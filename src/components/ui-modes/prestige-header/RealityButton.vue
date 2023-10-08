@@ -8,15 +8,15 @@ export default {
       hasRealityStudy: false,
       machinesGained: new Decimal(),
       projectedRM: new Decimal(),
-      newIMCap: 0,
+      newIMCap: new Decimal(),
       realityTime: 0,
       glyphLevel: 0,
       nextGlyphPercent: 0,
       nextMachineEP: 0,
-      shardsGained: 0,
-      currentShardsRate: 0,
-      bestShardRate: 0,
-      bestShardRateVal: 0,
+      shardsGained: new Decimal(),
+      currentShardsRate: new Decimal(),
+      bestShardRate: new Decimal(),
+      bestShardRateVal: new Decimal(),
       ppGained: 0,
       celestialRunText: ["", "", "", "", ""]
     };
@@ -33,10 +33,10 @@ export default {
       if (this.machinesGained.gt(0) && this.machinesGained.lt(100)) {
         return `(Next at ${format(this.nextMachineEP, 2)} EP)`;
       }
-      if (this.machinesGained.eq(0) && this.newIMCap === 0) {
+      if (this.machinesGained.eq(0) && this.newIMCap.eq(0)) {
         return `(Projected: ${format(this.projectedRM, 2)} RM)`;
       }
-      if (this.newIMCap !== 0) {
+      if (this.newIMCap.neq(0)) {
         return `(iM Cap: ${formatMachines(0, this.newIMCap)})`;
       }
       if (this.machinesGained.lt(Number.MAX_VALUE)) {
@@ -75,7 +75,7 @@ export default {
       this.canReality = isRealityAvailable();
       this.showSpecialEffect = this.hasSpecialReward();
       if (!this.canReality) {
-        this.shardsGained = 0;
+        this.shardsGained = new Decimal(0);
         return;
       }
       function EPforRM(rm) {
@@ -99,17 +99,17 @@ export default {
       this.nextGlyphPercent = this.percentToNextGlyphLevelText();
       this.nextMachineEP = EPforRM(this.machinesGained.plus(1));
       this.ppGained = multiplier;
-      this.shardsGained = Effarig.shardsGained * multiplier;
-      this.currentShardsRate = (this.shardsGained / Time.thisRealityRealTime.totalMinutes);
-      this.bestShardRate = player.records.thisReality.bestRSmin * multiplier;
-      this.bestShardRateVal = player.records.thisReality.bestRSminVal * multiplier;
+      this.shardsGained = Effarig.shardsGained.mul(multiplier);
+      this.currentShardsRate = this.shardsGained.div(Time.thisRealityRealTime.totalMinutes);
+      this.bestShardRate = player.records.thisReality.bestRSmin.mul(multiplier);
+      this.bestShardRateVal = player.records.thisReality.bestRSminVal.mul(multiplier);
 
       const teresaReward = this.formatScalingMultiplierText(
         "Glyph Sacrifice",
         Teresa.runRewardMultiplier,
-        Math.max(Teresa.runRewardMultiplier, Teresa.rewardMultiplier(Currency.antimatter.value)));
+        Teresa.runRewardMultiplier.max(Teresa.rewardMultiplier(Currency.antimatter.value)));
       const teresaThreshold = this.formatThresholdText(
-        Teresa.rewardMultiplier(Currency.antimatter.value) > Teresa.runRewardMultiplier,
+        Teresa.rewardMultiplier(Currency.antimatter.value).gt(Teresa.runRewardMultiplier),
         player.celestials.teresa.bestRunAM,
         "antimatter");
       this.celestialRunText = [
@@ -129,7 +129,7 @@ export default {
     },
     // Make the button have a visual animation if Realitying will give a reward
     hasSpecialReward() {
-      if (Teresa.isRunning && Teresa.rewardMultiplier(Currency.antimatter.value) > Teresa.runRewardMultiplier) {
+      if (Teresa.isRunning && Teresa.rewardMultiplier(Currency.antimatter.value).gt(Teresa.runRewardMultiplier)) {
         return true;
       }
       return Currency.eternityPoints.value.exponent > 4000 &&
@@ -166,7 +166,7 @@ export default {
         >
           <div>Other resources gained:</div>
           <div>{{ quantifyInt("Perk Point", ppGained) }}</div>
-          <div v-if="shardsGained !== 0">
+          <div v-if="shardsGained.neq(0)">
             {{ shardsGainedText }} ({{ format(currentShardsRate, 2) }}/min)
             <br>
             Peak: {{ format(bestShardRate, 2) }}/min at {{ format(bestShardRateVal, 2) }} RS

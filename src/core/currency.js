@@ -412,15 +412,15 @@ Currency.perkPoints = new class extends NumberCurrency {
   set value(value) { player.reality.perkPoints = value; }
 }();
 
-Currency.relicShards = new class extends NumberCurrency {
+Currency.relicShards = new class extends DecimalCurrency {
   get value() { return player.celestials.effarig.relicShards; }
   set value(value) { player.celestials.effarig.relicShards = value; }
 }();
 
-Currency.imaginaryMachines = new class extends NumberCurrency {
+Currency.imaginaryMachines = new class extends DecimalCurrency {
   get value() { return player.reality.imaginaryMachines; }
   set value(value) {
-    player.reality.imaginaryMachines = Math.clampMax(value, MachineHandler.currentIMCap);
+    player.reality.imaginaryMachines = value.min(MachineHandler.currentIMCap);
   }
 }();
 
@@ -436,18 +436,18 @@ Currency.darkMatter = new class extends DecimalCurrency {
   set max(value) { player.celestials.laitela.maxDarkMatter = value; }
 }();
 
-Currency.darkEnergy = new class extends NumberCurrency {
+Currency.darkEnergy = new class extends DecimalCurrency {
   get value() { return player.celestials.laitela.darkEnergy; }
   set value(value) { player.celestials.laitela.darkEnergy = value; }
 
   get productionPerSecond() {
     return DarkMatterDimensions.all
       .map(d => d.productionPerSecond)
-      .sum();
+      .sumDecimal();
   }
 }();
 
-Currency.singularities = new class extends NumberCurrency {
+Currency.singularities = new class extends DecimalCurrency {
   get value() { return player.celestials.laitela.singularities; }
   set value(value) { player.celestials.laitela.singularities = value; }
 }();

@@ -53,10 +53,8 @@ export class RealityAutobuyerState extends AutobuyerState {
     return this.data.shard;
   }
 
-  // This only gets set via functions in AutobuyerInput.vue; we want to take advantage of auto-formatting when the input
-  // is for a Decimal prop, but the actual value needs to be clamped to fit within a Number
   set shard(value) {
-    this.data.shard = value.clamp(0, Number.MAX_VALUE).toNumber();
+    this.data.shard = value;
   }
 
   toggleMode() {
@@ -117,7 +115,7 @@ export class RealityAutobuyerState extends AutobuyerState {
         proc = player.records.thisReality.realTime / 1000 > this.time;
         break;
       case AUTO_REALITY_MODE.RELIC_SHARD:
-        proc = Effarig.shardsGained * ampFactor > this.shard;
+        proc = Effarig.shardsGained.mul(ampFactor).gt(this.shard);
         break;
     }
     if (proc) autoReality();

@@ -12,13 +12,13 @@ export default {
       isUnlocked: false,
       ascension: 0,
       hasAscended: false,
-      powerDMPerAscension: 0,
+      powerDMPerAscension: new Decimal(0),
       interval: 0,
       powerDM: new Decimal(0),
-      powerDE: 0,
-      intervalCost: 0,
-      powerDMCost: 0,
-      powerDECost: 0,
+      powerDE: new Decimal(0),
+      intervalCost: new Decimal(0),
+      powerDMCost: new Decimal(0),
+      powerDECost: new Decimal(0),
       amount: new Decimal(0),
       canBuyInterval: false,
       canBuyPowerDM: false,
@@ -85,7 +85,7 @@ export default {
       return `${line1}<br>${line2}`;
     },
     darkEnergyText() {
-      const de = this.powerDE * (this.hoverOverAscension ? POWER_DE_PER_ASCENSION : 1);
+      const de = this.powerDE.mul(this.hoverOverAscension ? POWER_DE_PER_ASCENSION : 1);
       const str = `DE +${format(de, 2, 4)}`;
       const line1 = this.hoverOverAscension ? `<b>${str}</b>` : str;
       const ascMult = POWER_DE_PER_ASCENSION * this.interval / this.intervalAfterAscension;
@@ -123,9 +123,9 @@ export default {
       this.intervalAscensionBump = SingularityMilestone.ascensionIntervalScaling.effectOrDefault(1200);
       this.intervalAfterAscension = dim.intervalAfterAscension;
       this.darkEnergyPerSecond = dim.productionPerSecond;
-      this.portionDE = this.darkEnergyPerSecond / Currency.darkEnergy.productionPerSecond;
+      this.portionDE = this.darkEnergyPerSecond.div(Currency.darkEnergy.productionPerSecond).toNumber();
       this.productionPerSecond = this.dimensionProduction(this.tier);
-      this.percentPerSecond = Decimal.divide(this.productionPerSecond, this.amount).toNumber();
+      this.percentPerSecond = this.productionPerSecond.div(this.amount).toNumber();
       if (!this.isIntervalCapped) this.hoverOverAscension = false;
     },
     handleIntervalClick() {
@@ -142,10 +142,10 @@ export default {
     // however; it looks better in-game if we just format it as Infinity instead, as the resource used for these costs
     // is itself hardcapped at e308 and we specifically want to format here (and nowhere else) as Infinity.
     formatDMCost(cost) {
-      return cost.gt(Number.MAX_VALUE) ? Notations.current.infinite : format(cost, 2);
+      return format(cost, 2);
     },
     dimensionProduction(tier) {
-      if (tier === 4) return SingularityMilestone.dim4Generation.effectOrDefault(0);
+      if (tier === 4) return SingularityMilestone.dim4Generation.effectOrDefault(new Decimal(0));
       const prodDim = DarkMatterDimension(tier + 1);
       return prodDim.amount.times(prodDim.powerDM).divide(prodDim.interval).times(1000);
     },

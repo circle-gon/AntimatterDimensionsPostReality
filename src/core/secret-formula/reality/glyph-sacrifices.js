@@ -3,9 +3,9 @@ export const glyphSacrifice = {
     id: "power",
     effect: added => {
       if (Pelle.isDisabled("glyphsac")) return 0;
-      const sac = player.reality.glyphs.sac.power + (added ?? 0);
-      const capped = Math.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
-      const base = Math.log10(capped + 1) / Math.log10(GlyphSacrificeHandler.maxSacrificeForEffects);
+      const sac = player.reality.glyphs.sac.power.add(added ?? 0);
+      const capped = sac.min(GlyphSacrificeHandler.maxSacrificeForEffects);
+      const base = capped.add(1).log10() / Math.log10(GlyphSacrificeHandler.maxSacrificeForEffects);
       return Math.floor(750 * Math.pow(base, 1.2));
     },
     description: amount => {
@@ -22,9 +22,9 @@ export const glyphSacrifice = {
     id: "infinity",
     effect: added => {
       if (Pelle.isDisabled("glyphsac")) return 1;
-      const sac = player.reality.glyphs.sac.infinity + (added ?? 0);
-      const capped = Math.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
-      return 1 + Math.log10(1 + Math.pow(capped, 0.2) / 100);
+      const sac = player.reality.glyphs.sac.infinity.add(added ?? 0);
+      const capped = sac.min(GlyphSacrificeHandler.maxSacrificeForEffects);
+      return 1 + capped.pow(0.2).add(1).div(100).log10();
     },
     description: amount => `${formatX(amount, 2, 2)} bigger multiplier when buying 8th Infinity Dimension`,
     cap: () => GlyphSacrificeHandler.maxSacrificeForEffects
@@ -32,10 +32,10 @@ export const glyphSacrifice = {
   "time": {
     id: "time",
     effect: added => {
-      if (Pelle.isDisabled("glyphsac")) return 1;
-      const sac = player.reality.glyphs.sac.time + (added ?? 0);
-      const capped = Math.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
-      return Math.pow(1 + Math.pow(capped, 0.2) / 100, 2);
+      if (Pelle.isDisabled("glyphsac")) return DC.D1;
+      const sac = player.reality.glyphs.sac.time.add(added ?? 0);
+      const capped = sac.min(GlyphSacrificeHandler.maxSacrificeForEffects);
+      return capped.pow(0.2).div(100).add(1).pow(2);
     },
     description: amount => `${formatX(amount, 2, 2)} bigger multiplier when buying 8th Time Dimension`,
     cap: () => GlyphSacrificeHandler.maxSacrificeForEffects
@@ -44,9 +44,9 @@ export const glyphSacrifice = {
     id: "replication",
     effect: added => {
       if (Pelle.isDisabled("glyphsac")) return 0;
-      const sac = player.reality.glyphs.sac.replication + (added ?? 0);
-      const capped = Math.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
-      const base = Math.log10(capped + 1) / Math.log10(GlyphSacrificeHandler.maxSacrificeForEffects);
+      const sac = player.reality.glyphs.sac.replication.add(added ?? 0);
+      const capped = sac.min(GlyphSacrificeHandler.maxSacrificeForEffects);
+      const base = capped.add(1).log10() / Math.log10(GlyphSacrificeHandler.maxSacrificeForEffects);
       return Math.floor(1500 * Math.pow(base, 1.2));
     },
     description: amount => {
@@ -62,12 +62,12 @@ export const glyphSacrifice = {
   "dilation": {
     id: "dilation",
     effect: added => {
-      if (Pelle.isDisabled("glyphsac")) return 1;
-      const sac = player.reality.glyphs.sac.dilation + (added ?? 0);
-      const capped = Math.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
-      const exponent = 0.32 * Math.pow(Math.log10(capped + 1) /
+      if (Pelle.isDisabled("glyphsac")) return DC.D1;
+      const sac = player.reality.glyphs.sac.dilation.add(added ?? 0);
+      const capped = sac.min(GlyphSacrificeHandler.maxSacrificeForEffects);
+      const exponent = 0.32 * Math.pow(capped.add(1).log10() /
         Math.log10(GlyphSacrificeHandler.maxSacrificeForEffects), 0.1);
-      return Math.pow(Math.clampMin(capped, 1), exponent);
+      return capped.max(1).pow(exponent);
     },
     description: amount => `Multiply Tachyon Particle gain by ${formatX(amount, 2, 2)}`,
     cap: () => GlyphSacrificeHandler.maxSacrificeForEffects
@@ -76,10 +76,10 @@ export const glyphSacrifice = {
     id: "effarig",
     effect: added => {
       if (Pelle.isDisabled("glyphsac")) return 0;
-      const sac = player.reality.glyphs.sac.effarig + (added ?? 0);
+      const sac = player.reality.glyphs.sac.effarig.add(added ?? 0);
       // This doesn't use the GlyphSacrificeHandler cap because it hits its cap (+100%) earlier
-      const capped = Math.clampMax(sac, 1e70);
-      return 2 * Math.log10(capped / 1e20 + 1);
+      const capped = sac.min(1e70);
+      return 2 * capped.div(1e20).add(1).log10();
     },
     description: amount => `+${formatPercents(amount / 100, 2)} additional Glyph rarity`,
     cap: () => 1e70
@@ -88,9 +88,9 @@ export const glyphSacrifice = {
     id: "reality",
     effect: added => {
       if (Pelle.isDisabled("glyphsac")) return 0;
-      const sac = player.reality.glyphs.sac.reality + (added ?? 0);
+      const sac = player.reality.glyphs.sac.reality.add(added ?? 0);
       // This cap is only feasibly reached with the imaginary upgrade, but we still want to cap it at a nice number
-      return Math.clampMax(1 + Math.sqrt(sac) / 15, 100);
+      return sac.sqrt().div(15).add(1).min(100).toNumber();
     },
     description: amount => `Multiply Memory Chunk gain by ${formatX(amount, 2, 3)}`,
     cap: () => GlyphSacrificeHandler.maxSacrificeForEffects

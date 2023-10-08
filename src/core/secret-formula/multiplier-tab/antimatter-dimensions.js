@@ -223,10 +223,10 @@ export const AD = {
   },
   infinityPower: {
     name: "Multiplier from Infinity Power",
-    fakeValue: () => Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate),
+    fakeValue: () => InfinityDimensions.ADMultiplier,
     multValue: dim => {
-      const mult = Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate).max(1);
-      return Decimal.pow(mult, dim ? 1 : MultiplierTabHelper.activeDimCount("AD"));
+      const mult = InfinityDimensions.ADMultiplier.log10() * (dim ? 1 : MultiplierTabHelper.activeDimCount("AD"));
+      return powAndCap(mult)
     },
     isActive: () => Currency.infinityPower.value.gt(1) && !EternityChallenge(9).isRunning,
     icon: MultiplierTabIcons.INFINITY_POWER,

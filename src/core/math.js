@@ -9,6 +9,7 @@ window.LOG10_MAX_VALUE = Math.log10(Number.MAX_VALUE);
 window.LN_SQRT_2_PI = 0.5 * Math.log(2 * Math.PI);
 window.LOG10_2 = Math.log10(2);
 window.LOG10_E = Math.log10(Math.E);
+window.MAX_TOL = 1e-14;
 
 Math.PI_2 = Math.PI * 2;
 
@@ -63,14 +64,16 @@ window.bulkBuyBinarySearch = function bulkBuyBinarySearch(money, costInfo, alrea
   // The amount we can actually buy is in the interval [canBuy/2, canBuy), we do a binary search
   // to find the exact value:
   let canBuy = cantBuy / 2;
-  if (cantBuy > Number.MAX_SAFE_INTEGER) throw new Error("Overflow in binary search");
-  while (cantBuy - canBuy > 1) {
+  const maxPrecise = cantBuy <= Number.MAX_SAFE_INTEGER;
+  let maxTol = 0;
+  while (cantBuy - canBuy > maxTol) {
     const middle = Math.floor((canBuy + cantBuy) / 2);
     if (money.gte(costFunction(alreadyBought + middle - 1))) {
       canBuy = middle;
     } else {
       cantBuy = middle;
     }
+    maxTol = maxPrecise ? 1 : MAX_TOLERANCE * canBuy
   }
   const baseCost = costFunction(alreadyBought + canBuy - 1);
   if (!isCumulative) {
@@ -84,7 +87,10 @@ window.bulkBuyBinarySearch = function bulkBuyBinarySearch(money, costInfo, alrea
     const newCost = otherCost.plus(costFunction(alreadyBought + i - 1));
     if (newCost.eq(otherCost)) break;
     otherCost = newCost;
-    if (++count > 1000) throw new Error("unexpected long loop (buggy cost function?)");
+    if (++count > 1000) {
+      console.warn("unexpected long loop (buggy cost function?)");
+      break
+    }
   }
   let totalCost = baseCost.plus(otherCost);
   // Check the purchase price again
@@ -408,11 +414,12 @@ window.ExponentialCostScaling = class ExponentialCostScaling {
     // We can use the linear method up to one purchase past the threshold, because the first purchase
     // past the threshold doesn't have cost scaling in it yet.
     if (newPurchases > this._purchasesBeforeScaling) {
-      const discrim = this._precalcDiscriminant + 8 * this._logCostScale * logMoney;
-      if (discrim < 0) {
+       // if _logCostScale is big enough this will go to Infinity
+       const discrim = Decimal.mul(logMoney, this._logCostScale).mul(8).add(this._precalcDiscriminant)
+       if (discrim.lt(0)) {
         return null;
       }
-      newPurchases = Math.floor(this._precalcCenter + Math.sqrt(discrim) / (2 * this._logCostScale));
+      newPurchases = Math.floor(this._precalcCenter + discrim.sqrt().toNumber() / (2 * this._logCostScale));
     }
     if (newPurchases <= currentPurchases) return null;
     // There's a narrow edge case where the linear method returns > this._purchasesBeforeScaling + 1
@@ -450,11 +457,12 @@ window.ExponentialCostScaling = class ExponentialCostScaling {
     // We can use the linear method up to one purchase past the threshold, because the first purchase
     // past the threshold doesn't have cost scaling in it yet.
     if (contValue > this._purchasesBeforeScaling) {
-      const discrim = this._precalcDiscriminant + 8 * this._logCostScale * logMoney;
-      if (discrim < 0) {
+       // if _logCostScale is big enough this will go to Infinity
+       const discrim = Decimal.mul(logMoney, this._logCostScale).mul(8).add(this._precalcDiscriminant)
+       if (discrim.lt(0)) {
         return 0;
       }
-      contValue = this._precalcCenter + Math.sqrt(discrim) / (2 * this._logCostScale);
+      contValue = this._precalcCenter + discrim.sqrt().toNumber() / (2 * this._logCostScale);
     }
     return Math.clampMin(contValue, 0);
   }
@@ -470,11 +478,11 @@ window.ExponentialCostScaling = class ExponentialCostScaling {
 // this should never be turned down to 0 as there can be oscillatory behavior due to floating point quantization
 // that never converges to a fixed point. It also seems to take much longer to converge at higher values.
 window.productLog = function productLog(x) {
-  let curr = x, prev = 0;
+  let curr = x, prev = DC.D0;
   do {
     prev = curr;
-    curr -= 1 - (1 + x * Math.exp(-curr)) / (1 + curr);
-  } while (Math.abs(curr - prev) > 1e-6 * curr);
+    curr = curr.sub(new Decimal(1).sub(x.mul(curr.neg().exp()).div(curr.add(1))));
+  } while (curr.sub(prev).abs().gt(curr.mul(1e-6)));
   return curr;
 };
 
@@ -584,6 +592,28 @@ window.normalDistribution = (function() {
     haveSpare = true;
     spare = v * t;
     return mean + stdDev * u * t;
+  };
+}());
+
+window.normalDistributionDecimal = (function() {
+  let haveSpare = false;
+  let spare = 0;
+  return (mean, stdDev) => {
+    if (mean !== Decimal || stdDev !== Decimal) return new Decimal(NaN);
+    if (haveSpare) {
+      haveSpare = false;
+      return mean.add(stdDev.mul(spare));
+    }
+    let mag, u, v;
+    do {
+      u = fastRandom() * 2 - 1;
+      v = fastRandom() * 2 - 1;
+      mag = u * u + v * v;
+    } while (mag >= 1 || mag === 0);
+    const t = Math.sqrt(-2 * Math.log(mag) / mag);
+    haveSpare = true;
+    spare = v * t;
+    return mean.add(stdDev).mul(spare);
   };
 }());
 

@@ -29,9 +29,9 @@ export default {
       default: 0,
     },
     sacrificeReward: {
-      type: Number,
+      type: Decimal,
       required: false,
-      default: 0,
+      default: new Decimal(0),
     },
     refineReward: {
       type: Number,

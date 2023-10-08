@@ -1533,6 +1533,51 @@ export const devMigrations = {
     player => {
       player.options.lightGlyphs = !player.options.forceDarkGlyphs;
       delete player.options.forceDarkGlyphs;
+    },
+    player => {
+      // change effarig shards to decimal
+      player.celestials.effarig.relicShards = new Decimal(player.celestials.effarig.relicShards)
+      player.reality.iMCap = new Decimal(player.reality.iMCap)
+      player.reality.iMCap = new Decimal(player.reality.iMCap)
+      player.records.thisMend.maxiM = new Decimal(player.records.thisMend.maxiM)
+      player.records.totalTimePlayed = new Decimal(player.records.totalTimePlayed)
+      player.celestials.ra.peakGamespeed = new Decimal(player.celestials.ra.peakGamespeed)
+      player.challenge.normal.bestTimes = player.challenge.normal.bestTimes.map(i => new Decimal(i))
+      player.challenge.infinity.bestTimes = player.challenge.infinity.bestTimes.map(i => new Decimal(i))
+
+      function swapToDecimal(name) {
+        player.records["this" + name].time = new Decimal(player.records["this" + name].time)
+        player.records["best" + name].time = new Decimal(player.records["best" + name].time)
+      }
+
+      function fixRecents(name) {
+        player.records["recent" + name] = player.records["recent" + name].map(i => {
+          return [new Decimal(i[0]), ...i.slice(1)]
+        })
+      }
+
+      swapToDecimal("Infinity")
+      swapToDecimal("Eternity")
+      swapToDecimal("Reality")
+      swapToDecimal("Mend")
+
+      fixRecents("Infinities")
+      fixRecents("Eternities")
+      fixRecents("Realities")
+
+      player.records.totalTimePlayed = new Decimal(player.records.totalTimePlayed)
+      player.records.totalTimePlayedAtBHUnlock = new Decimal(player.records.totalTimePlayedAtBHUnlock)
+      player.celestials.enslaved.stored = new Decimal(player.celestials.enslaved.stored)
+      player.records.thisInfinity.lastBuyTime = new Decimal(player.records.thisInfinity.lastBuyTime)
+      player.records.thisInfinity.lastBuyTime = new Decimal(player.records.thisInfinity.lastBuyTime)
+      player.records.thisEternity.time = new Decimal(player.records.thisEternity.time)
+      player.auto.reality.shard = new Decimal(player.auto.reality.shard)
+      const l = player.celestials.laitela
+      l.darkEnergy = new Decimal(l.darkEnergy)
+      l.singularities = new Decimal(l.singularities)
+      l.lastCheckedMilestones = new Decimal(l.lastCheckedMilestones)
+      player.auto.annihilation.multiplier = new Decimal(player.auto.annihilation.multiplier)
+      player.reality.glyphs.sac = player.reality.glyphs.sac.map(i => new Decimal(i))
     }
   ],
 

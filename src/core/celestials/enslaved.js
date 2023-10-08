@@ -3,6 +3,8 @@ import { GameDatabase } from "../secret-formula/game-database";
 
 import { Quotes } from "./quotes";
 
+import { DC } from "../constants"
+
 export const ENSLAVED_UNLOCKS = {
   FREE_TICKSPEED_SOFTCAP: {
     id: 0,
@@ -32,13 +34,13 @@ export const Enslaved = {
   possessiveName: "The Nameless Ones'",
   boostReality: false,
   BROKEN_CHALLENGES: [2, 3, 4, 5, 7, 8, 10, 11, 12],
+  // Decimal and number
   nextTickDiff: 50,
   isReleaseTick: false,
   autoReleaseTick: 0,
   autoReleaseSpeed: 0,
-  timeCap: 1e300,
   glyphLevelMin: 5000,
-  currentBlackHoleStoreAmountPerMs: 0,
+  currentBlackHoleStoreAmountPerMs: DC.D0,
   tachyonNerf: 0.3,
   toggleStoreBlackHole() {
     if (!this.canModifyGameTimeStorage) return;
@@ -121,29 +123,29 @@ export const Enslaved = {
     let release = player.celestials.enslaved.stored;
     if (Enslaved.isRunning) {
       release = Enslaved.storedTimeInsideEnslaved(release);
-      if (Time.thisReality.totalYears + TimeSpan.fromMilliseconds(release).totalYears > 1) {
+      if (Time.thisReality.totalYears.add(DecimalTimeSpan.fromMilliseconds(release).totalYears).gt(1)) {
         EnslavedProgress.storedTime.giveProgress();
       }
     }
-    if (autoRelease) release *= 0.01;
-    this.nextTickDiff = Math.clampMax(release, this.timeCap);
+    if (autoRelease) release = release.mul(0.01);
+    this.nextTickDiff = release;
     this.isReleaseTick = true;
     // Effective gamespeed from stored time assumes a "default" 50 ms update rate for consistency
-    const effectiveGamespeed = release / 50;
-    player.celestials.ra.peakGamespeed = Math.max(player.celestials.ra.peakGamespeed, effectiveGamespeed);
-    this.autoReleaseSpeed = release / player.options.updateRate / 5;
-    player.celestials.enslaved.stored *= autoRelease ? 0.99 : 0;
+    const effectiveGamespeed = release.div(50);
+    player.celestials.ra.peakGamespeed = player.celestials.ra.peakGamespeed.max(effectiveGamespeed);
+    this.autoReleaseSpeed = release.div(player.options.updateRate * 5);
+    player.celestials.enslaved.stored = player.celestials.enslaved.stored.mul(autoRelease ? 0.99 : 0);
   },
   has(info) {
     return player.celestials.enslaved.unlocks.includes(info.id);
   },
   canBuy(info) {
-    return player.celestials.enslaved.stored >= info.price && info.secondaryRequirement() && !this.has(info);
+    return player.celestials.enslaved.stored.gte(info.price) && info.secondaryRequirement() && !this.has(info);
   },
   buyUnlock(info) {
     if (!this.canBuy(info)) return false;
     if (info.id === ENSLAVED_UNLOCKS.RUN.id) this.quotes.unlockRun.show();
-    player.celestials.enslaved.stored -= info.price;
+    player.celestials.enslaved.stored = player.celestials.enslaved.stored.sub(info.price);
     player.celestials.enslaved.unlocks.push(info.id);
     return true;
   },
@@ -188,8 +190,8 @@ export const Enslaved = {
     return this.realityBoostRatio > 1 && !Pelle.isDoomed && !isInCelestialReality();
   },
   storedTimeInsideEnslaved(stored) {
-    if (stored <= 1e3) return stored;
-    return Math.pow(10, Math.pow(Math.log10(stored / 1e3), 0.55)) * 1e3;
+    if (stored.lte(1e3)) return stored;
+    return Decimal.pow10(Math.pow(stored.div(1e3).log10(), 0.55)).mul(1e3);
   },
   feelEternity() {
     if (this.feltEternity) {
@@ -217,8 +219,8 @@ export const Enslaved = {
     return Math.clampMin(hintTime / TimeSpan.fromDays(1).totalMilliseconds, 0);
   },
   spendTimeForHint() {
-    if (player.celestials.enslaved.stored < this.nextHintCost) return false;
-    player.celestials.enslaved.stored -= this.nextHintCost;
+    if (player.celestials.enslaved.stored.lt(this.nextHintCost)) return false;
+    player.celestials.enslaved.stored = player.celestials.enslaved.stored.sub(this.nextHintCost);
     if (Enslaved.hintCostIncreases === 0) {
       player.celestials.enslaved.zeroHintTime = Date.now() + TimeSpan.fromDays(1).totalMilliseconds;
     } else {

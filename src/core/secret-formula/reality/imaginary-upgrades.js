@@ -1,7 +1,7 @@
 import { DC } from "../../constants";
 
 const rebuyable = props => {
-  props.cost = () => props.initialCost * Math.pow(props.costMult, player.reality.imaginaryRebuyables[props.id]);
+  props.cost = () => Decimal.pow(props.costMult, player.reality.imaginaryRebuyables[props.id]).mul(props.initialCost);
   const { effect } = props;
   if (props.isDecimal) props.effect = () => Decimal.pow(effect, player.reality.imaginaryRebuyables[props.id]);
   else props.effect = () => effect * player.reality.imaginaryRebuyables[props.id];
@@ -105,7 +105,7 @@ export const imaginaryUpgrades = [
     requirement: () => `${format(1e90)} total Relic Shards
       (You have ${format(player.celestials.effarig.relicShards, 2)})`,
     hasFailed: () => false,
-    checkRequirement: () => player.celestials.effarig.relicShards >= 1e90,
+    checkRequirement: () => player.celestials.effarig.relicShards.gte(1e90),
     checkEvent: GAME_EVENT.REALITY_RESET_AFTER,
     description: "Time Dimension power based on total antimatter",
     effect: () => 1 + Math.log10(player.records.totalAntimatter.log10()) / 100,
@@ -192,8 +192,8 @@ export const imaginaryUpgrades = [
     cost: 6e9,
     requirement: () => `Automatically condense at least ${formatInt(20)} Singularities at once`,
     hasFailed: () => false,
-    checkRequirement: () => Singularity.singularitiesGained >= 20 &&
-      Currency.darkEnergy.gte(Singularity.cap * SingularityMilestone.autoCondense.effectOrDefault(Infinity)),
+    checkRequirement: () => Singularity.singularitiesGained.gte(20) &&
+      Currency.darkEnergy.gte(Singularity.cap.mul(SingularityMilestone.autoCondense.effectOrDefault(Infinity))),
     checkEvent: GAME_EVENT.SINGULARITY_RESET_BEFORE,
     description: "Unlock the 3rd Dark Matter Dimension",
   },
@@ -249,7 +249,7 @@ export const imaginaryUpgrades = [
     canLock: true,
     lockEvent: "enable Continuum",
     description: "Annihilation multiplier gain is improved based on Imaginary Machines",
-    effect: () => Math.clampMin(Math.pow(Math.log10(Currency.imaginaryMachines.value) - 10, 3), 1),
+    effect: () => Math.clampMin(Math.pow(Currency.imaginaryMachines.value.log10() - 10, 3), 1),
     formatEffect: value => `${formatX(value, 2, 1)}`,
     isDisabledInDoomed: true
   },
@@ -266,7 +266,7 @@ export const imaginaryUpgrades = [
       Currency.antimatter.value.exponent >= 1.5e11,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     description: () => `All Glyph Sacrifice totals are increased to ${format(1e100)}`,
-    effect: 1e100,
+    effect: DC.E100,
     isDisabledInDoomed: true
   },
   {

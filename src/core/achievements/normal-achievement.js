@@ -2,6 +2,8 @@ import { GameMechanicState } from "../game-mechanics";
 
 import { SteamRuntime } from "@/steam";
 
+import { DC } from "@/core/constants";
+
 class AchievementState extends GameMechanicState {
   constructor(config) {
     super(config);
@@ -141,27 +143,27 @@ export const Achievements = {
   autoAchieveUpdate(diff) {
     if (!PlayerProgress.realityUnlocked()) return;
     if (!player.reality.autoAchieve || RealityUpgrade(8).isLockingMechanics) {
-      player.reality.achTimer = Math.clampMax(player.reality.achTimer + diff, this.period);
+      player.reality.achTimer = player.reality.achTimer.add(diff).min(this.period);
       return;
     }
     if (Achievements.preReality.every(a => a.isUnlocked)) return;
 
-    player.reality.achTimer += diff;
-    if (player.reality.achTimer < this.period) return;
+    player.reality.achTimer = player.reality.achTimer.add(diff);
+    if (player.reality.achTimer.lt(this.period)) return;
 
     for (const achievement of Achievements.preReality.filter(a => !a.isUnlocked)) {
       achievement.unlock(true);
-      player.reality.achTimer -= this.period;
-      if (player.reality.achTimer < this.period) break;
+      player.reality.achTimer = player.reality.achTimer.sub(this.period);
+      if (player.reality.achTimer.lt(this.period)) break;
     }
     player.reality.gainedAutoAchievements = true;
   },
 
   get timeToNextAutoAchieve() {
-    if (!PlayerProgress.realityUnlocked()) return 0;
-    if (GameCache.achievementPeriod.value === 0) return 0;
-    if (Achievements.preReality.countWhere(a => !a.isUnlocked) === 0) return 0;
-    return this.period - player.reality.achTimer;
+    if (!PlayerProgress.realityUnlocked()) return DC.D0;
+    if (GameCache.achievementPeriod.value === 0) return DC.D0;
+    if (Achievements.preReality.countWhere(a => !a.isUnlocked) === 0) return DC.D0;
+    return this.period.sub(player.reality.achTimer);
   },
 
   _power: new Lazy(() => {
@@ -169,11 +171,11 @@ export const Achievements = {
       .countWhere(row => row.every(ach => ach.isUnlocked));
     const basePower = Math.pow(1.25, unlockedRows) * Math.pow(1.03, Achievements.effectiveCount);
     const exponent = getAdjustedGlyphEffect("effarigachievement") * Ra.unlocks.achievementPower.effectOrDefault(1);
-    return Math.pow(basePower, exponent);
+    return Decimal.pow(basePower, exponent);
   }),
 
   get power() {
-    if (Pelle.isDisabled("achievementMult")) return 1;
+    if (Pelle.isDisabled("achievementMult")) return DC.D1;
     return Achievements._power.value;
   },
 

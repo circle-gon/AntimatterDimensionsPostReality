@@ -122,11 +122,15 @@ export const infinityChallenges = [
     goal: DC.E27000,
     isQuickResettable: true,
     effect: () => DC.D0_8446303389034288.pow(
-      Math.max(0, player.records.thisInfinity.time - player.records.thisInfinity.lastBuyTime)),
+      player.records.thisInfinity.time.sub(player.records.thisInfinity.lastBuyTime).max(0)),
     reward: {
       description:
         "You get a multiplier to AD 2-7 based on 1st and 8th AD multipliers.",
-      effect: () => AntimatterDimension(1).multiplier.times(AntimatterDimension(8).multiplier).pow(0.02),
+      effect: () => {
+        const log = (AntimatterDimension(1).multiplier.log10() + 
+        AntimatterDimension(8).multiplier.log10()) * 0.02
+        return powAndCap(log)
+      },
       formatEffect: value => formatX(value, 2, 2)
     },
     unlockAM: DC.E28000,

@@ -17,17 +17,17 @@ export default {
   },
   computed: {
     timeSum() {
-      return this.times.sum();
+      return this.times.sumDecimal();
     },
     completedAllChallenges() {
-      return this.timeSum < Number.MAX_VALUE;
+      return this.times.every(i => i.lt(Decimal.MAX_LIMIT));
     }
   },
   methods: {
-    timeDisplayShort,
+    decimalTimeDisplayShort,
     completionString(time) {
-      return time < Number.MAX_VALUE
-        ? `record time: ${timeDisplayShort(time)}`
+      return time.lt(Decimal.MAX_LIMIT)
+        ? `record time: ${decimalTimeDisplayShort(time)}`
         : "has not yet been completed";
     }
   }
@@ -45,7 +45,7 @@ export default {
     </div>
     <br>
     <div v-if="completedAllChallenges">
-      Sum of {{ name }} record times: {{ timeDisplayShort(timeSum) }}
+      Sum of {{ name }} record times: {{ decimalTimeDisplayShort(timeSum) }}
     </div>
     <div v-else>
       You have not completed all {{ name }}s yet.

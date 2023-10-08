@@ -71,12 +71,12 @@ export const Effarig = {
     return countValuesFromBitmask(genEffectBitmask) + countValuesFromBitmask(nongenEffectBitmask);
   },
   get shardsGained() {
-    if (!TeresaUnlocks.effarig.canBeApplied) return 0;
-    return Math.floor(Math.pow(Currency.eternityPoints.exponent / 7500, this.glyphEffectAmount)) *
-      AlchemyResource.effarig.effectValue;
+    if (!TeresaUnlocks.effarig.canBeApplied) return DC.D0;
+    return Decimal.pow(Currency.eternityPoints.exponent / 7500, this.glyphEffectAmount).floor().mul(
+      AlchemyResource.effarig.effectValue);
   },
   get maxRarityBoost() {
-    return 5 * Math.log10(Math.log10(Currency.relicShards.value + 10));
+    return 5 * Math.log10(Currency.relicShards.value.add(10).log10());
   },
   nerfFactor(power) {
     let c;

@@ -438,7 +438,7 @@ export const BlackHoles = {
     // binarySearch from working in the numberOfTicks = 1 case.
     // I doubt that's possible but it seems worth handling just in case.
     if (numberOfTicks === 1) {
-      return [totalRealTime, totalGameTime / totalRealTime];
+      return [totalRealTime, totalGameTime.div(totalRealTime)];
     }
     // We want calculateGameTimeFromRealTime(realTickTime, speedups) * numberOfTicks / totalGameTime to be roughly 1
     // (that is, the tick taking realTickTime real time has roughly average length in terms of game time).
@@ -450,11 +450,11 @@ export const BlackHoles = {
     const realTickTime = this.binarySearch(
       0,
       totalRealTime,
-      x => this.calculateGameTimeFromRealTime(x, speedups) * numberOfTicks / totalGameTime,
+      x => this.calculateGameTimeFromRealTime(x, speedups).mul(numberOfTicks).div(totalGameTime),
       1,
       tolerance
     );
-    const blackHoleSpeedup = this.calculateGameTimeFromRealTime(realTickTime, speedups) / realTickTime;
+    const blackHoleSpeedup = this.calculateGameTimeFromRealTime(realTickTime, speedups).div(realTickTime);
     return [realTickTime, blackHoleSpeedup];
   },
 
@@ -468,9 +468,9 @@ export const BlackHoles = {
     let middle;
     for (let iter = 0; iter < 100; ++iter) {
       middle = (start + end) / 2;
-      const error = evaluationFunction(middle) - target;
-      if (Math.abs(error) < tolerance) break;
-      if (error < 0) {
+      const error = evaluationFunction(middle).sub(target);
+      if (error.abs().lt(tolerance)) break;
+      if (error.lt(0)) {
         // eslint-disable-next-line no-param-reassign
         start = middle;
       } else {
@@ -491,12 +491,12 @@ export const BlackHoles = {
     const effectsToConsider = [GAME_SPEED_EFFECT.FIXED_SPEED, GAME_SPEED_EFFECT.TIME_GLYPH,
       GAME_SPEED_EFFECT.SINGULARITY_MILESTONE, GAME_SPEED_EFFECT.NERFS];
     const speedupWithoutBlackHole = getGameSpeedupFactor(effectsToConsider);
-    const speedups = [1];
+    const speedups = [DC.D1];
     effectsToConsider.push(GAME_SPEED_EFFECT.BLACK_HOLE);
     // Crucial thing: this works even if the black holes are paused, it's just that the speedups will be 1.
     for (const blackHole of this.list) {
       if (!blackHole.isUnlocked) break;
-      speedups.push(getGameSpeedupFactor(effectsToConsider, blackHole.id) / speedupWithoutBlackHole);
+      speedups.push(getGameSpeedupFactor(effectsToConsider, blackHole.id).div(speedupWithoutBlackHole));
     }
     return speedups;
   },
@@ -510,8 +510,8 @@ export const BlackHoles = {
     // This adds in time with black holes paused at the end of the list.
     effectivePeriods[0] += realTime - realerTime;
     return effectivePeriods
-      .map((period, i) => period * speedups[i])
-      .sum();
+      .map((period, i) => speedups[i].mul(period))
+      .sumDecimal();
   },
 
   /**

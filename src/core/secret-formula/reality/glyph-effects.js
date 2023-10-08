@@ -125,8 +125,16 @@ export const glyphEffects = {
     singleDesc: "Tachyon Galaxy threshold multiplier ×{value}",
     genericDesc: "Tachyon Galaxy cost multiplier",
     shortDesc: "TG threshold ×{value}",
-    effect: (level, strength) => 1 - Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100 -
-      GlyphAlteration.sacrificeBoost("dilation") / 50,
+    effect: (level, strength) => {
+      const base = 1 - GlyphAlteration.sacrificeBoost("dilation") / 50
+      const reduction = Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100
+      const total = base - reduction
+      if (total < 0.2) {
+        return 0.2 / (1.2 - total) ** 0.5
+      } else {
+        return total
+      }
+    },
     formatEffect: x => format(x, 3, 3),
     alteredColor: () => GlyphAlteration.getBoostColor("dilation"),
     alterationType: ALTERATION_TYPE.BOOST,
@@ -320,12 +328,12 @@ export const glyphEffects = {
     shortDesc: () => (GlyphAlteration.isAdded("infinity")
       ? "IP ×{value} and ^{value2}"
       : "IP ×{value}"),
-    effect: (level, strength) => Math.pow(level * (strength + 1), 6) * 10000,
+    effect: (level, strength) => Decimal.pow(level * (strength + 1), 6).mul(10000),
     formatEffect: x => format(x, 2, 3),
-    combine: GlyphCombiner.multiply,
+    combine: GlyphCombiner.multiplyDecimal,
     // eslint-disable-next-line no-negated-condition
-    softcap: value => ((Effarig.eternityCap !== undefined) ? Math.min(value, Effarig.eternityCap.toNumber()) : value),
-    conversion: x => 1 + Math.log10(x) / 1800,
+    softcap: value => ((Effarig.eternityCap !== undefined) ? value.min(Effarig.eternityCap) : value),
+    conversion: x => 1 + x.log10() / 1800,
     formatSecondaryEffect: x => format(x, 4, 4),
     alteredColor: () => GlyphAlteration.getAdditionColor("infinity"),
     alterationType: ALTERATION_TYPE.ADDITION
@@ -429,10 +437,10 @@ export const glyphEffects = {
     genericDesc: "Reality Machine multiplier",
     shortDesc: "RM ×{value}",
     effect: (level, strength) => (GlyphAlteration.isEmpowered("effarig")
-      ? Math.pow(level, 1.5)
-      : Math.pow(level, 0.6) * strength),
+      ? Decimal.pow(level, 1.5)
+      : Decimal.pow(level, 0.6).mul(strength)),
     formatEffect: x => format(x, 2, 2),
-    combine: GlyphCombiner.multiply,
+    combine: GlyphCombiner.multiplyDecimal,
     alteredColor: () => GlyphAlteration.getEmpowermentColor("effarig"),
     alterationType: ALTERATION_TYPE.EMPOWER
   },

@@ -101,8 +101,8 @@ export function maxAllTimeDimensions() {
 }
 
 export function timeDimensionCommonMultiplier() {
-  let mult = new Decimal(ShopPurchase.allDimPurchases.currentMult)
-    .timesEffectsOf(
+  let mult = Math.log10(ShopPurchase.allDimPurchases.currentMult) + 
+    Effects.log10Sum(
       Achievement(105),
       Achievement(128),
       TimeStudy(93),
@@ -122,13 +122,14 @@ export function timeDimensionCommonMultiplier() {
     );
 
   if (EternityChallenge(9).isRunning) {
-    mult = mult.times(
-      Decimal.pow(
-        Math.clampMin(Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate / 7).log2(), 1),
-        4)
-        .clampMin(1));
+    mult += Math.max(4 * 
+      Math.log10(
+        Math.clampMin(InfinityDimensions.ADMultiplier.pow(1 / 7).log2()
+        , 1)
+      ), 
+    0)
   }
-  return mult;
+  return powAndCap(mult);
 }
 
 export function updateTimeDimensionCosts() {
@@ -201,8 +202,8 @@ class TimeDimensionState extends DimensionState {
     const tier = this._tier;
 
     if (EternityChallenge(11).isRunning) return DC.D1;
-    let mult = GameCache.timeDimensionCommonMultiplier.value
-      .timesEffectsOf(
+    let mult = GameCache.timeDimensionCommonMultiplier.value.log10() + 
+      Effects.log10Sum(
         tier === 1 ? TimeStudy(11) : null,
         tier === 3 ? TimeStudy(73) : null,
         tier === 4 ? TimeStudy(227) : null
@@ -210,27 +211,27 @@ class TimeDimensionState extends DimensionState {
 
     const dim = TimeDimension(tier);
     const bought = tier === 8 ? Math.clampMax(dim.bought, 1e8) : dim.bought;
-    mult = mult.times(Decimal.pow(dim.powerMultiplier, bought));
+    mult += bought * dim.powerMultiplier.log10();
 
-    mult = mult.pow(getAdjustedGlyphEffect("timepow"));
-    mult = mult.pow(getAdjustedGlyphEffect("effarigdimensions"));
-    mult = mult.pow(getAdjustedGlyphEffect("curseddimensions"));
-    mult = mult.powEffectOf(AlchemyResource.time);
-    mult = mult.pow(Ra.momentumValue);
-    mult = mult.pow(ImaginaryUpgrade(11).effectOrDefault(1));
-    mult = mult.powEffectOf(PelleRifts.paradox);
+    mult *= getAdjustedGlyphEffect("timepow");
+    mult *= getAdjustedGlyphEffect("effarigdimensions");
+    mult *= getAdjustedGlyphEffect("curseddimensions");
+    mult *= Effects.product(AlchemyResource.time);
+    mult *= Ra.momentumValue;
+    mult *= ImaginaryUpgrade(11).effectOrDefault(1);
+    mult *= PelleRifts.paradox.effectValue.toNumber();
 
     if (player.dilation.active || PelleStrikes.dilation.hasStrike) {
-      mult = dilatedValueOf(mult);
+      mult = dilatedValueOf(powAndCap(mult)).log10();
     }
 
     if (Effarig.isRunning) {
-      mult = Effarig.multiplier(mult);
+      mult = Effarig.multiplier(powAndCap(mult)).log10();
     } else if (V.isRunning) {
-      mult = mult.pow(0.5);
+      mult *= 0.5;
     }
 
-    return mult;
+    return powAndCap(mult);
   }
 
   get productionPerSecond() {
@@ -241,12 +242,12 @@ class TimeDimensionState extends DimensionState {
     if (EternityChallenge(11).isRunning) {
       return this.amount;
     }
-    let production = this.amount.times(this.multiplier);
+    let production = this.amount.log10() + this.multiplier.log10();
     if (EternityChallenge(7).isRunning) {
-      production = production.times(Tickspeed.perSecond);
+      production += Tickspeed.perSecond.log10();
     }
     if (this._tier === 1 && !EternityChallenge(7).isRunning) {
-      production = production.pow(getAdjustedGlyphEffect("timeshardpow"));
+      production *= getAdjustedGlyphEffect("timeshardpow");
     }
     return production;
   }
@@ -323,7 +324,7 @@ export const TimeDimensions = {
 
   tick(diff) {
     for (let tier = 8; tier > 1; tier--) {
-      TimeDimension(tier).produceDimensions(TimeDimension(tier - 1), diff / 10);
+      TimeDimension(tier).produceDimensions(TimeDimension(tier - 1), diff.div(10));
     }
 
     if (EternityChallenge(7).isRunning) {
@@ -333,7 +334,7 @@ export const TimeDimensions = {
     }
 
     EternityChallenge(7).reward.applyEffect(production => {
-      InfinityDimension(8).amount = InfinityDimension(8).amount.plus(production.times(diff / 1000));
+      InfinityDimension(8).amount = InfinityDimension(8).amount.plus(production.times(diff.div(1000)));
     });
   }
 };

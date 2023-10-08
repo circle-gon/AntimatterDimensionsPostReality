@@ -1,9 +1,9 @@
 export const DeltaTimeState = {
-  deltaTime: new TimeSpan(0),
+  deltaTime: new DecimalTimeSpan(0),
   unscaledDeltaTime: new TimeSpan(0),
   update(deltaTime, gameDeltaTime) {
     this.unscaledDeltaTime = TimeSpan.fromMilliseconds(deltaTime);
-    this.deltaTime = TimeSpan.fromMilliseconds(gameDeltaTime);
+    this.deltaTime = DecimalTimeSpan.fromMilliseconds(gameDeltaTime);
   }
 };
 
@@ -13,14 +13,19 @@ export const Time = {
    * @returns {TimeSpan}
    */
   fromMilliseconds(getValue) {
-    return TimeSpan.fromMilliseconds(getValue());
+    const v = getValue();
+    if (v instanceof Decimal) {
+      return DecimalTimeSpan.fromMilliseconds(v);
+    } else {
+      return TimeSpan.fromMilliseconds(v);
+    }
   },
   /**
    * @param {TimeSpan} timespan
    * @param {Function} setValue
    */
   toMilliseconds(timespan, setValue) {
-    Guard.isTimeSpan(timespan);
+    Guard.isDecimalOrNotTimeSpan(timespan);
     setValue(timespan.totalMilliseconds);
   },
   /**
@@ -80,8 +85,8 @@ export const Time = {
    */
   get timeSinceBlackHole() {
     return this.fromMilliseconds(() => {
-      const diff = player.records.totalTimePlayed - player.records.timePlayedAtBHUnlock;
-      return Math.max(0, diff);
+      const diff = player.records.totalTimePlayed.sub(player.records.timePlayedAtBHUnlock);
+      return diff.max(0);
     });
   },
 

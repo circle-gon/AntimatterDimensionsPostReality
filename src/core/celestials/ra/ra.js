@@ -1,5 +1,6 @@
 import { BitUpgradeState, GameMechanicState } from "../../game-mechanics";
 import { Quotes } from "../quotes";
+import { DC } from "../../constants"
 
 class RaUnlockState extends BitUpgradeState {
   get bits() { return player.celestials.ra.unlockBits; }
@@ -245,7 +246,7 @@ export const Ra = {
     data.run = false;
     data.charged = new Set();
     data.disCharge = false;
-    data.peakGamespeed = 1;
+    data.peakGamespeed = DC.D1;
     for (const pet of Ra.pets.all) pet.reset();
   },
   memoryTick(realDiff, generateChunks) {

@@ -291,7 +291,7 @@ function updateRealityRecords(realityProps) {
     player.records.bestReality.glyphLevel = realityProps.gainedGlyphLevel.actualLevel;
     player.records.bestReality.glyphLevelSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
   }
-  player.records.bestReality.time = Math.min(player.records.thisReality.time, player.records.bestReality.time);
+  player.records.bestReality.time = player.records.thisReality.time.min(player.records.bestReality.time);
   if (player.records.thisReality.realTime < player.records.bestReality.realTime) {
     player.records.bestReality.realTime = player.records.thisReality.realTime;
     player.records.bestReality.speedSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
@@ -311,7 +311,7 @@ function giveRealityRewards(realityProps) {
   Currency.realities.add(realityAndPPMultiplier);
   Currency.perkPoints.add(realityAndPPMultiplier);
   if (TeresaUnlocks.effarig.canBeApplied) {
-    Currency.relicShards.add(realityProps.gainedShards * multiplier);
+    Currency.relicShards.add(realityProps.gainedShards.mul(multiplier));
   }
   if (multiplier > 1 && Enslaved.boostReality) {
     // Real time amplification is capped at 1 second of reality time; if it's faster then using all time at once would
@@ -327,7 +327,7 @@ function giveRealityRewards(realityProps) {
   if (Teresa.isRunning) {
     const current = Teresa.runRewardMultiplier;
     const newMultiplier = Teresa.rewardMultiplier(player.antimatter);
-    const isHigher = newMultiplier > current;
+    const isHigher = newMultiplier.gt(current);
     const modalText = `You have completed Teresa's Reality! ${isHigher
       ? `Since you gained more Antimatter, you increased your
       Glyph Sacrifice multiplier from ${format(current, 2, 2)} to ${format(newMultiplier, 2, 2)}`
@@ -340,7 +340,7 @@ function giveRealityRewards(realityProps) {
 
       // Encode iM values into the RM variable as e10000 * iM in order to only require one prop
       let machineRecord;
-      if (Currency.imaginaryMachines.value === 0) machineRecord = player.reality.maxRM;
+      if (Currency.imaginaryMachines.value.eq(0)) machineRecord = player.reality.maxRM;
       else machineRecord = DC.E10000.times(Currency.imaginaryMachines.value);
       player.celestials.teresa.lastRepeatedMachines = player.celestials.teresa.lastRepeatedMachines
         .clampMin(machineRecord);
@@ -412,34 +412,34 @@ export function beginProcessReality(realityProps) {
     sampleStats: generatedTypes.map(t => ({
       type: t,
       count: 0,
-      totalSacrifice: 0,
+      totalSacrifice: DC.D0,
       // This is (variance * sample count), which is used to get standard deviation later on and makes the math nicer
-      varProdSacrifice: 0,
+      varProdSacrifice: DC.D0,
     })),
     totalStats: {
       count: 0,
-      totalSacrifice: 0,
-      varProdSacrifice: 0,
+      totalSacrifice: DC.D0,
+      varProdSacrifice: DC.D0,
     },
   };
 
   // Incrementally calculate mean and variance in a way that doesn't require storing a list of entries
   // See https://datagenetics.com/blog/november22017/index.html for derivation
   const addToStats = (stats, value) => {
-    const oldMean = stats.totalSacrifice / stats.count;
-    stats.totalSacrifice += value;
+    const oldMean = stats.totalSacrifice.div(stats.count);
+    stats.totalSacrifice = stats.totalSacrifice.add(value);
     stats.count++;
-    const newMean = stats.totalSacrifice / stats.count;
+    const newMean = stats.totalSacrifice.div(stats.count);
     // Mathematically this is zero on the first iteration, but oldMean is NaN due to division by zero
-    if (stats.count !== 1) stats.varProdSacrifice += (value - oldMean) * (value - newMean);
+    if (stats.count !== 1) stats.varProdSacrifice = stats.varProdSacrifice.add(value.sub(oldMean).mul(value.sub(newMean)));
   };
 
   // Helper function for pulling a random sacrifice value from the sample we gathered
   const sampleFromStats = (stats, glyphsToGenerate) => {
     if (stats.count === 0) return 0;
-    const mean = stats.totalSacrifice / stats.count;
-    const stdev = Math.sqrt(stats.varProdSacrifice / stats.count);
-    return normalDistribution(mean * glyphsToGenerate, stdev * Math.sqrt(glyphsToGenerate));
+    const mean = stats.totalSacrifice.div(stats.count);
+    const stdev = stats.varProdSacrifice.div(stats.count).sqrt();
+    return normalDistributionDecimal(mean.mul(glyphsToGenerate), stdev.mul(Math.sqrt(glyphsToGenerate)));
   };
 
   // The function we run in the Async loop is either the expected "generate and filter all glyphs normally"
@@ -542,27 +542,27 @@ export function beginProcessReality(realityProps) {
             // Incrementing sacrifice totals without regard to glyph type and reassigning the final values in the same
             // ascending order as the starting order makes the code simpler to work with, so we do that
             const generatable = generatedTypes.filter(x => EffarigUnlock.reality.isUnlocked || x !== "effarig");
-            const sacArray = generatable.map(x => player.reality.glyphs.sac[x]).sort((a, b) => a - b);
+            const sacArray = generatable.map(x => player.reality.glyphs.sac[x]).sort(Decimal.sortFn);
             const typeMap = [];
             for (const type of generatable) typeMap.push({ type, value: player.reality.glyphs.sac[type] });
-            const sortedSacTotals = Object.values(typeMap).sort((a, b) => a.value - b.value);
+            const sortedSacTotals = Object.values(typeMap).sort((a, b) => Decimal.sortFn(a.value, b.value));
 
             // Attempt to fill up all the lowest sacrifice totals up to the next highest, stopping early if there isn't
             // enough left to use for filling. The filling process causes the array to progress something like
             // [1,3,4,7,9] => [3,3,4,7,9] => [4,4,4,7,9] => ...
             for (let toFill = 0; toFill < sacArray.length - 1; toFill++) {
               // Calculate how much we need to fully fill
-              let needed = 0;
-              for (let filling = 0; filling <= toFill; filling++) needed += sacArray[toFill + 1] - sacArray[filling];
+              let needed = DC.D0;
+              for (let filling = 0; filling <= toFill; filling++) needed = needed.add(sacArray[toFill + 1]).sub(sacArray[filling]);
 
               // Fill up the lower indices, but only up to a maximum of what we have available
-              const usedToFill = Math.clampMax(needed, totalSac);
-              totalSac -= usedToFill;
-              for (let filling = 0; filling <= toFill; filling++) sacArray[filling] += usedToFill / (toFill + 1);
-              if (totalSac === 0) break;
+              const usedToFill = needed.min(totalSac);
+              totalSac = totalSac.sub(usedToFill);
+              for (let filling = 0; filling <= toFill; filling++) sacArray[filling] = sacArray[filling].add(usedToFill.div(toFill + 1));
+              if (totalSac.eq(0)) break;
             }
             // We have some left over, fill all of them equally
-            for (let fill = 0; fill < sacArray.length; fill++) sacArray[fill] += totalSac / sacArray.length;
+            for (let fill = 0; fill < sacArray.length; fill++) sacArray[fill] = sacArray[fill].add(totalSac.div(sacArray.length));
 
             // Assign the values in increasing order as specified by the original sacrifice totals
             for (let index = 0; index < sacArray.length; index++) {
@@ -622,10 +622,10 @@ export function finishProcessReality(realityProps) {
 
   Currency.infinities.reset();
   Currency.infinitiesBanked.reset();
-  player.records.bestInfinity.time = 999999999999;
-  player.records.bestInfinity.realTime = 999999999999;
-  player.records.thisInfinity.time = 0;
-  player.records.thisInfinity.lastBuyTime = 0;
+  player.records.bestInfinity.time = Decimal.MAX_LIMIT;
+  player.records.bestInfinity.realTime = Number.MAX_VALUE;
+  player.records.thisInfinity.time = DC.D0;
+  player.records.thisInfinity.lastBuyTime = DC.D0;
   player.records.thisInfinity.realTime = 0;
   player.dimensionBoosts = 0;
   player.galaxies = 0;
@@ -642,10 +642,10 @@ export function finishProcessReality(realityProps) {
   // This has to be reset before Currency.eternities to make the bumpLimit logic work correctly
   EternityUpgrade.epMult.reset();
   if (!PelleUpgrade.eternitiesNoReset.canBeApplied) Currency.eternities.reset();
-  player.records.thisEternity.time = 0;
+  player.records.thisEternity.time = DC.D0;
   player.records.thisEternity.realTime = 0;
-  player.records.bestEternity.time = 999999999999;
-  player.records.bestEternity.realTime = 999999999999;
+  player.records.bestEternity.time = Decimal.MAX_LIMIT;
+  player.records.bestEternity.realTime = Number.MAX_VALUE;
   if (!PelleUpgrade.keepEternityUpgrades.canBeApplied) player.eternityUpgrades.clear();
   player.totalTickGained = 0;
   if (!PelleUpgrade.keepEternityChallenges.canBeApplied) player.eternityChalls = {};
@@ -663,7 +663,7 @@ export function finishProcessReality(realityProps) {
   } else {
     Player.resetRequirements("reality");
   }
-  player.records.thisReality.time = 0;
+  player.records.thisReality.time = DC.D0;
   player.records.thisReality.realTime = 0;
   player.records.thisReality.maxReplicanti = DC.D0;
   if (!PelleUpgrade.timeStudiesNoReset.canBeApplied) Currency.timeTheorems.reset();
@@ -707,7 +707,7 @@ export function finishProcessReality(realityProps) {
   resetChallengeStuff();
   AntimatterDimensions.reset();
   secondSoftReset(false);
-  player.celestials.ra.peakGamespeed = 1;
+  player.celestials.ra.peakGamespeed = DC.D1;
 
   InfinityDimensions.resetAmount();
   player.records.thisInfinity.bestIPmin = DC.D0;
@@ -717,8 +717,8 @@ export function finishProcessReality(realityProps) {
   player.records.thisEternity.bestIPMsWithoutMaxAll = DC.D0;
   player.records.bestEternity.bestEPminReality = DC.D0;
   player.records.thisReality.bestEternitiesPerMs = DC.D0;
-  player.records.thisReality.bestRSmin = 0;
-  player.records.thisReality.bestRSminVal = 0;
+  player.records.thisReality.bestRSmin = DC.D0;
+  player.records.thisReality.bestRSminVal = DC.D0;
   resetTimeDimensions();
   resetTickspeed();
   AchievementTimers.marathon2.reset();
@@ -839,5 +839,5 @@ function lockAchievementsOnReality() {
   for (const achievement of Achievements.preReality) {
     achievement.lock();
   }
-  player.reality.achTimer = 0;
+  player.reality.achTimer = DC.D0;
 }

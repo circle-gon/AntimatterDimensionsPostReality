@@ -2,9 +2,9 @@ import { DC } from "../../../constants";
 
 const thisInfinityMult = thisInfinity => {
   // All "this inf time" or "best inf time" mults are * 10
-  const scaledInfinity = thisInfinity * 10 + 1;
-  const cappedInfinity = Math.min(Math.pow(scaledInfinity, 0.125), 500);
-  return DC.D15.pow(Math.log(scaledInfinity) * cappedInfinity);
+  const scaledInfinity = thisInfinity.mul(10).add(1);
+  const cappedInfinity = scaledInfinity.pow(0.125).min(500);
+  return DC.D15.pow(cappedInfinity.mul(scaledInfinity.log(Math.E)));
 };
 const passiveIPMult = () => {
   const isEffarigLimited = Effarig.isRunning && Effarig.currentStage === EFFARIG_STAGES.ETERNITY;
@@ -185,7 +185,7 @@ export const normalTimeStudies = [
     requirement: [72],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     description: "Dimension Boosts affect Infinity Dimensions",
-    effect: () => DC.D1_0000109.pow(Math.pow(DimBoost.totalBoosts, 2)),
+    effect: () => DC.D1_0000109.pow(Math.min(Math.pow(DimBoost.totalBoosts, 2), Number.MAX_VALUE)),
     cap: DC.E1E7,
     formatEffect: value => formatX(value, 2, 1)
   },
@@ -205,7 +205,7 @@ export const normalTimeStudies = [
     requirement: [81],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     description: "Antimatter Dimension multiplier based on time spent in this Eternity",
-    effect: () => Decimal.pow10(Math.min(Time.thisEternity.totalMinutes, 20) * 15),
+    effect: () => DC.E1.pow(Time.thisEternity.totalMinutes.min(20).mul(15)),
     cap: DC.E300,
     formatEffect: value => formatX(value, 2, 1)
   },
@@ -215,7 +215,7 @@ export const normalTimeStudies = [
     requirement: [82],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     description: "Infinity Dimension multiplier based on fastest Eternity time",
-    effect: () => DC.D2.pow(60 / Math.max(Time.bestEternity.totalSeconds, 2)),
+    effect: () => DC.D2.pow(Decimal.div(60, Time.bestEternity.totalSeconds.max(2))),
     cap: DC.C2P30,
     formatEffect: value => formatX(value, 2, 1)
   },
@@ -303,9 +303,9 @@ export const normalTimeStudies = [
     requiresST: [121, 122],
     description: "You gain more Eternity Points based on time spent this Eternity",
     effect: () => {
-      const perkEffect = TimeSpan.fromMinutes(Perk.studyIdleEP.effectOrDefault(0));
+      const perkEffect = DecimalTimeSpan.fromMinutes(Perk.studyIdleEP.effectOrDefault(0));
       const totalSeconds = Time.thisEternity.plus(perkEffect).totalSeconds;
-      return Math.sqrt(1.39 * totalSeconds);
+      return totalSeconds.mul(1.39).sqrt();
     },
     formatEffect: value => formatX(value, 1, 1)
   },
@@ -381,7 +381,7 @@ export const normalTimeStudies = [
     requiresST: [141, 142],
     description: "Multiplier to Infinity Points, which increases over this Infinity",
     effect: () => {
-      const perkEffect = TimeSpan.fromMinutes(Perk.studyIdleEP.effectOrDefault(0));
+      const perkEffect = DecimalTimeSpan.fromMinutes(Perk.studyIdleEP.effectOrDefault(0));
       const totalSeconds = Time.thisInfinity.plus(perkEffect).totalSeconds;
       return thisInfinityMult(totalSeconds);
     },
@@ -430,7 +430,7 @@ export const normalTimeStudies = [
       () => EternityChallenge(3).completions > 0 || Perk.bypassEC3Lock.isBought],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     description: () => `You gain ${formatPercents(0.01)} of your Infinity Points gained on crunch each second`,
-    effect: () => gainedInfinityPoints().times(Time.deltaTime / 100)
+    effect: () => gainedInfinityPoints().times(Time.deltaTime.div(100))
       .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige)
   },
   {
@@ -584,7 +584,7 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     requiresST: [228],
     description: "Dimensional Sacrifice affects 4th Time Dimension with reduced effect",
-    effect: () => Math.max(Math.pow(Sacrifice.totalBoost.pLog10(), 10), 1),
+    effect: () => Decimal.pow(Sacrifice.totalBoost.pLog10(), 10).max(1),
     formatEffect: value => formatX(value, 2, 2)
   },
   {

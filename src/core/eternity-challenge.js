@@ -209,7 +209,7 @@ export class EternityChallengeState extends GameMechanicState {
     if (Player.canEternity) eternity(false, auto, { enteringEC: true });
     player.challenge.eternity.current = this.id;
     if (this.id === 12) {
-      if (enteringGamespeed < 0.001) SecretAchievement(42).unlock();
+      if (enteringGamespeed.lt(0.001)) SecretAchievement(42).unlock();
       player.requirementChecks.reality.slowestBH = 1;
     }
     if (Enslaved.isRunning) {
@@ -367,7 +367,7 @@ export const EternityChallenges = {
         Perk.autocompleteEC2,
         Perk.autocompleteEC3
       );
-      minutes /= VUnlocks.fastAutoEC.effectOrDefault(1);
+      minutes /= VUnlocks.fastAutoEC.effectOrDefault(DC.D1).toNumber();
       return TimeSpan.fromMinutes(minutes).totalMilliseconds;
     }
   }

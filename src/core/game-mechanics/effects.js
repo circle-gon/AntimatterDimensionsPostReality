@@ -10,6 +10,17 @@ export const Effects = {
   },
   /**
    * @param effectSources
+   * @returns {Number}
+   */
+  log10Sum(...effectSources) {
+    let result = 0;
+    applyEffectsOf(effectSources, v => {
+      result += v instanceof Decimal ? v.log10() : Math.log10(v);
+    });
+    return result;
+  },
+  /**
+   * @param effectSources
    * @return {Number}
    */
   product(...effectSources) {

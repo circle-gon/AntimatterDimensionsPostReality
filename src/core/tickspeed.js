@@ -215,8 +215,8 @@ export const FreeTickspeed = {
   fromShards(shards) {
     const tickmult = (1 + (Effects.min(1.33, TimeStudy(171)) - 1) *
       Math.max(getAdjustedGlyphEffect("cursedtickspeed"), 1));
-    const logTickmult = Math.log(tickmult);
-    const logShards = shards.ln();
+    const logTickmult = Math.log10(tickmult);
+    const logShards = shards.log10();
     const uncapped = Math.max(0, logShards / logTickmult);
     if (uncapped <= FreeTickspeed.softcap) {
       this.multToNext = tickmult;
@@ -227,24 +227,24 @@ export const FreeTickspeed = {
     }
     // Log of (cost - cost up to softcap)
     const priceToCap = FreeTickspeed.softcap * logTickmult;
-    // In the following we're implicitly applying the function (ln(x) - priceToCap) / logTickmult to all costs,
+    // In the following we're implicitly applying the function (log10(x) - priceToCap) / logTickmult to all costs,
     // so, for example, if the cost is 1 that means it's actually exp(priceToCap) * tickmult.
-    const desiredCost = (logShards - priceToCap) / logTickmult;
+    const desiredCost = Decimal.div(logShards - priceToCap, logTickmult);
     const costFormulaCoefficient = FreeTickspeed.GROWTH_RATE / FreeTickspeed.GROWTH_EXP / logTickmult;
     // In the following we're implicitly subtracting softcap from bought,
     // so, for example, if bought is 1 that means it's actually softcap + 1.
     // The first term (the big one) is the asymptotically more important term (since FreeTickspeed.GROWTH_EXP > 1),
     // but is small initially. The second term allows us to continue the pre-cap free tickspeed upgrade scaling
     // of tickmult per upgrade.
-    const boughtToCost = bought => costFormulaCoefficient * Math.pow(
-      Math.max(bought, 0), FreeTickspeed.GROWTH_EXP) + bought;
-    const derivativeOfBoughtToCost = x => FreeTickspeed.GROWTH_EXP * costFormulaCoefficient * Math.pow(
-      Math.max(x, 0), FreeTickspeed.GROWTH_EXP - 1) + 1;
-    const newtonsMethod = bought => bought - (boughtToCost(bought) - desiredCost) / derivativeOfBoughtToCost(bought);
+    const boughtToCost = bought => Decimal.pow(
+      Math.max(bought, 0), FreeTickspeed.GROWTH_EXP).mul(costFormulaCoefficient).add(bought);
+    const derivativeOfBoughtToCost = x => Decimal.pow(
+      Math.max(x, 0), FreeTickspeed.GROWTH_EXP - 1).mul(FreeTickspeed.GROWTH_EXP).mul(costFormulaCoefficient).add(1);
+    const newtonsMethod = bought => bought - boughtToCost(bought).sub(desiredCost).div(derivativeOfBoughtToCost(bought)).toNumber();
     let oldApproximation;
     let approximation = Math.min(
-      desiredCost,
-      Math.pow(desiredCost / costFormulaCoefficient, 1 / FreeTickspeed.GROWTH_EXP)
+      desiredCost.toNumber(),
+      desiredCost.div(costFormulaCoefficient).pow(1 / FreeTickspeed.GROWTH_EXP).toNumber()
     );
     let counter = 0;
     // The bought formula is concave upwards. We start with an over-estimate; when using newton's method,
@@ -257,8 +257,23 @@ export const FreeTickspeed = {
     const purchases = Math.floor(approximation);
     // This undoes the function we're implicitly applying to costs (the "+ 1") is because we want
     // the cost of the next upgrade.
-    const next = Decimal.exp(priceToCap + boughtToCost(purchases + 1) * logTickmult);
-    this.multToNext = Decimal.exp((boughtToCost(purchases + 1) - boughtToCost(purchases)) * logTickmult);
+    // the .min here is technically not nessecary because of how the cost function works
+    const next = DC.E1.pow(
+      boughtToCost(purchases + 1)
+        .mul(logTickmult)
+        .add(priceToCap)
+        .min(Number.MAX_VALUE)
+    );
+
+    const toIncrement = Math.max(purchases * MAX_TOLERANCE, 1)
+
+    this.multToNext = DC.E1.pow(
+      boughtToCost(purchases + toIncrement)
+        .sub(boughtToCost(purchases))
+        .mul(logTickmult)
+        .div(toIncrement)
+        .min(Number.MAX_VALUE)
+    );
     return {
       newAmount: purchases + FreeTickspeed.softcap,
       nextShards: next,

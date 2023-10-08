@@ -20,16 +20,16 @@ export default {
     hasAutoRelease: false,
     isRunning: false,
     completed: false,
-    storedBlackHole: 0,
+    storedBlackHole: new Decimal(0),
     storedReal: 0,
     storedRealEffiency: 0,
     storedRealCap: 0,
     autoRelease: false,
-    autoReleaseSpeed: 0,
+    autoReleaseSpeed: new Decimal(0),
     unlocks: [],
     buyableUnlocks: [],
     quote: "",
-    currentSpeedUp: 0,
+    currentSpeedUp: new Decimal(0),
     hintsUnlocked: false,
     canModifyGameTimeStorage: false,
     canChangeStoreTime: false,
@@ -133,7 +133,7 @@ export default {
       this.buyableUnlocks = Object.values(ENSLAVED_UNLOCKS).map(x => Enslaved.canBuy(x));
       this.quote = Enslaved.quote;
       this.autoRelease = player.celestials.enslaved.isAutoReleasing;
-      this.autoReleaseSpeed = Enslaved.isAutoReleasing ? Enslaved.autoReleaseSpeed : 0;
+      this.autoReleaseSpeed = Enslaved.isAutoReleasing ? Enslaved.autoReleaseSpeed : new Decimal(0);
       this.currentSpeedUp = Enslaved.currentBlackHoleStoreAmountPerMs;
       this.hintsUnlocked = EnslavedProgress.hintsUnlocked.hasProgress;
       this.canModifyGameTimeStorage = Enslaved.canModifyGameTimeStorage;
@@ -141,7 +141,7 @@ export default {
       this.canChangeStoreRealTime = Enslaved.canModifyRealTimeStorage;
       this.canDischarge = Enslaved.canRelease(false);
       this.canAutoRelease = Enslaved.canRelease(true);
-      this.hasNoCharge = player.celestials.enslaved.stored === 0;
+      this.hasNoCharge = player.celestials.enslaved.stored.eq(0);
       this.hasReachedCurrentCap = this.storedReal === this.storedRealCap;
     },
     toggleStoreBlackHole() {
@@ -158,10 +158,10 @@ export default {
       Enslaved.useStoredTime(false);
     },
     timeDisplayShort(ms) {
-      return timeDisplayShort(ms);
+      return decimalTimeDisplayShort(ms);
     },
     timeUntilBuy(price) {
-      return Math.max((price - this.storedBlackHole) / this.currentSpeedUp, 0);
+      return Decimal.sub(price, this.storedBlackHole).div(this.currentSpeedUp).max(0);
     },
     buyUnlock(info) {
       Enslaved.buyUnlock(info);
@@ -336,7 +336,7 @@ export default {
             <div v-if="!hasUnlock(unlock)">
               Costs: {{ timeDisplayShort(unlock.price) }}
             </div>
-            <span v-if="isStoringBlackHole && !hasUnlock(unlock) && timeUntilBuy(unlock.price) > 0">
+            <span v-if="isStoringBlackHole && !hasUnlock(unlock) && timeUntilBuy(unlock.price).gt(0)">
               Time to obtain: {{ timeDisplayShort(timeUntilBuy(unlock.price)) }}
             </span>
           </button>

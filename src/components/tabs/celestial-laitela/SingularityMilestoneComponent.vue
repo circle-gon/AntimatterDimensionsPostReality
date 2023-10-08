@@ -16,7 +16,7 @@ export default {
   data: () => ({
     isMaxed: false,
     progressToNext: "",
-    remainingSingularities: 0,
+    remainingSingularities: new Decimal(0),
     description: "",
     effectDisplay: "",
     isUnique: false,
@@ -25,12 +25,13 @@ export default {
     completions: 0,
     limit: 0,
     milestoneMode: false,
-    singularitiesPerCondense: 0,
+    singularitiesPerCondense: new Decimal(0),
     baseCondenseTime: 0,
     currentCondenseTime: 0,
     autoCondenseDelay: 0,
-    lastCheckedMilestones: 0,
+    lastCheckedMilestones: new Decimal(0),
     autoSingActive: false,
+    isMetro: false
   }),
   computed: {
     // The bar is a mask that inverts colors for any element with a lower z-index (including text).
@@ -51,7 +52,7 @@ export default {
       return {
         "c-laitela-milestone": true,
         "o-laitela-milestone--glow": !this.suppressGlow &&
-          this.milestone.previousGoal > this.lastCheckedMilestones
+          this.milestone.previousGoal.gt(this.lastCheckedMilestones)
       };
     },
     upgradeDirectionIcon() {
@@ -70,7 +71,7 @@ export default {
       return `${formatInt(this.completions)}/${maxStr} ${pluralize("completion", this.completions)}`;
     },
     progressDisplay() {
-      const condenseCount = this.remainingSingularities / this.singularitiesPerCondense;
+      const condenseCount = this.remainingSingularities.div(this.singularitiesPerCondense);
       let thisSingularityTime, extraTime, timeText;
       switch (this.milestoneMode) {
         case SINGULARITY_MILESTONE_RESOURCE.SINGULARITIES:
@@ -79,11 +80,11 @@ export default {
           return `Condense ${quantify("time", condenseCount, 2, 2)}`;
         case SINGULARITY_MILESTONE_RESOURCE.MANUAL_TIME:
           thisSingularityTime = Math.clampMin(0, this.currentCondenseTime);
-          extraTime = Math.ceil(condenseCount - 1) * this.baseCondenseTime;
+          extraTime = condenseCount.sub(1).ceil().mul(this.baseCondenseTime).toNumber();
           return `In ${TimeSpan.fromSeconds(thisSingularityTime + extraTime).toStringShort()} (manual)`;
         case SINGULARITY_MILESTONE_RESOURCE.AUTO_TIME:
           thisSingularityTime = Math.clampMin(0, this.currentCondenseTime + this.autoCondenseDelay);
-          extraTime = Math.ceil(condenseCount - 1) * (this.baseCondenseTime + this.autoCondenseDelay);
+          extraTime = condenseCount.sub(1).ceil().mul(this.baseCondenseTime + this.autoCondenseDelay).toNumber();
           timeText = `In ${TimeSpan.fromSeconds(thisSingularityTime + extraTime).toStringShort()}`;
           return this.autoSingActive ? timeText : `Auto-Singularity is OFF`;
         default:
@@ -109,7 +110,7 @@ export default {
       this.baseCondenseTime = Singularity.timePerCondense;
       this.currentCondenseTime = Singularity.timeUntilCap;
       this.autoCondenseDelay = Singularity.timeDelayFromAuto;
-      this.lastCheckedMilestones = player.celestials.laitela.lastCheckedMilestones;
+      this.lastCheckedMilestones.copyFrom(player.celestials.laitela.lastCheckedMilestones);
       this.isMetro = Theme.current().isMetro;
     },
   }

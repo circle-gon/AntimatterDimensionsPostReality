@@ -18,7 +18,13 @@ window.formatInt = function formatInt(value) {
   if (Notations.current.isPainful && Notations.current.name !== "Standard") {
     return format(value, 2);
   }
-  return formatWithCommas(typeof value === "number" ? value.toFixed(0) : value.toNumber().toFixed(0));
+
+  const num = typeof value === "number" ? value : value.toNumber();
+  if (num <= 1e12) {
+    return formatWithCommas(num.toFixed(0));
+  } else {
+    return format(num, 2)
+  }
 };
 
 window.formatFloat = function formatFloat(value, digits) {
@@ -99,6 +105,10 @@ window.timeDisplayNoDecimals = function timeDisplayNoDecimals(ms) {
 
 window.timeDisplayShort = function timeDisplayShort(ms) {
   return TimeSpan.fromMilliseconds(ms).toStringShort();
+};
+
+window.decimalTimeDisplayShort = function timeDisplayShort(ms) {
+  return DecimalTimeSpan.fromMilliseconds(ms).toStringShort();
 };
 
 const commaRegexp = /\B(?=(\d{3})+(?!\d))/gu;

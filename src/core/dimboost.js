@@ -96,8 +96,8 @@ export class DimBoost {
     return this.bulkRequirement(1);
   }
 
-  static bulkRequirement(bulk) {
-    const targetResets = DimBoost.purchasedBoosts + bulk;
+  static bulkRequirement(bulk, isTotal = false) {
+    const targetResets = isTotal ? bulk : DimBoost.purchasedBoosts + bulk;
     const tier = Math.min(targetResets + 3, this.maxDimensionsUnlockable);
     let amount = 20;
     const discount = Effects.sum(
@@ -235,29 +235,30 @@ function maxBuyDimBoosts() {
     if (DimBoost.requirement.isSatisfied) softReset(1);
     return;
   }
-  const req1 = DimBoost.bulkRequirement(1);
-  if (!req1.isSatisfied) return;
-  const req2 = DimBoost.bulkRequirement(2);
-  if (!req2.isSatisfied) {
+
+  const toIncrement = Math.floor(player.dimensionBoosts * MAX_TOL) + 1
+
+  const req1 = DimBoost.bulkRequirement(toIncrement);
+  if (!req1.isSatisfied && toIncrement === 1) return;
+  const req2 = DimBoost.bulkRequirement(toIncrement * 2);
+  if (!req2.isSatisfied && toIncrement === 1) {
     softReset(1);
     return;
   }
-  // Linearly extrapolate dimboost costs. req1 = a * 1 + b, req2 = a * 2 + b
-  // so a = req2 - req1, b = req1 - a = 2 req1 - req2, num = (dims - b) / a
-  const increase = req2.amount - req1.amount;
+  // Linearly extrapolate dimboost costs. req1 = a * x + b, req2 = a * 2x + b
+  // so a = (req2 - req1)/x, b = req1 - a*x = 2 req1 - req2, num = (dims - b) / a
+  const increase = (req2.amount - req1.amount) / toIncrement;
   const dim = AntimatterDimension(req1.tier);
   let maxBoosts = Math.min(Number.MAX_VALUE,
-    1 + Math.floor((dim.totalAmount.toNumber() - req1.amount) / increase));
+    toIncrement + Math.floor((dim.totalAmount.toNumber() - req1.amount) / increase));
   if (DimBoost.bulkRequirement(maxBoosts).isSatisfied) {
     softReset(maxBoosts);
     return;
   }
   // But in case of EC5 it's not, so do binary search for appropriate boost amount
-  let minBoosts = 2;
-  while (maxBoosts !== minBoosts + 1) {
-    const middle = Math.floor((maxBoosts + minBoosts) / 2);
-    if (DimBoost.bulkRequirement(middle).isSatisfied) minBoosts = middle;
-    else maxBoosts = middle;
-  }
-  softReset(minBoosts);
+  const toBuyBoosts = bulkBuyBinarySearch(dim.totalAmount, {
+    costFunction: boosts => DimBoosts.bulkRequirement(boosts, true).amount,
+    cumulative: false
+  }, player.dimensionBoosts)
+  if (toBuyBoosts !== null) softReset(toBuyBoosts.quantity);
 }

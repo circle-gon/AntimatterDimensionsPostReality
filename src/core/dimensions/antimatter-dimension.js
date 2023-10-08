@@ -4,17 +4,19 @@ import { DimensionState } from "./dimension";
 
 // Multiplier applied to all Antimatter Dimensions, regardless of tier. This is cached using a Lazy
 // and invalidated every update.
-export function antimatterDimensionCommonMultiplier() {
-  let multiplier = DC.D1;
 
-  multiplier = multiplier.times(Achievements.power);
-  multiplier = multiplier.times(ShopPurchase.dimPurchases.currentMult);
-  multiplier = multiplier.times(ShopPurchase.allDimPurchases.currentMult);
+// break_infinity.js wraps ee309 to 0
+export function antimatterDimensionCommonMultiplier() {
+  let multiplier = 0;
+
+  multiplier += Achievements.power.log10();
+  multiplier += ShopPurchase.dimPurchases.currentMult.log10();
+  multiplier += ShopPurchase.allDimPurchases.currentMult.log10();
 
   if (!EternityChallenge(9).isRunning) {
-    multiplier = multiplier.times(Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate).max(1));
+    multiplier += InfinityDimensions.ADMultiplier.log10();
   }
-  multiplier = multiplier.timesEffectsOf(
+  multiplier += Effects.log10Sum(
     BreakInfinityUpgrade.totalAMMult,
     BreakInfinityUpgrade.currentAMMult,
     BreakInfinityUpgrade.achievementMult,
@@ -43,53 +45,51 @@ export function antimatterDimensionCommonMultiplier() {
     PelleUpgrade.antimatterDimensionMult
   );
 
-  multiplier = multiplier.dividedByEffectOf(InfinityChallenge(6));
-  multiplier = multiplier.times(getAdjustedGlyphEffect("powermult"));
-  multiplier = multiplier.times(Currency.realityMachines.value.powEffectOf(AlchemyResource.force));
+  multiplier -= Effects.log10Sum(InfinityChallenge(6));
+  multiplier += getAdjustedGlyphEffect("powermult").log10();
+  multiplier += Currency.realityMachines.value.log10() * Effects.product(AlchemyResource.force);
 
-  if (Pelle.isDoomed) multiplier = multiplier.dividedBy(10);
+  if (Pelle.isDoomed) multiplier -= 1;
 
-  return multiplier;
+  return powAndCap(multiplier);
 }
 
 export function getDimensionFinalMultiplierUncached(tier) {
   if (tier < 1 || tier > 8) throw new Error(`Invalid Antimatter Dimension tier ${tier}`);
   if (NormalChallenge(10).isRunning && tier > 6) return DC.D1;
   if (EternityChallenge(11).isRunning) {
-    return Currency.infinityPower.value.pow(
-      InfinityDimensions.powerConversionRate
-    ).max(1).times(DimBoost.multiplierToNDTier(tier));
+    return powAndCap(InfinityDimensions.ADMultiplier.log10() + DimBoost.multiplierToNDTier(tier).log10())
   }
 
-  let multiplier = DC.D1;
+  let multiplier = 0;
 
   multiplier = applyNDMultipliers(multiplier, tier);
   multiplier = applyNDPowers(multiplier, tier);
 
   const glyphDilationPowMultiplier = getAdjustedGlyphEffect("dilationpow");
   if (player.dilation.active || PelleStrikes.dilation.hasStrike) {
-    multiplier = dilatedValueOf(multiplier.pow(glyphDilationPowMultiplier));
+    multiplier = dilatedValueOf(powAndCap(multiplier * glyphDilationPowMultiplier)).log10();
   } else if (Enslaved.isRunning) {
-    multiplier = dilatedValueOf(multiplier);
+    multiplier = dilatedValueOf(powAndCap(multiplier)).log10();
   }
-  multiplier = multiplier.timesEffectOf(DilationUpgrade.ndMultDT);
+  multiplier += Effects.log10Sum(DilationUpgrade.ndMultDT);
 
   if (Effarig.isRunning) {
-    multiplier = Effarig.multiplier(multiplier);
+    multiplier = Effarig.multiplier(powAndCap(multiplier)).log10();
   } else if (V.isRunning) {
-    multiplier = multiplier.pow(0.5);
+    multiplier *= 0.5;
   }
 
   // This power effect goes intentionally after all the nerf effects and shouldn't be moved before them
-  if (AlchemyResource.inflation.isUnlocked && multiplier.gte(AlchemyResource.inflation.effectValue)) {
-    multiplier = multiplier.pow(1.05);
+  if (AlchemyResource.inflation.isUnlocked && multiplier >= AlchemyResource.inflation.effectValue.log10()) {
+    multiplier *= 1.05;
   }
 
-  return multiplier;
+  return powAndCap(multiplier);
 }
 
 function applyNDMultipliers(mult, tier) {
-  let multiplier = mult.times(GameCache.antimatterDimensionCommonMultiplier.value);
+  let multiplier = mult + GameCache.antimatterDimensionCommonMultiplier.value.log10();
 
   let buy10Value;
   if (Laitela.continuumActive) {
@@ -98,19 +98,18 @@ function applyNDMultipliers(mult, tier) {
     buy10Value = Math.floor(AntimatterDimension(tier).bought / 10);
   }
 
-  multiplier = multiplier.times(Decimal.pow(AntimatterDimensions.buyTenMultiplier, buy10Value));
-  multiplier = multiplier.times(DimBoost.multiplierToNDTier(tier));
+  multiplier += buy10Value * AntimatterDimensions.buyTenMultiplier.log10();
+  multiplier += DimBoost.multiplierToNDTier(tier).log10();
 
-  let infinitiedMult = DC.D1.timesEffectsOf(
+  let infinitiedMult = Effects.log10Sum(
     AntimatterDimension(tier).infinityUpgrade,
     BreakInfinityUpgrade.infinitiedMult
   );
-  infinitiedMult = infinitiedMult.pow(TimeStudy(31).effectOrDefault(1));
-  multiplier = multiplier.times(infinitiedMult);
+  infinitiedMult *= TimeStudy(31).effectOrDefault(1);
+  multiplier += infinitiedMult;
 
   if (tier === 1) {
-    multiplier = multiplier
-      .timesEffectsOf(
+    multiplier += Effects.log10Sum(
         InfinityUpgrade.unspentIPMult,
         InfinityUpgrade.unspentIPMult.chargedEffect,
         Achievement(28),
@@ -121,10 +120,10 @@ function applyNDMultipliers(mult, tier) {
       );
   }
   if (tier === 8) {
-    multiplier = multiplier.times(Sacrifice.totalBoost);
+    multiplier += Sacrifice.totalBoost.log10();
   }
 
-  multiplier = multiplier.timesEffectsOf(
+  multiplier += Effects.log10Sum(
     tier === 8 ? Achievement(23) : null,
     tier < 8 ? Achievement(34) : null,
     tier <= 4 ? Achievement(64) : null,
@@ -133,10 +132,10 @@ function applyNDMultipliers(mult, tier) {
     tier > 1 && tier < 8 ? InfinityChallenge(8).reward : null
   );
   if (Achievement(43).isUnlocked) {
-    multiplier = multiplier.times(1 + tier / 100);
+    multiplier += Math.log10(1 + tier / 100);
   }
 
-  multiplier = multiplier.clampMin(1);
+  multiplier = Math.max(multiplier, 0);
 
   return multiplier;
 }
@@ -147,30 +146,30 @@ function applyNDPowers(mult, tier) {
   const glyphEffarigPowMultiplier = getAdjustedGlyphEffect("effarigdimensions");
 
   if (InfinityChallenge(4).isRunning && player.postC4Tier !== tier) {
-    multiplier = multiplier.pow(InfinityChallenge(4).effectValue);
+    multiplier *= InfinityChallenge(4).effectValue;
   }
   if (InfinityChallenge(4).isCompleted) {
-    multiplier = multiplier.pow(InfinityChallenge(4).reward.effectValue);
+    multiplier *= InfinityChallenge(4).reward.effectValue;
   }
 
-  multiplier = multiplier.pow(glyphPowMultiplier * glyphEffarigPowMultiplier * Ra.momentumValue);
+  multiplier *= glyphPowMultiplier * glyphEffarigPowMultiplier * Ra.momentumValue;
 
-  multiplier = multiplier
-    .powEffectsOf(
+  multiplier *= Effects.product(
       AntimatterDimension(tier).infinityUpgrade.chargedEffect,
       InfinityUpgrade.totalTimeMult.chargedEffect,
       InfinityUpgrade.thisInfinityTimeMult.chargedEffect,
       AlchemyResource.power,
-      Achievement(183),
-      PelleRifts.paradox
+      Achievement(183)
     );
 
-  multiplier = multiplier.pow(getAdjustedGlyphEffect("curseddimensions"));
+  multiplier *= PelleRifts.paradox.effectValue.toNumber()
 
-  multiplier = multiplier.pow(VUnlocks.adPow.effectOrDefault(1));
+  multiplier *= getAdjustedGlyphEffect("curseddimensions");
+
+  multiplier *= VUnlocks.adPow.effectOrDefault(1);
 
   if (PelleStrikes.infinity.hasStrike) {
-    multiplier = multiplier.pow(0.5);
+    multiplier *= 0.5;
   }
 
 
@@ -579,27 +578,37 @@ class AntimatterDimensionState extends DimensionState {
   get productionPerSecond() {
     const tier = this.tier;
     if (Laitela.isRunning && tier > Laitela.maxAllowedDimension) return DC.D0;
-    let amount = this.totalAmount;
+    let amount = this.totalAmount.log10();
     if (NormalChallenge(12).isRunning) {
-      if (tier === 2) amount = amount.pow(1.6);
-      if (tier === 4) amount = amount.pow(1.4);
-      if (tier === 6) amount = amount.pow(1.2);
+      if (tier === 2) amount *= 1.6;
+      if (tier === 4) amount *= 1.4;
+      if (tier === 6) amount *= 1.2;
     }
-    let production = amount.times(this.multiplier).times(Tickspeed.perSecond);
+    let production = amount + this.multiplier.log10() + Tickspeed.perSecond.log10();
     if (NormalChallenge(2).isRunning) {
-      production = production.times(player.chall2Pow);
+      production += Math.log10(player.chall2Pow);
     }
     if (tier === 1) {
       if (NormalChallenge(3).isRunning) {
-        production = production.times(player.chall3Pow);
+        production += Math.log10(player.chall3Pow);
       }
-      if (production.gt(10)) {
-        const log10 = production.log10();
-        production = Decimal.pow10(Math.pow(log10, getAdjustedGlyphEffect("effarigantimatter")));
+      if (production > 1) {
+        production **= getAdjustedGlyphEffect("effarigantimatter");
       }
     }
-    production = production.min(this.cappedProductionInNormalChallenges);
-    return production;
+    production = Math.min(production, this.cappedProductionInNormalChallenges.log10());
+    return powAndCap(production);
+  }
+
+  // override standard so it doesn't go above Infinity limit
+
+  productionForDiff(diff) {
+    return this.productionPerSecond.times(diff.div(1000)).min(this.cappedProductionInNormalChallenges);
+  }
+
+  produceCurrency(currency, diff) {
+    currency.add(this.productionForDiff(diff))
+    currency.dropTo(this.cappedProductionInNormalChallenges);
   }
 }
 
@@ -661,7 +670,7 @@ export const AntimatterDimensions = {
       nextTierOffset++;
     }
     for (let tier = maxTierProduced; tier >= 1; --tier) {
-      AntimatterDimension(tier + nextTierOffset).produceDimensions(AntimatterDimension(tier), diff / 10);
+      AntimatterDimension(tier + nextTierOffset).produceDimensions(AntimatterDimension(tier), diff.div(10));
     }
     if (AntimatterDimension(1).amount.gt(0)) {
       player.requirementChecks.eternity.noAD1 = false;

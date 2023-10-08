@@ -64,6 +64,12 @@ Decimal.maxReducer = function(a, b) {
   return Decimal.max(a, b);
 };
 
+Decimal.sortFn = function(a, b) {
+  if (a.gt(b)) return 1
+  if (a.eq(b)) return 0
+  return -1
+}
+
 Decimal.prototype.copyFrom = function(decimal) {
   if (!(decimal instanceof Decimal) && !(decimal instanceof DecimalCurrency)) {
     throw "Copy value is not Decimal or DecimalCurrency";
@@ -178,6 +184,11 @@ Array.prototype.sum = function() {
   return this.reduce(Number.sumReducer);
 };
 
+Array.prototype.sumDecimal = function() {
+  if (this.length === 0) return new Decimal(0);
+  return this.reduce(Decimal.sumReducer);
+}
+
 /**
  * @returns {number}
  */
@@ -186,12 +197,22 @@ Array.prototype.max = function() {
   return this.reduce((a, b) => Math.max(a, b));
 };
 
+Array.prototype.maxDecimal = function() {
+  if (this.length === 0) return new Decimal(0);
+  return this.reduce((a, b) => Decimal.max(a, b));
+};
+
 /**
  * @returns {number}
  */
 Array.prototype.min = function() {
   if (this.length === 0) return 0;
   return this.reduce((a, b) => Math.min(a, b));
+};
+
+Array.prototype.minDecimal = function() {
+  if (this.length === 0) return new Decimal(0);
+  return this.reduce((a, b) => Decimal.min(a, b));
 };
 
 /**
@@ -289,3 +310,48 @@ Array.fromBitmask = function(mask) {
 String.isWhiteSpace = function(value) {
   return value && !value.trim();
 };
+
+// borrowed from redsharkian code
+
+Decimal.prototype.mod = function(other) {
+  const v = new Decimal(other);
+  if (v.eq(0)) return new Decimal(0);
+  if (this.sign * v.sign === -1) return this.abs().mod(other.abs()).neg();
+  if (this.sign === -1) return this.abs().mod(other.abs());
+  return this.sub(this.div(other).floor().mul(other));
+}
+
+// a very bad hack
+function formatAllDigits(n) {
+  return n.toLocaleString(undefined, {
+    style: 'decimal',
+    useGrouping: false 
+  });
+}
+
+// TODO: fix the the thing for real
+Decimal.prototype.toString = function () {
+  if (isNaN(this.m) || isNaN(this.e)) {
+    return "NaN";
+  }
+
+  if (this.e >= Number.MAX_VALUE) {
+    return this.m > 0 ? "Infinity" : "-Infinity";
+  }
+
+  if (this.e <= -Number.MAX_VALUE || this.m === 0) {
+    return "0";
+  }
+
+  if (this.e < 21 && this.e > -7) {
+    return this.toNumber().toString();
+  }
+
+  return this.m + "e" + (this.e >= 0 ? "+" : "") + formatAllDigits(this.e);
+}
+
+window.powAndCap = function(num) {
+  return Decimal.pow10(Math.min(num, Number.MAX_VALUE));
+}
+
+Decimal.MAX_LIMIT = Decimal.pow10(Number.MAX_VALUE)

@@ -75,16 +75,16 @@ export const TD = {
         .reduce((x, y) => x.times(y), DC.D1);
     },
     isActive: dim => (dim
-      ? ImaginaryUpgrade(14).canBeApplied || (dim === 8 && GlyphSacrifice.time.effectValue > 1)
+      ? ImaginaryUpgrade(14).canBeApplied || (dim === 8 && GlyphSacrifice.time.effectValue.gt(1))
       : TimeDimension(1).isProducing),
     icon: dim => MultiplierTabIcons.PURCHASE("TD", dim),
   },
   timeGlyphSacrifice: {
     name: "Time Glyph Sacrifice",
     multValue: () => (TimeDimension(8).isProducing
-      ? Decimal.pow(GlyphSacrifice.time.effectValue, Math.clampMax(TimeDimension(8).bought, 1e8))
+      ? GlyphSacrifice.time.effectValue.pow(Math.clampMax(TimeDimension(8).bought, 1e8))
       : DC.D1),
-    isActive: () => GlyphSacrifice.time.effectValue > 1,
+    isActive: () => GlyphSacrifice.time.effectValue.gt(1),
     icon: MultiplierTabIcons.SACRIFICE("time"),
   },
   powPurchase: {
@@ -177,7 +177,7 @@ export const TD = {
       ).times(EternityChallenge(7).isRunning ? Tickspeed.perSecond : DC.D1);
       if (EternityChallenge(9).isRunning) {
         allMult = allMult.times(
-          Decimal.pow(Math.clampMin(Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate / 7)
+          Decimal.pow(Math.clampMin(InfinityDimensions.ADMultiplier
             .log2(), 1), 4).clampMin(1));
       }
       return Decimal.pow(allMult, dim ? 1 : MultiplierTabHelper.activeDimCount("TD"));

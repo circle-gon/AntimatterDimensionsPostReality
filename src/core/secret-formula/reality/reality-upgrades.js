@@ -12,7 +12,7 @@ const rebuyable = props => {
     props.initialCost * props.costMult
   );
   const { effect } = props;
-  props.effect = () => Math.pow(
+  props.effect = () => Decimal.pow(
     effect + ImaginaryUpgrade(props.id).effectOrDefault(0),
     player.reality.rebuyables[props.id] * getAdjustedGlyphEffect("realityrow1pow"));
   props.description = () => props.textTemplate.replace("{value}",
@@ -107,7 +107,7 @@ export const realityUpgrades = [
     canLock: true,
     // We don't have lockEvent because the modal can never show up for this upgrade
     description: "Tachyon Particle gain is boosted based on Achievement multiplier",
-    effect: () => Math.sqrt(Achievements.power),
+    effect: () => Achievements.power.sqrt(),
     formatEffect: value => formatX(value, 2, 2)
   },
   {
@@ -293,7 +293,7 @@ export const realityUpgrades = [
     requirement: () => `${formatInt(100)} days total play time after unlocking the Black Hole
       (Currently: ${Time.timeSinceBlackHole.toStringShort(false)})`,
     hasFailed: () => !BlackHole(1).isUnlocked && Currency.realityMachines.lt(100),
-    checkRequirement: () => Time.timeSinceBlackHole.totalDays >= 100 && BlackHole(1).isUnlocked,
+    checkRequirement: () => Time.timeSinceBlackHole.totalDays.gte(100) && BlackHole(1).isUnlocked,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     description: "Unlock another Black Hole",
     automatorPoints: 10,
@@ -320,7 +320,8 @@ export const realityUpgrades = [
     checkRequirement: () => Currency.timeShards.exponent >= 28000,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     description: "Time Dimension multiplier based on days spent in this Reality",
-    effect: () => Decimal.pow10(Math.pow(1 + 2 * Math.log10(Time.thisReality.totalDays + 1), 1.6)),
+    // TODOM: could go above ee308
+    effect: () => Decimal.pow10(Math.pow(1 + 2 * Time.thisReality.totalDays.add(1).log10(), 1.6)),
     formatEffect: value => formatX(value, 2, 2)
   },
   {
@@ -333,7 +334,7 @@ export const realityUpgrades = [
     checkRequirement: () => Time.thisReality.totalMinutes < 15,
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     description: "Replicanti speed is boosted based on your fastest game-time Reality",
-    effect: () => 15 / Math.clamp(Time.bestReality.totalMinutes, 1 / 12, 15),
+    effect: () => Decimal.div(15, Time.bestReality.totalMinutes.clamp(1 / 12, 15)),
     cap: 180,
     formatEffect: value => formatX(value, 2, 2)
   },

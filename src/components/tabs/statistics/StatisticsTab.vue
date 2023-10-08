@@ -24,8 +24,8 @@ export default {
         projectedBanked: new Decimal(0),
         bankRate: new Decimal(0),
         hasBest: false,
-        best: TimeSpan.zero,
-        this: TimeSpan.zero,
+        best: DecimalTimeSpan.zero,
+        this: DecimalTimeSpan.zero,
         thisReal: TimeSpan.zero,
         bestRate: new Decimal(0),
       },
@@ -33,19 +33,19 @@ export default {
         isUnlocked: false,
         count: new Decimal(0),
         hasBest: false,
-        best: TimeSpan.zero,
-        this: TimeSpan.zero,
+        best: DecimalTimeSpan.zero,
+        this: DecimalTimeSpan.zero,
         thisReal: TimeSpan.zero,
         bestRate: new Decimal(0),
       },
       reality: {
         isUnlocked: false,
         count: 0,
-        best: TimeSpan.zero,
+        best: DecimalTimeSpan.zero,
         bestReal: TimeSpan.zero,
-        this: TimeSpan.zero,
+        this: DecimalTimeSpan.zero,
         thisReal: TimeSpan.zero,
-        totalTimePlayed: TimeSpan.zero,
+        totalTimePlayed: DecimalTimeSpan.zero,
         bestRate: new Decimal(0),
         bestRarity: 0,
       },
@@ -103,8 +103,8 @@ export default {
           Achievement(131),
           TimeStudy(191)
         );
-        infinity.bankRate = infinity.projectedBanked.div(Math.clampMin(33, records.thisEternity.time)).times(60000);
-        infinity.hasBest = bestInfinity.time < 999999999999;
+        infinity.bankRate = infinity.projectedBanked.div(records.thisEternity.time.max(33)).times(60000);
+        infinity.hasBest = bestInfinity.time.lt(Decimal.MAX_LIMIT);
         infinity.best.setFrom(bestInfinity.time);
         infinity.this.setFrom(records.thisInfinity.time);
         infinity.bestRate.copyFrom(bestInfinity.bestIPminEternity);
@@ -116,7 +116,7 @@ export default {
       eternity.isUnlocked = isEternityUnlocked;
       if (isEternityUnlocked) {
         eternity.count.copyFrom(Currency.eternities);
-        eternity.hasBest = bestEternity.time < 999999999999;
+        eternity.hasBest = bestEternity.time.lt(Decimal.MAX_LIMIT);
         eternity.best.setFrom(bestEternity.time);
         eternity.this.setFrom(records.thisEternity.time);
         eternity.bestRate.copyFrom(bestEternity.bestEPminReality);

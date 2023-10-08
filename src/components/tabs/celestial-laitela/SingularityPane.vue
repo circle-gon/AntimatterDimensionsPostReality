@@ -3,29 +3,29 @@ export default {
   name: "SingularityPane",
   data() {
     return {
-      darkEnergy: 0,
-      darkEnergyGainPerSecond: 0,
-      singularities: 0,
+      darkEnergy: new Decimal(0),
+      darkEnergyGainPerSecond: new Decimal(0),
+      singularities: new Decimal(0),
       singularityCapIncreases: 0,
       canPerformSingularity: false,
       unlockedBulkSingularity: false,
-      singularityCap: 0,
+      singularityCap: new Decimal(0),
       baseTimeToSingularity: 0,
       currentTimeToSingularity: 0,
       extraTimeAfterSingularity: 0,
-      singularitiesGained: 0,
+      singularitiesGained: new Decimal(0),
       autoSingularityFactor: 0,
       perStepFactor: 0,
       isAutoEnabled: false,
       hasAutoSingularity: false,
-      nextLowerStep: 0,
+      nextLowerStep: new Decimal(0),
       willCondenseOnDecrease: false,
     };
   },
   computed: {
     isDoomed: () => Pelle.isDoomed,
     singularityFormText() {
-      const formText = this.singularitiesGained === 1 ? "all Dark Energy into a Singularity"
+      const formText = this.singularitiesGained.eq(1) ? "all Dark Energy into a Singularity"
         : `all Dark Energy into ${quantify("Singularity", this.singularitiesGained, 2)}`;
       if (this.canPerformSingularity) {
         return `Condense ${formText}`;
@@ -51,33 +51,28 @@ export default {
     },
     manualSingularityRate() {
       const totalTime = this.baseTimeToSingularity;
-      return this.formatRate(this.singularitiesGained / totalTime);
+      return this.formatRate(this.singularitiesGained.div(totalTime));
     },
     autoSingularityRate() {
       if (this.hasAutoSingularity && !this.isAutoEnabled) return "Auto-Singularity is OFF";
       const totalTime = this.baseTimeToSingularity + this.extraTimeAfterSingularity;
-      return this.formatRate(this.singularitiesGained / totalTime);
+      return this.formatRate(this.singularitiesGained.div(totalTime));
     },
     decreaseTooltip() {
       if (this.singularityCapIncreases === 0) return "You cannot decrease the cap any further!";
-      const singularities = this.singularitiesGained / this.perStepFactor;
+      const singularities = this.singularitiesGained.div(this.perStepFactor);
       return this.willCondenseOnDecrease
         ? `Decreasing the cap will immediately auto-condense for
           ${quantify("Singularity", singularities, 2)}!`
-        : null;
-    },
-    increaseTooltip() {
-      return this.singularityCapIncreases >= 50
-        ? "You cannot increase the cap any further!"
         : null;
     }
   },
   methods: {
     update() {
       const laitela = player.celestials.laitela;
-      this.darkEnergy = Currency.darkEnergy.value;
+      this.darkEnergy.copyFrom(Currency.darkEnergy.value);
       this.darkEnergyGainPerSecond = Currency.darkEnergy.productionPerSecond;
-      this.singularities = Currency.singularities.value;
+      this.singularities.copyFrom(Currency.singularities.value);
       this.singularityCapIncreases = laitela.singularityCapIncreases;
       this.canPerformSingularity = Singularity.capIsReached;
       this.unlockedBulkSingularity = Currency.singularities.gte(10);
@@ -90,8 +85,8 @@ export default {
       this.perStepFactor = Singularity.gainPerCapIncrease;
       this.isAutoEnabled = player.auto.singularity.isActive && SingularityMilestone.autoCondense.canBeApplied;
       this.hasAutoSingularity = Number.isFinite(this.autoSingularityFactor);
-      this.nextLowerStep = this.singularityCap * this.autoSingularityFactor / 10;
-      this.willCondenseOnDecrease = this.isAutoEnabled && this.darkEnergy > this.nextLowerStep;
+      this.nextLowerStep = this.singularityCap.mul(this.autoSingularityFactor).div(10);
+      this.willCondenseOnDecrease = this.isAutoEnabled && this.darkEnergy.gt(this.nextLowerStep);
     },
     doSingularity() {
       Singularity.perform();
@@ -103,8 +98,8 @@ export default {
       Singularity.decreaseCap();
     },
     formatRate(rate) {
-      if (rate < 1 / 60) return `${format(3600 * rate, 2, 3)} per hour`;
-      if (rate < 1) return `${format(60 * rate, 2, 3)} per minute`;
+      if (rate.lt(1 / 60)) return `${format(rate.mul(3600), 2, 3)} per hour`;
+      if (rate.lt(1)) return `${format(rate.mul(60), 2, 3)} per minute`;
       return `${format(rate, 2, 3)} per second`;
     },
     condenseClassObject() {
@@ -138,7 +133,7 @@ export default {
         </h2>
       </button>
     </div>
-    <div v-if="singularities !== 0">
+    <div v-if="singularities.neq(0)">
       <div class="o-laitela-matter-amount">
         You have {{ format(darkEnergy, 2, 4) }} Dark Energy. (+{{ format(darkEnergyGainPerSecond, 2, 4) }}/s)
       </div>
@@ -152,9 +147,7 @@ export default {
           Decrease Singularity cap.
         </button>
         <button
-          class="c-laitela-singularity__cap-control"
-          :class="{ 'c-laitela-singularity__cap-control--available' : singularityCapIncreases < 50 }"
-          :ach-tooltip="increaseTooltip"
+          class="c-laitela-singularity__cap-control c-laitela-singularity__cap-control--available"
           @click="increaseCap"
         >
           Increase Singularity cap.

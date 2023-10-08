@@ -1553,7 +1553,7 @@ export const celestialNavigation = {
     visible: () => Laitela.isUnlocked,
     complete: () => (Currency.singularities.gte(1)
       ? 1
-      : Math.clampMax(0.999, Currency.darkEnergy.value / Singularity.cap)),
+      : Currency.darkEnergy.value.div(Singularity.cap)).min(0.999).toNumber(),
     node: {
       clickAction: () => Tab.celestials.laitela.show(true),
       incompleteClass: "c-celestial-nav__test-incomplete",
@@ -1722,7 +1722,7 @@ export const celestialNavigation = {
     complete: () => {
       const upgrade = ImaginaryUpgrade(19);
       if (upgrade.canBeBought || upgrade.isBought) return 1;
-      if (upgrade.isAvailableForPurchase) return Currency.imaginaryMachines.value / upgrade.cost;
+      if (upgrade.isAvailableForPurchase) return Currency.imaginaryMachines.divide(upgrade.cost).toNumber();
       return upgrade.isPossible
         ? Tickspeed.continuumValue / 3850000
         : 0;
@@ -1807,7 +1807,7 @@ export const celestialNavigation = {
     visible: () => Laitela.difficultyTier > 4,
     complete: () => {
       if (Pelle.isUnlocked) return 1;
-      const imCost = Math.clampMax(emphasizeEnd(Math.log10(Currency.imaginaryMachines.value) / Math.log10(1.6e15)), 1);
+      const imCost = Math.clampMax(emphasizeEnd(Currency.imaginaryMachines.value.log10() / Math.log10(1.6e15)), 1);
       let laitelaProgress = Laitela.isRunning ? Math.min(Currency.eternityPoints.value.log10() / 4000, 0.99) : 0;
       if (Laitela.difficultyTier !== 8 || Glyphs.activeWithoutCompanion.length > 1) laitelaProgress = 0;
       else if (ImaginaryUpgrade(25).isAvailableForPurchase) laitelaProgress = 1;

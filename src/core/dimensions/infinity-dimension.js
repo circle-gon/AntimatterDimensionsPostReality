@@ -3,8 +3,8 @@ import { DC } from "../constants";
 import { DimensionState } from "./dimension";
 
 export function infinityDimensionCommonMultiplier() {
-  let mult = new Decimal(ShopPurchase.allDimPurchases.currentMult)
-    .timesEffectsOf(
+  let mult = Math.log10(ShopPurchase.allDimPurchases.currentMult) +
+    Effects.log10Sum(
       Achievement(75),
       TimeStudy(82),
       TimeStudy(92),
@@ -22,10 +22,10 @@ export function infinityDimensionCommonMultiplier() {
     );
 
   if (Replicanti.areUnlocked && Replicanti.amount.gt(1)) {
-    mult = mult.times(replicantiMult());
+    mult += replicantiMult().log10();
   }
 
-  return mult;
+  return powAndCap(mult);
 }
 
 export function toggleAllInfDims() {
@@ -129,55 +129,56 @@ class InfinityDimensionState extends DimensionState {
       (Laitela.isRunning && this.tier > Laitela.maxAllowedDimension)) {
       return DC.D0;
     }
-    let production = this.amount;
+    let production = this.amount.log10();
     if (EternityChallenge(11).isRunning) {
-      return production;
+      return powAndCap(production);
     }
     if (EternityChallenge(7).isRunning) {
-      production = production.times(Tickspeed.perSecond);
+      production += Tickspeed.perSecond.log10();
     }
-    return production.times(this.multiplier);
+    production += this.multiplier.log10();
+    return powAndCap(production);
   }
 
   get multiplier() {
     const tier = this.tier;
     if (EternityChallenge(11).isRunning) return DC.D1;
-    let mult = GameCache.infinityDimensionCommonMultiplier.value
-      .timesEffectsOf(
+    let mult = GameCache.infinityDimensionCommonMultiplier.value.log10() + 
+      Effects.log10Sum(
         tier === 1 ? Achievement(94) : null,
         tier === 4 ? TimeStudy(72) : null,
         tier === 1 ? EternityChallenge(2).reward : null
       );
-    mult = mult.times(Decimal.pow(this.powerMultiplier, Math.floor(this.baseAmount / 10)));
+    mult += Math.floor(this.baseAmount / 10) * this.powerMultiplier.log10();
 
 
     if (tier === 1) {
-      mult = mult.times(PelleRifts.decay.milestones[0].effectOrDefault(1));
+      mult += PelleRifts.decay.milestones[0].effectOrDefault(DC.D1).log10();
     }
 
 
-    mult = mult.pow(getAdjustedGlyphEffect("infinitypow"));
-    mult = mult.pow(getAdjustedGlyphEffect("effarigdimensions"));
-    mult = mult.pow(getAdjustedGlyphEffect("curseddimensions"));
-    mult = mult.powEffectOf(AlchemyResource.infinity);
-    mult = mult.pow(Ra.momentumValue);
-    mult = mult.powEffectOf(PelleRifts.paradox);
+    mult *= getAdjustedGlyphEffect("infinitypow");
+    mult *= getAdjustedGlyphEffect("effarigdimensions");
+    mult *= getAdjustedGlyphEffect("curseddimensions");
+    mult *= Effects.product(AlchemyResource.infinity);
+    mult *= Ra.momentumValue;
+    mult *= PelleRifts.paradox.effectValue.toNumber();
 
     if (player.dilation.active || PelleStrikes.dilation.hasStrike) {
-      mult = dilatedValueOf(mult);
+      mult = dilatedValueOf(powAndCap(mult)).log10();
     }
 
     if (Effarig.isRunning) {
-      mult = Effarig.multiplier(mult);
+      mult = Effarig.multiplier(powAndCap(mult)).log10();
     } else if (V.isRunning) {
-      mult = mult.pow(0.5);
+      mult *= 0.5;
     }
 
     if (PelleStrikes.powerGalaxies.hasStrike) {
-      mult = mult.pow(0.5);
+      mult *= 0.5;
     }
 
-    return mult;
+    return powAndCap(mult);
   }
 
   get isProducing() {
@@ -371,7 +372,7 @@ export const InfinityDimensions = {
 
   tick(diff) {
     for (let tier = 8; tier > 1; tier--) {
-      InfinityDimension(tier).produceDimensions(InfinityDimension(tier - 1), diff / 10);
+      InfinityDimension(tier).produceDimensions(InfinityDimension(tier - 1), diff.div(10));
     }
 
     if (EternityChallenge(7).isRunning) {
@@ -411,5 +412,11 @@ export const InfinityDimensions = {
   get powerConversionRate() {
     const multiplier = PelleRifts.paradox.milestones[2].effectOrDefault(1);
     return (7 + getAdjustedGlyphEffect("infinityrate") + PelleUpgrade.infConversion.effectOrDefault(0)) * multiplier;
+  },
+
+  get ADMultiplier() {
+    // deal with >ee308 values wrapping to 0
+    const log = Currency.infinityPower.value.max(1).log10() * this.powerConversionRate
+    return powAndCap(log)
   }
 };

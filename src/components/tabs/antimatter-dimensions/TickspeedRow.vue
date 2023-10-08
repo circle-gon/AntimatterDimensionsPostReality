@@ -10,7 +10,6 @@ export default {
       cost: new Decimal(0),
       isAffordable: false,
       tickspeed: new Decimal(0),
-      gameSpeedMult: 1,
       galaxyCount: 0,
       isContinuumActive: false,
       continuumValue: 0,
@@ -57,7 +56,6 @@ export default {
       this.cost.copyFrom(Tickspeed.cost);
       this.isAffordable = Tickspeed.isAvailableForPurchase && Tickspeed.isAffordable;
       this.tickspeed.copyFrom(Tickspeed.perSecond);
-      this.gameSpeedMult = getGameSpeedupForDisplay();
       this.galaxyCount = player.galaxies;
       this.isContinuumActive = Laitela.continuumActive;
       if (this.isContinuumActive) this.continuumValue = Tickspeed.continuumValue;
