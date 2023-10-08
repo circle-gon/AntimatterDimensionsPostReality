@@ -265,7 +265,7 @@ export const FreeTickspeed = {
         .min(Number.MAX_VALUE)
     );
 
-    const toIncrement = Math.max(purchases * MAX_TOLERANCE, 1)
+    const toIncrement = Math.max(purchases * MAX_TOL, 1)
 
     this.multToNext = DC.E1.pow(
       boughtToCost(purchases + toIncrement)

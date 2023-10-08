@@ -73,7 +73,7 @@ window.bulkBuyBinarySearch = function bulkBuyBinarySearch(money, costInfo, alrea
     } else {
       cantBuy = middle;
     }
-    maxTol = maxPrecise ? 1 : MAX_TOLERANCE * canBuy
+    maxTol = maxPrecise ? 1 : MAX_TOL * canBuy
   }
   const baseCost = costFunction(alreadyBought + canBuy - 1);
   if (!isCumulative) {
