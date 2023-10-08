@@ -1577,7 +1577,7 @@ export const devMigrations = {
       l.singularities = new Decimal(l.singularities)
       l.lastCheckedMilestones = new Decimal(l.lastCheckedMilestones)
       player.auto.annihilation.multiplier = new Decimal(player.auto.annihilation.multiplier)
-      player.reality.glyphs.sac = player.reality.glyphs.sac.map(i => new Decimal(i)) 
+      player.reality.glyphs.sac = player.reality.glyphs.sac.map(i => new Decimal(i))
     }
   ],
 
