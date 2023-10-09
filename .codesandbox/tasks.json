@@ -1,0 +1,48 @@
+{
+    "setupTasks": [
+      {
+        "name": "Install Dependencies",
+        "command": "npm ci"
+      }
+    ],
+    "tasks": {
+      "serve": {
+        "name": "serve",
+        "command": "npm run serve",
+        "runAtStart": true,
+        "preview": {
+          "port": 8080
+        }
+      },
+      "build:master": {
+        "name": "build:master",
+        "command": "npm run build:master",
+        "runAtStart": false
+      },
+      "build:release": {
+        "name": "build:release",
+        "command": "npm run build:release",
+        "runAtStart": false
+      },
+      "build:steam-development": {
+        "name": "build:steam-development",
+        "command": "npm run build:steam-development",
+        "runAtStart": false
+      },
+      "build:steam-release": {
+        "name": "build:steam-release",
+        "command": "npm run build:steam-release",
+        "runAtStart": false
+      },
+      "lint": {
+        "name": "lint",
+        "command": "npm run lint",
+        "runAtStart": false
+      },
+      "deploy": {
+        "name": "deploy",
+        "command": "npm run deploy",
+        "runAtStart": false
+      }
+    }
+  }
