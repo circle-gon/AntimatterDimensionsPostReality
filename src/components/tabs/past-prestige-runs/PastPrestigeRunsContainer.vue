@@ -66,18 +66,21 @@ export default {
       return this.layer.getRuns;
     },
     hasRealTime: () => PlayerProgress.seenAlteredSpeed(),
+    MAX_LIMIT() {
+      return Decimal.fromDecimal(Decimal.MAX_LIMIT);
+    }
   },
   methods: {
     update() {
       this.runs = this.clone(this.getRuns());
-      this.hasEmptyRecord = this.runs[0][0] === Number.MAX_VALUE;
+      this.hasEmptyRecord = this.runs[0][0].eq(Decimal.MAX_LIMIT);
       this.runs.push(this.averageRun);
       this.isRealityUnlocked = PlayerProgress.current.isRealityUnlocked;
       this.shown = player.shownRuns[this.singular];
       this.resourceType = player.options.statTabResources;
       this.showRate = this.resourceType === RECENT_PRESTIGE_RESOURCE.RATE;
       this.hasChallenges = this.runs.map(r => this.challengeText(r)).some(t => t);
-      this.hasIM = MachineHandler.currentIMCap > 0;
+      this.hasIM = MachineHandler.currentIMCap.gt(0);
 
       // We have 4 different "useful" stat pairings we could display, but this ends up being pretty boilerplatey
       const names = [this.points, `${this.points} Rate`, this.plural, `${this.singular} Rate`];
@@ -159,7 +162,7 @@ export default {
       return cells;
     },
     gameTime(run) {
-      return timeDisplayShort(run[0]);
+      return decimalTimeDisplayShort(run[0]);
     },
     realTime(run) {
       return timeDisplayShort(run[1]);
@@ -254,7 +257,7 @@ export default {
         :key="index"
       >
         <span
-          v-if="run[0].eq(Decimal.MAX_LIMIT)"
+          v-if="run[0].eq(MAX_LIMIT)"
           class="c-empty-row"
         >
           <i v-if="index === 10">

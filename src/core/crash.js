@@ -24,7 +24,7 @@ window.GlobalErrorHandler = {
   stopGame() {
     GameKeyboard.disable();
     GameIntervals.stop();
-    function clearHandles(set, clear) {
+    /*function clearHandles(set, clear) {
       // eslint-disable-next-line no-empty-function
       let id = set(() => {}, 9999);
       while (id--) {
@@ -33,7 +33,7 @@ window.GlobalErrorHandler = {
     }
     clearHandles(setInterval, clearInterval);
     clearHandles(setTimeout, clearTimeout);
-    clearHandles(requestAnimationFrame, cancelAnimationFrame);
+    clearHandles(requestAnimationFrame, cancelAnimationFrame);*/
   },
   crash(message) {
     if (window.GameUI !== undefined && GameUI.initialized) {
@@ -44,7 +44,8 @@ window.GlobalErrorHandler = {
   }
 };
 
-window.onerror = (event, source) => {
+window.onerror = (event, source, _, __, error) => {
   if (!source.endsWith(".js")) return;
   GlobalErrorHandler.onerror(event);
+  console.error(error)
 };

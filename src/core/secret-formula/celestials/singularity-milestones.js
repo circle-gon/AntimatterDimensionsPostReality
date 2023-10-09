@@ -44,7 +44,7 @@ export const singularityMilestones = {
     limit: Infinity,
     description: "Dark Matter Dimension upgrades are cheaper",
     effect: completions => Decimal.pow(0.4, completions),
-    effectFormat: x => `/ ${format(1 / x, 2, 2)}`,
+    effectFormat: x => `/ ${format(x.recip(), 2, 2)}`,
     upgradeDirection: LAITELA_UPGRADE_DIRECTION.SELF_BOOST,
   },
   singularityMult: {

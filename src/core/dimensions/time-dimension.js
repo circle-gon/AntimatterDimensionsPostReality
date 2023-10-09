@@ -249,7 +249,7 @@ class TimeDimensionState extends DimensionState {
     if (this._tier === 1 && !EternityChallenge(7).isRunning) {
       production *= getAdjustedGlyphEffect("timeshardpow");
     }
-    return production;
+    return powAndCap(production);
   }
 
   get rateOfChange() {

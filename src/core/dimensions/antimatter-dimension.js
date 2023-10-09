@@ -10,8 +10,8 @@ export function antimatterDimensionCommonMultiplier() {
   let multiplier = 0;
 
   multiplier += Achievements.power.log10();
-  multiplier += ShopPurchase.dimPurchases.currentMult.log10();
-  multiplier += ShopPurchase.allDimPurchases.currentMult.log10();
+  multiplier += Math.log10(ShopPurchase.dimPurchases.currentMult);
+  multiplier += Math.log10(ShopPurchase.allDimPurchases.currentMult);
 
   if (!EternityChallenge(9).isRunning) {
     multiplier += InfinityDimensions.ADMultiplier.log10();

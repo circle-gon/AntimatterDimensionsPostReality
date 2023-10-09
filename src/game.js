@@ -515,7 +515,7 @@ export function gameLoop(passDiff, options = {}) {
         .div(diff)
       speedFactor = reducedTimeFactor;
     }
-    diff *= speedFactor;
+    diff = diff.mul(speedFactor);
   } else if (fixedSpeedActive) {
     diff = diff.mul(getGameSpeedupFactor());
     Enslaved.currentBlackHoleStoreAmountPerMs = DC.D0;
@@ -1087,10 +1087,28 @@ export function browserCheck() {
   return supportedBrowsers.test(navigator.userAgent);
 }
 
-export function init() {
+function initEruda() {
+  return new Promise(resolve => {
+    const d = document.createElement("script")
+    d.src = "https://cdn.jsdelivr.net/npm/eruda"
+    d.onload = function () {
+      eruda.init()
+      resolve()
+    }
+    d.onerror = function () {
+      // don't hang the game if eruda doesn't load
+      console.warn("Eruda failed to load")
+      resolve()
+    }
+    document.body.append(d)
+  })
+}
+
+export async function init() {
   // eslint-disable-next-line no-console
   console.log("🌌 Antimatter Dimensions: Reality Update 🌌");
   if (DEV) {
+    await initEruda();
     // eslint-disable-next-line no-console
     console.log("👨‍💻 Development Mode 👩‍💻");
   }
