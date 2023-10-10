@@ -479,25 +479,6 @@ export const tabs = [
     ]
   },
   {
-    key: "atom",
-    name: "Atom",
-    newUIClass: "atom",
-    hideAt: 2.95,
-    condition: () => true,
-    id: 11,
-    hidable: true,
-    subtabs: [
-      {
-        key: "atom",
-        name: "Atom",
-        symbol: "A",
-        component: "AtomTab",
-        id: 12,
-        hidable: true
-      }
-    ]
-  },
-  {
     key: "shop",
     name: "Shop",
     newUIClass: "shop",

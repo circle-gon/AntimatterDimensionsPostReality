@@ -33,18 +33,15 @@ export class DimBoost {
         Achievement(142),
         GlyphEffect.dimBoostPower,
         PelleRifts.recursion.milestones[0]
-      )
-      .powEffectsOf(InfinityUpgrade.dimboostMult.chargedEffect);
+      ).powEffectsOf(InfinityUpgrade.dimboostMult.chargedEffect);
     if (GlyphAlteration.isAdded("effarig")) boost = boost.pow(getSecondaryGlyphEffect("effarigforgotten"));
     return boost;
   }
 
   static multiplierToNDTier(tier) {
     const normalBoostMult = DimBoost.power.pow(this.purchasedBoosts + 1 - tier).clampMin(1);
-    const imaginaryBoostMult = DimBoost.power
-      .times(ImaginaryUpgrade(24).effectOrDefault(1))
-      .pow(this.imaginaryBoosts)
-      .clampMin(1);
+    const imaginaryBoostMult = DimBoost.power.times(ImaginaryUpgrade(24).effectOrDefault(1))
+      .pow(this.imaginaryBoosts).clampMin(1);
     return normalBoostMult.times(imaginaryBoostMult);
   }
 
@@ -81,8 +78,8 @@ export class DimBoost {
 
   static get canBeBought() {
     if (DimBoost.purchasedBoosts >= this.maxBoosts) return false;
-    if (player.records.thisInfinity.maxAM.gt(Player.infinityGoal) && (!player.break || Player.isInAntimatterChallenge))
-      return false;
+    if (player.records.thisInfinity.maxAM.gt(Player.infinityGoal) &&
+       (!player.break || Player.isInAntimatterChallenge)) return false;
     return true;
   }
 
@@ -103,7 +100,10 @@ export class DimBoost {
     const targetResets = isTotal ? bulk : DimBoost.purchasedBoosts + bulk;
     const tier = Math.min(targetResets + 3, this.maxDimensionsUnlockable);
     let amount = 20;
-    const discount = Effects.sum(TimeStudy(211), TimeStudy(222));
+    const discount = Effects.sum(
+      TimeStudy(211),
+      TimeStudy(222)
+    );
     if (tier === 6 && NormalChallenge(10).isRunning) {
       amount += Math.round((targetResets - 3) * (20 - discount));
     } else if (tier === 8) {
@@ -146,8 +146,7 @@ export class DimBoost {
     else boostEffects = `${newUnlock} and ${formattedMultText} ${dimensionRange}`;
 
     if (boostEffects === "") return "Dimension Boosts are currently useless";
-    const areDimensionsKept =
-      (Perk.antimatterNoReset.isBought || Achievement(111).canBeApplied) &&
+    const areDimensionsKept = (Perk.antimatterNoReset.isBought || Achievement(111).canBeApplied) &&
       (!Pelle.isDoomed || PelleUpgrade.dimBoostResetsNothing.isBought);
     if (areDimensionsKept) return boostEffects[0].toUpperCase() + boostEffects.substring(1);
     return `Reset your Dimensions to ${boostEffects}`;
@@ -192,7 +191,7 @@ export function softReset(tempBulk, forcedADReset = false, forcedAMReset = false
   skipResetsIfPossible(enteringAntimatterChallenge);
   const canKeepAntimatter = Pelle.isDoomed
     ? PelleUpgrade.dimBoostResetsNothing.canBeApplied
-    : Achievement(111).isUnlocked || Perk.antimatterNoReset.canBeApplied;
+    : (Achievement(111).isUnlocked || Perk.antimatterNoReset.canBeApplied);
   if (!forcedAMReset && canKeepAntimatter) {
     Currency.antimatter.bumpTo(Currency.antimatter.startingValue);
   } else {
@@ -237,7 +236,7 @@ function maxBuyDimBoosts() {
     return;
   }
 
-  const toIncrement = Math.floor(player.dimensionBoosts * MAX_TOL) + 1;
+  const toIncrement = Math.floor(player.dimensionBoosts * MAX_TOL) + 1
 
   const req1 = DimBoost.bulkRequirement(toIncrement);
   if (!req1.isSatisfied && toIncrement === 1) return;
@@ -250,22 +249,16 @@ function maxBuyDimBoosts() {
   // so a = (req2 - req1)/x, b = req1 - a*x = 2 req1 - req2, num = (dims - b) / a
   const increase = (req2.amount - req1.amount) / toIncrement;
   const dim = AntimatterDimension(req1.tier);
-  let maxBoosts = Math.min(
-    Number.MAX_VALUE,
-    toIncrement + Math.floor((dim.totalAmount.toNumber() - req1.amount) / increase)
-  );
+  let maxBoosts = Math.min(Number.MAX_VALUE,
+    toIncrement + Math.floor((dim.totalAmount.toNumber() - req1.amount) / increase));
   if (DimBoost.bulkRequirement(maxBoosts).isSatisfied) {
     softReset(maxBoosts);
     return;
   }
   // But in case of EC5 it's not, so do binary search for appropriate boost amount
-  const toBuyBoosts = bulkBuyBinarySearch(
-    dim.totalAmount,
-    {
-      costFunction: (boosts) => DimBoost.bulkRequirement(boosts, true).amount,
-      cumulative: false,
-    },
-    player.dimensionBoosts
-  );
+  const toBuyBoosts = bulkBuyBinarySearch(dim.totalAmount, {
+    costFunction: boosts => DimBoosts.bulkRequirement(boosts, true).amount,
+    cumulative: false
+  }, player.dimensionBoosts)
   if (toBuyBoosts !== null) softReset(toBuyBoosts.quantity);
 }

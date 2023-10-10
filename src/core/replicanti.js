@@ -139,10 +139,11 @@ export function totalReplicantiSpeedMult(overCap) {
   const preCelestialEffects = Effects.product(
     TimeStudy(62),
     TimeStudy(213),
+    RealityUpgrade(2),
     RealityUpgrade(6),
+    RealityUpgrade(23),
   );
   totalMult = totalMult.times(preCelestialEffects);
-  totalMult = totalMult.timesEffectsOf(RealityUpgrade(2), RealityUpgrade(23));
   if (TimeStudy(132).isBought && Perk.studyPassive.isBought) {
     totalMult = totalMult.times(3);
   }
