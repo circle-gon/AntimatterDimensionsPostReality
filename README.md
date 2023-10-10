@@ -4,7 +4,7 @@
 
 To run the game locally, you will need to install
 [Node.js](https://nodejs.org/) (LTS suggested).
-
+ 
 First, run the following command in your terminal (or command line) while being
 inside the checked out repository:
 
