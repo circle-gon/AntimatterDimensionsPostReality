@@ -66,18 +66,21 @@ export default {
       return this.layer.getRuns;
     },
     hasRealTime: () => PlayerProgress.seenAlteredSpeed(),
+    MAX_LIMIT() {
+      return Decimal.MAX_LIMIT
+    }
   },
   methods: {
     update() {
       this.runs = this.clone(this.getRuns());
-      this.hasEmptyRecord = this.runs[0][0] === Number.MAX_VALUE;
+      this.hasEmptyRecord = this.runs[0][0].eq(Number.MAX_VALUE);
       this.runs.push(this.averageRun);
       this.isRealityUnlocked = PlayerProgress.current.isRealityUnlocked;
       this.shown = player.shownRuns[this.singular];
       this.resourceType = player.options.statTabResources;
       this.showRate = this.resourceType === RECENT_PRESTIGE_RESOURCE.RATE;
       this.hasChallenges = this.runs.map(r => this.challengeText(r)).some(t => t);
-      this.hasIM = MachineHandler.currentIMCap > 0;
+      this.hasIM = MachineHandler.currentIMCap.gt(0);
 
       // We have 4 different "useful" stat pairings we could display, but this ends up being pretty boilerplatey
       const names = [this.points, `${this.points} Rate`, this.plural, `${this.singular} Rate`];

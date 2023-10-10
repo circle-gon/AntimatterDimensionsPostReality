@@ -145,7 +145,7 @@ export default {
       return format(cost, 2);
     },
     dimensionProduction(tier) {
-      if (tier === 4) return SingularityMilestone.dim4Generation.effectOrDefault(new Decimal(0));
+      if (tier === 4) return Decimal.fromDecimal(SingularityMilestone.dim4Generation.effectOrDefault(new Decimal(0)));
       const prodDim = DarkMatterDimension(tier + 1);
       return prodDim.amount.times(prodDim.powerDM).divide(prodDim.interval).times(1000);
     },

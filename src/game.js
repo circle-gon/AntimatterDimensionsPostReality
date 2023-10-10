@@ -1087,7 +1087,27 @@ export function browserCheck() {
   return supportedBrowsers.test(navigator.userAgent);
 }
 
-export function init() {
+function initEruda() {
+  return new Promise(resolve => {
+    const d = document.createElement("script")
+    d.src = "https://cdn.jsdelivr.net/npm/eruda"
+    d.onload = function () {
+      eruda.init()
+      resolve()
+    }
+    d.onerror = function () {
+      // don't hang the game if eruda doesn't load
+      console.warn("Eruda failed to load")
+      resolve()
+    }
+    document.body.append(d)
+  })
+}
+
+export async function init() {
+  if (DEV) {
+    await initEruda();
+  }
   // eslint-disable-next-line no-console
   console.log("🌌 Antimatter Dimensions: Reality Update 🌌");
   if (DEV) {

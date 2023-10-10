@@ -136,7 +136,7 @@ export function totalReplicantiSpeedMult(overCap) {
   totalMult = totalMult.times(ShopPurchase.replicantiPurchases.currentMult);
   if (Pelle.isDisabled("replicantiIntervalMult")) return totalMult;
 
-  const preCelestialEffects = Effects.product(
+  const preCelestialEffects = DC.D1.timesEffectsOf(
     TimeStudy(62),
     TimeStudy(213),
     RealityUpgrade(2),

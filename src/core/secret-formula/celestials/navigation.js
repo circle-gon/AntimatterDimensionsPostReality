@@ -1552,7 +1552,7 @@ export const celestialNavigation = {
   "laitela-singularity": {
     visible: () => Laitela.isUnlocked,
     complete: () => (Currency.singularities.gte(1)
-      ? 1
+      ? DC.D1
       : Currency.darkEnergy.value.div(Singularity.cap)).min(0.999).toNumber(),
     node: {
       clickAction: () => Tab.celestials.laitela.show(true),

@@ -7,7 +7,7 @@ class AchievementTimer {
   }
 
   reset() {
-    this.time = isRealTime ? 0 : DC.D0;
+    this.time = this.realTime ? 0 : DC.D0;
   }
 
   advance() {
