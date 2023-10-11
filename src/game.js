@@ -515,7 +515,7 @@ export function gameLoop(passDiff, options = {}) {
         .div(diff)
       speedFactor = reducedTimeFactor;
     }
-    diff *= speedFactor;
+    diff = diff.mul(speedFactor);
   } else if (fixedSpeedActive) {
     diff = diff.mul(getGameSpeedupFactor());
     Enslaved.currentBlackHoleStoreAmountPerMs = DC.D0;

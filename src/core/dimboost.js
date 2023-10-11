@@ -257,7 +257,7 @@ function maxBuyDimBoosts() {
   }
   // But in case of EC5 it's not, so do binary search for appropriate boost amount
   const toBuyBoosts = bulkBuyBinarySearch(dim.totalAmount, {
-    costFunction: boosts => DimBoosts.bulkRequirement(boosts, true).amount,
+    costFunction: boosts => DimBoost.bulkRequirement(boosts, true).amount,
     cumulative: false
   }, player.dimensionBoosts)
   if (toBuyBoosts !== null) softReset(toBuyBoosts.quantity);
