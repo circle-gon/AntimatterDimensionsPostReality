@@ -476,7 +476,7 @@ export const tabs = [
       {
         key: "atom",
         name: "Atom",
-        symbol: "A",
+        symbol: "<i class='fa-solid fa-atom'></i>",
         component: "AtomTab",
         id: 12,
         hidable: true,
