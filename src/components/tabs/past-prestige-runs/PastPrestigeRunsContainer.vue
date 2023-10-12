@@ -257,7 +257,7 @@ export default {
         :key="index"
       >
         <span
-          v-if="run[0].eq(Decimal.MAX_LIMIT)"
+          v-if="run[0].eq(MAX_LIMIT)"
           class="c-empty-row"
         >
           <i v-if="index === 10">
