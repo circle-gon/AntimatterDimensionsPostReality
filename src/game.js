@@ -414,6 +414,8 @@ export function realTimeMechanics(realDiff) {
   return false;
 }
 
+window.EAZY_SPEED = 1;
+
 // "passDiff" is in ms. It is only unspecified when it's being called normally and not due to simulating time, in which
 // case it uses the gap between now and the last time the function was called (capped at a day). This is on average
 // equal to the update rate, but may be much larger if the game was unfocused or the device went to sleep for some time.
@@ -434,9 +436,9 @@ export function gameLoop(passDiff, options = {}) {
 
   let diff = passDiff;
   const thisUpdate = Date.now();
-  const realDiff = diff === undefined
+  const realDiff = (diff === undefined
     ? Math.clamp(thisUpdate - player.lastUpdate, 1, 8.64e7)
-    : diff;
+    : diff) * window.EAZY_SPEED;
   if (!GameStorage.ignoreBackupTimer) player.backupTimer += realDiff;
 
   // For single ticks longer than a minute from the GameInterval loop, we assume that the device has gone to sleep or
