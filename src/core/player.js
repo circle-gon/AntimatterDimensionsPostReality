@@ -219,7 +219,7 @@ window.player = {
   lastUpdate: new Date().getTime(),
   backupTimer: 0,
   chall2Pow: 1,
-  chall3Pow: DC.D0_01,
+  chall3Pow: 0.01,
   matter: DC.D1,
   chall9TickspeedCostBumps: 0,
   chall8TotalSacrifice: DC.D1,
