@@ -24,7 +24,7 @@ export class DarkMatterDimensionAscensionAutobuyerState extends IntervaledAutobu
   tick() {
     super.tick();
     for (let i = 1; i <= SingularityMilestone.ascensionAutobuyers.effectValue; i++) {
-      DarkMatterDimension(i).ascend();
+      DarkMatterDimension(i).bulkAscend();
     }
   }
 }

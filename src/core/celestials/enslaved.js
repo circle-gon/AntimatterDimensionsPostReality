@@ -296,6 +296,7 @@ export const Tesseracts = {
   BASE_COSTS: [2, 4, 6, 12, 48, 288, 2304, 23040, 276480, 3870720, 61931520, 1114767360],
   costs(index) {
     // In practice this should never happen, but have it just to be safe
+    // Don't use Decimal.MAX_LIMIT because otherwise Vue shenanigans happen
     if (index >= this.BASE_COSTS.length) return Decimal.pow10(Number.MAX_VALUE);
     return Decimal.pow10(1e7 * this.BASE_COSTS[Math.floor(index)]);
   },

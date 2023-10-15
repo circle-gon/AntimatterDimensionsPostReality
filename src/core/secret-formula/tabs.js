@@ -481,6 +481,14 @@ export const tabs = [
         id: 12,
         hidable: true,
       },
+      {
+        key: "break-universe",
+        name: "Break Universe",
+        symbol: "BU",
+        component: "BreakUniverseTab",
+        id: 13,
+        hidable: true,
+      }
     ],
   },
   {

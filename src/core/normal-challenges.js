@@ -6,24 +6,36 @@ export function updateNormalAndInfinityChallenges(diff) {
     if (AntimatterDimension(2).amount.neq(0)) {
       Currency.matter.bumpTo(1);
       // These caps are values which occur at approximately e308 IP
-      const cappedBase = 1.03 + Math.clampMax(DimBoost.totalBoosts, 400) / 200 +
-        Math.clampMax(player.galaxies, 100) / 100;
+      const cappedBase =
+        1.03 + Math.clampMax(DimBoost.totalBoosts, 400) / 200 + Math.clampMax(player.galaxies, 100) / 100;
       Currency.matter.multiply(Decimal.pow(cappedBase, diff.div(20)));
     }
     if (Currency.matter.gt(Currency.antimatter.value) && NormalChallenge(11).isRunning && !Player.canCrunch) {
       const values = [Currency.antimatter.value, Currency.matter.value];
       softReset(0, true, true);
-      Modal.message.show(`Your ${format(values[0], 2, 2)} antimatter was annihilated
-        by ${format(values[1], 2, 2)} matter.`, { closeEvent: GAME_EVENT.BIG_CRUNCH_AFTER }, 1);
+      Modal.message.show(
+        `Your ${format(values[0], 2, 2)} antimatter was annihilated
+        by ${format(values[1], 2, 2)} matter.`,
+        { closeEvent: GAME_EVENT.BIG_CRUNCH_AFTER },
+        1
+      );
     }
   }
 
   if (NormalChallenge(3).isRunning) {
-    player.chall3Pow = player.chall3Pow.times(DC.D1_00038.pow(diff.div(100))).clampMax(Decimal.NUMBER_MAX_VALUE).toNumber();
+    player.chall3Pow = DC.D1_00038
+      .pow(diff.div(100))
+      .mul(player.chall3Pow)
+      .min(Number.MAX_VALUE)
+      .toNumber();
   }
 
   if (NormalChallenge(2).isRunning) {
-    player.chall2Pow = diff.div(100 * 1800).add(player.chall2Pow).min(1).toNumber();
+    player.chall2Pow = diff
+      .div(100 * 1800)
+      .add(player.chall2Pow)
+      .min(1)
+      .toNumber();
   }
 
   if (InfinityChallenge(2).isRunning) {
@@ -145,9 +157,7 @@ export const NormalChallenge = NormalChallengeState.createAccessor(GameDatabase.
  * @returns {NormalChallengeState}
  */
 Object.defineProperty(NormalChallenge, "current", {
-  get: () => (player.challenge.normal.current > 0
-    ? NormalChallenge(player.challenge.normal.current)
-    : undefined),
+  get: () => (player.challenge.normal.current > 0 ? NormalChallenge(player.challenge.normal.current) : undefined),
 });
 
 Object.defineProperty(NormalChallenge, "isRunning", {
@@ -164,5 +174,5 @@ export const NormalChallenges = {
   },
   clearCompletions() {
     player.challenge.normal.completedBits = 0;
-  }
+  },
 };

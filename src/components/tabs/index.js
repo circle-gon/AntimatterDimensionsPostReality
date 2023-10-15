@@ -6,6 +6,7 @@ import AutobuyersTab from "./autobuyers/AutobuyersTab";
 import AutomatorTab from "./automator/AutomatorTab";
 import BlackHoleTab from "./black-hole/BlackHoleTab";
 import BreakInfinityTab from "./break-infinity/BreakInfinityTab";
+import BreakUniverseTab from "./atom/BreakUniverseTab";
 import CelestialNavigationTab from "./celestial-navigation/CelestialNavigationTab";
 import ChallengeRecordsTab from "./challenge-records/ChallengeRecordsTab";
 import EffarigTab from "./celestial-effarig/EffarigTab";
@@ -66,6 +67,7 @@ const TabComponents = {
   LaitelaTab,
   PelleTab,
   AtomTab,
+  BreakUniverseTab,
   AutobuyersTab,
   AutomatorTab,
   NormalChallengesTab,
@@ -86,7 +88,7 @@ const TabComponents = {
   AlchemyTab,
   CelestialNavigationTab,
   ShopTab,
-  MultiplierBreakdownTab
+  MultiplierBreakdownTab,
 };
 
 export default TabComponents;

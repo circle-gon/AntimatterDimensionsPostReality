@@ -54,11 +54,12 @@ export class DarkMatterDimensionState extends DimensionState {
       .mul(Decimal.pow(
         SingularityMilestone.ascensionIntervalScaling.effectOrDefault(1200), this.ascensions
       ))
-      .toNumber() * 1000 * tierFactor
+      .mul(tierFactor)
+      .mul(1000)
   }
 
   get interval() {
-    return Math.clampMin(this.intervalPurchaseCap, this.rawInterval);
+    return Math.clampMin(this.intervalPurchaseCap, this.rawInterval.toNumber());
   }
 
   get commonDarkMult() {
@@ -97,7 +98,7 @@ export class DarkMatterDimensionState extends DimensionState {
       .mul(1 + this.data.powerDEUpgrades * 0.1)
       .mul(tierFactor / 1000)
       .times(this.commonDarkMult)
-      .times(Math.pow(POWER_DE_PER_ASCENSION, this.ascensions))
+      .times(Decimal.pow(POWER_DE_PER_ASCENSION, this.ascensions))
       .timesEffectsOf(
         SingularityMilestone.darkEnergyMult,
         SingularityMilestone.realityDEMultiplier,
@@ -110,7 +111,7 @@ export class DarkMatterDimensionState extends DimensionState {
     const purchases = Decimal.affordGeometricSeries(Currency.darkMatter.value, this.rawIntervalCost,
       this.intervalCostIncrease, 0).toNumber();
     return Math.clampMin(this.intervalPurchaseCap, SingularityMilestone.ascensionIntervalScaling.effectOrDefault(1200) *
-      this.rawInterval * Math.pow(INTERVAL_PER_UPGRADE, purchases));
+      this.rawInterval.toNumber() * Math.pow(INTERVAL_PER_UPGRADE, purchases));
   }
 
   get adjustedStartingCost() {
@@ -225,6 +226,15 @@ export class DarkMatterDimensionState extends DimensionState {
     this.data.ascensionCount++;
 
     // Immediately buy as many interval upgrades as possible
+    while (this.buyInterval());
+  }
+
+  bulkAscend() {
+    if (this.interval > this.intervalPurchaseCap) return;
+    const ascensionsToBuy = Math.max(Math.floor(Decimal.div(this.intervalPurchaseCap, this.rawInterval).log10()
+      / Math.log10(SingularityMilestone.ascensionIntervalScaling.effectOrDefault(1200))) + 1, 0)
+    this.data.ascensionCount += ascensionsToBuy;
+
     while (this.buyInterval());
   }
 

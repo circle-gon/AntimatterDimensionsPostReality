@@ -11,6 +11,7 @@ import NormalChallengeStartModal from "@/components/modals/challenges/NormalChal
 import AntimatterGalaxyModal from "@/components/modals/prestige/AntimatterGalaxyModal";
 import ArmageddonModal from "@/components/modals/prestige/ArmageddonModal";
 import BigCrunchModal from "@/components/modals/prestige/BigCrunchModal";
+import CollapseModal from "@/components/modals/prestige/CollapseModal";
 import DimensionBoostModal from "@/components/modals/prestige/DimensionBoostModal";
 import EnterCelestialsModal from "@/components/modals/prestige/EnterCelestialsModal";
 import EnterDilationModal from "@/components/modals/prestige/EnterDilationModal";
@@ -48,6 +49,7 @@ import AutobuyerEditModal from "@/components/modals/AutobuyerEditModal";
 import AutomatorScriptTemplate from "@/components/modals/AutomatorScriptTemplate";
 import AwayProgressModal from "@/components/modals/AwayProgressModal";
 import BreakInfinityModal from "@/components/modals/BreakInfinityModal";
+import BreakUniverseModal from "@/components/modals/BreakUniverseModal";
 import CatchupModal from "@/components/modals/catchup/CatchupModal";
 import ChangelogModal from "@/components/modals/ChangelogModal";
 import ChangeNameModal from "@/components/modals/ChangeNameModal";
@@ -96,8 +98,13 @@ export class Modal {
   applyCloseListeners(closeEvent) {
     // Most of the time the close event will be a prestige event, in which case we want it to trigger on all higher
     // prestiges as well
-    const prestigeOrder = [GAME_EVENT.DIMBOOST_AFTER, GAME_EVENT.GALAXY_RESET_AFTER, GAME_EVENT.BIG_CRUNCH_AFTER,
-      GAME_EVENT.ETERNITY_RESET_AFTER, GAME_EVENT.REALITY_RESET_AFTER];
+    const prestigeOrder = [
+      GAME_EVENT.DIMBOOST_AFTER,
+      GAME_EVENT.GALAXY_RESET_AFTER,
+      GAME_EVENT.BIG_CRUNCH_AFTER,
+      GAME_EVENT.ETERNITY_RESET_AFTER,
+      GAME_EVENT.REALITY_RESET_AFTER,
+    ];
     let shouldClose = false;
     for (const prestige of prestigeOrder) {
       if (prestige === closeEvent) shouldClose = true;
@@ -140,7 +147,7 @@ export class Modal {
 
   removeFromQueue() {
     EventHub.ui.offAll(this._component);
-    ui.view.modal.queue = ui.view.modal.queue.filter(m => m._uniqueID !== this._uniqueID);
+    ui.view.modal.queue = ui.view.modal.queue.filter((m) => m._uniqueID !== this._uniqueID);
     if (ui.view.modal.queue.length === 0) ui.view.modal.current = undefined;
     else ui.view.modal.current = ui.view.modal.queue[0];
   }
@@ -204,6 +211,7 @@ Modal.dimensionBoost = new Modal(DimensionBoostModal, 1, GAME_EVENT.DIMBOOST_AFT
 
 Modal.antimatterGalaxy = new Modal(AntimatterGalaxyModal, 1, GAME_EVENT.GALAXY_RESET_AFTER);
 Modal.bigCrunch = new Modal(BigCrunchModal, 1, GAME_EVENT.BIG_CRUNCH_AFTER);
+Modal.collapse = new Modal(CollapseModal, 1, GAME_EVENT.COLLAPSE_AFTER);
 Modal.exitChallenge = new Modal(ExitChallengeModal, 1, GAME_EVENT.REALITY_RESET_AFTER);
 Modal.replicantiGalaxy = new Modal(ReplicantiGalaxyModal, 1, GAME_EVENT.ETERNITY_RESET_AFTER);
 Modal.eternity = new Modal(EternityModal, 1, GAME_EVENT.ETERNITY_RESET_AFTER);
@@ -269,6 +277,7 @@ Modal.singularityMilestones = new Modal(SingularityMilestonesModal);
 Modal.pelleEffects = new Modal(PelleEffectsModal);
 Modal.sacrifice = new Modal(SacrificeModal, 1, GAME_EVENT.DIMBOOST_AFTER);
 Modal.breakInfinity = new Modal(BreakInfinityModal, 1, GAME_EVENT.ETERNITY_RESET_AFTER);
+Modal.breakUniverse = new Modal(BreakUniverseModal, 1, GAME_EVENT.COLLAPSE_AFTER);
 Modal.respecIAP = new Modal(RespecIAPModal);
 
 Modal.s12Games = new Modal(S12GamesModal);
@@ -307,7 +316,7 @@ function getSaveInfo(save) {
   resources.imaginaryMachines.copyFrom(new Decimal(save.reality?.iMCap ?? 0));
   // Use max DT instead of current DT because spending it can cause it to drop and trigger the conflict modal
   // unnecessarily. We only use current DT as a fallback (eg. loading a save from pre-reality versions)
-  resources.dilatedTime.copyFrom(new Decimal(save.records?.thisReality.maxDT ?? (save.dilation?.dilatedTime ?? 0)));
+  resources.dilatedTime.copyFrom(new Decimal(save.records?.thisReality.maxDT ?? save.dilation?.dilatedTime ?? 0));
   resources.bestLevel = save.records?.bestReality.glyphLevel ?? 0;
   resources.pelleAM.copyFrom(new Decimal(save.celestials?.pelle.records.totalAntimatter));
   resources.remnants = save.celestials?.pelle.remnants ?? 0;
@@ -323,26 +332,26 @@ Modal.cloudSaveConflict = new Modal(CloudSaveConflictModal);
 Modal.cloudLoadConflict = new Modal(CloudLoadConflictModal);
 Modal.cloudInvalidData = new Modal(CloudInvalidDataModal);
 // eslint-disable-next-line max-params
-Modal.addCloudConflict = function(saveId, saveComparison, cloudSave, localSave, onAccept) {
+Modal.addCloudConflict = function (saveId, saveComparison, cloudSave, localSave, onAccept) {
   Modal.hide();
   ui.view.modal.cloudConflict = {
     saveId,
     saveComparison,
     cloud: getSaveInfo(cloudSave),
     local: getSaveInfo(localSave),
-    onAccept
+    onAccept,
   };
 };
 
-Modal.addImportConflict = function(importingSave, currentSave) {
+Modal.addImportConflict = function (importingSave, currentSave) {
   Modal.hide();
   ui.view.modal.cloudConflict = {
     importingSave: getSaveInfo(importingSave),
-    currentSave: getSaveInfo(currentSave)
+    currentSave: getSaveInfo(currentSave),
   };
 };
 
-Modal.message = new class extends Modal {
+Modal.message = new (class extends Modal {
   show(text, props = {}, messagePriority = 0) {
     if (!GameUI.initialized) return;
     // It might be zero, so explicitly check for undefined
@@ -362,4 +371,4 @@ Modal.message = new class extends Modal {
     this.currPriority = undefined;
     Modal.hide();
   }
-}(MessageModal, 2);
+})(MessageModal, 2);

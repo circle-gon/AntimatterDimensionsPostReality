@@ -1,7 +1,6 @@
 function isEND() {
-  const threshold = GameEnd.endState > END_STATE_MARKERS.END_NUMBERS
-    ? 1
-    : (GameEnd.endState - END_STATE_MARKERS.FADE_AWAY) / 2;
+  const threshold =
+    GameEnd.endState > END_STATE_MARKERS.END_NUMBERS ? 1 : (GameEnd.endState - END_STATE_MARKERS.FADE_AWAY) / 2;
   // Using the Pelle.isDoomed getter here causes this to not update properly after a game restart
   return player.celestials.pelle.doomed && Math.random() < threshold;
 }
@@ -23,7 +22,7 @@ window.formatInt = function formatInt(value) {
   if (num <= 1e12) {
     return formatWithCommas(num.toFixed(0));
   } else {
-    return format(num, 2)
+    return format(num, 2);
   }
 };
 
@@ -32,7 +31,12 @@ window.formatFloat = function formatFloat(value, digits) {
   if (Notations.current.isPainful) {
     return format(value, Math.max(2, digits), digits);
   }
-  return formatWithCommas(value.toFixed(digits));
+
+  if (value <= 1e12) {
+    return formatWithCommas(value.toFixed(digits));
+  } else {
+    return format(value, digits);
+  }
 };
 
 window.formatPostBreak = function formatPostBreak(value, places, placesUnder1000) {
@@ -137,7 +141,7 @@ window.isSingular = function isSingular(amount) {
 const PLURAL_HELPER = new Map([
   [/y$/u, "ies"],
   [/x$/u, "xes"],
-  [/$/u, "s"]
+  [/$/u, "s"],
 ]);
 
 // Some terms require specific (or no) handling when plural. These terms should be added, in Word Case, to this Map.

@@ -14,20 +14,20 @@ window.player = {
     antimatter: Array.range(0, 8).map(() => ({
       bought: 0,
       costBumps: 0,
-      amount: DC.D0
+      amount: DC.D0,
     })),
-    infinity: Array.range(0, 8).map(tier => ({
+    infinity: Array.range(0, 8).map((tier) => ({
       isUnlocked: false,
       bought: 0,
       amount: DC.D0,
       cost: [DC.E8, DC.E9, DC.E10, DC.E20, DC.E140, DC.E200, DC.E250, DC.E280][tier],
-      baseAmount: 0
+      baseAmount: 0,
     })),
-    time: Array.range(0, 8).map(tier => ({
+    time: Array.range(0, 8).map((tier) => ({
       cost: [DC.D1, DC.D5, DC.E2, DC.E3, DC.E2350, DC.E2650, DC.E3000, DC.E3350][tier],
       amount: DC.D0,
-      bought: 0
-    }))
+      bought: 0,
+    })),
   },
   buyUntil10: true,
   sacrificed: DC.D0,
@@ -50,10 +50,10 @@ window.player = {
       current: 0,
       unlocked: 0,
       requirementBits: 0,
-    }
+    },
   },
   infinity: {
-    upgradeBits: 0
+    upgradeBits: 0,
   },
   auto: {
     autobuyersOn: true,
@@ -64,7 +64,7 @@ window.player = {
       glyph: 0,
       time: 0,
       shard: DC.D0,
-      isActive: false
+      isActive: false,
     },
     eternity: {
       mode: 0,
@@ -72,7 +72,7 @@ window.player = {
       increaseWithMult: true,
       time: 1,
       xHighest: DC.D1,
-      isActive: false
+      isActive: false,
     },
     bigCrunch: {
       cost: 1,
@@ -83,7 +83,7 @@ window.player = {
       time: 1,
       xHighest: DC.D1,
       isActive: true,
-      lastTick: 0
+      lastTick: 0,
     },
     galaxy: {
       cost: 1,
@@ -93,7 +93,7 @@ window.player = {
       buyMax: false,
       buyMaxInterval: 0,
       isActive: true,
-      lastTick: 0
+      lastTick: 0,
     },
     dimBoost: {
       cost: 1,
@@ -104,7 +104,7 @@ window.player = {
       galaxies: 10,
       buyMaxInterval: 0,
       isActive: true,
-      lastTick: 0
+      lastTick: 0,
     },
     tickspeed: {
       isUnlocked: false,
@@ -113,14 +113,14 @@ window.player = {
       mode: AUTOBUYER_MODE.BUY_SINGLE,
       isActive: true,
       lastTick: 0,
-      isBought: false
+      isBought: false,
     },
     sacrifice: {
       multiplier: DC.D2,
-      isActive: true
+      isActive: true,
     },
     antimatterDims: {
-      all: Array.range(0, 8).map(tier => ({
+      all: Array.range(0, 8).map((tier) => ({
         isUnlocked: false,
         cost: 1,
         interval: [500, 600, 700, 800, 900, 1000, 1100, 1200][tier],
@@ -128,7 +128,7 @@ window.player = {
         mode: AUTOBUYER_MODE.BUY_10,
         isActive: true,
         lastTick: 0,
-        isBought: false
+        isBought: false,
       })),
       isActive: true,
     },
@@ -197,8 +197,8 @@ window.player = {
       multiplier: new Decimal(1.05),
     },
     singularity: { isActive: false },
-    ipMultBuyer: { isActive: false, },
-    epMultBuyer: { isActive: false, },
+    ipMultBuyer: { isActive: false },
+    epMultBuyer: { isActive: false },
   },
   infinityPoints: DC.D0,
   infinities: DC.D0,
@@ -212,7 +212,7 @@ window.player = {
       uselessNewsClicks: 0,
       paperclips: 0,
       newsQueuePosition: 1000,
-      eiffelTowerChapter: 0
+      eiffelTowerChapter: 0,
     },
     totalSeen: 0,
   },
@@ -235,7 +235,7 @@ window.player = {
   shownRuns: {
     Reality: true,
     Eternity: true,
-    Infinity: true
+    Infinity: true,
   },
   requirementChecks: {
     infinity: {
@@ -264,8 +264,8 @@ window.player = {
     permanent: {
       emojiGalaxies: 0,
       singleTickspeed: 0,
-      perkTreeDragging: 0
-    }
+      perkTreeDragging: 0,
+    },
   },
   records: {
     gameCreatedTime: Date.now(),
@@ -276,12 +276,9 @@ window.player = {
     fullGameCompletions: 0,
     previousRunRealTime: 0,
     totalAntimatter: DC.E1,
-    recentInfinities: Array.range(0, 10).map(() =>
-      [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, DC.D1, ""]),
-    recentEternities: Array.range(0, 10).map(() =>
-      [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
-    recentRealities: Array.range(0, 10).map(() =>
-      [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
+    recentInfinities: Array.range(0, 10).map(() => [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, DC.D1, ""]),
+    recentEternities: Array.range(0, 10).map(() => [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
+    recentRealities: Array.range(0, 10).map(() => [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
     thisInfinity: {
       time: DC.D0,
       realTime: 0,
@@ -356,10 +353,10 @@ window.player = {
     achievementTimes: {},
     seedSelection: SPEEDRUN_SEED_STATE.FIXED,
     initialSeed: 0,
-    previousRuns: {}
+    previousRuns: {},
   },
   IPMultPurchases: 0,
-  version: 24,
+  version: 30,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -434,7 +431,7 @@ window.player = {
         replication: DC.D0,
         dilation: DC.D0,
         effarig: DC.D0,
-        reality: DC.D0
+        reality: DC.D0,
       },
       undo: [],
       sets: new Array(7).fill({
@@ -447,14 +444,17 @@ window.player = {
         trash: AUTO_GLYPH_REJECT.SACRIFICE,
         simple: 0,
         types: GlyphTypes.list
-          .filter(t => ALCHEMY_BASIC_GLYPH_TYPES.includes(t.id))
-          .mapToObject(t => t.id, t => ({
-            rarity: 0,
-            score: 0,
-            effectCount: 0,
-            specifiedMask: 0,
-            effectScores: Array.repeat(0, t.effects.length),
-          })),
+          .filter((t) => ALCHEMY_BASIC_GLYPH_TYPES.includes(t.id))
+          .mapToObject(
+            (t) => t.id,
+            (t) => ({
+              rarity: 0,
+              score: 0,
+              effectCount: 0,
+              specifiedMask: 0,
+              effectScores: Array.repeat(0, t.effects.length),
+            })
+          ),
       },
       createdRealityGlyph: false,
       cosmetics: {
@@ -463,14 +463,14 @@ window.player = {
         unlockedFromNG: [],
         symbolMap: {},
         colorMap: {},
-      }
+      },
     },
     initialSeed: Math.floor(Date.now() * Math.random() + 1),
     // The seed value should get set from initialSeed upon unlocking reality, but we set it to 1 as a fallback in
     // case somehow it doesn't get set properly. Do not change this to 0, as a seed of 0 causes the game to hang
     seed: 1,
     secondGaussian: 1e6,
-    musicSeed: Math.floor(Date.now() * Math.random() + 0xBCDDECCB),
+    musicSeed: Math.floor(Date.now() * Math.random() + 0xbcddeccb),
     musicSecondGaussian: 1e6,
     rebuyables: {
       1: 0,
@@ -525,8 +525,7 @@ window.player = {
         followExecution: true,
         stack: [],
       },
-      scripts: {
-      },
+      scripts: {},
       constants: {},
       constantSortOrder: [],
       execTimer: 0,
@@ -538,9 +537,9 @@ window.player = {
     hasCheckedFilter: false,
   },
   atom: {
-    broken: false
+    broken: false,
   },
-  blackHole: Array.range(0, 2).map(id => ({
+  blackHole: Array.range(0, 2).map((id) => ({
     id,
     intervalUpgrades: 0,
     powerUpgrades: 0,
@@ -563,7 +562,7 @@ window.player = {
       bestRunAM: DC.D1,
       bestAMSet: [],
       perkShop: Array.repeat(0, 5),
-      lastRepeatedMachines: DC.D0
+      lastRepeatedMachines: DC.D0,
     },
     effarig: {
       relicShards: DC.D0,
@@ -574,7 +573,7 @@ window.player = {
         ep: 25,
         repl: 25,
         dt: 25,
-        eternities: 25
+        eternities: 25,
       },
       autoAdjustGlyphWeights: false,
     },
@@ -596,7 +595,7 @@ window.player = {
       hintBits: 0,
       hintUnlockProgress: 0,
       glyphHintsGiven: 0,
-      zeroHintTime: 0
+      zeroHintTime: 0,
     },
     v: {
       unlockBits: 0,
@@ -617,42 +616,41 @@ window.player = {
           memories: 0,
           memoryChunks: 0,
           memoryUpgrades: 0,
-          chunkUpgrades: 0
+          chunkUpgrades: 0,
         },
         effarig: {
           level: 1,
           memories: 0,
           memoryChunks: 0,
           memoryUpgrades: 0,
-          chunkUpgrades: 0
+          chunkUpgrades: 0,
         },
         enslaved: {
           level: 1,
           memories: 0,
           memoryChunks: 0,
           memoryUpgrades: 0,
-          chunkUpgrades: 0
+          chunkUpgrades: 0,
         },
         v: {
           level: 1,
           memories: 0,
           memoryChunks: 0,
           memoryUpgrades: 0,
-          chunkUpgrades: 0
-        }
+          chunkUpgrades: 0,
+        },
       },
-      alchemy: Array.repeat(0, 21)
-        .map(() => ({
-          amount: 0,
-          reaction: false
-        })),
+      alchemy: Array.repeat(0, 21).map(() => ({
+        amount: 0,
+        reaction: false,
+      })),
       highestRefinementValue: {
         power: 0,
         infinity: 0,
         time: 0,
         replication: 0,
         dilation: 0,
-        effarig: 0
+        effarig: 0,
       },
       quoteBits: 0,
       momentumTime: 0,
@@ -661,22 +659,21 @@ window.player = {
       charged: new Set(),
       disCharge: false,
       peakGamespeed: DC.D1,
-      petWithRemembrance: ""
+      petWithRemembrance: "",
     },
     laitela: {
       darkMatter: DC.D0,
       maxDarkMatter: DC.D0,
       run: false,
       quoteBits: 0,
-      dimensions: Array.range(0, 4).map(() =>
-        ({
-          amount: DC.D0,
-          intervalUpgrades: 0,
-          powerDMUpgrades: 0,
-          powerDEUpgrades: 0,
-          timeSinceLastUpdate: 0,
-          ascensionCount: 0
-        })),
+      dimensions: Array.range(0, 4).map(() => ({
+        amount: DC.D0,
+        intervalUpgrades: 0,
+        powerDMUpgrades: 0,
+        powerDEUpgrades: 0,
+        timeSinceLastUpdate: 0,
+        ascensionCount: 0,
+      })),
       entropy: 0,
       thisCompletion: 3600,
       fastestCompletion: 3600,
@@ -721,29 +718,29 @@ window.player = {
         vacuum: {
           fill: DC.D0,
           active: false,
-          reducedTo: 1
+          reducedTo: 1,
         },
         decay: {
           fill: DC.D0,
           active: false,
           percentageSpent: 0,
-          reducedTo: 1
+          reducedTo: 1,
         },
         chaos: {
           fill: 0,
           active: false,
-          reducedTo: 1
+          reducedTo: 1,
         },
         recursion: {
           fill: DC.D0,
           active: false,
-          reducedTo: 1
+          reducedTo: 1,
         },
         paradox: {
           fill: DC.D0,
           active: false,
-          reducedTo: 1
-        }
+          reducedTo: 1,
+        },
       },
       progressBits: 0,
       galaxyGenerator: {
@@ -751,16 +748,16 @@ window.player = {
         spentGalaxies: 0,
         generatedGalaxies: 0,
         phase: 0,
-        sacrificeActive: false
+        sacrificeActive: false,
       },
       quoteBits: 0,
       collapsed: {
         upgrades: false,
         rifts: false,
-        galaxies: false
+        galaxies: false,
       },
       showBought: false,
-    }
+    },
   },
   isGameEnd: false,
   tabNotifications: new Set(),
@@ -778,7 +775,7 @@ window.player = {
     notation: "Mixed scientific",
     notationDigits: {
       comma: 5,
-      notation: 9
+      notation: 9,
     },
     sidebarResourceID: 0,
     retryChallenge: false,
@@ -843,7 +840,7 @@ window.player = {
       tachyonParticles: true,
       reality: true,
       background: true,
-      blobSnowflakes: 16
+      blobSnowflakes: 16,
     },
     confirmations: {
       armageddon: true,
@@ -866,7 +863,8 @@ window.player = {
       antimatterGalaxy: true,
       dimensionBoost: true,
       switchAutomatorMode: true,
-      respecIAP: true
+      respecIAP: true,
+      collapse: true,
     },
     awayProgress: {
       antimatter: true,
@@ -892,7 +890,7 @@ window.player = {
       singularities: true,
       celestialMemories: true,
       blackHole: true,
-      realityShards: true
+      realityShards: true,
     },
     hiddenTabBits: 0,
     hiddenSubtabBits: Array.repeat(0, 11),
@@ -914,7 +912,7 @@ window.player = {
     enabled: false,
     checkoutSession: {
       id: false,
-    }
+    },
   },
 };
 
@@ -952,6 +950,11 @@ export const Player = {
     return player.records.thisEternity.maxIP.gte(Player.eternityGoal);
   },
 
+  get canCollapse() {
+    // TODOM: add actual condition here
+    return true;
+  },
+
   get bestRunIPPM() {
     return GameCache.bestRunIPPM.value;
   },
@@ -975,13 +978,11 @@ export const Player = {
 
   get infinityLimit() {
     const challenge = NormalChallenge.current || InfinityChallenge.current;
-    return challenge === undefined ? Decimal.MAX_LIMIT: challenge.goal;
+    return challenge === undefined ? Decimal.MAX_LIMIT : challenge.goal;
   },
 
   get eternityGoal() {
-    return EternityChallenge.isRunning
-      ? EternityChallenge.current.currentGoal
-      : requiredIPForEP(1);
+    return EternityChallenge.isRunning ? EternityChallenge.current.currentGoal : requiredIPForEP(1);
   },
 
   get automatorUnlocked() {
@@ -1029,7 +1030,7 @@ export const Player = {
       default:
         throw Error("Unrecognized prestige layer for requirement reset");
     }
-  }
+  },
 };
 
 export function guardFromNaNValues(obj) {
@@ -1064,7 +1065,7 @@ export function guardFromNaNValues(obj) {
             throw new Error("NaN player property assignment");
           }
           value = newValue;
-        }
+        },
       });
     }
 
@@ -1084,7 +1085,7 @@ export function guardFromNaNValues(obj) {
             throw new Error("NaN player property assignment");
           }
           value = newValue;
-        }
+        },
       });
     }
   }
