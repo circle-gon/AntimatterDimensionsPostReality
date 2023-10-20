@@ -166,13 +166,14 @@ export const Tickspeed = {
   },
 
   get baseValue() {
+    const upgradeMult = powAndCap(getTickSpeedMultiplier().log10() * this.totalUpgrades);
     return DC.E3.timesEffectsOf(
       Achievement(36),
       Achievement(45),
       Achievement(66),
       Achievement(83)
     )
-      .times(getTickSpeedMultiplier().pow(this.totalUpgrades));
+      .times(upgradeMult);
   },
 
   get totalUpgrades() {

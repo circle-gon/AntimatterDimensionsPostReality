@@ -45,20 +45,27 @@ export const Laitela = {
     }
   },
   get matterExtraPurchaseFactor() {
-    return (1 + 0.5 * Math.pow(Decimal.pLog10(Currency.darkMatter.max) / 50, 0.4) *
-      (1 + SingularityMilestone.continuumMult.effectOrDefault(0)));
+    return (
+      1 +
+      0.5 *
+        Math.pow(Decimal.pLog10(Currency.darkMatter.max) / 50, 0.4) *
+        (1 + SingularityMilestone.continuumMult.effectOrDefault(0))
+    );
   },
   get realityReward() {
-    return Math.clampMin(Math.pow(100, this.difficultyTier) *
-      Math.pow(360 / player.celestials.laitela.fastestCompletion, 2), 1);
+    return Math.clampMin(
+      Math.pow(100, this.difficultyTier) * Math.pow(360 / player.celestials.laitela.fastestCompletion, 2),
+      1
+    );
   },
   // Note that entropy goes from 0 to 1, with 1 being completion
   get entropyGainPerSecond() {
     return Math.clamp(Math.pow(Currency.antimatter.value.add(1).log10() / 1e11, 2), 0, 100) / 200;
   },
   get darkMatterMultGain() {
-    return Decimal.pow(Currency.darkMatter.value.dividedBy(this.annihilationDMRequirement)
-      .plus(1).log10(), 1.5).mul(ImaginaryUpgrade(21).effectOrDefault(1));
+    return Decimal.pow(Currency.darkMatter.value.dividedBy(this.annihilationDMRequirement).plus(1).log10(), 1.5).mul(
+      ImaginaryUpgrade(21).effectOrDefault(1)
+    );
   },
   get darkMatterMult() {
     return this.celestial.darkMatterMult;
@@ -86,16 +93,23 @@ export const Laitela = {
   // Greedily buys the cheapest available upgrade until none are affordable
   maxAllDMDimensions(maxTier) {
     // Note that tier is 1-indexed
-    const unlockedDimensions = DarkMatterDimensions.all
-      .filter(d => d.isUnlocked && d.tier <= maxTier);
+    const unlockedDimensions = DarkMatterDimensions.all.filter((d) => d.isUnlocked && d.tier <= maxTier);
     const upgradeInfo = unlockedDimensions
-      .map(d => [
-        [d.rawIntervalCost, d.intervalCostIncrease, d.maxIntervalPurchases, x => d.buyManyInterval(x)],
-        [d.rawPowerDMCost, d.powerDMCostIncrease, Infinity, x => d.buyManyPowerDM(x)],
-        [d.rawPowerDECost, d.powerDECostIncrease, Infinity, x => d.buyManyPowerDE(x)]])
+      .map((d) => [
+        [
+          d.rawIntervalCost,
+          d.intervalCostIncrease,
+          d.maxIntervalPurchases,
+          d.data.intervalUpgrades,
+          (x) => d.buyManyInterval(x),
+        ],
+        [d.rawPowerDMCost, d.powerDMCostIncrease, Infinity, d.data.powerDMUpgrades, (x) => d.buyManyPowerDM(x)],
+        [d.rawPowerDECost, d.powerDECostIncrease, Infinity, d.data.powerDEUpgrade, (x) => d.buyManyPowerDE(x)],
+      ])
       .flat(1);
-    const buy = function(upgrade, purchases) {
-      upgrade[3](purchases);
+    const buy = function (upgrade, purchases) {
+      upgrade[4](purchases);
+      upgrade[3] += purchases;
       upgrade[0] = upgrade[0].times(Decimal.pow(upgrade[1], purchases));
       upgrade[2] -= purchases;
     };
@@ -105,8 +119,13 @@ export const Laitela = {
       const purchases = Math.clamp(Math.floor(darkMatter.times(0.02).div(upgrade[0]).log(upgrade[1])), 0, upgrade[2]);
       buy(upgrade, purchases);
     }
-    while (upgradeInfo.some(upgrade => upgrade[0].lte(darkMatter) && upgrade[2] > 0)) {
-      const cheapestUpgrade = upgradeInfo.filter(upgrade => upgrade[2] > 0).sort((a, b) => a[0].minus(b[0]).sign())[0];
+    // make sure that we don't forever buy 1 because precision issues
+    while (
+      upgradeInfo.some((upgrade) => upgrade[0].lte(darkMatter) && upgrade[2] > 0 && upgrade[3] + 1 !== upgrade[3])
+    ) {
+      const cheapestUpgrade = upgradeInfo
+        .filter((upgrade) => upgrade[2] > 0)
+        .sort((a, b) => a[0].minus(b[0]).sign())[0];
       buy(cheapestUpgrade, 1);
     }
   },
@@ -121,7 +140,7 @@ export const Laitela = {
     this.celestial.singularityCapIncreases = 0;
   },
   quotes: Quotes.laitela,
-  symbol: "ᛝ"
+  symbol: "ᛝ",
 };
 
 EventHub.logic.on(GAME_EVENT.TAB_CHANGED, () => {

@@ -31,7 +31,7 @@ export default {
       darkEnergyPerSecond: 0,
       portionDE: 0,
       productionPerSecond: new Decimal(0),
-      percentPerSecond: 0,
+      percentPerSecond: new Decimal(0),
       hoverOverAscension: false,
     };
   },
@@ -65,7 +65,7 @@ export default {
     },
     intervalText() {
       const interval = this.hoverOverAscension ? this.intervalAfterAscension : this.interval;
-      const str = interval > 1000 ? `${format(interval / 1000, 2, 2)}s` : `${format(interval, 2, 2)}ms`;
+      const str = interval >= 1000 ? `${format(interval / 1000, 2, 2)}s` : `${format(interval, 2, 2)}ms`;
       const line1 = this.hoverOverAscension ? `<b>${str}</b>` : str;
 
       let line2;
@@ -125,7 +125,7 @@ export default {
       this.darkEnergyPerSecond = dim.productionPerSecond;
       this.portionDE = this.darkEnergyPerSecond.div(Currency.darkEnergy.productionPerSecond).toNumber();
       this.productionPerSecond = this.dimensionProduction(this.tier);
-      this.percentPerSecond = this.productionPerSecond.div(this.amount).toNumber();
+      this.percentPerSecond = this.productionPerSecond.div(this.amount).mul(100);
       if (!this.isIntervalCapped) this.hoverOverAscension = false;
     },
     handleIntervalClick() {
@@ -167,7 +167,7 @@ export default {
     </div>
     <div>
       Average gain: {{ format(productionPerSecond, 2, 2) }}/s
-      (+{{ formatPercents(percentPerSecond, 2, 2) }}/s)
+      (+{{ format(percentPerSecond, 2, 2) }}%/s)
     </div>
     <div class="c-dark-matter-dimension-buttons">
       <button

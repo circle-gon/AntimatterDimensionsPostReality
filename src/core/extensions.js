@@ -347,11 +347,11 @@ Decimal.prototype.toString = function () {
     return this.toNumber().toString();
   }
 
-  return this.m + "e" + (this.e >= 0 ? "+" : "") + formatAllDigits(this.e);
+  return this.m + "e" + formatAllDigits(this.e);
 }
 
 window.powAndCap = function(num) {
-  return Decimal.pow10(Math.min(num, Number.MAX_VALUE));
+  return Decimal.pow10(Math.clamp(num, -Number.MAX_VALUE, Number.MAX_VALUE));
 }
 
 Decimal.MAX_LIMIT = Decimal.pow10(Number.MAX_VALUE)

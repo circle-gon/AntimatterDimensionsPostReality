@@ -203,7 +203,6 @@ export class DarkMatterDimensionState extends DimensionState {
       .times(Decimal.pow(this.intervalCostIncrease, x).minus(1))
       .div(this.intervalCostIncrease - 1)
       .floor();
-    console.log(cost);
     if (!Currency.darkMatter.purchase(cost)) return false;
     this.data.intervalUpgrades += x;
     return true;
@@ -265,9 +264,6 @@ export class DarkMatterDimensionState extends DimensionState {
       Math.floor(Decimal.div(this.intervalPurchaseCap, realInterval).log10() / Math.log10(singMult)) + 1,
       0
     );
-
-    // TODO: deal with actually subtracting the cost to buy that many
-    //const leftovers = Decimal.pow(singMult, ascensionsToBuy).mul(realInterval).div(this.intervalPurchaseCap).recip()
 
     this.data.ascensionCount += ascensionsToBuy;
     this.buyManyInterval(possiblePurchases);

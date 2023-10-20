@@ -50,7 +50,7 @@ export class AntimatterDimensionAutobuyerState extends UpgradeableAutobuyerState
 
   get bulk() {
     // Use 1e100 to avoid issues with Infinity.
-    return this.hasUnlimitedBulk ? 1e100 : Math.clampMax(this.data.bulk, this.bulkCap);
+    return this.hasUnlimitedBulk ? Infinity : Math.clampMax(this.data.bulk, this.bulkCap);
   }
 
   get hasUnlimitedBulk() {
