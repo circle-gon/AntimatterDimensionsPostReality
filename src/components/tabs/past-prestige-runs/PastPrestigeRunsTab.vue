@@ -9,6 +9,13 @@ export default {
   data() {
     return {
       layers: {
+        atom: {
+          name: "Collapse",
+          plural: "Collapses",
+          currency: "Atom",
+          condition: () => PlayerProgress.atomUnlocked(),
+          getRuns: () => player.records.recentCollapses
+        },
         reality: {
           name: "Reality",
           plural: "Realities",

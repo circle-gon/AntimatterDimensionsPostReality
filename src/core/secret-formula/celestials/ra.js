@@ -179,8 +179,8 @@ export const ra = {
     },
     enslavedXP: {
       id: 16,
-      reward: "All Memory Chunks produce more Memories based on total time played",
-      effect: () => 1 + player.records.totalTimePlayed.log10() / 200,
+      reward: () => `All Memory Chunks produce more Memories based on total time played${atomTimeText()}`,
+      effect: () => 1 + player.records.thisCollapse.time.log10() / 200,
       pet: "enslaved",
       level: 5,
       displayIcon: `<span class="fas fa-stopwatch"></span>`

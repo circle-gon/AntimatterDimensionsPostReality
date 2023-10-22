@@ -85,7 +85,7 @@ export const Time = {
    */
   get timeSinceBlackHole() {
     return this.fromMilliseconds(() => {
-      const diff = player.records.totalTimePlayed.sub(player.records.timePlayedAtBHUnlock);
+      const diff = player.records.thisCollapse.time.sub(player.records.timePlayedAtBHUnlock);
       return diff.max(0);
     });
   },
@@ -271,6 +271,58 @@ export const Time = {
    */
   set bestRealityRealTime(timespan) {
     this.toMilliseconds(timespan, value => player.records.bestReality.realTime = value);
+  },
+
+  /**
+   * @returns {TimeSpan}
+   */
+  get thisCollapse() {
+    return this.fromMilliseconds(() => player.records.thisCollapse.time);
+  },
+  /**
+   * @param {TimeSpan} timespan
+   */
+  set thisCollapse(timespan) {
+    this.toMilliseconds(timespan, value => player.records.thisCollapse.time = value);
+  },
+
+  /**
+   * @returns {TimeSpan}
+   */
+  get thisCollapseRealTime() {
+    return this.fromMilliseconds(() => player.records.thisCollapse.realTime);
+  },
+  /**
+   * @param {TimeSpan} timespan
+   */
+  set thisCollapseRealTime(timespan) {
+    this.toMilliseconds(timespan, value => player.records.thisCollapse.realTime = value);
+  },
+
+  /**
+   * @returns {TimeSpan}
+   */
+  get bestCollapse() {
+    return this.fromMilliseconds(() => player.records.bestCollapse.time);
+  },
+  /**
+   * @param {TimeSpan} timespan
+   */
+  set bestCollapse(timespan) {
+    this.toMilliseconds(timespan, value => player.records.bestCollapse.time = value);
+  },
+
+  /**
+   * @returns {TimeSpan}
+   */
+  get bestCollapseRealTime() {
+    return this.fromMilliseconds(() => player.records.bestCollapse.realTime);
+  },
+  /**
+   * @param {TimeSpan} timespan
+   */
+  set bestCollapseRealTime(timespan) {
+    this.toMilliseconds(timespan, value => player.records.bestCollapse.realTime = value);
   },
 
   /**

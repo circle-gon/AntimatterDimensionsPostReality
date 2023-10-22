@@ -4,9 +4,21 @@ export default {
   data() {
     return {
       isVisible: true,
+      canCollapse: false,
     };
   },
+  computed: {
+    buttonClassObject() {
+      return {
+        "o-collapse-button": true,
+        "o-collapse-button--unavailable": !this.canCollapse,
+      };
+    },
+  },
   methods: {
+    update() {
+      this.canCollapse = Player.canCollapse;
+    },
     collapse() {
       collapseResetRequest();
     },
@@ -15,6 +27,10 @@ export default {
 </script>
 <template>
   <div>
-    <button @click="collapse">Collapse this Universe</button>
+    <button 
+      :class="buttonClassObject"
+      @click="collapse" 
+      class="c-collapse-button"
+    >Collapse this Universe</button>
   </div>
 </template>

@@ -842,6 +842,39 @@ button:focus {
   padding: 1rem;
 }
 
+.l-collapse-button {
+  width: 35rem;
+  height: 6rem;
+}
+
+.t-metro .l-collapse-button {
+  box-shadow: 0.1rem 0.1rem 0.1rem 0 #9e9e9e;
+}
+
+.l-collapse-button__contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.c-collapse-button__header {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.c-collapse-button {
+  width: 50rem;
+  height: 100%;
+  font-family: Typewriter;
+  font-size: 1.f2rem;
+  font-weight: bold;
+  background: var(--color-background);
+  border-style: solid;
+  border-width: var(--var-border-width, 0.2rem);
+  border-radius: var(--var-border-radius, 0.4rem);
+  transition-duration: 0.2s;
+}
+
 @keyframes a-celstial-reward-glow {
   0% { box-shadow: inset 0 0 4rem var(--color-celestials); }
   50% { box-shadow: inset 0 0 0; }
@@ -9302,4 +9335,33 @@ input.o-automator-block-input {
 .l-fill-container {
   width: 100%;
   height: 100%;
+}
+
+.o-collapse-button {
+  font-weight: bold;
+  color: var(--color-atom);
+  background-color: var(--color-prestige--accent);
+  border-color: var(--color-atom);
+}
+
+.o-collapse-button:hover {
+  color: black;
+  background-color: var(--color-atom);
+}
+
+.o-collapse-button span {
+  transition-duration: 0.2s;
+}
+
+.o-collapse-button:hover span {
+  color: black;
+}
+
+.t-metro .o-collapse-button {
+  box-shadow: 0.1rem 0.1rem 0.1rem 0 #9e9e9e;
+}
+
+.o-collapse-button--unavailable {
+  opacity: 0.5;
+  cursor: default;
 }

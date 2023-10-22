@@ -34,6 +34,10 @@ class AchievementState extends GameMechanicState {
     return this.row < 18;
   }
 
+  get isPreAtom() {
+    return this.row < 19;
+  }
+
   get isUnlocked() {
     return (player.achievementBits[this.row - 1] & this._bitmask) !== 0;
   }
@@ -112,6 +116,13 @@ export const Achievements = {
     return Achievements.all.filter(ach => ach.isPrePelle);
   },
 
+  /**
+   * @type {AchievementState[]}
+   */
+  get preAtom() {
+    return Achievements.all.filter(ach => ach.isPreAtom);
+  },
+
   get allRows() {
     const count = Achievements.all.map(a => a.row).max();
     return Achievements.rows(1, count);
@@ -124,6 +135,11 @@ export const Achievements = {
 
   get prePelleRows() {
     const count = Achievements.prePelle.map(a => a.row).max();
+    return Achievements.rows(1, count);
+  },
+
+  get preAtomRows() {
+    const count = Achievements.preAtom.map(a => a.row).max();
     return Achievements.rows(1, count);
   },
 
@@ -141,7 +157,7 @@ export const Achievements = {
   },
 
   autoAchieveUpdate(diff) {
-    if (!PlayerProgress.realityUnlocked()) return;
+    if (!PlayerProgress.hasRealitied()) return;
     if (!player.reality.autoAchieve || RealityUpgrade(8).isLockingMechanics) {
       player.reality.achTimer = player.reality.achTimer.add(diff).min(this.period);
       return;
@@ -160,10 +176,10 @@ export const Achievements = {
   },
 
   get timeToNextAutoAchieve() {
-    if (!PlayerProgress.realityUnlocked()) return DC.D0;
-    if (GameCache.achievementPeriod.value === 0) return DC.D0;
+    if (!PlayerProgress.hasRealitied()) return DC.D0;
+    if (this.period === 0) return DC.D0;
     if (Achievements.preReality.countWhere(a => !a.isUnlocked) === 0) return DC.D0;
-    return this.period.sub(player.reality.achTimer);
+    return Decimal.sub(this.period, player.reality.achTimer);
   },
 
   _power: new Lazy(() => {

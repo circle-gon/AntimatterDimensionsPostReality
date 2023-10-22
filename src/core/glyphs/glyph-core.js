@@ -497,7 +497,7 @@ export const Glyphs = {
   isMusicGlyph(glyph) {
     return glyph?.cosmetic === "music";
   },
-  removeFromInventory(glyph) {
+  removeFromInventory(glyph, dispatch = true) {
     // This can get called on a glyph not in inventory, during auto sacrifice.
     if (glyph.idx === null) return;
     this.validate();
@@ -505,7 +505,7 @@ export const Glyphs = {
     if (index < 0) return;
     this.inventory[glyph.idx] = null;
     player.reality.glyphs.inventory.splice(index, 1);
-    EventHub.dispatch(GAME_EVENT.GLYPHS_CHANGED);
+    if (dispatch) EventHub.dispatch(GAME_EVENT.GLYPHS_CHANGED);
     this.validate();
   },
   validate() {

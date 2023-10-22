@@ -87,7 +87,7 @@ export const Laitela = {
     this.celestial.darkMatterMult = this.celestial.darkMatterMult.add(this.darkMatterMultGain);
     DarkMatterDimensions.reset();
     Laitela.quotes.annihilation.show();
-    Achievement(176).unlock();
+    if (!force) Achievement(176).unlock();
     return true;
   },
   // Greedily buys the cheapest available upgrade until none are affordable

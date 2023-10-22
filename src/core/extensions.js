@@ -329,17 +329,17 @@ function formatAllDigits(n) {
   });
 }
 
-// TODO: fix the the thing for real
+// TODOM: fix the the thing for real
 Decimal.prototype.toString = function () {
   if (isNaN(this.m) || isNaN(this.e)) {
     return "NaN";
   }
 
-  if (this.e >= Number.MAX_VALUE) {
+  if (this.e > Number.MAX_VALUE) {
     return this.m > 0 ? "Infinity" : "-Infinity";
   }
 
-  if (this.e <= -Number.MAX_VALUE || this.m === 0) {
+  if (this.e < -Number.MAX_VALUE || this.m === 0) {
     return "0";
   }
 

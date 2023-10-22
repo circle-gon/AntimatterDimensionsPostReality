@@ -102,7 +102,7 @@ export const confirmationTypes = [
   {
     name: "Collapse",
     option: "collapse",
-    isUnlocked: () => Player.canCollapse,
+    isUnlocked: () => PlayerProgress.atomUnlocked(),
   },
   {
     name: "Respec Shop Purchases",

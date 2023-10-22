@@ -8,7 +8,7 @@ export default {
   components: {
     SwapAchievementImagesButton,
     NormalAchievementRow,
-    PrimaryToggleButton
+    PrimaryToggleButton,
   },
   data() {
     return {
@@ -26,7 +26,7 @@ export default {
       achMultToBH: false,
       achMultToTP: false,
       achMultToTT: false,
-      renderedRowIndices: []
+      renderedRowIndices: [],
     };
   },
   computed: {
@@ -60,7 +60,7 @@ export default {
     hideCompletedRows(newValue) {
       player.options.hideCompletedAchievementRows = newValue;
       this.startRowRendering();
-    }
+    },
   },
   created() {
     this.startRowRendering();
@@ -74,12 +74,12 @@ export default {
       this.achievementPower = Achievements.power;
       this.achTPEffect = RealityUpgrade(8).config.effect();
       this.achCountdown = Achievements.timeToNextAutoAchieve.div(gameSpeedupFactor).toNumber();
-      this.totalCountdown = 
-        Achievements.timeToNextAutoAchieve
-          .add((Achievements.preReality.countWhere(a => !a.isUnlocked) - 1) * Achievements.period)
-          .div(gameSpeedupFactor).toNumber();
-      this.missingAchievements = Achievements.preReality.countWhere(a => !a.isUnlocked);
-      this.showAutoAchieve = PlayerProgress.realityUnlocked() && !Perk.achievementGroup5.isBought;
+      this.totalCountdown = Achievements.timeToNextAutoAchieve
+        .add((Achievements.preReality.countWhere((a) => !a.isUnlocked) - 1) * Achievements.period)
+        .div(gameSpeedupFactor)
+        .toNumber();
+      this.missingAchievements = Achievements.preReality.countWhere((a) => !a.isUnlocked);
+      this.showAutoAchieve = PlayerProgress.hasRealitied() && !Perk.achievementGroup5.isBought;
       this.isAutoAchieveActive = player.reality.autoAchieve;
       this.hideCompletedRows = player.options.hideCompletedAchievementRows;
       this.achMultBreak = BreakInfinityUpgrade.achievementMult.canBeApplied;
@@ -93,11 +93,11 @@ export default {
       const unlockedRows = [];
       const lockedRows = [];
       for (let i = 0; i < this.rows.length; i++) {
-        const targetArray = this.rows[i].every(a => a.isUnlocked) ? unlockedRows : lockedRows;
+        const targetArray = this.rows[i].every((a) => a.isUnlocked) ? unlockedRows : lockedRows;
         targetArray.push(i);
       }
-      const renderedLockedRows = lockedRows.filter(row => this.renderedRowIndices.includes(row));
-      const nonRenderedLockedRows = lockedRows.filter(row => !this.renderedRowIndices.includes(row));
+      const renderedLockedRows = lockedRows.filter((row) => this.renderedRowIndices.includes(row));
+      const nonRenderedLockedRows = lockedRows.filter((row) => !this.renderedRowIndices.includes(row));
       let rowsToRender;
       if (player.options.hideCompletedAchievementRows) {
         this.renderedRowIndices = unlockedRows.concat(renderedLockedRows);
@@ -125,7 +125,7 @@ export default {
       return this.isDoomed ? false : row === 17;
     },
     timeDisplayNoDecimals,
-  }
+  },
 };
 </script>
 
@@ -145,9 +145,7 @@ export default {
       />
     </div>
     <div class="c-achievements-tab__header c-achievements-tab__header--multipliers">
-      <span v-if="isDoomed">
-        All Achievement multipliers have been disabled<SwapAchievementImagesButton />
-      </span>
+      <span v-if="isDoomed"> All Achievement multipliers have been disabled<SwapAchievementImagesButton /> </span>
       <span v-else>
         Achievements provide a multiplier to<SwapAchievementImagesButton />
         <div v-html="boostText" />
@@ -156,32 +154,24 @@ export default {
     <div class="c-achievements-tab__header">
       Achievements with a <i class="fas fa-star" /> icon also give an additional reward.
     </div>
-    <div
-      v-if="showAutoAchieve"
-      class="c-achievements-tab__header"
-    >
+    <div v-if="showAutoAchieve" class="c-achievements-tab__header">
       <div v-if="achCountdown > 0">
         Automatically gain the next missing Achievement in
         {{ timeDisplayNoDecimals(achCountdown) }}<span v-if="!isAutoAchieveActive"> once Auto is turned on</span>.
         (left-to-right, top-to-bottom)
       </div>
       <div v-else-if="missingAchievements !== 0">
-        Automatically gain the next missing Achievement as soon as you enable Auto Achievements.
-        (left-to-right, top-to-bottom)
+        Automatically gain the next missing Achievement as soon as you enable Auto Achievements. (left-to-right,
+        top-to-bottom)
       </div>
       <div v-if="totalCountdown > 0">
-        You will regain all remaining achievements after {{ timeDisplayNoDecimals(totalCountdown) }} if Auto
-        Achievement <span v-if="isAutoAchieveActive">stays enabled</span><span v-else>is turned on</span>.
+        You will regain all remaining achievements after {{ timeDisplayNoDecimals(totalCountdown) }} if Auto Achievement
+        <span v-if="isAutoAchieveActive">stays enabled</span><span v-else>is turned on</span>.
       </div>
-      <br>
+      <br />
     </div>
     <div class="l-achievement-grid">
-      <NormalAchievementRow
-        v-for="(row, i) in renderedRows"
-        :key="i"
-        :row="row"
-        :is-obscured="isObscured(i)"
-      />
+      <NormalAchievementRow v-for="(row, i) in renderedRows" :key="i" :row="row" :is-obscured="isObscured(i)" />
     </div>
   </div>
 </template>

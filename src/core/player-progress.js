@@ -16,8 +16,16 @@ export class PlayerProgress {
     return new Decimal(this._player.eternities).gt(0) || this.isRealityUnlocked;
   }
 
-  get isRealityUnlocked() {
+  get hasRealitied() {
     return this._player.realities > 0;
+  }
+
+  get isRealityUnlocked() {
+    return this.hasRealitied || this.isAtomUnlocked;
+  }
+
+  get isAtomUnlocked() {
+    return this._player.atom.resetCount > 0;
   }
 
   get hasFullCompletion() {
@@ -52,8 +60,16 @@ export class PlayerProgress {
     return TimeStudy.dilation.isBought;
   }
 
+  static hasRealitied() {
+    return PlayerProgress.current.hasRealitied;
+  }
+
   static realityUnlocked() {
     return PlayerProgress.current.isRealityUnlocked;
+  }
+
+  static atomUnlocked() {
+    return PlayerProgress.current.isAtomUnlocked;
   }
 
   static seenAlteredSpeed() {
@@ -62,10 +78,10 @@ export class PlayerProgress {
   }
 
   static challengeCompleted() {
-    return NormalChallenges.all.slice(1).some(c => c.isCompleted);
+    return NormalChallenges.all.slice(1).some((c) => c.isCompleted);
   }
 
   static infinityChallengeCompleted() {
-    return InfinityChallenges.all.some(c => c.isCompleted);
+    return InfinityChallenges.all.some((c) => c.isCompleted);
   }
 }

@@ -469,7 +469,7 @@ export const tabs = [
     name: "Atom",
     UIClass: "o-tab-btn--atom",
     hideAt: 2.95,
-    condition: () => true,
+    condition: () => PlayerProgress.atomUnlocked(),
     id: 11,
     hidable: true,
     subtabs: [

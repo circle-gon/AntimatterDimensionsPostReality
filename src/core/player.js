@@ -278,7 +278,8 @@ window.player = {
     totalAntimatter: DC.E1,
     recentInfinities: Array.range(0, 10).map(() => [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, DC.D1, ""]),
     recentEternities: Array.range(0, 10).map(() => [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
-    recentRealities: Array.range(0, 10).map(() => [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
+    recentRealities: Array.range(0, 10).map(() => [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, 1, "", 0, DC.D0, DC.D0]),
+    recentCollapses: Array.range(0, 10).map(() => [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, DC.D1]),
     thisInfinity: {
       time: DC.D0,
       realTime: 0,
@@ -336,6 +337,19 @@ window.player = {
       iMCapSet: [],
       laitelaSet: [],
     },
+    thisCollapse: {
+      time: DC.D0,
+      realTime: 0,
+      maxAM: DC.D0,
+      maxIP: DC.D0,
+      maxEP: DC.D0,
+      maxRM: DC.D0,
+      maxIM: DC.D0
+    },
+    bestCollapse: {
+      time: Decimal.MAX_LIMIT,
+      realTime: Number.MAX_VALUE
+    }
   },
   speedrun: {
     isUnlocked: false,
@@ -538,6 +552,8 @@ window.player = {
   },
   atom: {
     broken: false,
+    resetCount: 0,
+    atoms: DC.D0,
   },
   blackHole: Array.range(0, 2).map((id) => ({
     id,
@@ -951,8 +967,7 @@ export const Player = {
   },
 
   get canCollapse() {
-    // TODOM: add actual condition here
-    return true;
+    return Pelle.isDoomed && player.records.thisInfinity.maxAM.gte(Decimal.pow10(400e6));
   },
 
   get bestRunIPPM() {

@@ -195,16 +195,14 @@ export const V = {
     this.spaceTheorems = sum;
   },
   reset() {
-    player.celestials.v = {
-      unlockBits: 0,
-      run: false,
-      quotes: [],
-      runUnlocks: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      goalReductionSteps: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      STSpent: 0,
-      runGlyphs: [[], [], [], [], [], [], [], [], []],
-      runRecords: [-10, 0, 0, 0, 0, 0, 0, 0, 0],
-    };
+    const v = player.celestials.v
+    v.unlockBits = 0
+    v.run = false
+    v.runUnlocks = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    v.goalReductionSteps = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    v.STSpent = 0
+    v.runGlyphs = [[], [], [], [], [], [], [], [], []]
+    v.runRecords = [-10, 0, 0, 0, 0, 0, 0, 0, 0]
     this.spaceTheorems = 0;
   },
   get availableST() {

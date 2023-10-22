@@ -232,6 +232,13 @@ export function resetEternityRuns() {
   GameCache.averageRealTimePerEternity.invalidate();
 }
 
+export function resetRealityRuns() {
+  player.records.recentRealities = Array.from(
+    { length: 10 },
+    () => [Decimal.MAX_LIMIT, Number.MAX_VALUE, DC.D1, 1, "", 0, DC.D0, DC.D0]
+  );
+}
+
 // Player gains 50% of the eternities they would get if they continuously repeated their fastest eternity, if they
 // have the auto-eternity milestone and turned on eternity autobuyer with 0 EP
 export function getEternitiedMilestoneReward(ms, considerMilestoneReached) {
@@ -263,6 +270,11 @@ export function addRealityTime(time, realTime, rm, level, realities, ampFactor, 
   player.records.recentRealities.pop();
   player.records.recentRealities.unshift([time, realTime, rm.times(ampFactor),
     realities, reality, level, shards.mul(ampFactor), projIM]);
+}
+
+export function addCollapseTime(time, realTime, atoms, collapses) {
+  player.records.recentCollapses.pop();
+  player.records.recentCollapses.unshift([time, realTime, atoms, collapses])
 }
 
 export function gainedInfinities() {
@@ -404,6 +416,7 @@ export function realTimeMechanics(realDiff) {
     player.records.thisInfinity.realTime += realDiff;
     player.records.thisEternity.realTime += realDiff;
     player.records.thisReality.realTime += realDiff;
+    player.records.thisCollapse.realTime += realDiff;
     Enslaved.storeRealTime();
     // Most autobuyers will only tick usefully on the very first tick, but this needs to be here in order to allow
     // the autobuyers unaffected by time storage to tick as well
@@ -413,8 +426,6 @@ export function realTimeMechanics(realDiff) {
   }
   return false;
 }
-
-window.EAZY_SPEED = 1;
 
 // "passDiff" is in ms. It is only unspecified when it's being called normally and not due to simulating time, in which
 // case it uses the gap between now and the last time the function was called (capped at a day). This is on average
@@ -436,9 +447,9 @@ export function gameLoop(passDiff, options = {}) {
 
   let diff = passDiff;
   const thisUpdate = Date.now();
-  const realDiff = (diff === undefined
+  const realDiff = diff === undefined
     ? Math.clamp(thisUpdate - player.lastUpdate, 1, 8.64e7)
-    : diff) * window.EAZY_SPEED;
+    : diff;
   if (!GameStorage.ignoreBackupTimer) player.backupTimer += realDiff;
 
   // For single ticks longer than a minute from the GameInterval loop, we assume that the device has gone to sleep or
@@ -542,6 +553,8 @@ export function gameLoop(passDiff, options = {}) {
     }
     player.records.thisReality.realTime += realDiff;
     player.records.thisReality.time = player.records.thisReality.time.add(diff);
+    player.records.thisCollapse.realTime += realDiff;
+    player.records.thisCollapse.time = player.records.thisCollapse.time.add(diff);
   }
 
   DeltaTimeState.update(realDiff, diff);

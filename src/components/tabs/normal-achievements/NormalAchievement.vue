@@ -27,7 +27,7 @@ export default {
       isMouseOver: false,
       isCancer: false,
       showUnlockState: false,
-      realityUnlocked: false,
+      hasRealitied: false,
       garbleTimer: 0,
       garbleKey: 0,
       achievementTime: 0,
@@ -83,7 +83,7 @@ export default {
       };
     },
     isPreRealityAchievement() {
-      return this.realityUnlocked && this.achievement.row <= 13;
+      return this.hasRealitied && this.achievement.row <= 13;
     },
     hasReward() {
       return this.config.reward !== undefined && !this.isObscured;
@@ -115,7 +115,7 @@ export default {
       this.isUnlocked = this.achievement.isUnlocked && !this.isDisabled;
       this.isCancer = Theme.current().name === "S4" || player.secretUnlocks.cancerAchievements;
       this.showUnlockState = player.options.showHintText.achievementUnlockStates;
-      this.realityUnlocked = PlayerProgress.realityUnlocked();
+      this.hasRealitied = PlayerProgress.hasRealitied();
 
       this.processedName = this.processText(this.config.name, this.garbledNameTemplate);
       this.processedId = this.processText(this.displayId, this.garbledIDTemplate);
