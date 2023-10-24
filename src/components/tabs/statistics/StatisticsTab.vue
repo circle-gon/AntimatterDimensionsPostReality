@@ -75,6 +75,10 @@ export default {
       const num = this.eternity.count;
       return num.gt(0) ? `${this.formatDecimalAmount(num)} ${pluralize("Eternity", num.floor())}` : "no Eternities";
     },
+    realityCountString() {
+      const num = this.reality.count;
+      return num > 0 ? quanitfyInt("Reality", num) : "no Realities";
+    },
     fullGameCompletions() {
       return player.records.fullGameCompletions;
     },
@@ -269,7 +273,7 @@ export default {
         {{ isDoomed ? "Doomed Reality" : "Reality" }}
       </div>
       <div>
-        You have {{ quantifyInt("Reality", reality.count) }}<span v-if="collapse.isUnlocked"> this Collapse</span>.
+        You have {{ realityCountString }}<span v-if="collapse.isUnlocked"> this Collapse</span>.
       </div>
       <div v-if="reality.hasBest">
         Your fastest game-time Reality was {{ reality.best.toStringShort() }}.<br />
@@ -290,16 +294,14 @@ export default {
       <br />
     </div>
     <div v-if="collapse.isUnlocked" class="c-stats-tab-subheader c-stats-tab-general">
-      <div class="c-stats-tab-title c-stats-tab-eternity">Atom</div>
+      <div class="c-stats-tab-title c-stats-tab-atom">Atom</div>
       <div>You have {{ quantifyInt("Collapse", collapse.count) }}.</div>
       <div>
         Your fastest game-time Collapse was {{ collapse.best.toStringShort() }}.<br />
         Your fastest real-time Collapse was {{ collapse.bestReal.toStringShort() }}.
       </div>
       <div>
-        You have spent {{ collapse.this.toStringShort() }} in this Collapse. ({{
-          collapse.thisReal.toStringShort()
-        }}
+        You have spent {{ collapse.this.toStringShort() }} in this Collapse. ({{ collapse.thisReal.toStringShort() }}
         real time)
       </div>
     </div>
@@ -338,5 +340,9 @@ export default {
 
 .c-stats-tab-doomed {
   color: var(--color-pelle--base);
+}
+
+.c-stats-tab-atom {
+  color: var(--color-atom);
 }
 </style>

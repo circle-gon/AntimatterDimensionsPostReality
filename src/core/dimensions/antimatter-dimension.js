@@ -47,7 +47,9 @@ export function antimatterDimensionCommonMultiplier() {
 
   multiplier -= Effects.log10Sum(InfinityChallenge(6));
   multiplier += getAdjustedGlyphEffect("powermult").log10();
-  multiplier += Currency.realityMachines.value.log10() * Effects.product(AlchemyResource.force);
+  // this does some weird things in early-game because 0^0 = 1, but log(0)*0 = NaN, so prefer this way
+  // this shouldn't get too big anyway
+  multiplier += Currency.realityMachines.value.powEffectOf(AlchemyResource.force).log10();
 
   if (Pelle.isDoomed) multiplier -= 1;
 
@@ -88,7 +90,7 @@ export function getDimensionFinalMultiplierUncached(tier) {
   return powAndCap(multiplier);
 }
 
-function applyNDMultipliers(mult, tier) {
+export function applyNDMultipliers(mult, tier) {
   let multiplier = mult + GameCache.antimatterDimensionCommonMultiplier.value.log10();
 
   let buy10Value;
