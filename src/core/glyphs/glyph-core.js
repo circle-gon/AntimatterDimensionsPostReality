@@ -100,8 +100,8 @@ export const Glyphs = {
       if (PelleRifts.vacuum.milestones[0].canBeApplied) return 1;
       return 0;
     }
-    // TESTING
-    return 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24)) + 3;
+    // TODO: remove this
+    return 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24))/* + 3*/;
   },
   get protectedSlots() {
     return 10 * player.reality.glyphs.protectedRows;

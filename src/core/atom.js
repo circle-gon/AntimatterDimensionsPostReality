@@ -273,6 +273,7 @@ export function collapse() {
   player.reality.glyphs.sac.reality = DC.D0;
   player.reality.glyphs.undo = [];
   player.reality.perkPoints = 0;
+  player.realities = 0;
   player.reality.perks.clear();
 
   for (let i = 1; i <= 5; i++) {
@@ -294,13 +295,6 @@ export function collapse() {
     activations: 0,
   }));
 
-  player.reality.gainedAutoAchievements = false;
-  player.reality.hasCheckedFilter = false;
-  clearCelestialRuns();
-  resetRealityRuns();
-  Glyphs.updateMaxGlyphCount(true);
-  player.reality.unlockedEC = 0;
-  player.reality.lastAutoEC = 0;
   player.records.thisReality = {
     time: DC.D0,
     realTime: 0,
@@ -329,7 +323,6 @@ export function collapse() {
     iMCapSet: [],
     laitelaSet: [],
   };
-  player.realities = 0;
 
   // remove all glyphs in inventory that aren't companion
   for (const glyph of Glyphs.inventory) {
@@ -351,12 +344,18 @@ export function collapse() {
   }
   player.reality.glyphs.active = [];
 
+  // Reality
+  recalculateAllGlyphs();
+  Glyphs.updateMaxGlyphCount(true);
+  Glyphs.refreshActive();
+  resetRealityRuns();
+  clearCelestialRuns();
+  player.reality.unlockedEC = 0;
+  player.reality.lastAutoEC = 0;
+  player.reality.gainedAutoAchievements = false;
+  player.reality.hasCheckedFilter = false;
+
   // Eternity
-  resetEternityRuns();
-  Currency.timeShards.reset();
-  Currency.eternityPoints.reset();
-  EternityUpgrade.epMult.reset();
-  Currency.eternities.reset();
   player.records.thisEternity.time = DC.D0;
   player.records.thisEternity.realTime = 0;
   player.records.thisEternity.maxAM = DC.D0;
@@ -366,6 +365,10 @@ export function collapse() {
   player.records.bestEternity.time = Decimal.MAX_LIMIT;
   player.records.bestEternity.realTime = Number.MAX_VALUE;
   player.records.bestEternity.bestEPminReality = DC.D0;
+  Currency.timeShards.reset();
+  Currency.eternityPoints.reset();
+  EternityUpgrade.epMult.reset();
+  Currency.eternities.reset();
   player.eternityUpgrades.clear();
   player.totalTickGained = 0;
   player.eternityChalls = {};
@@ -376,7 +379,6 @@ export function collapse() {
   player.eterc8ids = 50;
   player.eterc8repl = 40;
   Currency.timeTheorems.reset();
-  player.celestials.v.STSpent = 0;
   player.dilation.studies = [];
   player.dilation.active = false;
   player.dilation.upgrades.clear();
@@ -394,16 +396,11 @@ export function collapse() {
   player.dilation.totalTachyonGalaxies = 0;
   Currency.dilatedTime.reset();
   player.dilation.lastEP = DC.DM1;
+  resetEternityRuns();
   fullResetTimeDimensions();
   resetTimeDimensions();
 
   // Infinity
-  secondSoftReset(false);
-  resetInfinityRuns();
-  disChargeAll();
-  initializeChallengeCompletions(true);
-  Currency.infinities.reset();
-  Currency.infinitiesBanked.reset();
   player.records.bestInfinity.time = Decimal.MAX_LIMIT;
   player.records.bestInfinity.realTime = Number.MAX_VALUE;
   player.records.bestInfinity.bestIPminEternity = DC.D0;
@@ -412,6 +409,10 @@ export function collapse() {
   player.records.thisInfinity.realTime = 0;
   player.records.thisInfinity.maxAM = DC.D0;
   player.records.thisInfinity.bestIPmin = DC.D0;
+  initializeChallengeCompletions(true);
+  disChargeAll();
+  Currency.infinities.reset();
+  Currency.infinitiesBanked.reset();
   player.partInfinityPoint = 0;
   player.partInfinitied = 0;
   player.break = false;
@@ -419,16 +420,19 @@ export function collapse() {
   Currency.infinityPower.reset();
   Replicanti.reset(true);
   playerInfinityUpgradesOnReset();
+  resetInfinityRuns();
   InfinityDimensions.fullReset();
+  secondSoftReset(false);
   InfinityDimensions.resetAmount();
   Currency.infinityPoints.reset();
 
   // Pre-Infinity
   player.sacrificed = DC.D0;
-  resetTickspeed();
-  Currency.antimatter.reset();
+  player.dimensionBoosts = 0;
+  player.galaxies = 0;
   resetChallengeStuff();
   AntimatterDimensions.reset();
+  resetTickspeed();
 
   // Misc
   resetCollapseStats();
@@ -439,9 +443,11 @@ export function collapse() {
     AutomatorBackend.start(AutomatorBackend.state.topLevelScript);
   }
   AchievementTimers.marathon2.reset();
-  Glyphs.refresh();
+  Tab.dimensions.antimatter.show();
+
   Lazy.invalidateAll();
   ECTimeStudyState.invalidateCachedRequirements();
+  Player.resetRequirements("atom");
 
   EventHub.dispatch(GAME_EVENT.COLLAPSE_AFTER);
 }
@@ -452,6 +458,7 @@ export function collapseResetRequest() {
 }
 
 export function breakUniverse() {
-  // TODOM: expand this
+  // TODO: expand this
   player.atom.broken = true;
+  collapse();
 }

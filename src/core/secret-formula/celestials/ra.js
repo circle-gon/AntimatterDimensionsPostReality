@@ -1,4 +1,4 @@
-// TODOM: Fix memory chunk overflow
+// TODO: Fix memory chunk overflow
 
 export const ra = {
   pets: {

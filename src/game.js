@@ -513,7 +513,7 @@ export function gameLoop(passDiff, options = {}) {
     }
 
     if (Enslaved.isStoringGameTime && !fixedSpeedActive) {
-      // TODOM: time storage fails at high numbers because they become the same
+      // TODO: time storage fails at high numbers because they become the same
       // These variables are the actual game speed used and the game speed unaffected by time storage, respectively
       const reducedTimeFactor = getGameSpeedupFactor();
       const totalTimeFactor = getGameSpeedupFactor([GAME_SPEED_EFFECT.FIXED_SPEED, GAME_SPEED_EFFECT.TIME_GLYPH,

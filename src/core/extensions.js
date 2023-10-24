@@ -329,7 +329,7 @@ function formatAllDigits(n) {
   });
 }
 
-// TODOM: fix the the thing for real
+// TODO: fix the the thing for real
 Decimal.prototype.toString = function () {
   if (isNaN(this.m) || isNaN(this.e)) {
     return "NaN";
@@ -351,7 +351,7 @@ Decimal.prototype.toString = function () {
 }
 
 window.powAndCap = function(num) {
-  return Decimal.pow10(Math.clamp(num, -Number.MAX_VALUE, Number.MAX_VALUE));
+  return Decimal.pow10(Math.min(num, Number.MAX_VALUE));
 }
 
 Decimal.MAX_LIMIT = Decimal.pow10(Number.MAX_VALUE)

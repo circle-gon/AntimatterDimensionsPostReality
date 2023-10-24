@@ -194,7 +194,7 @@ export const singularityMilestones = {
     repeat: 0,
     limit: 1,
     description: "Singularities boost game speed",
-    // TODOM: could go above e308
+    // TODO: could go above e308
     effect: () => Math.clampMin(Math.pow(Currency.singularities.value.log10(), 3), 1),
     effectFormat: (x) => formatX(x, 2, 2),
     upgradeDirection: LAITELA_UPGRADE_DIRECTION.BOOSTS_MAIN,
@@ -240,7 +240,7 @@ export const singularityMilestones = {
     repeat: 0,
     limit: 1,
     description: "Singularities give a power effect to Time Theorem gain",
-    // TODOM: TT gain could go boom and then hit 0
+    // TODO: TT gain could go boom and then hit 0
     effect: () => 1 + Currency.singularities.value.add(1).log10() / 70,
     effectFormat: (x) => formatPow(x, 2, 3),
     upgradeDirection: LAITELA_UPGRADE_DIRECTION.BOOSTS_MAIN,

@@ -261,6 +261,7 @@ window.player = {
       maxGlyphs: 0,
       slowestBH: 1,
     },
+    atom: {},
     permanent: {
       emojiGalaxies: 0,
       singleTickspeed: 0,
@@ -1008,6 +1009,8 @@ export const Player = {
     const glyphCount = player.requirementChecks.reality.maxGlyphs;
     // This switch case intentionally falls through because every lower layer should be reset as well
     switch (key) {
+      case "atom":
+        player.requirementChecks.atom = {}
       case "reality":
         player.requirementChecks.reality = {
           noAM: true,

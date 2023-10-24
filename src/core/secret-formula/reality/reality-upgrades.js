@@ -320,7 +320,7 @@ export const realityUpgrades = [
     checkRequirement: () => Currency.timeShards.exponent >= 28000,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     description: "Time Dimension multiplier based on days spent in this Reality",
-    // TODOM: could go above ee308
+    // TODO: could go above ee308
     effect: () => Decimal.pow10(Math.pow(1 + 2 * Time.thisReality.totalDays.add(1).log10(), 1.6)),
     formatEffect: value => formatX(value, 2, 2)
   },
