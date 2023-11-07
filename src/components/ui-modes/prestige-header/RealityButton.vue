@@ -98,7 +98,7 @@ export default {
       this.glyphLevel = gainedGlyphLevel().actualLevel;
       this.nextGlyphPercent = this.percentToNextGlyphLevelText();
       this.nextMachineEP = EPforRM(this.machinesGained.plus(1));
-      this.ppGained = multiplier;
+      this.ppGained = multiplier * MachineHandler.perkPointMultiplier;
       this.shardsGained = Effarig.shardsGained.mul(multiplier);
       this.currentShardsRate = this.shardsGained.div(Time.thisRealityRealTime.totalMinutes);
       this.bestShardRate = player.records.thisReality.bestRSmin.mul(multiplier);

@@ -368,6 +368,7 @@ export const EternityChallenges = {
         Perk.autocompleteEC3
       );
       minutes /= VUnlocks.fastAutoEC.effectOrDefault(DC.D1).toNumber();
+      if (AtomMilestone.am1.isReached) minutes /= 120;
       return TimeSpan.fromMinutes(minutes).totalMilliseconds;
     }
   }

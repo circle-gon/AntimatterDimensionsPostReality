@@ -1,4 +1,5 @@
 import { DC } from "./constants";
+import { BitPurchasableMechanicState } from "./game-mechanics";
 
 export function migrateSaves(player) {
   // change effarig shards to decimal
@@ -54,6 +55,7 @@ export function migrateSaves(player) {
   // New stuff that has been added
   player.records.thisCollapse.time = player.records.totalTimePlayed;
   player.records.thisCollapse.realTime = player.records.realTimePlayed;
+  player.records.thisCollapse.realTimeNoStore = player.records.realTimePlayed;
 }
 
 // lazy way to hide the "in this Collapse" text until you know about it
@@ -61,7 +63,7 @@ export function atomTimeText() {
   return PlayerProgress.atomUnlocked() ? " in this Collapse" : "";
 }
 
-function gainedAtoms() {
+export function gainedAtoms() {
   return DC.D1;
 }
 
@@ -75,11 +77,16 @@ function updateCollapseStats() {
     player.records.bestCollapse.realTime,
     player.records.thisCollapse.realTime
   );
+  player.records.bestCollapse.realTimeNoStore = Math.min(
+    player.records.bestCollapse.realTimeNoStore,
+    player.records.thisCollapse.realTimeNoStore
+  );
 }
 
 function resetCollapseStats() {
   player.records.thisCollapse.time = DC.D0;
   player.records.thisCollapse.realTime = 0;
+  player.records.thisCollapse.realTimeNoStore = 0;
   player.records.thisCollapse.maxAM = DC.D0;
   player.records.thisCollapse.maxIP = DC.D0;
   player.records.thisCollapse.maxEP = DC.D0;
@@ -102,8 +109,20 @@ function lockAchievementsOnCollapse() {
   player.reality.achTimer = DC.D0;
 }
 
+function giveRealityUpgrade(num) {
+  const upg = RealityUpgrade(num);
+  player.reality.upgReqs |= 1 << upg.id;
+  upg.hasPlayerLock = false;
+  upg.isBought = true;
+  upg.onPurchased();
+}
+
 export function collapse() {
   EventHub.dispatch(GAME_EVENT.COLLAPSE_BEFORE);
+
+  GameEnd.creditsClosed = false;
+  GameEnd.creditsEverClosed = false;
+  player.isGameEnd = false;
 
   const atomsGained = gainedAtoms();
   const collapsesMade = getCollapseGain();
@@ -112,11 +131,32 @@ export function collapse() {
   updateCollapseStats();
   addCollapseTime(player.records.thisCollapse.time, player.records.thisCollapse.realTime, atomsGained, collapsesMade);
 
+  // RESET
+
+  if (!AtomMilestone.am1.isReached) {
+    player.challenge = {
+      normal: {
+        current: 0,
+        bestTimes: Array.repeat(Decimal.MAX_LIMIT, 11),
+        completedBits: 0,
+      },
+      infinity: {
+        current: 0,
+        bestTimes: Array.repeat(Decimal.MAX_LIMIT, 8),
+        completedBits: 0,
+      },
+      eternity: {
+        current: 0,
+        unlocked: 0,
+        requirementBits: 0,
+      },
+    };
+  }
+
   lockAchievementsOnCollapse();
-  player.isGameEnd = false;
 
   // Celestials
-  Object.assign(player.celestials.teresa, {
+  player.celestials.teresa = {
     pouredAmount: 0,
     unlockBits: 0,
     run: false,
@@ -124,9 +164,10 @@ export function collapse() {
     bestAMSet: [],
     perkShop: Array.repeat(0, 5),
     lastRepeatedMachines: DC.D0,
-  });
+    quoteBits: AtomMilestone.am1.isReached ? player.celestials.teresa.quoteBits : 0,
+  };
 
-  Object.assign(player.celestials.effarig, {
+  player.celestials.effarig = {
     relicShards: DC.D0,
     unlockBits: 0,
     run: false,
@@ -137,7 +178,8 @@ export function collapse() {
       eternities: 25,
     },
     autoAdjustGlyphWeights: false,
-  });
+    quoteBits: AtomMilestone.am1.isReached ? player.celestials.effarig.quoteBits : 0,
+  };
 
   Object.assign(player.celestials.enslaved, {
     isStoring: false,
@@ -157,10 +199,13 @@ export function collapse() {
     hintUnlockProgress: 0,
     glyphHintsGiven: 0,
     zeroHintTime: 0,
+    quoteBits: AtomMilestone.am1.isReached ? player.celestials.enslaved.quoteBits : 0,
+    isDischargingReal: false,
   });
   Enslaved.autoReleaseTick = 0;
 
   V.reset();
+  player.celestials.v.quoteBits = AtomMilestone.am1.isReached ? player.celestials.teresa.quoteBits : 0;
 
   Ra.reset();
   player.celestials.ra.petWithRemembrance = "";
@@ -177,6 +222,7 @@ export function collapse() {
     dilation: 0,
     effarig: 0,
   };
+  player.celestials.ra.quoteBits = AtomMilestone.am1.isReached ? player.celestials.ra.quoteBits : 0;
 
   Laitela.reset();
   Object.assign(player.celestials.laitela, {
@@ -186,6 +232,7 @@ export function collapse() {
     upgrades: {},
     darkEnergy: DC.D0,
     lastCheckedMilestones: DC.D0,
+    quoteBits: AtomMilestone.am1.isReached ? player.celestials.laitela.quoteBits : 0,
   });
 
   Object.assign(player.celestials.pelle, {
@@ -251,6 +298,7 @@ export function collapse() {
       rifts: false,
       galaxies: false,
     },
+    quoteBits: AtomMilestone.am1.isReached ? player.celestials.pelle.quoteBits : 0,
   });
 
   // Reality
@@ -326,23 +374,24 @@ export function collapse() {
 
   // remove all glyphs in inventory that aren't companion
   for (const glyph of Glyphs.inventory) {
-    if (glyph !== null && glyph.type !== "companion") Glyphs.removeFromInventory(glyph, false);
+    if (glyph !== null && (!AtomMilestone.am1.isReached || glyph.type !== "companion"))
+      Glyphs.removeFromInventory(glyph, false);
   }
 
   // remove all active glyphs that aren't companion
+  const protectedRows = player.reality.glyphs.protectedRows;
+  player.reality.glyphs.protectedRows = 0;
+
   for (const activeGlyph of player.reality.glyphs.active) {
     Glyphs.active[activeGlyph.idx] = null;
-    if (activeGlyph.type === "companion") {
-      let index = Glyphs.findFreeIndex(player.options.respecIntoProtected);
-      // In case there is nowhere to put it
-      // (all slots are protected and respecIntoProtected is false, or vice-versa)
-      // just use the first slot, and it is guaranteed to work
-      // because we wiped all the glyphs in the inventory
-      if (index < 0) index = 0;
+    if (activeGlyph.type === "companion" && AtomMilestone.am1.isReached) {
+      let index = Glyphs.findFreeIndex(false);
+      // this will always have an index because we set it to no protection
       Glyphs.addToInventory(activeGlyph, index, true);
     }
   }
   player.reality.glyphs.active = [];
+  player.reality.glyphs.protectedRows = protectedRows;
 
   // Reality
   recalculateAllGlyphs();
@@ -449,6 +498,23 @@ export function collapse() {
   ECTimeStudyState.invalidateCachedRequirements();
   Player.resetRequirements("atom");
 
+  if (AtomMilestone.am1.isReached) {
+    // this needs to be done this way because some perks rely on others
+    const visited = [];
+    const toVisit = [Perk.firstPerk];
+    while (toVisit.length > 0) {
+      Currency.perkPoints.add(1);
+      const perk = toVisit.shift();
+      visited.push(perk);
+      toVisit.push(...perk.connectedPerks.filter((p) => !visited.includes(p)));
+      perk.purchase();
+    }
+
+    giveRealityUpgrade(10);
+    giveRealityUpgrade(13);
+    giveRealityUpgrade(25);
+  }
+
   EventHub.dispatch(GAME_EVENT.COLLAPSE_AFTER);
 }
 
@@ -462,3 +528,102 @@ export function breakUniverse() {
   player.atom.broken = true;
   collapse();
 }
+
+export class AtomMilestoneState {
+  constructor(config) {
+    this.config = config;
+  }
+
+  get isReached() {
+    // TODO: testing
+    return player.records.bestCollapse.realTimeNoStore < this.time;
+  }
+
+  get time() {
+    return this.config.time;
+  }
+
+  get reward() {
+    return this.config.reward;
+  }
+}
+
+export const AtomMilestone = mapGameDataToObject(
+  GameDatabase.atom.milestones,
+  (config) => new AtomMilestoneState(config)
+);
+
+class AtomUpgradeState extends BitPurchasableMechanicState {
+  constructor(config) {
+    super(config);
+    this.registerEvents(config.checkEvent, () => this.tryUnlock());
+  }
+
+  get name() {
+    return this.config.name;
+  }
+
+  get shortDescription() {
+    return this.config.shortDescription ? this.config.shortDescription() : "";
+  }
+
+  get requirement() {
+    return typeof this.config.requirement === "function" ? this.config.requirement() : this.config.requirement;
+  }
+
+  get lockEvent() {
+    return typeof this.config.lockEvent === "function" ? this.config.lockEvent() : this.config.lockEvent;
+  }
+
+  get currency() {
+    return Currency.atoms;
+  }
+
+  get bitIndex() {
+    return this.id;
+  }
+
+  get bits() {
+    return player.atom.upgradeBits;
+  }
+
+  set bits(value) {
+    player.atom.upgradeBits = value;
+  }
+
+  get hasPlayerLock() {
+    return false;
+  }
+
+  get isLockingMechanics() {
+    const shouldBypass = this.config.bypassLock?.() ?? false;
+    return this.hasPlayerLock && this.isPossible && !shouldBypass && !this.isAvailableForPurchase;
+  }
+
+  get isAvailableForPurchase() {
+    return true;
+  }
+
+  get isPossible() {
+    return this.config.hasFailed ? !this.config.hasFailed() : true;
+  }
+
+  tryUnlock() {
+    const atomReached = PlayerProgress.atomUnlocked();
+    if (!atomReached || this.isAvailableForPurchase || !this.config.checkRequirement()) return;
+    player.atom.upgReqs |= 1 << this.id;
+    GameUI.notify.reality(`You've unlocked an Atom Upgrade: ${this.config.name}`);
+    this.hasPlayerLock = false;
+  }
+}
+
+AtomUpgradeState.index = mapGameData(GameDatabase.atom.upgrades, (config) => new AtomUpgradeState(config));
+
+export const AtomUpgrade = (id) => AtomUpgradeState.index[id];
+
+export const AtomUpgrades = {
+  all: AtomUpgradeState.index.compact(),
+  get hasAllMilestones() {
+    return this.all.every((i) => i.isReached);
+  },
+};

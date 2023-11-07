@@ -12,11 +12,11 @@ export default {
   computed: {
     classObject() {
       return {
-        "o-infinity-upgrade-btn": true,
-        "o-infinity-upgrade-btn--color-2": true,
-        "o-infinity-upgrade-btn--available": this.isUnlocked,
-        "o-infinity-upgrade-btn--unavailable": !this.isUnlocked,
-        "o-infinity-upgrade-btn--unclickable": this.isBroken,
+        "o-atom-upgrade-btn": true,
+        "o-atom-upgrade-btn--color-2": true,
+        "o-atom-upgrade-btn--available": this.isUnlocked,
+        "o-atom-upgrade-btn--unavailable": !this.isUnlocked,
+        "o-atom-upgrade-btn--unclickable": this.isBroken,
       };
     },
     text() {

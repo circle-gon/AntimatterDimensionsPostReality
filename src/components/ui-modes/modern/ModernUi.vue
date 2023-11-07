@@ -6,6 +6,7 @@ import HeaderChallengeEffects from "../HeaderChallengeEffects";
 import HeaderPrestigeGroup from "../HeaderPrestigeGroup";
 import NewsTicker from "../NewsTicker";
 import CollapseButton from "../prestige-header/CollapseButton";
+import AtomPointsHeader from "../../AtomPointsHeader";
 
 import GameSpeedDisplay from "@/components/GameSpeedDisplay";
 
@@ -20,6 +21,7 @@ export default {
     HeaderPrestigeGroup,
     GameSpeedDisplay,
     CollapseButton,
+    AtomPointsHeader,
   },
   data() {
     return {
@@ -59,6 +61,7 @@ export default {
     <div :key="newGameKey" class="game-container" :style="topMargin">
       <NewsTicker v-if="news" />
       <div>
+        <AtomPointsHeader />
         <CollapseButton />
       </div>
       <BigCrunchButton />

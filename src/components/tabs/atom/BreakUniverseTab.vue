@@ -11,8 +11,8 @@ export default {
 </script>
 
 <template>
-    <div class="l-break-infinity-tab">
-        <BreakUniverseButton />
+    <div class="l-break-universe-tab">
+        <BreakUniverseButton class="l-break-universe-tab__break-btn" />
     </div>
 </template>
 

@@ -86,8 +86,10 @@ export const Laitela = {
     if (!force && !this.canAnnihilate) return false;
     this.celestial.darkMatterMult = this.celestial.darkMatterMult.add(this.darkMatterMultGain);
     DarkMatterDimensions.reset();
-    Laitela.quotes.annihilation.show();
-    if (!force) Achievement(176).unlock();
+    if (!force) {
+      Laitela.quotes.annihilation.show();
+      Achievement(176).unlock();
+    }
     return true;
   },
   // Greedily buys the cheapest available upgrade until none are affordable
@@ -121,7 +123,7 @@ export const Laitela = {
     }
     // make sure that we don't forever buy 1 because precision issues
     while (
-      upgradeInfo.some((upgrade) => upgrade[0].lte(darkMatter) && upgrade[2] > 0 && upgrade[3] + 1 !== upgrade[3])
+      upgradeInfo.some((upgrade) => upgrade[0].lte(darkMatter) && upgrade[2] > 0 && upgrade[3] + 1 > upgrade[3])
     ) {
       const cheapestUpgrade = upgradeInfo
         .filter((upgrade) => upgrade[2] > 0)

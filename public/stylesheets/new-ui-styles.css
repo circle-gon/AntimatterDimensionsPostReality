@@ -803,6 +803,14 @@ body.t-s12 {
   font-size: 0.95rem;
 }
 
+.l-hint-text--atom-upgrade {
+  top: -1.3rem;
+}
+
+.c-hint-text--atom-upgrade {
+  font-size: 0.95rem;
+}
+
 .resource-eternity-canreset > div {
   height: 100%;
 }
@@ -912,7 +920,7 @@ body.t-s12 {
 .t-normal .c-sacrificed-glyphs--dragover,
 .t-s12 .c-sacrificed-glyphs--dragover {
   border-color: rgb(255, 255, 255);
-  box-shadow: 0 0 0.1rem 0.1rem  rgb(255, 255, 255);
+  box-shadow: 0 0 0.1rem 0.1rem rgb(255, 255, 255);
 }
 
 .t-normal .c-glyph-choice-icon,
@@ -930,3 +938,16 @@ body.t-s12 {
 .l-information {
   top: 7rem;
 }
+
+.o-atom-upgrade-btn--unavailable {
+  color: white;
+  background: #525252;
+  border: 0.1rem solid var(--color-accent);
+  cursor: default;
+}
+
+.o-atom-upgrade-btn--unavailable:hover {
+  color: var(--color-text-inverted);
+  background: #525252;
+}
+  

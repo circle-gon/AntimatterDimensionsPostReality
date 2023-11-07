@@ -559,13 +559,13 @@ export const migrations = {
     }
     if (player.challengeTimes) {
       for (let i = 0; i < player.challengeTimes.length; ++i) {
-        player.challenge.normal.bestTimes[i] = Math.min(player.challenge.normal.bestTimes[i], player.challengeTimes[i]);
+        player.challenge.normal.bestTimes[i] = Decimal.min(player.challenge.normal.bestTimes[i], player.challengeTimes[i]);
       }
       delete player.challengeTimes;
     }
     if (player.infchallengeTimes) {
       for (let i = 0; i < player.infchallengeTimes.length; ++i) {
-        player.challenge.infinity.bestTimes[i] = Math.min(
+        player.challenge.infinity.bestTimes[i] = Decimal.min(
           player.challenge.infinity.bestTimes[i],
           player.infchallengeTimes[i]
         );

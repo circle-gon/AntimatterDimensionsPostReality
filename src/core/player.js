@@ -341,16 +341,18 @@ window.player = {
     thisCollapse: {
       time: DC.D0,
       realTime: 0,
+      realTimeNoStore: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
       maxEP: DC.D0,
       maxRM: DC.D0,
-      maxIM: DC.D0
+      maxIM: DC.D0,
     },
     bestCollapse: {
       time: Decimal.MAX_LIMIT,
-      realTime: Number.MAX_VALUE
-    }
+      realTimeNoStore: Number.MAX_VALUE,
+      realTime: Number.MAX_VALUE,
+    },
   },
   speedrun: {
     isUnlocked: false,
@@ -555,6 +557,8 @@ window.player = {
     broken: false,
     resetCount: 0,
     atoms: DC.D0,
+    upgradeBits: 0,
+    upgReqs: 0
   },
   blackHole: Array.range(0, 2).map((id) => ({
     id,
@@ -600,6 +604,11 @@ window.player = {
       isStoringReal: false,
       storedReal: 0,
       autoStoreReal: false,
+      // 0 for constant, and 1 for percent
+      realDischargeMode: 0,
+      realDischargeConstant: 1,
+      realDischargePercent: 1,
+      isDischargingReal: false,
       isAutoReleasing: false,
       quoteBits: 0,
       unlocks: [],
@@ -849,6 +858,7 @@ window.player = {
       alchemy: true,
       glyphInfoType: GlyphInfo.types.NONE,
       showGlyphInfoByDefault: false,
+      atomUpgrades: true,
     },
     animations: {
       bigCrunch: true,
@@ -1010,7 +1020,7 @@ export const Player = {
     // This switch case intentionally falls through because every lower layer should be reset as well
     switch (key) {
       case "atom":
-        player.requirementChecks.atom = {}
+        player.requirementChecks.atom = {};
       case "reality":
         player.requirementChecks.reality = {
           noAM: true,

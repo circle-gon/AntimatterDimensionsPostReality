@@ -258,6 +258,7 @@ export const Ra = {
     for (const pet of Ra.pets.all) {
       if (pet.isUnlocked) res *= pet.memoryProductionMultiplier;
     }
+    if (AtomUpgrade(1).isReached) res *= 10;
     return res;
   },
   get memoryBoostResources() {
@@ -267,6 +268,7 @@ export const Ra = {
     }
     if (Achievement(168).isUnlocked) boostList.push("Achievement 168");
     if (Ra.unlocks.continuousTTBoost.canBeApplied) boostList.push("current TT");
+    if (AtomUpgrade(1).isBought) boostList.push("Atom Upgrade 'Starter Pack'");
 
     if (boostList.length === 1) return `${boostList[0]}`;
     if (boostList.length === 2) return `${boostList[0]} and ${boostList[1]}`;

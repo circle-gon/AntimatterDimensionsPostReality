@@ -25,7 +25,7 @@ export class PlayerProgress {
   }
 
   get isAtomUnlocked() {
-    return this._player.atom.resetCount > 0;
+    return this._player.atom?.resetCount > 0;
   }
 
   get hasFullCompletion() {
@@ -75,6 +75,10 @@ export class PlayerProgress {
   static seenAlteredSpeed() {
     const ec12 = EternityChallenge(12);
     return this.realityUnlocked() || ec12.completions > 0 || ec12.isRunning;
+  }
+
+  static seenRealAlteredSpeed() {
+    return AtomMilestone.am1.isReached;
   }
 
   static challengeCompleted() {

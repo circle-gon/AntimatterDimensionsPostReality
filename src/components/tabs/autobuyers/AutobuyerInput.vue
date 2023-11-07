@@ -13,18 +13,27 @@ export default {
     type: {
       type: String,
       required: true
+    },
+    isValidValue: {
+      type: Function,
+      required: false,
+      default: () => true
     }
   },
   data() {
     return {
-      isValid: true,
+      isValidInternal: true,
       isFocused: false,
-      displayValue: "0"
+      displayValue: "0",
+      actualValue: 0
     };
   },
   computed: {
     inputType() {
       return this.type === "int" ? "number" : "text";
+    },
+    isValid() {
+      return this.isValidInternal && this.isValidValue(this.actualValue)
     },
     typeFunctions() {
       const functions = AutobuyerInputFunctions[this.type];
@@ -59,11 +68,11 @@ export default {
       const input = event.target.value;
       this.displayValue = input;
       if (input.length === 0) {
-        this.isValid = false;
+        this.isValidInternal = false;
         return;
       }
       const parsedValue = this.typeFunctions.tryParse(input);
-      this.isValid = parsedValue !== undefined;
+      this.isValidInternal = parsedValue !== undefined;
       this.actualValue = this.typeFunctions.copyValue(parsedValue);
     },
     handleFocus() {
@@ -79,7 +88,7 @@ export default {
         this.updateActualValue();
       }
       this.updateDisplayValue();
-      this.isValid = true;
+      this.isValidInternal = true;
 
       this.isFocused = false;
       event.target.blur();

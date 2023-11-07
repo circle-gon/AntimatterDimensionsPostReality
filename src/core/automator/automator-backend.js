@@ -451,6 +451,7 @@ export const AutomatorBackend = {
   },
 
   get currentInterval() {
+    if (AtomMilestone.am1.isReached) return 1;
     return Math.clampMin(Math.pow(0.994, Currency.realities.value) * 500, 1);
   },
 

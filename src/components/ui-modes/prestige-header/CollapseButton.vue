@@ -5,6 +5,7 @@ export default {
     return {
       isVisible: true,
       canCollapse: false,
+      shouldShow: false
     };
   },
   computed: {
@@ -18,6 +19,7 @@ export default {
   methods: {
     update() {
       this.canCollapse = Player.canCollapse;
+      this.shouldShow = PlayerProgress.atomUnlocked() || player.isGameEnd
     },
     collapse() {
       collapseResetRequest();
@@ -26,7 +28,7 @@ export default {
 };
 </script>
 <template>
-  <div>
+  <div v-if="shouldShow">
     <button 
       :class="buttonClassObject"
       @click="collapse" 

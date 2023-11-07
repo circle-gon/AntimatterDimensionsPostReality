@@ -1833,6 +1833,14 @@ Rifts once the current cap has been reached.`,
       tags: ["reality", "antimatter", "lategame", "endgame", "final", "pelle", "galaxy",
         "galaxies", "generator", "celestial"],
       tab: "celestials/pelle"
+    }, {
+      name: "Atom",
+      info: () => `Atom (and the prestige layer, Collapse) are unlocked by completing the Doomed Reality. There are two core mechanics unlocked:
+Atom Milestones and Atom Upgrades. Atom Upgrades function much like Reality Upgrades, and Atom Milestones are obtained
+based on the fastest Collapse. Atom Milestones give QoL, while Atom Upgrades give production boosts.`,
+      isUnlocked: () => PlayerProgress.atomUnlocked(),
+      tags: ["atom", "collapse", "final", "endgame", "prestige", "upgrades", "milestones"],
+      tab: "atom/atom"
     }
   ]
 };

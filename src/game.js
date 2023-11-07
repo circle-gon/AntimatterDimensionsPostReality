@@ -354,6 +354,8 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.mul(SingularityMilestone.gamespeedFromSingularities.effectOrDefault(1));
   }
 
+  if (AtomUpgrade(1).isBought && !BlackHoles.areNegative) factor = factor.mul(1000)
+
   if (effects.includes(GAME_SPEED_EFFECT.TIME_GLYPH)) {
     factor = factor.mul(getAdjustedGlyphEffect("timespeed"));
     factor = factor.pow(getAdjustedGlyphEffect("effarigblackhole"));
@@ -380,7 +382,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   // 1e-300 is now possible with max inverted BH, going below it would be possible with
   // an effarig glyph.
-  //factor = Math.clamp(factor, 1e-300, 1e300);
+  factor = factor.clamp(1e-300, 1e300);
 
   return factor;
 }
@@ -447,10 +449,12 @@ export function gameLoop(passDiff, options = {}) {
 
   let diff = passDiff;
   const thisUpdate = Date.now();
-  const realDiff = diff === undefined
+  // unaffected by enslaved real time discharge
+  const trueRealDiff = diff === undefined
     ? Math.clamp(thisUpdate - player.lastUpdate, 1, 8.64e7)
     : diff;
-  if (!GameStorage.ignoreBackupTimer) player.backupTimer += realDiff;
+  const realDiff = Enslaved.useRealStoredTime(trueRealDiff) + trueRealDiff;
+  if (!GameStorage.ignoreBackupTimer) player.backupTimer += trueRealDiff;
 
   // For single ticks longer than a minute from the GameInterval loop, we assume that the device has gone to sleep or
   // hibernation - in those cases we stop the interval and simulate time instead. The gameLoop interval automatically
@@ -458,7 +462,7 @@ export function gameLoop(passDiff, options = {}) {
   // result in a ~1 second tick rate for browsers.
   // Note that we have to explicitly call all the real-time mechanics with the existing value of realDiff, because
   // simply letting it run through simulateTime seems to result in it using zero
-  if (player.options.hibernationCatchup && passDiff === undefined && realDiff > 6e4) {
+  if (player.options.hibernationCatchup && passDiff === undefined && trueRealDiff > 6e4) {
     GameIntervals.gameLoop.stop();
     simulateTime(realDiff / 1000, true);
     realTimeMechanics(realDiff);
@@ -554,6 +558,7 @@ export function gameLoop(passDiff, options = {}) {
     player.records.thisReality.realTime += realDiff;
     player.records.thisReality.time = player.records.thisReality.time.add(diff);
     player.records.thisCollapse.realTime += realDiff;
+    player.records.thisCollapse.realTimeNoStore += realDiff;
     player.records.thisCollapse.time = player.records.thisCollapse.time.add(diff);
   }
 
@@ -575,7 +580,7 @@ export function gameLoop(passDiff, options = {}) {
 
   const uncountabilityGain = AlchemyResource.uncountability.effectValue * Time.unscaledDeltaTime.totalSeconds;
   Currency.realities.add(uncountabilityGain);
-  Currency.perkPoints.add(uncountabilityGain);
+  Currency.perkPoints.add(uncountabilityGain * MachineHandler.perkPointMultiplier);
 
   if (Perk.autocompleteEC1.canBeApplied) player.reality.lastAutoEC += realDiff;
 

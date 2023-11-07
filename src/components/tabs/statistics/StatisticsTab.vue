@@ -76,8 +76,8 @@ export default {
       return num.gt(0) ? `${this.formatDecimalAmount(num)} ${pluralize("Eternity", num.floor())}` : "no Eternities";
     },
     realityCountString() {
-      const num = this.reality.count;
-      return num > 0 ? quanitfyInt("Reality", num) : "no Realities";
+      const num = new Decimal(this.reality.count);
+      return num.gt(0) ? `${this.formatDecimalAmount(num)} ${pluralize("Reality", num)}` : "no Realities";
     },
     fullGameCompletions() {
       return player.records.fullGameCompletions;
@@ -184,8 +184,9 @@ export default {
         "c-stats-tab-doomed": this.isDoomed,
       };
     },
-  },
-};
+    formatPostBreak
+  }
+}
 </script>
 
 <template>
@@ -194,7 +195,7 @@ export default {
       <PrimaryButton onclick="Modal.catchup.show(0)"> View Content Summary </PrimaryButton>
       <div class="c-stats-tab-title c-stats-tab-general">General</div>
       <div class="c-stats-tab-general">
-        <div>You have made a total of {{ format(totalAntimatter, 2, 1) }} antimatter.</div>
+        <div>You have made a total of {{ formatPostBreak(totalAntimatter, 2, 1) }} antimatter.</div>
         <div>You have played for {{ realTimePlayed }}. (real time)</div>
         <div v-if="reality.isUnlocked">Your existence has spanned {{ totalTimePlayed }} of time. (game time)</div>
         <div>Your save was created on {{ startDate }} ({{ saveAge }} ago)</div>

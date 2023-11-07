@@ -298,7 +298,8 @@ export const Pelle = {
   },
 
   realityShardGain(remnants) {
-    return Decimal.pow(10, remnants ** (1 / 7.5) * 4).minus(1).div(1e3);
+    const au1 = AtomUpgrade(1).isReached ? 100 : 1
+    return Decimal.pow(10, remnants ** (1 / 7.5) * 4).minus(1).div(1e3).mul(au1);
   },
 
   get realityShardGainPerSecond() {

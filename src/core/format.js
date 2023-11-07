@@ -32,7 +32,7 @@ window.formatFloat = function formatFloat(value, digits) {
     return format(value, Math.max(2, digits), digits);
   }
 
-  if (value <= 1e12) {
+  if (Decimal.lte(value, 1e12)) {
     return formatWithCommas(value.toFixed(digits));
   } else {
     return format(value, digits);

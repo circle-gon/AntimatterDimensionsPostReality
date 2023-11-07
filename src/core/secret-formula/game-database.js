@@ -1,6 +1,7 @@
 import { multiplierTabTree, multiplierTabValues } from "./multiplier-tab";
 
 import { achievements } from "./achievements";
+import { atom } from "./atom";
 import { awayProgressTypes } from "./away-progress-types";
 import { catchupResources } from "./catchup-resources";
 import { celestials } from "./celestials";
@@ -23,6 +24,7 @@ import { tabs } from "./tabs";
 
 export const GameDatabase = {
   achievements,
+  atom,
   awayProgressTypes,
   catchupResources,
   celestials,

@@ -14,6 +14,7 @@ export default {
       eternityUnlocked: false,
       realityUnlocked: false,
       alchemyUnlocked: false,
+      atomUnlocked: false,
 
       showPercentage: false,
       achievements: false,
@@ -24,6 +25,7 @@ export default {
       realityUpgrades: false,
       perks: false,
       alchemy: false,
+      atomUpgrades: false
     };
   },
   computed: {
@@ -59,6 +61,9 @@ export default {
     alchemy(newValue) {
       player.options.showHintText.alchemy = newValue;
     },
+    atomUpgrades(newValue) {
+      player.options.showHintText.atomUpgrades = newValue;
+    }
   },
   methods: {
     update() {
@@ -67,6 +72,7 @@ export default {
       this.eternityUnlocked = this.fullCompletion || progress.isEternityUnlocked;
       this.realityUnlocked = this.fullCompletion || progress.isRealityUnlocked;
       this.alchemyUnlocked = this.fullCompletion || Ra.unlocks.effarigUnlock.canBeApplied;
+      this.atomUnlocked = this.fullCompletion || progress.isAtomUnlocked;
 
       const options = player.options.showHintText;
       this.showPercentage = options.showPercentage;
@@ -78,6 +84,7 @@ export default {
       this.realityUpgrades = options.realityUpgrades;
       this.perks = options.perks;
       this.alchemy = options.alchemy;
+      this.atomUpgrades = options.atomUpgrades;
     }
   },
 };
@@ -130,6 +137,11 @@ export default {
         v-if="alchemyUnlocked"
         v-model="alchemy"
         text="Alchemy resource amounts:"
+      />
+      <ModalOptionsToggleButton
+        v-if="atomUnlocked"
+        v-model="atomUpgrades"
+        text="Atom Upgrade names:"
       />
     </div>
     Note: All types of additional info above will always display when holding shift.

@@ -82,7 +82,9 @@ html {
   --color-reality-light: #d5ffd7;
   --color-reality-dark: #0a790c;
   --color-celestials: #5151ec;
-  --color-atom: blue;
+  --color-atom: #0404b0;
+  --color-atom-light: #7f7ff8;
+  --color-atom-dark: #01018a;
   --color-prestige--accent: white;
 
   --color-teresa--base: #5151ec;
@@ -124,7 +126,9 @@ html {
   --color-reality: #3a823d;
   --color-reality-light: #d5ffd7;
   --color-celestials: #00bcd4;
-  --color-atom: blue;
+  --color-atom: #0404b0;
+  --color-atom-light: #7f7ff8;
+  --color-atom-dark: #01018a;
 }
 
 :root .t-dark {
@@ -163,7 +167,9 @@ html {
   --color-reality: #4caf50;
   --color-reality-dark: #0ba00e;
   --color-celestials: #00bcd4;
-  --color-atom: blue;
+  --color-atom: #0404b0;
+  --color-atom-light: #7f7ff8;
+  --color-atom-dark: #01018a;
   --color-prestige--accent: black;
 
   --color-teresa--accent: black;
@@ -204,7 +210,9 @@ html {
   --color-reality: #4caf50;
   --color-reality-dark: #0ba00e;
   --color-celestials: #00bcd4;
-  --color-atom: blue;
+  --color-atom: #0404b0;
+  --color-atom-light: #7f7ff8;
+  --color-atom-dark: #01018a;
   --color-prestige--accent: black;
 
   --color-teresa--accent: black;
@@ -229,7 +237,9 @@ html {
   --color-reality-light: #e8e3e4;
   --color-reality-dark: #7a7273;
   --color-celestials: #f2d6c1;
-  --color-atom: blue;
+  --color-atom: #0404b0;
+  --color-atom-light: #7f7ff8;
+  --color-atom-dark: #01018a;
   --color-prestige--accent: #dbd242;
 
   --color-pelle--base: #7cb727;
@@ -313,25 +323,11 @@ body {
   font-family: "Open Sans Condensed";
   font-style: normal;
   font-weight: 300;
-  src:
-    local("Open Sans Cond Light"),
-    local("OpenSans-CondensedLight"),
-    url("https://fonts.gstatic.com/s/opensanscondensed/v10/gk5FxslNkTTHtojXrkp-xBEur64QvLD-0IbiAdTUNXE.woff2") format("woff2");
-  unicode-range:
-    U+0000-00FF,
-    U+0131,
-    U+0152-0153,
-    U+02C6,
-    U+02DA,
-    U+02DC,
-    U+2000-206F,
-    U+2074,
-    U+20AC,
-    U+2212,
-    U+2215,
-    U+E0FF,
-    U+EFFD,
-    U+F000;
+  src: local("Open Sans Cond Light"), local("OpenSans-CondensedLight"),
+    url("https://fonts.gstatic.com/s/opensanscondensed/v10/gk5FxslNkTTHtojXrkp-xBEur64QvLD-0IbiAdTUNXE.woff2")
+      format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215,
+    U+E0FF, U+EFFD, U+F000;
 }
 
 @font-face {
@@ -866,7 +862,7 @@ button:focus {
   width: 50rem;
   height: 100%;
   font-family: Typewriter;
-  font-size: 1.f2rem;
+  font-size: 1f2rem;
   font-weight: bold;
   background: var(--color-background);
   border-style: solid;
@@ -876,9 +872,15 @@ button:focus {
 }
 
 @keyframes a-celstial-reward-glow {
-  0% { box-shadow: inset 0 0 4rem var(--color-celestials); }
-  50% { box-shadow: inset 0 0 0; }
-  100% { box-shadow: inset 0 0 4rem var(--color-celestials); }
+  0% {
+    box-shadow: inset 0 0 4rem var(--color-celestials);
+  }
+  50% {
+    box-shadow: inset 0 0 0;
+  }
+  100% {
+    box-shadow: inset 0 0 4rem var(--color-celestials);
+  }
 }
 
 .t-s6 .c-reality-button,
@@ -1298,8 +1300,7 @@ br {
   }
 }
 
-@media print,
-  screen and (max-width: 720px) {
+@media print, screen and (max-width: 720px) {
   body {
     word-wrap: break-word;
   }
@@ -1314,8 +1315,7 @@ br {
   }
 }
 
-@media print,
-  screen and (max-width: 480px) {
+@media print, screen and (max-width: 480px) {
   body {
     padding: 15px;
   }
@@ -1341,21 +1341,33 @@ br {
 }
 
 @keyframes a-barrel-roll {
-  0% { transform: rotateZ(0deg); }
+  0% {
+    transform: rotateZ(0deg);
+  }
 
   50%,
-  100% { transform: rotateZ(360deg); }
+  100% {
+    transform: rotateZ(360deg);
+  }
 }
 
 @keyframes a-spin3d {
-  0% { transform: rotate3d(5.2, -2.8, 1.4, 0deg); }
-  100% { transform: rotate3d(5.2, -2.8, 1.4, 360deg); }
+  0% {
+    transform: rotate3d(5.2, -2.8, 1.4, 0deg);
+  }
+  100% {
+    transform: rotate3d(5.2, -2.8, 1.4, 360deg);
+  }
 }
 
 @keyframes a-spin4d {
   0%,
-  100% { transform: scale(1) rotate3d(5.2, -2.8, 1.4, 0deg); }
-  50% { transform: scale(0) rotate3d(5.2, -2.8, 1.4, 360deg); }
+  100% {
+    transform: scale(1) rotate3d(5.2, -2.8, 1.4, 0deg);
+  }
+  50% {
+    transform: scale(0) rotate3d(5.2, -2.8, 1.4, 360deg);
+  }
 }
 
 @keyframes a-float {
@@ -1474,58 +1486,114 @@ br {
 }
 
 @keyframes a-realize {
-  0% { opacity: 1; }
-  20% { opacity: 0; }
-  80% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes a-realizebg {
-  0% { opacity: 0; }
-  20% { opacity: 0; }
-  30% { opacity: 1; }
-  70% { opacity: 1; }
-  80% { opacity: 0; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes a-text-grow {
-  0% { font-size: 1.3rem; }
-  50% { font-size: 1.8rem; }
-  100% { font-size: 1.3rem; }
+  0% {
+    font-size: 1.3rem;
+  }
+  50% {
+    font-size: 1.8rem;
+  }
+  100% {
+    font-size: 1.3rem;
+  }
 }
 
 @keyframes a-text-shrink {
-  0% { font-size: 1.8rem; }
-  50% { font-size: 1.3rem; }
-  100% { font-size: 1.8rem; }
+  0% {
+    font-size: 1.8rem;
+  }
+  50% {
+    font-size: 1.3rem;
+  }
+  100% {
+    font-size: 1.8rem;
+  }
 }
 
 @keyframes a-text-crunch {
-  0% { font-size: 1.5rem; }
-  90% { font-size: 1.5rem; }
-  100% { font-size: 0; }
+  0% {
+    font-size: 1.5rem;
+  }
+  90% {
+    font-size: 1.5rem;
+  }
+  100% {
+    font-size: 0;
+  }
 }
 
 @keyframes a-text-flash {
-  0% { color: yellow; }
-  50% { color: red; }
+  0% {
+    color: yellow;
+  }
+  50% {
+    color: red;
+  }
 }
 
 @keyframes a-fade-out {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes a-disappear {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes a-text-stretch {
-  0% { letter-spacing: 0; }
-  100% { letter-spacing: 30rem; }
+  0% {
+    letter-spacing: 0;
+  }
+  100% {
+    letter-spacing: 30rem;
+  }
 }
 
 .infotooltip {
@@ -1858,6 +1926,11 @@ br {
   width: 15rem;
   height: 4rem;
   font-size: 1rem;
+}
+
+.o-primary-btn--atom-upgrade-toggle {
+  font-size: 1rem;
+  margin-top: 0.5rem;
 }
 
 /* #endregion modifiers */
@@ -2202,15 +2275,8 @@ br {
 .o-dim-path-priority {
   font-size: 1.5rem;
   color: white;
-  text-shadow:
-    -0.1rem -0.1rem 0 black,
-    -0.1rem -0.1rem 0 black,
-    0.1rem -0.1rem 0 black,
-    0.1rem -0.1rem 0 black,
-    -0.1rem 0.1rem 0 black,
-    -0.1rem 0.1rem 0 black,
-    0.1rem 0.1rem 0 black,
-    0.1rem 0.1rem 0 black;
+  text-shadow: -0.1rem -0.1rem 0 black, -0.1rem -0.1rem 0 black, 0.1rem -0.1rem 0 black, 0.1rem -0.1rem 0 black,
+    -0.1rem 0.1rem 0 black, -0.1rem 0.1rem 0 black, 0.1rem 0.1rem 0 black, 0.1rem 0.1rem 0 black;
   pointer-events: none;
 }
 
@@ -2228,6 +2294,17 @@ br {
 }
 
 .c-hint-text--reality-upgrade {
+  font-weight: bold;
+  color: var(--color-text);
+  text-shadow: none;
+}
+
+.l-hint-text--atom-upgrade {
+  top: -1.7rem;
+  font-size: 1.25rem;
+}
+
+.c-hint-text--atom-upgrade {
   font-weight: bold;
   color: var(--color-text);
   text-shadow: none;
@@ -2357,10 +2434,18 @@ br {
 }
 
 @keyframes a-game-header__antimatter--glow {
-  0% { color: #2196f3; }
-  33% { color: #673ab7; }
-  66% { color: #00bcd4; }
-  100% { color: #2196f3; }
+  0% {
+    color: #2196f3;
+  }
+  33% {
+    color: #673ab7;
+  }
+  66% {
+    color: #00bcd4;
+  }
+  100% {
+    color: #2196f3;
+  }
 }
 
 .t-s11 .c-game-header__antimatter {
@@ -2368,10 +2453,18 @@ br {
 }
 
 @keyframes a-game-header__antimatter--glow-blob {
-  0% { color: #fbc21b; }
-  33% { color: #caa32c; }
-  66% { color: #fba11b; }
-  100% { color: #fbc21b; }
+  0% {
+    color: #fbc21b;
+  }
+  33% {
+    color: #caa32c;
+  }
+  66% {
+    color: #fba11b;
+  }
+  100% {
+    color: #fbc21b;
+  }
 }
 
 .t-dark-metro .c-game-header__antimatter,
@@ -2675,15 +2768,27 @@ br {
 }
 
 @keyframes a-tesseract-shift {
-  0% { box-shadow: 1.5rem 1.5rem 0.5rem black, -1.5rem -1.5rem 0.5rem black; }
-  50% { box-shadow: 1.5rem -1.5rem 0.5rem black, -1.5rem 1.5rem 0.5rem black; }
-  100% { box-shadow: -1.5rem -1.5rem 0.5rem black, 1.5rem 1.5rem 0.5rem black; }
+  0% {
+    box-shadow: 1.5rem 1.5rem 0.5rem black, -1.5rem -1.5rem 0.5rem black;
+  }
+  50% {
+    box-shadow: 1.5rem -1.5rem 0.5rem black, -1.5rem 1.5rem 0.5rem black;
+  }
+  100% {
+    box-shadow: -1.5rem -1.5rem 0.5rem black, 1.5rem 1.5rem 0.5rem black;
+  }
 }
 
 @keyframes a-tesseract-shift-dark {
-  0% { box-shadow: 1.5rem 1.5rem 0.5rem white, -1.5rem -1.5rem 0.5rem white; }
-  50% { box-shadow: 1.5rem -1.5rem 0.5rem white, -1.5rem 1.5rem 0.5rem white; }
-  100% { box-shadow: -1.5rem -1.5rem 0.5rem white, 1.5rem 1.5rem 0.5rem white; }
+  0% {
+    box-shadow: 1.5rem 1.5rem 0.5rem white, -1.5rem -1.5rem 0.5rem white;
+  }
+  50% {
+    box-shadow: 1.5rem -1.5rem 0.5rem white, -1.5rem 1.5rem 0.5rem white;
+  }
+  100% {
+    box-shadow: -1.5rem -1.5rem 0.5rem white, 1.5rem 1.5rem 0.5rem white;
+  }
 }
 
 /* #endregion l-infinity-dim-tab */
@@ -3244,7 +3349,6 @@ br {
   background-color: #4caf50;
   border-color: #388e3c;
 }
-
 
 /* #endregion t-dark-metro */
 
@@ -4042,15 +4146,33 @@ br {
 }
 
 @keyframes a-charged-infinity-upgrade-glow {
-  0% { box-shadow: inset 0 0 2rem 0; }
-  13% { box-shadow: inset 0 0 2rem 0.15rem; }
-  25% { box-shadow: inset 0 0 2rem 0.4rem; }
-  38% { box-shadow: inset 0 0 2rem 0.65rem; }
-  50% { box-shadow: inset 0 0 2rem 0.8rem; }
-  63% { box-shadow: inset 0 0 2rem 0.65rem; }
-  75% { box-shadow: inset 0 0 2rem 0.4rem; }
-  88% { box-shadow: inset 0 0 2rem 0.15rem; }
-  100% { box-shadow: inset 0 0 2rem 0; }
+  0% {
+    box-shadow: inset 0 0 2rem 0;
+  }
+  13% {
+    box-shadow: inset 0 0 2rem 0.15rem;
+  }
+  25% {
+    box-shadow: inset 0 0 2rem 0.4rem;
+  }
+  38% {
+    box-shadow: inset 0 0 2rem 0.65rem;
+  }
+  50% {
+    box-shadow: inset 0 0 2rem 0.8rem;
+  }
+  63% {
+    box-shadow: inset 0 0 2rem 0.65rem;
+  }
+  75% {
+    box-shadow: inset 0 0 2rem 0.4rem;
+  }
+  88% {
+    box-shadow: inset 0 0 2rem 0.15rem;
+  }
+  100% {
+    box-shadow: inset 0 0 2rem 0;
+  }
 }
 
 .o-infinity-upgrade-btn--charged {
@@ -5135,35 +5257,87 @@ properly on certain themes. */
 }
 
 @keyframes a-dilation-btn-glow {
-  0% { box-shadow: inset 0.5rem  0       2rem; }
-  25% { box-shadow: inset 0       0.5rem  2rem; }
-  50% { box-shadow: inset -0.5rem 0       2rem; }
-  75% { box-shadow: inset 0       -0.5rem 2rem; }
-  100% { box-shadow: inset 0.5rem  0       2rem; }
+  0% {
+    box-shadow: inset 0.5rem 0 2rem;
+  }
+  25% {
+    box-shadow: inset 0 0.5rem 2rem;
+  }
+  50% {
+    box-shadow: inset -0.5rem 0 2rem;
+  }
+  75% {
+    box-shadow: inset 0 -0.5rem 2rem;
+  }
+  100% {
+    box-shadow: inset 0.5rem 0 2rem;
+  }
 }
 
 @keyframes a-dilation-btn-glow--cancer {
-  0% { box-shadow: inset  0.5px -0.5rem 2rem; }
-  10% { box-shadow: inset -0.5px  0.5rem 2rem; }
-  20% { box-shadow: inset  0.5px -0.5rem 2rem; }
-  22% { box-shadow: inset -0.5px  0.5rem 2rem; }
-  25% { box-shadow: inset  0.5px -0.5rem 2rem; }
-  29% { box-shadow: inset -0.5px  0.5rem 2rem; }
-  39% { box-shadow: inset  0.5px -0.5rem 2rem; }
-  44% { box-shadow: inset -0.5px  0.5rem 2rem; }
-  53% { box-shadow: inset  0.5px -0.5rem 2rem; }
-  57% { box-shadow: inset -0.5px  0.5rem 2rem; }
-  63% { box-shadow: inset  0.5px -0.5rem 2rem; }
-  69% { box-shadow: inset -0.5px  0.5rem 2rem; }
-  71% { box-shadow: inset  0.5px -0.5rem 2rem; }
-  74% { box-shadow: inset -0.5px  0.5rem 2rem; }
-  75% { box-shadow: inset  0.5px -0.5rem 2rem; }
-  84% { box-shadow: inset -0.5px  0.5rem 2rem; }
-  88% { box-shadow: inset  0.5px -0.5rem 2rem; }
-  92% { box-shadow: inset -0.5px  0.5rem 2rem; }
-  93% { box-shadow: inset  0.5px -0.5rem 2rem; }
-  95% { box-shadow: inset -0.5px  0.5rem 2rem; }
-  100% { box-shadow: inset  0.5px -0.5rem 2rem; }
+  0% {
+    box-shadow: inset 0.5px -0.5rem 2rem;
+  }
+  10% {
+    box-shadow: inset -0.5px 0.5rem 2rem;
+  }
+  20% {
+    box-shadow: inset 0.5px -0.5rem 2rem;
+  }
+  22% {
+    box-shadow: inset -0.5px 0.5rem 2rem;
+  }
+  25% {
+    box-shadow: inset 0.5px -0.5rem 2rem;
+  }
+  29% {
+    box-shadow: inset -0.5px 0.5rem 2rem;
+  }
+  39% {
+    box-shadow: inset 0.5px -0.5rem 2rem;
+  }
+  44% {
+    box-shadow: inset -0.5px 0.5rem 2rem;
+  }
+  53% {
+    box-shadow: inset 0.5px -0.5rem 2rem;
+  }
+  57% {
+    box-shadow: inset -0.5px 0.5rem 2rem;
+  }
+  63% {
+    box-shadow: inset 0.5px -0.5rem 2rem;
+  }
+  69% {
+    box-shadow: inset -0.5px 0.5rem 2rem;
+  }
+  71% {
+    box-shadow: inset 0.5px -0.5rem 2rem;
+  }
+  74% {
+    box-shadow: inset -0.5px 0.5rem 2rem;
+  }
+  75% {
+    box-shadow: inset 0.5px -0.5rem 2rem;
+  }
+  84% {
+    box-shadow: inset -0.5px 0.5rem 2rem;
+  }
+  88% {
+    box-shadow: inset 0.5px -0.5rem 2rem;
+  }
+  92% {
+    box-shadow: inset -0.5px 0.5rem 2rem;
+  }
+  93% {
+    box-shadow: inset 0.5px -0.5rem 2rem;
+  }
+  95% {
+    box-shadow: inset -0.5px 0.5rem 2rem;
+  }
+  100% {
+    box-shadow: inset 0.5px -0.5rem 2rem;
+  }
 }
 
 /* #endregion o-dilation-btn */
@@ -5190,8 +5364,12 @@ properly on certain themes. */
 /* #region Modals */
 
 @keyframes a-modal-overlay-fadein {
-  from { background-color: rgba(0, 0, 0, 0%); }
-  to { background-color: var(--color-overlay); }
+  from {
+    background-color: rgba(0, 0, 0, 0%);
+  }
+  to {
+    background-color: var(--color-overlay);
+  }
 }
 
 .l-modal-overlay {
@@ -5484,11 +5662,7 @@ properly on certain themes. */
 }
 
 .t-dark .c-modal-away-progress {
-  text-shadow:
-    0 0 0.2rem black,
-    0 0 0.2rem black,
-    0 0 0.2rem black,
-    0 0 0.2rem black;
+  text-shadow: 0 0 0.2rem black, 0 0 0.2rem black, 0 0 0.2rem black, 0 0 0.2rem black;
 }
 
 .c-modal-away-progress__header {
@@ -5500,11 +5674,7 @@ properly on certain themes. */
 
 .c-modal-away-progress b {
   font-weight: bold;
-  text-shadow:
-    0 0 0.3rem black,
-    0 0 0.3rem black,
-    0 0 0.3rem black,
-    0 0 0.3rem black;
+  text-shadow: 0 0 0.3rem black, 0 0 0.3rem black, 0 0 0.3rem black, 0 0 0.3rem black;
 }
 
 /* #endregion c-modal-away-progress */
@@ -5795,10 +5965,18 @@ kbd {
 }
 
 @keyframes a-notification--enter {
-  0% { transform: translateX(125%); }
-  50% { transform: translateX(-2rem); }
-  75% { transform: translateX(1rem); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(125%);
+  }
+  50% {
+    transform: translateX(-2rem);
+  }
+  75% {
+    transform: translateX(1rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .a-notification--leave {
@@ -5818,9 +5996,15 @@ kbd {
 }
 
 @keyframes a-notification-glow {
-  0% { filter: brightness(70%); }
-  50% { filter: brightness(100%); }
-  100% { filter: brightness(70%); }
+  0% {
+    filter: brightness(70%);
+  }
+  50% {
+    filter: brightness(100%);
+  }
+  100% {
+    filter: brightness(70%);
+  }
 }
 
 /* #endregion o-notification */
@@ -5911,11 +6095,21 @@ kbd {
 }
 
 @keyframes a-teresa-unfinished-milestone-flash {
-  0% { opacity: 0.7; }
-  20% { opacity: 0.7; }
-  50% { opacity: 0.4; }
-  80% { opacity: 0.7; }
-  100% { opacity: 0.7; }
+  0% {
+    opacity: 0.7;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.7;
+  }
 }
 
 .c-teresa-milestone-line--unlocked {
@@ -5993,9 +6187,15 @@ kbd {
 }
 
 @keyframes a-teresa-run-button__icon--glow {
-  0% { text-shadow: 0.1rem 0.1rem 0.3rem; }
-  50% { text-shadow: 0.1rem 0.1rem 0.8rem; }
-  100% { text-shadow: 0.1rem 0.1rem 0.3rem; }
+  0% {
+    text-shadow: 0.1rem 0.1rem 0.3rem;
+  }
+  50% {
+    text-shadow: 0.1rem 0.1rem 0.8rem;
+  }
+  100% {
+    text-shadow: 0.1rem 0.1rem 0.3rem;
+  }
 }
 
 @keyframes a-teresa-run-button__icon--super-glow {
@@ -6016,17 +6216,39 @@ kbd {
 }
 
 @keyframes a-teresa-run-button__icon--spin {
-  0% { transform: rotate(61deg); }
-  10% { transform: rotate(322deg); }
-  20% { transform: rotate(235deg); }
-  30% { transform: rotate(222deg); }
-  40% { transform: rotate(105deg); }
-  50% { transform: rotate(33deg); }
-  60% { transform: rotate(103deg); }
-  70% { transform: rotate(158deg); }
-  80% { transform: rotate(41deg); }
-  90% { transform: rotate(73deg); }
-  100% { transform: rotate(61deg); }
+  0% {
+    transform: rotate(61deg);
+  }
+  10% {
+    transform: rotate(322deg);
+  }
+  20% {
+    transform: rotate(235deg);
+  }
+  30% {
+    transform: rotate(222deg);
+  }
+  40% {
+    transform: rotate(105deg);
+  }
+  50% {
+    transform: rotate(33deg);
+  }
+  60% {
+    transform: rotate(103deg);
+  }
+  70% {
+    transform: rotate(158deg);
+  }
+  80% {
+    transform: rotate(41deg);
+  }
+  90% {
+    transform: rotate(73deg);
+  }
+  100% {
+    transform: rotate(61deg);
+  }
 }
 
 .c-teresa-shop {
@@ -6078,9 +6300,15 @@ kbd {
 }
 
 @keyframes a-teresa-pour--unlock-available {
-  0% { box-shadow: 0 0 0.3rem var(--color-teresa--base) inset; }
-  50% { box-shadow: 0 0 1rem var(--color-teresa--base) inset; }
-  100% { box-shadow: 0 0 0.3rem var(--color-teresa--base) inset; }
+  0% {
+    box-shadow: 0 0 0.3rem var(--color-teresa--base) inset;
+  }
+  50% {
+    box-shadow: 0 0 1rem var(--color-teresa--base) inset;
+  }
+  100% {
+    box-shadow: 0 0 0.3rem var(--color-teresa--base) inset;
+  }
 }
 
 .s-base--metro .c-teresa-unlock {
@@ -6169,26 +6397,14 @@ kbd {
 
 @keyframes a-effarig-run-button--not-running-glow {
   from {
-    text-shadow:
-      0 0 1rem black,
-      0 0 2rem black,
-      0 0 3rem #cb1a1a,
-      0 0 4rem #cb1a1a,
-      0 0 5rem #cb1a1a,
-      0 0 6rem #cb1a1a,
+    text-shadow: 0 0 1rem black, 0 0 2rem black, 0 0 3rem #cb1a1a, 0 0 4rem #cb1a1a, 0 0 5rem #cb1a1a, 0 0 6rem #cb1a1a,
       0 0 7rem #cb1a1a;
     box-shadow: 0 0 0.5rem #cb1a1a, 0 0 1rem #cb1a1a, 0 0 1.5rem #cb1a1a;
   }
 
   to {
-    text-shadow:
-      0 0 2rem black,
-      0 0 3rem #bf0404,
-      0 0 4rem #bf0404,
-      0 0 5rem #bf0404,
-      0 0 6rem #bf0404,
-      0 0 7rem #bf0404,
-      0 0 8rem #bf0404;
+    text-shadow: 0 0 2rem black, 0 0 3rem #bf0404, 0 0 4rem #bf0404, 0 0 5rem #bf0404, 0 0 6rem #bf0404,
+      0 0 7rem #bf0404, 0 0 8rem #bf0404;
     box-shadow: 0 0 0.5rem #bf0404, 0 0 1rem #bf0404, 0 0 1.5rem #bf0404, 0 0 2rem #bf0404;
   }
 }
@@ -6312,25 +6528,13 @@ kbd {
 
 @keyframes a-effarig-run-button--running-glow {
   from {
-    box-shadow:
-      0 0 0.5rem #c20707 inset,
-      0 0 1rem #c20707 inset,
-      0 0 1.5rem #c20707 inset,
-      0 0 1.5rem #c20707,
-      0 0 1.5rem #c20707,
-      0 0 1.5rem #c20707;
+    box-shadow: 0 0 0.5rem #c20707 inset, 0 0 1rem #c20707 inset, 0 0 1.5rem #c20707 inset, 0 0 1.5rem #c20707,
+      0 0 1.5rem #c20707, 0 0 1.5rem #c20707;
   }
 
   to {
-    box-shadow:
-      0 0 0.5rem #e21717 inset,
-      0 0 1rem #e21717 inset,
-      0 0 1.5rem #e21717 inset,
-      0 0 1.5rem #e21717,
-      0 0 1.5rem #e21717,
-      0 0 1.5rem #e21717,
-      0 0 2rem #e21717 inset,
-      0 0 2rem #e21717;
+    box-shadow: 0 0 0.5rem #e21717 inset, 0 0 1rem #e21717 inset, 0 0 1.5rem #e21717 inset, 0 0 1.5rem #e21717,
+      0 0 1.5rem #e21717, 0 0 1.5rem #e21717, 0 0 2rem #e21717 inset, 0 0 2rem #e21717;
   }
 }
 
@@ -6599,13 +6803,12 @@ kbd {
 .c-enslaved-run-button__icon__glitch {
   width: 0.1rem;
   position: absolute;
-  background-image:
-    linear-gradient(
-      rgba(0, 0, 0, 0%) 0%,
-      var(--color-enslaved--base) 20%,
-      var(--color-enslaved--base) 80%,
-      rgba(0, 0, 0, 0%) 100%
-    );
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0%) 0%,
+    var(--color-enslaved--base) 20%,
+    var(--color-enslaved--base) 80%,
+    rgba(0, 0, 0, 0%) 100%
+  );
   border: none;
 }
 
@@ -6614,8 +6817,12 @@ kbd {
 }
 
 @keyframes a-enslaved-run-button--spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .c-enslaved-hint-modal {
@@ -6672,24 +6879,24 @@ kbd {
 }
 
 /* required for hex structure */
-.l-v-unlocks-container li:nth-child(3n+2) {
+.l-v-unlocks-container li:nth-child(3n + 2) {
   margin: 0 1%;
 }
 
-.l-v-unlocks-container li:nth-child(6n+4),
-.l-v-unlocks-container li:nth-child(6n+5),
-.l-v-unlocks-container li:nth-child(6n+6) {
+.l-v-unlocks-container li:nth-child(6n + 4),
+.l-v-unlocks-container li:nth-child(6n + 5),
+.l-v-unlocks-container li:nth-child(6n + 6) {
   margin-top: -7%;
   margin-bottom: -7%;
 }
 
-.l-v-unlocks-container li:nth-child(6n+1),
-.l-v-unlocks-container li:nth-child(6n+2),
-.l-v-unlocks-container li:nth-child(6n+3) {
+.l-v-unlocks-container li:nth-child(6n + 1),
+.l-v-unlocks-container li:nth-child(6n + 2),
+.l-v-unlocks-container li:nth-child(6n + 3) {
   transform: translateX(50%) rotate(-60deg) skewY(30deg);
 }
 
-.l-v-unlocks-container li:nth-child(6n+1) {
+.l-v-unlocks-container li:nth-child(6n + 1) {
   margin-left: 1%;
 }
 
@@ -6844,20 +7051,17 @@ kbd {
 }
 
 .c-v-run-button--running .c-v-run-button__line--1 {
-  animation:
-    a-c-v-run-button__line--1--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
+  animation: a-c-v-run-button__line--1--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
     a-c-v-run-button__line--burst 3s infinite cubic-bezier(0.9, 0, 0, 0.9);
 }
 
 .c-v-run-button--running .c-v-run-button__line--2 {
-  animation:
-    a-c-v-run-button__line--2--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
+  animation: a-c-v-run-button__line--2--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
     a-c-v-run-button__line--burst 3s infinite cubic-bezier(0.9, 0, 0, 0.9);
 }
 
 .c-v-run-button--running .c-v-run-button__line--3 {
-  animation:
-    a-c-v-run-button__line--3--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
+  animation: a-c-v-run-button__line--3--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
     a-c-v-run-button__line--burst 3s infinite cubic-bezier(0.9, 0, 0, 0.9);
 }
 
@@ -6922,9 +7126,15 @@ kbd {
 }
 
 @keyframes a-c-v-run-button__line--burst {
-  0% { box-shadow: 0 0 3rem black; }
-  50% { box-shadow: 0 0 0 black; }
-  100% { box-shadow: 0 0 3rem black; }
+  0% {
+    box-shadow: 0 0 3rem black;
+  }
+  50% {
+    box-shadow: 0 0 0 black;
+  }
+  100% {
+    box-shadow: 0 0 3rem black;
+  }
 }
 
 /* #endregion v tab */
@@ -6985,12 +7195,8 @@ kbd {
   z-index: 3;
   font-size: 1.5rem;
   font-weight: bold;
-  text-shadow:
-    0.1rem 0.1rem 0.1rem black,
-    -0.1rem 0.1rem 0.1rem black,
-    0.1rem -0.1rem 0.1rem black,
-    -0.1rem -0.1rem 0.1rem black,
-    0.1rem -0.1rem 0 black;
+  text-shadow: 0.1rem 0.1rem 0.1rem black, -0.1rem 0.1rem 0.1rem black, 0.1rem -0.1rem 0.1rem black,
+    -0.1rem -0.1rem 0.1rem black, 0.1rem -0.1rem 0 black;
   border-left-width: var(--var-border-width, 0.2rem);
 }
 
@@ -7138,21 +7344,32 @@ kbd {
 }
 
 .c-ra-run-button__icon--running .c-ra-run-button__icon__sigil {
-  animation:
-    a-c-ra-run-button__icon__sigil--undulate 0.6s infinite ease-in-out,
+  animation: a-c-ra-run-button__icon__sigil--undulate 0.6s infinite ease-in-out,
     a-c-ra-run-button__icon__sigil--glow 3s infinite ease-in-out;
 }
 
 @keyframes a-c-ra-run-button__icon__sigil--undulate {
-  0% { transform: scale(0.9); }
-  50% { transform: scale(1); }
-  100% { transform: scale(0.9); }
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.9);
+  }
 }
 
 @keyframes a-c-ra-run-button__icon__sigil--glow {
-  0% { text-shadow: 0 0 1rem; }
-  50% { text-shadow: 0 0 3rem; }
-  100% { text-shadow: 0 0 1rem; }
+  0% {
+    text-shadow: 0 0 1rem;
+  }
+  50% {
+    text-shadow: 0 0 3rem;
+  }
+  100% {
+    text-shadow: 0 0 1rem;
+  }
 }
 
 .c-ra-rewards {
@@ -7232,11 +7449,21 @@ kbd {
 }
 
 @keyframes a-ra-color-shift {
-  0% { background-color: var(--color-ra-pet--teresa); }
-  25% { background-color: var(--color-ra-pet--effarig); }
-  50% { background-color: var(--color-ra-pet--enslaved); }
-  75% { background-color: var(--color-ra-pet--v); }
-  100% { background-color: var(--color-ra-pet--teresa); }
+  0% {
+    background-color: var(--color-ra-pet--teresa);
+  }
+  25% {
+    background-color: var(--color-ra-pet--effarig);
+  }
+  50% {
+    background-color: var(--color-ra-pet--enslaved);
+  }
+  75% {
+    background-color: var(--color-ra-pet--v);
+  }
+  100% {
+    background-color: var(--color-ra-pet--teresa);
+  }
 }
 
 .l-ra-all-pets-container {
@@ -7593,14 +7820,30 @@ kbd {
 }
 
 @keyframes a-rainbow-stroke {
-  0% { stroke: red; }
-  14.2% { stroke: orange; }
-  28.4% { stroke: yellow; }
-  42.6% { stroke: green; }
-  56.8% { stroke: blue; }
-  71% { stroke: indigo; }
-  85.2% { stroke: violet; }
-  100% { stroke: red; }
+  0% {
+    stroke: red;
+  }
+  14.2% {
+    stroke: orange;
+  }
+  28.4% {
+    stroke: yellow;
+  }
+  42.6% {
+    stroke: green;
+  }
+  56.8% {
+    stroke: blue;
+  }
+  71% {
+    stroke: indigo;
+  }
+  85.2% {
+    stroke: violet;
+  }
+  100% {
+    stroke: red;
+  }
 }
 
 .o-alchemy-reaction-arrow--focused {
@@ -8156,9 +8399,15 @@ kbd {
 }
 
 @keyframes a-dark-energy-glow {
-  0% { box-shadow: 0 0 0 rgb(53, 10, 53); }
-  50% { box-shadow: 0 0 5px rgb(53, 10, 53); }
-  100% { box-shadow: 0 0 0 rgb(53, 10, 53); }
+  0% {
+    box-shadow: 0 0 0 rgb(53, 10, 53);
+  }
+  50% {
+    box-shadow: 0 0 5px rgb(53, 10, 53);
+  }
+  100% {
+    box-shadow: 0 0 0 rgb(53, 10, 53);
+  }
 }
 
 .o-laitela-run-button__icon {
@@ -8187,8 +8436,12 @@ kbd {
 }
 
 @keyframes a-laitela-run-button__icon--scroll {
-  0% { background-position-y: 0; }
-  100% { background-position-y: 24rem; }
+  0% {
+    background-position-y: 0;
+  }
+  100% {
+    background-position-y: 24rem;
+  }
 }
 
 .l-laitela-annihilation-container {
@@ -8592,14 +8845,7 @@ kbd {
   /* Text color gets inherited from other pseudo-classes; so we use !important here in order to ensure good contrast
     specifically on reality and imaginary upgrades, the only upgrades which use this and the related --locked below */
   color: black !important;
-  background:
-    repeating-linear-gradient(
-      -45deg,
-      #A2A229,
-      #A2A229 3rem,
-      #919122 3rem,
-      #919122 6rem
-    );
+  background: repeating-linear-gradient(-45deg, #a2a229, #a2a229 3rem, #919122 3rem, #919122 6rem);
   cursor: default;
 }
 
@@ -8611,10 +8857,8 @@ kbd {
 .c-reality-upgrade-btn--locked {
   color: white !important;
   background: #952020;
-  background-image:
-    linear-gradient(45deg, #802222 25%, transparent 25%),
-    linear-gradient(135deg, #802222 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #802222 75%),
+  background-image: linear-gradient(45deg, #802222 25%, transparent 25%),
+    linear-gradient(135deg, #802222 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #802222 75%),
     linear-gradient(135deg, transparent 75%, #802222 75%);
   background-position: 0 0, 2rem 0, 2rem -2rem, 0 2rem;
   background-size: 4rem 4rem;
@@ -9152,9 +9396,15 @@ input.o-automator-block-input {
 }
 
 @keyframes a-opacity {
-  0% { opacity: 0; }
-  50% { opacity: 0.4; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .tutorial--glow {
@@ -9337,6 +9587,8 @@ input.o-automator-block-input {
   height: 100%;
 }
 
+/* #region Collapse Button */
+
 .o-collapse-button {
   font-weight: bold;
   color: var(--color-atom);
@@ -9365,3 +9617,338 @@ input.o-automator-block-input {
   opacity: 0.5;
   cursor: default;
 }
+
+/* #endregion Collapse Button */
+/* #region Atom Point Styling */
+.c-atom-point-desc {
+  font-size: 1.2rem;
+  padding-bottom: 0.5rem;
+}
+.c-atom-points {
+  color: var(--color-atom);
+}
+/* #endregion Atom Point Styling */
+/* #region Atom Milestones */
+
+.l-atom-milestone-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.l-atom-milestone-grid__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.l-atom-milestone-grid__cell {
+  margin: 0.5rem 0.8rem;
+}
+
+.o-atom-milestone__goal {
+  text-align: left;
+  font-size: 2rem;
+}
+
+.o-atom-milestone__reward {
+  width: 100rem;
+  height: 8rem;
+  font-family: Typewriter, serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  border: 0.1rem solid var(--color-atom);
+  border-radius: var(--var-border-radius, 0.4rem);
+  transition-duration: 0.2s;
+}
+
+.o-atom-milestone__reward--locked {
+  background-color: dimgrey;
+}
+
+.o-atom-milestone__reward--reached {
+  background-color: var(--color-atom);
+  border-color: black;
+}
+
+.o-atom-milestone__reward--small-font {
+  font-size: 1.1rem;
+}
+
+.s-base--metro .o-atom-milestone__reward--locked,
+.t-s1 .o-atom-milestone__reward--locked {
+  background-color: #9e9e9e;
+  border: none;
+  box-shadow: 0.1rem 0.1rem 0.1rem 0 black;
+}
+
+.t-dark .o-atom-milestone__reward--locked,
+.t-s6 .o-atom-milestone__reward--locked,
+.t-s10 .o-atom-milestone__reward--locked {
+  color: var(--color-atom);
+  background-color: black;
+  border-color: var(--color-atom);
+  animation: a-time-study 7s infinite;
+}
+
+.l-atom-milestone {
+  display: flex;
+  flex-direction: column;
+}
+
+.o-atom-milestone__reward--possible {
+  /* Text color gets inherited from other pseudo-classes; so we use !important here in order to ensure good contrast
+    specifically on reality and imaginary upgrades, the only upgrades which use this and the related --locked below */
+  color: black !important;
+  background: repeating-linear-gradient(-45deg, #a2a229, #a2a229 3rem, #919122 3rem, #919122 6rem);
+  cursor: default;
+}
+
+.o-atom-milestone__reward--possible:hover {
+  /* This is actually a solid color, but it flickers on hover if we don't make it a linear-gradient */
+  background: linear-gradient(0deg, #919122, #919122);
+}
+
+.o-atom-milestone__reward--impossible {
+  color: white !important;
+  background: #952020;
+  background-image: linear-gradient(45deg, #802222 25%, transparent 25%),
+    linear-gradient(135deg, #802222 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #802222 75%),
+    linear-gradient(135deg, transparent 75%, #802222 75%);
+  background-position: 0 0, 2rem 0, 2rem -2rem, 0 2rem;
+  background-size: 4rem 4rem;
+  cursor: default;
+}
+
+.o-atom-milestone__reward--impossible:hover {
+  background-color: #802222;
+}
+
+/* #endregion Atom Milestones */
+/* #region Atom Upgrades */
+.l-atom-upgrade-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-top: 1.2rem;
+}
+
+.l-atom-upgrade-grid__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.l-atom-upgrade-btn {
+  display: flex;
+  flex-direction: column;
+  width: 22.55rem;
+  height: 11rem;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  margin: 1.2rem;
+  padding: 0 0.5rem;
+}
+
+.c-atom-upgrade-btn {
+  text-align: center;
+  font-family: Typewriter, serif;
+  font-size: 1rem;
+  color: var(--color-atom-dark);
+  background-color: var(--color-background);
+  border: var(--var-border-width, 0.2rem) solid var(--color-atom-dark);
+  border-radius: var(--var-border-radius, 0.5rem);
+  transition-duration: 0.15s;
+  cursor: pointer;
+}
+
+.s-base--dark .c-atom-upgrade-btn {
+  color: var(--color-atom-light);
+}
+
+.c-atom-upgrade-btn__requirement {
+  font-weight: bold;
+}
+
+.c-atom-upgrade-btn:hover {
+  color: black;
+  background-color: var(--color-atom-light);
+}
+
+.c-atom-upgrade-btn--unavailable {
+  color: var(--color-atom-light);
+  background-color: var(--color-glyph-undo-disabled);
+  cursor: default;
+}
+
+.c-atom-upgrade-btn--unavailable:hover {
+  color: var(--color-atom-light);
+  background-color: var(--color-glyph-undo-disabled);
+}
+
+.c-atom-upgrade-btn--bought {
+  color: var(--color-atom-light);
+  background-color: var(--color-atom);
+  border-color: #094e0b;
+  cursor: default;
+}
+
+.c-atom-upgrade-btn--bought:hover {
+  color: var(--color-atom-light);
+  background-color: var(--color-atom);
+}
+
+.c-atom-upgrade-btn--possible {
+  /* Text color gets inherited from other pseudo-classes; so we use !important here in order to ensure good contrast
+    specifically on reality and imaginary upgrades, the only upgrades which use this and the related --locked below */
+  color: black !important;
+  background: repeating-linear-gradient(-45deg, #a2a229, #a2a229 3rem, #919122 3rem, #919122 6rem);
+  cursor: default;
+}
+
+.c-atom-upgrade-btn--possible:hover {
+  /* This is actually a solid color, but it flickers on hover if we don't make it a linear-gradient */
+  background: linear-gradient(0deg, #919122, #919122);
+}
+
+.c-atom-upgrade-btn--locked {
+  color: white !important;
+  background: #952020;
+  background-image: linear-gradient(45deg, #802222 25%, transparent 25%),
+    linear-gradient(135deg, #802222 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #802222 75%),
+    linear-gradient(135deg, transparent 75%, #802222 75%);
+  background-position: 0 0, 2rem 0, 2rem -2rem, 0 2rem;
+  background-size: 4rem 4rem;
+  cursor: default;
+}
+
+.c-atom-upgrade-btn--locked:hover {
+  background-color: #802222;
+}
+/* #endregion Atom Upgrades */
+/* #region Break Universe */
+.l-break-universe-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.l-break-universe-tab__break-btn {
+  margin-top: 2rem;
+}
+
+.o-atom-upgrade-btn {
+  width: 19rem;
+  height: 9rem;
+  font-family: Typewriter, serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #1f1f1f;
+  border: 0.1rem solid black;
+  border-radius: var(--var-border-radius, 0.4rem);
+  transition-duration: 0.2s;
+  cursor: pointer;
+}
+
+.t-s6 .o-atom-upgrade-btn,
+.t-s10 .o-atom-upgrade-btn {
+  box-shadow: 0 0 0.7rem 0.2rem #111111;
+}
+
+.o-atom-upgrade-btn:hover {
+  color: var(--color-text-inverted);
+}
+
+/* #region o-atom-upgrade-btn--available */
+
+.o-atom-upgrade-btn--available:hover {
+  background-color: #a53b98;
+}
+
+.t-dark .o-atom-upgrade-btn--available:hover,
+.t-s6 .o-atom-upgrade-btn--available:hover,
+.t-s10 .o-atom-upgrade-btn--available:hover {
+  background-color: #6200ea;
+}
+
+.s-base--metro .o-atom-upgrade-btn--available:hover {
+  background-color: #9c27b0;
+}
+
+/* #endregion o-atom-upgrade-btn--available */
+
+/* #region o-atom-upgrade-btn--color-2 */
+
+.o-atom-upgrade-btn--color-2.o-atom-upgrade-btn--available:hover {
+  background-color: #ff3300;
+}
+
+.t-dark .o-atom-upgrade-btn--color-2.o-atom-upgrade-btn--available:hover,
+.t-s6 .o-atom-upgrade-btn--color-2.o-atom-upgrade-btn--available:hover,
+.t-s10 .o-atom-upgrade-btn--color-2.o-atom-upgrade-btn--available:hover {
+  background-color: #d50000;
+}
+
+.s-base--metro .o-atom-upgrade-btn--color-2.o-atom-upgrade-btn--available:hover {
+  background-color: #f44336;
+}
+
+/* #endregion o-infinity-upgrade-btn--color-2 */
+
+.o-atom-upgrade-btn--unavailable {
+  color: black;
+  background-color: #f7f7f7;
+}
+
+.o-atom-upgrade-btn--unclickable {
+  cursor: auto;
+}
+
+.o-atom-upgrade-btn--unavailable:hover {
+  color: var(--color-text);
+  background-color: var(--color-text-inverted);
+  cursor: default;
+}
+
+.t-dark .o-atom-upgrade-btn--unavailable {
+  background-color: #263238;
+  border-color: black;
+}
+
+.t-dark .o-atom-upgrade-btn--unavailable:hover {
+  background-color: #37474f;
+}
+
+.s-base--metro .o-atom-upgrade-btn--unavailable {
+  background-color: #9e9e9e;
+  border-color: #616161;
+}
+
+.s-base--metro .o-atom-upgrade-btn--unavailable:hover {
+  color: var(--color-text-inverted);
+  background-color: #bdbdbd;
+}
+
+.t-s1 .o-atom-upgrade-btn--unavailable {
+  background-color: #9a921d;
+  border-color: black;
+}
+
+.t-s1 .o-atom-upgrade-btn--unavailable:hover {
+  background-color: #c5ba26;
+}
+
+.t-s6 .o-atom-upgrade-btn--unavailable,
+.t-s10 .o-atom-upgrade-btn--unavailable {
+  color: grey;
+  background-color: black;
+  border-color: grey;
+}
+
+.t-s6 .o-atom-upgrade-btn--unavailable:hover,
+.t-s10 .o-atom-upgrade-btn--unavailable:hover {
+  background-color: #222222;
+}
+/* #endregion Break Universe */

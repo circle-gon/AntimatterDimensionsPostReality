@@ -495,6 +495,7 @@ window.PROGRESS_STAGE = {
   IMAGINARY_MACHINES: 15,
   LAITELA: 16,
   PELLE: 17,
+  ATOM: 18,
 };
 
 window.STD_BACKEND_URL = "https://antimatterdimensionspayments.ew.r.appspot.com";

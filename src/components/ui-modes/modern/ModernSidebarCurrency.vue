@@ -177,4 +177,7 @@ export default {
 .o-sidebar-currency--pelle {
   color: var(--color-pelle--base);
 }
+.o-sidebar-currency--atom {
+  color: var(--color-atom);
+}
 </style>

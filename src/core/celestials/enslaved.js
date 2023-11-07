@@ -48,7 +48,7 @@ export const Enslaved = {
     player.celestials.enslaved.isStoringReal = false;
   },
   toggleStoreReal() {
-    if (!this.canModifyRealTimeStorage && !this.isStoredRealTimeCapped) return;
+    if (!this.canStoreRealTime || !this.isStoredRealTimeCapped) return;
     player.celestials.enslaved.isStoringReal = !player.celestials.enslaved.isStoringReal;
     player.celestials.enslaved.isStoring = false;
   },
@@ -56,12 +56,24 @@ export const Enslaved = {
     if (!this.canModifyRealTimeStorage) return;
     player.celestials.enslaved.autoStoreReal = !player.celestials.enslaved.autoStoreReal;
   },
+  toggleRealStoreDischarge() {
+    if (!this.canDischargeRealTime) return;
+    player.celestials.enslaved.isDischargingReal = !player.celestials.enslaved.isDischargingReal;
+  },
   get canModifyGameTimeStorage() {
     return Enslaved.isUnlocked && !Pelle.isDoomed && !BlackHoles.arePaused && !EternityChallenge(12).isRunning &&
       !Enslaved.isRunning && !Laitela.isRunning;
   },
   get canModifyRealTimeStorage() {
-    return Enslaved.isUnlocked && !Pelle.isDoomed;
+    return (Enslaved.isUnlocked || AtomMilestone.am1.isReached) && !Pelle.isDoomed;
+  },
+  get canStoreRealTime() {
+    return this.canModifyRealTimeStorage && !this.realDischargeActive
+  },
+  get canDischargeRealTime() {
+    return this.canModifyRealTimeStorage && 
+      AtomMilestone.am1.isReached && 
+      !player.celestials.enslaved.isStoringReal
   },
   get isStoredRealTimeCapped() {
     return player.celestials.enslaved.storedReal < this.storedRealTimeCap;
@@ -73,20 +85,29 @@ export const Enslaved = {
     return this.canModifyGameTimeStorage && (this.isAutoReleasing || player.celestials.enslaved.isStoring);
   },
   get isStoringRealTime() {
-    return this.canModifyRealTimeStorage && player.celestials.enslaved.isStoringReal;
+    return this.canStoreRealTime && player.celestials.enslaved.isStoringReal;
+  },
+  get isDischargingRealTime() {
+    return this.canDischargeRealTime && this.realDischargeActive;
   },
   get storedRealTimeEfficiency() {
-    return 0.7;
+    return AtomMilestone.am1.isReached ? 1 : 0.7;
   },
   get storedRealTimeCap() {
     const addedCap = Ra.unlocks.improvedStoredTime.effects.realTimeCap.effectOrDefault(0);
     return 1000 * 3600 * 8 + addedCap;
   },
+  get realTimeDischargeMode() {
+    return player.celestials.enslaved.realDischargeMode
+  },
+  get realDischargeActive() {
+    return player.celestials.enslaved.isDischargingReal
+  },
   get isAutoReleasing() {
     return player.celestials.enslaved.isAutoReleasing && !BlackHoles.areNegative && !Pelle.isDisabled("blackhole");
   },
   storeRealTime() {
-    if (Pelle.isDoomed) return;
+    if (!this.canStoreRealTime) return;
     const thisUpdate = Date.now();
     const diff = Math.max(thisUpdate - player.lastUpdate, 0);
     const efficiency = this.storedRealTimeEfficiency;
@@ -135,6 +156,26 @@ export const Enslaved = {
     player.celestials.ra.peakGamespeed = player.celestials.ra.peakGamespeed.max(effectiveGamespeed);
     this.autoReleaseSpeed = release.div(player.options.updateRate * 5);
     player.celestials.enslaved.stored = player.celestials.enslaved.stored.mul(autoRelease ? 0.99 : 0);
+  },
+  // returns the amount of time discharged
+  useRealStoredTime(diff) {
+    if (!this.isDischargingRealTime) return 0
+    const realStored = player.celestials.enslaved.storedReal
+    // diff is in ms
+    const realDiff = diff / 1000
+    const timeSpent = Math.min(this.realTimeDischargeMode ? 
+      // there's not really much of a point to go above it
+      // so cap it there so that not all real stored time gets used in 1 tick
+      realStored * Math.min(1 - Math.pow(1 - player.celestials.enslaved.realDischargePercent / 100, realDiff), 0.99) :
+      player.celestials.enslaved.realDischargeConstant * 1000 * realDiff, realStored
+    )
+    player.celestials.enslaved.storedReal -= timeSpent
+    // 1 millisecond should be good enough
+    if (player.celestials.enslaved.storedReal < 1) {
+      player.celestials.enslaved.isDischargingReal = false;
+      player.celestials.enslaved.storedReal = 0;
+    }
+    return timeSpent
   },
   has(info) {
     return player.celestials.enslaved.unlocks.includes(info.id);
