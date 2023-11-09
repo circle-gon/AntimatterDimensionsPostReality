@@ -2,6 +2,7 @@
 import AlchemyTab from "./alchemy/AlchemyTab";
 import AntimatterDimensionsTab from "./antimatter-dimensions/AntimatterDimensionsTab";
 import AtomMilestones from "./atom/AtomMilestones";
+import AtomicPower from "./atom/AtomicPower";
 import AtomUpgrades from "./atom/AtomUpgrades";
 import AutobuyersTab from "./autobuyers/AutobuyersTab";
 import AutomatorTab from "./automator/AutomatorTab";
@@ -69,6 +70,7 @@ const TabComponents = {
   PelleTab,
   AtomUpgrades,
   AtomMilestones,
+  AtomicPower,
   BreakUniverseTab,
   AutobuyersTab,
   AutomatorTab,

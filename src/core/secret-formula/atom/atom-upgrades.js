@@ -15,37 +15,55 @@ export const atomUpgrades = [
     cost: Infinity,
     description: `Rebuyable Dilation upgrades previously only available in a Doomed Reality
     are now purchasable outside of it, but they scale faster and have hardcaps. The 
-    autobuyers for them are also available outside of a Doomed Reality.`
+    autobuyers for them are also available outside of a Doomed Reality.`,
   },
   {
     id: 3,
     name: "Knowledge Empowerment",
     cost: Infinity,
-    description: "Memory gain of Ra's pets is raised by 1.25."
+    description: "Memory gain of Ra's pets is raised by 1.25.",
   },
   {
     id: 4,
     name: "Continuum Destruction",
     cost: Infinity,
     description: `Continuum gives 25% more purchases. Every Collapse, start 
-    with Continuum unlocked.`
-  }, 
+    with Continuum unlocked.`,
+  },
   {
     id: 5,
     name: "Hoarder of Glyphs",
     cost: Infinity,
-    description: "Unlock one more glyph slot."
+    description: "Unlock one more glyph slot.",
   },
   {
     id: 6,
     name: "Glyph Enlarger",
     cost: Infinity,
-    description: "You can now equip 2 Reality and Effarig glyphs."
+    description: "You can now equip 2 Reality and Effarig glyphs.",
   },
   {
     id: 7,
     name: "Super Achievement",
     cost: Infinity,
-    description: "Regular V-Achievements gives"
-  }
+    description: "Regular V-Achievements gives",
+  },
+  {
+    id: 8,
+    name: "Super Achievement",
+    cost: Infinity,
+    description: "Regular V-Achievements gives",
+  },
+  {
+    id: 9,
+    name: "Super Achievement",
+    cost: Infinity,
+    description: "Regular V-Achievements gives",
+  },
+  {
+    id: 10,
+    name: "Super Achievement",
+    cost: Infinity,
+    description: "Regular V-Achievements gives",
+  },
 ];

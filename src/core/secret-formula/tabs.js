@@ -476,9 +476,17 @@ export const tabs = [
     hidable: true,
     subtabs: [
       {
+        key: "atomic-power",
+        name: "Atomic Power",
+        symbol: "<i class='fa-solid fa-atom' />",
+        component: "AtomicPower",
+        id: 15,
+        hidable: true
+      },
+      {
         key: "atom",
         name: "Atom",
-        symbol: "<i class='fa-solid fa-atom'></i>",
+        symbol: "<i class='fa-solid fa-atom' />",
         component: "AtomUpgrades",
         id: 12,
         hidable: true,
@@ -486,7 +494,7 @@ export const tabs = [
       {
         key: "atom-milestones",
         name: "Atom Milestones",
-        symbol: "<i class='fas fa-star'></i>",
+        symbol: "<i class='fas fa-star' />",
         component: "AtomMilestones",
         id: 14,
         hidable: true,

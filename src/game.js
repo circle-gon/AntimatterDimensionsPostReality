@@ -361,6 +361,8 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.pow(getAdjustedGlyphEffect("effarigblackhole"));
   }
 
+  factor = factor.pow(AtomicParticle(2).effects[1])
+
   if (Enslaved.isStoringGameTime && effects.includes(GAME_SPEED_EFFECT.TIME_STORAGE)) {
     const storedTimeWeight = Ra.unlocks.autoPulseTime.canBeApplied ? 0.99 : 1;
     factor = factor.mul(1 - storedTimeWeight).add(storedTimeWeight);
@@ -411,6 +413,8 @@ export function realTimeMechanics(realDiff) {
   }
 
   DarkMatterDimensions.tick(realDiff);
+
+  if (PlayerProgress.atomUnlocked()) AtomicPower.tick(realDiff);
 
   // When storing real time, skip everything else having to do with production once stats are updated
   if (Enslaved.isStoringRealTime) {

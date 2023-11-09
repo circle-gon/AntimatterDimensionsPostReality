@@ -45,12 +45,14 @@ export const Laitela = {
     }
   },
   get matterExtraPurchaseFactor() {
-    return (
+    const preAtom = (
       1 +
       0.5 *
         Math.pow(Decimal.pLog10(Currency.darkMatter.max) / 50, 0.4) *
         (1 + SingularityMilestone.continuumMult.effectOrDefault(0))
     );
+    const postAtom = preAtom * AtomicParticle(0).effects[0]
+    return postAtom
   },
   get realityReward() {
     return Math.clampMin(

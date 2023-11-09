@@ -6,7 +6,7 @@ export const MachineHandler = {
   },
 
   get hardcapRM() {
-    return this.baseRMCap.times(ImaginaryUpgrade(6).effectOrDefault(1));
+    return this.baseRMCap.times(ImaginaryUpgrade(6).effectOrDefault(1)).times(AtomicParticle(2).effects[0]);
   },
 
   get distanceToRMCap() {
@@ -14,7 +14,7 @@ export const MachineHandler = {
   },
 
   get perkPointMultiplier() {
-    return AtomUpgrade(1).isBought ? 5 : 1
+    return AtomUpgrade(1).isBought ? 5 : 1;
   },
 
   get realityMachineMultiplier() {

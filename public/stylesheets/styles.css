@@ -9725,6 +9725,28 @@ input.o-automator-block-input {
 }
 
 /* #endregion Atom Milestones */
+/* #region Atomic Power */
+.c-atomic-tab__big-numbers {
+  font-size: 2.5rem;
+  color: var(--color-atom-light);
+}
+.c-atomic-tab__particle-seperator {
+  display: flex;
+  justify-content: center;
+}
+.c-atomic-tab__particle {
+  width: 30rem;
+}
+.c-atomic-tab__effect-enlarger {
+  font-size: 1.25rem;
+}
+.c-atomic-convert {
+  color: var(--color-text);
+  border: 0.1rem solid #691fa5;
+  border-radius: var(--var-border-radius, 4px);
+  height: 4rem;
+}
+/* #endregion Atomic Power */
 /* #region Atom Upgrades */
 .l-atom-upgrade-grid {
   display: flex;

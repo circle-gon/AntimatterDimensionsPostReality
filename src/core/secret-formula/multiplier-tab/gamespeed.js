@@ -97,5 +97,17 @@ export const gamespeed = {
     powValue: () => Math.clampMax(Time.thisRealityRealTime.totalMinutes / 10, 1),
     isActive: () => Laitela.isRunning,
     icon: MultiplierTabIcons.GENERIC_LAITELA,
+  },
+  atomUpgrade: {
+    name: "Atom Upgrade 1",
+    multValue: () => 1e3,
+    isActive: () => AtomUpgrade(1).isBought,
+    icon: MultiplierTabIcons.ATOM,
+  },
+  atomicParticle: {
+    name: "Atomic Electrons",
+    powValue: () => AtomicParticle(2).effects[1],
+    isActive: () => AtomUpgrade(1).isBought,
+    icon: MultiplierTabIcons.ATOM,
   }
 };

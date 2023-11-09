@@ -1,7 +1,9 @@
 import { atomMilestones } from "./atom-milestones";
-import { atomUpgrades } from "./atom-upgrades"
+import { atomUpgrades } from "./atom-upgrades";
+import { atomicParticles } from "./atomic-power";
 
 export const atom = {
   milestones: atomMilestones,
-  upgrades: atomUpgrades
+  upgrades: atomUpgrades,
+  power: atomicParticles,
 };

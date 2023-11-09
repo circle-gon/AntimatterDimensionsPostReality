@@ -556,9 +556,12 @@ window.player = {
   atom: {
     broken: false,
     resetCount: 0,
+    totalAtoms: DC.D0,
     atoms: DC.D0,
     upgradeBits: 0,
-    upgReqs: 0
+    upgReqs: 0,
+    atomicPower: DC.D0,
+    particles: Array.repeat(DC.D0, 3),
   },
   blackHole: Array.range(0, 2).map((id) => ({
     id,

@@ -1,5 +1,5 @@
 import { DC } from "./constants";
-import { BitPurchasableMechanicState } from "./game-mechanics";
+import { BitPurchasableMechanicState, GameMechanicState } from "./game-mechanics";
 
 export function migrateSaves(player) {
   // change effarig shards to decimal
@@ -64,7 +64,9 @@ export function atomTimeText() {
 }
 
 export function gainedAtoms() {
-  return DC.D1;
+  const gain = DC.D1;
+  gain = gain.mul(AtomicParticle(1).effects[1])
+  return gain
 }
 
 function getCollapseGain() {
@@ -127,6 +129,7 @@ export function collapse() {
   const atomsGained = gainedAtoms();
   const collapsesMade = getCollapseGain();
   Currency.atoms.add(atomsGained);
+  player.atom.totalAtoms = player.atom.totalAtoms.add(atomsGained);
   Currency.collapses.add(collapsesMade);
   updateCollapseStats();
   addCollapseTime(player.records.thisCollapse.time, player.records.thisCollapse.realTime, atomsGained, collapsesMade);
@@ -625,5 +628,51 @@ export const AtomUpgrades = {
   all: AtomUpgradeState.index.compact(),
   get hasAllMilestones() {
     return this.all.every((i) => i.isReached);
+  },
+};
+
+class AtomicParticleState extends GameMechanicState {
+  get name() {
+    return this.config.name;
+  }
+  get color() {
+    return this.config.color;
+  }
+  get amount() {
+    return player.atom.particles[this.config.id];
+  }
+  get effects() {
+    return this.config.bonus(this.amount);
+  }
+  get effectDescriptions() {
+    return this.config.description(this.effects);
+  }
+
+  // a utility
+  static createAccessor(gameData) {
+    return super.createAccessor(
+      gameData.map((i, id) => ({
+        ...i,
+        id,
+      }))
+    );
+  }
+}
+
+export const AtomicParticle = AtomicParticleState.createAccessor(GameDatabase.atom.power);
+
+export const AtomicPower = {
+  get gain() {
+    if (!PlayerProgress.atomUnlocked()) return DC.D0;
+    let base = player.atom.totalAtoms.mul(Currency.collapses.value);
+    base = base.mul(AtomicParticle(1).effects[0])
+    return base
+  },
+  tick(realDiff) {
+    player.atom.atomicPower = player.atom.atomicPower.add(this.gain.mul(realDiff / 1000));
+  },
+  use(slot) {
+    player.atom.particles[slot] = player.atom.particles[slot].add(player.atom.atomicPower);
+    player.atom.atomicPower = DC.D0;
   },
 };

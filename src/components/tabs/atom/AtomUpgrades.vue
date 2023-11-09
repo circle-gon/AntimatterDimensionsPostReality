@@ -17,14 +17,18 @@ export default {
       still possible.`,
     lockTooltip: () => `This will only function if you have not already failed the condition or
       unlocked the upgrade.`,
+    upgradesPerRow: () => 5,
+    upgradeRows() {
+      return Math.ceil(this.upgrades.length / this.upgradesPerRow)
+    }
   },
   methods: {
     id(row, column) {
-      return (row - 1) * 5 + column - 1;
+      return (row - 1) * this.upgradesPerRow + column - 1;
     },
     update() {
       this.atoms.copyFrom(Currency.atoms);
-    },
+    }
   },
 };
 </script>
@@ -35,8 +39,8 @@ export default {
       You have <span class="c-atom-points c-atom-amount-accent">{{ format(atoms, 2) }}</span> {{ pluralize("Atom", atoms) }}.
     </div><br />
     <div class="c-atom-upgrade-infotext">This section works similarly to Reality Upgrades.</div>
-    <div v-for="row in 1" :key="row" class="l-atom-upgrade-grid__row">
-      <AtomUpgradeButton v-for="column in 1" :key="id(row, column)" :upgrade="upgrades[id(row, column)]" />
+    <div v-for="row in upgradeRows" :key="row" class="l-atom-upgrade-grid__row">
+      <AtomUpgradeButton v-for="column in upgradesPerRow" :key="id(row, column)" :upgrade="upgrades[id(row, column)]" />
     </div>
   </div>
 </template>
