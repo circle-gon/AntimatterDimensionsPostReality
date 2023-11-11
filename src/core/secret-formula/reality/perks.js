@@ -163,14 +163,22 @@ export const perks = {
     id: 42,
     label: "DU1",
     family: PERK_FAMILY.DILATION,
-    description: "After unlocking Dilation, automatically unlock the second row of Dilation Upgrades for free.",
+    get description() {
+      return `After unlocking Dilation, automatically unlock the ${
+        AtomUpgrade(3).isBought ? "third" : "second"
+      } row of Dilation Upgrades for free.`;
+    },
     layoutPosList: [125433, 81801, 79803, 79398, 80200, 97510],
   },
   autounlockDilation2: {
     id: 43,
     label: "DU2",
     family: PERK_FAMILY.DILATION,
-    description: "After unlocking Dilation, automatically unlock the third row of Dilation Upgrades for free.",
+    get description() {
+      return `After unlocking Dilation, automatically unlock the ${
+        AtomUpgrade(3).isBought ? "fourth and fifth rows" : "third row"
+      } of Dilation Upgrades for free.`;
+    },
     layoutPosList: [128662, 82201, 79403, 79397, 80203, 85513],
   },
   autounlockDilation3: {
@@ -221,7 +229,8 @@ export const perks = {
     id: 53,
     label: "DILR",
     family: PERK_FAMILY.DILATION,
-    description: "Remove the Eternity Challenge 11, Eternity Challenge 12, and total Time Theorem " +
+    description:
+      "Remove the Eternity Challenge 11, Eternity Challenge 12, and total Time Theorem " +
       "requirements from Time Dilation unlock.",
     automatorPoints: 5,
     shortDescription: () => `Unlocking Dilation only requires TT`,
@@ -323,8 +332,7 @@ export const perks = {
     id: 73,
     label: "ECB",
     family: PERK_FAMILY.ETERNITY,
-    description:
-      `You can complete multiple tiers of Eternity Challenges at once if
+    description: `You can complete multiple tiers of Eternity Challenges at once if
       you reach the goal for a higher completion of that challenge.`,
     automatorPoints: 15,
     shortDescription: () => "Bulk EC Completion",
@@ -507,10 +515,10 @@ export const perks = {
     automatorPoints: 10,
     shortDescription: () => "Keep Achievements on Reality",
     layoutPosList: [29761, 81402, 81403, 79404, 79803, 84639],
-  }
+  },
 };
 
-export const perkConnections = (function() {
+export const perkConnections = (function () {
   const p = perks;
   // First item is the start, other items are the ends
   const groups = [
@@ -554,15 +562,15 @@ export const perkConnections = (function() {
   const connections = {};
   for (const perk of Object.values(perks)) {
     const connectedPerks = [];
-    const directConnections = groups.find(g => g[0] === perk);
+    const directConnections = groups.find((g) => g[0] === perk);
     if (directConnections !== undefined) {
       connectedPerks.push(...directConnections.slice(1));
     }
     const indirectConnections = groups
-      .filter(g => g.slice(1).some(groupPerk => groupPerk === perk))
-      .map(g => g[0]);
+      .filter((g) => g.slice(1).some((groupPerk) => groupPerk === perk))
+      .map((g) => g[0]);
     connectedPerks.push(...indirectConnections);
-    connections[perk.id] = [...new Set(connectedPerks.map(connectedPerk => connectedPerk.id))];
+    connections[perk.id] = [...new Set(connectedPerks.map((connectedPerk) => connectedPerk.id))];
   }
   return connections;
-}());
+})();

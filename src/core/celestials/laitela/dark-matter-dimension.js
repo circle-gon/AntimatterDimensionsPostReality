@@ -64,7 +64,7 @@ export class DarkMatterDimensionState extends DimensionState {
   }
 
   get commonDarkMult() {
-    const au1 = AtomUpgrade(1).isBought ? 10 : 1;
+    const au2 = AtomUpgrade(2).isBought ? 10 : 1;
     return DC.D1.timesEffectsOf(
       SingularityMilestone.darkFromTesseracts,
       SingularityMilestone.darkFromGlyphLevel,
@@ -72,7 +72,7 @@ export class DarkMatterDimensionState extends DimensionState {
       SingularityMilestone.darkFromDM4,
       SingularityMilestone.darkFromGamespeed,
       SingularityMilestone.darkFromDilatedTime
-    ).mul(au1);
+    ).mul(au2);
   }
 
   get powerDMPerAscension() {

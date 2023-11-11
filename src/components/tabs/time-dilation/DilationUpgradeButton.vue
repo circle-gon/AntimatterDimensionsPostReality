@@ -69,11 +69,15 @@ export default {
       const tp = this.upgrade.id === 3 && !this.rebuyableBoost;
       const ip = this.upgrade.id === 7;
       return Pelle.isDoomed && (tp || ip);
+    },
+    rightAutobuyerID() {
+      if (!this.isRebuyable) return null
+      return this.upgrade.id <= 3 ? this.upgrade.id : this.upgrade.id - 7
     }
   },
   watch: {
     isAutobuyerOn(newValue) {
-      Autobuyer.dilationUpgrade(this.upgrade.id).isActive = newValue;
+      Autobuyer.dilationUpgrade(this.rightAutobuyerID).isActive = newValue;
     }
   },
   methods: {
@@ -86,7 +90,7 @@ export default {
       if (this.isRebuyable) {
         this.isAffordable = upgrade.isAffordable;
         this.isCapped = upgrade.isCapped;
-        const autobuyer = Autobuyer.dilationUpgrade(upgrade.id);
+        const autobuyer = Autobuyer.dilationUpgrade(this.rightAutobuyerID);
         this.boughtAmount = upgrade.boughtAmount;
         this.rebuyableBoost = PelleRifts.paradox.milestones[2].canBeApplied;
         if (!autobuyer) return;

@@ -51,7 +51,7 @@ export default {
 <template>
   <div class="c-atomic-tab__particle">
     <div class="c-atomic-tab__big-numbers" :style="style">
-      {{ format(amount) }} {{ pluralize(particleData.name, amount) }}
+      {{ format(amount, 2) }} {{ pluralize(particleData.name, amount) }}
     </div>
     <div>
       <button class="c-atomic-convert" :style="conversionStyle" @click="convert">

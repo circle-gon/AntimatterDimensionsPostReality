@@ -486,7 +486,7 @@ export const tabs = [
       {
         key: "atom",
         name: "Atom",
-        symbol: "<i class='fa-solid fa-atom' />",
+        symbol: '<i class="fa-solid fa-circle"></i>',
         component: "AtomUpgrades",
         id: 12,
         hidable: true,
@@ -506,6 +506,7 @@ export const tabs = [
         component: "BreakUniverseTab",
         id: 13,
         hidable: true,
+        condition: () => AtomUpgrades.breakUnlocked
       },
     ],
   },

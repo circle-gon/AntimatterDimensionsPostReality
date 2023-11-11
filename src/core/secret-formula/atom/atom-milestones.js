@@ -3,7 +3,7 @@ export const atomMilestones = {
     time: Number.MAX_VALUE,
     reward: () => `Celestial quote unlocks, the Companion glyph, Automator data, 
     glyph presets and filters, and Normal and Infinity challenge times never reset on
-    Collapse. Start with all perks, the Nameless Ones'  storing
+    Collapse. Start with all perks, the Nameless Ones' storing
     time mechanic unlocked, Automator speed maxed, all one-time Doomed upgrades,
     passive EP generation (works while Doomed), and Reality Upgrades 10, 13, and 25.
     Storing real time is now 100% efficent, unlock real time discharge, 

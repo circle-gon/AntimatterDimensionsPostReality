@@ -14,7 +14,7 @@ export const MachineHandler = {
   },
 
   get perkPointMultiplier() {
-    return AtomUpgrade(1).isBought ? 5 : 1;
+    return AtomUpgrade(2).isBought ? 5 : 1;
   },
 
   get realityMachineMultiplier() {
@@ -23,7 +23,7 @@ export const MachineHandler = {
       .mul(Teresa.rmMultiplier)
       .mul(Effects.max(1, PerkShopUpgrade.rmMult))
       .mul(Achievement(167).effectOrDefault(1))
-      .mul(AtomUpgrade(1).isBought ? 10 : 1);
+      .mul(AtomUpgrade(2).isBought ? 10 : 1);
   },
 
   get uncappedRM() {

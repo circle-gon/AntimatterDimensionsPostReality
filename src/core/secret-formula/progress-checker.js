@@ -166,8 +166,9 @@ export const progressStages = [
     name: "Atom",
     hasReached: (save) => new Decimal(save.atom?.atoms).gt(0),
     suggestedResource: () => {
-      if (AtomMilestones.hasAllMilestones) return "Atoms";
-      const suffix = "in your current Collapse, and your Atoms in the long term";
+      if (AtomUpgrades.breakUnlocked) return "Post e9e15 AM Progression";
+      if (Object.values(AtomMilestone).every(i => i.isReached)) return "Atom Upgrades";
+      const suffix = "in your current Collapse, and obtaining all Atom Milestones in the long term";
       if (player.realities === 0) return `Realities ${suffix}`;
       return `Celestial progress ${suffix}`;
     },

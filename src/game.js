@@ -354,7 +354,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.mul(SingularityMilestone.gamespeedFromSingularities.effectOrDefault(1));
   }
 
-  if (AtomUpgrade(1).isBought && !BlackHoles.areNegative) factor = factor.mul(1000)
+  if (AtomUpgrade(2).isBought && !BlackHoles.areNegative) factor = factor.mul(1000)
 
   if (effects.includes(GAME_SPEED_EFFECT.TIME_GLYPH)) {
     factor = factor.mul(getAdjustedGlyphEffect("timespeed"));
@@ -839,7 +839,7 @@ function laitelaBeatText(disabledDim) {
 function applyAutoprestige(diff) {
   Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));
 
-  if (TeresaUnlocks.epGen.canBeApplied) {
+  if (TeresaUnlocks.epGen.canBeApplied || (AtomMilestone.am1.isReached && !Pelle.isDoomed)) {
     Currency.eternityPoints.add(player.records.thisEternity.bestEPmin.times(DC.D0_01)
       .times(getGameSpeedupFactor().mul(diff / 1000)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
   }
@@ -851,7 +851,7 @@ function applyAutoprestige(diff) {
     Currency.realityMachines.add(addedRM);
   }
 
-  if (PelleRifts.chaos.milestones[2].canBeApplied) {
+  if (PelleRifts.chaos.milestones[2].canBeApplied || (AtomMilestone.am1.isReached && Pelle.isDoomed)) {
     Currency.eternityPoints.add(gainedEternityPoints().times(DC.D0_1).times(diff / 1000));
   }
 }

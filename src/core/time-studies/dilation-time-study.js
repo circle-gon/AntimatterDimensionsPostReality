@@ -38,6 +38,7 @@ export class DilationTimeStudyState extends TimeStudyState {
       }
       if (Perk.autounlockDilation2.canBeApplied) {
         for (const id of [7, 8, 9]) player.dilation.upgrades.add(id);
+        if (AtomUpgrade(3).isBought) for (const id of [14, 15]) player.dilation.upgrades.add(id);
       }
       if (!Pelle.isDoomed) Currency.tachyonParticles.bumpTo(Perk.startTP.effectOrDefault(0));
       if (Ra.unlocks.unlockDilationStartingTP.canBeApplied && !isInCelestialReality() && !Pelle.isDoomed) {
@@ -48,10 +49,14 @@ export class DilationTimeStudyState extends TimeStudyState {
     if (this.id === 6) {
       // ID 6 is the reality unlock study
       if (!PlayerProgress.realityUnlocked()) {
-        Modal.message.show(`Reality Machine gain for your first Reality is reduced above ${format("1e6000")} Eternity
+        Modal.message.show(
+          `Reality Machine gain for your first Reality is reduced above ${format("1e6000")} Eternity
           Points and capped at ${format("1e8000")} Eternity Points. This is due to balance changes made in the Reality
           update which affect the difficulty of reaching those amounts, such as the increased Time Dimension cost
-          scaling above ${format("1e6000")}.`, {}, 3);
+          scaling above ${format("1e6000")}.`,
+          {},
+          3
+        );
         EventHub.dispatch(GAME_EVENT.REALITY_FIRST_UNLOCKED);
       }
       if (!Perk.autounlockReality.isBought) Tab.reality.glyphs.show();
@@ -65,7 +70,7 @@ export class DilationTimeStudyState extends TimeStudyState {
 
 DilationTimeStudyState.studies = mapGameData(
   GameDatabase.eternity.timeStudies.dilation,
-  config => new DilationTimeStudyState(config)
+  (config) => new DilationTimeStudyState(config)
 );
 
 /**
@@ -77,7 +82,7 @@ TimeStudy.dilation = DilationTimeStudyState.studies[1];
  * @param {number} tier
  * @returns {DilationTimeStudyState}
  */
-TimeStudy.timeDimension = function(tier) {
+TimeStudy.timeDimension = function (tier) {
   return DilationTimeStudyState.studies[tier - 3];
 };
 
@@ -86,6 +91,6 @@ TimeStudy.timeDimension = function(tier) {
  */
 TimeStudy.reality = DilationTimeStudyState.studies[6];
 
-TimeStudy.boughtDilationTS = function() {
-  return player.dilation.studies.map(id => DilationTimeStudyState.studies[id]);
+TimeStudy.boughtDilationTS = function () {
+  return player.dilation.studies.map((id) => DilationTimeStudyState.studies[id]);
 };

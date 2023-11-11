@@ -9764,8 +9764,8 @@ input.o-automator-block-input {
 .l-atom-upgrade-btn {
   display: flex;
   flex-direction: column;
-  width: 22.55rem;
-  height: 11rem;
+  width: 20.5rem;
+  height: 10rem;
   position: relative;
   justify-content: center;
   align-items: center;
@@ -9776,7 +9776,7 @@ input.o-automator-block-input {
 .c-atom-upgrade-btn {
   text-align: center;
   font-family: Typewriter, serif;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: var(--color-atom-dark);
   background-color: var(--color-background);
   border: var(--var-border-width, 0.2rem) solid var(--color-atom-dark);

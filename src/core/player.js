@@ -160,7 +160,7 @@ window.player = {
       isActive: false,
     },
     dilationUpgrades: {
-      all: Array.range(0, 3).map(() => ({
+      all: Array.range(0, 6).map(() => ({
         isActive: false,
         lastTick: 0,
       })),
@@ -562,6 +562,10 @@ window.player = {
     upgReqs: 0,
     atomicPower: DC.D0,
     particles: Array.repeat(DC.D0, 3),
+    rebuyables: {
+      1: 0,
+      6: 0,
+    },
   },
   blackHole: Array.range(0, 2).map((id) => ({
     id,

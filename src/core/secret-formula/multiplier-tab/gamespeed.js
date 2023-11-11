@@ -99,15 +99,15 @@ export const gamespeed = {
     icon: MultiplierTabIcons.GENERIC_LAITELA,
   },
   atomUpgrade: {
-    name: "Atom Upgrade 1",
+    name: "Atom Upgrade 'Starter Pack'",
     multValue: () => 1e3,
-    isActive: () => AtomUpgrade(1).isBought,
+    isActive: () => AtomUpgrade(2).isBought,
     icon: MultiplierTabIcons.ATOM,
   },
   atomicParticle: {
     name: "Atomic Electrons",
     powValue: () => AtomicParticle(2).effects[1],
-    isActive: () => AtomUpgrade(1).isBought,
+    isActive: () => AtomicParticle(2).effects[1] > 1,
     icon: MultiplierTabIcons.ATOM,
   }
 };

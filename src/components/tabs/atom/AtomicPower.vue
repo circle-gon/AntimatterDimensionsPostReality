@@ -25,8 +25,8 @@ export default {
 <template>
   <div>
     <div>
-      You have <span class="c-atomic-tab__big-numbers">{{ format(atomicPower, 2) }}</span> Atomic Power.
-      <span class="c-atomic-tab__big-numbers">+{{ format(atomicPowerGain, 2) }}/s</span>
+      You have <span class="c-atomic-tab__big-numbers">{{ format(atomicPower, 2, 2) }}</span> Atomic Power.
+      <span class="c-atomic-tab__big-numbers">+{{ format(atomicPowerGain, 2, 2) }}/s</span>
     </div>
     <div>Atomic Power gain can be increased by gaining more Atoms and doing more Collapses.</div>
     <div>

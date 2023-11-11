@@ -1,5 +1,5 @@
 import { DC } from "./constants";
-import { BitPurchasableMechanicState, GameMechanicState } from "./game-mechanics";
+import { BitPurchasableMechanicState, RebuyableMechanicState, GameMechanicState } from "./game-mechanics";
 
 export function migrateSaves(player) {
   // change effarig shards to decimal
@@ -56,6 +56,15 @@ export function migrateSaves(player) {
   player.records.thisCollapse.time = player.records.totalTimePlayed;
   player.records.thisCollapse.realTime = player.records.realTimePlayed;
   player.records.thisCollapse.realTimeNoStore = player.records.realTimePlayed;
+
+  // new dilation autobuyers
+  player.auto.dilationUpgrades.all = [
+    ...player.auto.dilationUpgrades.all,
+    ...Array.range(0, 3).map(() => ({
+      isActive: false,
+      lastTick: 0,
+    })),
+  ];
 }
 
 // lazy way to hide the "in this Collapse" text until you know about it
@@ -65,8 +74,9 @@ export function atomTimeText() {
 
 export function gainedAtoms() {
   const gain = DC.D1;
-  gain = gain.mul(AtomicParticle(1).effects[1])
-  return gain
+  gain = gain.mul(AtomicParticle(1).effects[1]);
+  gain = gain.timesEffectOf(AtomUpgrade(1));
+  return gain;
 }
 
 function getCollapseGain() {
@@ -516,6 +526,13 @@ export function collapse() {
     giveRealityUpgrade(10);
     giveRealityUpgrade(13);
     giveRealityUpgrade(25);
+
+    // no need for onPurchased call since none of the upgrades have ite none of the upgrades have it
+    for (const upg of PelleUpgrades.singles) upg.isBought = true
+  }
+  if (AtomUpgrade(8).isBought) {
+    // this must be done this way because ach 188 should not be obtained
+    for (let ach = 181; ach <= 187; ach++) Achievement(ach).unlock();
   }
 
   EventHub.dispatch(GAME_EVENT.COLLAPSE_AFTER);
@@ -620,14 +637,37 @@ class AtomUpgradeState extends BitPurchasableMechanicState {
   }
 }
 
-AtomUpgradeState.index = mapGameData(GameDatabase.atom.upgrades, (config) => new AtomUpgradeState(config));
+class RebuyableAtomUpgradeState extends RebuyableMechanicState {
+  get currency() {
+    return Currency.atoms;
+  }
 
-export const AtomUpgrade = (id) => AtomUpgradeState.index[id];
+  get boughtAmount() {
+    return player.atom.rebuyables[this.id];
+  }
+
+  set boughtAmount(value) {
+    player.atom.rebuyables[this.id] = value;
+  }
+}
+
+const AUIndex = mapGameData(GameDatabase.atom.upgrades, (config) =>
+  config.id % 5 === 1 ? new RebuyableAtomUpgradeState(config) : new AtomUpgradeState(config)
+);
+
+export const AtomUpgrade = (id) => AUIndex[id];
 
 export const AtomUpgrades = {
-  all: AtomUpgradeState.index.compact(),
-  get hasAllMilestones() {
-    return this.all.every((i) => i.isReached);
+  all: AUIndex.compact(),
+  get breakUnlocked() {
+    return AtomUpgrade(10).isBought;
+  },
+  // used for the pelle rebuyable dilation upgrades
+  dilExpo(id) {
+    if (Pelle.isDoomed) return 1;
+    if (id === 11) return 1.5;
+    if (id === 12) return 3.5;
+    return 3;
   },
 };
 
@@ -665,8 +705,8 @@ export const AtomicPower = {
   get gain() {
     if (!PlayerProgress.atomUnlocked()) return DC.D0;
     let base = player.atom.totalAtoms.mul(Currency.collapses.value);
-    base = base.mul(AtomicParticle(1).effects[0])
-    return base
+    base = base.mul(AtomicParticle(1).effects[0]);
+    return base;
   },
   tick(realDiff) {
     player.atom.atomicPower = player.atom.atomicPower.add(this.gain.mul(realDiff / 1000));

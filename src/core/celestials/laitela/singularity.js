@@ -229,7 +229,7 @@ export const Singularity = {
     return Decimal.pow(this.gainPerCapIncrease, player.celestials.laitela.singularityCapIncreases)
       .mul(SingularityMilestone.singularityMult.effectOrDefault(1))
       .mul(1 + ImaginaryUpgrade(10).effectOrDefault(0))
-      .mul(AtomUpgrade(1).isBought ? 5 : 1)
+      .mul(AtomUpgrade(2).isBought ? 5 : 1)
       .floor();
   },
 

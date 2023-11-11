@@ -951,3 +951,7 @@ body.t-s12 {
   background: #525252;
 }
   
+.l-atom-upgrade-btn {
+  width: 18rem;
+  margin: 0.6rem 0.4rem;
+}

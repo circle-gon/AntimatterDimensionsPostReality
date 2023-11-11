@@ -206,10 +206,10 @@ class RaPetState extends GameMechanicState {
       : 0;
     // Adding memories from half of the gained chunks this tick results in the best mathematical behavior
     // for very long simulated ticks
-    const newMemories = seconds * (this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
-      this.memoryUpgradeCurrentMult;
+    const gain = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
+      this.memoryUpgradeCurrentMult, Ra.productionExponent);
     this.memoryChunks += newMemoryChunks;
-    this.memories += newMemories;
+    this.memories += gain * seconds;
   }
 
   reset() {
@@ -258,8 +258,13 @@ export const Ra = {
     for (const pet of Ra.pets.all) {
       if (pet.isUnlocked) res *= pet.memoryProductionMultiplier;
     }
-    if (AtomUpgrade(1).isReached) res *= 10;
+    if (AtomUpgrade(2).isBought) res *= 10;
     return res;
+  },
+  get productionExponent() {
+    let expo = 1
+    if (AtomUpgrade(4).isBought) expo *= 1.5
+    return expo
   },
   get memoryBoostResources() {
     const boostList = [];
@@ -268,7 +273,8 @@ export const Ra = {
     }
     if (Achievement(168).isUnlocked) boostList.push("Achievement 168");
     if (Ra.unlocks.continuousTTBoost.canBeApplied) boostList.push("current TT");
-    if (AtomUpgrade(1).isBought) boostList.push("Atom Upgrade 'Starter Pack'");
+    if (AtomUpgrade(2).isBought) boostList.push("Atom Upgrade 'Starter Pack'");
+    if (AtomUpgrade(4).isBought) boostList.push("Atom Upgrade 'Knowledge Empowerment'");
 
     if (boostList.length === 1) return `${boostList[0]}`;
     if (boostList.length === 2) return `${boostList[0]} and ${boostList[1]}`;

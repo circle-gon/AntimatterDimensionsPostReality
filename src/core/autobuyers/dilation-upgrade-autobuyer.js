@@ -2,7 +2,9 @@ import { IntervaledAutobuyerState } from "./autobuyer";
 
 export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   get _upgradeName() {
-    return ["dtGain", "galaxyThreshold", "tachyonGain"][this.id - 1];
+    return ["dtGain", "galaxyThreshold", "tachyonGain", "dtGainPelle", "galaxyMultiplier", "tickspeedPower"][
+      this.id - 1
+    ];
   }
 
   get data() {
@@ -10,7 +12,14 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   }
 
   get name() {
-    return [`Dilated Time Multiplier`, `Tachyon Galaxy Threshold`, "Tachyon Particle Multiplier"][this.id - 1];
+    return [
+      `Dilated Time Multiplier`,
+      `Tachyon Galaxy Threshold`,
+      "Tachyon Particle Multiplier",
+      "Pelle DT Multiplier",
+      "Pelle TG Multiplier",
+      "Tickspeed Power",
+    ][this.id - 1];
   }
 
   get interval() {
@@ -18,6 +27,9 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   }
 
   get isUnlocked() {
+    if (["dtGainPelle", "galaxyMultiplier", "tickspeedPower"].includes(this._upgradeName))
+      return AtomUpgrade(3).isBought && !Pelle.isDoomed;
+
     return Perk.autobuyerDilation.isEffectActive && !Pelle.isDoomed;
   }
 
@@ -38,7 +50,7 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   }
 
   static get entryCount() {
-    return 3;
+    return 6;
   }
   static get autobuyerGroupName() {
     return "Dilation Upgrade";
