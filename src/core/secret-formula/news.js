@@ -2606,17 +2606,17 @@ export const news = [
   {
     id: "l3",
     text: "What do you mean, more than two dimensions??? We're on a screen, clearly there are only 2 dimensions.",
-    get unlocked() { return AntimatterDimension(3).amount.gt(0) || DimBoost.totalBoosts > 0; }
+    get unlocked() { return AntimatterDimension(3).totalAmount.gt(0) || DimBoost.totalBoosts > 0; }
   },
   {
     id: "l4",
     text: "How much is Infinity? -literally everyone at least once",
-    get unlocked() { return AntimatterDimension(8).amount.eq(190) || Currency.infinities.gt(0); }
+    get unlocked() { return AntimatterDimension(8).totalAmount.eq(190) || Currency.infinities.gt(0); }
   },
   {
     id: "l5",
     text: "Eh, the Fourth Dimension is alright...",
-    get unlocked() { return AntimatterDimension(4).amount.gt(0) && AntimatterDimension(5).amount.eq(0); }
+    get unlocked() { return AntimatterDimension(4).totalAmount.gt(0) && AntimatterDimension(5).totalAmount.eq(0); }
   },
   {
     id: "l6",

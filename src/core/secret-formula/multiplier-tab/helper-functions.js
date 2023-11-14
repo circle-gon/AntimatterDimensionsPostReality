@@ -7,12 +7,15 @@ export const MultiplierTabHelper = {
       case "AD":
         // Technically not 100% correct, but within EC7 any AD8 production is going to be irrelevant compared to AD7
         // and making the UI behave as if it's inactive produces a better look overall
-        return Math.clamp(AntimatterDimensions.all.filter(ad => ad.isProducing).length,
-          1, EternityChallenge(7).isRunning ? 7 : 8);
+        return Math.clamp(
+          AntimatterDimensions.all.filter((ad) => ad.isProducing).length,
+          1,
+          EternityChallenge(7).isRunning ? 7 : 8
+        );
       case "ID":
-        return InfinityDimensions.all.filter(id => id.isProducing).length;
+        return InfinityDimensions.all.filter((id) => id.isProducing).length;
       case "TD":
-        return TimeDimensions.all.filter(td => td.isProducing).length;
+        return TimeDimensions.all.filter((td) => td.isProducing).length;
       default:
         throw new Error("Unrecognized Dimension type in Multiplier tab GameDB entry");
     }
@@ -20,18 +23,20 @@ export const MultiplierTabHelper = {
 
   // Helper method for galaxy strength multipliers affecting all galaxy types (this is used a large number of times)
   globalGalaxyMult() {
-    return Effects.product(
-      InfinityUpgrade.galaxyBoost,
-      InfinityUpgrade.galaxyBoost.chargedEffect,
-      BreakInfinityUpgrade.galaxyBoost,
-      TimeStudy(212),
-      TimeStudy(232),
-      Achievement(86),
-      Achievement(178),
-      InfinityChallenge(5).reward,
-      PelleUpgrade.galaxyPower,
-      PelleRifts.decay.milestones[1]
-    ) * Pelle.specialGlyphEffect.power;
+    return (
+      Effects.product(
+        InfinityUpgrade.galaxyBoost,
+        InfinityUpgrade.galaxyBoost.chargedEffect,
+        BreakInfinityUpgrade.galaxyBoost,
+        TimeStudy(212),
+        TimeStudy(232),
+        Achievement(86),
+        Achievement(178),
+        InfinityChallenge(5).reward,
+        PelleUpgrade.galaxyPower,
+        PelleRifts.decay.milestones[1]
+      ) * Pelle.specialGlyphEffect.power
+    );
   },
 
   // Helper method for galaxies and tickspeed, broken up as contributions of tickspeed*log(perGalaxy) and galaxyCount to
@@ -58,7 +63,7 @@ export const MultiplierTabHelper = {
       effectiveCount *= Pelle.specialGlyphEffect.power;
 
       tickFrac = Tickspeed.totalUpgrades * logBase;
-      galFrac = -Math.log10(Math.max(0.01, 1 / baseMult - (effectiveCount * perGalaxy))) / logBase;
+      galFrac = -Math.log10(Math.max(0.01, 1 / baseMult - effectiveCount * perGalaxy)) / logBase;
     } else {
       effectiveCount -= 2;
       effectiveCount *= effects;
@@ -71,19 +76,14 @@ export const MultiplierTabHelper = {
       const logPerGalaxy = -DC.D0_965.log10();
 
       tickFrac = Tickspeed.totalUpgrades * logBase;
-      galFrac = (1 + effectiveCount / logBase * logPerGalaxy);
+      galFrac = 1 + (effectiveCount / logBase) * logPerGalaxy;
     }
 
     // Artificially inflate the galaxy portion in order to make the breakdown closer to 50/50 in common situations
     galFrac *= 3;
 
     // Calculate what proportion base tickspeed takes out of the entire tickspeed multiplier
-    const base = DC.D1.dividedByEffectsOf(
-      Achievement(36),
-      Achievement(45),
-      Achievement(66),
-      Achievement(83)
-    );
+    const base = DC.D1.dividedByEffectsOf(Achievement(36), Achievement(45), Achievement(66), Achievement(83));
     let baseFrac = base.log10() / Tickspeed.perSecond.log10();
 
     // We want to make sure to zero out components in some edge cases
@@ -183,19 +183,21 @@ export const MultiplierTabHelper = {
 
   blackHoleSpeeds() {
     const currBH = BlackHoles.list
-      .filter(bh => bh.isUnlocked)
-      .map(bh => (bh.isActive ? bh.power : 1))
+      .filter((bh) => bh.isUnlocked)
+      .map((bh) => (bh.isActive ? bh.power : 1))
       .reduce((x, y) => x * y, 1);
 
     // Calculate an average black hole speedup factor
     const bh1 = BlackHole(1);
     const bh2 = BlackHole(2);
-    const avgBH = 1 + (bh1.isUnlocked ? bh1.dutyCycle * (bh1.power - 1) : 0) +
-        (bh2.isUnlocked ? bh1.dutyCycle * bh2.dutyCycle * bh1.power * (bh2.power - 1) : 0);
+    const avgBH =
+      1 +
+      (bh1.isUnlocked ? bh1.dutyCycle * (bh1.power - 1) : 0) +
+      (bh2.isUnlocked ? bh1.dutyCycle * bh2.dutyCycle * bh1.power * (bh2.power - 1) : 0);
 
     return {
       current: currBH,
-      average: avgBH
+      average: avgBH,
     };
   },
 
@@ -207,11 +209,11 @@ export const MultiplierTabHelper = {
   // which set of Dimensions are actually producing within NC12 - in nearly every case, one of the odd/even sets will
   // produce significantly more than the other, so we simply assume the larger one is active and the other isn't
   evenDimNC12Production() {
-    const nc12Pow = tier => ([2, 4, 6].includes(tier) ? 0.1 * (8 - tier) : 0);
+    const nc12Pow = (tier) => ([2, 4, 6].includes(tier) ? 0.1 * (8 - tier) : 0);
     const maxTier = Math.clampMin(2 * Math.floor(MultiplierTabHelper.activeDimCount("AD") / 2), 2);
     return AntimatterDimensions.all
-      .filter(ad => ad.isProducing && ad.tier % 2 === 0)
-      .map(ad => ad.multiplier.times(ad.amount.pow(nc12Pow(ad.tier))))
+      .filter((ad) => ad.isProducing && ad.tier % 2 === 0)
+      .map((ad) => ad.multiplier.times(ad.amount.pow(nc12Pow(ad.tier))))
       .reduce((x, y) => x.times(y), DC.D1)
       .times(AntimatterDimension(maxTier).totalAmount);
   },
@@ -219,8 +221,8 @@ export const MultiplierTabHelper = {
   oddDimNC12Production() {
     const maxTier = Math.clampMin(2 * Math.floor(MultiplierTabHelper.activeDimCount("AD") / 2 - 0.5) + 1, 1);
     return AntimatterDimensions.all
-      .filter(ad => ad.isProducing && ad.tier % 2 === 1)
-      .map(ad => ad.multiplier)
+      .filter((ad) => ad.isProducing && ad.tier % 2 === 1)
+      .map((ad) => ad.multiplier)
       .reduce((x, y) => x.times(y), DC.D1)
       .times(AntimatterDimension(maxTier).totalAmount);
   },
@@ -230,12 +232,18 @@ export const MultiplierTabHelper = {
   },
 
   multInNC12(dim) {
-    const nc12Pow = tier => ([2, 4, 6].includes(tier) ? 0.1 * (8 - tier) : 0);
+    const nc12Pow = (tier) => ([2, 4, 6].includes(tier) ? 0.1 * (8 - tier) : 0);
     const ad = AntimatterDimension(dim);
     return ad.isProducing ? ad.multiplier.times(ad.totalAmount.pow(nc12Pow(dim))) : DC.D1;
   },
 
   isNC12ProducingEven() {
     return this.evenDimNC12Production().gt(this.oddDimNC12Production());
-  }
+  },
+
+  getIDValue(id) {
+    return InfinityDimensions.continuumActive
+      ? InfinityDimension(id).continuumValue
+      : Math.floor(InfinityDimension(id).baseAmount / 10);
+  },
 };

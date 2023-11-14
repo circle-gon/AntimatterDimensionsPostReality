@@ -659,9 +659,6 @@ export const AtomUpgrade = (id) => AUIndex[id];
 
 export const AtomUpgrades = {
   all: AUIndex.compact(),
-  get breakUnlocked() {
-    return AtomUpgrade(10).isBought;
-  },
   // used for the pelle rebuyable dilation upgrades
   dilExpo(id) {
     if (Pelle.isDoomed) return 1;

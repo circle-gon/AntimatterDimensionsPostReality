@@ -77,7 +77,7 @@ export const normalAchievements = [
     id: 23,
     name: "The 9th Dimension is a lie",
     get description() { return `Have exactly ${formatInt(99)} 8th Antimatter Dimensions.`; },
-    checkRequirement: () => AntimatterDimension(8).amount.eq(99),
+    checkRequirement: () => AntimatterDimension(8).totalAmount.eq(99),
     get reward() { return `8th Antimatter Dimensions are ${formatPercents(0.1)} stronger.`; },
     effect: 1.1
   },
@@ -115,7 +115,7 @@ export const normalAchievements = [
     get description() {
       return `Buy a single 1st Antimatter Dimension when you have over ${format(DC.E150)} of them.`;
     },
-    checkRequirement: () => AntimatterDimension(1).amount.exponent >= 150,
+    checkRequirement: () => AntimatterDimension(1).totalAmount.exponent >= 150,
     checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
     get reward() { return `1st Antimatter Dimensions are ${formatPercents(0.1)} stronger.`; },
     effect: 1.1
@@ -267,7 +267,7 @@ export const normalAchievements = [
     id: 46,
     name: "Multidimensional",
     get description() { return `Reach ${format(DC.E12)} of all Antimatter Dimensions except the 8th.`; },
-    checkRequirement: () => AntimatterDimension(7).amount.exponent >= 12,
+    checkRequirement: () => AntimatterDimension(7).totalAmount.exponent >= 12,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
   {
@@ -455,7 +455,7 @@ export const normalAchievements = [
       or Antimatter Galaxies, while in the 2nd Antimatter Dimension Autobuyer Challenge.`,
     checkRequirement: () =>
       NormalChallenge(2).isOnlyActiveChallenge &&
-      AntimatterDimension(1).amount.eq(1) &&
+      AntimatterDimension(1).totalAmount.eq(1) &&
       DimBoost.purchasedBoosts === 0 &&
       player.galaxies === 0,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
@@ -1105,7 +1105,7 @@ export const normalAchievements = [
     name: "You really didn't need it anyway",
     get description() {
       return `Get ${formatInt(800)} Antimatter Galaxies without
-      buying 8th Antimatter Dimensions in your current Infinity.`;
+      having 8th Antimatter Dimensions in your current Infinity.`;
     },
     checkRequirement: () => player.galaxies >= 800 && player.requirementChecks.infinity.noAD8,
     checkEvent: GAME_EVENT.GALAXY_RESET_AFTER,

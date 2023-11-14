@@ -506,7 +506,7 @@ export const tabs = [
         component: "BreakUniverseTab",
         id: 13,
         hidable: true,
-        condition: () => AtomUpgrades.breakUnlocked
+        condition: () => AtomUpgrade(10).isBought
       },
     ],
   },

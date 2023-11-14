@@ -3,7 +3,7 @@ import { GameMechanicState } from "./game-mechanics";
 
 export function updateNormalAndInfinityChallenges(diff) {
   if (NormalChallenge(11).isRunning || InfinityChallenge(6).isRunning) {
-    if (AntimatterDimension(2).amount.neq(0)) {
+    if (AntimatterDimension(2).totalAmount.neq(0)) {
       Currency.matter.bumpTo(1);
       // These caps are values which occur at approximately e308 IP
       const cappedBase =
@@ -40,7 +40,7 @@ export function updateNormalAndInfinityChallenges(diff) {
 
   if (InfinityChallenge(2).isRunning) {
     if (player.ic2Count >= 400) {
-      if (AntimatterDimension(8).amount.gt(0)) {
+      if (AntimatterDimension(8).totalAmount.gt(0)) {
         sacrificeReset();
       }
       player.ic2Count %= 400;

@@ -8,13 +8,13 @@ export default {
   components: {
     GenericDimensionRowText,
     PrimaryButton,
-    PrimaryToggleButton
+    PrimaryToggleButton,
   },
   props: {
     tier: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -36,6 +36,8 @@ export default {
       hardcap: InfinityDimensions.HARDCAP_PURCHASES,
       eternityReached: false,
       enslavedRunning: false,
+      isContinuumActive: false,
+      continuumValue: 0,
     };
   },
   computed: {
@@ -46,6 +48,7 @@ export default {
       return `${InfinityDimension(this.tier).shortDisplayName} Infinity Dimension`;
     },
     costDisplay() {
+      if (this.isContinuumActive) return `Continuum: ${this.continuumString}`;
       if (this.isUnlocked || this.shiftDown) {
         if (this.isCapped) return "Capped";
         return this.showCostTitle ? `Cost: ${format(this.cost)} IP` : `${format(this.cost)} IP`;
@@ -57,6 +60,9 @@ export default {
 
       return `Reach ${formatPostBreak(InfinityDimension(this.tier).amRequirement)} AM`;
     },
+    continuumString() {
+      return formatFloat(this.continuumValue, 2);
+    },
     hasLongText() {
       return this.costDisplay.length > 20;
     },
@@ -66,20 +72,26 @@ export default {
     capTooltip() {
       if (this.enslavedRunning) return `Nameless prevents the purchase of more than ${format(10)} Infinity Dimensions`;
       if (this.isCapped) return `Cap reached at ${format(this.capIP)} IP`;
+      if (this.isContinuumActive) return "Continuum produces all your Infinity Dimensions";
       return `Purchased ${quantifyInt("time", this.purchases)}`;
     },
     showRow() {
-      return this.eternityReached || this.isUnlocked || this.canUnlock || this.amount.gt(0) ||
-        this.hasPrevTier;
+      return this.eternityReached || this.isUnlocked || this.canUnlock || this.amount.gt(0) || this.hasPrevTier;
     },
     showCostTitle() {
       return this.cost.exponent < 1e6;
-    }
+    },
+    buttonClass() {
+      return {
+        "l-dim-row-small-text": this.hasLongText,
+        "o-non-clickable o-continuum": this.isContinuumActive,
+      };
+    },
   },
   watch: {
     isAutobuyerOn(newValue) {
       Autobuyer.infinityDimension(this.tier).isActive = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -92,7 +104,7 @@ export default {
       this.multiplier.copyFrom(dimension.multiplier);
       this.baseAmount = dimension.baseAmount;
       this.purchases = dimension.purchases;
-      this.amount.copyFrom(dimension.amount);
+      this.amount.copyFrom(dimension.totalAmount);
       this.rateOfChange.copyFrom(dimension.rateOfChange);
       this.isAutobuyerUnlocked = autobuyer.isUnlocked;
       this.cost.copyFrom(dimension.cost);
@@ -106,14 +118,18 @@ export default {
       this.isAutobuyerOn = autobuyer.isActive;
       this.eternityReached = PlayerProgress.eternityUnlocked();
       this.enslavedRunning = Enslaved.isRunning;
+      this.isContinuumActive = InfinityDimensions.continuumActive;
+      if (this.isContinuumActive) this.continuumValue = dimension.continuumValue;
     },
     buySingleInfinityDimension() {
+      if (this.isContinuumActive) return;
       InfinityDimension(this.tier).buySingle();
     },
     buyMaxInfinityDimension() {
+      if (this.isContinuumActive) return;
       InfinityDimension(this.tier).buyMax(false);
     },
-  }
+  },
 };
 </script>
 
@@ -132,9 +148,9 @@ export default {
     />
     <div class="l-dim-row-multi-button-container">
       <PrimaryButton
-        :enabled="isAvailableForPurchase || (!isUnlocked && canUnlock)"
+        :enabled="(isAvailableForPurchase && !isContinuumActive) || (!isUnlocked && canUnlock)"
         class="o-primary-btn--buy-id o-primary-btn--buy-dim c-dim-tooltip-container"
-        :class="{ 'l-dim-row-small-text': hasLongText }"
+        :class="buttonClass"
         @click="buySingleInfinityDimension"
       >
         {{ costDisplay }}
@@ -142,20 +158,35 @@ export default {
           {{ capTooltip }}
         </div>
       </PrimaryButton>
-      <PrimaryToggleButton
-        v-if="isAutobuyerUnlocked && !isEC8Running"
-        v-model="isAutobuyerOn"
-        class="o-primary-btn--id-auto"
-        label="Auto:"
-      />
-      <PrimaryButton
-        v-else
-        :enabled="isAvailableForPurchase && isUnlocked"
-        class="o-primary-btn--id-auto"
-        @click="buyMaxInfinityDimension"
-      >
-        Buy Max
-      </PrimaryButton>
+      <template v-if="!isContinuumActive">
+        <PrimaryToggleButton
+          v-if="isAutobuyerUnlocked && !isEC8Running"
+          v-model="isAutobuyerOn"
+          class="o-primary-btn--id-auto"
+          label="Auto:"
+        />
+        <PrimaryButton
+          v-else
+          :enabled="isAvailableForPurchase && isUnlocked"
+          class="o-primary-btn--id-auto"
+          @click="buyMaxInfinityDimension"
+        >
+          Buy Max
+        </PrimaryButton>
+      </template>
     </div>
   </div>
 </template>
+
+<style scoped>
+.o-continuum {
+  border-color: var(--color-laitela--accent);
+  color: var(--color-laitela--accent);
+  background: var(--color-laitela--base);
+}
+.o-continuum:hover {
+  border-color: var(--color-laitela--accent);
+  color: var(--color-laitela--base);
+  background: var(--color-laitela--accent);
+}
+</style>

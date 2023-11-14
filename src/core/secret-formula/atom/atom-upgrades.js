@@ -66,7 +66,7 @@ export const atomUpgrades = [
     id: 5,
     name: "Overachiever",
     cost: Infinity,
-    description: "[TBD]",
+    description: "Each V-Achievement awards 2 Space Theorems instead of 1.",
   },
   rebuyable({
     id: 6,
@@ -86,14 +86,14 @@ export const atomUpgrades = [
   },
   {
     id: 8,
-    name: "Death to Continuum",
+    name: "Death to Continuum [TBD]",
     cost: Infinity,
     description: `Unlock Infinity and Time Dimension Continuum, which is unlocked when
-    Antimatter Dimension Continuum is unlocked. Start Collapses with Continuum unlocked.`,
+    Antimatter Dimension Continuum is unlocked. Start Collapses with AD Continuum unlocked.`,
   },
   {
     id: 9,
-    name: "Hoarder of Glyphs",
+    name: "Hoarder of Glyphs [TBD]",
     cost: Infinity,
     description: "Unlock two more glyph slots. You can now equip 2 Reality and Effarig glyphs.",
   },

@@ -102,7 +102,11 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get isAvailableForPurchase() {
-    return InfinityDimensions.canBuy() && this.isUnlocked && this.isAffordable && !this.isCapped;
+    return this.isContinuumAvailable && this.isAffordable && !this.isCapped;
+  }
+
+  get isContinuumAvailable() {
+    return InfinityDimensions.canBuy() && this.isUnlocked; 
   }
 
   get isAffordable() {
@@ -124,12 +128,34 @@ class InfinityDimensionState extends DimensionState {
     return toGain.times(10).dividedBy(current).times(getGameSpeedupForDisplay());
   }
 
+  get continuumValue() {
+    if (!this.isContinuumAvailable) return 0;
+    if (ImaginaryUpgrade(15).isLockingMechanics) return 0;
+
+    let continuumValue = Currency.infinityPoints.value
+      .div(this.baseCost)
+      .log10() / Math.log10(this.costMultiplier) + 1
+
+    continuumValue *= InfinityDimensions.extraPurchases;
+    continuumValue = Math.clampMax(continuumValue, this.purchaseCap)
+    return Math.clampMin(continuumValue, 0);
+  }
+
+  get continuumAmount() {
+    if (!InfinityDimensions.continuumActive) return 0;
+    return Math.floor(10 * this.continuumValue);
+  }
+
+  get totalAmount() {
+    return this.amount.max(this.continuumAmount);
+  }
+
   get productionPerSecond() {
     if (EternityChallenge(2).isRunning || EternityChallenge(10).isRunning ||
       (Laitela.isRunning && this.tier > Laitela.maxAllowedDimension)) {
       return DC.D0;
     }
-    let production = this.amount.log10();
+    let production = this.totalAmount.log10();
     if (EternityChallenge(11).isRunning) {
       return powAndCap(production);
     }
@@ -149,7 +175,9 @@ class InfinityDimensionState extends DimensionState {
         tier === 4 ? TimeStudy(72) : null,
         tier === 1 ? EternityChallenge(2).reward : null
       );
-    mult += Math.floor(this.baseAmount / 10) * this.powerMultiplier.log10();
+
+    const dimAmount = InfinityDimensions.continuumActive ? this.continuumValue : Math.floor(this.baseAmount / 10)
+    mult += dimAmount * this.powerMultiplier.log10();
 
 
     if (tier === 1) {
@@ -188,7 +216,7 @@ class InfinityDimensionState extends DimensionState {
       (Laitela.isRunning && tier > Laitela.maxAllowedDimension)) {
       return false;
     }
-    return this.amount.gt(0);
+    return this.totalAmount.gt(0);
   }
 
   get baseCost() {
@@ -222,11 +250,14 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get isCapped() {
-    return this.purchases >= this.purchaseCap;
+    const realPurchases = InfinityDimensions.continuumActive ? this.continuumValue : this.purchases
+    return realPurchases >= this.purchaseCap;
   }
 
   get hardcapIPAmount() {
-    return this._baseCost.times(Decimal.pow(this.costMultiplier, this.purchaseCap));
+    // This needs to be done because extra purchases will cause the cap to be reached earlier
+    const extras = InfinityDimensions.continuumActive ? InfinityDimensions.extraPurchases : 1
+    return this._baseCost.times(Decimal.pow(this.costMultiplier, this.purchaseCap / extras));
   }
 
   resetAmount() {
@@ -254,6 +285,7 @@ class InfinityDimensionState extends DimensionState {
 
   // Only ever called from manual actions
   buySingle() {
+    if (InfinityDimensions.continuumActive) return false;
     if (!this.isUnlocked) return this.unlock();
     if (!this.isAvailableForPurchase) return false;
     if (ImaginaryUpgrade(15).isLockingMechanics) {
@@ -278,6 +310,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   buyMax(auto) {
+    if (InfinityDimensions.continuumActive) return false;
     if (!this.isAvailableForPurchase) return false;
     if (ImaginaryUpgrade(15).isLockingMechanics) {
       const lockString = this.tier === 1
@@ -384,7 +417,7 @@ export const InfinityDimensions = {
     }
 
     player.requirementChecks.reality.maxID1 = player.requirementChecks.reality.maxID1
-      .clampMin(InfinityDimension(1).amount);
+      .clampMin(InfinityDimension(1).totalAmount);
   },
 
   tryAutoUnlock() {
@@ -418,5 +451,18 @@ export const InfinityDimensions = {
     // deal with >ee308 values wrapping to 0
     const log = Currency.infinityPower.value.max(1).log10() * this.powerConversionRate
     return powAndCap(log)
-  }
+  },
+
+  get continuumUnlocked() {
+    return !EternityChallenge(8).isRunning && AtomUpgrade(8).isBought && Laitela.continuumUnlocked;
+  },
+
+  get continuumActive() {
+    // TODO: add setting
+    return this.continuumUnlocked
+  },
+
+  get extraPurchases() {
+    return AtomicParticle(0).effects[0];
+  },
 };

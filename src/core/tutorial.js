@@ -26,11 +26,11 @@ const tutorialStates = [
   },
   {
     id: TUTORIAL_STATE.DIMBOOST,
-    condition: () => AntimatterDimension(4).amount.gte(20)
+    condition: () => AntimatterDimension(4).totalAmount.gte(20)
   },
   {
     id: TUTORIAL_STATE.GALAXY,
-    condition: () => AntimatterDimension(8).amount.gte(80)
+    condition: () => AntimatterDimension(8).totalAmount.gte(80)
   },
   {
     id: TUTORIAL_STATE.AUTOMATOR,

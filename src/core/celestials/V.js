@@ -192,6 +192,9 @@ export const V = {
       if (i < 6) sum += player.celestials.v.runUnlocks[i];
       else sum += player.celestials.v.runUnlocks[i] * 2;
     }
+
+    if (AtomUpgrade(5).isBought) sum *= 2;
+
     this.spaceTheorems = sum;
   },
   reset() {

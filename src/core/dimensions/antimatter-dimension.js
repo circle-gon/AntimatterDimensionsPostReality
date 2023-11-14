@@ -456,7 +456,7 @@ class AntimatterDimensionState extends DimensionState {
    */
   get currencyAmount() {
     return this.tier >= 3 && NormalChallenge(6).isRunning
-      ? AntimatterDimension(this.tier - 2).amount
+      ? AntimatterDimension(this.tier - 2).totalAmount
       : Currency.antimatter.value;
   }
 
@@ -674,10 +674,24 @@ export const AntimatterDimensions = {
       maxTierProduced--;
       nextTierOffset++;
     }
+
+    function dimensionIsBad(id) {
+      return AntimatterDimension(id).continuumValue > 0 && Laitela.continuumActive
+    }
+    function allExcept(id) {
+      for (let i = 1; i <= 8; i++) {
+        if (i === id) continue
+        if (dimensionIsBad(id)) return false
+      }
+      return true
+    }
+    if (dimensionIsBad(8)) player.requirementChecks.infinity.noAD8 = false
+    if (!allExcept(8)) player.requirementChecks.eternity.onlyAD8 = false
+    if (!allExcept(1)) player.requirementChecks.eternity.onlyAD1 = false
     for (let tier = maxTierProduced; tier >= 1; --tier) {
       AntimatterDimension(tier + nextTierOffset).produceDimensions(AntimatterDimension(tier), diff.div(10));
     }
-    if (AntimatterDimension(1).amount.gt(0)) {
+    if (AntimatterDimension(1).totalAmount.gt(0)) {
       player.requirementChecks.eternity.noAD1 = false;
     }
     AntimatterDimension(1).produceCurrency(Currency.antimatter, diff);

@@ -19,7 +19,7 @@ export const ID = {
     multValue: dim => (dim
       ? InfinityDimension(dim).multiplier
       : InfinityDimensions.all
-        .filter(id => id.isProducing)
+        .filter(id => id.isProducing) 
         .map(id => id.multiplier)
         .reduce((x, y) => x.times(y), DC.D1)),
     isActive: dim => (dim
@@ -39,7 +39,7 @@ export const ID = {
     name: dim => (dim ? `Purchased ID ${dim}` : "Purchases"),
     multValue: dim => {
       const getMult = id => Decimal.pow(InfinityDimension(id).powerMultiplier,
-        Math.floor(InfinityDimension(id).baseAmount / 10));
+        MultiplierTabHelper.getIDValue(id));
       if (dim) return getMult(dim);
       return InfinityDimensions.all
         .filter(id => id.isProducing)
@@ -53,9 +53,9 @@ export const ID = {
     name: () => `Amount of highest Dimension`,
     displayOverride: () => {
       const dim = MultiplierTabHelper.activeDimCount("ID");
-      return `ID ${dim}, ${format(InfinityDimension(dim).amount, 2)}`;
+      return `ID ${dim}, ${format(InfinityDimension(dim).totalAmount, 2)}`;
     },
-    multValue: () => InfinityDimension(MultiplierTabHelper.activeDimCount("ID")).amount,
+    multValue: () => InfinityDimension(MultiplierTabHelper.activeDimCount("ID")).totalAmount,
     isActive: () => InfinityDimension(1).isProducing,
     icon: MultiplierTabIcons.DIMENSION("ID"),
   },
@@ -64,9 +64,10 @@ export const ID = {
     name: "Base purchases",
     multValue: dim => {
       const getMult = id => {
+        const amt = MultiplierTabHelper.getIDValue(id)
         const purchases = id === 8
-          ? Math.floor(InfinityDimension(id).baseAmount / 10)
-          : Math.min(InfinityDimensions.HARDCAP_PURCHASES, Math.floor(InfinityDimension(id).baseAmount / 10));
+          ? amt
+          : Math.min(InfinityDimensions.HARDCAP_PURCHASES, amt);
         const baseMult = InfinityDimension(id)._powerMultiplier;
         return Decimal.pow(baseMult, purchases);
       };
@@ -84,7 +85,7 @@ export const ID = {
     multValue: dim => {
       const getMult = id => {
         if (id === 8) return DC.D1;
-        const purchases = Math.floor(InfinityDimension(id).baseAmount / 10);
+        const purchases = MultiplierTabHelper.getIDValue(id);
         return Decimal.pow(InfinityDimension(id)._powerMultiplier,
           Math.clampMin(purchases - InfinityDimensions.HARDCAP_PURCHASES, 0));
       };
@@ -100,7 +101,7 @@ export const ID = {
   infinityGlyphSacrifice: {
     name: "Infinity Glyph sacrifice",
     multValue: () => (InfinityDimension(8).isProducing
-      ? Decimal.pow(GlyphSacrifice.infinity.effectValue, Math.floor(InfinityDimension(8).baseAmount / 10))
+      ? Decimal.pow(GlyphSacrifice.infinity.effectValue, MultiplierTabHelper.getIDValue(8))
       : DC.D1),
     isActive: () => GlyphSacrifice.infinity.effectValue > 1,
     icon: MultiplierTabIcons.SACRIFICE("infinity"),
