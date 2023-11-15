@@ -29,6 +29,8 @@ export default {
       extraTesseracts: 0,
       creditsClosed: false,
       showLockedDimCostNote: true,
+      isContinuumUnlocked: false,
+      isContinuumActive: false,
     };
   },
   computed: {
@@ -70,23 +72,39 @@ export default {
       this.boughtTesseracts = Tesseracts.bought;
       this.extraTesseracts = Tesseracts.extra;
       this.creditsClosed = GameEnd.creditsEverClosed;
+      this.isContinuumUnlocked = InfinityDimensions.continuumUnlocked;
+      this.isContinuumActive = InfinityDimensions.continuumActive;
     },
     maxAll() {
+      if (this.isContinuumActive) return;
       InfinityDimensions.buyMax();
     },
     toggleAllAutobuyers() {
+      if (this.isContinuumActive) return;
       toggleAllInfDims();
     },
     buyTesseract() {
       Tesseracts.buyTesseract();
-    }
+    },
+    toggleContinuum() {
+      InfinityDimensions.setContinuum(!this.isContinuumActive);
+    },
   }
 };
 </script>
 
 <template>
   <div class="l-infinity-dim-tab">
-    <div class="c-subtab-option-container">
+    <div class="c-subtab-option-container" v-if="isContinuumUnlocked">
+      <PrimaryButton
+        v-if="!isEC8Running"
+        class="o-primary-btn--subtab-option"
+        @click="toggleContinuum"
+      >
+        {{ isContinuumActive ? "Disable" : "Enable" }} Continuum
+      </PrimaryButton>
+    </div>
+    <div class="c-subtab-option-container" v-if="!isContinuumActive">
       <PrimaryButton
         v-if="!isEC8Running"
         class="o-primary-btn--subtab-option"

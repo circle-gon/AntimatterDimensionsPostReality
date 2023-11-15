@@ -197,7 +197,7 @@ export class EternityChallengeState extends GameMechanicState {
       if (!auto) ImaginaryUpgrade(24).tryShowWarningModal("enter Eternity Challenge 12");
       return false;
     }
-    if (this.id === 7 && ImaginaryUpgrade(15).isLockingMechanics && TimeDimension(1).amount.gt(0)) {
+    if (this.id === 7 && ImaginaryUpgrade(15).isLockingMechanics && TimeDimension(1).totalAmount.gt(0)) {
       if (!auto) ImaginaryUpgrade(15).tryShowWarningModal("enter Eternity Challenge 7");
       return false;
     }
@@ -326,7 +326,7 @@ export const EternityChallenges = {
 
   autoComplete: {
     tick() {
-      const shouldPreventEC7 = TimeDimension(1).amount.gt(0);
+      const shouldPreventEC7 = TimeDimension(1).totalAmount.gt(0);
       const hasUpgradeLock = RealityUpgrade(12).isLockingMechanics ||
         (ImaginaryUpgrade(15).isLockingMechanics && shouldPreventEC7 &&
           !Array.range(1, 6).some(ec => !EternityChallenge(ec).isFullyCompleted));

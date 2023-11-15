@@ -459,7 +459,11 @@ export const InfinityDimensions = {
 
   get continuumActive() {
     // TODO: add setting
-    return this.continuumUnlocked
+    return this.continuumUnlocked && !player.auto.continuumDisabled.ID
+  },
+
+  setContinuum(value) {
+    player.auto.continuumDisabled.ID = !value;
   },
 
   get extraPurchases() {

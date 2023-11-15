@@ -57,7 +57,7 @@ export default {
       } else if (player.buyUntil10) {
         player.buyUntil10 = false;
       } else {
-        if (ImaginaryUpgrade(21).isLockingMechanics && player.auto.disableContinuum) {
+        if (ImaginaryUpgrade(21).isLockingMechanics && player.auto.continuumDisabled.AD) {
           ImaginaryUpgrade(21).tryShowWarningModal();
           return;
         }

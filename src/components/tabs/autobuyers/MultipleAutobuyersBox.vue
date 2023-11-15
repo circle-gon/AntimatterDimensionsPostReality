@@ -60,6 +60,7 @@ export default {
     autobuyerText() {
       if (this.continuumStates[0]) return "Antimatter Dimension and Tickspeed"
       if (this.continuumStates[1]) return "Infinity Dimension"
+      if (this.continuumStates[2]) return "Time Dimension"
       return ""
     }
   },
@@ -68,6 +69,7 @@ export default {
       this.continuumStates = [
         this.isADBox && Laitela.continuumActive,
         this.name === Autobuyer.infinityDimension.groupName && InfinityDimensions.continuumActive,
+        this.name === Autobuyer.timeDimension.groupName && TimeDimensions.continuumActive,
       ];
       const type = this.type;
       this.anyUnlocked = type.anyUnlocked;

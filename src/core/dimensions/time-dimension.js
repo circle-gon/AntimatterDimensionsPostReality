@@ -204,20 +204,36 @@ class TimeDimensionState extends DimensionState {
     return Currency.eternityPoints.gte(this.cost);
   }
 
-  get continuumValue() {
+  get continuumBaseValue() {
+    if (!this.isContinuumAvailable) return 0;
     // To be consistent with the standard handling of TDs being disabled, we still
     // retain the amount, even if TDs are disabled
     const paradox = PelleRifts.paradox.milestones[0].canBeApplied;
-    const eterPoints = Currency.eternityPoints.value
-    const paradoxed = eterPoints.pow(paradox ? 2 : 1).mul(paradox ? "1e2250" : 1).div(this.baseCost)re less than it, the scaling doesn't kick in, so you can buy to it
+    const eterPoints = Currency.eternityPoints.value;
+    const paradoxed = eterPoints.pow(paradox ? 2 : 1).mul(paradox ? "1e2250" : 1);
+
+    const baseTDs = paradoxed.div(this.baseCost).log(this.costMultiplier);
+    // if you're less than it, the scaling doesn't kick in, so you can buy to it
     // before it kicks in
-    if (baseTDs <= this.e6000ScalingAmount && this._tier > 4) return base;
+    if (baseTDs <= this.e6000ScalingAmount && this._tier > 4) return baseTDs;
+
     const costMultIncreases = [1, 1.5, 2.2];
     const idx = this._costIncreaseThresholds.findIndex((i) => eterPoints.lt(i));
     if (idx !== -1) return eterPoints.div(this.baseCost).log(this.costMultiplier * costMultIncreases[idx]) + 1;
-    let base = this.costMultiplier * (this._tier <= 4 ? 2.2 : 1);
+
+    const base = this.costMultiplier * (this._tier <= 4 ? 2.2 : 1);
     const TDScale = TimeDimensions.scalingPast1e6000;
-    return (eterPointsEffective.div(this.baseCost).log(base) + this.e6000ScalingAmount * (TDScale - 1)) / TDScale + 1;
+    return (paradoxed.div(this.baseCost).log(base) + this.e6000ScalingAmount * (TDScale - 1)) / TDScale + 1;
+  }
+
+  // We handle exceptions here just because it's easier to do so
+  get continuumValue() {
+    if (RealityUpgrade(13).isLockingMechanics && this._tier > 4) return 0;
+    // TODO: better handling of IM upgrade 15?
+    if (ImaginaryUpgrade(15).isLockingMechanics && EternityChallenge(7).completions > 0) return 0;
+    let val = this.continuumBaseValue * TimeDimensions.extraPurchases;
+    if (Enslaved.isRunning && val > 1) val = 1;
+    return val;
   }
 
   get continuumAmount() {
@@ -242,7 +258,8 @@ class TimeDimensionState extends DimensionState {
       );
 
     const dim = TimeDimension(tier);
-    const bought = tier === 8 ? Math.clampMax(dim.bought, 1e8) : dim.bought;
+    const realBought = TimeDimensions.continuumActive ? dim.continuumValue : dim.bought;
+    const bought = tier === 8 ? Math.clampMax(realBought, 1e8) : realBought;
     mult += bought * dim.powerMultiplier.log10();
 
     mult *= getAdjustedGlyphEffect("timepow");
@@ -275,9 +292,9 @@ class TimeDimensionState extends DimensionState {
       return DC.D0;
     }
     if (EternityChallenge(11).isRunning) {
-      return this.amount;
+      return this.totalAmount;
     }
-    let production = this.amount.log10() + this.multiplier.log10();
+    let production = this.totalAmount.log10() + this.multiplier.log10();
     if (EternityChallenge(7).isRunning) {
       production += Tickspeed.perSecond.log10();
     }
@@ -306,7 +323,7 @@ class TimeDimensionState extends DimensionState {
     ) {
       return false;
     }
-    return this.amount.gt(0);
+    return this.totalAmount.gt(0);
   }
 
   get baseCost() {
@@ -375,6 +392,23 @@ export const TimeDimensions = {
     EternityChallenge(7).reward.applyEffect((production) => {
       InfinityDimension(8).amount = InfinityDimension(8).totalAmount.plus(production.times(diff.div(1000)));
     });
+  },
+
+  get continuumUnlocked() {
+    return AtomUpgrade(8).isBought && Laitela.continuumUnlocked;
+  },
+
+  get continuumActive() {
+    // TODO: add setting
+    return this.continuumUnlocked && !player.auto.continuumDisabled.TD;
+  },
+
+  setContinuum(value) {
+    player.auto.continuumDisabled.TD = !value;
+  },
+
+  get extraPurchases() {
+    return AtomicParticle(0).effects[0];
   },
 };
 

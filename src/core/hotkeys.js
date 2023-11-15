@@ -423,14 +423,14 @@ function keyboardToggleAutobuyers() {
 
 function keyboardToggleContinuum() {
   if (!Laitela.continuumUnlocked) return;
-  if (ImaginaryUpgrade(21).isLockingMechanics && player.auto.disableContinuum) {
+  if (ImaginaryUpgrade(21).isLockingMechanics && player.auto.continuumDisabled.AD) {
     ImaginaryUpgrade(21).tryShowWarningModal();
     return;
   }
-  // This is a toggle despite the lack of !, because player.auto.disableContinuum
+  // This is a toggle despite the lack of !, because player.auto.continuumDisabled.AD
   // is negated compared to whether continuum is on.
-  Laitela.setContinuum(player.auto.disableContinuum);
-  GameUI.notify.info(`${(player.auto.disableContinuum) ? "Disabled" : "Enabled"} Continuum`);
+  Laitela.setContinuum(player.auto.continuumDisabled.AD);
+  GameUI.notify.info(`${(player.auto.continuumDisabled.AD) ? "Disabled" : "Enabled"} Continuum`);
 }
 
 function keyboardAutomatorToggle() {

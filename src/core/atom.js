@@ -65,6 +65,11 @@ export function migrateSaves(player) {
       lastTick: 0,
     })),
   ];
+
+  // more continuum settings
+  player.auto.continuumDisabled.AD = player.auto.disableContinuum
+
+  delete player.auto.disableContinuum
 }
 
 // lazy way to hide the "in this Collapse" text until you know about it

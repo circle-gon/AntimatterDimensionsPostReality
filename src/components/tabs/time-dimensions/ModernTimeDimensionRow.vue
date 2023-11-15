@@ -162,7 +162,7 @@ export default {
         <span v-html="tooltipContents" />
       </div>
       <PrimaryButton
-        :enabled="isAvailableForPurchase && !isCapped"
+        :enabled="isAvailableForPurchase && !isCapped && !isContinuumActive"
         class="o-primary-btn--buy-td o-primary-btn o-primary-btn--new o-primary-btn--buy-dim"
         :class="buttonClass"
         @click="buyTimeDimension"

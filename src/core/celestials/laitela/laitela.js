@@ -35,12 +35,12 @@ export const Laitela = {
     return (ImaginaryUpgrade(15).isBought || AtomUpgrade(8).isBought) && !Pelle.isDisabled("continuum");
   },
   get continuumActive() {
-    return this.continuumUnlocked && !player.auto.disableContinuum && !Pelle.isDisabled("continuum");
+    return this.continuumUnlocked && !player.auto.continuumDisabled.AD && !Pelle.isDisabled("continuum");
   },
   setContinuum(x) {
-    player.auto.disableContinuum = !x;
+    player.auto.continuumDisabled.AD = !x;
     // If continuum is now not disabled (i.e. is enabled) we update the relevant requirement check.
-    if (!player.auto.disableContinuum) {
+    if (!player.auto.continuumDisabled.AD) {
       player.requirementChecks.reality.noContinuum = false;
     }
   },
