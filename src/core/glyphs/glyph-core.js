@@ -100,8 +100,7 @@ export const Glyphs = {
       if (PelleRifts.vacuum.milestones[0].canBeApplied) return 1;
       return 0;
     }
-    // TODO: remove this
-    return 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24))/* + 3*/;
+    return 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24), AtomUpgrade(9));
   },
   get protectedSlots() {
     return 10 * player.reality.glyphs.protectedRows;
@@ -609,7 +608,7 @@ export const Glyphs = {
           (g.level >= glyph.level || g.strength >= glyph.strength) &&
           (g.effects & glyph.effects) === glyph.effects
       );
-    let compareThreshold = glyph.type === "effarig" || glyph.type === "reality" ? 1 : 5;
+    let compareThreshold = glyph.type === "effarig" || glyph.type === "reality" ? 1 : this.activeSlotCount;
     compareThreshold = Math.clampMax(compareThreshold, threshold);
     if (toCompare.length < compareThreshold) return false;
     const comparedEffects = getGlyphEffectsFromBitmask(glyph.effects).filter((x) => x.id.startsWith(glyph.type));
@@ -620,8 +619,8 @@ export const Glyphs = {
   // If deleteGlyphs === false, we are running this from the modal and are doing so purely to *count* the number of
   // removed glyphs. In this case, we copy the inventory and run the purge on the copy - we need to be able to remove
   // glyphs as we go, or else the purge logic will be wrong (eg. 7 identical glyphs will all be "worse than 5 others")
-  autoClean(threshold = 5, deleteGlyphs = true) {
-    const isHarsh = threshold < 5;
+  autoClean(threshold = this.activeSlotCount, deleteGlyphs = true) {
+    const isHarsh = threshold < this.activeSlotCount;
     let toBeDeleted = 0;
     const inventoryCopy = deleteGlyphs ? undefined : this.fakePurgeInventory();
     // If the player hasn't unlocked sacrifice yet, prevent them from removing any glyphs.

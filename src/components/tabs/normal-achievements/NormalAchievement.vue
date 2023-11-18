@@ -15,7 +15,7 @@ export default {
       type: Object,
       required: true
     },
-    isObscured: {
+    isObscuredProp: {
       type: Boolean,
       required: false
     }
@@ -34,6 +34,9 @@ export default {
     };
   },
   computed: {
+    isObscured() {
+      return this.isObscuredProp && !this.isUnlocked;
+    },
     id() {
       return this.achievement.id;
     },

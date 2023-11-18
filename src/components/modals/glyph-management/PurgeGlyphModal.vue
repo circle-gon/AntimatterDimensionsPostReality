@@ -12,9 +12,14 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      glyphCount: 0,
+    }
+  },
   computed: {
     threshold() {
-      return this.harsh ? 1 : 5;
+      return this.harsh ? 1 : this.glyphCount;
     },
     extraMessage() {
       if (this.glyphsDeleted === 0) return `This will Purge no Glyphs.`;
@@ -47,6 +52,9 @@ export default {
     handleYesClick() {
       Glyphs.autoClean(this.threshold, true);
     },
+    update() {
+      this.glyphCount = Glyphs.activeGlyphCount
+    }
   },
 };
 </script>

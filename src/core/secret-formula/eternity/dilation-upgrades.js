@@ -163,10 +163,10 @@ export const dilationUpgrades = {
     increment: 1000,
     pelleOnly: true,
     description: "Multiply Tachyon Galaxies gained, applies after TG doubling upgrade",
-    effect: (bought) => (Pelle.isDoomed ? bought + 1 : bought / 20 + 1),
+    effect: (bought) => (Pelle.isDoomed ? bought + 1 : bought * 0.02 + 1),
     formatEffect: (value) => {
       if (Pelle.isDoomed) return `${formatX(value, 2)} ➜ ${formatX(value + 1, 2)}`;
-      return `${formatX(value, 2, 2)} ➜ ${formatX(value + 0.05, 2, 2)}`;
+      return `${formatX(value, 2, 2)} ➜ ${formatX(value + 0.02, 2, 2)}`;
     },
     formatCost: (value) => format(value, 2),
     purchaseCap: Number.MAX_VALUE,
@@ -177,8 +177,10 @@ export const dilationUpgrades = {
     increment: 1e4,
     pelleOnly: true,
     description: "Gain a power to Tickspeed",
-    effect: (bought) => 1 + bought * (Pelle.isDoomed ? 0.03 : 0.02),
-    formatEffect: (value) => `${formatPow(value, 2, 2)} ➜ ${formatPow(value + (Pelle.isDoomed ? 0.03 : 0.02), 2, 2)}`,
+    effect: (bought) => 1 + bought * (Pelle.isDoomed ? 0.03 : 0.01),
+    formatEffect: (value) => {
+      return `${formatPow(value, 2, 2)} ➜ ${formatPow(value + (Pelle.isDoomed ? 0.03 : 0.01), 2, 2)}`
+    },
     formatCost: (value) => format(value, 2),
     purchaseCap: Number.MAX_VALUE,
   }),
@@ -186,8 +188,8 @@ export const dilationUpgrades = {
     id: 14,
     cost: 1e45,
     pelleOnly: true,
-    description: () => `Apply a ${Pelle.isDoomed ? "cube" : "1.5th"} root to the Tachyon Galaxy threshold`,
-    effect: () => (Pelle.isDoomed ? 1 / 3 : 1 / 1.5),
+    description: () => `Apply a ${Pelle.isDoomed ? "cube" : "1.05th"} root to the Tachyon Galaxy threshold`,
+    effect: () => (Pelle.isDoomed ? 1 / 3 : 1 / 1.05),
   },
   flatDilationMult: {
     id: 15,

@@ -48,7 +48,7 @@ export default {
       v-for="(achievement, i) in row"
       :key="i"
       :achievement="achievement"
-      :is-obscured="isObscured"
+      :is-obscured-prop="isObscured"
       class="l-achievement-grid__cell"
     />
   </div>

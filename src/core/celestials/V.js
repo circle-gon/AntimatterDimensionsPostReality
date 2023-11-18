@@ -193,7 +193,7 @@ export const V = {
       else sum += player.celestials.v.runUnlocks[i] * 2;
     }
 
-    if (AtomUpgrade(5).isBought) sum *= 2;
+    sum *= Effects.product(AtomUpgrade(5))
 
     this.spaceTheorems = sum;
   },

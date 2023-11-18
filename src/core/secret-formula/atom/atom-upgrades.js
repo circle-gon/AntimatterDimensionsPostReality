@@ -61,12 +61,14 @@ export const atomUpgrades = [
     name: "Knowledge Empowerment",
     cost: Infinity,
     description: "Memory gain is raised ^1.5.",
+    effect: 1.5,
   },
   {
     id: 5,
     name: "Overachiever",
     cost: Infinity,
     description: "Each V-Achievement awards 2 Space Theorems instead of 1.",
+    effect: 2,
   },
   rebuyable({
     id: 6,
@@ -82,11 +84,11 @@ export const atomUpgrades = [
     id: 7,
     name: "Keeper of Achievements",
     cost: Infinity,
-    description: "Start Collapses with all Doom achievements (except for 188) unlocked.",
+    description: "Upon purchasing this upgrade or Collapsing, start with all Doom achievements (except for 188) unlocked.",
   },
   {
     id: 8,
-    name: "Death to Continuum [TBD]",
+    name: "Death to Continuum",
     cost: Infinity,
     description: `Unlock Infinity and Time Dimension Continuum, which is unlocked when
     Antimatter Dimension Continuum is unlocked. Start Collapses with AD Continuum unlocked.`,
@@ -95,7 +97,8 @@ export const atomUpgrades = [
     id: 9,
     name: "Hoarder of Glyphs [TBD]",
     cost: Infinity,
-    description: "Unlock two more glyph slots. You can now equip 2 Reality and Effarig glyphs.",
+    description: "Unlock one more glyph slot.",
+    effect: 1,
   },
   {
     id: 10,

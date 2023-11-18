@@ -328,26 +328,30 @@ export const Tesseracts = {
     player.celestials.enslaved.tesseracts++;
   },
 
-  // This used to be a somewhat complicated function which spaced costs out super-exponentially, but the decision to
-  // hardcap all resources (as feasible) to e9e15 meant that in practice only the first 10 or so could actually be
-  // obtained. Changing the function to a hardcoded array is better for understanding the code since it's small.
-  // Note that costs go a bit past e9e15 because while AM is capped at e9e15, most other resources (including IP)
-  // aren't and can go a tiny bit past it.
   // The formula is a hardcoded 2, 4, 6 followed by successive multiplication by 2x, 4x, 6x, and so on.
-  BASE_COSTS: [2, 4, 6, 12, 48, 288, 2304, 23040, 276480, 3870720, 61931520, 1114767360],
+  // BASE_COSTS: [2, 4, 6, 12, 48, 288, 2304, 23040, 276480, 3870720, 61931520, 1114767360],
+  // This isn't 100% accurate but it's not like we care
   costs(index) {
-    // In practice this should never happen, but have it just to be safe
-    // Don't use Decimal.MAX_LIMIT because otherwise Vue shenanigans happen
-    if (index >= this.BASE_COSTS.length) return Decimal.pow10(Number.MAX_VALUE);
-    return Decimal.pow10(1e7 * this.BASE_COSTS[Math.floor(index)]);
+    const idx = Math.floor(index)
+    let baseExp;
+    if (idx <= 2) baseExp = [2, 4, 6][idx]
+    else {
+      const multiplyTimes = idx - 2
+      // technically this can break if the stuff before .toNumber() is >ee308 but that has
+      // a 1e-10% chance of occuring in practice
+      baseExp = new Decimal(multiplyTimes).factorial().mul(Decimal.pow(2, multiplyTimes)).toNumber() * 6
+    }
+    return powAndCap(baseExp * 1e7)
   },
 
   get nextCost() {
     return this.costs(this.bought);
   },
 
+  // This is here so people can't buy infinite after hitting ee308 cost
+  HARDCAP: 150,
   get canBuyTesseract() {
-    return Enslaved.isCompleted && Currency.infinityPoints.gte(Tesseracts.nextCost);
+    return Enslaved.isCompleted && Currency.infinityPoints.gte(Tesseracts.nextCost) && this.bought < this.HARDCAP;
   },
 
   capIncrease(count = this.bought) {

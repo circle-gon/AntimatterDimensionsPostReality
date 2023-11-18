@@ -67,9 +67,9 @@ export function migrateSaves(player) {
   ];
 
   // more continuum settings
-  player.auto.continuumDisabled.AD = player.auto.disableContinuum
+  player.auto.continuumDisabled.AD = player.auto.disableContinuum;
 
-  delete player.auto.disableContinuum
+  delete player.auto.disableContinuum;
 }
 
 // lazy way to hide the "in this Collapse" text until you know about it
@@ -81,7 +81,7 @@ export function gainedAtoms() {
   const gain = DC.D1;
   gain = gain.mul(AtomicParticle(1).effects[1]);
   gain = gain.timesEffectOf(AtomUpgrade(1));
-  return gain;
+  return gain.floor();
 }
 
 function getCollapseGain() {
@@ -132,6 +132,11 @@ function giveRealityUpgrade(num) {
   upg.hasPlayerLock = false;
   upg.isBought = true;
   upg.onPurchased();
+}
+
+function giveAU8() {
+  // this must be done this way because ach 188 should not be obtained
+  for (let ach = 181; ach <= 187; ach++) Achievement(ach).unlock();
 }
 
 export function collapse() {
@@ -533,12 +538,9 @@ export function collapse() {
     giveRealityUpgrade(25);
 
     // no need for onPurchased call since none of the upgrades have ite none of the upgrades have it
-    for (const upg of PelleUpgrades.singles) upg.isBought = true
+    for (const upg of PelleUpgrades.singles) upg.isBought = true;
   }
-  if (AtomUpgrade(8).isBought) {
-    // this must be done this way because ach 188 should not be obtained
-    for (let ach = 181; ach <= 187; ach++) Achievement(ach).unlock();
-  }
+  if (AtomUpgrade(8).isBought) giveAU8();
 
   EventHub.dispatch(GAME_EVENT.COLLAPSE_AFTER);
 }
@@ -640,6 +642,20 @@ class AtomUpgradeState extends BitPurchasableMechanicState {
     GameUI.notify.reality(`You've unlocked an Atom Upgrade: ${this.config.name}`);
     this.hasPlayerLock = false;
   }
+
+  onPurchased() {
+    switch (this.id) {
+      case 5:
+        V.updateTotalRunUnlocks();
+        break;
+      case 7:
+        giveAU8();
+        break;
+      case 9:
+        Glyphs.refreshActive();
+        break;
+    }
+  }
 }
 
 class RebuyableAtomUpgradeState extends RebuyableMechanicState {
@@ -667,9 +683,9 @@ export const AtomUpgrades = {
   // used for the pelle rebuyable dilation upgrades
   dilExpo(id) {
     if (Pelle.isDoomed) return 1;
-    if (id === 11) return 1.5;
-    if (id === 12) return 3.5;
-    return 3;
+    if (id === 11) return 2;
+    if (id === 12) return 4;
+    return 3; 
   },
 };
 
