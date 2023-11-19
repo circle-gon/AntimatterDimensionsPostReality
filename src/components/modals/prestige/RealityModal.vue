@@ -168,6 +168,7 @@ export default {
         :ignore-modified-level="true"
         :show-sacrifice="canSacrifice"
         @click.native="select(index)"
+        @touchstart.native="select(index)"
       />
     </div>
     <div v-if="!firstReality">
