@@ -126,9 +126,10 @@ function lockAchievementsOnCollapse() {
   player.reality.achTimer = DC.D0;
 }
 
-function giveRealityUpgrade(num) {
-  const upg = RealityUpgrade(num);
-  player.reality.upgReqs |= 1 << upg.id;
+function giveRealityUpgrade(num, isReality) {
+  const upg = isReality ? RealityUpgrade(num) : ImaginaryUpgrade(num);
+  if (isReality) player.reality.upgReqs |= 1 << upg.id;
+  else player.reality.imaginaryUpgReqs |= 1 << upg.id;
   upg.hasPlayerLock = false;
   upg.isBought = true;
   upg.onPurchased();
@@ -140,12 +141,7 @@ function giveAU8() {
 }
 
 export function collapse() {
-  EventHub.dispatch(GAME_EVENT.COLLAPSE_BEFORE);
-
-  GameEnd.creditsClosed = false;
-  GameEnd.creditsEverClosed = false;
-  player.isGameEnd = false;
-
+  // STUFF TO GAIN
   const atomsGained = gainedAtoms();
   const collapsesMade = getCollapseGain();
   Currency.atoms.add(atomsGained);
@@ -154,7 +150,12 @@ export function collapse() {
   updateCollapseStats();
   addCollapseTime(player.records.thisCollapse.time, player.records.thisCollapse.realTime, atomsGained, collapsesMade);
 
+  EventHub.dispatch(GAME_EVENT.COLLAPSE_RESET_BEFORE);
+
   // RESET
+  GameEnd.creditsClosed = false;
+  GameEnd.creditsEverClosed = false;
+  player.isGameEnd = false;
 
   if (!AtomMilestone.am1.isReached) {
     player.challenge = {
@@ -416,7 +417,6 @@ export function collapse() {
   player.reality.glyphs.active = [];
   player.reality.glyphs.protectedRows = protectedRows;
 
-  // Reality
   recalculateAllGlyphs();
   Glyphs.updateMaxGlyphCount(true);
   Glyphs.refreshActive();
@@ -521,6 +521,8 @@ export function collapse() {
   ECTimeStudyState.invalidateCachedRequirements();
   Player.resetRequirements("atom");
 
+  // Post-Reset
+
   if (AtomMilestone.am1.isReached) {
     // this needs to be done this way because some perks rely on others
     const visited = [];
@@ -533,16 +535,21 @@ export function collapse() {
       perk.purchase();
     }
 
-    giveRealityUpgrade(10);
-    giveRealityUpgrade(13);
-    giveRealityUpgrade(25);
+    giveRealityUpgrade(10, true);
+    giveRealityUpgrade(13, true);
+    giveRealityUpgrade(25, true);
 
     // no need for onPurchased call since none of the upgrades have ite none of the upgrades have it
     for (const upg of PelleUpgrades.singles) upg.isBought = true;
   }
+  if (AtomMilestone.am2.isReached) {
+    for (const blackHole of player.blackHole) blackHole.unlocked = true;
+    giveRealityUpgrade(20, false);
+    for (let i = 1; i <= 12; i++) EternityChallenge(i).completions = 5;
+  }
   if (AtomUpgrade(8).isBought) giveAU8();
 
-  EventHub.dispatch(GAME_EVENT.COLLAPSE_AFTER);
+  EventHub.dispatch(GAME_EVENT.COLLAPSE_RESET_AFTER);
 }
 
 export function collapseResetRequest() {
@@ -685,7 +692,7 @@ export const AtomUpgrades = {
     if (Pelle.isDoomed) return 1;
     if (id === 11) return 2;
     if (id === 12) return 4;
-    return 3; 
+    return 3;
   },
 };
 
@@ -732,5 +739,6 @@ export const AtomicPower = {
   use(slot) {
     player.atom.particles[slot] = player.atom.particles[slot].add(player.atom.atomicPower);
     player.atom.atomicPower = DC.D0;
+    EventHub.dispatch(GAME_EVENT.ATOMIC_PARTICLE_CONVERSION);
   },
 };

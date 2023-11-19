@@ -221,7 +221,7 @@ class BlackHoleState {
   }
 
   get isPermanent() {
-    return this.dutyCycle >= 0.9999;
+    return this.dutyCycle >= 0.9999 || AtomMilestone.am2.isReached;
   }
 
   /**

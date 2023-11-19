@@ -10,7 +10,9 @@ export class RealityUpgradeAutobuyerState extends AutobuyerState {
   }
 
   get isUnlocked() {
-    return Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied;
+    return (
+      Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied || (AtomMilestone.am2.isReached && !Pelle.isDoomed)
+    );
   }
 
   get hasUnlimitedBulk() {
@@ -22,8 +24,16 @@ export class RealityUpgradeAutobuyerState extends AutobuyerState {
     while (Currency.realityMachines.gte(upg.cost)) upg.purchase();
   }
 
-  static get entryCount() { return 5; }
-  static get autobuyerGroupName() { return "Reality Upgrade"; }
-  static get isActive() { return player.auto.realityUpgrades.isActive; }
-  static set isActive(value) { player.auto.realityUpgrades.isActive = value; }
+  static get entryCount() {
+    return 5;
+  }
+  static get autobuyerGroupName() {
+    return "Reality Upgrade";
+  }
+  static get isActive() {
+    return player.auto.realityUpgrades.isActive;
+  }
+  static set isActive(value) {
+    player.auto.realityUpgrades.isActive = value;
+  }
 }

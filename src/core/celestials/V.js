@@ -186,6 +186,9 @@ export const V = {
     player.celestials.v.run = true;
     this.quotes.realityEnter.show();
   },
+  get spaceTheoremMultiplier() {
+    return Effects.product(AtomUpgrade(4))
+  },
   updateTotalRunUnlocks() {
     let sum = 0;
     for (let i = 0; i < player.celestials.v.runUnlocks.length; i++) {
@@ -193,7 +196,7 @@ export const V = {
       else sum += player.celestials.v.runUnlocks[i] * 2;
     }
 
-    sum *= Effects.product(AtomUpgrade(5))
+    sum *= this.spaceTheoremMultiplier;
 
     this.spaceTheorems = sum;
   },

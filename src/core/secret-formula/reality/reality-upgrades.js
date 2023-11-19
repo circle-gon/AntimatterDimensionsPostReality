@@ -164,11 +164,14 @@ export const realityUpgrades = [
     name: "The Knowing Existence",
     id: 12,
     cost: 50,
-    requirement: () => `Eternity for ${format(DC.E70)} Eternity Points without completing Eternity Challenge 1`,
-    hasFailed: () => EternityChallenge(1).completions !== 0,
-    checkRequirement: () => Currency.eternityPoints.exponent >= 70 && EternityChallenge(1).completions === 0,
+    requirement: () => `Eternity for ${format(DC.E70)} Eternity Points${AtomMilestone.am2.isReached ? "" : "without completing Eternity Challenge 1"}`,
+    hasFailed: () => !AtomMilestone.am2.isReached && EternityChallenge(1).completions !== 0,
+    checkRequirement: () => Currency.eternityPoints.exponent >= 70 && (AtomMilestone.am2.isReached || EternityChallenge(1).completions === 0),
     checkEvent: GAME_EVENT.ETERNITY_RESET_AFTER,
-    canLock: true,
+    // The only reason why this works is because on Collapse, the locks are reset
+    get canLock() {
+      return !AtomMilestone.am2.isReached;
+    },
     lockEvent: "complete Eternity Challenge 1",
     description: "Eternity Point multiplier based on Reality and Time Theorem count",
     effect: () => Currency.timeTheorems.value

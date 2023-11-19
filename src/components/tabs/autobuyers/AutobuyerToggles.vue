@@ -49,11 +49,11 @@ export default {
     update() {
       this.isDoomed = Pelle.isDoomed;
       this.autobuyersOn = player.auto.autobuyersOn;
-      this.showContinuum = Laitela.isUnlocked || AtomUpgrade(8).isBought;
+      this.showContinuum = Laitela.isUnlocked || AtomUpgrade(5).isBought;
       this.disableADContinuum = player.auto.continuumDisabled.AD;
       this.disableIDContinuum = player.auto.continuumDisabled.ID;
       this.disableTDContinuum = player.auto.continuumDisabled.TD;
-      this.unlockedExtras = AtomUpgrade(8).isBought;
+      this.unlockedExtras = AtomUpgrade(5).isBought;
       this.allAutobuyersDisabled = Autobuyers.unlocked.every((autobuyer) => !autobuyer.isActive);
     },
     toggleAllAutobuyers() {

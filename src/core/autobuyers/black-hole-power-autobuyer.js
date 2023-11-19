@@ -10,7 +10,7 @@ export class BlackHolePowerAutobuyerState extends AutobuyerState {
   }
 
   get isUnlocked() {
-    return Ra.unlocks.blackHolePowerAutobuyers.canBeApplied;
+    return Ra.unlocks.blackHolePowerAutobuyers.canBeApplied || (AtomMilestone.am2.isReached && !Pelle.isDoomed);
   }
 
   get hasUnlimitedBulk() {

@@ -33,7 +33,7 @@ export const atomicParticles = [
     name: "Electron",
     color: "yellow",
     bonus(amt) {
-      const a = amt.add(1).pow(75).powEffectOf(AtomUpgrade(6));
+      const a = amt.add(1).pow(100).powEffectOf(AtomUpgrade(6));
       const b = (((amt.add(1).log10() + 1) ** 0.5 - 1) / 10 + 1) ** Effects.product(AtomUpgrade(6));
       return [a, b];
     },

@@ -49,26 +49,24 @@ export const atomUpgrades = [
   },
   {
     id: 3,
-    name: "Doomed Transcendence",
-    cost: Infinity,
-    description: `Dilation upgrades previously only available in a Doomed Reality
-    are now purchasable outside of it (with rebuyable autobuyers unlocked), but they scale faster
-    and some upgrades are weakened. The DU2 Perk now also unlocks the 2 one-time Pelle Dilation upgrades 
-    as well.`,
-  },
-  {
-    id: 4,
     name: "Knowledge Empowerment",
     cost: Infinity,
     description: "Memory gain is raised ^1.5.",
     effect: 1.5,
   },
   {
-    id: 5,
+    id: 4,
     name: "Overachiever",
     cost: Infinity,
     description: "Each V-Achievement awards 2 Space Theorems instead of 1.",
     effect: 2,
+  },
+  {
+    id: 5,
+    name: "Death to Continuum",
+    cost: Infinity,
+    description: `Unlock Infinity and Time Dimension Continuum, which is unlocked when
+    Antimatter Dimension Continuum is unlocked. Start Collapses with AD Continuum unlocked.`,
   },
   rebuyable({
     id: 6,
@@ -82,20 +80,22 @@ export const atomUpgrades = [
   }),
   {
     id: 7,
+    name: "Doomed Transcendence",
+    cost: Infinity,
+    description: `Dilation upgrades previously only available in a Doomed Reality
+    are now purchasable outside of it, but they scale faster
+    and some upgrades are weakened. The DU2 and DAU Perks now adjust to account for the
+    new Dilation upgrades.`,
+  },
+  {
+    id: 8,
     name: "Keeper of Achievements",
     cost: Infinity,
     description: "Upon purchasing this upgrade or Collapsing, start with all Doom achievements (except for 188) unlocked.",
   },
   {
-    id: 8,
-    name: "Death to Continuum",
-    cost: Infinity,
-    description: `Unlock Infinity and Time Dimension Continuum, which is unlocked when
-    Antimatter Dimension Continuum is unlocked. Start Collapses with AD Continuum unlocked.`,
-  },
-  {
     id: 9,
-    name: "Hoarder of Glyphs [TBD]",
+    name: "Hoarder of Glyphs",
     cost: Infinity,
     description: "Unlock one more glyph slot.",
     effect: 1,

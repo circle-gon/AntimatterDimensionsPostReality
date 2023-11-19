@@ -395,7 +395,7 @@ export const TimeDimensions = {
   },
 
   get continuumUnlocked() {
-    return AtomUpgrade(8).isBought && Laitela.continuumUnlocked;
+    return AtomUpgrade(5).isBought && Laitela.continuumUnlocked;
   },
 
   get continuumActive() {

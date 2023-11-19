@@ -262,7 +262,7 @@ export const Ra = {
     return res;
   },
   get productionExponent() {
-    return Effects.product(AtomUpgrade(4))
+    return Effects.product(AtomUpgrade(3))
   },
   get memoryBoostResources() {
     const boostList = [];
@@ -272,7 +272,7 @@ export const Ra = {
     if (Achievement(168).isUnlocked) boostList.push("Achievement 168");
     if (Ra.unlocks.continuousTTBoost.canBeApplied) boostList.push("current TT");
     if (AtomUpgrade(2).isBought) boostList.push("Atom Upgrade 'Starter Pack'");
-    if (AtomUpgrade(4).isBought) boostList.push("Atom Upgrade 'Knowledge Empowerment'");
+    if (AtomUpgrade(3).isBought) boostList.push("Atom Upgrade 'Knowledge Empowerment'");
 
     if (boostList.length === 1) return `${boostList[0]}`;
     if (boostList.length === 2) return `${boostList[0]} and ${boostList[1]}`;
