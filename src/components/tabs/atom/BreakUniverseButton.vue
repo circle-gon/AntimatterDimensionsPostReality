@@ -1,5 +1,5 @@
 <script>
-//import { PlayerProgress } from '../../../core/player-progress';
+// Import { PlayerProgress } from '../../../core/player-progress';
 
 export default {
   name: "BreakUniverseButton",
@@ -36,7 +36,10 @@ export default {
 </script>
 
 <template>
-  <button :class="classObject" @click="clicked">
+  <button
+    :class="classObject"
+    @click="clicked"
+  >
     {{ text }}
   </button>
 </template>

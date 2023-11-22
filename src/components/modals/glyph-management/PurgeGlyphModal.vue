@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       glyphCount: 0,
-    }
+    };
   },
   computed: {
     threshold() {
@@ -53,7 +53,7 @@ export default {
       Glyphs.autoClean(this.threshold, true);
     },
     update() {
-      this.glyphCount = Glyphs.activeGlyphCount
+      this.glyphCount = Glyphs.activeGlyphCount;
     }
   },
 };

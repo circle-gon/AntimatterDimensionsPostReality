@@ -187,7 +187,7 @@ export const V = {
     this.quotes.realityEnter.show();
   },
   get spaceTheoremMultiplier() {
-    return Effects.product(AtomUpgrade(4))
+    return Effects.product(AtomUpgrade(4));
   },
   updateTotalRunUnlocks() {
     let sum = 0;
@@ -201,14 +201,14 @@ export const V = {
     this.spaceTheorems = sum;
   },
   reset() {
-    const v = player.celestials.v
-    v.unlockBits = 0
-    v.run = false
-    v.runUnlocks = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    v.goalReductionSteps = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    v.STSpent = 0
-    v.runGlyphs = [[], [], [], [], [], [], [], [], []]
-    v.runRecords = [-10, 0, 0, 0, 0, 0, 0, 0, 0]
+    const v = player.celestials.v;
+    v.unlockBits = 0;
+    v.run = false;
+    v.runUnlocks = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    v.goalReductionSteps = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    v.STSpent = 0;
+    v.runGlyphs = [[], [], [], [], [], [], [], [], []];
+    v.runRecords = [-10, 0, 0, 0, 0, 0, 0, 0, 0];
     this.spaceTheorems = 0;
   },
   get availableST() {

@@ -252,7 +252,7 @@ export class DarkMatterDimensionState extends DimensionState {
   bulkAscend() {
     if (this.interval > this.intervalPurchaseCap) return;
 
-    // take into account the amount of interval upgrades that can be bought
+    // Take into account the amount of interval upgrades that can be bought
     const singMult = SingularityMilestone.ascensionIntervalScaling.effectOrDefault(1200);
     const possiblePurchases = Decimal.affordGeometricSeries(
       Currency.darkMatter.value,
@@ -269,7 +269,7 @@ export class DarkMatterDimensionState extends DimensionState {
     this.data.ascensionCount += ascensionsToBuy;
     this.buyManyInterval(possiblePurchases);
 
-    // buyInterval is unessecary because we already bought all of them
+    // BuyInterval is unessecary because we already bought all of them
   }
 
   static get dimensionCount() {

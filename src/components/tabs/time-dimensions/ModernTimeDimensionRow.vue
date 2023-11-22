@@ -157,7 +157,10 @@ export default {
       :amount-text="format(amount, 2)"
       :rate="rateOfChange"
     />
-    <div class="l-dim-row-multi-button-container c-modern-dim-tooltip-container" :style="cssVars">
+    <div
+      class="l-dim-row-multi-button-container c-modern-dim-tooltip-container"
+      :style="cssVars"
+    >
       <div class="c-modern-dim-purchase-count-tooltip">
         <span v-html="tooltipContents" />
       </div>

@@ -22,11 +22,21 @@ export default {
 </script>
 
 <template>
-  <ModalWrapperChoice :show-cancel="false" @confirm="handleYesClick">
-    <template #header> You are Breaking the Universe </template>
+  <ModalWrapperChoice
+    :show-cancel="false"
+    @confirm="handleYesClick"
+  >
+    <template #header>
+      You are Breaking the Universe
+    </template>
     <div class="c-modal-message__text">
-      <span v-for="(line, index) in message" :key="index"> {{ line }} <br /> </span>
+      <span
+        v-for="(line, index) in message"
+        :key="index"
+      > {{ line }} <br> </span>
     </div>
-    <template #confirm-text> Break </template>
+    <template #confirm-text>
+      Break
+    </template>
   </ModalWrapperChoice>
 </template>

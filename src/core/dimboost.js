@@ -35,7 +35,7 @@ export class DimBoost {
         PelleRifts.recursion.milestones[0]
       ).powEffectsOf(InfinityUpgrade.dimboostMult.chargedEffect);
     if (GlyphAlteration.isAdded("effarig")) boost = boost.pow(getSecondaryGlyphEffect("effarigforgotten"));
-    boost = boost.pow(AtomicParticle(0).effects[1])
+    boost = boost.pow(AtomicParticle(0).effects[1]);
     return boost;
   }
 
@@ -237,7 +237,7 @@ function maxBuyDimBoosts() {
     return;
   }
 
-  const toIncrement = Math.floor(player.dimensionBoosts * MAX_TOL) + 1
+  const toIncrement = Math.floor(player.dimensionBoosts * MAX_TOL) + 1;
 
   const req1 = DimBoost.bulkRequirement(toIncrement);
   if (!req1.isSatisfied && toIncrement === 1) return;
@@ -250,7 +250,7 @@ function maxBuyDimBoosts() {
   // so a = (req2 - req1)/x, b = req1 - a*x = 2 req1 - req2, num = (dims - b) / a
   const increase = (req2.amount - req1.amount) / toIncrement;
   const dim = AntimatterDimension(req1.tier);
-  let maxBoosts = Math.min(Number.MAX_VALUE,
+  const maxBoosts = Math.min(Number.MAX_VALUE,
     toIncrement + Math.floor((dim.totalAmount.toNumber() - req1.amount) / increase));
   if (DimBoost.bulkRequirement(maxBoosts).isSatisfied) {
     softReset(maxBoosts);
@@ -260,6 +260,6 @@ function maxBuyDimBoosts() {
   const toBuyBoosts = bulkBuyBinarySearch(dim.totalAmount, {
     costFunction: boosts => DimBoost.bulkRequirement(boosts, true).amount,
     cumulative: false
-  }, player.dimensionBoosts)
+  }, player.dimensionBoosts);
   if (toBuyBoosts !== null) softReset(toBuyBoosts.quantity);
 }

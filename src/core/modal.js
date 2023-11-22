@@ -147,7 +147,7 @@ export class Modal {
 
   removeFromQueue() {
     EventHub.ui.offAll(this._component);
-    ui.view.modal.queue = ui.view.modal.queue.filter((m) => m._uniqueID !== this._uniqueID);
+    ui.view.modal.queue = ui.view.modal.queue.filter(m => m._uniqueID !== this._uniqueID);
     if (ui.view.modal.queue.length === 0) ui.view.modal.current = undefined;
     else ui.view.modal.current = ui.view.modal.queue[0];
   }
@@ -332,7 +332,7 @@ Modal.cloudSaveConflict = new Modal(CloudSaveConflictModal);
 Modal.cloudLoadConflict = new Modal(CloudLoadConflictModal);
 Modal.cloudInvalidData = new Modal(CloudInvalidDataModal);
 // eslint-disable-next-line max-params
-Modal.addCloudConflict = function (saveId, saveComparison, cloudSave, localSave, onAccept) {
+Modal.addCloudConflict = function(saveId, saveComparison, cloudSave, localSave, onAccept) {
   Modal.hide();
   ui.view.modal.cloudConflict = {
     saveId,
@@ -343,7 +343,7 @@ Modal.addCloudConflict = function (saveId, saveComparison, cloudSave, localSave,
   };
 };
 
-Modal.addImportConflict = function (importingSave, currentSave) {
+Modal.addImportConflict = function(importingSave, currentSave) {
   Modal.hide();
   ui.view.modal.cloudConflict = {
     importingSave: getSaveInfo(importingSave),

@@ -19,7 +19,7 @@ export default {
   methods: {
     update() {
       this.canCollapse = Player.canCollapse;
-      this.shouldShow = PlayerProgress.atomUnlocked() || player.isGameEnd
+      this.shouldShow = PlayerProgress.atomUnlocked() || player.isGameEnd;
     },
     collapse() {
       collapseResetRequest();
@@ -27,12 +27,15 @@ export default {
   },
 };
 </script>
+
 <template>
   <div v-if="shouldShow">
-    <button 
+    <button
       :class="buttonClassObject"
-      @click="collapse" 
       class="c-collapse-button"
-    >Collapse this Universe</button>
+      @click="collapse"
+    >
+      Collapse this Universe
+    </button>
   </div>
 </template>

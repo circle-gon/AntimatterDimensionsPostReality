@@ -97,7 +97,6 @@ export const Cloud = {
     if (snapshot.exists) {
       const encoded = snapshot.val();
       const uintArray = decodeBase64Binary(encoded.replace(/-/gu, "+").replace(/_/gu, "/"));
-      const save = pako.ungzip(uintArray, { to: "string" });
     }
   },
 

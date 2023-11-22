@@ -75,10 +75,10 @@ export default {
       this.achTPEffect = RealityUpgrade(8).config.effect();
       this.achCountdown = Achievements.timeToNextAutoAchieve.div(gameSpeedupFactor).toNumber();
       this.totalCountdown = Achievements.timeToNextAutoAchieve
-        .add((Achievements.preReality.countWhere((a) => !a.isUnlocked) - 1) * Achievements.period)
+        .add((Achievements.preReality.countWhere(a => !a.isUnlocked) - 1) * Achievements.period)
         .div(gameSpeedupFactor)
         .toNumber();
-      this.missingAchievements = Achievements.preReality.countWhere((a) => !a.isUnlocked);
+      this.missingAchievements = Achievements.preReality.countWhere(a => !a.isUnlocked);
       this.showAutoAchieve = PlayerProgress.hasRealitied() && !Perk.achievementGroup5.isBought;
       this.isAutoAchieveActive = player.reality.autoAchieve;
       this.hideCompletedRows = player.options.hideCompletedAchievementRows;
@@ -93,11 +93,11 @@ export default {
       const unlockedRows = [];
       const lockedRows = [];
       for (let i = 0; i < this.rows.length; i++) {
-        const targetArray = this.rows[i].every((a) => a.isUnlocked) ? unlockedRows : lockedRows;
+        const targetArray = this.rows[i].every(a => a.isUnlocked) ? unlockedRows : lockedRows;
         targetArray.push(i);
       }
-      const renderedLockedRows = lockedRows.filter((row) => this.renderedRowIndices.includes(row));
-      const nonRenderedLockedRows = lockedRows.filter((row) => !this.renderedRowIndices.includes(row));
+      const renderedLockedRows = lockedRows.filter(row => this.renderedRowIndices.includes(row));
+      const nonRenderedLockedRows = lockedRows.filter(row => !this.renderedRowIndices.includes(row));
       let rowsToRender;
       if (player.options.hideCompletedAchievementRows) {
         this.renderedRowIndices = unlockedRows.concat(renderedLockedRows);
@@ -154,7 +154,10 @@ export default {
     <div class="c-achievements-tab__header">
       Achievements with a <i class="fas fa-star" /> icon also give an additional reward.
     </div>
-    <div v-if="showAutoAchieve" class="c-achievements-tab__header">
+    <div
+      v-if="showAutoAchieve"
+      class="c-achievements-tab__header"
+    >
       <div v-if="achCountdown > 0">
         Automatically gain the next missing Achievement in
         {{ timeDisplayNoDecimals(achCountdown) }}<span v-if="!isAutoAchieveActive"> once Auto is turned on</span>.
@@ -168,10 +171,15 @@ export default {
         You will regain all remaining achievements after {{ timeDisplayNoDecimals(totalCountdown) }} if Auto Achievement
         <span v-if="isAutoAchieveActive">stays enabled</span><span v-else>is turned on</span>.
       </div>
-      <br />
+      <br>
     </div>
     <div class="l-achievement-grid">
-      <NormalAchievementRow v-for="(row, i) in renderedRows" :key="i" :row="row" :is-obscured="isObscured(i)" />
+      <NormalAchievementRow
+        v-for="(row, i) in renderedRows"
+        :key="i"
+        :row="row"
+        :is-obscured="isObscured(i)"
+      />
     </div>
   </div>
 </template>

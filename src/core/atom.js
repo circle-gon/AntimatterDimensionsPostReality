@@ -1,14 +1,14 @@
 import { DC } from "./constants";
-import { BitPurchasableMechanicState, RebuyableMechanicState, GameMechanicState } from "./game-mechanics";
+import { BitPurchasableMechanicState, GameMechanicState, RebuyableMechanicState } from "./game-mechanics";
 
 export function migrateSaves(player) {
-  // change effarig shards to decimal
+  // Change effarig shards to decimal
   player.celestials.effarig.relicShards = new Decimal(player.celestials.effarig.relicShards);
   player.reality.imaginaryMachines = new Decimal(player.reality.imaginaryMachines);
   player.reality.iMCap = new Decimal(player.reality.iMCap);
   player.celestials.ra.peakGamespeed = new Decimal(player.celestials.ra.peakGamespeed);
-  player.challenge.normal.bestTimes = player.challenge.normal.bestTimes.map((i) => new Decimal(i));
-  player.challenge.infinity.bestTimes = player.challenge.infinity.bestTimes.map((i) => new Decimal(i));
+  player.challenge.normal.bestTimes = player.challenge.normal.bestTimes.map(i => new Decimal(i));
+  player.challenge.infinity.bestTimes = player.challenge.infinity.bestTimes.map(i => new Decimal(i));
 
   player.records.thisReality.bestRSMin = new Decimal(player.records.thisReality.bestRSMin);
   player.records.thisReality.bestRSMinVal = new Decimal(player.records.thisReality.bestRSMinVal);
@@ -18,14 +18,12 @@ export function migrateSaves(player) {
   }
 
   function swapToDecimal(name) {
-    player.records["this" + name].time = new Decimal(player.records["this" + name].time);
-    player.records["best" + name].time = patchTime(player.records["best" + name].time);
+    player.records[`this${name}`].time = new Decimal(player.records[`this${name}`].time);
+    player.records[`best${name}`].time = patchTime(player.records[`best${name}`].time);
   }
 
   function fixRecents(name) {
-    player.records["recent" + name] = player.records["recent" + name].map((i) => {
-      return [patchTime(i[0]), ...i.slice(1)];
-    });
+    player.records[`recent${name}`] = player.records[`recent${name}`].map(i => [patchTime(i[0]), ...i.slice(1)]);
   }
 
   swapToDecimal("Infinity");
@@ -48,7 +46,7 @@ export function migrateSaves(player) {
   l.darkMatterMult = new Decimal(l.darkMatterMult);
   player.auto.annihilation.multiplier = new Decimal(player.auto.annihilation.multiplier);
   player.reality.glyphs.sac = Object.fromEntries(
-    Object.entries(player.reality.glyphs.sac).map((i) => [i[0], new Decimal(i[1])])
+    Object.entries(player.reality.glyphs.sac).map(i => [i[0], new Decimal(i[1])])
   );
   player.records.achTimer = new Decimal(player.records.achTimer);
 
@@ -57,7 +55,7 @@ export function migrateSaves(player) {
   player.records.thisCollapse.realTime = player.records.realTimePlayed;
   player.records.thisCollapse.realTimeNoStore = player.records.realTimePlayed;
 
-  // new dilation autobuyers
+  // New dilation autobuyers
   player.auto.dilationUpgrades.all = [
     ...player.auto.dilationUpgrades.all,
     ...Array.range(0, 3).map(() => ({
@@ -66,13 +64,13 @@ export function migrateSaves(player) {
     })),
   ];
 
-  // more continuum settings
+  // More continuum settings
   player.auto.continuumDisabled.AD = player.auto.disableContinuum;
 
   delete player.auto.disableContinuum;
 }
 
-// lazy way to hide the "in this Collapse" text until you know about it
+// Lazy way to hide the "in this Collapse" text until you know about it
 export function atomTimeText() {
   return PlayerProgress.atomUnlocked() ? " in this Collapse" : "";
 }
@@ -136,7 +134,7 @@ function giveRealityUpgrade(num, isReality) {
 }
 
 function giveAU8() {
-  // this must be done this way because ach 188 should not be obtained
+  // This must be done this way because ach 188 should not be obtained
   for (let ach = 181; ach <= 187; ach++) Achievement(ach).unlock();
 }
 
@@ -356,7 +354,7 @@ export function collapse() {
     player.reality.imaginaryRebuyables[i] = 0;
   }
 
-  player.blackHole = Array.range(0, 2).map((id) => ({
+  player.blackHole = Array.range(0, 2).map(id => ({
     id,
     intervalUpgrades: 0,
     powerUpgrades: 0,
@@ -396,21 +394,21 @@ export function collapse() {
     laitelaSet: [],
   };
 
-  // remove all glyphs in inventory that aren't companion
+  // Remove all glyphs in inventory that aren't companion
   for (const glyph of Glyphs.inventory) {
     if (glyph !== null && (!AtomMilestone.am1.isReached || glyph.type !== "companion"))
       Glyphs.removeFromInventory(glyph, false);
   }
 
-  // remove all active glyphs that aren't companion
+  // Remove all active glyphs that aren't companion
   const protectedRows = player.reality.glyphs.protectedRows;
   player.reality.glyphs.protectedRows = 0;
 
   for (const activeGlyph of player.reality.glyphs.active) {
     Glyphs.active[activeGlyph.idx] = null;
     if (activeGlyph.type === "companion" && AtomMilestone.am1.isReached) {
-      let index = Glyphs.findFreeIndex(false);
-      // this will always have an index because we set it to no protection
+      const index = Glyphs.findFreeIndex(false);
+      // This will always have an index because we set it to no protection
       Glyphs.addToInventory(activeGlyph, index, true);
     }
   }
@@ -524,14 +522,14 @@ export function collapse() {
   // Post-Reset
 
   if (AtomMilestone.am1.isReached) {
-    // this needs to be done this way because some perks rely on others
+    // This needs to be done this way because some perks rely on others
     const visited = [];
     const toVisit = [Perk.firstPerk];
     while (toVisit.length > 0) {
       Currency.perkPoints.add(1);
       const perk = toVisit.shift();
       visited.push(perk);
-      toVisit.push(...perk.connectedPerks.filter((p) => !visited.includes(p)));
+      toVisit.push(...perk.connectedPerks.filter(p => !visited.includes(p)));
       perk.purchase();
     }
 
@@ -539,7 +537,7 @@ export function collapse() {
     giveRealityUpgrade(13, true);
     giveRealityUpgrade(25, true);
 
-    // no need for onPurchased call since none of the upgrades have ite none of the upgrades have it
+    // No need for onPurchased call since none of the upgrades have ite none of the upgrades have it
     for (const upg of PelleUpgrades.singles) upg.isBought = true;
   }
   if (AtomMilestone.am2.isReached) {
@@ -584,7 +582,7 @@ export class AtomMilestoneState {
 
 export const AtomMilestone = mapGameDataToObject(
   GameDatabase.atom.milestones,
-  (config) => new AtomMilestoneState(config)
+  config => new AtomMilestoneState(config)
 );
 
 class AtomUpgradeState extends BitPurchasableMechanicState {
@@ -679,15 +677,15 @@ class RebuyableAtomUpgradeState extends RebuyableMechanicState {
   }
 }
 
-const AUIndex = mapGameData(GameDatabase.atom.upgrades, (config) =>
-  config.id % 5 === 1 ? new RebuyableAtomUpgradeState(config) : new AtomUpgradeState(config)
+const AUIndex = mapGameData(GameDatabase.atom.upgrades, config =>
+  (config.id % 5 === 1 ? new RebuyableAtomUpgradeState(config) : new AtomUpgradeState(config))
 );
 
-export const AtomUpgrade = (id) => AUIndex[id];
+export const AtomUpgrade = id => AUIndex[id];
 
 export const AtomUpgrades = {
   all: AUIndex.compact(),
-  // used for the pelle rebuyable dilation upgrades
+  // Used for the pelle rebuyable dilation upgrades
   dilExpo(id) {
     if (Pelle.isDoomed) return 1;
     if (id === 11) return 2;
@@ -700,20 +698,24 @@ class AtomicParticleState extends GameMechanicState {
   get name() {
     return this.config.name;
   }
+
   get color() {
     return this.config.color;
   }
+
   get amount() {
     return player.atom.particles[this.config.id];
   }
+
   get effects() {
     return this.config.bonus(this.amount);
   }
+
   get effectDescriptions() {
     return this.config.description(this.effects);
   }
 
-  // a utility
+  // A utility
   static createAccessor(gameData) {
     return super.createAccessor(
       gameData.map((i, id) => ({

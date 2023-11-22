@@ -1,6 +1,6 @@
 import { DC } from "../../constants";
 
-const rebuyable = (props) => {
+const rebuyable = props => {
   props.cost = () =>
     getHybridCostScaling(
       player.atom.rebuyables[props.id],
@@ -23,7 +23,7 @@ const rebuyable = (props) => {
     const val = props.id === 6 ? formatPercents(effect) : formatInt(effect);
     return props.textTemplate.replace("{value}", val);
   };
-  props.formatCost = (value) => format(value, 2, 0);
+  props.formatCost = value => format(value, 2, 0);
   return props;
 };
 
@@ -35,7 +35,7 @@ export const atomUpgrades = [
     costMult: 5,
     textTemplate: "Multiply Atomic Power gain by {value}.",
     effect: 3,
-    formatEffect: (e) => formatX(e, 2, 0),
+    formatEffect: e => formatX(e, 2, 0),
   }),
   {
     id: 2,
@@ -75,7 +75,7 @@ export const atomUpgrades = [
     costMult: 5,
     textTemplate: "Make Atomic Particles' effects {value} stronger (additively).",
     effect: 0.05,
-    formatEffect: (e) => `${formatPercents(e - 1)} stronger`,
+    formatEffect: e => `${formatPercents(e - 1)} stronger`,
     effectAdditive: true
   }),
   {

@@ -55,9 +55,9 @@ export default {
     },
   },
   watch: {
-    /*isAutobuyerOn(newValue) {
-      Autobuyer.realityUpgrade(this.upgrade.id).isActive = newValue;
-    }*/
+    // IsAutobuyerOn(newValue) {
+    // Autobuyer.realityUpgrade(this.upgrade.id).isActive = newValue;
+    // }
   },
   methods: {
     update() {
@@ -67,10 +67,10 @@ export default {
       this.isRebuyable = upgrade.isRebuyable;
       this.isBought = !upgrade.isRebuyable && upgrade.isBought;
       this.isPossible = upgrade.isPossible;
-      this.isAutoUnlocked = false //Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied;
+      this.isAutoUnlocked = false; // Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied;
       this.canBeLocked = upgrade.config.canLock && !this.isAvailableForPurchase;
       this.hasRequirementLock = upgrade.hasPlayerLock;
-      //if (this.isRebuyable) this.isAutobuyerOn = Autobuyer.realityUpgrade(upgrade.id).isActive;
+      // If (this.isRebuyable) this.isAutobuyerOn = Autobuyer.realityUpgrade(upgrade.id).isActive;
     },
     toggleLock(upgrade) {
       if (this.isRebuyable) return;

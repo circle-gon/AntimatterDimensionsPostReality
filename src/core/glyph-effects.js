@@ -163,7 +163,7 @@ class GlyphEffectConfig {
 
   /** @private */
   static setupCombine(setup) {
-    let combine = setup.combine;
+    const combine = setup.combine;
     const softcap = setup.softcap;
     const emptyCombine = combine([]);
     // No supplied capped indicator

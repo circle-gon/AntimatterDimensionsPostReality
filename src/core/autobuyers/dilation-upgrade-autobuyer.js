@@ -30,7 +30,7 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
     return (
       Perk.autobuyerDilation.isEffectActive &&
       !Pelle.isDoomed &&
-      // if this is not the doomed ones, we're fine, but if it is, we need the Atom Upgrade
+      // If this is not the doomed ones, we're fine, but if it is, we need the Atom Upgrade
       (!["dtGainPelle", "galaxyMultiplier", "tickspeedPower"].includes(this._upgradeName) || AtomUpgrade(7).isBought)
     );
   }
@@ -54,12 +54,15 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   static get entryCount() {
     return 6;
   }
+
   static get autobuyerGroupName() {
     return "Dilation Upgrade";
   }
+
   static get isActive() {
     return player.auto.dilationUpgrades.isActive;
   }
+
   static set isActive(value) {
     player.auto.dilationUpgrades.isActive = value;
   }

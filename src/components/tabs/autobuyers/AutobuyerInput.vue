@@ -33,7 +33,7 @@ export default {
       return this.type === "int" ? "number" : "text";
     },
     isValid() {
-      return this.isValidInternal && this.isValidValue(this.actualValue)
+      return this.isValidInternal && this.isValidValue(this.actualValue);
     },
     typeFunctions() {
       const functions = AutobuyerInputFunctions[this.type];

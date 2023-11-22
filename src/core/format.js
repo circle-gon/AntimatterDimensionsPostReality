@@ -21,9 +21,9 @@ window.formatInt = function formatInt(value) {
   const num = typeof value === "number" ? value : value.toNumber();
   if (num <= 1e12) {
     return formatWithCommas(num.toFixed(0));
-  } else {
-    return format(num, 2);
   }
+  return format(num, 2);
+
 };
 
 window.formatFloat = function formatFloat(value, digits) {
@@ -34,9 +34,9 @@ window.formatFloat = function formatFloat(value, digits) {
 
   if (Decimal.lte(value, 1e12)) {
     return formatWithCommas(value.toFixed(digits));
-  } else {
-    return format(value, digits);
   }
+  return format(value, digits);
+
 };
 
 window.formatPostBreak = function formatPostBreak(value, places, placesUnder1000) {

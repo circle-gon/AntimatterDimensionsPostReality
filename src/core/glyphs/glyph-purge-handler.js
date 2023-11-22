@@ -1,4 +1,4 @@
-import { DC } from "../constants"
+import { DC } from "../constants";
 
 // This actually deals with both sacrifice and refining, but I wasn't 100% sure what to call it
 export const GlyphSacrificeHandler = {

@@ -3,6 +3,9 @@ import NumberInput from "../autobuyers/AutobuyerInput";
 
 export default {
   name: "AnnihilationButton",
+  components: {
+    NumberInput,
+  },
   data() {
     return {
       darkMatter: new Decimal(0),
@@ -14,9 +17,6 @@ export default {
       darkMatterMultRatio: new Decimal(0),
       isEnabled: true,
     };
-  },
-  components: {
-    NumberInput,
   },
   computed: {
     annihilationInputStyle() {
@@ -44,25 +44,32 @@ export default {
 
 <template>
   <div class="l-laitela-annihilation-container">
-    <button v-if="darkMatter.lt(matterRequirement)" class="l-laitela-annihilation-button">
+    <button
+      v-if="darkMatter.lt(matterRequirement)"
+      class="l-laitela-annihilation-button"
+    >
       Annihilation requires {{ format(matterRequirement, 2) }} Dark Matter
     </button>
-    <button v-else class="l-laitela-annihilation-button c-laitela-annihilation-button" @click="annihilate">
+    <button
+      v-else
+      class="l-laitela-annihilation-button c-laitela-annihilation-button"
+      @click="annihilate"
+    >
       <b>Annihilate your Dark Matter Dimensions</b>
     </button>
-    <br />
-    <br />
+    <br>
+    <br>
     <span v-if="darkMatterMult.gt(1)">
       Current multiplier to all Dark Matter Dimensions: <b>{{ formatX(darkMatterMult, 2, 2) }}</b>
-      <br />
-      <br />
+      <br>
+      <br>
       Annihilation will reset your Dark Matter and Dark Matter Dimension amounts, but also add
       <b>+{{ format(darkMatterMultGain, 2, 2) }}</b> to your Annihilation multiplier.
-      <br />
+      <br>
       (<b>{{ formatX(darkMatterMultRatio, 2, 2) }}</b> from previous multiplier)
       <span v-if="autobuyerUnlocked">
-        <br />
-        <br />
+        <br>
+        <br>
         Auto-Annihilate when adding
         <NumberInput
           type="decimal"

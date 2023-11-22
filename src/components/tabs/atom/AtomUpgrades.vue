@@ -19,7 +19,7 @@ export default {
       unlocked the upgrade.`,
     upgradesPerRow: () => 5,
     upgradeRows() {
-      return Math.ceil(this.upgrades.length / this.upgradesPerRow)
+      return Math.ceil(this.upgrades.length / this.upgradesPerRow);
     }
   },
   methods: {
@@ -37,10 +37,20 @@ export default {
   <div class="l-atom-upgrade-grid">
     <div class="c-atom-point-desc c-atom-point-desc-enlarge">
       You have <span class="c-atom-points c-atom-amount-accent">{{ format(atoms, 2) }}</span> {{ pluralize("Atom", atoms) }}.
-    </div><br />
-    <div class="c-atom-upgrade-infotext">This section works similarly to Reality Upgrades.</div>
-    <div v-for="row in upgradeRows" :key="row" class="l-atom-upgrade-grid__row">
-      <AtomUpgradeButton v-for="column in upgradesPerRow" :key="id(row, column)" :upgrade="upgrades[id(row, column)]" />
+    </div><br>
+    <div class="c-atom-upgrade-infotext">
+      This section works similarly to Reality Upgrades.
+    </div>
+    <div
+      v-for="row in upgradeRows"
+      :key="row"
+      class="l-atom-upgrade-grid__row"
+    >
+      <AtomUpgradeButton
+        v-for="column in upgradesPerRow"
+        :key="id(row, column)"
+        :upgrade="upgrades[id(row, column)]"
+      />
     </div>
   </div>
 </template>

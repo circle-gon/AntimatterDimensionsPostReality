@@ -127,9 +127,9 @@ export const infinityChallenges = [
       description:
         "You get a multiplier to AD 2-7 based on 1st and 8th AD multipliers.",
       effect: () => {
-        const log = (AntimatterDimension(1).multiplier.log10() + 
-        AntimatterDimension(8).multiplier.log10()) * 0.02
-        return powAndCap(log)
+        const log = (AntimatterDimension(1).multiplier.log10() +
+        AntimatterDimension(8).multiplier.log10()) * 0.02;
+        return powAndCap(log);
       },
       formatEffect: value => formatX(value, 2, 2)
     },

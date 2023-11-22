@@ -43,18 +43,25 @@ export default {
 </script>
 
 <template>
-  <div v-if="shouldDisplay" class="c-prestige-button-container">
-    <span
-      >You have <span class="c-game-header__antimatter">{{ format(antimatter, 2, 1) }}</span> antimatter.</span
+  <div
+    v-if="shouldDisplay"
+    class="c-prestige-button-container"
+  >
+    <span>You have <span class="c-game-header__antimatter">{{ format(antimatter, 2, 1) }}</span> antimatter.</span>
+    <div
+      v-if="hasRealityButton"
+      class="c-reality-container"
     >
-    <div v-if="hasRealityButton" class="c-reality-container">
       <RealityCurrencyHeader />
-      <ArmageddonButton v-if="isDoomed" :is-header="true" />
+      <ArmageddonButton
+        v-if="isDoomed"
+        :is-header="true"
+      />
       <RealityButton v-else />
     </div>
     <div v-else>
       You are getting {{ format(antimatterPerSec, 2) }} antimatter per second.
-      <br />
+      <br>
       <HeaderTickspeedInfo />
     </div>
   </div>

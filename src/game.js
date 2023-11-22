@@ -274,7 +274,7 @@ export function addRealityTime(time, realTime, rm, level, realities, ampFactor, 
 
 export function addCollapseTime(time, realTime, atoms, collapses) {
   player.records.recentCollapses.pop();
-  player.records.recentCollapses.unshift([time, realTime, atoms, collapses])
+  player.records.recentCollapses.unshift([time, realTime, atoms, collapses]);
 }
 
 export function gainedInfinities() {
@@ -354,14 +354,14 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.mul(SingularityMilestone.gamespeedFromSingularities.effectOrDefault(1));
   }
 
-  if (AtomUpgrade(2).isBought && !BlackHoles.areNegative) factor = factor.mul(1000)
+  if (AtomUpgrade(2).isBought && !BlackHoles.areNegative) factor = factor.mul(1000);
 
   if (effects.includes(GAME_SPEED_EFFECT.TIME_GLYPH)) {
     factor = factor.mul(getAdjustedGlyphEffect("timespeed"));
     factor = factor.pow(getAdjustedGlyphEffect("effarigblackhole"));
   }
 
-  factor = factor.pow(AtomicParticle(2).effects[1])
+  factor = factor.pow(AtomicParticle(2).effects[1]);
 
   if (Enslaved.isStoringGameTime && effects.includes(GAME_SPEED_EFFECT.TIME_STORAGE)) {
     const storedTimeWeight = Ra.unlocks.autoPulseTime.canBeApplied ? 0.99 : 1;
@@ -453,7 +453,7 @@ export function gameLoop(passDiff, options = {}) {
 
   let diff = passDiff;
   const thisUpdate = Date.now();
-  // unaffected by enslaved real time discharge
+  // Unaffected by enslaved real time discharge
   const trueRealDiff = diff === undefined
     ? Math.clamp(thisUpdate - player.lastUpdate, 1, 8.64e7)
     : diff;
@@ -506,7 +506,7 @@ export function gameLoop(passDiff, options = {}) {
   GameCache.timeDimensionCommonMultiplier.invalidate();
   GameCache.totalIPMult.invalidate();
 
-  diff = new Decimal(diff)
+  diff = new Decimal(diff);
 
   const blackHoleDiff = realDiff;
   const fixedSpeedActive = EternityChallenge(12).isRunning;
@@ -533,7 +533,7 @@ export function gameLoop(passDiff, options = {}) {
       );
       Enslaved.currentBlackHoleStoreAmountPerMs = player.celestials.enslaved.stored
         .sub(beforeStore)
-        .div(diff)
+        .div(diff);
       speedFactor = reducedTimeFactor;
     }
     diff = diff.mul(speedFactor);
@@ -1113,19 +1113,19 @@ export function browserCheck() {
 
 function initEruda() {
   return new Promise(resolve => {
-    const d = document.createElement("script")
-    d.src = "https://cdn.jsdelivr.net/npm/eruda"
-    d.onload = function () {
-      eruda.init()
-      resolve()
-    }
-    d.onerror = function () {
-      // don't hang the game if eruda doesn't load
-      console.warn("Eruda failed to load")
-      resolve()
-    }
-    document.body.append(d)
-  })
+    const d = document.createElement("script");
+    d.src = "https://cdn.jsdelivr.net/npm/eruda";
+    d.onload = function() {
+      eruda.init();
+      resolve();
+    };
+    d.onerror = function() {
+      // Don't hang the game if eruda doesn't load
+      console.warn("Eruda failed to load");
+      resolve();
+    };
+    document.body.append(d);
+  });
 }
 
 export async function init() {

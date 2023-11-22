@@ -126,14 +126,14 @@ export const glyphEffects = {
     genericDesc: "Tachyon Galaxy cost multiplier",
     shortDesc: "TG threshold ×{value}",
     effect: (level, strength) => {
-      const base = 1 - GlyphAlteration.sacrificeBoost("dilation") / 50
-      const reduction = Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100
-      const total = base - reduction
+      const base = 1 - GlyphAlteration.sacrificeBoost("dilation") / 50;
+      const reduction = Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100;
+      const total = base - reduction;
       if (total < 0.2) {
-        return 0.2 / (1.2 - total) ** 0.5
-      } else {
-        return total
+        return 0.2 / (1.2 - total) ** 0.5;
       }
+      return total;
+
     },
     formatEffect: x => format(x, 3, 3),
     alteredColor: () => GlyphAlteration.getBoostColor("dilation"),

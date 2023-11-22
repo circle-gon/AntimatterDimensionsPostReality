@@ -823,10 +823,10 @@ export const AutomatorCommands = [
   {
     id: "equipGlyph",
     rule: $ => () => {
-      $.CONSUME(T.Glyphs)
-      $.CONSUME(T.Equip)
-      $.CONSUME(T.GlyphType)
-      console.log("Ruled!")
+      $.CONSUME(T.Glyphs);
+      $.CONSUME(T.Equip);
+      $.CONSUME(T.GlyphType);
+      console.log("Ruled!");
     },
     validate: (ctx, V) => {
       ctx.startLine = ctx.Glyphs[0].startLine;
@@ -838,42 +838,42 @@ export const AutomatorCommands = [
       if (!AtomMilestone.am3.isReached) {
         V.addError(ctx.Glyphs[0], "You do not have Reality automation unlocked.",
           "Unlock it from Atom first.");
-        return false;  
+        return false;
       }
       return true;
     },
     compile: ctx => {
-      const glyphToEquip = ctx.GlyphType[0].image
+      const glyphToEquip = ctx.GlyphType[0].image;
       let realGlyphType;
       switch (glyphToEquip) {
         case "pow":
         case "power":
-          realGlyphType = "power"
-          break
+          realGlyphType = "power";
+          break;
         case "inf":
         case "infinity":
-          realGlyphType = "infinity"
-          break
+          realGlyphType = "infinity";
+          break;
         case "rep":
         case "replication":
-          realGlyphType = "replication"
-          break
+          realGlyphType = "replication";
+          break;
         case "time":
-          realGlyphType = "time"
-          break
+          realGlyphType = "time";
+          break;
         case "dil":
         case "dilation":
-          realGlyphType = "dilation"
-          break
+          realGlyphType = "dilation";
+          break;
         case "eff":
         case "effarig":
-          realGlyphType = "effarig"
-          break
+          realGlyphType = "effarig";
+          break;
         case "reality":
-          realGlyphType = "reality"
-          break
+          realGlyphType = "reality";
+          break;
         default:
-          console.warn("Uh oh, something bad happened!")
+          console.warn("Uh oh, something bad happened!");
       }
 
       return () => {
@@ -882,20 +882,20 @@ export const AutomatorCommands = [
           return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
         }
 
-        const glyph = Glyphs.inventory.find(i => i !== null && i.type === realGlyphType)
+        const glyph = Glyphs.inventory.find(i => i !== null && i.type === realGlyphType);
         if (!glyph) {
           AutomatorData.logCommandEvent(`Attempted to equip a Glyph with type ${realGlyphType},
-          but one could not be found.`, ctx.startLine)
-          return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION
+          but one could not be found.`, ctx.startLine);
+          return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
         }
 
         // TODO: add more slots
-        Glyphs.equip(glyph, 1)
+        Glyphs.equip(glyph, 1);
 
-        AutomatorData.logCommandEvent(`A Glyph with type "${realGlyphType}" was equipped.`, ctx.startLine)
-        
-        return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION
-      }
+        AutomatorData.logCommandEvent(`A Glyph with type "${realGlyphType}" was equipped.`, ctx.startLine);
+
+        return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
+      };
     },
     blockify: ctx => ({
       singleTextInput: ctx.GlyphType[0].image,

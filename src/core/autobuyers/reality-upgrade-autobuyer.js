@@ -27,12 +27,15 @@ export class RealityUpgradeAutobuyerState extends AutobuyerState {
   static get entryCount() {
     return 5;
   }
+
   static get autobuyerGroupName() {
     return "Reality Upgrade";
   }
+
   static get isActive() {
     return player.auto.realityUpgrades.isActive;
   }
+
   static set isActive(value) {
     player.auto.realityUpgrades.isActive = value;
   }

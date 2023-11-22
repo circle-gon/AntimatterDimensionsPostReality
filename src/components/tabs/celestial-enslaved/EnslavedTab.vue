@@ -1,9 +1,10 @@
 <script>
+import NumberInput from "../autobuyers/AutobuyerInput";
+
 import BlackHoleChargingSliders from "@/components/tabs/black-hole/BlackHoleChargingSliders";
 import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import PrimaryButton from "@/components/PrimaryButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
-import NumberInput from "../autobuyers/AutobuyerInput";
 
 export default {
   name: "EnslavedTab",
@@ -165,7 +166,7 @@ export default {
       this.storedRealEffiency = Enslaved.storedRealTimeEfficiency;
       this.storedRealCap = Enslaved.storedRealTimeCap;
       this.unlocks = Array.from(player.celestials.enslaved.unlocks);
-      this.buyableUnlocks = Object.values(ENSLAVED_UNLOCKS).map((x) => Enslaved.canBuy(x));
+      this.buyableUnlocks = Object.values(ENSLAVED_UNLOCKS).map(x => Enslaved.canBuy(x));
       this.quote = Enslaved.quote;
       this.autoRelease = player.celestials.enslaved.isAutoReleasing;
       this.autoReleaseSpeed = Enslaved.isAutoReleasing ? Enslaved.autoReleaseSpeed : new Decimal(0);
@@ -258,20 +259,33 @@ export default {
 <template>
   <div class="l-enslaved-celestial-tab">
     <CelestialQuoteHistory celestial="enslaved" />
-    <div v-if="hasAutoRelease && canAutoRelease" class="c-subtab-option-container">
-      <PrimaryToggleButton v-model="autoRelease" class="o-primary-btn--subtab-option" label="Pulse Black Hole:" />
+    <div
+      v-if="hasAutoRelease && canAutoRelease"
+      class="c-subtab-option-container"
+    >
+      <PrimaryToggleButton
+        v-model="autoRelease"
+        class="o-primary-btn--subtab-option"
+        label="Pulse Black Hole:"
+      />
     </div>
     <div class="l-enslaved-celestial-tab--inner">
       <div class="l-enslaved-run-container">
         <div v-if="hasUnlock(unlocksInfo.RUN)">
           <div class="c-enslaved-run-button">
-            <div class="c-enslaved-run-button__title" :class="doomedDisabledClass">
+            <div
+              class="c-enslaved-run-button__title"
+              :class="doomedDisabledClass"
+            >
               {{ realityTitle }}
             </div>
             <div v-if="completed">
               <b>(Completed)</b>
             </div>
-            <div :class="runButtonClassObject" @click="startRun">
+            <div
+              :class="runButtonClassObject"
+              @click="startRun"
+            >
               <div class="c-enslaved-run-button__icon__sigil">
                 {{ enslavedSymbol }}
               </div>
@@ -282,17 +296,23 @@ export default {
                 :style="glitchStyle(x)"
               />
             </div>
-            <div v-for="line in runDescription" :key="line" class="c-enslaved-run-description-line">
+            <div
+              v-for="line in runDescription"
+              :key="line"
+              class="c-enslaved-run-description-line"
+            >
               {{ line }}
             </div>
-            <b
-              >Reward: Unlock Tesseracts, which let you increase Infinity Dimension caps (see Infinity Dimension tab)</b
-            >
+            <b>Reward: Unlock Tesseracts, which let you increase Infinity Dimension caps (see Infinity Dimension tab)</b>
           </div>
         </div>
       </div>
       <div class="l-enslaved-upgrades-column">
-        <PrimaryButton v-if="hintsUnlocked" class="o-primary-btn" onclick="Modal.enslavedHints.show()">
+        <PrimaryButton
+          v-if="hintsUnlocked"
+          class="o-primary-btn"
+          onclick="Modal.enslavedHints.show()"
+        >
           Examine the Reality more closely...
         </PrimaryButton>
         <div class="l-enslaved-top-container">
@@ -300,24 +320,38 @@ export default {
             While charging, game speed multipliers are {{ hasAutoRelease ? "decreased" : "disabled" }}, and the lost
             speed is converted into stored game time. Discharging the Black Hole allows you to skip forward in time.
             Stored game time is also used to unlock certain upgrades.
-            <button :class="storeGameTimeClass" @click="toggleStoreBlackHole">
-              <div class="o-enslaved-stored-time" :class="doomedDisabledClass">
+            <button
+              :class="storeGameTimeClass"
+              @click="toggleStoreBlackHole"
+            >
+              <div
+                class="o-enslaved-stored-time"
+                :class="doomedDisabledClass"
+              >
                 {{ timeDisplayShort(storedBlackHole) }}
               </div>
               <div>
                 {{ isStoringBlackHole ? "Charging Black Hole" : "Charge Black Hole" }}
               </div>
             </button>
-            <button :class="dischargeClass" @click="useStored">
+            <button
+              :class="dischargeClass"
+              @click="useStored"
+            >
               <span>Discharge Black Hole</span>
-              <p v-if="isRunning">{{ timeDisplayShort(nerfedBlackHoleTime) }} in this Reality</p>
+              <p v-if="isRunning">
+                {{ timeDisplayShort(nerfedBlackHoleTime) }} in this Reality
+              </p>
             </button>
           </div>
           <div class="l-enslaved-top-container__half">
             Storing real time completely halts all production, setting game speed to {{ formatInt(0) }}. You can use
             stored real time to "amplify" a Reality, simulating repeated runs of it. Amplified Realities give all the
             rewards that normal Realities do.
-            <button :class="[storeRealTimeClass, { 'l-fixed-setting': hasReachedCurrentCap }]" @click="toggleStoreReal">
+            <button
+              :class="[storeRealTimeClass, { 'l-fixed-setting': hasReachedCurrentCap }]"
+              @click="toggleStoreReal"
+            >
               <div class="o-enslaved-stored-time">
                 {{ timeDisplayShort(storedReal) }}
               </div>
@@ -341,15 +375,24 @@ export default {
             <div>Efficiency: {{ storedRealEfficiencyDesc }}</div>
             <div>Maximum stored real time: {{ storedRealCapDesc }}</div>
           </div>
-          <div class="l-enslaved-top-container__half" v-if="moreRealDischargeSettings">
+          <div
+            v-if="moreRealDischargeSettings"
+            class="l-enslaved-top-container__half"
+          >
             Stored real time can also be discharged over time, instead of all at once. There are two settings:
             percentage, discharging a percentage of the remaining stored real time per second, or constant, discharging
             a constant amount per second.
-            <button :class="dischargeRealTimeClass" @click="toggleActiveDischarge">
+            <button
+              :class="dischargeRealTimeClass"
+              @click="toggleActiveDischarge"
+            >
               {{ realDischargeActive ? "Discharging" : "Discharge" }}
               real time
             </button>
-            <button class="o-enslaved-mechanic-button" @click="advanceDischargeSetting">
+            <button
+              class="o-enslaved-mechanic-button"
+              @click="advanceDischargeSetting"
+            >
               Swap to {{ realDischargeMode ? "constant" : "percentange" }} discharge mode
             </button>
             <div>
@@ -374,7 +417,9 @@ export default {
             @click="buyUnlock(unlock)"
           >
             {{ unlock.description() }}
-            <div v-if="!hasUnlock(unlock)">Costs: {{ timeDisplayShort(unlock.price) }}</div>
+            <div v-if="!hasUnlock(unlock)">
+              Costs: {{ timeDisplayShort(unlock.price) }}
+            </div>
             <span v-if="isStoringBlackHole && !hasUnlock(unlock) && timeUntilBuy(unlock.price).gt(0)">
               Time to obtain: {{ timeDisplayShort(timeUntilBuy(unlock.price)) }}
             </span>

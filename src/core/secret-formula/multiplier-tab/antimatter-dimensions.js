@@ -226,7 +226,7 @@ export const AD = {
     fakeValue: () => InfinityDimensions.ADMultiplier,
     multValue: dim => {
       const mult = InfinityDimensions.ADMultiplier.log10() * (dim ? 1 : MultiplierTabHelper.activeDimCount("AD"));
-      return powAndCap(mult)
+      return powAndCap(mult);
     },
     isActive: () => Currency.infinityPower.value.gt(1) && !EternityChallenge(9).isRunning,
     icon: MultiplierTabIcons.INFINITY_POWER,

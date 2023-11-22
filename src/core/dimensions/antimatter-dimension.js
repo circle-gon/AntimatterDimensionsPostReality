@@ -47,7 +47,7 @@ export function antimatterDimensionCommonMultiplier() {
 
   multiplier -= Effects.log10Sum(InfinityChallenge(6));
   multiplier += getAdjustedGlyphEffect("powermult").log10();
-  // this does some weird things in early-game because 0^0 = 1, but log(0)*0 = NaN, so prefer this way
+  // This does some weird things in early-game because 0^0 = 1, but log(0)*0 = NaN, so prefer this way
   // this shouldn't get too big anyway
   multiplier += Currency.realityMachines.value.powEffectOf(AlchemyResource.force).log10();
 
@@ -60,7 +60,7 @@ export function getDimensionFinalMultiplierUncached(tier) {
   if (tier < 1 || tier > 8) throw new Error(`Invalid Antimatter Dimension tier ${tier}`);
   if (NormalChallenge(10).isRunning && tier > 6) return DC.D1;
   if (EternityChallenge(11).isRunning) {
-    return powAndCap(InfinityDimensions.ADMultiplier.log10() + DimBoost.multiplierToNDTier(tier).log10())
+    return powAndCap(InfinityDimensions.ADMultiplier.log10() + DimBoost.multiplierToNDTier(tier).log10());
   }
 
   let multiplier = 0;
@@ -112,14 +112,14 @@ export function applyNDMultipliers(mult, tier) {
 
   if (tier === 1) {
     multiplier += Effects.log10Sum(
-        InfinityUpgrade.unspentIPMult,
-        InfinityUpgrade.unspentIPMult.chargedEffect,
-        Achievement(28),
-        Achievement(31),
-        Achievement(68),
-        Achievement(71),
-        TimeStudy(234)
-      );
+      InfinityUpgrade.unspentIPMult,
+      InfinityUpgrade.unspentIPMult.chargedEffect,
+      Achievement(28),
+      Achievement(31),
+      Achievement(68),
+      Achievement(71),
+      TimeStudy(234)
+    );
   }
   if (tier === 8) {
     multiplier += Sacrifice.totalBoost.log10();
@@ -157,14 +157,14 @@ function applyNDPowers(mult, tier) {
   multiplier *= glyphPowMultiplier * glyphEffarigPowMultiplier * Ra.momentumValue;
 
   multiplier *= Effects.product(
-      AntimatterDimension(tier).infinityUpgrade.chargedEffect,
-      InfinityUpgrade.totalTimeMult.chargedEffect,
-      InfinityUpgrade.thisInfinityTimeMult.chargedEffect,
-      AlchemyResource.power,
-      Achievement(183)
-    );
+    AntimatterDimension(tier).infinityUpgrade.chargedEffect,
+    InfinityUpgrade.totalTimeMult.chargedEffect,
+    InfinityUpgrade.thisInfinityTimeMult.chargedEffect,
+    AlchemyResource.power,
+    Achievement(183)
+  );
 
-  multiplier *= PelleRifts.paradox.effectValue.toNumber()
+  multiplier *= PelleRifts.paradox.effectValue.toNumber();
 
   multiplier *= getAdjustedGlyphEffect("curseddimensions");
 
@@ -574,10 +574,10 @@ class AntimatterDimensionState extends DimensionState {
     const postBreak = (player.break && !NormalChallenge.isRunning) ||
       InfinityChallenge.isRunning ||
       Enslaved.isRunning;
-    const brokeUni = player.atom.broken
-    if (postBreak && brokeUni) return Decimal.MAX_LIMIT
-    else if (postBreak) return Decimal.MAX_VALUE
-    return DC.E315
+    const brokeUni = player.atom.broken;
+    if (postBreak && brokeUni) return Decimal.MAX_LIMIT;
+    if (postBreak) return Decimal.MAX_VALUE;
+    return DC.E315;
   }
 
   get productionPerSecond() {
@@ -605,14 +605,14 @@ class AntimatterDimensionState extends DimensionState {
     return powAndCap(production);
   }
 
-  // override standard so it doesn't go above Infinity limit
+  // Override standard so it doesn't go above Infinity limit
 
   productionForDiff(diff) {
     return this.productionPerSecond.times(diff.div(1000)).min(this.cappedProductionInNormalChallenges);
   }
 
   produceCurrency(currency, diff) {
-    currency.add(this.productionForDiff(diff))
+    currency.add(this.productionForDiff(diff));
     currency.dropTo(this.cappedProductionInNormalChallenges);
   }
 }
@@ -676,18 +676,18 @@ export const AntimatterDimensions = {
     }
 
     function dimensionIsBad(id) {
-      return AntimatterDimension(id).continuumValue > 0 && Laitela.continuumActive
+      return AntimatterDimension(id).continuumValue > 0 && Laitela.continuumActive;
     }
     function allExcept(id) {
       for (let i = 1; i <= 8; i++) {
-        if (i === id) continue
-        if (dimensionIsBad(id)) return false
+        if (i === id) continue;
+        if (dimensionIsBad(id)) return false;
       }
-      return true
+      return true;
     }
-    if (dimensionIsBad(8)) player.requirementChecks.infinity.noAD8 = false
-    if (!allExcept(8)) player.requirementChecks.eternity.onlyAD8 = false
-    if (!allExcept(1)) player.requirementChecks.eternity.onlyAD1 = false
+    if (dimensionIsBad(8)) player.requirementChecks.infinity.noAD8 = false;
+    if (!allExcept(8)) player.requirementChecks.eternity.onlyAD8 = false;
+    if (!allExcept(1)) player.requirementChecks.eternity.onlyAD1 = false;
     for (let tier = maxTierProduced; tier >= 1; --tier) {
       AntimatterDimension(tier + nextTierOffset).produceDimensions(AntimatterDimension(tier), diff.div(10));
     }

@@ -16,14 +16,14 @@ window.player = {
       costBumps: 0,
       amount: DC.D0,
     })),
-    infinity: Array.range(0, 8).map((tier) => ({
+    infinity: Array.range(0, 8).map(tier => ({
       isUnlocked: false,
       bought: 0,
       amount: DC.D0,
       cost: [DC.E8, DC.E9, DC.E10, DC.E20, DC.E140, DC.E200, DC.E250, DC.E280][tier],
       baseAmount: 0,
     })),
-    time: Array.range(0, 8).map((tier) => ({
+    time: Array.range(0, 8).map(tier => ({
       cost: [DC.D1, DC.D5, DC.E2, DC.E3, DC.E2350, DC.E2650, DC.E3000, DC.E3350][tier],
       amount: DC.D0,
       bought: 0,
@@ -124,7 +124,7 @@ window.player = {
       isActive: true,
     },
     antimatterDims: {
-      all: Array.range(0, 8).map((tier) => ({
+      all: Array.range(0, 8).map(tier => ({
         isUnlocked: false,
         cost: 1,
         interval: [500, 600, 700, 800, 900, 1000, 1100, 1200][tier],
@@ -465,10 +465,10 @@ window.player = {
         trash: AUTO_GLYPH_REJECT.SACRIFICE,
         simple: 0,
         types: GlyphTypes.list
-          .filter((t) => ALCHEMY_BASIC_GLYPH_TYPES.includes(t.id))
+          .filter(t => ALCHEMY_BASIC_GLYPH_TYPES.includes(t.id))
           .mapToObject(
-            (t) => t.id,
-            (t) => ({
+            t => t.id,
+            t => ({
               rarity: 0,
               score: 0,
               effectCount: 0,
@@ -571,7 +571,7 @@ window.player = {
       6: 0,
     },
   },
-  blackHole: Array.range(0, 2).map((id) => ({
+  blackHole: Array.range(0, 2).map(id => ({
     id,
     intervalUpgrades: 0,
     powerUpgrades: 0,

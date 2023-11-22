@@ -1,9 +1,10 @@
 import { BitUpgradeState } from "../game-mechanics";
 import { GameDatabase } from "../secret-formula/game-database";
 
+import { DC } from "../constants";
+
 import { Quotes } from "./quotes";
 
-import { DC } from "../constants"
 
 export const ENSLAVED_UNLOCKS = {
   FREE_TICKSPEED_SOFTCAP: {
@@ -68,12 +69,12 @@ export const Enslaved = {
     return (Enslaved.isUnlocked || AtomMilestone.am1.isReached) && !Pelle.isDoomed;
   },
   get canStoreRealTime() {
-    return this.canModifyRealTimeStorage && !this.realDischargeActive
+    return this.canModifyRealTimeStorage && !this.realDischargeActive;
   },
   get canDischargeRealTime() {
-    return this.canModifyRealTimeStorage && 
-      AtomMilestone.am1.isReached && 
-      !player.celestials.enslaved.isStoringReal
+    return this.canModifyRealTimeStorage &&
+      AtomMilestone.am1.isReached &&
+      !player.celestials.enslaved.isStoringReal;
   },
   get isStoredRealTimeCapped() {
     return player.celestials.enslaved.storedReal < this.storedRealTimeCap;
@@ -98,10 +99,10 @@ export const Enslaved = {
     return 1000 * 3600 * 8 + addedCap;
   },
   get realTimeDischargeMode() {
-    return player.celestials.enslaved.realDischargeMode
+    return player.celestials.enslaved.realDischargeMode;
   },
   get realDischargeActive() {
-    return player.celestials.enslaved.isDischargingReal
+    return player.celestials.enslaved.isDischargingReal;
   },
   get isAutoReleasing() {
     return player.celestials.enslaved.isAutoReleasing && !BlackHoles.areNegative && !Pelle.isDisabled("blackhole");
@@ -157,25 +158,25 @@ export const Enslaved = {
     this.autoReleaseSpeed = release.div(player.options.updateRate * 5);
     player.celestials.enslaved.stored = player.celestials.enslaved.stored.mul(autoRelease ? 0.99 : 0);
   },
-  // returns the amount of time discharged
+  // Returns the amount of time discharged
   useRealStoredTime(diff) {
-    if (!this.isDischargingRealTime) return 0
-    const realStored = player.celestials.enslaved.storedReal
-    // diff is in ms
-    const realDiff = diff / 1000
-    const timeSpent = Math.min(this.realTimeDischargeMode ? 
-      // there's not really much of a point to go above it
+    if (!this.isDischargingRealTime) return 0;
+    const realStored = player.celestials.enslaved.storedReal;
+    // Diff is in ms
+    const realDiff = diff / 1000;
+    const timeSpent = Math.min(this.realTimeDischargeMode
+      // There's not really much of a point to go above it
       // so cap it there so that not all real stored time gets used in 1 tick
-      realStored * Math.min(1 - Math.pow(1 - player.celestials.enslaved.realDischargePercent / 100, realDiff), 0.99) :
-      player.celestials.enslaved.realDischargeConstant * 1000 * realDiff, realStored
-    )
-    player.celestials.enslaved.storedReal -= timeSpent
+      ? realStored * Math.min(1 - Math.pow(1 - player.celestials.enslaved.realDischargePercent / 100, realDiff), 0.99)
+      : player.celestials.enslaved.realDischargeConstant * 1000 * realDiff, realStored
+    );
+    player.celestials.enslaved.storedReal -= timeSpent;
     // 1 millisecond should be good enough
     if (player.celestials.enslaved.storedReal < 1) {
       player.celestials.enslaved.isDischargingReal = false;
       player.celestials.enslaved.storedReal = 0;
     }
-    return timeSpent
+    return timeSpent;
   },
   has(info) {
     return player.celestials.enslaved.unlocks.includes(info.id);
@@ -332,16 +333,16 @@ export const Tesseracts = {
   // BASE_COSTS: [2, 4, 6, 12, 48, 288, 2304, 23040, 276480, 3870720, 61931520, 1114767360],
   // This isn't 100% accurate but it's not like we care
   costs(index) {
-    const idx = Math.floor(index)
+    const idx = Math.floor(index);
     let baseExp;
-    if (idx <= 2) baseExp = [2, 4, 6][idx]
+    if (idx <= 2) baseExp = [2, 4, 6][idx];
     else {
-      const multiplyTimes = idx - 2
-      // technically this can break if the stuff before .toNumber() is >ee308 but that has
+      const multiplyTimes = idx - 2;
+      // Technically this can break if the stuff before .toNumber() is >ee308 but that has
       // a 1e-10% chance of occuring in practice
-      baseExp = new Decimal(multiplyTimes).factorial().mul(Decimal.pow(2, multiplyTimes)).toNumber() * 6
+      baseExp = new Decimal(multiplyTimes).factorial().mul(Decimal.pow(2, multiplyTimes)).toNumber() * 6;
     }
-    return powAndCap(baseExp * 1e7)
+    return powAndCap(baseExp * 1e7);
   },
 
   get nextCost() {

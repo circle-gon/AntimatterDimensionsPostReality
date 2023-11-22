@@ -106,7 +106,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get isContinuumAvailable() {
-    return InfinityDimensions.canBuy() && this.isUnlocked; 
+    return InfinityDimensions.canBuy() && this.isUnlocked;
   }
 
   get isAffordable() {
@@ -134,10 +134,10 @@ class InfinityDimensionState extends DimensionState {
 
     let continuumValue = Currency.infinityPoints.value
       .div(this.baseCost)
-      .log10() / Math.log10(this.costMultiplier) + 1
+      .log10() / Math.log10(this.costMultiplier) + 1;
 
     continuumValue *= InfinityDimensions.extraPurchases;
-    continuumValue = Math.clampMax(continuumValue, this.purchaseCap)
+    continuumValue = Math.clampMax(continuumValue, this.purchaseCap);
     return Math.clampMin(continuumValue, 0);
   }
 
@@ -169,14 +169,14 @@ class InfinityDimensionState extends DimensionState {
   get multiplier() {
     const tier = this.tier;
     if (EternityChallenge(11).isRunning) return DC.D1;
-    let mult = GameCache.infinityDimensionCommonMultiplier.value.log10() + 
+    let mult = GameCache.infinityDimensionCommonMultiplier.value.log10() +
       Effects.log10Sum(
         tier === 1 ? Achievement(94) : null,
         tier === 4 ? TimeStudy(72) : null,
         tier === 1 ? EternityChallenge(2).reward : null
       );
 
-    const dimAmount = InfinityDimensions.continuumActive ? this.continuumValue : Math.floor(this.baseAmount / 10)
+    const dimAmount = InfinityDimensions.continuumActive ? this.continuumValue : Math.floor(this.baseAmount / 10);
     mult += dimAmount * this.powerMultiplier.log10();
 
 
@@ -250,13 +250,13 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get isCapped() {
-    const realPurchases = InfinityDimensions.continuumActive ? this.continuumValue : this.purchases
+    const realPurchases = InfinityDimensions.continuumActive ? this.continuumValue : this.purchases;
     return realPurchases >= this.purchaseCap;
   }
 
   get hardcapIPAmount() {
     // This needs to be done because extra purchases will cause the cap to be reached earlier
-    const extras = InfinityDimensions.continuumActive ? InfinityDimensions.extraPurchases : 1
+    const extras = InfinityDimensions.continuumActive ? InfinityDimensions.extraPurchases : 1;
     return this._baseCost.times(Decimal.pow(this.costMultiplier, this.purchaseCap / extras));
   }
 
@@ -448,9 +448,9 @@ export const InfinityDimensions = {
   },
 
   get ADMultiplier() {
-    // deal with >ee308 values wrapping to 0
-    const log = Currency.infinityPower.value.max(1).log10() * this.powerConversionRate
-    return powAndCap(log)
+    // Deal with >ee308 values wrapping to 0
+    const log = Currency.infinityPower.value.max(1).log10() * this.powerConversionRate;
+    return powAndCap(log);
   },
 
   get continuumUnlocked() {
@@ -458,7 +458,7 @@ export const InfinityDimensions = {
   },
 
   get continuumActive() {
-    return this.continuumUnlocked && !player.auto.continuumDisabled.ID
+    return this.continuumUnlocked && !player.auto.continuumDisabled.ID;
   },
 
   setContinuum(value) {

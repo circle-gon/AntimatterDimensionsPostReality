@@ -19,7 +19,7 @@ export const ID = {
     multValue: dim => (dim
       ? InfinityDimension(dim).multiplier
       : InfinityDimensions.all
-        .filter(id => id.isProducing) 
+        .filter(id => id.isProducing)
         .map(id => id.multiplier)
         .reduce((x, y) => x.times(y), DC.D1)),
     isActive: dim => (dim
@@ -64,7 +64,7 @@ export const ID = {
     name: "Base purchases",
     multValue: dim => {
       const getMult = id => {
-        const amt = MultiplierTabHelper.getIDValue(id)
+        const amt = MultiplierTabHelper.getIDValue(id);
         const purchases = id === 8
           ? amt
           : Math.min(InfinityDimensions.HARDCAP_PURCHASES, amt);

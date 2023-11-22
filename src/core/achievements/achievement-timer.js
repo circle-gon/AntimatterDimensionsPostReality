@@ -1,4 +1,4 @@
-import { DC } from "../constants"
+import { DC } from "../constants";
 
 class AchievementTimer {
   constructor(isRealTime) {
@@ -15,10 +15,10 @@ class AchievementTimer {
       ? Time.unscaledDeltaTime.totalSeconds
       : Time.deltaTime;
     if (this.realTime) {
-      this.time += addedTime
+      this.time += addedTime;
     } else {
-      this.time = this.time.add(addedTime)
-    };
+      this.time = this.time.add(addedTime);
+    }
   }
 
   check(condition, duration) {
@@ -29,9 +29,9 @@ class AchievementTimer {
     this.advance();
     if (this.realTime) {
       return this.time >= duration;
-    } else {
-      return this.time.gte(duration);
     }
+    return this.time.gte(duration);
+
   }
 }
 

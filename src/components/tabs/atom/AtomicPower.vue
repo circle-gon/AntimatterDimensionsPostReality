@@ -1,5 +1,6 @@
 <script>
 import AtomicParticle from "./AtomicParticle";
+
 export default {
   name: "AtomicPower",
   components: {
@@ -22,6 +23,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <div>
     <div>
@@ -34,9 +36,13 @@ export default {
       unaffected by storing real time.
     </div>
     <div>Each type of subatomic particle gives boosts to various things.</div>
-    <br />
+    <br>
     <div class="c-atomic-tab__particle-seperator">
-      <AtomicParticle v-for="i in stateCount" :key="i" :particleNum="i - 1" />
+      <AtomicParticle
+        v-for="i in stateCount"
+        :key="i"
+        :particle-num="i - 1"
+      />
     </div>
   </div>
 </template>

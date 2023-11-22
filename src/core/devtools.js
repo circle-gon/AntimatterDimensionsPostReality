@@ -530,8 +530,8 @@ dev.unlockAllCosmeticSets = function() {
 };
 
 dev.unlockAtom = function() {
-  player.atom.atoms = DC.D1
-  player.atom.totalAtoms = DC.D1
-  player.atom.resetCount = 1
-  player.records.bestCollapse.realTimeNoStore = TimeSpan.fromYears(1).totalMilliseconds
-}
+  player.atom.atoms = DC.D1;
+  player.atom.totalAtoms = DC.D1;
+  player.atom.resetCount = 1;
+  player.records.bestCollapse.realTimeNoStore = TimeSpan.fromYears(1).totalMilliseconds;
+};

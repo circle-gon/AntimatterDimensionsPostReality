@@ -97,7 +97,7 @@ export default {
       this.realityMachines.copyFrom(simRMGained.clampMax(MachineHandler.distanceToRMCap));
       this.shardsGained = Effarig.shardsGained.mul(simulatedRealityCount(false) + 1);
       this.willAutoPurge = player.reality.autoAutoClean;
-      this.perkPointMultiplier = MachineHandler.perkPointMultiplier
+      this.perkPointMultiplier = MachineHandler.perkPointMultiplier;
       if (this.firstReality) return;
       for (let i = 0; i < this.glyphs.length; ++i) {
         const currentGlyph = this.glyphs[i];

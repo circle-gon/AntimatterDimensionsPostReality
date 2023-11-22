@@ -310,7 +310,7 @@ window.TimeSpan = class TimeSpan {
   }
 };
 
-// i'm too lazy to actually write good code
+// I'm too lazy to actually write good code
 window.DecimalTimeSpan = class DecimalTimeSpan {
   /**
    * @param {Number} value
@@ -381,7 +381,7 @@ window.DecimalTimeSpan = class DecimalTimeSpan {
    */
   setFrom(ms) {
     Guard.isDecimal(ms);
-    // clone it so reactivity shenanigans don't happen
+    // Clone it so reactivity shenanigans don't happen
     this._ms = Decimal.fromDecimal(ms);
   }
 
@@ -636,7 +636,7 @@ const Guard = {
     throw "Value is not a number";
   },
   isDecimal(value, message) {
-    if (value instanceof Decimal) return
+    if (value instanceof Decimal) return;
     if (message) throw message;
     throw "Value is not a Decimal";
   },

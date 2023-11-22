@@ -18,8 +18,8 @@ export default {
 
 <template>
   <div
-    class="c-atom-point-desc"
     v-if="isVisible"
+    class="c-atom-point-desc"
   >
     You have
     <span class="c-atom-points">{{ formatInt(atoms) }}</span>

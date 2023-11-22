@@ -1,7 +1,5 @@
 Array.prototype.distinct = function() {
-    return this.filter(function (value, index, self) {
-        return self.indexOf(value) === index;
-    });
+  return this.filter((value, index, self) => self.indexOf(value) === index);
 };
 
 Math.wrap = function(number, min, max) {
@@ -65,10 +63,10 @@ Decimal.maxReducer = function(a, b) {
 };
 
 Decimal.sortFn = function(a, b) {
-  if (a.gt(b)) return 1
-  if (a.eq(b)) return 0
-  return -1
-}
+  if (a.gt(b)) return 1;
+  if (a.eq(b)) return 0;
+  return -1;
+};
 
 Decimal.prototype.copyFrom = function(decimal) {
   if (!(decimal instanceof Decimal) && !(decimal instanceof DecimalCurrency)) {
@@ -79,17 +77,17 @@ Decimal.prototype.copyFrom = function(decimal) {
 };
 
 window.copyToClipboard = (function() {
-  let el = document.createElement('textarea');
+  const el = document.createElement("textarea");
   document.body.appendChild(el);
   el.style.position = "absolute";
-  el.style.left = '-9999999px';
-  el.setAttribute('readonly', '');
+  el.style.left = "-9999999px";
+  el.setAttribute("readonly", "");
   return function(str) {
     try {
       el.value = str;
       el.select();
-      return document.execCommand('copy');
-    } catch(ex) {
+      return document.execCommand("copy");
+    } catch (ex) {
       console.log(ex);
       return false;
     }
@@ -97,8 +95,8 @@ window.copyToClipboard = (function() {
 }());
 
 window.safeCall = function safeCall(fn) {
-    if (fn) fn();
-}
+  if (fn) fn();
+};
 
 String.prototype.capitalize = function() {
   return this.toLowerCase().replace(/^\w/u, c => c.toUpperCase());
@@ -164,12 +162,12 @@ Array.prototype.last = function(predicate) {
 Array.prototype.mapToObject = function(keyFun, valueFun) {
   if (typeof keyFun !== "function" || typeof valueFun !== "function")
     throw "keyFun and valueFun must be functions";
-  let out = {}
+  const out = {};
   for (let idx = 0; idx < this.length; ++idx) {
     out[keyFun(this[idx], idx)] = valueFun(this[idx], idx);
   }
   return out;
-}
+};
 
 /**
  * @type {number[]}
@@ -187,7 +185,7 @@ Array.prototype.sum = function() {
 Array.prototype.sumDecimal = function() {
   if (this.length === 0) return new Decimal(0);
   return this.reduce(Decimal.sumReducer);
-}
+};
 
 /**
  * @returns {number}
@@ -311,7 +309,7 @@ String.isWhiteSpace = function(value) {
   return value && !value.trim();
 };
 
-// borrowed from redsharkian code
+// Borrowed from redsharkian code
 
 Decimal.prototype.mod = function(other) {
   const v = new Decimal(other);
@@ -319,18 +317,18 @@ Decimal.prototype.mod = function(other) {
   if (this.sign * v.sign === -1) return this.abs().mod(other.abs()).neg();
   if (this.sign === -1) return this.abs().mod(other.abs());
   return this.sub(this.div(other).floor().mul(other));
-}
+};
 
-// a very bad hack
+// A very bad hack
 function formatAllDigits(n) {
   return n.toLocaleString(undefined, {
-    style: 'decimal',
-    useGrouping: false 
+    style: "decimal",
+    useGrouping: false
   });
 }
 
 // TODO: fix the the thing for real
-Decimal.prototype.toString = function () {
+Decimal.prototype.toString = function() {
   if (isNaN(this.m) || isNaN(this.e)) {
     return "NaN";
   }
@@ -347,11 +345,11 @@ Decimal.prototype.toString = function () {
     return this.toNumber().toString();
   }
 
-  return this.m + "e" + formatAllDigits(this.e);
-}
+  return `${this.m}e${formatAllDigits(this.e)}`;
+};
 
 window.powAndCap = function(num) {
   return Decimal.pow10(Math.min(num, Number.MAX_VALUE));
-}
+};
 
-Decimal.MAX_LIMIT = Decimal.pow10(Number.MAX_VALUE)
+Decimal.MAX_LIMIT = Decimal.pow10(Number.MAX_VALUE);

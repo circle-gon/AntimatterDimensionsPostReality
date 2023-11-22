@@ -57,21 +57,32 @@ export default {
 
 <template>
   <div id="page">
-    <link rel="stylesheet" type="text/css" href="stylesheets/new-ui-styles.css" />
-    <div :key="newGameKey" class="game-container" :style="topMargin">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="stylesheets/new-ui-styles.css"
+    >
+    <div
+      :key="newGameKey"
+      class="game-container"
+      :style="topMargin"
+    >
       <NewsTicker v-if="news" />
       <div>
         <AtomPointsHeader />
         <CollapseButton />
       </div>
       <BigCrunchButton />
-      <div v-if="!bigCrunch" class="tab-container">
+      <div
+        v-if="!bigCrunch"
+        class="tab-container"
+      >
         <HeaderPrestigeGroup />
         <div class="information-header">
           <HeaderChallengeDisplay />
           <HeaderChallengeEffects />
           <GameSpeedDisplay v-if="hasReality" />
-          <br v-if="hasReality" />
+          <br v-if="hasReality">
           <HeaderBlackHole />
         </div>
         <slot />

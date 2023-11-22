@@ -24,7 +24,7 @@ export default {
     },
     timeFormatted() {
       const time = this.time;
-      // format the max number specifically as Infinity because it looks better
+      // Format the max number specifically as Infinity because it looks better
       if (time === Number.MAX_VALUE) return Infinity;
       return time;
     },
@@ -60,7 +60,10 @@ export default {
 <template>
   <div class="l-atom-milestone">
     <span class="o-atom-milestone__goal"> {{ timeDisplay(timeFormatted) }}: </span>
-    <button v-tooltip="tooltip" :class="rewardClassObject">
+    <button
+      v-tooltip="tooltip"
+      :class="rewardClassObject"
+    >
       <span>
         {{ reward }}
       </span>

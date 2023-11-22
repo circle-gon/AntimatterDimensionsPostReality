@@ -228,7 +228,7 @@ export const tabs = [
         condition: () =>
           PlayerProgress.realityUnlocked() ||
           player.challenge.eternity.unlocked !== 0 ||
-          EternityChallenges.all.some((ec) => ec.completions > 0),
+          EternityChallenges.all.some(ec => ec.completions > 0),
         id: 2,
         hidable: true,
       },

@@ -35,7 +35,7 @@ export default {
     collapse() {
       // Don't show the confirmation window because it doesn't matter
       collapse();
-      //NG.startNewGame();
+      // NG.startNewGame();
     },
     openSelectionModal() {
       Modal.cosmeticSetChoice.show();
@@ -45,24 +45,39 @@ export default {
 </script>
 
 <template>
-  <div class="c-new-game-container" :style="style">
+  <div
+    class="c-new-game-container"
+    :style="style"
+  >
     <h2>... eons stacked on eons stacked on eons stacked on eons ...</h2>
     <h2>In order to go further, you must Collapse this Universe.</h2>
     <h3>You can use the button in the top-right to view the game as it is right now.</h3>
     <div class="c-new-game-button-container">
-      <button class="c-new-game-button" @click="collapse">Collapse this Universe{{ collapseText }}</button>
+      <button
+        class="c-new-game-button"
+        @click="collapse"
+      >
+        Collapse this Universe{{ collapseText }}
+      </button>
     </div>
-    <br />
+    <br>
     <h3 v-if="hasMoreCosmetics">
       Because of the fragmentation of this Universe, you also unlock a new cosmetic set of your choice for Glyphs. These
       are freely modifiable once you reach Reality again, but are purely visual and offer no gameplay bonuses.
-      <br />
-      <button class="c-new-game-button" @click="openSelectionModal">Choose Cosmetic Set</button>
-      <br />
-      <br />
+      <br>
+      <button
+        class="c-new-game-button"
+        @click="openSelectionModal"
+      >
+        Choose Cosmetic Set
+      </button>
+      <br>
+      <br>
       Selected Set: {{ selectedSetName }}
     </h3>
-    <h3 v-else>You have unlocked all Glyph cosmetic sets!</h3>
+    <h3 v-else>
+      You have unlocked all Glyph cosmetic sets!
+    </h3>
   </div>
 </template>
 

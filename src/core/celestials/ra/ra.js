@@ -1,6 +1,6 @@
 import { BitUpgradeState, GameMechanicState } from "../../game-mechanics";
 import { Quotes } from "../quotes";
-import { DC } from "../../constants"
+import { DC } from "../../constants";
 
 class RaUnlockState extends BitUpgradeState {
   get bits() { return player.celestials.ra.unlockBits; }
@@ -262,7 +262,7 @@ export const Ra = {
     return res;
   },
   get productionExponent() {
-    return Effects.product(AtomUpgrade(3))
+    return Effects.product(AtomUpgrade(3));
   },
   get memoryBoostResources() {
     const boostList = [];

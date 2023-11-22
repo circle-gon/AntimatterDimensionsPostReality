@@ -71,8 +71,8 @@ export default {
       return Pelle.isDoomed && (tp || ip);
     },
     rightAutobuyerID() {
-      if (!this.isRebuyable) return null
-      return this.upgrade.id <= 3 ? this.upgrade.id : this.upgrade.id - 7
+      if (!this.isRebuyable) return null;
+      return this.upgrade.id <= 3 ? this.upgrade.id : this.upgrade.id - 7;
     }
   },
   watch: {

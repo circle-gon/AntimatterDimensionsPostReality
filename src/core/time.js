@@ -16,9 +16,9 @@ export const Time = {
     const v = getValue();
     if (v instanceof Decimal) {
       return DecimalTimeSpan.fromMilliseconds(v);
-    } else {
-      return TimeSpan.fromMilliseconds(v);
     }
+    return TimeSpan.fromMilliseconds(v);
+
   },
   /**
    * @param {TimeSpan} timespan

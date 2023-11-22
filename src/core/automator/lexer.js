@@ -79,7 +79,7 @@ const ComparisonOperator = createToken({
 const GlyphType = createToken({
   name: "GlyphType",
   pattern: /(pow|power|inf|infinity|rep|replication|time|dil|dilation|eff|effarig|reality)/i
-})
+});
 
 const AutomatorCurrency = createCategory("AutomatorCurrency");
 const PrestigeEvent = createCategory("PrestigeEvent");
