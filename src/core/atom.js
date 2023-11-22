@@ -78,7 +78,7 @@ export function atomTimeText() {
 }
 
 export function gainedAtoms() {
-  const gain = DC.D1;
+  let gain = DC.D1;
   gain = gain.mul(AtomicParticle(1).effects[1]);
   gain = gain.timesEffectOf(AtomUpgrade(1));
   return gain.floor();
