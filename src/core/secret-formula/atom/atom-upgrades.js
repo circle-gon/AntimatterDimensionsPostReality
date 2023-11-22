@@ -31,8 +31,8 @@ export const atomUpgrades = [
   rebuyable({
     id: 1,
     name: "Atomic Charge",
-    initialCost: 10,
-    costMult: 10,
+    initialCost: 5,
+    costMult: 5,
     textTemplate: "Multiply Atomic Power gain by {value}.",
     effect: 3,
     formatEffect: (e) => formatX(e, 2, 0),
@@ -50,21 +50,21 @@ export const atomUpgrades = [
   {
     id: 3,
     name: "Knowledge Empowerment",
-    cost: Infinity,
+    cost: 5,
     description: "Memory gain is raised ^1.5.",
     effect: 1.5,
   },
   {
     id: 4,
     name: "Overachiever",
-    cost: Infinity,
+    cost: 5,
     description: "Each V-Achievement awards 2 Space Theorems instead of 1.",
     effect: 2,
   },
   {
     id: 5,
     name: "Death to Continuum",
-    cost: Infinity,
+    cost: 20,
     description: `Unlock Infinity and Time Dimension Continuum, which is unlocked when
     Antimatter Dimension Continuum is unlocked. Start Collapses with AD Continuum unlocked.`,
   },
@@ -72,7 +72,7 @@ export const atomUpgrades = [
     id: 6,
     name: "Atomic Empowerment",
     initialCost: 10,
-    costMult: 50,
+    costMult: 5,
     textTemplate: "Make Atomic Particles' effects {value} stronger (additively).",
     effect: 0.05,
     formatEffect: (e) => `${formatPercents(e - 1)} stronger`,
@@ -81,7 +81,7 @@ export const atomUpgrades = [
   {
     id: 7,
     name: "Doomed Transcendence",
-    cost: Infinity,
+    cost: 100,
     description: `Dilation upgrades previously only available in a Doomed Reality
     are now purchasable outside of it, but they scale faster
     and some upgrades are weakened. The DU2 and DAU Perks now adjust to account for the
@@ -90,20 +90,20 @@ export const atomUpgrades = [
   {
     id: 8,
     name: "Keeper of Achievements",
-    cost: Infinity,
+    cost: 200,
     description: "Upon purchasing this upgrade or Collapsing, start with all Doom achievements (except for 188) unlocked.",
   },
   {
     id: 9,
     name: "Hoarder of Glyphs",
-    cost: Infinity,
+    cost: 500,
     description: "Unlock one more glyph slot.",
     effect: 1,
   },
   {
     id: 10,
     name: "Antimatter Limitus",
-    cost: Infinity,
+    cost: 2000,
     description: "Unlock the ability to Break the Universe.",
   },
 ];

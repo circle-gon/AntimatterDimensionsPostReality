@@ -76,6 +76,11 @@ const ComparisonOperator = createToken({
   pattern: Lexer.NA,
 });
 
+const GlyphType = createToken({
+  name: "GlyphType",
+  pattern: /(pow|power|inf|infinity|rep|replication|time|dil|dilation|eff|effarig|reality)/i
+})
+
 const AutomatorCurrency = createCategory("AutomatorCurrency");
 const PrestigeEvent = createCategory("PrestigeEvent");
 const StudyPath = createCategory("StudyPath");
@@ -341,6 +346,9 @@ createKeyword("XHighest", /x[ \t]+highest/i, {
   $autocomplete: "x highest",
 });
 
+createKeyword("Glyphs", /glyphs/i);
+createKeyword("Equip", /equip/i);
+
 // We allow ECLiteral to consume lots of digits because that makes error reporting more
 // clear (it's nice to say ec123 is an invalid ec)
 const ECLiteral = createToken({
@@ -368,6 +376,7 @@ export const automatorTokens = [
   PrestigeEvent, ...tokenLists.PrestigeEvent,
   StudyPath, ...tokenLists.StudyPath,
   TimeUnit, ...tokenLists.TimeUnit,
+  GlyphType,
   Identifier,
 ];
 

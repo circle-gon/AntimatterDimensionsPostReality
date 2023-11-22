@@ -61,6 +61,7 @@ CodeMirror.defineSimpleMode("automato", {
   start: [
     commentRule,
     { regex: /studies\s+/ui, token: "keyword", next: "studiesArgs" },
+    { regex: /glyphs\s+/ui, token: "keyword", next: "glyphArgs" },
     { regex: /blob\s\s/ui, token: "blob" },
     {
       // eslint-disable-next-line max-len
@@ -119,6 +120,16 @@ CodeMirror.defineSimpleMode("automato", {
     commentRule,
     { sol: true, next: "start" },
     { regex: /(\/(?!\/)|[^\s#/])+/ui, token: "qualifier", next: "commandDone" },
+  ],
+  glyphArgs: [
+    commentRule,
+    { sol: true, next: "start" },
+    { regex: /equip/ui, token: "variable-2", next: "equipGlyphArgs" },
+  ],
+  equipGlyphArgs: [
+    commentRule,
+    { sol: true, next: "start" },
+    { regex: /(pow(er)?|inf(inity)?|rep(lication)?|time|dil(ation)?|eff(arig)?|reality)/ui, token: "variable", next: "commandDone" },
   ],
   prestige: [
     commentRule,

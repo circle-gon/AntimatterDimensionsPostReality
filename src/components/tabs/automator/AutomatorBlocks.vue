@@ -178,6 +178,12 @@ export const automatorBlocks = [
     targets: ["genericInput1", "compOperator", "genericInput2"],
     nested: true
   }, {
+    cmd: "GLYPHS EQUIP",
+    alias: "EQUIP GLYPH",
+    allowedPatterns: ["A"],
+    A: ["*"],
+    targets: ["singleTextInput"],
+  }, {
     cmd: "BLOB"
   }, {
     cmd: "STOP",
