@@ -5,7 +5,7 @@ import { createToken, Lexer } from "chevrotain";
 
 import { DC } from "../constants";
 
-const createCategory = name => createToken({ name, pattern: Lexer.NA, longer_alt: Identifier });
+const createCategory = (name) => createToken({ name, pattern: Lexer.NA, longer_alt: Identifier });
 
 // Shorthand for creating tokens and adding them to a list
 const tokenLists = {};
@@ -22,7 +22,7 @@ const createInCategory = (category, name, pattern, props = {}) => {
   const categoryName = Array.isArray(category) ? category[0].name : category.name;
   if (tokenLists[categoryName] === undefined) tokenLists[categoryName] = [];
   tokenLists[categoryName].push(token);
-  const patternWord = pattern.toString().match(/^\/([a-zA-Z0-9]*)\/[a-zA-Z]*$/ui);
+  const patternWord = pattern.toString().match(/^\/([a-zA-Z0-9]*)\/[a-zA-Z]*$/iu);
   if (patternWord && patternWord[1]) token.$autocomplete = patternWord[1];
   Object.assign(token, props);
   return token;
@@ -31,7 +31,7 @@ const createInCategory = (category, name, pattern, props = {}) => {
 const HSpace = createToken({
   name: "HSpace",
   pattern: /[ \t]+/,
-  group: Lexer.SKIPPED
+  group: Lexer.SKIPPED,
 });
 
 const EOL = createToken({
@@ -76,15 +76,11 @@ const ComparisonOperator = createToken({
   pattern: Lexer.NA,
 });
 
-const GlyphType = createToken({
-  name: "GlyphType",
-  pattern: /(pow|power|inf|infinity|rep|replication|time|dil|dilation|eff|effarig|reality)/i
-});
-
 const AutomatorCurrency = createCategory("AutomatorCurrency");
 const PrestigeEvent = createCategory("PrestigeEvent");
 const StudyPath = createCategory("StudyPath");
 const TimeUnit = createCategory("TimeUnit");
+const GlyphType = createCategory("GlyphType");
 
 createInCategory(ComparisonOperator, "OpGTE", />=/, {
   $autocomplete: ">=",
@@ -115,6 +111,16 @@ const EqualSign = createToken({
 });
 EqualSign.$compare = (a, b) => Decimal.eq(a, b);
 
+createInCategory(GlyphType, "PowerGlyph", /powerglyph/i);
+createInCategory(GlyphType, "InfinityGlyph", /infinityglyph/i);
+createInCategory(GlyphType, "TimeGlyph", /timeglyph/i);
+createInCategory(GlyphType, "ReplicationGlyph", /replicationglyph/i);
+createInCategory(GlyphType, "DilationGlyph", /dilationglyph/i);
+createInCategory(GlyphType, "EffarigGlyph", /effarigglyph/i);
+createInCategory(GlyphType, "RealityGlyph", /realityglyph/i);
+createInCategory(GlyphType, "CursedGlyph", /cursedglyph/i);
+createInCategory(GlyphType, "CompanionGlyph", /companionglyph/i);
+
 createInCategory(AutomatorCurrency, "EP", /ep/i, { $getter: () => Currency.eternityPoints.value });
 createInCategory(AutomatorCurrency, "IP", /ip/i, { $getter: () => Currency.infinityPoints.value });
 createInCategory(AutomatorCurrency, "AM", /am/i, { $getter: () => Currency.antimatter.value });
@@ -126,18 +132,18 @@ createInCategory(AutomatorCurrency, "RM", /rm/i, { $getter: () => Currency.reali
 createInCategory(AutomatorCurrency, "infinities", /infinities/i, { $getter: () => Currency.infinities.value });
 createInCategory(AutomatorCurrency, "bankedInfinities", /banked[ \t]+infinities/i, {
   $autocomplete: "banked infinities",
-  $getter: () => Currency.infinitiesBanked.value
+  $getter: () => Currency.infinitiesBanked.value,
 });
 createInCategory(AutomatorCurrency, "eternities", /eternities/i, { $getter: () => Currency.eternities.value });
 createInCategory(AutomatorCurrency, "realities", /realities/i, { $getter: () => Currency.realities.value });
 
 createInCategory(AutomatorCurrency, "PendingIP", /pending[ \t]+ip/i, {
   $autocomplete: "pending IP",
-  $getter: () => (Player.canCrunch ? gainedInfinityPoints() : DC.D0)
+  $getter: () => (Player.canCrunch ? gainedInfinityPoints() : DC.D0),
 });
 createInCategory(AutomatorCurrency, "PendingEP", /pending[ \t]+ep/i, {
   $autocomplete: "pending EP",
-  $getter: () => (Player.canEternity ? gainedEternityPoints() : DC.D0)
+  $getter: () => (Player.canEternity ? gainedEternityPoints() : DC.D0),
 });
 createInCategory(AutomatorCurrency, "PendingTP", /pending[ \t]+tp/i, {
   $autocomplete: "pending TP",
@@ -145,15 +151,15 @@ createInCategory(AutomatorCurrency, "PendingTP", /pending[ \t]+tp/i, {
 });
 createInCategory(AutomatorCurrency, "PendingRM", /pending[ \t]+rm/i, {
   $autocomplete: "pending RM",
-  $getter: () => (isRealityAvailable() ? MachineHandler.gainedRealityMachines : DC.D0)
+  $getter: () => (isRealityAvailable() ? MachineHandler.gainedRealityMachines : DC.D0),
 });
 createInCategory(AutomatorCurrency, "PendingGlyphLevel", /pending[ \t]+glyph[ \t]+level/i, {
   $autocomplete: "pending Glyph level",
   $getter: () => new Decimal(isRealityAvailable() ? gainedGlyphLevel().actualLevel : 0),
 });
 
-createInCategory(AutomatorCurrency, "Rep", /rep(licanti)?/i, {
-  $autocomplete: "rep",
+createInCategory(AutomatorCurrency, "Rep", /replicanti/i, {
+  $autocomplete: "replicanti",
   $getter: () => Replicanti.amount,
 });
 createInCategory(AutomatorCurrency, "TT", /(tt|time theorems?)/i, {
@@ -177,7 +183,7 @@ createInCategory(AutomatorCurrency, "PendingCompletions", /pending[ \t]+completi
     // completions returns true
     if (!EternityChallenge.isRunning) return Decimal.NUMBER_MAX_VALUE;
     return EternityChallenge.current.gainedCompletionStatus.totalCompletions;
-  }
+  },
 });
 
 createInCategory(AutomatorCurrency, "FilterScore", /filter[ \t]+score/i, {
@@ -185,8 +191,9 @@ createInCategory(AutomatorCurrency, "FilterScore", /filter[ \t]+score/i, {
   $getter: () => {
     // If the filter isn't unlocked somehow, return the most negative number in order to ensure it's nonblocking
     if (!EffarigUnlock.glyphFilter.isUnlocked) return -Number.MAX_VALUE;
-    const choices = GlyphSelection.glyphList(GlyphSelection.choiceCount, gainedGlyphLevel(),
-      { isChoosingGlyph: false });
+    const choices = GlyphSelection.glyphList(GlyphSelection.choiceCount, gainedGlyphLevel(), {
+      isChoosingGlyph: false,
+    });
     const bestGlyph = AutoGlyphProcessor.pick(choices);
     return AutoGlyphProcessor.filterValue(bestGlyph);
   },
@@ -212,7 +219,7 @@ for (let i = 1; i <= 12; ++i) {
   createInCategory(AutomatorCurrency, `EC${i}`, new RegExp(`ec${i} completions`, "i"), {
     $autocomplete: `ec${i} completions`,
     // eslint-disable-next-line no-loop-func
-    $getter: () => EternityChallenge(id).completions
+    $getter: () => EternityChallenge(id).completions,
   });
 }
 
@@ -348,6 +355,12 @@ createKeyword("XHighest", /x[ \t]+highest/i, {
 
 createKeyword("Glyphs", /glyphs/i);
 createKeyword("Equip", /equip/i);
+createKeyword("Sacrifice", /sacrifice/i);
+createKeyword("Slot", /slot/i);
+createKeyword("Type", /type/i);
+createKeyword("Effects", /effects/i);
+createKeyword("Level", /level/i);
+createKeyword("Rarity", /rarity/i);
 
 // We allow ECLiteral to consume lots of digits because that makes error reporting more
 // clear (it's nice to say ec123 is an invalid ec)
@@ -365,18 +378,37 @@ const Dash = createToken({ name: "Dash", pattern: /-/, label: "-" });
 const Exclamation = createToken({ name: "Exclamation", pattern: /!/, label: "!" });
 
 // The order here is the order the lexer looks for tokens in.
+window.tokenLists = tokenLists;
 export const automatorTokens = [
-  HSpace, StringLiteral, StringLiteralSingleQuote, Comment, EOL,
-  ComparisonOperator, ...tokenLists.ComparisonOperator,
-  LCurly, RCurly, Comma, EqualSign, Pipe, Dash, Exclamation,
-  BlackHoleStr, NumberLiteral,
-  AutomatorCurrency, ...tokenLists.AutomatorCurrency,
+  HSpace,
+  StringLiteral,
+  StringLiteralSingleQuote,
+  Comment,
+  EOL,
+  ComparisonOperator,
+  ...tokenLists.ComparisonOperator,
+  LCurly,
+  RCurly,
+  Comma,
+  EqualSign,
+  Pipe,
+  Dash,
+  Exclamation,
+  BlackHoleStr,
+  NumberLiteral,
+  AutomatorCurrency,
+  ...tokenLists.AutomatorCurrency,
   ECLiteral,
-  Keyword, ...keywordTokens,
-  PrestigeEvent, ...tokenLists.PrestigeEvent,
-  StudyPath, ...tokenLists.StudyPath,
-  TimeUnit, ...tokenLists.TimeUnit,
   GlyphType,
+  ...tokenLists.GlyphType,
+  Keyword,
+  ...keywordTokens,
+  PrestigeEvent,
+  ...tokenLists.PrestigeEvent,
+  StudyPath,
+  ...tokenLists.StudyPath,
+  TimeUnit,
+  ...tokenLists.TimeUnit,
   Identifier,
 ];
 
@@ -388,7 +420,7 @@ Comma.LABEL = "❟";
 
 export const lexer = new Lexer(automatorTokens, {
   positionTracking: "full",
-  ensureOptimizations: true
+  ensureOptimizations: true,
 });
 
 // The lexer uses an ID system that's separate from indices into the token array
@@ -398,11 +430,14 @@ for (const token of lexer.lexerDefinition) {
 }
 
 // We use this while building up the grammar
-export const tokenMap = automatorTokens.mapToObject(e => e.name, e => e);
+export const tokenMap = automatorTokens.mapToObject(
+  (e) => e.name,
+  (e) => e
+);
 
-const automatorCurrencyNames = tokenLists.AutomatorCurrency.map(i => i.$autocomplete.toUpperCase());
+const automatorCurrencyNames = tokenLists.AutomatorCurrency.map((i) => i.$autocomplete.toUpperCase());
 
-export const standardizeAutomatorValues = function(x) {
+export const standardizeAutomatorValues = function (x) {
   try {
     if (automatorCurrencyNames.includes(x.toUpperCase())) return x.toUpperCase();
   } catch {
@@ -426,6 +461,6 @@ export const standardizeAutomatorValues = function(x) {
 // final resulting array. Note that this technically duplicates words present in multiple phrases (eg. "pending")
 const ignoredPatterns = ["Identifier", "LCurly", "RCurly"];
 export const forbiddenConstantPatterns = lexer.lexerDefinition
-  .filter(p => !ignoredPatterns.includes(p.name))
-  .map(p => p.PATTERN.source)
-  .flatMap(p => ((p.includes("(") || p.includes(")")) ? p : p.split("[ \\t]+")));
+  .filter((p) => !ignoredPatterns.includes(p.name))
+  .map((p) => p.PATTERN.source)
+  .flatMap((p) => (p.includes("(") || p.includes(")") ? p : p.split("[ \\t]+")));

@@ -27,13 +27,16 @@ class VRunUnlockState extends GameMechanicState {
   }
 
   get canBeReduced() {
-    return this.completions < this.config.values.length && this.completions !== 0 &&
-      new Decimal(this.reduction).neq(this.config.maxShardReduction(this.conditionBaseValue));
+    return (
+      this.completions < this.config.values.length &&
+      this.completions !== 0 &&
+      new Decimal(this.reduction).neq(this.config.maxShardReduction(this.conditionBaseValue))
+    );
   }
 
   get isReduced() {
     if (player.celestials.v.goalReductionSteps[this.id] === 0) return false;
-    return (VUnlocks.shardReduction.canBeApplied && this.reduction > 0);
+    return VUnlocks.shardReduction.canBeApplied && this.reduction > 0;
   }
 
   get reductionCost() {
@@ -75,11 +78,13 @@ class VRunUnlockState extends GameMechanicState {
     const value = this.config.currentValue();
     if (this.config.condition() && Decimal.gte(value, playerData.runRecords[this.id])) {
       playerData.runRecords[this.id] = value;
-      playerData.runGlyphs[this.id] = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
+      playerData.runGlyphs[this.id] = Glyphs.copyForRecords(Glyphs.active.filter((g) => g !== null));
     }
 
-    while (this.completions < this.config.values.length &&
-    Decimal.gte(playerData.runRecords[this.id], this.conditionValue)) {
+    while (
+      this.completions < this.config.values.length &&
+      Decimal.gte(playerData.runRecords[this.id], this.conditionValue)
+    ) {
       if (!V.isFlipped && this.config.isHard) continue;
       this.completions++;
       GameUI.notify.success(`You have unlocked V-Achievement
@@ -98,8 +103,12 @@ class VRunUnlockState extends GameMechanicState {
 }
 
 class VUnlockState extends BitUpgradeState {
-  get bits() { return player.celestials.v.unlockBits; }
-  set bits(value) { player.celestials.v.unlockBits = value; }
+  get bits() {
+    return player.celestials.v.unlockBits;
+  }
+  set bits(value) {
+    player.celestials.v.unlockBits = value;
+  }
 
   get pelleDisabled() {
     return Pelle.isDoomed && this !== VUnlocks.vAchievementUnlock;
@@ -110,13 +119,11 @@ class VUnlockState extends BitUpgradeState {
   }
 
   get description() {
-    return typeof this.config.description === "function" ? this.config.description()
-      : this.config.description;
+    return typeof this.config.description === "function" ? this.config.description() : this.config.description;
   }
 
   get rewardText() {
-    return typeof this.config.reward === "function" ? this.config.reward()
-      : this.config.reward;
+    return typeof this.config.reward === "function" ? this.config.reward() : this.config.reward;
   }
 
   get canBeUnlocked() {
@@ -147,10 +154,7 @@ export const VRunUnlocks = {
   all: VRunUnlock.index.compact(),
 };
 
-export const VUnlocks = mapGameDataToObject(
-  GameDatabase.celestials.v.unlocks,
-  config => new VUnlockState(config)
-);
+export const VUnlocks = mapGameDataToObject(GameDatabase.celestials.v.unlocks, (config) => new VUnlockState(config));
 
 export const V = {
   displayName: "V",
@@ -177,7 +181,7 @@ export const V = {
     return VUnlocks.vAchievementUnlock.canBeUnlocked;
   },
   unlockCelestial() {
-    player.celestials.v.unlockBits |= (1 << VUnlocks.vAchievementUnlock.id);
+    player.celestials.v.unlockBits |= 1 << VUnlocks.vAchievementUnlock.id;
     GameUI.notify.success("You have unlocked V, The Celestial Of Achievements!", 10000);
     V.quotes.unlock.show();
   },
@@ -230,7 +234,7 @@ export const V = {
     return 1000 * Math.pow(1.15, currReductionSteps);
   },
   quotes: Quotes.v,
-  symbol: "⌬"
+  symbol: "⌬",
 };
 
 EventHub.logic.on(GAME_EVENT.TAB_CHANGED, () => {

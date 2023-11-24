@@ -16,8 +16,9 @@ export const TP = {
     // This is treated as a multiplier and not a prestige currency, with an overridden display;
     // therefore we need to return 1 "by default"
     multValue: () => {
-      const baseTP = new Decimal(Currency.tachyonParticles.value)
-        .pow(PelleRifts.paradox.milestones[1].effectOrDefault(1));
+      const baseTP = new Decimal(Currency.tachyonParticles.value).pow(
+        PelleRifts.paradox.milestones[1].effectOrDefault(1)
+      );
       return TimeStudy.dilation.isBought ? baseTP : 1;
     },
     isActive: () => PlayerProgress.realityUnlocked() || PlayerProgress.dilationUnlocked(),
@@ -72,5 +73,5 @@ export const TP = {
     powValue: () => Enslaved.tachyonNerf,
     isActive: () => Enslaved.isRunning,
     icon: MultiplierTabIcons.GENERIC_ENSLAVED,
-  }
+  },
 };

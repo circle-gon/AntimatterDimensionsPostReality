@@ -22,14 +22,12 @@ export const RichPresenceInfo = {
     const chall = this.challengeState;
     const stageName = typeof this.gameStage.name === "function" ? this.gameStage.name() : this.gameStage.name;
     if (!chall) return `At ${stageName} (${this.gameStage.mainResource()})`;
-    const challResStr = chall.resource()
-      ? `, ${chall.resource()}`
-      : "";
+    const challResStr = chall.resource() ? `, ${chall.resource()}` : "";
     return `At ${stageName} (In ${chall.name(chall.activityToken())}${challResStr})`;
   },
   // Second line of info for DRP
   get state() {
     const mainRes = this.challengeState ? [this.gameStage.mainResource()] : [];
-    return mainRes.concat((this.gameStage.resourceList ?? []).map(res => res())).join(" | ");
-  }
+    return mainRes.concat((this.gameStage.resourceList ?? []).map((res) => res())).join(" | ");
+  },
 };

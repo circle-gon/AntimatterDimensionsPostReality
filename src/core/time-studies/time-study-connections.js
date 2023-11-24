@@ -27,9 +27,9 @@ export class TimeStudyConnection {
 /**
  * @type {TimeStudyConnection[]}
  */
-TimeStudy.allConnections = (function() {
-  const TS = id => TimeStudy(id);
-  const EC = id => TimeStudy.eternityChallenge(id);
+TimeStudy.allConnections = (function () {
+  const TS = (id) => TimeStudy(id);
+  const EC = (id) => TimeStudy.eternityChallenge(id);
   const connections = [
     [TS(11), TS(21)],
     [TS(11), TS(22)],
@@ -103,8 +103,11 @@ TimeStudy.allConnections = (function() {
     [TS(171), EC(2)],
     [TS(171), EC(3)],
 
-    [TS(171), TS(181),
-      () => !Perk.bypassEC1Lock.isBought || !Perk.bypassEC2Lock.isBought || !Perk.bypassEC3Lock.isBought],
+    [
+      TS(171),
+      TS(181),
+      () => !Perk.bypassEC1Lock.isBought || !Perk.bypassEC2Lock.isBought || !Perk.bypassEC3Lock.isBought,
+    ],
 
     [EC(1), TS(181), () => Perk.bypassEC1Lock.isBought],
     [EC(2), TS(181), () => Perk.bypassEC2Lock.isBought],
@@ -153,8 +156,8 @@ TimeStudy.allConnections = (function() {
     [TimeStudy.timeDimension(5), TimeStudy.timeDimension(6)],
     [TimeStudy.timeDimension(6), TimeStudy.timeDimension(7)],
     [TimeStudy.timeDimension(7), TimeStudy.timeDimension(8)],
-    [TimeStudy.timeDimension(8), TimeStudy.reality]
-  ].map(props => new TimeStudyConnection(props[0], props[1], props[2]));
+    [TimeStudy.timeDimension(8), TimeStudy.reality],
+  ].map((props) => new TimeStudyConnection(props[0], props[1], props[2]));
 
   return connections;
-}());
+})();

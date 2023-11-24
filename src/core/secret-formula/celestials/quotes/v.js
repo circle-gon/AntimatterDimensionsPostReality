@@ -1,9 +1,7 @@
 export const vQuotes = {
   initial: {
     id: 0,
-    lines: [
-      "How pathetic..."
-    ],
+    lines: ["How pathetic..."],
   },
   unlock: {
     id: 1,
@@ -16,11 +14,7 @@ export const vQuotes = {
   },
   realityEnter: {
     id: 2,
-    lines: [
-      "Good luck with that!",
-      "You will need it.",
-      "My reality is flawless. You will fail.",
-    ],
+    lines: ["Good luck with that!", "You will need it.", "My reality is flawless. You will fail."],
   },
   realityComplete: {
     id: 3,
@@ -34,51 +28,32 @@ export const vQuotes = {
   achievement1: {
     id: 4,
     requirement: () => V.spaceTheorems >= 1,
-    lines: [
-      "Only one? Pathetic.",
-      "Your accomplishments pale in comparison to mine.",
-    ],
+    lines: ["Only one? Pathetic.", "Your accomplishments pale in comparison to mine."],
   },
   achievement6: {
     id: 5,
     requirement: () => V.spaceTheorems >= 6,
-    lines: [
-      "This is nothing.",
-      "Do not be so full of yourself.",
-    ],
+    lines: ["This is nothing.", "Do not be so full of yourself."],
   },
   hex1: {
     id: 6,
-    requirement: () => player.celestials.v.runUnlocks.filter(a => a === 6).length >= 1,
-    lines: [
-      "Do not think it will get any easier from now on.",
-      "You are awfully proud for such a little achievement.",
-    ],
+    requirement: () => player.celestials.v.runUnlocks.filter((a) => a === 6).length >= 1,
+    lines: ["Do not think it will get any easier from now on.", "You are awfully proud for such a little achievement."],
   },
   achievement12: {
     id: 7,
     requirement: () => V.spaceTheorems >= 12,
-    lines: [
-      "How did you...",
-      "This barely amounts to anything!",
-      "You will never complete them all.",
-    ],
+    lines: ["How did you...", "This barely amounts to anything!", "You will never complete them all."],
   },
   achievement24: {
     id: 8,
     requirement: () => V.spaceTheorems >= 24,
-    lines: [
-      "Impossible...",
-      "After how difficult it was for me...",
-    ],
+    lines: ["Impossible...", "After how difficult it was for me..."],
   },
   hex3: {
     id: 9,
-    requirement: () => player.celestials.v.runUnlocks.filter(a => a === 6).length >= 3,
-    lines: [
-      "No... No... No...",
-      "This cannot be...",
-    ],
+    requirement: () => player.celestials.v.runUnlocks.filter((a) => a === 6).length >= 3,
+    lines: ["No... No... No...", "This cannot be..."],
   },
   allAchievements: {
     id: 10,
@@ -90,5 +65,5 @@ export const vQuotes = {
       "No one is better than me...",
       "No one... no one... no on-",
     ],
-  }
+  },
 };

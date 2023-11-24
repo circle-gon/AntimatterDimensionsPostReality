@@ -14,9 +14,7 @@ export const gamespeed = {
       const currBH = bh.current;
       const avgBH = bh.average;
 
-      const avgSpeed = Enslaved.isAutoReleasing
-        ? getGameSpeedupForDisplay()
-        : curr.div(currBH).mul(avgBH);
+      const avgSpeed = Enslaved.isAutoReleasing ? getGameSpeedupForDisplay() : curr.div(currBH).mul(avgBH);
       const avgString = ` (current) | ${formatX(avgSpeed, 2, 2)} (average)`;
       return `${formatX(curr, 2, 2)}${curr.eq(avgSpeed) ? "" : avgString}`;
     },
@@ -47,16 +45,14 @@ export const gamespeed = {
   },
   achievementMult: {
     name: "30 V-Achievement Milestone - Achievement Multiplier",
-    multValue: () => VUnlocks.achievementBH.effectOrDefault(1).pow(
-      BlackHoles.list.countWhere(bh => bh.isUnlocked)),
+    multValue: () => VUnlocks.achievementBH.effectOrDefault(1).pow(BlackHoles.list.countWhere((bh) => bh.isUnlocked)),
     isActive: () => !BlackHoles.arePaused && VUnlocks.achievementBH.canBeApplied && !EternityChallenge(12).isRunning,
     icon: MultiplierTabIcons.ACHIEVEMENT,
   },
   pulsing: {
     name: "Auto-Discharging Stored Time",
-    multValue: () => (Enslaved.isAutoReleasing
-      ? Enslaved.autoReleaseSpeed.div(getGameSpeedupFactor()).max(1)
-      : getGameSpeedupFactor()),
+    multValue: () =>
+      Enslaved.isAutoReleasing ? Enslaved.autoReleaseSpeed.div(getGameSpeedupFactor()).max(1) : getGameSpeedupFactor(),
     isActive: () => Enslaved.canRelease() && Enslaved.isAutoReleasing && !EternityChallenge(12).isRunning,
     icon: MultiplierTabIcons.BH_PULSE,
   },
@@ -109,5 +105,5 @@ export const gamespeed = {
     powValue: () => AtomicParticle(2).effects[1],
     isActive: () => AtomicParticle(2).effects[1] > 1,
     icon: MultiplierTabIcons.ATOM,
-  }
+  },
 };

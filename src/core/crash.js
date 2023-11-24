@@ -41,7 +41,7 @@ window.GlobalErrorHandler = {
     }
     // eslint-disable-next-line no-debugger
     debugger;
-  }
+  },
 };
 
 window.onerror = (event, source, _, __, error) => {

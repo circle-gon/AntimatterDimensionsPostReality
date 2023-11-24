@@ -8,9 +8,14 @@ export class Sacrifice {
   }
 
   static get canSacrifice() {
-    return DimBoost.purchasedBoosts > 4 && !EternityChallenge(3).isRunning && this.nextBoost.gt(1) &&
-      AntimatterDimension(8).totalAmount.gt(0) && Currency.antimatter.lte(Player.infinityLimit) &&
-      !Enslaved.isRunning;
+    return (
+      DimBoost.purchasedBoosts > 4 &&
+      !EternityChallenge(3).isRunning &&
+      this.nextBoost.gt(1) &&
+      AntimatterDimension(8).totalAmount.gt(0) &&
+      Currency.antimatter.lte(Player.infinityLimit) &&
+      !Enslaved.isRunning
+    );
   }
 
   static get disabledCondition() {
@@ -37,13 +42,14 @@ export class Sacrifice {
       base = "AD1";
     }
 
-    const exponent = (1 +
-      (f("Achievement32", Achievement(32).isEffectActive) ? Achievement(32).config.effect : 0) +
-      (f("Achievement57", Achievement(57).isEffectActive) ? Achievement(57).config.effect : 0)
-    ) * (1 +
-      (f("Achievement88", Achievement(88).isEffectActive) ? Achievement(88).config.effect : 0) +
-      (f("TimeStudy228", TimeStudy(228).isEffectActive) ? TimeStudy(228).config.effect : 0)
-    ) * factor;
+    const exponent =
+      (1 +
+        (f("Achievement32", Achievement(32).isEffectActive) ? Achievement(32).config.effect : 0) +
+        (f("Achievement57", Achievement(57).isEffectActive) ? Achievement(57).config.effect : 0)) *
+      (1 +
+        (f("Achievement88", Achievement(88).isEffectActive) ? Achievement(88).config.effect : 0) +
+        (f("TimeStudy228", TimeStudy(228).isEffectActive) ? TimeStudy(228).config.effect : 0)) *
+      factor;
     return base + (exponent === 1 ? "" : formatPow(exponent, places, places));
   }
 
@@ -79,12 +85,15 @@ export class Sacrifice {
     // different variable that is only applied during C8. However since sacrifice only depends on sacrificed ND1, this
     // can actually be done in a single calculation in order to handle C8 in a less hacky way.
     if (NormalChallenge(8).isRunning) {
-      prePowerSacrificeMult = nd1Amount.pow(0.05).dividedBy(sacrificed.pow(0.04)).clampMin(1)
+      prePowerSacrificeMult = nd1Amount
+        .pow(0.05)
+        .dividedBy(sacrificed.pow(0.04))
+        .clampMin(1)
         .times(nd1Amount.pow(0.05).dividedBy(sacrificed.plus(nd1Amount).pow(0.04)));
     } else if (InfinityChallenge(2).isCompleted) {
       prePowerSacrificeMult = nd1Amount.dividedBy(sacrificed);
     } else {
-      prePowerSacrificeMult = new Decimal((nd1Amount.log10() / 10) / Math.max(sacrificed.log10() / 10, 1));
+      prePowerSacrificeMult = new Decimal(nd1Amount.log10() / 10 / Math.max(sacrificed.log10() / 10, 1));
     }
 
     return prePowerSacrificeMult.clampMin(1).pow(this.sacrificeExponent);
@@ -112,12 +121,12 @@ export class Sacrifice {
 
 export function sacrificeReset() {
   if (!Sacrifice.canSacrifice) return false;
-  if ((!player.break || (!InfinityChallenge.isRunning && NormalChallenge.isRunning)) &&
-    Currency.antimatter.gt(Decimal.NUMBER_MAX_VALUE)) return false;
   if (
-    NormalChallenge(8).isRunning &&
-    (Sacrifice.totalBoost.gte(Decimal.NUMBER_MAX_VALUE))
-  ) {
+    (!player.break || (!InfinityChallenge.isRunning && NormalChallenge.isRunning)) &&
+    Currency.antimatter.gt(Decimal.NUMBER_MAX_VALUE)
+  )
+    return false;
+  if (NormalChallenge(8).isRunning && Sacrifice.totalBoost.gte(Decimal.NUMBER_MAX_VALUE)) {
     return false;
   }
   EventHub.dispatch(GAME_EVENT.SACRIFICE_RESET_BEFORE);

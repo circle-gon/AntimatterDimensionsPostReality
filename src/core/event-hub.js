@@ -14,7 +14,7 @@ window.EventHub = class EventHub {
 
   offAll(target) {
     for (const handlers of Object.keys(this._handlers)) {
-      this._handlers[handlers] = this._handlers[handlers].filter(handler => handler.target !== target);
+      this._handlers[handlers] = this._handlers[handlers].filter((handler) => handler.target !== target);
     }
   }
 
@@ -35,7 +35,7 @@ window.EventHub = class EventHub {
     // For debug/profiling purposes
     function countHandlers(eventHub) {
       return Object.values(eventHub._handlers)
-        .map(handlers => handlers.length)
+        .map((handlers) => handlers.length)
         .sum();
     }
     return (

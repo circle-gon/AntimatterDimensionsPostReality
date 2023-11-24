@@ -228,14 +228,14 @@ export const FreeTickspeed = {
     // The first term (the big one) is the asymptotically more important term (since FreeTickspeed.GROWTH_EXP > 1),
     // but is small initially. The second term allows us to continue the pre-cap free tickspeed upgrade scaling
     // of tickmult per upgrade.
-    const boughtToCost = bought =>
+    const boughtToCost = (bought) =>
       Decimal.pow(Math.max(bought, 0), FreeTickspeed.GROWTH_EXP).mul(costFormulaCoefficient).add(bought);
-    const derivativeOfBoughtToCost = x =>
+    const derivativeOfBoughtToCost = (x) =>
       Decimal.pow(Math.max(x, 0), FreeTickspeed.GROWTH_EXP - 1)
         .mul(FreeTickspeed.GROWTH_EXP)
         .mul(costFormulaCoefficient)
         .add(1);
-    const newtonsMethod = bought =>
+    const newtonsMethod = (bought) =>
       bought - boughtToCost(bought).sub(desiredCost).div(derivativeOfBoughtToCost(bought)).toNumber();
     let oldApproximation;
     let approximation = Math.min(

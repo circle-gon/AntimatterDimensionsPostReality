@@ -67,7 +67,7 @@ export class EternityChallengeState extends GameMechanicState {
   }
 
   set hasUnlocked(value) {
-    if (value) player.reality.unlockedEC |= (1 << this.id);
+    if (value) player.reality.unlockedEC |= 1 << this.id;
   }
 
   get completions() {
@@ -162,7 +162,7 @@ export class EternityChallengeState extends GameMechanicState {
 
   completionsAtIP(ip) {
     if (ip.lt(this.initialGoal)) return 0;
-    const completions = 1 + (ip.dividedBy(this.initialGoal)).log10() / this.goalIncrease.log10();
+    const completions = 1 + ip.dividedBy(this.initialGoal).log10() / this.goalIncrease.log10();
     return Math.min(Math.floor(completions), this.maxCompletions);
   }
 
@@ -232,8 +232,7 @@ export class EternityChallengeState extends GameMechanicState {
   }
 
   isWithinRestrictionAtCompletions(completions) {
-    return this.config.restriction === undefined ||
-      this.config.checkRestriction(this.config.restriction(completions));
+    return this.config.restriction === undefined || this.config.checkRestriction(this.config.restriction(completions));
   }
 
   exit() {
@@ -249,26 +248,31 @@ export class EternityChallengeState extends GameMechanicState {
     let reason;
     if (auto) {
       if (this.id === 4) {
-        reason = restriction => `Auto Eternity Challenge completion completed ` +
-        `Eternity Challenge ${this.id} and made the next tier ` +
-        `require having less Infinities (${quantifyInt("Infinity", restriction)} ` +
-        `or less) than you had`;
+        reason = (restriction) =>
+          `Auto Eternity Challenge completion completed ` +
+          `Eternity Challenge ${this.id} and made the next tier ` +
+          `require having less Infinities (${quantifyInt("Infinity", restriction)} ` +
+          `or less) than you had`;
       } else if (this.id === 12) {
-        reason = restriction => `Auto Eternity Challenge completion completed ` +
-        `Eternity Challenge ${this.id} and made the next tier ` +
-        `require spending less time in it (${quantify("in-game second", restriction, 0, 1)} ` +
-        `or less) than you had spent`;
+        reason = (restriction) =>
+          `Auto Eternity Challenge completion completed ` +
+          `Eternity Challenge ${this.id} and made the next tier ` +
+          `require spending less time in it (${quantify("in-game second", restriction, 0, 1)} ` +
+          `or less) than you had spent`;
       }
     } else if (this.id === 4) {
-      reason = restriction => `You failed Eternity Challenge ${this.id} due to ` +
-      `having more than ${quantifyInt("Infinity", restriction)}`;
+      reason = (restriction) =>
+        `You failed Eternity Challenge ${this.id} due to ` + `having more than ${quantifyInt("Infinity", restriction)}`;
     } else if (this.id === 12) {
-      reason = restriction => `You failed Eternity Challenge ${this.id} due to ` +
-      `spending more than ${quantify("in-game second", restriction, 0, 1)} in it`;
+      reason = (restriction) =>
+        `You failed Eternity Challenge ${this.id} due to ` +
+        `spending more than ${quantify("in-game second", restriction, 0, 1)} in it`;
     }
-    Modal.message.show(`${reason(this.config.restriction(this.completions))}, ` +
-    `which has caused you to exit it.`,
-    { closeEvent: GAME_EVENT.REALITY_RESET_AFTER }, 1);
+    Modal.message.show(
+      `${reason(this.config.restriction(this.completions))}, ` + `which has caused you to exit it.`,
+      { closeEvent: GAME_EVENT.REALITY_RESET_AFTER },
+      1
+    );
     EventHub.dispatch(GAME_EVENT.CHALLENGE_FAILED);
   }
 
@@ -291,9 +295,7 @@ export const EternityChallenge = EternityChallengeState.createAccessor(GameDatab
  * @returns {EternityChallengeState}
  */
 Object.defineProperty(EternityChallenge, "current", {
-  get: () => (player.challenge.eternity.current > 0
-    ? EternityChallenge(player.challenge.eternity.current)
-    : undefined),
+  get: () => (player.challenge.eternity.current > 0 ? EternityChallenge(player.challenge.eternity.current) : undefined),
 });
 
 Object.defineProperty(EternityChallenge, "isRunning", {
@@ -307,29 +309,25 @@ export const EternityChallenges = {
   all: EternityChallenge.index.compact(),
 
   get completions() {
-    return EternityChallenges.all
-      .map(ec => ec.completions)
-      .sum();
+    return EternityChallenges.all.map((ec) => ec.completions).sum();
   },
 
   get maxCompletions() {
-    return EternityChallenges.all
-      .map(ec => ec.maxCompletions)
-      .sum();
+    return EternityChallenges.all.map((ec) => ec.maxCompletions).sum();
   },
 
   get remainingCompletions() {
-    return EternityChallenges.all
-      .map(ec => ec.remainingCompletions)
-      .sum();
+    return EternityChallenges.all.map((ec) => ec.remainingCompletions).sum();
   },
 
   autoComplete: {
     tick() {
       const shouldPreventEC7 = TimeDimension(1).totalAmount.gt(0);
-      const hasUpgradeLock = RealityUpgrade(12).isLockingMechanics ||
-        (ImaginaryUpgrade(15).isLockingMechanics && shouldPreventEC7 &&
-          !Array.range(1, 6).some(ec => !EternityChallenge(ec).isFullyCompleted));
+      const hasUpgradeLock =
+        RealityUpgrade(12).isLockingMechanics ||
+        (ImaginaryUpgrade(15).isLockingMechanics &&
+          shouldPreventEC7 &&
+          !Array.range(1, 6).some((ec) => !EternityChallenge(ec).isFullyCompleted));
       if (!player.reality.autoEC || Pelle.isDisabled("autoec") || hasUpgradeLock) {
         player.reality.lastAutoEC = Math.clampMax(player.reality.lastAutoEC, this.interval);
         return;
@@ -356,20 +354,15 @@ export const EternityChallenges = {
     },
 
     get nextChallenge() {
-      return EternityChallenges.all.find(ec => !ec.isFullyCompleted);
+      return EternityChallenges.all.find((ec) => !ec.isFullyCompleted);
     },
 
     get interval() {
       if (!Perk.autocompleteEC1.canBeApplied) return Infinity;
-      let minutes = Effects.min(
-        Number.MAX_VALUE,
-        Perk.autocompleteEC1,
-        Perk.autocompleteEC2,
-        Perk.autocompleteEC3
-      );
+      let minutes = Effects.min(Number.MAX_VALUE, Perk.autocompleteEC1, Perk.autocompleteEC2, Perk.autocompleteEC3);
       minutes /= VUnlocks.fastAutoEC.effectOrDefault(DC.D1).toNumber();
       if (AtomMilestone.am1.isReached) minutes /= 120;
       return TimeSpan.fromMinutes(minutes).totalMilliseconds;
-    }
-  }
+    },
+  },
 };

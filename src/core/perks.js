@@ -34,7 +34,7 @@ class PerkState extends SetPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return this.id === 0 || this.connectedPerks.some(p => p.isBought);
+    return this.id === 0 || this.connectedPerks.some((p) => p.isBought);
   }
 
   get canBeApplied() {
@@ -42,14 +42,14 @@ class PerkState extends SetPurchasableMechanicState {
   }
 
   initializeConnections() {
-    this.connectedPerks = GameDatabase.reality.perkConnections[this.id].map(id => Perks.find(id));
+    this.connectedPerks = GameDatabase.reality.perkConnections[this.id].map((id) => Perks.find(id));
   }
 
   onPurchased() {
     if (this.config.bumpCurrency !== undefined) this.config.bumpCurrency();
     if (this.label === "EU1" && Currency.eternities.gt(0)) applyEU1();
     if (this.label === "ACHNR") {
-      if (Achievements.preReality.some(a => !a.isUnlocked)) player.reality.gainedAutoAchievements = true;
+      if (Achievements.preReality.some((a) => !a.isUnlocked)) player.reality.gainedAutoAchievements = true;
       for (const achievement of Achievements.preReality) {
         achievement.unlock(true);
       }
@@ -60,10 +60,7 @@ class PerkState extends SetPurchasableMechanicState {
   }
 }
 
-export const Perk = mapGameDataToObject(
-  GameDatabase.reality.perks,
-  config => new PerkState(config)
-);
+export const Perk = mapGameDataToObject(GameDatabase.reality.perks, (config) => new PerkState(config));
 
 export const Perks = {
   all: Perk.all,
@@ -72,8 +69,8 @@ export const Perks = {
    * @returns {PerkState}
    */
   find(id) {
-    return Perks.all.find(p => p.id === id);
-  }
+    return Perks.all.find((p) => p.id === id);
+  },
 };
 
 for (const perk of Perks.all) {
@@ -81,7 +78,7 @@ for (const perk of Perks.all) {
 }
 
 export function checkPerkValidity() {
-  if (player.reality.perks.every(id => Perks.find(id) !== undefined)) return;
+  if (player.reality.perks.every((id) => Perks.find(id) !== undefined)) return;
   dev.respecPerks();
   if (Currency.perkPoints.gte(Perks.all.length)) {
     dev.buyAllPerks();

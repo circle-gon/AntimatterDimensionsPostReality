@@ -518,7 +518,7 @@ export const perks = {
   },
 };
 
-export const perkConnections = (function() {
+export const perkConnections = (function () {
   const p = perks;
   // First item is the start, other items are the ends
   const groups = [
@@ -562,15 +562,15 @@ export const perkConnections = (function() {
   const connections = {};
   for (const perk of Object.values(perks)) {
     const connectedPerks = [];
-    const directConnections = groups.find(g => g[0] === perk);
+    const directConnections = groups.find((g) => g[0] === perk);
     if (directConnections !== undefined) {
       connectedPerks.push(...directConnections.slice(1));
     }
     const indirectConnections = groups
-      .filter(g => g.slice(1).some(groupPerk => groupPerk === perk))
-      .map(g => g[0]);
+      .filter((g) => g.slice(1).some((groupPerk) => groupPerk === perk))
+      .map((g) => g[0]);
     connectedPerks.push(...indirectConnections);
-    connections[perk.id] = [...new Set(connectedPerks.map(connectedPerk => connectedPerk.id))];
+    connections[perk.id] = [...new Set(connectedPerks.map((connectedPerk) => connectedPerk.id))];
   }
   return connections;
-}());
+})();

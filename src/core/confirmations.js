@@ -17,8 +17,8 @@ class ConfirmationState {
 }
 
 export const ConfirmationTypes = GameDatabase.confirmationTypes.mapToObject(
-  config => config.option,
-  config => new ConfirmationState(config)
+  (config) => config.option,
+  (config) => new ConfirmationState(config)
 );
 
 ConfirmationTypes.index = Object.values(ConfirmationTypes);

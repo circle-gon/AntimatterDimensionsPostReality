@@ -44,13 +44,7 @@ export class ECTimeStudyState extends TimeStudyState {
   }
 
   purchaseUntil() {
-    const studiesToBuy = [
-      undefined,
-      171, 171, 171,
-      143, 42, 121,
-      111, 123, 151,
-      181, 181, 181
-    ];
+    const studiesToBuy = [undefined, 171, 171, 171, 143, 42, 121, 111, 123, 151, 181, 181, 181];
     // If the player shift clicks an EC study that is immediately buyable, we try to
     // buy it first - in case buying studies up to that point renders it unaffordable.
     this.purchase();
@@ -72,7 +66,7 @@ export class ECTimeStudyState extends TimeStudyState {
     if (player.challenge.eternity.unlocked !== 0) {
       return false;
     }
-    if (!this.config.requirement.some(s => TimeStudy(s).isBought)) {
+    if (!this.config.requirement.some((s) => TimeStudy(s).isBought)) {
       return false;
     }
     return this.allSecondaryRequirementsMet;
@@ -102,11 +96,11 @@ export class ECTimeStudyState extends TimeStudyState {
   }
 
   get allSecondaryRequirementsMet() {
-    return Perk.studyECRequirement.isBought || !this.hasForbiddenStudies && this.isEntryGoalMet;
+    return Perk.studyECRequirement.isBought || (!this.hasForbiddenStudies && this.isEntryGoalMet);
   }
 
   get hasForbiddenStudies() {
-    return this.config.secondary.forbiddenStudies?.some(s => TimeStudy(s).isBought);
+    return this.config.secondary.forbiddenStudies?.some((s) => TimeStudy(s).isBought);
   }
 
   get isEntryGoalMet() {
@@ -127,28 +121,25 @@ export class ECTimeStudyState extends TimeStudyState {
   }
 }
 
-ECTimeStudyState.studies = mapGameData(
-  GameDatabase.eternity.timeStudies.ec,
-  config => new ECTimeStudyState(config)
-);
+ECTimeStudyState.studies = mapGameData(GameDatabase.eternity.timeStudies.ec, (config) => new ECTimeStudyState(config));
 
 /**
  * @param {number} id
  * @returns {ECTimeStudyState}
  */
-TimeStudy.eternityChallenge = function(id) {
+TimeStudy.eternityChallenge = function (id) {
   return ECTimeStudyState.studies[id];
 };
 
 /**
  * @returns {ECTimeStudyState|undefined}
  */
-TimeStudy.eternityChallenge.current = function() {
+TimeStudy.eternityChallenge.current = function () {
   return player.challenge.eternity.unlocked
     ? TimeStudy.eternityChallenge(player.challenge.eternity.unlocked)
     : undefined;
 };
 
-ECTimeStudyState.invalidateCachedRequirements = function() {
-  ECTimeStudyState.studies.forEach(study => study.invalidateRequirement());
+ECTimeStudyState.invalidateCachedRequirements = function () {
+  ECTimeStudyState.studies.forEach((study) => study.invalidateRequirement());
 };

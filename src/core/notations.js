@@ -1,8 +1,8 @@
 import * as ADNotations from "@antimatter-dimensions/notations";
 
-export const Notation = (function() {
+export const Notation = (function () {
   const N = ADNotations;
-  const notation = type => {
+  const notation = (type) => {
     const n = new type();
     n.setAsCurrent = () => {
       player.options.notation = n.name;
@@ -10,7 +10,7 @@ export const Notation = (function() {
     };
     return n;
   };
-  const painful = n => {
+  const painful = (n) => {
     n.isPainful = true;
     return n;
   };
@@ -36,9 +36,9 @@ export const Notation = (function() {
     shi: painful(notation(N.ShiNotation)),
     blind: painful(notation(N.BlindNotation)),
     blobs: painful(notation(N.BlobsNotation)),
-    all: painful(notation(N.AllNotation))
+    all: painful(notation(N.AllNotation)),
   };
-}());
+})();
 
 Notation.emoji.setAsCurrent = (silent = false) => {
   player.options.notation = Notation.emoji.name;
@@ -72,16 +72,16 @@ export const Notations = {
     Notation.blobs,
     Notation.all,
   ],
-  find: name => {
-    const notation = Notations.all.find(n => n.name === name);
+  find: (name) => {
+    const notation = Notations.all.find((n) => n.name === name);
     return notation === undefined ? Notation.mixedScientific : notation;
   },
   get current() {
     return GameUI.initialized ? ui.notation : Notation.mixedScientific;
-  }
+  },
 };
 
-ADNotations.Settings.isInfinite = decimal => ui.formatPreBreak && decimal.gte(Decimal.NUMBER_MAX_VALUE);
+ADNotations.Settings.isInfinite = (decimal) => ui.formatPreBreak && decimal.gte(Decimal.NUMBER_MAX_VALUE);
 
 EventHub.logic.on(GAME_EVENT.GAME_TICK_AFTER, () => {
   ui.formatPreBreak = !PlayerProgress.hasBroken() || (NormalChallenge.isRunning && !Enslaved.isRunning);

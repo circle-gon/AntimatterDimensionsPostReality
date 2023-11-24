@@ -12,16 +12,16 @@ const Payments = {
   },
 
   // Only called from clicking the "Buy More" button in the Shop tab
-  buyMoreSTD: async STD => {
+  buyMoreSTD: async (STD) => {
     player.IAP.checkoutSession = { id: true };
     let res;
     try {
       res = await fetch(`${STD_BACKEND_URL}/purchase`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ amount: STD, cloudID: Cloud.user.id })
+        body: JSON.stringify({ amount: STD, cloudID: Cloud.user.id }),
       });
     } catch (e) {
       GameUI.notify.error("Could not contact payment server!", 10000);
@@ -43,14 +43,14 @@ const Payments = {
   pollForPurchases: () => {
     const { id, amount } = player.IAP.checkoutSession;
     let pollAmount = 0;
-    window.onbeforeunload = async() => {
+    window.onbeforeunload = async () => {
       if (!Payments.interval) return;
       Payments.windowReference?.close();
       await Payments.cancelPurchase(false);
     };
 
     // This setInterval checks every 3 seconds for a response from the payment backend
-    Payments.interval = setInterval(async() => {
+    Payments.interval = setInterval(async () => {
       pollAmount++;
       let statusRes;
       try {
@@ -97,16 +97,16 @@ const Payments = {
       res = await fetch(`${STD_BACKEND_URL}/upgrade`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           user: Cloud.user.id,
           upgrade: upgradeKey,
           extraData: {
             requestedSet: cosmeticName,
-            fullCompletions: player.records.fullGameCompletions
-          }
-        })
+            fullCompletions: player.records.fullGameCompletions,
+          },
+        }),
       });
     } catch (e) {
       GameUI.notify.error("Unable to spend STD coins on upgrade!", 10000);
@@ -130,9 +130,9 @@ const Payments = {
       await fetch(`${STD_BACKEND_URL}/expire`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ sessionId: player.IAP.checkoutSession.id })
+        body: JSON.stringify({ sessionId: player.IAP.checkoutSession.id }),
       });
     } catch (e) {
       GameUI.notify.error("Could not contact payment server!", 10000);
@@ -147,7 +147,7 @@ const Payments = {
   clearInterval() {
     clearInterval(Payments.interval);
     window.onbeforeunload = null;
-  }
+  },
 };
 
 export default Payments;

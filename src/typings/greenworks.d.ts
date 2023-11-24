@@ -28,4 +28,3 @@ export declare module Greenworks {
     state: string;
   }
 }
-

@@ -5,33 +5,33 @@ import { GameDatabase } from "./secret-formula/game-database";
  * @typedef {Object} GlyphEffectConfig__combine_result
  * @property {number | Decimal} value The final effect value (boost to whatever)
  * @property {boolean} capped whether or not a cap or limit was applied (softcaps, etc)
-*/
+ */
 class GlyphEffectConfig {
   /**
-  * @param {Object} setup The fields here mostly match the properties of GlyphEffectConfig
-  * @param {string} setup.id powerpow, etc
-  * @param {string[]} setup.glyphTypes
-  * @param {string} setup.singleDesc Specify how to show a single glyph's effect. Use a string with {value}
-  *  somewhere in it; that will be replaced with a number.
-  * @param {string} [setup.totalDesc] (Defaults to singleDesc) specify how to show the combined effect of many
-  *  glyphs.
-  * @param {string} [setup.genericDesc] (Defaults to singleDesc with {value} replaced with "x") Generic
-  *  description of the glyph's effect
-  * @param {string} [setup.shortDesc] Short and condensed version of the glyph's effect for use in the Modal
-  * @param {(function(number, number): number) | function(number, number): Decimal} [setup.effect] Calculate effect
-  *  value from level and strength
-  * @param {function(number | Decimal): string} [setup.formatEffect] Format the effect's value into a string. Defaults
-  *  to format(x, 3, 3)
-  * @param {function(number | Decimal): string} [setup.formatSingleEffect] Format the effect's value into a string, used
-  *  for effects which need to display different values in single values versus combined values (eg. power effects)
-  * @param {function(number | Decimal): number | Decimal} [setup.softcap] An optional softcap to be applied after glyph
-  *  effects are combined.
-  * @param {((function(number[]): GlyphEffectConfig__combine_result) | function(number[]): number)} setup.combine
-  *  Specification of how multiple glyphs combine. Can be GlyphCombiner.add or GlyphCombiner.multiply for most glyphs.
-  *  Otherwise, should be a function that takes a potentially empty array of numbers (each glyph's effect value)
-  *  and returns a combined effect or an object with the combined effect amd a capped indicator.
-  * @param {boolean} [setup.enabledInDoomed] Determines if this effect is enabled while doomed. Defaults to false
-  */
+   * @param {Object} setup The fields here mostly match the properties of GlyphEffectConfig
+   * @param {string} setup.id powerpow, etc
+   * @param {string[]} setup.glyphTypes
+   * @param {string} setup.singleDesc Specify how to show a single glyph's effect. Use a string with {value}
+   *  somewhere in it; that will be replaced with a number.
+   * @param {string} [setup.totalDesc] (Defaults to singleDesc) specify how to show the combined effect of many
+   *  glyphs.
+   * @param {string} [setup.genericDesc] (Defaults to singleDesc with {value} replaced with "x") Generic
+   *  description of the glyph's effect
+   * @param {string} [setup.shortDesc] Short and condensed version of the glyph's effect for use in the Modal
+   * @param {(function(number, number): number) | function(number, number): Decimal} [setup.effect] Calculate effect
+   *  value from level and strength
+   * @param {function(number | Decimal): string} [setup.formatEffect] Format the effect's value into a string. Defaults
+   *  to format(x, 3, 3)
+   * @param {function(number | Decimal): string} [setup.formatSingleEffect] Format the effect's value into a string, used
+   *  for effects which need to display different values in single values versus combined values (eg. power effects)
+   * @param {function(number | Decimal): number | Decimal} [setup.softcap] An optional softcap to be applied after glyph
+   *  effects are combined.
+   * @param {((function(number[]): GlyphEffectConfig__combine_result) | function(number[]): number)} setup.combine
+   *  Specification of how multiple glyphs combine. Can be GlyphCombiner.add or GlyphCombiner.multiply for most glyphs.
+   *  Otherwise, should be a function that takes a potentially empty array of numbers (each glyph's effect value)
+   *  and returns a combined effect or an object with the combined effect amd a capped indicator.
+   * @param {boolean} [setup.enabledInDoomed] Determines if this effect is enabled while doomed. Defaults to false
+   */
   constructor(setup) {
     GlyphEffectConfig.checkInputs(setup);
     /** @type {string} unique key for the effect -- powerpow, etc */
@@ -51,29 +51,29 @@ class GlyphEffectConfig {
     /** @type {string} shortened description for use in glyph choice info modal */
     this._shortDesc = setup.shortDesc;
     /**
-    * @type {(function(number, number): number) | function(number, number): Decimal} Calculate effect
-    *  value from level and strength
-    */
+     * @type {(function(number, number): number) | function(number, number): Decimal} Calculate effect
+     *  value from level and strength
+     */
     this.effect = setup.effect;
     /**
-    * @type {function(number | Decimal): string} formatting function for the effect
-    * (just the number conversion). Combined with the description strings to make descriptions
-    */
-    this.formatEffect = setup.formatEffect ?? (x => format(x, 3, 3));
+     * @type {function(number | Decimal): string} formatting function for the effect
+     * (just the number conversion). Combined with the description strings to make descriptions
+     */
+    this.formatEffect = setup.formatEffect ?? ((x) => format(x, 3, 3));
     /** @type {function(number | Decimal): string} See info about setup, above */
     this.formatSingleEffect = setup.formatSingleEffect || this.formatEffect;
     /**
-    *  @type {function(number[]): GlyphEffectConfig__combine_result} combine Function that combines
-    * multiple glyph effects into one value (adds up, applies softcaps, etc)
-    */
+     *  @type {function(number[]): GlyphEffectConfig__combine_result} combine Function that combines
+     * multiple glyph effects into one value (adds up, applies softcaps, etc)
+     */
     this.combine = GlyphEffectConfig.setupCombine(setup);
     /** @type {function(number)} conversion function to produce altered glyph effect */
     this.conversion = setup.conversion;
     /**
-    * @type {function(number | Decimal): string} formatSecondaryEffect formatting function for
-    * the secondary effect (if there is one)
-    */
-    this.formatSecondaryEffect = setup.formatSecondaryEffect || (x => format(x, 3, 3));
+     * @type {function(number | Decimal): string} formatSecondaryEffect formatting function for
+     * the secondary effect (if there is one)
+     */
+    this.formatSecondaryEffect = setup.formatSecondaryEffect || ((x) => format(x, 3, 3));
     /** @type {function(number | Decimal): string} See info about setup, above */
     this.formatSingleSecondaryEffect = setup.formatSingleSecondaryEffect || this.formatSecondaryEffect;
     /** @type {string} color to show numbers in glyph tooltips if boosted */
@@ -136,15 +136,33 @@ class GlyphEffectConfig {
 
   /** @private */
   static checkInputs(setup) {
-    const KNOWN_KEYS = ["id", "bitmaskIndex", "glyphTypes", "singleDesc", "totalDesc", "genericDesc", "effect",
-      "formatEffect", "formatSingleEffect", "combine", "softcap", "conversion", "formatSecondaryEffect",
-      "formatSingleSecondaryEffect", "alteredColor", "alterationType", "isGenerated", "shortDesc", "enabledInDoomed"];
-    const unknownField = Object.keys(setup).find(k => !KNOWN_KEYS.includes(k));
+    const KNOWN_KEYS = [
+      "id",
+      "bitmaskIndex",
+      "glyphTypes",
+      "singleDesc",
+      "totalDesc",
+      "genericDesc",
+      "effect",
+      "formatEffect",
+      "formatSingleEffect",
+      "combine",
+      "softcap",
+      "conversion",
+      "formatSecondaryEffect",
+      "formatSingleSecondaryEffect",
+      "alteredColor",
+      "alterationType",
+      "isGenerated",
+      "shortDesc",
+      "enabledInDoomed",
+    ];
+    const unknownField = Object.keys(setup).find((k) => !KNOWN_KEYS.includes(k));
     if (unknownField !== undefined) {
       throw new Error(`Glyph effect "${setup.id}" includes unrecognized field "${unknownField}"`);
     }
 
-    const unknownGlyphType = setup.glyphTypes.find(e => !GLYPH_TYPES.includes(e));
+    const unknownGlyphType = setup.glyphTypes.find((e) => !GLYPH_TYPES.includes(e));
     if (unknownGlyphType !== undefined) {
       throw new Error(`Glyph effect "${setup.id}" references unknown glyphType "${unknownGlyphType}"`);
     }
@@ -155,8 +173,10 @@ class GlyphEffectConfig {
         throw new Error(`The combine function for Glyph effect "${setup.id}" has invalid return type`);
       }
       if (setup.softcap) {
-        throw new Error(`The combine function for Glyph effect "${setup.id}" gives capped information, ` +
-          `but there's also a softcap method`);
+        throw new Error(
+          `The combine function for Glyph effect "${setup.id}" gives capped information, ` +
+            `but there's also a softcap method`
+        );
       }
     }
   }
@@ -167,17 +187,17 @@ class GlyphEffectConfig {
     const softcap = setup.softcap;
     const emptyCombine = combine([]);
     // No supplied capped indicator
-    if (typeof (emptyCombine) === "number") {
-      if (softcap === undefined) return effects => ({ value: combine(effects), capped: false });
-      return effects => {
+    if (typeof emptyCombine === "number") {
+      if (softcap === undefined) return (effects) => ({ value: combine(effects), capped: false });
+      return (effects) => {
         const rawValue = combine(effects);
         const cappedValue = softcap(rawValue);
         return { value: cappedValue, capped: rawValue !== cappedValue };
       };
     }
     if (emptyCombine instanceof Decimal) {
-      if (softcap === undefined) return effects => ({ value: combine(effects), capped: false });
-      return effects => {
+      if (softcap === undefined) return (effects) => ({ value: combine(effects), capped: false });
+      return (effects) => {
         const rawValue = combine(effects);
         const cappedValue = softcap(rawValue);
         return { value: cappedValue, capped: rawValue.neq(cappedValue) };
@@ -192,11 +212,11 @@ export const realityGlyphEffectLevelThresholds = [0, 9000, 15000, 25000];
 
 export const GlyphEffects = mapGameDataToObject(
   GameDatabase.reality.glyphEffects,
-  config => new GlyphEffectConfig(config)
+  (config) => new GlyphEffectConfig(config)
 );
 
 export function findGlyphTypeEffects(glyphType) {
-  return GlyphEffects.all.filter(e => e.glyphTypes.includes(glyphType));
+  return GlyphEffects.all.filter((e) => e.glyphTypes.includes(glyphType));
 }
 
 export function makeGlyphEffectBitmask(effectList) {
@@ -205,12 +225,12 @@ export function makeGlyphEffectBitmask(effectList) {
 
 export function getGlyphEffectsFromBitmask(bitmask) {
   return orderedEffectList
-    .map(effectName => GlyphEffects[effectName])
-    .filter(effect => (bitmask & (1 << effect.bitmaskIndex)) !== 0);
+    .map((effectName) => GlyphEffects[effectName])
+    .filter((effect) => (bitmask & (1 << effect.bitmaskIndex)) !== 0);
 }
 
 export function getGlyphIDsFromBitmask(bitmask) {
-  return getGlyphEffectsFromBitmask(bitmask).map(x => x.id);
+  return getGlyphEffectsFromBitmask(bitmask).map((x) => x.id);
 }
 
 class FunctionalGlyphType {
@@ -249,25 +269,26 @@ class FunctionalGlyphType {
 
 const functionalGlyphTypes = mapGameDataToObject(
   GameDatabase.reality.glyphTypes,
-  config => new FunctionalGlyphType(config)
+  (config) => new FunctionalGlyphType(config)
 );
 
 export const GlyphTypes = {
   ...functionalGlyphTypes,
   /**
-    * @param {function(): number} rng Random number source (0..1)
-    * @param {string} [blacklisted] Do not return the specified type
-    * @returns {string | null}
-    */
+   * @param {function(): number} rng Random number source (0..1)
+   * @param {string} [blacklisted] Do not return the specified type
+   * @returns {string | null}
+   */
   random(rng, blacklisted = []) {
     const types = generatedTypes.filter(
-      x => (EffarigUnlock.reality.isUnlocked || x !== "effarig") && !blacklisted.includes(x));
+      (x) => (EffarigUnlock.reality.isUnlocked || x !== "effarig") && !blacklisted.includes(x)
+    );
     return types[Math.floor(rng.uniform() * types.length)];
   },
   get list() {
-    return GLYPH_TYPES.map(e => GlyphTypes[e]);
+    return GLYPH_TYPES.map((e) => GlyphTypes[e]);
   },
   get locked() {
-    return this.list.filter(e => !e.isUnlocked);
-  }
+    return this.list.filter((e) => !e.isUnlocked);
+  },
 };

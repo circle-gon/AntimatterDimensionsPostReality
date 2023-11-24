@@ -1,29 +1,29 @@
 export const AutomatorPoints = {
   get perks() {
-    return Perks.all.filter(p => p.automatorPoints);
+    return Perks.all.filter((p) => p.automatorPoints);
   },
 
   // This also rejects rebuyables, where automatorPoints is undefined
   get upgrades() {
-    return RealityUpgrades.all.filter(p => p.automatorPoints);
+    return RealityUpgrades.all.filter((p) => p.automatorPoints);
   },
 
   get pointsFromPerks() {
     return this.perks
-      .filter(p => p.isBought)
-      .map(p => p.automatorPoints)
+      .filter((p) => p.isBought)
+      .map((p) => p.automatorPoints)
       .sum();
   },
 
   get pointsFromUpgrades() {
     return this.upgrades
-      .filter(p => p.isBought)
-      .map(p => p.automatorPoints)
+      .filter((p) => p.isBought)
+      .map((p) => p.automatorPoints)
       .sum();
   },
 
   get pointsFromOther() {
-    return GameDatabase.reality.automator.otherAutomatorPoints.map(s => s.automatorPoints()).sum();
+    return GameDatabase.reality.automator.otherAutomatorPoints.map((s) => s.automatorPoints()).sum();
   },
 
   get totalPoints() {
@@ -32,5 +32,5 @@ export const AutomatorPoints = {
 
   get pointsForAutomator() {
     return 100;
-  }
+  },
 };

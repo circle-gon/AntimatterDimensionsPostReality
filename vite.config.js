@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), "");
   const STEAM = env.VITE_STEAM === "true";
-  const path = fileURLToPath(new URL('./src', import.meta.url));
+  const path = fileURLToPath(new URL("./src", import.meta.url));
 
   return {
     plugins: [createVuePlugin()],
@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
       alias: {
         "@": path,
       },
-      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
+      extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json", ".vue"],
     },
   };
 });

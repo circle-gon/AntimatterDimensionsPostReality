@@ -22,7 +22,7 @@ export class GameMechanicState extends Effect {
         }
         Object.defineProperty(effect, "isEffectActive", {
           configurable: false,
-          get: () => this.isEffectActive
+          get: () => this.isEffectActive,
         });
         this.effects[key] = effect;
       }
@@ -45,8 +45,8 @@ export class GameMechanicState extends Effect {
   }
 
   static createAccessor(gameData) {
-    const index = mapGameData(gameData, config => new this(config));
-    const accessor = id => index[id];
+    const index = mapGameData(gameData, (config) => new this(config));
+    const accessor = (id) => index[id];
     accessor.index = index;
     return accessor;
   }

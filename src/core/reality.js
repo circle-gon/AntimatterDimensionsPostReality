@@ -12,8 +12,7 @@ export const GlyphSelection = {
   },
 
   get choiceCount() {
-    return Effects.max(1, Perk.firstPerk) *
-      Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.effectOrDefault(1);
+    return Effects.max(1, Perk.firstPerk) * Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.effectOrDefault(1);
   },
 
   glyphUncommonGuarantee(glyphList, rng) {
@@ -27,7 +26,7 @@ export const GlyphSelection = {
     do {
       newStrength = GlyphGenerator.randomStrength(rng);
     } while (newStrength < strengthThreshold);
-    if (glyphList.some(e => e.strength >= strengthThreshold)) return;
+    if (glyphList.some((e) => e.strength >= strengthThreshold)) return;
     glyphList[Math.floor(random * glyphList.length)].strength = newStrength;
   },
 
@@ -113,7 +112,7 @@ export const GlyphSelection = {
   get indexWithoutSTART() {
     const lexIndex = player.realities * ((player.reality.initialSeed % 5) + 3);
     return permutationIndex(4, lexIndex)[0];
-  }
+  },
 };
 
 export function isRealityAvailable() {
@@ -144,8 +143,9 @@ export function requestManualReality() {
     return;
   }
   if (GameCache.glyphInventorySpace.value === 0) {
-    Modal.message.show("No available inventory space; free up space by shift-clicking Glyphs to get rid of them.",
-      { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
+    Modal.message.show("No available inventory space; free up space by shift-clicking Glyphs to get rid of them.", {
+      closeEvent: GAME_EVENT.GLYPHS_CHANGED,
+    });
     return;
   }
   startManualReality(false);
@@ -263,9 +263,10 @@ export function getRealityProps(isReset, alreadyGotGlyph = false) {
     glyphUndo: false,
     restoreCelestialState: false,
   };
-  if (isReset) return Object.assign(defaults, {
-    reset: true,
-  });
+  if (isReset)
+    return Object.assign(defaults, {
+      reset: true,
+    });
   return Object.assign(defaults, {
     reset: false,
     gainedRM: MachineHandler.gainedRealityMachines,
@@ -285,16 +286,16 @@ function updateRealityRecords(realityProps) {
   const thisRunRMmin = realityProps.gainedRM.dividedBy(Math.clampMin(0.0005, Time.thisRealityRealTime.totalMinutes));
   if (player.records.bestReality.RMmin.lt(thisRunRMmin)) {
     player.records.bestReality.RMmin = thisRunRMmin;
-    player.records.bestReality.RMminSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
+    player.records.bestReality.RMminSet = Glyphs.copyForRecords(Glyphs.active.filter((g) => g !== null));
   }
   if (player.records.bestReality.glyphLevel < realityProps.gainedGlyphLevel.actualLevel) {
     player.records.bestReality.glyphLevel = realityProps.gainedGlyphLevel.actualLevel;
-    player.records.bestReality.glyphLevelSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
+    player.records.bestReality.glyphLevelSet = Glyphs.copyForRecords(Glyphs.active.filter((g) => g !== null));
   }
   player.records.bestReality.time = player.records.thisReality.time.min(player.records.bestReality.time);
   if (player.records.thisReality.realTime < player.records.bestReality.realTime) {
     player.records.bestReality.realTime = player.records.thisReality.realTime;
-    player.records.bestReality.speedSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
+    player.records.bestReality.speedSet = Glyphs.copyForRecords(Glyphs.active.filter((g) => g !== null));
   }
 }
 
@@ -305,9 +306,14 @@ function giveRealityRewards(realityProps) {
   Currency.realityMachines.add(gainedRM.times(multiplier));
   updateRealityRecords(realityProps);
   addRealityTime(
-    player.records.thisReality.time, player.records.thisReality.realTime, gainedRM,
-    realityProps.gainedGlyphLevel.actualLevel, realityAndPPMultiplier, multiplier,
-    MachineHandler.projectedIMCap);
+    player.records.thisReality.time,
+    player.records.thisReality.realTime,
+    gainedRM,
+    realityProps.gainedGlyphLevel.actualLevel,
+    realityAndPPMultiplier,
+    multiplier,
+    MachineHandler.projectedIMCap
+  );
   Currency.realities.add(realityAndPPMultiplier);
   Currency.perkPoints.add(realityAndPPMultiplier * MachineHandler.perkPointMultiplier);
   if (TeresaUnlocks.effarig.canBeApplied) {
@@ -328,22 +334,24 @@ function giveRealityRewards(realityProps) {
     const current = Teresa.runRewardMultiplier;
     const newMultiplier = Teresa.rewardMultiplier(player.antimatter);
     const isHigher = newMultiplier.gt(current);
-    const modalText = `You have completed Teresa's Reality! ${isHigher
-      ? `Since you gained more Antimatter, you increased your
+    const modalText = `You have completed Teresa's Reality! ${
+      isHigher
+        ? `Since you gained more Antimatter, you increased your
       Glyph Sacrifice multiplier from ${format(current, 2, 2)} to ${format(newMultiplier, 2, 2)}`
-      : `You did not gain more Antimatter during this run, so the Glyph Sacrifice multiplier
-      from Teresa did not increase`}.`;
+        : `You did not gain more Antimatter during this run, so the Glyph Sacrifice multiplier
+      from Teresa did not increase`
+    }.`;
     Modal.message.show(modalText, {}, 2);
     if (Currency.antimatter.gt(player.celestials.teresa.bestRunAM)) {
       player.celestials.teresa.bestRunAM = Currency.antimatter.value;
-      player.celestials.teresa.bestAMSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
+      player.celestials.teresa.bestAMSet = Glyphs.copyForRecords(Glyphs.active.filter((g) => g !== null));
 
       // Encode iM values into the RM variable as e10000 * iM in order to only require one prop
       let machineRecord;
       if (Currency.imaginaryMachines.value.eq(0)) machineRecord = player.reality.maxRM;
       else machineRecord = DC.E10000.times(Currency.imaginaryMachines.value);
-      player.celestials.teresa.lastRepeatedMachines = player.celestials.teresa.lastRepeatedMachines
-        .clampMin(machineRecord);
+      player.celestials.teresa.lastRepeatedMachines =
+        player.celestials.teresa.lastRepeatedMachines.clampMin(machineRecord);
     }
     Teresa.quotes.completeReality.show();
   }
@@ -383,8 +391,9 @@ export function beginProcessReality(realityProps) {
     for (let glyphNum = 0; glyphNum < glyphsToProcess; glyphNum++) {
       GlyphSelection.generate(GlyphSelection.choiceCount, glyphLevel);
       if (EffarigUnlock.glyphFilter.isUnlocked) {
-        const glyphChoices = GlyphSelection.glyphList(GlyphSelection.choiceCount,
-          realityProps.gainedGlyphLevel, { rng });
+        const glyphChoices = GlyphSelection.glyphList(GlyphSelection.choiceCount, realityProps.gainedGlyphLevel, {
+          rng,
+        });
         const newGlyph = AutoGlyphProcessor.pick(glyphChoices);
         if (!AutoGlyphProcessor.wouldKeep(newGlyph) || GameCache.glyphInventorySpace.value === 0) {
           AutoGlyphProcessor.getRidOfGlyph(newGlyph);
@@ -409,7 +418,7 @@ export function beginProcessReality(realityProps) {
     toGenerate: 0,
     // We track each glyph type separately; there is the possibility for the glyph filter to be configured in such a
     // way that some types get significantly more or less sacrifice value than the others
-    sampleStats: generatedTypes.map(t => ({
+    sampleStats: generatedTypes.map((t) => ({
       type: t,
       count: 0,
       totalSacrifice: DC.D0,
@@ -431,7 +440,8 @@ export function beginProcessReality(realityProps) {
     stats.count++;
     const newMean = stats.totalSacrifice.div(stats.count);
     // Mathematically this is zero on the first iteration, but oldMean is NaN due to division by zero
-    if (stats.count !== 1) stats.varProdSacrifice = stats.varProdSacrifice.add(value.sub(oldMean).mul(value.sub(newMean)));
+    if (stats.count !== 1)
+      stats.varProdSacrifice = stats.varProdSacrifice.add(value.sub(oldMean).mul(value.sub(newMean)));
   };
 
   // Helper function for pulling a random sacrifice value from the sample we gathered
@@ -451,14 +461,13 @@ export function beginProcessReality(realityProps) {
       // Generate glyph choices and subject the choices to the filter in order to choose a glyph for the sampling
       // process - we can't skip the filter even for the sampling because in most cases the filter will affect
       // the actual result (which is arguably the point of the filter)
-      const glyphChoices = GlyphSelection.glyphList(GlyphSelection.choiceCount,
-        realityProps.gainedGlyphLevel, { rng });
+      const glyphChoices = GlyphSelection.glyphList(GlyphSelection.choiceCount, realityProps.gainedGlyphLevel, { rng });
       const sampleGlyph = AutoGlyphProcessor.pick(glyphChoices);
       const sacGain = GlyphSacrificeHandler.glyphSacrificeGain(sampleGlyph);
 
       // Code and math later on is a lot simpler if we add to both a type-specific stat object and a total stats
       // object right here instead of attempting to combine the types into a total later on
-      const thisTypeStats = glyphSample.sampleStats.find(s => s.type === sampleGlyph.type);
+      const thisTypeStats = glyphSample.sampleStats.find((s) => s.type === sampleGlyph.type);
       addToStats(thisTypeStats, sacGain);
       addToStats(glyphSample.totalStats, sacGain);
     } else {
@@ -469,28 +478,31 @@ export function beginProcessReality(realityProps) {
     }
   };
   const glyphsToSample = Math.min(glyphsToProcess, 10000);
-  Async.run(glyphFunction,
-    glyphsToProcess,
-    {
-      batchSize: 100,
-      maxTime: 33,
-      sleepTime: 1,
-      asyncEntry: doneSoFar => {
-        GameIntervals.stop();
-        ui.$viewModel.modal.progressBar = {
-          label: "Simulating Amplified Reality",
-          info: () => `The game is currently calculating all the resources you would gain from repeating the
+  Async.run(glyphFunction, glyphsToProcess, {
+    batchSize: 100,
+    maxTime: 33,
+    sleepTime: 1,
+    asyncEntry: (doneSoFar) => {
+      GameIntervals.stop();
+      ui.$viewModel.modal.progressBar = {
+        label: "Simulating Amplified Reality",
+        info: () => `The game is currently calculating all the resources you would gain from repeating the
             Reality you just completed ${formatInt(glyphsToProcess)} more times. Pressing "Quick Glyphs" with
             more than ${formatInt(glyphsToSample)} Glyphs remaining will speed up the calculation by automatically
             sacrificing all the remaining Glyphs you would get. Pressing "Skip Glyphs" will ignore all resources
             related to Glyphs and stop the simulation after giving all other resources.
-            ${Ra.unlocks.unlockGlyphAlchemy.canBeApplied ? `Pressing either button to speed up
-            simulation will not update any resources within Glyph Alchemy.` : ""}`,
-          progressName: "Realities",
-          current: doneSoFar,
-          max: glyphsToProcess,
-          startTime: Date.now(),
-          buttons: [{
+            ${
+              Ra.unlocks.unlockGlyphAlchemy.canBeApplied
+                ? `Pressing either button to speed up
+            simulation will not update any resources within Glyph Alchemy.`
+                : ""
+            }`,
+        progressName: "Realities",
+        current: doneSoFar,
+        max: glyphsToProcess,
+        startTime: Date.now(),
+        buttons: [
+          {
             text: "Quick Glyphs",
             condition: (current, max) => max - current > glyphsToSample,
             click: () => {
@@ -504,7 +516,7 @@ export function beginProcessReality(realityProps) {
               progress.remaining = glyphsToSample;
               // We update the progress bar max data (remaining will update automatically).
               ui.$viewModel.modal.progressBar.max = progress.maxIter;
-            }
+            },
           },
           {
             text: "Skip Glyphs",
@@ -513,72 +525,75 @@ export function beginProcessReality(realityProps) {
               // Shortcut to the end since we're ignoring all glyph-related resources
               progress.maxIter -= progress.remaining;
               progress.remaining = 0;
-            }
-          }]
-        };
-      },
-      asyncProgress: doneSoFar => {
-        ui.$viewModel.modal.progressBar.current = doneSoFar;
-      },
-      asyncExit: () => {
-        ui.$viewModel.modal.progressBar = undefined;
-        GameIntervals.start();
-      },
-      then: () => {
-        // This is where we update sacrifice values if we ended up doing quick mode
-        if (glyphSample.toGenerate > 0) {
+            },
+          },
+        ],
+      };
+    },
+    asyncProgress: (doneSoFar) => {
+      ui.$viewModel.modal.progressBar.current = doneSoFar;
+    },
+    asyncExit: () => {
+      ui.$viewModel.modal.progressBar = undefined;
+      GameIntervals.start();
+    },
+    then: () => {
+      // This is where we update sacrifice values if we ended up doing quick mode
+      if (glyphSample.toGenerate > 0) {
+        // Note: This is the only score mode we consider doing special behavior for because it's the only mode where
+        // sacrificing a glyph can significantly affect future glyph choices. Alchemy is not a factor because
+        // the in-game wording specifically disallows it.
+        if (AutoGlyphProcessor.scoreMode === AUTO_GLYPH_SCORE.LOWEST_SACRIFICE) {
+          // General behavior for repeated sacrifice with these settings is that all sacrifice values will increase
+          // at an approximately equal rate because any type that falls behind will get prioritized by the filter.
+          // We fake this behavior by attempting to fill the lower values until all are equal, and then filling all
+          // types equally with whatever is left. We pull from the total stats here because this filter mode
+          // effectively ignores types when assigning scores and picking glyphs
+          let totalSac = sampleFromStats(glyphSample.totalStats, glyphSample.toGenerate);
 
-          // Note: This is the only score mode we consider doing special behavior for because it's the only mode where
-          // sacrificing a glyph can significantly affect future glyph choices. Alchemy is not a factor because
-          // the in-game wording specifically disallows it.
-          if (AutoGlyphProcessor.scoreMode === AUTO_GLYPH_SCORE.LOWEST_SACRIFICE) {
-            // General behavior for repeated sacrifice with these settings is that all sacrifice values will increase
-            // at an approximately equal rate because any type that falls behind will get prioritized by the filter.
-            // We fake this behavior by attempting to fill the lower values until all are equal, and then filling all
-            // types equally with whatever is left. We pull from the total stats here because this filter mode
-            // effectively ignores types when assigning scores and picking glyphs
-            let totalSac = sampleFromStats(glyphSample.totalStats, glyphSample.toGenerate);
+          // Incrementing sacrifice totals without regard to glyph type and reassigning the final values in the same
+          // ascending order as the starting order makes the code simpler to work with, so we do that
+          const generatable = generatedTypes.filter((x) => EffarigUnlock.reality.isUnlocked || x !== "effarig");
+          const sacArray = generatable.map((x) => player.reality.glyphs.sac[x]).sort(Decimal.sortFn);
+          const typeMap = [];
+          for (const type of generatable) typeMap.push({ type, value: player.reality.glyphs.sac[type] });
+          const sortedSacTotals = Object.values(typeMap).sort((a, b) => Decimal.sortFn(a.value, b.value));
 
-            // Incrementing sacrifice totals without regard to glyph type and reassigning the final values in the same
-            // ascending order as the starting order makes the code simpler to work with, so we do that
-            const generatable = generatedTypes.filter(x => EffarigUnlock.reality.isUnlocked || x !== "effarig");
-            const sacArray = generatable.map(x => player.reality.glyphs.sac[x]).sort(Decimal.sortFn);
-            const typeMap = [];
-            for (const type of generatable) typeMap.push({ type, value: player.reality.glyphs.sac[type] });
-            const sortedSacTotals = Object.values(typeMap).sort((a, b) => Decimal.sortFn(a.value, b.value));
+          // Attempt to fill up all the lowest sacrifice totals up to the next highest, stopping early if there isn't
+          // enough left to use for filling. The filling process causes the array to progress something like
+          // [1,3,4,7,9] => [3,3,4,7,9] => [4,4,4,7,9] => ...
+          for (let toFill = 0; toFill < sacArray.length - 1; toFill++) {
+            // Calculate how much we need to fully fill
+            let needed = DC.D0;
+            for (let filling = 0; filling <= toFill; filling++)
+              needed = needed.add(sacArray[toFill + 1]).sub(sacArray[filling]);
 
-            // Attempt to fill up all the lowest sacrifice totals up to the next highest, stopping early if there isn't
-            // enough left to use for filling. The filling process causes the array to progress something like
-            // [1,3,4,7,9] => [3,3,4,7,9] => [4,4,4,7,9] => ...
-            for (let toFill = 0; toFill < sacArray.length - 1; toFill++) {
-              // Calculate how much we need to fully fill
-              let needed = DC.D0;
-              for (let filling = 0; filling <= toFill; filling++) needed = needed.add(sacArray[toFill + 1]).sub(sacArray[filling]);
+            // Fill up the lower indices, but only up to a maximum of what we have available
+            const usedToFill = needed.min(totalSac);
+            totalSac = totalSac.sub(usedToFill);
+            for (let filling = 0; filling <= toFill; filling++)
+              sacArray[filling] = sacArray[filling].add(usedToFill.div(toFill + 1));
+            if (totalSac.eq(0)) break;
+          }
+          // We have some left over, fill all of them equally
+          for (let fill = 0; fill < sacArray.length; fill++)
+            sacArray[fill] = sacArray[fill].add(totalSac.div(sacArray.length));
 
-              // Fill up the lower indices, but only up to a maximum of what we have available
-              const usedToFill = needed.min(totalSac);
-              totalSac = totalSac.sub(usedToFill);
-              for (let filling = 0; filling <= toFill; filling++) sacArray[filling] = sacArray[filling].add(usedToFill.div(toFill + 1));
-              if (totalSac.eq(0)) break;
-            }
-            // We have some left over, fill all of them equally
-            for (let fill = 0; fill < sacArray.length; fill++) sacArray[fill] = sacArray[fill].add(totalSac.div(sacArray.length));
-
-            // Assign the values in increasing order as specified by the original sacrifice totals
-            for (let index = 0; index < sacArray.length; index++) {
-              player.reality.glyphs.sac[sortedSacTotals[index].type] = sacArray[index];
-            }
-          } else {
-            // Give sacrifice values proportionally according to what we found in the sampling stats
-            for (const stats of glyphSample.sampleStats) {
-              const toGenerate = glyphSample.toGenerate * stats.count / glyphsToSample;
-              player.reality.glyphs.sac[stats.type] += sampleFromStats(stats, toGenerate);
-            }
+          // Assign the values in increasing order as specified by the original sacrifice totals
+          for (let index = 0; index < sacArray.length; index++) {
+            player.reality.glyphs.sac[sortedSacTotals[index].type] = sacArray[index];
+          }
+        } else {
+          // Give sacrifice values proportionally according to what we found in the sampling stats
+          for (const stats of glyphSample.sampleStats) {
+            const toGenerate = (glyphSample.toGenerate * stats.count) / glyphsToSample;
+            player.reality.glyphs.sac[stats.type] += sampleFromStats(stats, toGenerate);
           }
         }
-      },
-      progress
-    });
+      }
+    },
+    progress,
+  });
   Glyphs.processSortingAfterReality();
 }
 
@@ -587,7 +602,7 @@ export function finishProcessReality(realityProps) {
   const finalEP = Currency.eternityPoints.value.plus(gainedEternityPoints());
   if (player.records.bestReality.bestEP.lt(finalEP)) {
     player.records.bestReality.bestEP = new Decimal(finalEP);
-    player.records.bestReality.bestEPSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
+    player.records.bestReality.bestEPSet = Glyphs.copyForRecords(Glyphs.active.filter((g) => g !== null));
   }
 
   const realityRealTime = player.records.thisReality.realTime;
@@ -659,8 +674,10 @@ export function finishProcessReality(realityProps) {
   player.eterc8ids = 50;
   player.eterc8repl = 40;
   if (realityProps.glyphUndo) {
-    player.requirementChecks.reality.maxGlyphs =
-      Math.max(Glyphs.bestUndoGlyphCount, player.requirementChecks.reality.maxGlyphs);
+    player.requirementChecks.reality.maxGlyphs = Math.max(
+      Glyphs.bestUndoGlyphCount,
+      player.requirementChecks.reality.maxGlyphs
+    );
   } else {
     Player.resetRequirements("reality");
   }
@@ -681,7 +698,7 @@ export function finishProcessReality(realityProps) {
       3: 0,
       11: 0,
       12: 0,
-      13: 0
+      13: 0,
     };
   }
   if (!PelleUpgrade.tachyonParticlesNoReset.canBeApplied) {
@@ -777,7 +794,7 @@ export function applyRUPG10() {
   }
   if (Pelle.isDisabled("rupg10")) return;
 
-  player.auto.antimatterDims.all = player.auto.antimatterDims.all.map(current => ({
+  player.auto.antimatterDims.all = player.auto.antimatterDims.all.map((current) => ({
     isUnlocked: true,
     // These costs are approximately right; if bought manually all dimensions are slightly different from one another
     cost: 1e14,
@@ -786,7 +803,7 @@ export function applyRUPG10() {
     mode: current.mode,
     priority: current.priority,
     isActive: current.isActive,
-    lastTick: player.records.realTimePlayed
+    lastTick: player.records.realTimePlayed,
   }));
 
   for (const autobuyer of Autobuyers.all) {
@@ -832,7 +849,7 @@ export function clearCelestialRuns() {
 }
 
 export function isInCelestialReality() {
-  return Object.values(player.celestials).some(x => x.run);
+  return Object.values(player.celestials).some((x) => x.run);
 }
 
 function lockAchievementsOnReality() {

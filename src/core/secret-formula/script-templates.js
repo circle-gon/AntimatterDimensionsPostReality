@@ -2,38 +2,38 @@ import { AutobuyerInputFunctions } from "@/components/tabs/autobuyers/AutobuyerI
 
 export const automatorTemplates = {
   /**
-    * List of possible data types to dynamically generate in script templates, assumed to be only string or boolean
-    * {
-    *  @property {String} name              String to be used as a key for entries in this object
-    *  @property {String[]} boolDisplay     Strings to be displayed for true/false states for boolean inputs. If
-    *   undefined, assumed to be a non-boolean input
-    *  @property {Function} isValidString   A function used to test if an input string is formatted properly or not
-    *  @property {Function} map             A function to be used to map the inputs to their actual values
-    *   which are stored in the param object. If undefined, assumed to be no mapping
-    * }
-    */
+   * List of possible data types to dynamically generate in script templates, assumed to be only string or boolean
+   * {
+   *  @property {String} name              String to be used as a key for entries in this object
+   *  @property {String[]} boolDisplay     Strings to be displayed for true/false states for boolean inputs. If
+   *   undefined, assumed to be a non-boolean input
+   *  @property {Function} isValidString   A function used to test if an input string is formatted properly or not
+   *  @property {Function} map             A function to be used to map the inputs to their actual values
+   *   which are stored in the param object. If undefined, assumed to be no mapping
+   * }
+   */
   paramTypes: [
     {
       name: "tree",
-      isValidString: str => {
+      isValidString: (str) => {
         const validImport = TimeStudyTree.isValidImportString(str);
         const preset = str.match(/^(NAME (.{1,4})|ID (\d))$/u);
-        const validPreset = preset ? (
-          player.timestudy.presets.some(p => p.name === preset[2]) ||
-          (Number(preset[3]) > 0 && Number(preset[3]) < 7)
-        ) : false;
+        const validPreset = preset
+          ? player.timestudy.presets.some((p) => p.name === preset[2]) ||
+            (Number(preset[3]) > 0 && Number(preset[3]) < 7)
+          : false;
         return validImport || validPreset;
       },
     },
     {
       name: "integer",
-      isValidString: str => AutobuyerInputFunctions.int.tryParse(str),
-      map: x => Math.round(parseInt(x, 10)),
+      isValidString: (str) => AutobuyerInputFunctions.int.tryParse(str),
+      map: (x) => Math.round(parseInt(x, 10)),
     },
     {
       name: "decimal",
-      isValidString: str => AutobuyerInputFunctions.decimal.tryParse(str),
-      map: x => AutobuyerInputFunctions.decimal.tryParse(x),
+      isValidString: (str) => AutobuyerInputFunctions.decimal.tryParse(str),
+      map: (x) => AutobuyerInputFunctions.decimal.tryParse(x),
     },
     {
       name: "boolean",
@@ -46,24 +46,24 @@ export const automatorTemplates = {
     {
       name: "mode",
       boolDisplay: ["X times highest", "Seconds since last"],
-      map: x => (x ? "mult" : "time"),
+      map: (x) => (x ? "mult" : "time"),
     },
   ],
   /**
-    * List automator script templates, primarily used here for formatting the player UI prompts appropriately
-    * so that all of the required fields show up in the proper input formats. Actual script formatting requires
-    * additionally writing a method to be called in the constructor of the ScriptTemplate class
-    * {
-    *  @property {String} name          Name of script template, also used as a key within the constructor for
-    *   ScriptTemplate objects
-    *  @property {String} description   Text description of what the template does when used in the automator
-    *  @property {Object[]} inputs      Fields of the param object which need to be filled for the template to
-    *   have all the information it needs. Contains the name of the field, the type (drawn from paramTypes above),
-    *   and a prompt to be shown in the UI end
-    *  @property {Function} warnings    Function which checks the current game state and potentially provides
-    *   warnings based on some possibly common cases which may lead to undesired behavior
-    * }
-    */
+   * List automator script templates, primarily used here for formatting the player UI prompts appropriately
+   * so that all of the required fields show up in the proper input formats. Actual script formatting requires
+   * additionally writing a method to be called in the constructor of the ScriptTemplate class
+   * {
+   *  @property {String} name          Name of script template, also used as a key within the constructor for
+   *   ScriptTemplate objects
+   *  @property {String} description   Text description of what the template does when used in the automator
+   *  @property {Object[]} inputs      Fields of the param object which need to be filled for the template to
+   *   have all the information it needs. Contains the name of the field, the type (drawn from paramTypes above),
+   *   and a prompt to be shown in the UI end
+   *  @property {Function} warnings    Function which checks the current game state and potentially provides
+   *   warnings based on some possibly common cases which may lead to undesired behavior
+   * }
+   */
   scripts: [
     {
       name: "Climb EP",
@@ -195,5 +195,5 @@ export const automatorTemplates = {
         return list;
       },
     },
-  ]
+  ],
 };

@@ -63,7 +63,7 @@ async function validatePurchase(orderId) {
 
   await PlayFab.ConsumeItem(purchaseInstance, 1);
   const stdsBought = Number(purchaseName.replace("STD", ""));
-  pendingValidations = pendingValidations.filter(item => item !== orderId);
+  pendingValidations = pendingValidations.filter((item) => item !== orderId);
   await PlayFab.AddUserVirtualCurrency(stdsBought, "ST");
   GameUI.notify.info(`${stdsBought} STDs Obtained!`);
   syncIAP();
@@ -77,7 +77,7 @@ async function syncIAP() {
   const userInventory = await PlayFab.GetUserInventory();
   ShopPurchaseData.totalSTD = userInventory.VirtualCurrency?.ST ?? 0;
   for (const key of Object.keys(GameDatabase.shopPurchases)) {
-    const item = userInventory.Inventory.find(x => x.ItemId === key);
+    const item = userInventory.Inventory.find((x) => x.ItemId === key);
     ShopPurchaseData[key] = item?.RemainingUses ?? 0;
   }
   GameUI.update();
@@ -101,7 +101,7 @@ async function storeCosmetic(id) {
   cosmetics.add(id);
   const updatedCosmetics = [...cosmetics];
   await PlayFab.UpdateUserData({
-    Cosmetics: updatedCosmetics.join(",")
+    Cosmetics: updatedCosmetics.join(","),
   });
 
   ShopPurchaseData.unlockedCosmetics = updatedCosmetics;

@@ -5,10 +5,14 @@ export const Speedrun = {
   officialFixedSeed: 69420,
   unlock() {
     if (player.speedrun.isUnlocked) return;
-    Modal.message.show(`You have unlocked Speedrun Mode! This allows you to start a new save file with some slight
+    Modal.message.show(
+      `You have unlocked Speedrun Mode! This allows you to start a new save file with some slight
       changes which can be helpful if you're trying to complete the game as quickly as possible. The option to
       start a Speedrun Save is now available in the Options tab, under Saving. Choosing to start a Speedrun Save
-      will provide you with another modal with more in-depth information.`, {}, 3);
+      will provide you with another modal with more in-depth information.`,
+      {},
+      3
+    );
     player.speedrun.isUnlocked = true;
   },
   // Used to block the seed-changing modal from opening (other functions assume this is checked beforehand)
@@ -122,13 +126,13 @@ export const Speedrun = {
     const newestTime = player.speedrun.records.max();
     if (newestTime === 0) return 0;
     return player.speedrun.records.indexOf(newestTime);
-  }
+  },
 };
 
 class SpeedrunMilestone extends GameMechanicState {
   constructor(config) {
     super(config);
-    this.registerEvents(config.checkEvent, args => this.tryComplete(args));
+    this.registerEvents(config.checkEvent, (args) => this.tryComplete(args));
   }
 
   get name() {

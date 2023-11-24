@@ -2,7 +2,7 @@ import { GameMechanicState } from "./game-mechanics";
 
 export function tryCompleteInfinityChallenges() {
   if (EternityMilestone.autoIC.isReached) {
-    const toComplete = InfinityChallenges.all.filter(x => x.isUnlocked && !x.isCompleted);
+    const toComplete = InfinityChallenges.all.filter((x) => x.isUnlocked && !x.isCompleted);
     for (const challenge of toComplete) challenge.complete();
   }
 }
@@ -29,8 +29,11 @@ class InfinityChallengeState extends GameMechanicState {
   }
 
   get isUnlocked() {
-    return player.records.thisEternity.maxAM.gte(this.unlockAM) || (Achievement(133).isUnlocked && !Pelle.isDoomed) ||
-      (PelleUpgrade.keepInfinityChallenges.canBeApplied && Pelle.cel.records.totalAntimatter.gte(this.unlockAM));
+    return (
+      player.records.thisEternity.maxAM.gte(this.unlockAM) ||
+      (Achievement(133).isUnlocked && !Pelle.isDoomed) ||
+      (PelleUpgrade.keepInfinityChallenges.canBeApplied && Pelle.cel.records.totalAntimatter.gte(this.unlockAM))
+    );
   }
 
   get isRunning() {
@@ -112,9 +115,7 @@ export const InfinityChallenge = InfinityChallengeState.createAccessor(GameDatab
  * @returns {InfinityChallengeState}
  */
 Object.defineProperty(InfinityChallenge, "current", {
-  get: () => (player.challenge.infinity.current > 0
-    ? InfinityChallenge(player.challenge.infinity.current)
-    : undefined),
+  get: () => (player.challenge.infinity.current > 0 ? InfinityChallenge(player.challenge.infinity.current) : undefined),
 });
 
 Object.defineProperty(InfinityChallenge, "isRunning", {
@@ -133,7 +134,7 @@ export const InfinityChallenges = {
     player.challenge.infinity.completedBits = 0;
   },
   get nextIC() {
-    return InfinityChallenges.all.find(x => !x.isUnlocked);
+    return InfinityChallenges.all.find((x) => !x.isUnlocked);
   },
   get nextICUnlockAM() {
     return this.nextIC?.unlockAM;
@@ -160,6 +161,6 @@ export const InfinityChallenges = {
    * @returns {InfinityChallengeState[]}
    */
   get completed() {
-    return InfinityChallenges.all.filter(ic => ic.isCompleted);
-  }
+    return InfinityChallenges.all.filter((ic) => ic.isCompleted);
+  },
 };

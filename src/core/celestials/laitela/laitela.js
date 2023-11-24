@@ -45,12 +45,11 @@ export const Laitela = {
     }
   },
   get matterExtraPurchaseFactor() {
-    const preAtom = (
+    const preAtom =
       1 +
       0.5 *
         Math.pow(Decimal.pLog10(Currency.darkMatter.max) / 50, 0.4) *
-        (1 + SingularityMilestone.continuumMult.effectOrDefault(0))
-    );
+        (1 + SingularityMilestone.continuumMult.effectOrDefault(0));
     const postAtom = preAtom * AtomicParticle(0).effects[0];
     return postAtom;
   },
@@ -97,21 +96,21 @@ export const Laitela = {
   // Greedily buys the cheapest available upgrade until none are affordable
   maxAllDMDimensions(maxTier) {
     // Note that tier is 1-indexed
-    const unlockedDimensions = DarkMatterDimensions.all.filter(d => d.isUnlocked && d.tier <= maxTier);
+    const unlockedDimensions = DarkMatterDimensions.all.filter((d) => d.isUnlocked && d.tier <= maxTier);
     const upgradeInfo = unlockedDimensions
-      .map(d => [
+      .map((d) => [
         [
           d.rawIntervalCost,
           d.intervalCostIncrease,
           d.maxIntervalPurchases,
           d.data.intervalUpgrades,
-          x => d.buyManyInterval(x),
+          (x) => d.buyManyInterval(x),
         ],
-        [d.rawPowerDMCost, d.powerDMCostIncrease, Infinity, d.data.powerDMUpgrades, x => d.buyManyPowerDM(x)],
-        [d.rawPowerDECost, d.powerDECostIncrease, Infinity, d.data.powerDEUpgrade, x => d.buyManyPowerDE(x)],
+        [d.rawPowerDMCost, d.powerDMCostIncrease, Infinity, d.data.powerDMUpgrades, (x) => d.buyManyPowerDM(x)],
+        [d.rawPowerDECost, d.powerDECostIncrease, Infinity, d.data.powerDEUpgrade, (x) => d.buyManyPowerDE(x)],
       ])
       .flat(1);
-    const buy = function(upgrade, purchases) {
+    const buy = function (upgrade, purchases) {
       upgrade[4](purchases);
       upgrade[3] += purchases;
       upgrade[0] = upgrade[0].times(Decimal.pow(upgrade[1], purchases));
@@ -124,11 +123,9 @@ export const Laitela = {
       buy(upgrade, purchases);
     }
     // Make sure that we don't forever buy 1 because precision issues
-    while (
-      upgradeInfo.some(upgrade => upgrade[0].lte(darkMatter) && upgrade[2] > 0 && upgrade[3] + 1 > upgrade[3])
-    ) {
+    while (upgradeInfo.some((upgrade) => upgrade[0].lte(darkMatter) && upgrade[2] > 0 && upgrade[3] + 1 > upgrade[3])) {
       const cheapestUpgrade = upgradeInfo
-        .filter(upgrade => upgrade[2] > 0)
+        .filter((upgrade) => upgrade[2] > 0)
         .sort((a, b) => a[0].minus(b[0]).sign())[0];
       buy(cheapestUpgrade, 1);
     }

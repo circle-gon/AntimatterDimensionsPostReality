@@ -7,9 +7,7 @@ import { MultiplierTabIcons } from "./icons";
 export const EP = {
   total: {
     name: "Total EP Gained on Eternity",
-    displayOverride: () => (Player.canEternity
-      ? format(gainedEternityPoints(), 2, 2)
-      : "Cannot Eternity"),
+    displayOverride: () => (Player.canEternity ? format(gainedEternityPoints(), 2, 2) : "Cannot Eternity"),
     // This effectively hides everything if the player can't actually gain any
     multValue: () => (Player.canEternity ? gainedEternityPoints() : 1),
     isActive: () => PlayerProgress.eternityUnlocked() || Player.canEternity,
@@ -21,8 +19,12 @@ export const EP = {
     name: "Base Eternity Points",
     isBase: true,
     fakeValue: DC.D5,
-    multValue: () => DC.D5.pow(player.records.thisEternity.maxIP.plus(
-      gainedInfinityPoints()).log10() / (308 - PelleRifts.recursion.effectValue.toNumber()) - 0.7),
+    multValue: () =>
+      DC.D5.pow(
+        player.records.thisEternity.maxIP.plus(gainedInfinityPoints()).log10() /
+          (308 - PelleRifts.recursion.effectValue.toNumber()) -
+          0.7
+      ),
     isActive: () => PlayerProgress.eternityUnlocked(),
     icon: MultiplierTabIcons.CONVERT_FROM("IP"),
   },
@@ -52,20 +54,14 @@ export const EP = {
   },
   timeStudy: {
     name: "Time Studies",
-    multValue: () => DC.D1.timesEffectsOf(
-      TimeStudy(61),
-      TimeStudy(121),
-      TimeStudy(122),
-      TimeStudy(123),
-    ),
+    multValue: () => DC.D1.timesEffectsOf(TimeStudy(61), TimeStudy(121), TimeStudy(122), TimeStudy(123)),
     isActive: () => PlayerProgress.eternityUnlocked() && !Pelle.isDoomed,
     icon: MultiplierTabIcons.TIME_STUDY,
   },
   glyph: {
     name: "Equipped Glyphs",
-    multValue: () => DC.D1
-      .timesEffectsOf(Pelle.isDoomed ? null : GlyphEffect.epMult)
-      .times(Pelle.specialGlyphEffect.time),
+    multValue: () =>
+      DC.D1.timesEffectsOf(Pelle.isDoomed ? null : GlyphEffect.epMult).times(Pelle.specialGlyphEffect.time),
     powValue: () => (GlyphAlteration.isAdded("time") ? getSecondaryGlyphEffect("timeEP") : 1),
     isActive: () => PlayerProgress.realityUnlocked(),
     icon: MultiplierTabIcons.GENERIC_GLYPH,

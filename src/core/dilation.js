@@ -87,24 +87,24 @@ export function buyDilationUpgrade(id, bulk = 1) {
     if (Currency.dilatedTime.lt(upgrade.cost) || upgAmount >= upgrade.config.purchaseCap) return false;
 
     const expo = upgrade.config.pelleOnly ? AtomUpgrades.dilExpo(id) : 1;
-    let buying = expo !== 1
-      ? Math.floor(
-        Currency.dilatedTime.value.div(upgrade.config.initialCost).log(upgrade.config.increment) ** (1 / expo) - upgAmount
-      ) + 1
-      : Decimal.affordGeometricSeries(
-        Currency.dilatedTime.value,
-        upgrade.config.initialCost,
-        upgrade.config.increment,
-        upgAmount
-      ).toNumber();
+    let buying =
+      expo !== 1
+        ? Math.floor(
+            Currency.dilatedTime.value.div(upgrade.config.initialCost).log(upgrade.config.increment) ** (1 / expo) -
+              upgAmount
+          ) + 1
+        : Decimal.affordGeometricSeries(
+            Currency.dilatedTime.value,
+            upgrade.config.initialCost,
+            upgrade.config.increment,
+            upgAmount
+          ).toNumber();
     buying = Math.clampMax(buying, bulk);
     buying = Math.clampMax(buying, upgrade.config.purchaseCap - upgAmount);
-    const cost = expo !== 1 ? Decimal.pow(upgrade.config.increment, (buying + upgAmount - 1) ** expo).mul(upgrade.config.initialCost) : Decimal.sumGeometricSeries(
-      buying,
-      upgrade.config.initialCost,
-      upgrade.config.increment,
-      upgAmount
-    );
+    const cost =
+      expo !== 1
+        ? Decimal.pow(upgrade.config.increment, (buying + upgAmount - 1) ** expo).mul(upgrade.config.initialCost)
+        : Decimal.sumGeometricSeries(buying, upgrade.config.initialCost, upgrade.config.increment, upgAmount);
     Currency.dilatedTime.subtract(cost);
     player.dilation.rebuyables[id] += buying;
     if (id === 2) {
@@ -287,11 +287,11 @@ class RebuyableDilationUpgradeState extends RebuyableMechanicState {
   }
 }
 
-export const DilationUpgrade = mapGameDataToObject(GameDatabase.eternity.dilation, config =>
-  (config.rebuyable ? new RebuyableDilationUpgradeState(config) : new DilationUpgradeState(config))
+export const DilationUpgrade = mapGameDataToObject(GameDatabase.eternity.dilation, (config) =>
+  config.rebuyable ? new RebuyableDilationUpgradeState(config) : new DilationUpgradeState(config)
 );
 
 export const DilationUpgrades = {
   rebuyable: [DilationUpgrade.dtGain, DilationUpgrade.galaxyThreshold, DilationUpgrade.tachyonGain],
-  fromId: id => DilationUpgrade.all.find(x => x.id === Number(id)),
+  fromId: (id) => DilationUpgrade.all.find((x) => x.id === Number(id)),
 };

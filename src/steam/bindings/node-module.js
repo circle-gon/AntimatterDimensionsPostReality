@@ -6,7 +6,6 @@ import { STEAM } from "@/env";
  * @template TModule
  */
 export class NodeModule {
-
   /**
    * @param {string} name
    */

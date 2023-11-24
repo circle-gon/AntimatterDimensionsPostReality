@@ -28,16 +28,11 @@ export const tickspeed = {
   base: {
     name: "Base Tickspeed from Achievements",
     displayOverride: () => {
-      const val = DC.D1.dividedByEffectsOf(
-        Achievement(36),
-        Achievement(45),
-        Achievement(66),
-        Achievement(83)
-      );
+      const val = DC.D1.dividedByEffectsOf(Achievement(36), Achievement(45), Achievement(66), Achievement(83));
       return `${format(val, 2, 2)}/sec`;
     },
     multValue: () => new Decimal.pow10(100 * MultiplierTabHelper.decomposeTickspeed().base),
-    isActive: () => [36, 45, 66, 83].some(a => Achievement(a).canBeApplied),
+    isActive: () => [36, 45, 66, 83].some((a) => Achievement(a).canBeApplied),
     icon: MultiplierTabIcons.ACHIEVEMENT,
   },
   upgrades: {
@@ -70,9 +65,8 @@ export const tickspeed = {
 export const tickspeedUpgrades = {
   purchased: {
     name: "Purchased Tickspeed Upgrades",
-    displayOverride: () => (Laitela.continuumActive
-      ? formatFloat(Tickspeed.continuumValue, 2, 2)
-      : formatInt(player.totalTickBought)),
+    displayOverride: () =>
+      Laitela.continuumActive ? formatFloat(Tickspeed.continuumValue, 2, 2) : formatInt(player.totalTickBought),
     multValue: () => Decimal.pow10(Laitela.continuumActive ? Tickspeed.continuumValue : player.totalTickBought),
     isActive: () => true,
     icon: MultiplierTabIcons.PURCHASE("AD"),
@@ -83,5 +77,5 @@ export const tickspeedUpgrades = {
     multValue: () => Decimal.pow10(player.totalTickGained),
     isActive: () => Currency.timeShards.gt(0),
     icon: MultiplierTabIcons.SPECIFIC_GLYPH("time"),
-  }
+  },
 };

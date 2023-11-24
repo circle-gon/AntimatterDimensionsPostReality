@@ -29,13 +29,15 @@ class GlyphRNG {
       this.secondGaussian = GlyphRNG.SECOND_GAUSSIAN_DEFAULT_VALUE;
       return toReturn;
     }
-    let u = 0, v = 0, s = 0;
+    let u = 0,
+      v = 0,
+      s = 0;
     do {
       u = this.uniform() * 2 - 1;
       v = this.uniform() * 2 - 1;
       s = u * u + v * v;
     } while (s >= 1 || s === 0);
-    s = Math.sqrt(-2 * Math.log(s) / s);
+    s = Math.sqrt((-2 * Math.log(s)) / s);
     this.secondGaussian = v * s;
     return u * s;
   }
@@ -44,12 +46,16 @@ class GlyphRNG {
    * Write the seed out to where it can be restored
    * @abstract
    */
-  finalize() { throw new NotImplementedError(); }
+  finalize() {
+    throw new NotImplementedError();
+  }
 
   /**
    * @abstract
    */
-  get isFake() { throw new NotImplementedError(); }
+  get isFake() {
+    throw new NotImplementedError();
+  }
 }
 
 export const GlyphGenerator = {
@@ -66,30 +72,42 @@ export const GlyphGenerator = {
   fakeSecondGaussian: null,
   /* eslint-disable lines-between-class-members */
   RealGlyphRNG: class extends GlyphRNG {
-    constructor() { super(player.reality.seed, player.reality.secondGaussian); }
+    constructor() {
+      super(player.reality.seed, player.reality.secondGaussian);
+    }
     finalize() {
       player.reality.seed = this.seed;
       player.reality.secondGaussian = this.secondGaussian;
     }
-    get isFake() { return false; }
+    get isFake() {
+      return false;
+    }
   },
 
   FakeGlyphRNG: class extends GlyphRNG {
-    constructor() { super(GlyphGenerator.fakeSeed, GlyphGenerator.fakeSecondGaussian); }
+    constructor() {
+      super(GlyphGenerator.fakeSeed, GlyphGenerator.fakeSecondGaussian);
+    }
     finalize() {
       GlyphGenerator.fakeSeed = this.seed;
       GlyphGenerator.fakeSecondGaussian = this.secondGaussian;
     }
-    get isFake() { return true; }
+    get isFake() {
+      return true;
+    }
   },
 
   MusicGlyphRNG: class extends GlyphRNG {
-    constructor() { super(player.reality.musicSeed, player.reality.musicSecondGaussian); }
+    constructor() {
+      super(player.reality.musicSeed, player.reality.musicSecondGaussian);
+    }
     finalize() {
       player.reality.musicSeed = this.seed;
       player.reality.musicSecondGaussian = this.secondGaussian;
     }
-    get isFake() { return false; }
+    get isFake() {
+      return false;
+    }
   },
   /* eslint-enable lines-between-class-members */
 
@@ -143,9 +161,7 @@ export const GlyphGenerator = {
 
   cursedGlyph() {
     const str = rarityToStrength(100);
-    const effectBitmask = makeGlyphEffectBitmask(
-      orderedEffectList.filter(effect => effect.match("cursed*"))
-    );
+    const effectBitmask = makeGlyphEffectBitmask(orderedEffectList.filter((effect) => effect.match("cursed*")));
     return {
       id: undefined,
       idx: null,
@@ -160,7 +176,7 @@ export const GlyphGenerator = {
   // These Glyphs are given on entering Doomed to prevent the player
   // from having none of each basic glyphs which are requied to beat pelle
   doomedGlyph(type) {
-    const effectList = GlyphEffects.all.filter(e => e.id.startsWith(type));
+    const effectList = GlyphEffects.all.filter((e) => e.id.startsWith(type));
     effectList.push(GlyphEffects.timespeed);
     let bitmask = 0;
     for (const effect of effectList) bitmask |= 1 << effect.bitmaskIndex;
@@ -179,7 +195,7 @@ export const GlyphGenerator = {
   companionGlyph(eternityPoints) {
     // Store the pre-Reality EP value in the glyph's rarity
     const str = rarityToStrength(eternityPoints.log10() / 1e6);
-    const effects = orderedEffectList.filter(effect => effect.match("companion*"));
+    const effects = orderedEffectList.filter((effect) => effect.match("companion*"));
     const effectBitmask = makeGlyphEffectBitmask(effects);
     return {
       id: undefined,
@@ -194,8 +210,10 @@ export const GlyphGenerator = {
 
   musicGlyph() {
     const rng = new GlyphGenerator.MusicGlyphRNG();
-    const glyph =
-      this.randomGlyph({ actualLevel: Math.floor(player.records.bestReality.glyphLevel * 0.8), rawLevel: 1 }, rng);
+    const glyph = this.randomGlyph(
+      { actualLevel: Math.floor(player.records.bestReality.glyphLevel * 0.8), rawLevel: 1 },
+      rng
+    );
     rng.finalize();
     glyph.cosmetic = "music";
     glyph.fixedCosmetic = "music";
@@ -223,8 +241,8 @@ export const GlyphGenerator = {
     if (Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.canBeApplied) return rarityToStrength(100);
     let result = GlyphGenerator.gaussianBellCurve(rng) * GlyphGenerator.strengthMultiplier;
     const relicShardFactor = Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.canBeApplied ? 1 : rng.uniform();
-    const increasedRarity = relicShardFactor * Effarig.maxRarityBoost +
-      Effects.sum(Achievement(146), GlyphSacrifice.effarig);
+    const increasedRarity =
+      relicShardFactor * Effarig.maxRarityBoost + Effects.sum(Achievement(146), GlyphSacrifice.effarig);
     // Each rarity% is 0.025 strength.
     result += increasedRarity / 40;
     // Raise the result to the next-highest 0.1% rarity.
@@ -241,10 +259,7 @@ export const GlyphGenerator = {
     const random2 = rng.uniform();
     if (type !== "effarig" && Ra.unlocks.glyphEffectCount.canBeApplied) return 4;
     const maxEffects = Ra.unlocks.glyphEffectCount.canBeApplied ? 7 : 4;
-    let num = Math.min(
-      maxEffects,
-      Math.floor(Math.pow(random1, 1 - (Math.pow(level * strength, 0.5)) / 100) * 1.5 + 1)
-    );
+    let num = Math.min(maxEffects, Math.floor(Math.pow(random1, 1 - Math.pow(level * strength, 0.5) / 100) * 1.5 + 1));
     // If we do decide to add anything else that boosts chance of an extra effect, keeping the code like this
     // makes it easier to do (add it to the Effects.max).
     if (RealityUpgrade(17).isBought && random2 < Effects.max(0, RealityUpgrade(17))) {
@@ -255,16 +270,19 @@ export const GlyphGenerator = {
 
   // Populate a list of reality glyph effects based on level
   generateRealityEffects(level) {
-    const numberOfEffects = realityGlyphEffectLevelThresholds.filter(lv => lv <= level).length;
+    const numberOfEffects = realityGlyphEffectLevelThresholds.filter((lv) => lv <= level).length;
     const sortedRealityEffects = GlyphEffects.all
-      .filter(eff => eff.glyphTypes.includes("reality"))
+      .filter((eff) => eff.glyphTypes.includes("reality"))
       .sort((a, b) => a.bitmaskIndex - b.bitmaskIndex)
-      .map(eff => eff.id);
+      .map((eff) => eff.id);
     return sortedRealityEffects.slice(0, numberOfEffects);
   },
 
   generateEffects(type, count, rng) {
-    const effectValues = GlyphTypes[type].effects.mapToObject(x => x.bitmaskIndex, () => rng.uniform());
+    const effectValues = GlyphTypes[type].effects.mapToObject(
+      (x) => x.bitmaskIndex,
+      () => rng.uniform()
+    );
     // Get a bunch of random numbers so that we always use 7 here.
     Array.range(0, 7 - GlyphTypes[type].effects.length).forEach(() => rng.uniform());
     if (type === "effarig") {
@@ -279,15 +297,19 @@ export const GlyphGenerator = {
       }
     }
     // Sort from highest to lowest value.
-    const effects = Object.keys(effectValues).sort((a, b) => effectValues[b] - effectValues[a]).slice(0, count);
+    const effects = Object.keys(effectValues)
+      .sort((a, b) => effectValues[b] - effectValues[a])
+      .slice(0, count);
     return effects.map(Number).toBitmask();
   },
 
   randomType(rng, typesSoFar = []) {
-    const generatable = generatedTypes.filter(x => EffarigUnlock.reality.isUnlocked || x !== "effarig");
-    const maxOfSameTypeSoFar = generatable.map(x => typesSoFar.countWhere(y => y === x)).max();
-    const blacklisted = typesSoFar.length === 0
-      ? [] : generatable.filter(x => typesSoFar.countWhere(y => y === x) === maxOfSameTypeSoFar);
+    const generatable = generatedTypes.filter((x) => EffarigUnlock.reality.isUnlocked || x !== "effarig");
+    const maxOfSameTypeSoFar = generatable.map((x) => typesSoFar.countWhere((y) => y === x)).max();
+    const blacklisted =
+      typesSoFar.length === 0
+        ? []
+        : generatable.filter((x) => typesSoFar.countWhere((y) => y === x) === maxOfSameTypeSoFar);
     return GlyphTypes.random(rng, blacklisted);
   },
 
@@ -310,7 +332,7 @@ export const GlyphGenerator = {
     // The usage of the initial seed is complicated in order to prevent future prediction without using information
     // not normally available in-game (ie. the console). This makes it appear less predictable overall
     const initSeed = player.reality.initialSeed;
-    const typePerm = permutationIndex(5, (31 + initSeed % 7) * groupNum + initSeed % 1123);
+    const typePerm = permutationIndex(5, (31 + (initSeed % 7)) * groupNum + (initSeed % 1123));
 
     // Figure out a permutation index for each generated glyph type this reality by counting through the sets
     // for choices which have already been generated for options in previous realities for this group
@@ -330,7 +352,7 @@ export const GlyphGenerator = {
     typesThisReality.splice(typePerm[groupIndex], 1);
     for (let i = 0; i < 4; i++) {
       const type = typesThisReality[i];
-      const effectPerm = permutationIndex(4, 5 * type + (7 + initSeed % 5) * groupNum + initSeed % 11);
+      const effectPerm = permutationIndex(4, 5 * type + (7 + (initSeed % 5)) * groupNum + (initSeed % 11));
       uniformEffects.push(startID[type] + effectPerm[typePermIndex[type]]);
     }
 
@@ -342,17 +364,16 @@ export const GlyphGenerator = {
     const glyphs = [];
     for (let i = 0; i < 4; ++i) {
       const newGlyph = GlyphGenerator.randomGlyph(level, rng, BASIC_GLYPH_TYPES[typesThisReality[i]]);
-      const newMask = (initSeed + realityCount + i) % 2 === 0
-        ? (1 << uniformEffects[i])
-        : newGlyph.effects | (1 << uniformEffects[i]);
+      const newMask =
+        (initSeed + realityCount + i) % 2 === 0 ? 1 << uniformEffects[i] : newGlyph.effects | (1 << uniformEffects[i]);
       const maxEffects = RealityUpgrade(17).isBought ? 3 : 2;
       if (countValuesFromBitmask(newMask) > maxEffects) {
         // Turn the old effect bitmask into an array of removable effects and then deterministically remove one
         // of the non-power effects based on seed and reality count
         const replacable = getGlyphEffectsFromBitmask(newGlyph.effects)
-          .filter(eff => eff.isGenerated)
-          .map(eff => eff.bitmaskIndex)
-          .filter(eff => ![0, 12, 16].includes(eff));
+          .filter((eff) => eff.isGenerated)
+          .map((eff) => eff.bitmaskIndex)
+          .filter((eff) => ![0, 12, 16].includes(eff));
         const toRemove = replacable[Math.abs(initSeed + realityCount) % replacable.length];
         newGlyph.effects = newMask & ~(1 << toRemove);
       } else {
@@ -387,7 +408,7 @@ export const GlyphGenerator = {
     // The function here is an approximation of ^0.65, here is the old code:
     //     return Math.pow(Math.max(rng.normal() + 1, 1), 0.65);
     const x = Math.sqrt(Math.abs(rng.normal(), 0) + 1);
-    return -0.111749606737000 + x * (0.900603878243551 + x * (0.229108274476697 + x * -0.017962545983249));
+    return -0.111749606737 + x * (0.900603878243551 + x * (0.229108274476697 + x * -0.017962545983249));
   },
 
   copy(glyph) {

@@ -89,9 +89,9 @@ export const ShopPurchaseData = {
       res = await fetch(`${STD_BACKEND_URL}/respec`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user: Cloud.user.id })
+        body: JSON.stringify({ user: Cloud.user.id }),
       });
     } catch (e) {
       GameUI.notify.error("Unable to respec STD purchases!", 10000);
@@ -179,9 +179,7 @@ class ShopPurchaseState extends RebuyableMechanicState {
     if (GameEnd.creditsEverClosed) return false;
     if (this.config.instantPurchase && ui.$viewModel.modal.progressBar) return false;
 
-    const cosmeticId = this.config.key === "singleCosmeticSet"
-      ? GlyphAppearanceHandler.chosenFromModal?.id
-      : undefined;
+    const cosmeticId = this.config.key === "singleCosmeticSet" ? GlyphAppearanceHandler.chosenFromModal?.id : undefined;
 
     // Contact the purchase provider to verify the purchase
     const success = SteamRuntime.isActive
@@ -196,17 +194,14 @@ class ShopPurchaseState extends RebuyableMechanicState {
   }
 }
 
-export const ShopPurchase = mapGameDataToObject(
-  GameDatabase.shopPurchases,
-  config => new ShopPurchaseState(config)
-);
+export const ShopPurchase = mapGameDataToObject(GameDatabase.shopPurchases, (config) => new ShopPurchaseState(config));
 
-shop.purchaseTimeSkip = function() {
+shop.purchaseTimeSkip = function () {
   Speedrun.setSTDUse(true);
   simulateTime(3600 * 6);
 };
 
-shop.purchaseLongerTimeSkip = function() {
+shop.purchaseLongerTimeSkip = function () {
   Speedrun.setSTDUse(true);
   simulateTime(3600 * 24);
 };

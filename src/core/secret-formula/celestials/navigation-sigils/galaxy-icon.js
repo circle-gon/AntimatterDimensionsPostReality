@@ -28,8 +28,13 @@ function sigilShape(type, att, draw, colorOverride) {
   switch (type) {
     case "circle":
       pos = att.center;
-      path = LogarithmicSpiral.fromPolarEndpoints(att.center, 0, att.radius * SigilAttributes.size,
-        1, att.radius * SigilAttributes.size);
+      path = LogarithmicSpiral.fromPolarEndpoints(
+        att.center,
+        0,
+        att.radius * SigilAttributes.size,
+        1,
+        att.radius * SigilAttributes.size
+      );
       pathStart = att.initAngle;
       pathEnd = att.finalAngle;
       break;
@@ -37,8 +42,13 @@ function sigilShape(type, att, draw, colorOverride) {
       pos = att.center;
       pathStart = att.initAngle;
       pathEnd = att.finalAngle;
-      path = LogarithmicSpiral.fromPolarEndpoints(att.center, pathStart, att.initRadius * SigilAttributes.size,
-        pathEnd, att.finalRadius * SigilAttributes.size);
+      path = LogarithmicSpiral.fromPolarEndpoints(
+        att.center,
+        pathStart,
+        att.initRadius * SigilAttributes.size,
+        pathEnd,
+        att.finalRadius * SigilAttributes.size
+      );
       break;
     default:
       throw Error("Unrecognized shape in sigil specification");
@@ -61,7 +71,7 @@ function sigilShape(type, att, draw, colorOverride) {
       path,
       fill: colorOverride ?? SigilAttributes.color,
       completeWidth: SigilAttributes.size * draw.thickness,
-      noBG: true
+      noBG: true,
     },
   };
 }
@@ -69,26 +79,34 @@ function sigilShape(type, att, draw, colorOverride) {
 // List of specified primitive graphics elements with which to construct the sigil; see docstring of sigilShape
 // for description of proper attribute specifications. These are two circular rings in the center of the galaxy
 const Shapes = {
-  disc: sigilShape("circle",
+  disc: sigilShape(
+    "circle",
     { center: SigilAttributes.center, radius: 0.2, initAngle: 0, finalAngle: 6.28 },
     { thickness: 0.15, layer: 1 },
-    "#88ffff"),
-  glow: sigilShape("circle",
+    "#88ffff"
+  ),
+  glow: sigilShape(
+    "circle",
     { center: SigilAttributes.center, radius: 0.125, initAngle: 0, finalAngle: 6.28 },
     { thickness: 0.05, layer: 2 },
-    "white"),
+    "white"
+  ),
 };
 
 // This segment adds multiple circular arcs around the entire sigil, in a shape resembling a spiral galaxy
 const arcSegments = 10;
 for (let arcIndex = 0; arcIndex < arcSegments; arcIndex++) {
-  const len = 2 * Math.PI / arcSegments;
+  const len = (2 * Math.PI) / arcSegments;
   const init = arcIndex * len;
-  Shapes[`spiral${arcIndex}`] = sigilShape("arc",
+  Shapes[`spiral${arcIndex}`] = sigilShape(
+    "arc",
     { center: SigilAttributes.center, initRadius: 0.2, finalRadius: 0.9, initAngle: init, finalAngle: init + Math.PI },
     { thickness: 0.1, layer: 0 },
-    "cyan");
+    "cyan"
+  );
 }
 
-export const galaxyIcon = Object.values(Shapes)
-  .mapToObject((key, idx) => `galaxy-icon-${idx}`, val => val);
+export const galaxyIcon = Object.values(Shapes).mapToObject(
+  (key, idx) => `galaxy-icon-${idx}`,
+  (val) => val
+);

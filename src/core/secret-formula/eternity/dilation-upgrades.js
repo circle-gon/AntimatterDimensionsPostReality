@@ -28,23 +28,23 @@ export const dilationUpgrades = {
     initialCost: 1e4,
     increment: 10,
     description: () =>
-      (SingularityMilestone.dilatedTimeFromSingularities.canBeApplied || Achievement(187).canBeApplied
+      SingularityMilestone.dilatedTimeFromSingularities.canBeApplied || Achievement(187).canBeApplied
         ? `${formatX(
-          2 * Effects.product(SingularityMilestone.dilatedTimeFromSingularities, Achievement(187)),
-          2,
-          2
-        )} Dilated Time gain`
-        : "Double Dilated Time gain"),
-    effect: bought => {
+            2 * Effects.product(SingularityMilestone.dilatedTimeFromSingularities, Achievement(187)),
+            2,
+            2
+          )} Dilated Time gain`
+        : "Double Dilated Time gain",
+    effect: (bought) => {
       const base = 2 * Effects.product(SingularityMilestone.dilatedTimeFromSingularities, Achievement(187));
       return Decimal.pow(base, bought);
     },
-    formatEffect: value => {
+    formatEffect: (value) => {
       const nonInteger =
         SingularityMilestone.dilatedTimeFromSingularities.canBeApplied || Achievement(187).canBeApplied;
       return formatX(value, 2, nonInteger ? 2 : 0);
     },
-    formatCost: value => format(value, 2),
+    formatCost: (value) => format(value, 2),
     purchaseCap: Number.MAX_VALUE,
   }),
   galaxyThreshold: rebuyable({
@@ -52,18 +52,18 @@ export const dilationUpgrades = {
     initialCost: 1e6,
     increment: 100,
     description: () =>
-      (Perk.bypassTGReset.isBought && !Pelle.isDoomed
+      Perk.bypassTGReset.isBought && !Pelle.isDoomed
         ? "Reset Tachyon Galaxies, but lower their threshold"
-        : "Reset Dilated Time and Tachyon Galaxies, but lower their threshold"),
+        : "Reset Dilated Time and Tachyon Galaxies, but lower their threshold",
     // The 38th purchase is at 1e80, and is the last purchase.
-    effect: bought => (bought < 38 ? Math.pow(0.8, bought) : 0),
-    formatEffect: effect => {
+    effect: (bought) => (bought < 38 ? Math.pow(0.8, bought) : 0),
+    formatEffect: (effect) => {
       if (effect === 0) return `${formatX(getTachyonGalaxyMult(effect), 4, 4)}`;
       const nextEffect = effect === Math.pow(0.8, 37) ? 0 : 0.8 * effect;
       return `${formatX(getTachyonGalaxyMult(effect), 4, 4)} ➜
         Next: ${formatX(getTachyonGalaxyMult(nextEffect), 4, 4)}`;
     },
-    formatCost: value => format(value, 2),
+    formatCost: (value) => format(value, 2),
     purchaseCap: 38,
   }),
   tachyonGain: rebuyable({
@@ -77,12 +77,12 @@ export const dilationUpgrades = {
       by ${Math.pow(3, Enslaved.tachyonNerf).toFixed(2)}`;
       return "Triple the amount of Tachyon Particles gained";
     },
-    effect: bought => {
+    effect: (bought) => {
       if (Pelle.isDoomed) return DC.D1.pow(bought);
       return DC.D3.pow(bought);
     },
-    formatEffect: value => formatX(value, 2),
-    formatCost: value => format(value, 2),
+    formatEffect: (value) => formatX(value, 2),
+    formatCost: (value) => format(value, 2),
     purchaseCap: Number.MAX_VALUE,
   }),
   doubleGalaxies: {
@@ -111,21 +111,21 @@ export const dilationUpgrades = {
       rep10 = rep10 > 9000 ? 9000 + 0.5 * (rep10 - 9000) : rep10;
       return Decimal.pow10(rep10);
     },
-    formatEffect: value => formatX(value, 2, 1),
+    formatEffect: (value) => formatX(value, 2, 1),
   },
   ndMultDT: {
     id: 6,
     cost: 5e7,
     description: "Antimatter Dimension multiplier based on Dilated Time, unaffected by Time Dilation",
     effect: () => Currency.dilatedTime.value.pow(308).clampMin(1),
-    formatEffect: value => formatX(value, 2, 1),
+    formatEffect: (value) => formatX(value, 2, 1),
   },
   ipMultDT: {
     id: 7,
     cost: 2e12,
     description: "Gain a multiplier to Infinity Points based on Dilated Time",
     effect: () => Currency.dilatedTime.value.pow(1000).clampMin(1),
-    formatEffect: value => formatX(value, 2, 1),
+    formatEffect: (value) => formatX(value, 2, 1),
     cap: () => Effarig.eternityCap,
   },
   timeStudySplit: {
@@ -144,7 +144,7 @@ export const dilationUpgrades = {
     cost: 1e15,
     description: "Generate Time Theorems based on Tachyon Particles",
     effect: () => Currency.tachyonParticles.value.div(20000),
-    formatEffect: value => `${format(value, 2, 1)}/sec`,
+    formatEffect: (value) => `${format(value, 2, 1)}/sec`,
   },
   dtGainPelle: rebuyable({
     id: 11,
@@ -152,9 +152,9 @@ export const dilationUpgrades = {
     increment: 100,
     pelleOnly: true,
     description: () => `${formatX(5)} Dilated Time gain`,
-    effect: bought => Decimal.pow(5, bought),
-    formatEffect: value => formatX(value, 2),
-    formatCost: value => format(value, 2),
+    effect: (bought) => Decimal.pow(5, bought),
+    formatEffect: (value) => formatX(value, 2),
+    formatCost: (value) => format(value, 2),
     purchaseCap: Number.MAX_VALUE,
   }),
   galaxyMultiplier: rebuyable({
@@ -163,12 +163,12 @@ export const dilationUpgrades = {
     increment: 1000,
     pelleOnly: true,
     description: "Multiply Tachyon Galaxies gained, applies after TG doubling upgrade",
-    effect: bought => (Pelle.isDoomed ? bought + 1 : bought * 0.02 + 1),
-    formatEffect: value => {
+    effect: (bought) => (Pelle.isDoomed ? bought + 1 : bought * 0.02 + 1),
+    formatEffect: (value) => {
       if (Pelle.isDoomed) return `${formatX(value, 2)} ➜ ${formatX(value + 1, 2)}`;
       return `${formatX(value, 2, 2)} ➜ ${formatX(value + 0.02, 2, 2)}`;
     },
-    formatCost: value => format(value, 2),
+    formatCost: (value) => format(value, 2),
     purchaseCap: Number.MAX_VALUE,
   }),
   tickspeedPower: rebuyable({
@@ -177,9 +177,9 @@ export const dilationUpgrades = {
     increment: 1e4,
     pelleOnly: true,
     description: "Gain a power to Tickspeed",
-    effect: bought => 1 + bought * (Pelle.isDoomed ? 0.03 : 0.01),
-    formatEffect: value => `${formatPow(value, 2, 2)} ➜ ${formatPow(value + (Pelle.isDoomed ? 0.03 : 0.01), 2, 2)}`,
-    formatCost: value => format(value, 2),
+    effect: (bought) => 1 + bought * (Pelle.isDoomed ? 0.03 : 0.01),
+    formatEffect: (value) => `${formatPow(value, 2, 2)} ➜ ${formatPow(value + (Pelle.isDoomed ? 0.03 : 0.01), 2, 2)}`,
+    formatCost: (value) => format(value, 2),
     purchaseCap: Number.MAX_VALUE,
   }),
   galaxyThresholdPelle: {
@@ -195,6 +195,6 @@ export const dilationUpgrades = {
     pelleOnly: true,
     description: () => `Gain more Dilated Time based on current EP`,
     effect: () => 1e9 ** Math.min((Math.max(player.eternityPoints.log10() - 1500, 0) / 2500) ** 1.2, 1),
-    formatEffect: value => formatX(value, 2, 2),
+    formatEffect: (value) => formatX(value, 2, 2),
   },
 };

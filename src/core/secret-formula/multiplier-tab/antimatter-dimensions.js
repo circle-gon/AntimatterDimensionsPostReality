@@ -7,7 +7,7 @@ import { MultiplierTabIcons } from "./icons";
 // See index.js for documentation
 export const AD = {
   total: {
-    name: dim => {
+    name: (dim) => {
       if (dim) return `AD ${dim} Multiplier`;
       if (NormalChallenge(12).isRunning) {
         if (MultiplierTabHelper.actualNC12Production().eq(0)) return "Base AD Production from All Dimensions";
@@ -15,7 +15,7 @@ export const AD = {
       }
       return "Base AD Production";
     },
-    displayOverride: dim => {
+    displayOverride: (dim) => {
       if (dim) {
         const singleMult = NormalChallenge(12).isRunning
           ? MultiplierTabHelper.multInNC12(dim)
@@ -24,13 +24,16 @@ export const AD = {
       }
       const maxTier = EternityChallenge(7).isRunning ? 7 : MultiplierTabHelper.activeDimCount("AD");
       if (NormalChallenge(12).isRunning) return `${format(MultiplierTabHelper.actualNC12Production(), 2)}/sec`;
-      return `${format(AntimatterDimensions.all
-        .filter(ad => ad.isProducing)
-        .map(ad => ad.multiplier)
-        .reduce((x, y) => x.times(y), DC.D1)
-        .times(AntimatterDimension(maxTier).totalAmount), 2)}/sec`;
+      return `${format(
+        AntimatterDimensions.all
+          .filter((ad) => ad.isProducing)
+          .map((ad) => ad.multiplier)
+          .reduce((x, y) => x.times(y), DC.D1)
+          .times(AntimatterDimension(maxTier).totalAmount),
+        2
+      )}/sec`;
     },
-    multValue: dim => {
+    multValue: (dim) => {
       if (NormalChallenge(12).isRunning) {
         const nc12Prod = MultiplierTabHelper.actualNC12Production();
         if (!dim) return nc12Prod.eq(0) ? 1 : nc12Prod;
@@ -41,39 +44,39 @@ export const AD = {
       const mult = dim
         ? AntimatterDimension(dim).multiplier
         : AntimatterDimensions.all
-          .filter(ad => ad.isProducing)
-          .map(ad => ad.multiplier)
-          .reduce((x, y) => x.times(y), DC.D1);
+            .filter((ad) => ad.isProducing)
+            .map((ad) => ad.multiplier)
+            .reduce((x, y) => x.times(y), DC.D1);
       const highestDim = AntimatterDimension(
-        EternityChallenge(7).isRunning ? 7 : MultiplierTabHelper.activeDimCount("AD")).totalAmount;
+        EternityChallenge(7).isRunning ? 7 : MultiplierTabHelper.activeDimCount("AD")
+      ).totalAmount;
       return mult.times(highestDim).clampMin(1);
     },
-    isActive: dim => (dim ? dim <= MultiplierTabHelper.activeDimCount("AD") : true),
+    isActive: (dim) => (dim ? dim <= MultiplierTabHelper.activeDimCount("AD") : true),
     dilationEffect: () => {
-      const baseEff = (player.dilation.active || Enslaved.isRunning)
-        ? 0.75 * Effects.product(DilationUpgrade.dilationPenalty)
-        : 1;
+      const baseEff =
+        player.dilation.active || Enslaved.isRunning ? 0.75 * Effects.product(DilationUpgrade.dilationPenalty) : 1;
       return baseEff * (Effarig.isRunning ? Effarig.multDilation : 1);
     },
     isDilated: true,
     overlay: ["Ω", "<i class='fas fa-cube' />"],
-    icon: dim => MultiplierTabIcons.DIMENSION("AD", dim),
+    icon: (dim) => MultiplierTabIcons.DIMENSION("AD", dim),
   },
   purchase: {
-    name: dim => (dim ? `Purchased AD ${dim}` : "Purchases"),
-    multValue: dim => {
-      const getPurchases = ad => (Laitela.continuumActive
-        ? AntimatterDimension(ad).continuumValue
-        : Math.floor(AntimatterDimension(ad).bought / 10)
-      );
+    name: (dim) => (dim ? `Purchased AD ${dim}` : "Purchases"),
+    multValue: (dim) => {
+      const getPurchases = (ad) =>
+        Laitela.continuumActive
+          ? AntimatterDimension(ad).continuumValue
+          : Math.floor(AntimatterDimension(ad).bought / 10);
       if (dim) return Decimal.pow(AntimatterDimensions.buyTenMultiplier, getPurchases(dim));
       return AntimatterDimensions.all
-        .filter(ad => ad.isProducing)
-        .map(ad => Decimal.pow(AntimatterDimensions.buyTenMultiplier, getPurchases(ad.tier)))
+        .filter((ad) => ad.isProducing)
+        .map((ad) => Decimal.pow(AntimatterDimensions.buyTenMultiplier, getPurchases(ad.tier)))
         .reduce((x, y) => x.times(y), DC.D1);
     },
     isActive: () => !EternityChallenge(11).isRunning,
-    icon: dim => MultiplierTabIcons.PURCHASE("AD", dim),
+    icon: (dim) => MultiplierTabIcons.PURCHASE("AD", dim),
   },
   highestDim: {
     name: () => `Amount of highest Dimension`,
@@ -90,31 +93,32 @@ export const AD = {
   },
 
   dimboost: {
-    name: dim => (dim ? `Dimboosts on AD ${dim}` : "Dimboosts"),
-    multValue: dim => (dim
-      ? DimBoost.multiplierToNDTier(dim)
-      : AntimatterDimensions.all
-        .filter(ad => ad.isProducing)
-        .map(ad => DimBoost.multiplierToNDTier(ad.tier))
-        .reduce((x, y) => x.times(y), DC.D1)),
+    name: (dim) => (dim ? `Dimboosts on AD ${dim}` : "Dimboosts"),
+    multValue: (dim) =>
+      dim
+        ? DimBoost.multiplierToNDTier(dim)
+        : AntimatterDimensions.all
+            .filter((ad) => ad.isProducing)
+            .map((ad) => DimBoost.multiplierToNDTier(ad.tier))
+            .reduce((x, y) => x.times(y), DC.D1),
     isActive: true,
     icon: MultiplierTabIcons.DIMBOOST,
   },
   sacrifice: {
     name: "Sacrifice Multiplier",
-    multValue: dim => ((!dim || dim === 8) ? Sacrifice.totalBoost : DC.D1),
-    isActive: dim => (!dim || dim === 8) && Sacrifice.totalBoost.gt(1) && !EternityChallenge(11).isRunning,
+    multValue: (dim) => (!dim || dim === 8 ? Sacrifice.totalBoost : DC.D1),
+    isActive: (dim) => (!dim || dim === 8) && Sacrifice.totalBoost.gt(1) && !EternityChallenge(11).isRunning,
     icon: MultiplierTabIcons.SACRIFICE("antimatter"),
   },
   achievementMult: {
     name: "Achievement Multiplier",
-    multValue: dim => Decimal.pow(Achievements.power, dim ? 1 : MultiplierTabHelper.activeDimCount("AD")),
+    multValue: (dim) => Decimal.pow(Achievements.power, dim ? 1 : MultiplierTabHelper.activeDimCount("AD")),
     isActive: () => !Pelle.isDoomed && !EternityChallenge(11).isRunning,
     icon: MultiplierTabIcons.ACHIEVEMENT,
   },
   achievement: {
     name: "Achievement Rewards",
-    multValue: dim => {
+    multValue: (dim) => {
       const allMult = DC.D1.timesEffectsOf(
         Achievement(48),
         Achievement(56),
@@ -135,13 +139,13 @@ export const AD = {
             Achievement(28),
             Achievement(31),
             Achievement(68),
-            Achievement(71),
+            Achievement(71)
           );
         }
         dimMults[tier] = dimMults[tier].timesEffectsOf(
           tier === 8 ? Achievement(23) : null,
           tier < 8 ? Achievement(34) : null,
-          tier <= 4 ? Achievement(64) : null,
+          tier <= 4 ? Achievement(64) : null
         );
         if (Achievement(43).isUnlocked) {
           dimMults[tier] = dimMults[tier].times(1 + tier / 100);
@@ -160,24 +164,19 @@ export const AD = {
     icon: MultiplierTabIcons.ACHIEVEMENT,
   },
   infinityUpgrade: {
-    name: dim => (dim ? `Infinity Upgrades (AD ${dim})` : "Infinity Upgrades"),
-    multValue: dim => {
-      const allMult = DC.D1.timesEffectsOf(
-        InfinityUpgrade.totalTimeMult,
-        InfinityUpgrade.thisInfinityTimeMult,
-      );
+    name: (dim) => (dim ? `Infinity Upgrades (AD ${dim})` : "Infinity Upgrades"),
+    multValue: (dim) => {
+      const allMult = DC.D1.timesEffectsOf(InfinityUpgrade.totalTimeMult, InfinityUpgrade.thisInfinityTimeMult);
 
       const dimMults = Array.repeat(DC.D1, 9);
       for (let tier = 1; tier <= 8; tier++) {
         if (tier === 1) {
           dimMults[tier] = dimMults[tier].timesEffectsOf(
             InfinityUpgrade.unspentIPMult,
-            InfinityUpgrade.unspentIPMult.chargedEffect,
+            InfinityUpgrade.unspentIPMult.chargedEffect
           );
         }
-        dimMults[tier] = dimMults[tier].timesEffectsOf(
-          AntimatterDimension(tier).infinityUpgrade,
-        );
+        dimMults[tier] = dimMults[tier].timesEffectsOf(AntimatterDimension(tier).infinityUpgrade);
       }
 
       if (dim) return allMult.times(dimMults[dim]);
@@ -187,9 +186,10 @@ export const AD = {
       }
       return totalMult;
     },
-    powValue: dim => {
-      const allPow = InfinityUpgrade.totalTimeMult.chargedEffect.effectOrDefault(1) *
-          InfinityUpgrade.thisInfinityTimeMult.chargedEffect.effectOrDefault(1);
+    powValue: (dim) => {
+      const allPow =
+        InfinityUpgrade.totalTimeMult.chargedEffect.effectOrDefault(1) *
+        InfinityUpgrade.thisInfinityTimeMult.chargedEffect.effectOrDefault(1);
 
       const dimPow = Array.repeat(1, 9);
       for (let tier = 1; tier <= 8; tier++) {
@@ -200,15 +200,22 @@ export const AD = {
       // This isn't entirely accurate because you can't return a power for all ADs if only some of them actually have
       // it, so we cheat somewhat by returning the geometric mean of all actively producing dimensions (this should
       // be close to the same value if all the base multipliers are similar in magnitude)
-      return allPow * Math.exp(dimPow.slice(1)
-        .map(n => Math.log(n)).sum() / MultiplierTabHelper.activeDimCount("AD"));
+      return (
+        allPow *
+        Math.exp(
+          dimPow
+            .slice(1)
+            .map((n) => Math.log(n))
+            .sum() / MultiplierTabHelper.activeDimCount("AD")
+        )
+      );
     },
     isActive: () => PlayerProgress.infinityUnlocked() && !EternityChallenge(11).isRunning,
     icon: MultiplierTabIcons.UPGRADE("infinity"),
   },
   breakInfinityUpgrade: {
     name: "Break Infinity Upgrades",
-    multValue: dim => {
+    multValue: (dim) => {
       const mult = DC.D1.timesEffectsOf(
         BreakInfinityUpgrade.totalAMMult,
         BreakInfinityUpgrade.currentAMMult,
@@ -224,7 +231,7 @@ export const AD = {
   infinityPower: {
     name: "Multiplier from Infinity Power",
     fakeValue: () => InfinityDimensions.ADMultiplier,
-    multValue: dim => {
+    multValue: (dim) => {
       const mult = InfinityDimensions.ADMultiplier.log10() * (dim ? 1 : MultiplierTabHelper.activeDimCount("AD"));
       return powAndCap(mult);
     },
@@ -232,18 +239,13 @@ export const AD = {
     icon: MultiplierTabIcons.INFINITY_POWER,
   },
   infinityChallenge: {
-    name: dim => (dim ? `Infinity Challenges (AD ${dim})` : "Infinity Challenges"),
-    multValue: dim => {
-      const allMult = DC.D1.timesEffectsOf(
-        InfinityChallenge(3),
-        InfinityChallenge(3).reward,
-      );
+    name: (dim) => (dim ? `Infinity Challenges (AD ${dim})` : "Infinity Challenges"),
+    multValue: (dim) => {
+      const allMult = DC.D1.timesEffectsOf(InfinityChallenge(3), InfinityChallenge(3).reward);
 
       const dimMults = Array.repeat(DC.D1, 9);
       for (let tier = 1; tier <= 8; tier++) {
-        dimMults[tier] = dimMults[tier].timesEffectsOf(
-          tier > 1 && tier < 8 ? InfinityChallenge(8).reward : null
-        );
+        dimMults[tier] = dimMults[tier].timesEffectsOf(tier > 1 && tier < 8 ? InfinityChallenge(8).reward : null);
       }
 
       if (dim) return allMult.times(dimMults[dim]);
@@ -258,14 +260,9 @@ export const AD = {
     icon: MultiplierTabIcons.CHALLENGE("infinity"),
   },
   timeStudy: {
-    name: dim => (dim ? `Time Studies (AD ${dim})` : "Time Studies"),
-    multValue: dim => {
-      const allMult = DC.D1.timesEffectsOf(
-        TimeStudy(91),
-        TimeStudy(101),
-        TimeStudy(161),
-        TimeStudy(193),
-      );
+    name: (dim) => (dim ? `Time Studies (AD ${dim})` : "Time Studies"),
+    multValue: (dim) => {
+      const allMult = DC.D1.timesEffectsOf(TimeStudy(91), TimeStudy(101), TimeStudy(161), TimeStudy(193));
 
       const dimMults = Array.repeat(DC.D1, 9);
       for (let tier = 1; tier <= 8; tier++) {
@@ -279,7 +276,7 @@ export const AD = {
         dimMults[tier] = dimMults[tier].timesEffectsOf(
           tier < 8 ? TimeStudy(71) : null,
           tier === 8 ? TimeStudy(214) : null,
-          tier === 1 ? TimeStudy(234) : null,
+          tier === 1 ? TimeStudy(234) : null
         );
       }
 
@@ -295,14 +292,14 @@ export const AD = {
   },
   eternityChallenge: {
     name: "Eternity Challenges",
-    multValue: dim => Decimal.pow(EternityChallenge(10).effectValue,
-      dim ? 1 : MultiplierTabHelper.activeDimCount("AD")),
+    multValue: (dim) =>
+      Decimal.pow(EternityChallenge(10).effectValue, dim ? 1 : MultiplierTabHelper.activeDimCount("AD")),
     isActive: () => EternityChallenge(10).isRunning,
     icon: MultiplierTabIcons.CHALLENGE("eternity"),
   },
   glyph: {
     name: "Glyph Effects",
-    multValue: dim => {
+    multValue: (dim) => {
       const mult = getAdjustedGlyphEffect("powermult");
       return Decimal.pow(mult, dim ? 1 : MultiplierTabHelper.activeDimCount("AD"));
     },
@@ -321,12 +318,13 @@ export const AD = {
   },
   alchemy: {
     name: "Glyph Alchemy",
-    multValue: dim => {
-      const mult = AlchemyResource.dimensionality.effectOrDefault(1)
+    multValue: (dim) => {
+      const mult = AlchemyResource.dimensionality
+        .effectOrDefault(1)
         .times(Currency.realityMachines.value.powEffectOf(AlchemyResource.force));
       return Decimal.pow(mult, dim ? 1 : MultiplierTabHelper.activeDimCount("AD"));
     },
-    powValue: dim => {
+    powValue: (dim) => {
       const basePow = AlchemyResource.power.effectOrDefault(1) * Ra.momentumValue;
       // Not entirely accurate, but returns the geometric mean of all producing dimensions (which should be close)
       // Set to default value of 1 in non-unlocked case (arguably some sort of effect-or-default would be better,
@@ -336,9 +334,10 @@ export const AD = {
         if (dim) {
           inflationPow = AntimatterDimension(dim).multiplier.gte(AlchemyResource.inflation.effectValue) ? 1.05 : 1;
         } else {
-          const inflated = AntimatterDimensions.all
-            .countWhere(ad => ad.isProducing && ad.multiplier.gte(AlchemyResource.inflation.effectValue));
-          inflationPow = Math.pow(1.05, inflated / AntimatterDimensions.all.countWhere(ad => ad.isProducing));
+          const inflated = AntimatterDimensions.all.countWhere(
+            (ad) => ad.isProducing && ad.multiplier.gte(AlchemyResource.inflation.effectValue)
+          );
+          inflationPow = Math.pow(1.05, inflated / AntimatterDimensions.all.countWhere((ad) => ad.isProducing));
         }
       }
       return basePow * inflationPow;
@@ -348,15 +347,18 @@ export const AD = {
   },
   pelle: {
     name: "Pelle Upgrades",
-    multValue: dim => Decimal.pow(PelleUpgrade.antimatterDimensionMult.effectOrDefault(1),
-      dim ? 1 : MultiplierTabHelper.activeDimCount("AD")),
+    multValue: (dim) =>
+      Decimal.pow(
+        PelleUpgrade.antimatterDimensionMult.effectOrDefault(1),
+        dim ? 1 : MultiplierTabHelper.activeDimCount("AD")
+      ),
     powValue: () => PelleRifts.paradox.effectOrDefault(DC.D1).toNumber(),
     isActive: () => Pelle.isDoomed && !EternityChallenge(11).isRunning,
     icon: MultiplierTabIcons.PELLE,
   },
   iap: {
     name: "Shop Tab Purchases",
-    multValue: dim => {
+    multValue: (dim) => {
       const mult = ShopPurchase.dimPurchases.currentMult * ShopPurchase.allDimPurchases.currentMult;
       return Decimal.pow(mult, dim ? 1 : MultiplierTabHelper.activeDimCount("AD"));
     },
@@ -365,11 +367,11 @@ export const AD = {
   },
 
   effectNC: {
-    name: dim => (dim ? `Normal Challenge Effect (AD ${dim})` : "Normal Challenge Effects"),
+    name: (dim) => (dim ? `Normal Challenge Effect (AD ${dim})` : "Normal Challenge Effects"),
     // Depending on the challenge itself and the game state, this could be either a nerf or a buff, so we make
     // sure to render a x or / conditionally. This requires we calculate the value itself again, however
-    displayOverride: dim => {
-      const formatFn = num => (num.gte(1) ? formatX(num, 2, 2) : `/${format(num.reciprocal(), 2, 2)}`);
+    displayOverride: (dim) => {
+      const formatFn = (num) => (num.gte(1) ? formatX(num, 2, 2) : `/${format(num.reciprocal(), 2, 2)}`);
 
       let dimMults = Array.repeat(DC.D1, 9);
       if (NormalChallenge(2).isRunning) {
@@ -393,7 +395,7 @@ export const AD = {
       return formatFn(totalMult);
     },
     // This and displayOverride contain largely the same code
-    multValue: dim => {
+    multValue: (dim) => {
       let dimMults = Array.repeat(DC.D1, 9);
       // Do not change this to an else-if, as NC2/NC3 need to be enterable simultaneously in IC1
       if (NormalChallenge(2).isRunning) {
@@ -428,12 +430,12 @@ export const AD = {
       }
       return totalMult;
     },
-    isActive: () => [2, 3, 12].some(c => NormalChallenge(c).isRunning),
+    isActive: () => [2, 3, 12].some((c) => NormalChallenge(c).isRunning),
     icon: MultiplierTabIcons.CHALLENGE("infinity"),
   },
   nerfIC: {
-    name: dim => (dim ? `Infinity Challenge Nerf (AD ${dim})` : "Infinity Challenge Nerf"),
-    multValue: dim => {
+    name: (dim) => (dim ? `Infinity Challenge Nerf (AD ${dim})` : "Infinity Challenge Nerf"),
+    multValue: (dim) => {
       let dimMults = Array.repeat(DC.D1, 9);
       if (InfinityChallenge(4).isRunning) {
         for (let tier = 1; tier <= 8; tier++) {
@@ -454,7 +456,7 @@ export const AD = {
       }
       return totalMult;
     },
-    isActive: () => [4, 6, 8].some(ic => InfinityChallenge(ic).isRunning),
+    isActive: () => [4, 6, 8].some((ic) => InfinityChallenge(ic).isRunning),
     icon: MultiplierTabIcons.CHALLENGE("infinity"),
   },
   nerfV: {
@@ -475,5 +477,5 @@ export const AD = {
     powValue: () => (PelleStrikes.infinity.hasStrike ? 0.5 : 1),
     isActive: () => Pelle.isDoomed,
     icon: MultiplierTabIcons.PELLE,
-  }
+  },
 };

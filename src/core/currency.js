@@ -461,7 +461,7 @@ Currency.eternityPoints = new (class extends DecimalCurrency {
     player.records.thisCollapse.maxEP = player.records.thisCollapse.maxEP.max(value);
     if (player.records.bestReality.bestEP.lt(value)) {
       player.records.bestReality.bestEP = value;
-      player.records.bestReality.bestEPSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
+      player.records.bestReality.bestEPSet = Glyphs.copyForRecords(Glyphs.active.filter((g) => g !== null));
     }
 
     if (Pelle.isDoomed) {
@@ -564,7 +564,7 @@ Currency.realityMachines = new (class extends DecimalCurrency {
     player.reality.maxRM = Decimal.max(player.reality.maxRM, newValue);
     if (player.records.bestReality.RM.lt(addedThisReality)) {
       player.records.bestReality.RM = addedThisReality;
-      player.records.bestReality.RMSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
+      player.records.bestReality.RMSet = Glyphs.copyForRecords(Glyphs.active.filter((g) => g !== null));
     }
   }
 })();
@@ -631,7 +631,7 @@ Currency.darkEnergy = new (class extends DecimalCurrency {
   }
 
   get productionPerSecond() {
-    return DarkMatterDimensions.all.map(d => d.productionPerSecond).sumDecimal();
+    return DarkMatterDimensions.all.map((d) => d.productionPerSecond).sumDecimal();
   }
 })();
 

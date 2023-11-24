@@ -13,7 +13,7 @@ class Validator extends BaseVisitor {
     for (const cmd of AutomatorCommands) {
       if (!cmd.validate) continue;
       const ownMethod = this[cmd.id];
-      this[cmd.id] = ctx => {
+      this[cmd.id] = (ctx) => {
         if (!cmd.validate(ctx, this)) return;
         if (ownMethod) ownMethod.call(this, ctx);
       };
@@ -37,7 +37,7 @@ class Validator extends BaseVisitor {
         startOffset: err.offset,
         endOffset: err.offset + err.length,
         info: `Unexpected characters: ${this.rawText.substr(err.offset, err.length)}`,
-        tip: `${this.rawText.substr(err.offset, err.length)} cannot be part of a command, remove them`
+        tip: `${this.rawText.substr(err.offset, err.length)} cannot be part of a command, remove them`,
       });
     }
   }
@@ -54,13 +54,14 @@ class Validator extends BaseVisitor {
     for (const parseError of errors) {
       let err = Validator.combinePositionRanges(
         Validator.getPositionRange(parseError.previousToken),
-        Validator.getPositionRange(parseError.token));
+        Validator.getPositionRange(parseError.token)
+      );
       // In some cases, at the end of the script we don't get any useful tokens out of the parse error
       if (parseError.token.tokenType.name === "EOF" && parseError.previousToken.tokenType.name === "EOF") {
         err = Validator.combinePositionRanges(err, Validator.getPositionRange(tokens[tokens.length - 1]));
       }
       // Deal with literal EOL in error message:
-      err.info = parseError.message.replace(/'\n\s*'/ui, "End of line");
+      err.info = parseError.message.replace(/'\n\s*'/iu, "End of line");
       const isEndToken = parseError.token.tokenType.name === "EOF" || parseError.token.tokenType.name === "EOL";
       if (parseError.name === "NoViableAltException") {
         if (!isEndToken) {
@@ -181,8 +182,11 @@ class Validator extends BaseVisitor {
   checkTimeStudyNumber(token) {
     const tsNumber = parseFloat(token.image);
     if (!TimeStudy(tsNumber) || (TimeStudy(tsNumber).isTriad && !Ra.canBuyTriad)) {
-      this.addError(token, `Invalid Time Study identifier ${tsNumber}`,
-        `Make sure you copied or typed in your time study IDs correctly`);
+      this.addError(
+        token,
+        `Invalid Time Study identifier ${tsNumber}`,
+        `Make sure you copied or typed in your time study IDs correctly`
+      );
       return 0;
     }
     return tsNumber;
@@ -193,8 +197,11 @@ class Validator extends BaseVisitor {
     const varInfo = {};
     const constants = player.reality.automator.constants;
     if (!Object.keys(constants).includes(varName)) {
-      this.addError(identifier, `Variable ${varName} has not been defined`,
-        `Use the definition panel to define ${varName} in order to reference it, or check for typos`);
+      this.addError(
+        identifier,
+        `Variable ${varName} has not been defined`,
+        `Use the definition panel to define ${varName} in order to reference it, or check for typos`
+      );
       return undefined;
     }
     const value = constants[varName];
@@ -207,7 +214,7 @@ class Validator extends BaseVisitor {
       case AUTOMATOR_VAR_TYPES.STUDIES:
         tree = new TimeStudyTree(value);
         varInfo.value = {
-          normal: tree.selectedStudies.map(ts => ts.id),
+          normal: tree.selectedStudies.map((ts) => ts.id),
           ec: tree.ec,
           startEC: tree.startEC,
         };
@@ -279,10 +286,17 @@ class Validator extends BaseVisitor {
   }
 
   studyRange(ctx, studiesOut) {
-    if (!ctx.firstStudy || ctx.firstStudy[0].isInsertedInRecovery ||
-      !ctx.lastStudy || ctx.lastStudy[0].isInsertedInRecovery) {
-      this.addError(ctx, "Missing Time Study number in range",
-        "Provide starting and ending IDs for Time Study number ranges");
+    if (
+      !ctx.firstStudy ||
+      ctx.firstStudy[0].isInsertedInRecovery ||
+      !ctx.lastStudy ||
+      ctx.lastStudy[0].isInsertedInRecovery
+    ) {
+      this.addError(
+        ctx,
+        "Missing Time Study number in range",
+        "Provide starting and ending IDs for Time Study number ranges"
+      );
       return;
     }
     const first = this.checkTimeStudyNumber(ctx.firstStudy[0]);
@@ -327,13 +341,19 @@ class Validator extends BaseVisitor {
     };
     if (ctx.ECNumber) {
       if (ctx.ECNumber.isInsertedInRecovery) {
-        this.addError(ctx.Pipe[0], "Missing Eternity Challenge number",
-          "Specify which Eternity Challenge is being referred to");
+        this.addError(
+          ctx.Pipe[0],
+          "Missing Eternity Challenge number",
+          "Specify which Eternity Challenge is being referred to"
+        );
       }
       const ecNumber = parseFloat(ctx.ECNumber[0].image);
       if (!Number.isInteger(ecNumber) || ecNumber < 0 || ecNumber > 12) {
-        this.addError(ctx.ECNumber, `Invalid Eternity Challenge ID ${ecNumber}`,
-          `Eternity Challenge ${ecNumber} does not exist, use an integer between ${format(1)} and ${format(12)}`);
+        this.addError(
+          ctx.ECNumber,
+          `Invalid Eternity Challenge ID ${ecNumber}`,
+          `Eternity Challenge ${ecNumber} does not exist, use an integer between ${format(1)} and ${format(12)}`
+        );
       }
       ctx.$cached.ec = ecNumber;
     }
@@ -346,8 +366,11 @@ class Validator extends BaseVisitor {
       ctx.$value = new Decimal(ctx.NumberLiteral[0].image);
     } else if (ctx.Identifier) {
       if (!this.isValidVarFormat(ctx.Identifier[0], AUTOMATOR_VAR_TYPES.NUMBER)) {
-        this.addError(ctx, `Constant ${ctx.Identifier[0].image} cannot be used for comparison`,
-          `Ensure that ${ctx.Identifier[0].image} contains a properly-formatted number and not a Time Study string`);
+        this.addError(
+          ctx,
+          `Constant ${ctx.Identifier[0].image} cannot be used for comparison`,
+          `Ensure that ${ctx.Identifier[0].image} contains a properly-formatted number and not a Time Study string`
+        );
       }
       const varLookup = this.lookupVar(ctx.Identifier[0], AUTOMATOR_VAR_TYPES.NUMBER);
       if (varLookup) ctx.$value = ctx.Identifier[0].image;
@@ -356,8 +379,12 @@ class Validator extends BaseVisitor {
 
   comparison(ctx) {
     super.comparison(ctx);
-    if (!ctx.compareValue || ctx.compareValue[0].recoveredNode ||
-      ctx.compareValue.length !== 2 || ctx.compareValue[1].recoveredNode) {
+    if (
+      !ctx.compareValue ||
+      ctx.compareValue[0].recoveredNode ||
+      ctx.compareValue.length !== 2 ||
+      ctx.compareValue[1].recoveredNode
+    ) {
       this.addError(ctx, "Missing value for comparison", "Ensure that the comparison has two values");
     }
     if (!ctx.ComparisonOperator || ctx.ComparisonOperator[0].isInsertedInRecovery) {
@@ -365,16 +392,22 @@ class Validator extends BaseVisitor {
       return;
     }
     if (ctx.ComparisonOperator[0].tokenType === T.OpEQ || ctx.ComparisonOperator[0].tokenType === T.EqualSign) {
-      this.addError(ctx, "Please use an inequality comparison (>, <, >=, <=)",
-        "Comparisons cannot be done with equality, only with inequality operators");
+      this.addError(
+        ctx,
+        "Please use an inequality comparison (>, <, >=, <=)",
+        "Comparisons cannot be done with equality, only with inequality operators"
+      );
     }
   }
 
   badCommand(ctx) {
     const firstToken = ctx.badCommandToken[0].children;
     const firstTokenType = Object.keys(firstToken)[0];
-    this.addError(firstToken[firstTokenType][0], `Unrecognized command "${firstToken[firstTokenType][0].image}"`,
-      "Check to make sure you have typed in the command name correctly");
+    this.addError(
+      firstToken[firstTokenType][0],
+      `Unrecognized command "${firstToken[firstTokenType][0].image}"`,
+      "Check to make sure you have typed in the command name correctly"
+    );
   }
 
   eternityChallenge(ctx) {
@@ -386,13 +419,15 @@ class Validator extends BaseVisitor {
       ecNumber = parseFloat(ctx.NumberLiteral[0].image);
       errToken = ctx.NumberLiteral[0];
     } else {
-      this.addError(ctx, "Missing Eternity Challenge number",
-        "Specify which Eternity Challenge is being referred to");
+      this.addError(ctx, "Missing Eternity Challenge number", "Specify which Eternity Challenge is being referred to");
       return;
     }
     if (!Number.isInteger(ecNumber) || ecNumber < 1 || ecNumber > 12) {
-      this.addError(errToken, `Invalid Eternity Challenge ID ${ecNumber}`,
-        `Eternity Challenge ${ecNumber} does not exist, use an integer between ${format(1)} and ${format(12)}`);
+      this.addError(
+        errToken,
+        `Invalid Eternity Challenge ID ${ecNumber}`,
+        `Eternity Challenge ${ecNumber} does not exist, use an integer between ${format(1)} and ${format(12)}`
+      );
     }
     ctx.$ecNumber = ecNumber;
   }
@@ -400,13 +435,19 @@ class Validator extends BaseVisitor {
   checkBlock(ctx, commandToken) {
     let hadError = false;
     if (!ctx.RCurly || ctx.RCurly[0].isInsertedInRecovery) {
-      this.addError(commandToken[0], "Missing closing }",
-        "This loop has mismatched brackets, add a corresponding } on another line to close the loop");
+      this.addError(
+        commandToken[0],
+        "Missing closing }",
+        "This loop has mismatched brackets, add a corresponding } on another line to close the loop"
+      );
       hadError = true;
     }
     if (!ctx.LCurly || ctx.LCurly[0].isInsertedInRecovery) {
-      this.addError(commandToken[0], "Missing opening {",
-        "This line has an extra } closing a loop which does not exist, remove the }");
+      this.addError(
+        commandToken[0],
+        "Missing opening {",
+        "This line has an extra } closing a loop which does not exist, remove the }"
+      );
       hadError = true;
     }
     return !hadError;
@@ -439,14 +480,14 @@ class Compiler extends BaseVisitor {
   }
 
   comparison(ctx) {
-    const getters = ctx.compareValue.map(cv => {
+    const getters = ctx.compareValue.map((cv) => {
       if (cv.children.AutomatorCurrency) return cv.children.AutomatorCurrency[0].tokenType.$getter;
       const val = cv.children.$value;
       if (typeof val === "string") return () => player.reality.automator.constants[val];
       return () => val;
     });
     // Some currencies are locked and should always evaluate to false if they're attempted to be used
-    const canUseInComp = ctx.compareValue.map(cv => {
+    const canUseInComp = ctx.compareValue.map((cv) => {
       if (cv.children.AutomatorCurrency) {
         const unlockedFn = cv.children.AutomatorCurrency[0].tokenType.$unlocked;
         return unlockedFn ? unlockedFn() : true;
@@ -488,7 +529,7 @@ class Blockifier extends BaseVisitor {
           const block = blockify(ctx, this);
           output.push({
             ...block,
-            id: UIID.next()
+            id: UIID.next(),
           });
         } catch {
           // If a command is invalid, it will throw an exception in blockify and fail to assign a value to block
@@ -501,7 +542,7 @@ class Blockifier extends BaseVisitor {
   }
 
   comparison(ctx) {
-    const parseInput = index => {
+    const parseInput = (index) => {
       const comp = ctx.compareValue[index];
       const isCurrency = Boolean(comp.children.AutomatorCurrency);
       if (isCurrency) return comp.children.AutomatorCurrency[0].image;
@@ -557,7 +598,7 @@ export function blockifyTextAutomator(input) {
   // associated with unparsable commands. This results in a discrepancy in line count whenever a line can't be
   // parsed as a specific command, and in general this is a problem we can't try to guess a fix for, so we just
   // don't convert it at all. In both cases nested commands are stored recursively, but with different structure.
-  const validatedCount = entry => {
+  const validatedCount = (entry) => {
     if (!entry) return 0;
     const commandDepth = entry.children;
     let foundChildren = 0;
@@ -567,7 +608,7 @@ export function blockifyTextAutomator(input) {
       const nestedBlock = commandDepth[key][0]?.children?.block;
       const nestedCommands = nestedBlock ? nestedBlock[0].children.command : [];
       foundChildren += nestedCommands
-        ? nestedCommands.map(c => validatedCount(c) + 1).reduce((sum, val) => sum + val, 0)
+        ? nestedCommands.map((c) => validatedCount(c) + 1).reduce((sum, val) => sum + val, 0)
         : 0;
 
       // Trailing newlines get turned into a command with a single EOF argument; we return -1 because one level up
@@ -576,15 +617,15 @@ export function blockifyTextAutomator(input) {
     }
     return foundChildren;
   };
-  const visitedCount = block => {
+  const visitedCount = (block) => {
     if (!block.nest) return 1;
-    return 1 + block.nest.map(b => visitedCount(b)).reduce((sum, val) => sum + val, 0);
+    return 1 + block.nest.map((b) => visitedCount(b)).reduce((sum, val) => sum + val, 0);
   };
   // Note: top-level structure is slightly different than the nesting structure
   const validatedBlocks = validator.parseResult.children.block[0].children.command
-    .map(c => validatedCount(c) + 1)
+    .map((c) => validatedCount(c) + 1)
     .reduce((sum, val) => sum + val, 0);
-  const visitedBlocks = blocks.map(b => visitedCount(b)).reduce((sum, val) => sum + val, 0);
+  const visitedBlocks = blocks.map((b) => visitedCount(b)).reduce((sum, val) => sum + val, 0);
 
   return { blocks, validatedBlocks, visitedBlocks };
 }

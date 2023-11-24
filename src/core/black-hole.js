@@ -6,14 +6,9 @@ class BlackHoleUpgradeState {
     const { getAmount, setAmount, calculateValue, initialCost, costMult } = config;
     this.incrementAmount = () => setAmount(getAmount() + 1);
     this._lazyValue = new Lazy(() => calculateValue(getAmount()));
-    this._lazyCost = new Lazy(() => getHybridCostScaling(getAmount(),
-      1e30,
-      initialCost,
-      costMult,
-      0.2,
-      DC.E310,
-      1e5,
-      10));
+    this._lazyCost = new Lazy(() =>
+      getHybridCostScaling(getAmount(), 1e30, initialCost, costMult, 0.2, DC.E310, 1e5, 10)
+    );
     this.id = config.id;
     this.hasAutobuyer = config.hasAutobuyer;
     this.onPurchase = config.onPurchase;
@@ -69,8 +64,8 @@ class BlackHoleState {
     this.intervalUpgrade = new BlackHoleUpgradeState({
       id: this.id,
       getAmount: () => this._data.intervalUpgrades,
-      setAmount: amount => this._data.intervalUpgrades = amount,
-      calculateValue: amount => (3600 / (Math.pow(10, id))) * Math.pow(0.8, amount),
+      setAmount: (amount) => (this._data.intervalUpgrades = amount),
+      calculateValue: (amount) => (3600 / Math.pow(10, id)) * Math.pow(0.8, amount),
       initialCost: 15 * blackHoleCostMultipliers[id],
       costMult: 3.5,
       hasAutobuyer: false,
@@ -78,27 +73,27 @@ class BlackHoleState {
         if (!this.isCharged) {
           this._data.phase = Math.clampMax(this.interval, this._data.phase);
         }
-      }
+      },
     });
     // Power: starts at 5, x1.35 per upgrade, cost goes x2, starts at 20
     this.powerUpgrade = new BlackHoleUpgradeState({
       id: this.id,
       getAmount: () => this._data.powerUpgrades,
-      setAmount: amount => this._data.powerUpgrades = amount,
-      calculateValue: amount => (180 / Math.pow(2, id)) * Math.pow(1.35, amount),
+      setAmount: (amount) => (this._data.powerUpgrades = amount),
+      calculateValue: (amount) => (180 / Math.pow(2, id)) * Math.pow(1.35, amount),
       initialCost: 20 * blackHoleCostMultipliers[id],
       costMult: 2,
-      hasAutobuyer: true
+      hasAutobuyer: true,
     });
     // Duration: starts at 10, x1.5 per upgrade, cost goes x4, starts at 10
     this.durationUpgrade = new BlackHoleUpgradeState({
       id: this.id,
       getAmount: () => this._data.durationUpgrades,
-      setAmount: amount => this._data.durationUpgrades = amount,
-      calculateValue: amount => (10 - (id) * 3) * Math.pow(1.3, amount),
+      setAmount: (amount) => (this._data.durationUpgrades = amount),
+      calculateValue: (amount) => (10 - id * 3) * Math.pow(1.3, amount),
       initialCost: 10 * blackHoleCostMultipliers[id],
       costMult: 4,
-      hasAutobuyer: false
+      hasAutobuyer: false,
     });
   }
 
@@ -176,9 +171,7 @@ class BlackHoleState {
       timeActive -= this.timeToNextStateChange;
     }
     // Determine the time until the next full activation.
-    let totalTime = this.isCharged
-      ? this.timeToNextStateChange + this.interval
-      : this.timeToNextStateChange;
+    let totalTime = this.isCharged ? this.timeToNextStateChange + this.interval : this.timeToNextStateChange;
     // This is the number of full cycles needed...
     totalTime += Math.floor(timeActive / this.duration) * this.cycleLength;
     // And the time from a partial cycle.
@@ -315,7 +308,7 @@ class BlackHoleState {
   }
 }
 
-BlackHoleState.list = Array.range(0, 2).map(id => new BlackHoleState(id));
+BlackHoleState.list = Array.range(0, 2).map((id) => new BlackHoleState(id));
 
 /**
  * @param {number} id
@@ -373,8 +366,11 @@ export const BlackHoles = {
 
   get unpauseAccelerationFactor() {
     if (this.arePermanent) return 1;
-    return Math.clamp((player.records.realTimePlayed - player.blackHolePauseTime) /
-      (1000 * this.ACCELERATION_TIME), 0, 1);
+    return Math.clamp(
+      (player.records.realTimePlayed - player.blackHolePauseTime) / (1000 * this.ACCELERATION_TIME),
+      0,
+      1
+    );
   },
 
   get arePaused() {
@@ -386,7 +382,7 @@ export const BlackHoles = {
   },
 
   get arePermanent() {
-    return BlackHoles.list.every(bh => bh.isPermanent);
+    return BlackHoles.list.every((bh) => bh.isPermanent);
   },
 
   updatePhases(blackHoleDiff) {
@@ -450,7 +446,7 @@ export const BlackHoles = {
     const realTickTime = this.binarySearch(
       0,
       totalRealTime,
-      x => this.calculateGameTimeFromRealTime(x, speedups).mul(numberOfTicks).div(totalGameTime),
+      (x) => this.calculateGameTimeFromRealTime(x, speedups).mul(numberOfTicks).div(totalGameTime),
       1,
       tolerance
     );
@@ -488,8 +484,12 @@ export const BlackHoles = {
    * starting from black hole 1 and black hole 0 being normal game.
    */
   calculateSpeedups() {
-    const effectsToConsider = [GAME_SPEED_EFFECT.FIXED_SPEED, GAME_SPEED_EFFECT.TIME_GLYPH,
-      GAME_SPEED_EFFECT.SINGULARITY_MILESTONE, GAME_SPEED_EFFECT.NERFS];
+    const effectsToConsider = [
+      GAME_SPEED_EFFECT.FIXED_SPEED,
+      GAME_SPEED_EFFECT.TIME_GLYPH,
+      GAME_SPEED_EFFECT.SINGULARITY_MILESTONE,
+      GAME_SPEED_EFFECT.NERFS,
+    ];
     const speedupWithoutBlackHole = getGameSpeedupFactor(effectsToConsider);
     const speedups = [DC.D1];
     effectsToConsider.push(GAME_SPEED_EFFECT.BLACK_HOLE);
@@ -509,9 +509,7 @@ export const BlackHoles = {
     const effectivePeriods = this.realTimePeriodsWithBlackHoleEffective(realerTime, speedups);
     // This adds in time with black holes paused at the end of the list.
     effectivePeriods[0] += realTime - realerTime;
-    return effectivePeriods
-      .map((period, i) => speedups[i].mul(period))
-      .sumDecimal();
+    return effectivePeriods.map((period, i) => speedups[i].mul(period)).sumDecimal();
   },
 
   /**
@@ -572,8 +570,9 @@ export const BlackHoles = {
       // If the time until next activation is less than the acceleration time,
       // we have to wait until the activation after that;
       // otherwise, we can just use the next activation.
-      return (t < BlackHoles.ACCELERATION_TIME)
-        ? t + bh.duration + bh.interval - BlackHoles.ACCELERATION_TIME : t - BlackHoles.ACCELERATION_TIME;
+      return t < BlackHoles.ACCELERATION_TIME
+        ? t + bh.duration + bh.interval - BlackHoles.ACCELERATION_TIME
+        : t - BlackHoles.ACCELERATION_TIME;
     }
     // Look at the next 100 black hole transitions.
     // This is called every tick if BH pause setting is set to BH2, so we try to optimize it.
@@ -610,8 +609,8 @@ export const BlackHoles = {
       // Get the list of phase bounds.
       const phaseBounds = phaseBoundList[current];
       // Compute time until some phase reaches its bound.
-      const minTime = current > 0 ? Math.min(phaseBounds[0] - phases[0], phaseBounds[1] - phases[1])
-        : phaseBounds[0] - phases[0];
+      const minTime =
+        current > 0 ? Math.min(phaseBounds[0] - phases[0], phaseBounds[1] - phases[1]) : phaseBounds[0] - phases[0];
       if (current === 2) {
         // Check if there was enough time before this activation to pause.
         if (inactiveTime >= BlackHoles.ACCELERATION_TIME) {
@@ -666,5 +665,5 @@ export const BlackHoles = {
       return [false, realTime];
     }
     return [true, timeLeft];
-  }
+  },
 };

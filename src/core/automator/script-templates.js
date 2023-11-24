@@ -63,8 +63,9 @@ export class ScriptTemplate {
   storeTreeData(params) {
     const nowaitStr = params.treeNowait ? " nowait" : "";
     if (params.treePreset) {
-      const presetObj = player.timestudy.presets.map((p, i) => ({ ...p, id: i + 1 }))
-        .find(p => (p.name === params.treePreset || p.id === Number(params.treePreset)));
+      const presetObj = player.timestudy.presets
+        .map((p, i) => ({ ...p, id: i + 1 }))
+        .find((p) => p.name === params.treePreset || p.id === Number(params.treePreset));
       const preset = presetObj.name ? `name ${presetObj.name}` : `id ${presetObj.id}`;
       this.storedTreeStr = `studies${nowaitStr} load ${preset}`;
       this.storedTreeObj = new TimeStudyTree(presetObj.studies);
@@ -138,9 +139,10 @@ export class ScriptTemplate {
     // We give it a bit of an extra "safety factor" of 5x in order to make sure it doesn't end up repeatedly going
     // to something like 1.6e308 due to poor rounding. The startingValue may fluctuate based on achievements, but
     // this can be a significant time save that we want to actually give the player if they have the e130 perk
-    const gapToEternity = Number.MAX_VALUE / Currency.infinityPoints.startingValue.toNumber() * 5;
-    this.lines.push(`auto infinity ${this.format(
-      Decimal.pow(gapToEternity, 1 / params.crunchesPerEternity))} x highest`);
+    const gapToEternity = (Number.MAX_VALUE / Currency.infinityPoints.startingValue.toNumber()) * 5;
+    this.lines.push(
+      `auto infinity ${this.format(Decimal.pow(gapToEternity, 1 / params.crunchesPerEternity))} x highest`
+    );
     this.lines.push(`wait eternities > ${this.format(params.eternities)}`);
     this.lines.push("auto eternity off");
   }
@@ -165,7 +167,8 @@ export class ScriptTemplate {
     this.lines.push(`auto infinity 5s`);
     if (params.isBanked) {
       const has191 = this.storedTreeObj.purchasedStudies.includes(TimeStudy(191));
-      if (!has191) this.warnings.push(`TS191 is not reachable from an empty tree; banking anything in this template
+      if (!has191)
+        this.warnings.push(`TS191 is not reachable from an empty tree; banking anything in this template
         will require Achievement "${Achievement(131).name}"`);
       const bankRate = has191 ? 0.1 : 0.05;
       this.lines.push("// Note: This template attempts to get all the Banked Infinities within a single Eternity");
@@ -230,7 +233,7 @@ export class ScriptTemplate {
     this.lines.push("// Template: Unlock Dilation");
     this.lines.push(`notify "Running Template Unlock Dilation"`);
     this.storeTreeData(params);
-    if (![231, 232, 233, 234].some(s => this.storedTreeObj.purchasedStudies.includes(TimeStudy(s)))) {
+    if (![231, 232, 233, 234].some((s) => this.storedTreeObj.purchasedStudies.includes(TimeStudy(s)))) {
       this.warnings.push("Specified Study Tree cannot reach Dilation");
     }
     this.lines.push(`auto infinity off`);

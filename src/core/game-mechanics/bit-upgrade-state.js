@@ -12,8 +12,12 @@ export class BitUpgradeState extends GameMechanicState {
   /**
    * @abstract
    */
-  get bits() { throw new NotImplementedError(); }
-  set bits(value) { throw new NotImplementedError(); }
+  get bits() {
+    throw new NotImplementedError();
+  }
+  set bits(value) {
+    throw new NotImplementedError();
+  }
 
   get isUnlocked() {
     return Boolean(this.bits & (1 << this.id));
@@ -28,11 +32,11 @@ export class BitUpgradeState extends GameMechanicState {
   }
 
   // eslint-disable-next-line no-empty-function
-  onUnlock() { }
+  onUnlock() {}
 
   unlock() {
     if (!this.canBeUnlocked) return;
-    this.bits |= (1 << this.id);
+    this.bits |= 1 << this.id;
     this.onUnlock();
   }
 }

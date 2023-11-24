@@ -18,5 +18,5 @@ export const reality = {
   imaginaryUpgrades,
   perks,
   perkConnections,
-  upgrades: realityUpgrades
+  upgrades: realityUpgrades,
 };

@@ -28,7 +28,7 @@ export const NG = {
       // For the sake of keeping a bounded savefile size, we only keep a queue of the last 100 full runs. The earliest
       // this will feasibly become an issue from nonstop speedruns is around 2030; I guess we can revisit it at that
       // point if we really need to, but I suspect this limit should be high enough
-      const prevRunIndices = Object.keys(speedrun.previousRuns).map(k => Number(k));
+      const prevRunIndices = Object.keys(speedrun.previousRuns).map((k) => Number(k));
       if (prevRunIndices.length > 100) player.speedrun.previousRuns[prevRunIndices.min()] = undefined;
     }
 
@@ -83,9 +83,9 @@ export const NG = {
     player.speedrun.previousRuns = JSON.parse(speedrunRecords);
     player.speedrun.isUnlocked = hasSpeedrun;
     Themes.find(Theme.currentName()).set();
-    Notations.all.find(n => n.name === player.options.notation).setAsCurrent();
+    Notations.all.find((n) => n.name === player.options.notation).setAsCurrent();
     ADNotations.Settings.exponentCommas.min = 10 ** player.options.notationDigits.comma;
     ADNotations.Settings.exponentCommas.max = 10 ** player.options.notationDigits.notation;
     player.lastUpdate = Date.now();
-  }
+  },
 };

@@ -128,20 +128,23 @@ const Zalgo = {
   },
   random(len, seed) {
     if (len == 1) return 0;
-    const x = (66669 * seed % 981) / 997;
+    const x = ((66669 * seed) % 981) / 997;
     return !!len ? Math.floor(x * len + 1) - 1 : x;
   },
   generate(str, level = 0) {
     const str_arr = str.split("");
     let seed = str_arr.reduce((curr, acc) => curr + acc.charCodeAt(0), 0);
-    return str_arr.map(a => {
-      if (a == " ") return a;
-      for (let i = 0; i < level; i++) {
-        const rand = Zalgo.random(3, seed++);
-        if (Zalgo.random(10, seed++) / 10 >= 0.5) a += Zalgo.chars[rand][Zalgo.random(Zalgo.chars[rand].length, seed++)];
-      }
-      return a;
-    }).join("");
+    return str_arr
+      .map((a) => {
+        if (a == " ") return a;
+        for (let i = 0; i < level; i++) {
+          const rand = Zalgo.random(3, seed++);
+          if (Zalgo.random(10, seed++) / 10 >= 0.5)
+            a += Zalgo.chars[rand][Zalgo.random(Zalgo.chars[rand].length, seed++)];
+        }
+        return a;
+      })
+      .join("");
   },
 };
 

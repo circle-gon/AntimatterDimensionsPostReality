@@ -1,7 +1,7 @@
 export const GALAXY_TYPE = {
   NORMAL: 0,
   DISTANT: 1,
-  REMOTE: 2
+  REMOTE: 2,
 };
 
 class GalaxyRequirement {
@@ -31,16 +31,20 @@ export class Galaxy {
    * @returns {number} Max number of galaxies (total)
    */
   static buyableGalaxies(currency) {
-    const bulk = bulkBuyBinarySearch(new Decimal(currency), {
-      costFunction: x => this.requirementAt(x).amount,
-      cumulative: false,
-    }, player.galaxies);
+    const bulk = bulkBuyBinarySearch(
+      new Decimal(currency),
+      {
+        costFunction: (x) => this.requirementAt(x).amount,
+        cumulative: false,
+      },
+      player.galaxies
+    );
     if (!bulk) throw new Error("Unexpected failure to calculate galaxy purchase");
     return player.galaxies + bulk.quantity;
   }
 
   static requirementAt(galaxies) {
-    let amount = Galaxy.baseCost + (galaxies * Galaxy.costMult);
+    let amount = Galaxy.baseCost + galaxies * Galaxy.costMult;
 
     const type = Galaxy.typeAt(galaxies);
 
@@ -81,8 +85,8 @@ export class Galaxy {
   static get canBeBought() {
     if (EternityChallenge(6).isRunning && !Enslaved.isRunning) return false;
     if (NormalChallenge(8).isRunning || InfinityChallenge(7).isRunning) return false;
-    if (player.records.thisInfinity.maxAM.gt(Player.infinityGoal) &&
-       (!player.break || Player.isInAntimatterChallenge)) return false;
+    if (player.records.thisInfinity.maxAM.gt(Player.infinityGoal) && (!player.break || Player.isInAntimatterChallenge))
+      return false;
     return true;
   }
 
@@ -96,11 +100,10 @@ export class Galaxy {
   }
 
   static get costScalingStart() {
-    return 100 + TimeStudy(302).effectOrDefault(0) + Effects.sum(
-      TimeStudy(223),
-      TimeStudy(224),
-      EternityChallenge(5).reward,
-      GlyphSacrifice.power
+    return (
+      100 +
+      TimeStudy(302).effectOrDefault(0) +
+      Effects.sum(TimeStudy(223), TimeStudy(224), EternityChallenge(5).reward, GlyphSacrifice.power)
     );
   }
 
@@ -163,9 +166,7 @@ function maxBuyGalaxies(limit = Number.MAX_VALUE) {
   const req = Galaxy.requirement;
   if (!req.isSatisfied) return false;
   const dim = AntimatterDimension(req.tier);
-  const newGalaxies = Math.clampMax(
-    Galaxy.buyableGalaxies(Math.round(dim.totalAmount.toNumber())),
-    limit);
+  const newGalaxies = Math.clampMax(Galaxy.buyableGalaxies(Math.round(dim.totalAmount.toNumber())), limit);
   if (Notations.current === Notation.emoji) {
     player.requirementChecks.permanent.emojiGalaxies += newGalaxies - player.galaxies;
   }

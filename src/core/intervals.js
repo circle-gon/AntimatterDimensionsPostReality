@@ -1,4 +1,4 @@
-export const GameIntervals = (function() {
+export const GameIntervals = (function () {
   const interval = (handler, timeout) => {
     let id = -1;
     return {
@@ -23,17 +23,15 @@ export const GameIntervals = (function() {
       restart() {
         this.stop();
         this.start();
-      }
+      },
     };
   };
   return {
     // Not a getter because getter will cause stack overflow
     all() {
-      return Object.values(GameIntervals)
-        .filter(i =>
-          Object.prototype.hasOwnProperty.call(i, "start") &&
-          Object.prototype.hasOwnProperty.call(i, "stop")
-        );
+      return Object.values(GameIntervals).filter(
+        (i) => Object.prototype.hasOwnProperty.call(i, "start") && Object.prototype.hasOwnProperty.call(i, "stop")
+      );
     },
     start() {
       // eslint-disable-next-line no-shadow
@@ -53,9 +51,13 @@ export const GameIntervals = (function() {
         interval.restart();
       }
     },
-    gameLoop: interval(() => gameLoop(), () => player.options.updateRate),
-    save: interval(() => GameStorage.save(), () =>
-      player.options.autosaveInterval - Math.clampMin(0, Date.now() - GameStorage.lastSaveTime)
+    gameLoop: interval(
+      () => gameLoop(),
+      () => player.options.updateRate
+    ),
+    save: interval(
+      () => GameStorage.save(),
+      () => player.options.autosaveInterval - Math.clampMin(0, Date.now() - GameStorage.lastSaveTime)
     ),
     checkCloudSave: interval(() => {
       if (player.options.cloudEnabled && Cloud.loggedIn) Cloud.saveCheck();
@@ -69,12 +71,12 @@ export const GameIntervals = (function() {
     checkForUpdates: interval(() => {
       if (isLocalEnvironment()) return;
       fetch("version.txt")
-        .then(response => response.json())
-        .then(json => {
+        .then((response) => response.json())
+        .then((json) => {
           if (json.version > player.version) {
             Modal.message.show(json.message, { callback: updateRefresh }, 3);
           }
         });
-    }, 60000)
+    }, 60000),
   };
-}());
+})();

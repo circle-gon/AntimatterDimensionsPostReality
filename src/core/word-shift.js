@@ -3,7 +3,7 @@ function predictableRandom(x) {
   const a = 15485863;
   const b = 521791;
   start = (start * a) % b;
-  for (let i = 0; i < (x * x) % 90 + 90; i++) {
+  for (let i = 0; i < ((x * x) % 90) + 90; i++) {
     start = (start * a) % b;
   }
   return start / b;
@@ -38,7 +38,7 @@ export default {
     v = this.randomCrossWords(v, 0.1 * Math.pow(mod5 - 2.5, 4) - 0.6);
     if (noBuffer) return v;
 
-    const maxWordLen = Math.max(...list.map(x => x.length));
+    const maxWordLen = Math.max(...list.map((x) => x.length));
     const bufferSpace = (maxWordLen - v.length) / 2;
 
     // Buffer the result with ALT+255 on either side to prevent the ui from twitching.
@@ -51,7 +51,7 @@ export default {
     if (frac <= 0) return str;
     const x = str.split("");
     for (let i = 0; i < x.length * frac; i++) {
-      const randomIndex = Math.floor(predictableRandom(Math.floor(Date.now() / 500) % 964372 + 1.618 * i) * x.length);
+      const randomIndex = Math.floor(predictableRandom((Math.floor(Date.now() / 500) % 964372) + 1.618 * i) * x.length);
       x[randomIndex] = randomSymbol();
     }
     return x.join("");
@@ -62,7 +62,8 @@ export default {
   blendWords(first, second, param) {
     if (param <= 0) return first;
     if (param >= 1) return second;
-    return first.substring(0, first.length * (1 - param)) +
-      second.substring(second.length * (1 - param), second.length);
-  }
+    return (
+      first.substring(0, first.length * (1 - param)) + second.substring(second.length * (1 - param), second.length)
+    );
+  },
 };

@@ -11,8 +11,7 @@ export const GlyphSacrificeHandler = {
     // We check elsewhere for this equalling zero to determine if the player has ever sacrificed. Technically this
     // should check for -Infinity, but the clampMin works in practice because the minimum possible sacrifice
     // value is greater than 1 for even the weakest possible glyph
-    return BASIC_GLYPH_TYPES.reduce(
-      (tot, type) => tot + player.reality.glyphs.sac[type].max(1).log10(), 0);
+    return BASIC_GLYPH_TYPES.reduce((tot, type) => tot + player.reality.glyphs.sac[type].max(1).log10(), 0);
   },
   get canSacrifice() {
     return RealityUpgrade(19).isBought;
@@ -114,9 +113,11 @@ export const GlyphSacrificeHandler = {
       return;
     }
     const decoherence = AlchemyResource.decoherence.isUnlocked;
-    if (!Ra.unlocks.unlockGlyphAlchemy.canBeApplied ||
-        (this.glyphRefinementGain(glyph) === 0 && !decoherence) ||
-        (decoherence && AlchemyResources.base.every(x => x.data.amount >= Ra.alchemyResourceCap))) {
+    if (
+      !Ra.unlocks.unlockGlyphAlchemy.canBeApplied ||
+      (this.glyphRefinementGain(glyph) === 0 && !decoherence) ||
+      (decoherence && AlchemyResources.base.every((x) => x.data.amount >= Ra.alchemyResourceCap))
+    ) {
       this.sacrificeGlyph(glyph, force);
       return;
     }
@@ -131,9 +132,8 @@ export const GlyphSacrificeHandler = {
       resourceName: resource.name,
       resourceAmount: resource.amount,
       gain: this.glyphRefinementGain(glyph),
-      cap: resource.cap
+      cap: resource.cap,
     });
-
   },
   refineGlyph(glyph) {
     if (Pelle.isDoomed) return;
@@ -162,5 +162,5 @@ export const GlyphSacrificeHandler = {
       resource.highestRefinementValue = this.highestRefinementValue(glyph);
     }
     Glyphs.removeFromInventory(glyph);
-  }
+  },
 };

@@ -7,9 +7,7 @@ import { MultiplierTabIcons } from "./icons";
 export const IP = {
   total: {
     name: "Total IP Gained on Infinity",
-    displayOverride: () => (Player.canCrunch
-      ? format(gainedInfinityPoints(), 2, 2)
-      : "Cannot Crunch"),
+    displayOverride: () => (Player.canCrunch ? format(gainedInfinityPoints(), 2, 2) : "Cannot Crunch"),
     // This effectively hides everything if the player can't actually gain any
     multValue: () => (Player.canCrunch ? gainedInfinityPoints() : 1),
     isActive: () => PlayerProgress.infinityUnlocked() || Player.canCrunch,
@@ -54,25 +52,20 @@ export const IP = {
   },
   achievement: {
     name: "Achievements",
-    multValue: () => DC.D1.timesEffectsOf(
-      Achievement(85),
-      Achievement(93),
-      Achievement(116),
-      Achievement(125),
-      Achievement(141).effects.ipGain,
-    ),
+    multValue: () =>
+      DC.D1.timesEffectsOf(
+        Achievement(85),
+        Achievement(93),
+        Achievement(116),
+        Achievement(125),
+        Achievement(141).effects.ipGain
+      ),
     isActive: () => player.break && !Pelle.isDoomed,
     icon: MultiplierTabIcons.ACHIEVEMENT,
   },
   timeStudy: {
     name: "Time Studies",
-    multValue: () => DC.D1.timesEffectsOf(
-      TimeStudy(41),
-      TimeStudy(51),
-      TimeStudy(141),
-      TimeStudy(142),
-      TimeStudy(143),
-    ),
+    multValue: () => DC.D1.timesEffectsOf(TimeStudy(41), TimeStudy(51), TimeStudy(141), TimeStudy(142), TimeStudy(143)),
     isActive: () => player.break && !Pelle.isDoomed,
     icon: MultiplierTabIcons.TIME_STUDY,
   },

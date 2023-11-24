@@ -7,7 +7,7 @@ export const NewsHandler = {
 
   addSeenNews(id) {
     // From very old save versions; we ignore any IDs which belong to tickers which no longer exist.
-    if (!GameDatabase.news.map(e => e.id).includes(id)) return;
+    if (!GameDatabase.news.map((e) => e.id).includes(id)) return;
 
     const groups = id.match(/([a-z]+)(\d+)/u);
     const type = groups[1];
@@ -22,7 +22,7 @@ export const NewsHandler = {
     // If the bit array isn't large enough (ie. the numerical ID is the largest we've seen so far by a long shot), then
     // we pad the array with zeroes until we can fit the new ID in before actually adding it.
     while (this.BITS_PER_MASK * player.news.seen[type].length <= number) player.news.seen[type].push(0);
-    player.news.seen[type][Math.floor(number / this.BITS_PER_MASK)] |= 1 << (number % this.BITS_PER_MASK);
+    player.news.seen[type][Math.floor(number / this.BITS_PER_MASK)] |= 1 << number % this.BITS_PER_MASK;
     player.news.totalSeen++;
   },
 
@@ -33,7 +33,7 @@ export const NewsHandler = {
     const bitArray = player.news.seen[type];
 
     if (!bitArray || this.BITS_PER_MASK * bitArray.length < number) return false;
-    return (bitArray[Math.floor(number / this.BITS_PER_MASK)] |= 1 << (number % this.BITS_PER_MASK)) !== 0;
+    return (bitArray[Math.floor(number / this.BITS_PER_MASK)] |= 1 << number % this.BITS_PER_MASK) !== 0;
   },
 
   get uniqueTickersSeen() {
@@ -44,5 +44,5 @@ export const NewsHandler = {
       }
     }
     return totalSeen;
-  }
+  },
 };

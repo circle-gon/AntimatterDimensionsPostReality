@@ -12,23 +12,23 @@ function cloneUnlessOtherwiseSpecified(value, options) {
   if (value instanceof Set) {
     return new Set(value);
   }
-  return (options.clone !== false && options.isMergeableObject(value))
+  return options.clone !== false && options.isMergeableObject(value)
     ? deepmerge(emptyTarget(value), value, options)
     : value;
 }
 
 function defaultArrayMerge(target, source, options) {
-  return target.concat(source).map(element => cloneUnlessOtherwiseSpecified(element, options));
+  return target.concat(source).map((element) => cloneUnlessOtherwiseSpecified(element, options));
 }
 
 function mergeObject(target, source, options) {
   const destination = {};
   if (options.isMergeableObject(target)) {
-    Object.keys(target).forEach(key => {
+    Object.keys(target).forEach((key) => {
       destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
     });
   }
-  Object.keys(source).forEach(key => {
+  Object.keys(source).forEach((key) => {
     if (target[key] && target[key] instanceof Decimal) {
       destination[key] = new Decimal(source[key]);
     } else if (target[key] && target[key] instanceof Set) {
@@ -76,24 +76,24 @@ export function deepmergeAll(array, options) {
 
   if (!options) {
     // eslint-disable-next-line no-shadow
-    const deepCloneMerge = (destinationArray, sourceArray, options) => sourceArray.map((element, index) => {
-      if (destinationArray[index] && destinationArray[index] instanceof Decimal) {
-        return new Decimal(element);
-      }
+    const deepCloneMerge = (destinationArray, sourceArray, options) =>
+      sourceArray.map((element, index) => {
+        if (destinationArray[index] && destinationArray[index] instanceof Decimal) {
+          return new Decimal(element);
+        }
 
-      if (destinationArray[index] && destinationArray[index] instanceof Set) {
-        return new Set(element);
-      }
+        if (destinationArray[index] && destinationArray[index] instanceof Set) {
+          return new Set(element);
+        }
 
-      if (!options.isMergeableObject(element) || !destinationArray[index]) {
-        return cloneUnlessOtherwiseSpecified(element, options);
-      }
-      return deepmerge(destinationArray[index], element, options);
-
-    });
+        if (!options.isMergeableObject(element) || !destinationArray[index]) {
+          return cloneUnlessOtherwiseSpecified(element, options);
+        }
+        return deepmerge(destinationArray[index], element, options);
+      });
     // eslint-disable-next-line no-param-reassign
     options = {
-      arrayMerge: deepCloneMerge
+      arrayMerge: deepCloneMerge,
     };
   }
 

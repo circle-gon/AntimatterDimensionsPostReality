@@ -3,7 +3,10 @@ export const sidebarResources = [
   {
     id: 1,
     optionName: "Blob",
-    isAvailable: () => Themes.available().map(t => t.name).includes("S11"),
+    isAvailable: () =>
+      Themes.available()
+        .map((t) => t.name)
+        .includes("S11"),
     // This is a dummy value to prevent vue errors
     value: () => new Decimal(1),
     formatValue: () => "\uE010",
@@ -14,7 +17,7 @@ export const sidebarResources = [
     optionName: "Antimatter",
     isAvailable: () => true,
     value: () => Currency.antimatter.value,
-    formatValue: x => format(x, 2, 1),
+    formatValue: (x) => format(x, 2, 1),
     formatClass: "o-sidebar-currency--antimatter",
   },
   {
@@ -22,7 +25,7 @@ export const sidebarResources = [
     optionName: "Infinity Points",
     isAvailable: () => PlayerProgress.infinityUnlocked(),
     value: () => Currency.infinityPoints.value.floor(),
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--infinity",
   },
   {
@@ -30,7 +33,7 @@ export const sidebarResources = [
     optionName: "Replicanti",
     isAvailable: () => Replicanti.areUnlocked || PlayerProgress.eternityUnlocked(),
     value: () => Replicanti.amount,
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--replicanti",
   },
   {
@@ -38,7 +41,7 @@ export const sidebarResources = [
     optionName: "Eternity Points",
     isAvailable: () => PlayerProgress.eternityUnlocked(),
     value: () => Currency.eternityPoints.value.floor(),
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--eternity",
   },
   {
@@ -46,7 +49,7 @@ export const sidebarResources = [
     optionName: "Total TT",
     isAvailable: () => PlayerProgress.eternityUnlocked(),
     value: () => player.timestudy.theorem.plus(TimeTheorems.calculateTimeStudiesCost()),
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--eternity",
   },
   {
@@ -54,7 +57,7 @@ export const sidebarResources = [
     optionName: "Tachyon Particles",
     isAvailable: () => PlayerProgress.dilationUnlocked() || PlayerProgress.realityUnlocked(),
     value: () => Currency.tachyonParticles.value,
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--dilation",
   },
   {
@@ -62,7 +65,7 @@ export const sidebarResources = [
     optionName: "Dilated Time",
     isAvailable: () => PlayerProgress.dilationUnlocked() || PlayerProgress.realityUnlocked(),
     value: () => Currency.dilatedTime.value,
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--dilation",
   },
   {
@@ -70,7 +73,7 @@ export const sidebarResources = [
     optionName: "Reality Machines",
     isAvailable: () => PlayerProgress.realityUnlocked(),
     value: () => Currency.realityMachines.value,
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--reality",
   },
   {
@@ -78,7 +81,7 @@ export const sidebarResources = [
     optionName: "Relic Shards",
     isAvailable: () => TeresaUnlocks.effarig.isUnlocked,
     value: () => new Decimal(Currency.relicShards.value),
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--effarig",
   },
   {
@@ -86,7 +89,7 @@ export const sidebarResources = [
     optionName: "Imaginary Machines",
     isAvailable: () => MachineHandler.isIMUnlocked,
     value: () => new Decimal(Currency.imaginaryMachines.value),
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--reality",
   },
   {
@@ -104,7 +107,7 @@ export const sidebarResources = [
     optionName: "Dark Matter",
     isAvailable: () => Laitela.isUnlocked,
     value: () => Currency.darkMatter,
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--laitela",
   },
   {
@@ -112,7 +115,7 @@ export const sidebarResources = [
     optionName: "Dark Energy",
     isAvailable: () => Laitela.isUnlocked,
     value: () => new Decimal(Currency.darkEnergy.value),
-    formatValue: x => format(x, 2, 2),
+    formatValue: (x) => format(x, 2, 2),
     formatClass: "o-sidebar-currency--laitela",
   },
   {
@@ -120,7 +123,7 @@ export const sidebarResources = [
     optionName: "Singularities",
     isAvailable: () => Laitela.isUnlocked,
     value: () => new Decimal(Currency.singularities.value),
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--laitela",
   },
   {
@@ -128,7 +131,7 @@ export const sidebarResources = [
     optionName: "Reality Shards",
     isAvailable: () => Pelle.isDoomed,
     value: () => Currency.realityShards,
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--pelle",
   },
   {
@@ -136,7 +139,7 @@ export const sidebarResources = [
     optionName: "Atoms",
     isAvailable: () => PlayerProgress.atomUnlocked(),
     value: () => Currency.atoms,
-    formatValue: x => format(x, 2),
+    formatValue: (x) => format(x, 2),
     formatClass: "o-sidebar-currency--atom",
-  }
+  },
 ];

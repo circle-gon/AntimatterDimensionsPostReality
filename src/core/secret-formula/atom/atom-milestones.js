@@ -43,5 +43,5 @@ export const atomMilestones = {
     Start with one more post-Reality achievement (excluding Doomed Reality achievements) for
     every Collapse done. 
     `,
-  }
+  },
 };

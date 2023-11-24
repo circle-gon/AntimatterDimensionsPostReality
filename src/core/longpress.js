@@ -34,12 +34,12 @@ class LongPress {
     if (!Object.prototype.hasOwnProperty.call(handlers, "longPress")) {
       throw "Need to specify a longPress handler";
     }
-    const begin = e => LongPress._pressBegin(timeout, handlers.longPress, handlers.cancel, handlers.repeat, e);
+    const begin = (e) => LongPress._pressBegin(timeout, handlers.longPress, handlers.cancel, handlers.repeat, e);
     obj.addEventListener("mousedown", begin);
     obj.addEventListener("touchstart", begin);
     obj.addEventListener("mouseout", LongPress._cancelCurrentPress);
     obj.addEventListener("touchcancel", LongPress._cancelCurrentPress);
-    obj.addEventListener("touchmove", e => {
+    obj.addEventListener("touchmove", (e) => {
       // Suggested in stackoverflow example
       e.preventDefault();
       const t = e.changedTouches[0];
@@ -48,8 +48,8 @@ class LongPress {
       }
     });
     if (handlers.click) {
-      obj.addEventListener("click", e => LongPress._handleClick(e, handlers.click));
-      obj.addEventListener("touchend", e => LongPress._handleTouchEnd(e, handlers.click));
+      obj.addEventListener("click", (e) => LongPress._handleClick(e, handlers.click));
+      obj.addEventListener("touchend", (e) => LongPress._handleTouchEnd(e, handlers.click));
     } else {
       obj.addEventListener("click", LongPress._cancelCurrentPress);
       obj.addEventListener("touchend", LongPress._cancelCurrentPress);
@@ -130,7 +130,7 @@ export function useLongPress(vue) {
     bind(el, binding, vnode) {
       // This seems to be the only way to get events to our component
       const emit = (name, data) => {
-        const handlers = (vnode.data && vnode.data.on);
+        const handlers = vnode.data && vnode.data.on;
         if (handlers && handlers[name]) {
           handlers[name].fns(data);
         }
@@ -140,7 +140,7 @@ export function useLongPress(vue) {
         cancel: () => emit("longpresscancel"),
         click: () => emit("longpressclick"),
       });
-    }
+    },
   });
 }
 
@@ -149,7 +149,7 @@ export function useRepeatingClick(vue) {
     bind(el, binding, vnode) {
       // This seems to be the only way to get events to our component
       const emit = (name, data) => {
-        const handlers = (vnode.data && vnode.data.on);
+        const handlers = vnode.data && vnode.data.on;
         if (handlers && handlers[name]) {
           handlers[name].fns(data);
         }
@@ -157,8 +157,8 @@ export function useRepeatingClick(vue) {
       LongPress.addTo(el, binding.value.delay, {
         longPress: () => emit("repeatclick"),
         click: () => emit("firstclick"),
-        repeat: 250
+        repeat: 250,
       });
-    }
+    },
   });
 }

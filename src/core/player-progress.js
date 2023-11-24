@@ -82,10 +82,10 @@ export class PlayerProgress {
   }
 
   static challengeCompleted() {
-    return NormalChallenges.all.slice(1).some(c => c.isCompleted);
+    return NormalChallenges.all.slice(1).some((c) => c.isCompleted);
   }
 
   static infinityChallengeCompleted() {
-    return InfinityChallenges.all.some(c => c.isCompleted);
+    return InfinityChallenges.all.some((c) => c.isCompleted);
   }
 }

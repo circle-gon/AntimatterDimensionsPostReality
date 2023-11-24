@@ -5,7 +5,7 @@ export const Effects = {
    */
   sum(...effectSources) {
     let result = 0;
-    applyEffectsOf(effectSources, v => result += v);
+    applyEffectsOf(effectSources, (v) => (result += v));
     return result;
   },
   /**
@@ -14,7 +14,7 @@ export const Effects = {
    */
   log10Sum(...effectSources) {
     let result = 0;
-    applyEffectsOf(effectSources, v => {
+    applyEffectsOf(effectSources, (v) => {
       result += v instanceof Decimal ? v.log10() : Math.log10(v);
     });
     return result;
@@ -25,7 +25,7 @@ export const Effects = {
    */
   product(...effectSources) {
     let result = 1;
-    applyEffectsOf(effectSources, v => result *= v);
+    applyEffectsOf(effectSources, (v) => (result *= v));
     return result;
   },
   /**
@@ -36,10 +36,8 @@ export const Effects = {
   last(defaultValue, ...effectSources) {
     let result = defaultValue;
     let foundLast = false;
-    const reversedSources = effectSources
-      .filter(s => s !== null && s !== undefined)
-      .reverse();
-    const reducer = v => {
+    const reversedSources = effectSources.filter((s) => s !== null && s !== undefined).reverse();
+    const reducer = (v) => {
       result = v;
       foundLast = true;
     };
@@ -56,7 +54,7 @@ export const Effects = {
    */
   max(defaultValue, ...effectSources) {
     let result = defaultValue;
-    applyEffectsOf(effectSources, v => result = Math.max(result, v));
+    applyEffectsOf(effectSources, (v) => (result = Math.max(result, v)));
     return result;
   },
   /**
@@ -66,70 +64,70 @@ export const Effects = {
    */
   min(defaultValue, ...effectSources) {
     let result = defaultValue;
-    applyEffectsOf(effectSources, v => result = Math.min(result, v));
+    applyEffectsOf(effectSources, (v) => (result = Math.min(result, v)));
     return result;
-  }
+  },
 };
 
 /**
  * @returns {Decimal}
  */
-Decimal.prototype.plusEffectOf = function(effectSource) {
+Decimal.prototype.plusEffectOf = function (effectSource) {
   // eslint-disable-next-line consistent-this
   let result = this;
-  effectSource.applyEffect(v => result = result.plus(v));
+  effectSource.applyEffect((v) => (result = result.plus(v)));
   return result;
 };
 
 /**
  * @returns {Decimal}
  */
-Decimal.prototype.plusEffectsOf = function(...effectSources) {
+Decimal.prototype.plusEffectsOf = function (...effectSources) {
   // eslint-disable-next-line consistent-this
   let result = this;
-  applyEffectsOf(effectSources, v => result = result.plus(v));
+  applyEffectsOf(effectSources, (v) => (result = result.plus(v)));
   return result;
 };
 
 /**
  * @returns {Decimal}
  */
-Decimal.prototype.minusEffectOf = function(effectSource) {
+Decimal.prototype.minusEffectOf = function (effectSource) {
   // eslint-disable-next-line consistent-this
   let result = this;
-  effectSource.applyEffect(v => result = result.minus(v));
+  effectSource.applyEffect((v) => (result = result.minus(v)));
   return result;
 };
 
 /**
  * @returns {Decimal}
  */
-Decimal.prototype.minusEffectsOf = function(...effectSources) {
+Decimal.prototype.minusEffectsOf = function (...effectSources) {
   // eslint-disable-next-line consistent-this
   let result = this;
-  applyEffectsOf(effectSources, v => result = result.minus(v));
+  applyEffectsOf(effectSources, (v) => (result = result.minus(v)));
   return result;
 };
 
 /**
  * @returns {Decimal}
  */
-Decimal.prototype.timesEffectOf = function(effectSource) {
+Decimal.prototype.timesEffectOf = function (effectSource) {
   // eslint-disable-next-line consistent-this
   let result = this;
-  effectSource.applyEffect(v => result = result.times(v));
+  effectSource.applyEffect((v) => (result = result.times(v)));
   return result;
 };
 
 /**
  * @returns {Decimal}
  */
-Decimal.prototype.timesEffectsOf = function(...effectSources) {
+Decimal.prototype.timesEffectsOf = function (...effectSources) {
   // Normalize is expensive; when we multiply many things together, it's faster
   // to get a big mantissa and then fix it at the end.
   let resultMantissa = this.mantissa;
   let resultExponent = this.exponent;
-  applyEffectsOf(effectSources, v => {
+  applyEffectsOf(effectSources, (v) => {
     const decimal = typeof v === "number" ? new Decimal(v) : v;
     resultMantissa *= decimal.mantissa;
     resultExponent += decimal.exponent;
@@ -140,40 +138,40 @@ Decimal.prototype.timesEffectsOf = function(...effectSources) {
 /**
  * @returns {Decimal}
  */
-Decimal.prototype.dividedByEffectOf = function(effectSource) {
+Decimal.prototype.dividedByEffectOf = function (effectSource) {
   // eslint-disable-next-line consistent-this
   let result = this;
-  effectSource.applyEffect(v => result = result.dividedBy(v));
+  effectSource.applyEffect((v) => (result = result.dividedBy(v)));
   return result;
 };
 
 /**
  * @returns {Decimal}
  */
-Decimal.prototype.dividedByEffectsOf = function(...effectSources) {
+Decimal.prototype.dividedByEffectsOf = function (...effectSources) {
   // eslint-disable-next-line consistent-this
   let result = this;
-  applyEffectsOf(effectSources, v => result = result.dividedBy(v));
+  applyEffectsOf(effectSources, (v) => (result = result.dividedBy(v)));
   return result;
 };
 
 /**
  * @returns {Decimal}
  */
-Decimal.prototype.powEffectOf = function(effectSource) {
+Decimal.prototype.powEffectOf = function (effectSource) {
   // eslint-disable-next-line consistent-this
   let result = this;
-  effectSource.applyEffect(v => result = result.pow(v));
+  effectSource.applyEffect((v) => (result = result.pow(v)));
   return result;
 };
 
 /**
  * @returns {Decimal}
  */
-Decimal.prototype.powEffectsOf = function(...effectSources) {
+Decimal.prototype.powEffectsOf = function (...effectSources) {
   // eslint-disable-next-line consistent-this
   let result = this;
-  applyEffectsOf(effectSources, v => result = result.pow(v));
+  applyEffectsOf(effectSources, (v) => (result = result.pow(v)));
   return result;
 };
 

@@ -6,7 +6,7 @@ import {
   loginPlayFabWithSteam,
   purchaseIAP,
   purchaseShopItem,
-  validatePurchases
+  validatePurchases,
 } from "./steam-purchases";
 
 import * as Greenworks from "./bindings/greenworks";
@@ -115,7 +115,7 @@ export const SteamRuntime = {
     }
 
     return hasPendingPurchaseConfirmations();
-  }
+  },
 };
 
 async function loginPlayFab(steamId) {

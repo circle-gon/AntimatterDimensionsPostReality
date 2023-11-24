@@ -228,7 +228,7 @@ export const tabs = [
         condition: () =>
           PlayerProgress.realityUnlocked() ||
           player.challenge.eternity.unlocked !== 0 ||
-          EternityChallenges.all.some(ec => ec.completions > 0),
+          EternityChallenges.all.some((ec) => ec.completions > 0),
         id: 2,
         hidable: true,
       },
@@ -481,7 +481,7 @@ export const tabs = [
         symbol: "<i class='fa-solid fa-atom' />",
         component: "AtomicPower",
         id: 15,
-        hidable: true
+        hidable: true,
       },
       {
         key: "atom",
@@ -506,7 +506,7 @@ export const tabs = [
         component: "BreakUniverseTab",
         id: 13,
         hidable: true,
-        condition: () => AtomUpgrade(10).isBought
+        condition: () => AtomUpgrade(10).isBought,
       },
     ],
   },

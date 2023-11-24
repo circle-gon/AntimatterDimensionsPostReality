@@ -49,8 +49,10 @@ export const AutoGlyphProcessor = {
           : -player.reality.glyphs.sac[glyph.type].log10();
       case AUTO_GLYPH_SCORE.EFFECT_COUNT:
         // Effect count, plus a very small rarity term to break ties in favor of rarer glyphs
-        return strengthToRarity(glyph.strength) / 1000 + getGlyphEffectsFromBitmask(glyph.effects, 0, 0)
-          .filter(effect => effect.isGenerated).length;
+        return (
+          strengthToRarity(glyph.strength) / 1000 +
+          getGlyphEffectsFromBitmask(glyph.effects, 0, 0).filter((effect) => effect.isGenerated).length
+        );
       case AUTO_GLYPH_SCORE.RARITY_THRESHOLD:
         return strengthToRarity(glyph.strength);
       case AUTO_GLYPH_SCORE.SPECIFIED_EFFECT: {
@@ -68,14 +70,14 @@ export const AutoGlyphProcessor = {
       }
       case AUTO_GLYPH_SCORE.EFFECT_SCORE: {
         const effectList = getGlyphEffectsFromBitmask(glyph.effects, 0, 0)
-          .filter(effect => effect.isGenerated)
-          .map(effect => effect.bitmaskIndex);
+          .filter((effect) => effect.isGenerated)
+          .map((effect) => effect.bitmaskIndex);
         const offset = this.bitmaskIndexOffset(glyph.type);
         // This ternary check is required to filter out any effects which may appear on the glyph which aren't normally
         // there in typical glyph generation. Ra-Nameless 25 is the only case where this happens, but this also has the
         // side-effect of making altered glyph generation in mods less likely to crash the game as well
         const effectScore = effectList
-          .map(e => (typeCfg.effectScores[e - offset] ? typeCfg.effectScores[e - offset] : 0))
+          .map((e) => (typeCfg.effectScores[e - offset] ? typeCfg.effectScores[e - offset] : 0))
           .sum();
         return strengthToRarity(glyph.strength) + effectScore;
       }
@@ -85,9 +87,7 @@ export const AutoGlyphProcessor = {
       case AUTO_GLYPH_SCORE.LOWEST_ALCHEMY: {
         const resource = AlchemyResource[glyph.type];
         const refinementGain = GlyphSacrificeHandler.glyphRefinementGain(glyph);
-        return resource.isUnlocked && refinementGain > 0
-          ? -resource.amount
-          : Number.NEGATIVE_INFINITY;
+        return resource.isUnlocked && refinementGain > 0 ? -resource.amount : Number.NEGATIVE_INFINITY;
       }
       case AUTO_GLYPH_SCORE.ALCHEMY_VALUE:
         return AlchemyResource[glyph.type].isUnlocked
@@ -127,16 +127,13 @@ export const AutoGlyphProcessor = {
     // We want to make sure to account for when glyphs are compared to different thresholds based on their type, or
     // else we end up always picking the rarest glyph despite all filter settings. However, we need to special-case
     // modes which never keep glyphs, or else they all become the same value and it ends up picking pseudo-randomly
-    const glyphScore = glyph => {
+    const glyphScore = (glyph) => {
       const filter = this.filterValue(glyph);
       const threshold = this.thresholdValue(glyph);
       return threshold === Number.MAX_VALUE ? filter : filter - threshold;
     };
 
-    return glyphs
-      .map(g => ({ glyph: g, score: glyphScore(g) }))
-      .reduce((x, y) => (x.score > y.score ? x : y))
-      .glyph;
+    return glyphs.map((g) => ({ glyph: g, score: glyphScore(g) })).reduce((x, y) => (x.score > y.score ? x : y)).glyph;
   },
   getRidOfGlyph(glyph) {
     // Auto clean calls this function too, which chokes without a special case for these types
@@ -163,8 +160,12 @@ export const AutoGlyphProcessor = {
   // Generally only used for UI in order to notify the player that they might end up retroactively getting rid of
   // some glyphs they otherwise want to keep
   hasNegativeEffectScore() {
-    return this.scoreMode === AUTO_GLYPH_SCORE.EFFECT_SCORE &&
-      Object.values(this.types).map(t => t.effectScores.min()).min() < 0;
+    return (
+      this.scoreMode === AUTO_GLYPH_SCORE.EFFECT_SCORE &&
+      Object.values(this.types)
+        .map((t) => t.effectScores.min())
+        .min() < 0
+    );
   },
 
   // These are here because they're used in multiple UI components
@@ -199,14 +200,16 @@ export const AutoGlyphProcessor = {
       default:
         return "Invalid Glyph trash mode";
     }
-  }
+  },
 };
 
 export function autoAdjustGlyphWeights() {
   const sources = getGlyphLevelSources();
-  const f = x => Math.pow(Math.clampMin(1, Math.log(5 * x)), 3 / 2);
-  const totalWeight = Object.values(sources).map(s => f(s.value)).sum();
-  const scaledWeight = key => 100 * f(sources[key].value) / totalWeight;
+  const f = (x) => Math.pow(Math.clampMin(1, Math.log(5 * x)), 3 / 2);
+  const totalWeight = Object.values(sources)
+    .map((s) => f(s.value))
+    .sum();
+  const scaledWeight = (key) => (100 * f(sources[key].value)) / totalWeight;
 
   // Adjust all weights to be integer, while maintaining that they must sum to 100. We ensure it's within 1 on the
   // weights by flooring and then taking guesses on which ones would give the largest boost when adding the lost
@@ -217,12 +220,12 @@ export function autoAdjustGlyphWeights() {
   for (const key of weightKeys) {
     weights.push({
       key,
-      percent: scaledWeight(key)
+      percent: scaledWeight(key),
     });
   }
-  const fracPart = x => x - Math.floor(x);
-  const priority = weights.sort((a, b) => fracPart(b.percent) - fracPart(a.percent)).map(w => w.key);
-  const missingPercent = 100 - weights.map(w => Math.floor(w.percent)).reduce((a, b) => a + b);
+  const fracPart = (x) => x - Math.floor(x);
+  const priority = weights.sort((a, b) => fracPart(b.percent) - fracPart(a.percent)).map((w) => w.key);
+  const missingPercent = 100 - weights.map((w) => Math.floor(w.percent)).reduce((a, b) => a + b);
   for (let i = 0; i < weightKeys.length; i++) {
     const key = priority[i];
     player.celestials.effarig.glyphWeights[key] = Math.floor(scaledWeight(key)) + (i < missingPercent ? 1 : 0);
@@ -271,7 +274,7 @@ function getGlyphLevelSources() {
       // These are copied from Reality Upgrade 18's gameDB entry
       coeff: 0.45,
       exp: 0.5,
-    }
+    },
   };
 }
 
@@ -308,7 +311,7 @@ export function getGlyphLevelInputs() {
   const adjustFactor = (source, weight) => {
     const input = source.value;
     const powEffect = Math.pow(4 * weight, blendExp);
-    source.value = (input > 0 ? Math.pow(input * preScale, powEffect) / preScale : 0);
+    source.value = input > 0 ? Math.pow(input * preScale, powEffect) / preScale : 0;
     source.coeff = Math.pow(preScale, powEffect - 1) * Math.pow(source.coeff, powEffect);
     source.exp *= powEffect;
   };
@@ -317,8 +320,9 @@ export function getGlyphLevelInputs() {
   adjustFactor(sources.dt, weights.dt / 100);
   adjustFactor(sources.eternities, weights.eternities / 100);
   const shardFactor = Ra.unlocks.relicShardGlyphLevelBoost.effectOrDefault(0);
-  let baseLevel = sources.ep.value * sources.repl.value * sources.dt.value * sources.eternities.value *
-    staticFactors.perkShop + shardFactor;
+  let baseLevel =
+    sources.ep.value * sources.repl.value * sources.dt.value * sources.eternities.value * staticFactors.perkShop +
+    shardFactor;
 
   const singularityEffect = SingularityMilestone.glyphLevelFromSingularities.effectOrDefault(1);
   baseLevel *= singularityEffect;
@@ -365,16 +369,15 @@ export function staticGlyphWeights() {
   const perkShop = Effects.max(1, PerkShopUpgrade.glyphLevel);
   const instability = Glyphs.instabilityThreshold;
   const hyperInstability = Glyphs.hyperInstabilityThreshold;
-  const realityUpgrades = [Array.range(1, 5).every(x => RealityUpgrade(x).boughtAmount > 0)]
-    .concat(Array.range(1, 4).map(x => Array.range(1, 5).every(y => RealityUpgrade(5 * x + y).isBought)))
-    .filter(x => x)
-    .length;
+  const realityUpgrades = [Array.range(1, 5).every((x) => RealityUpgrade(x).boughtAmount > 0)]
+    .concat(Array.range(1, 4).map((x) => Array.range(1, 5).every((y) => RealityUpgrade(5 * x + y).isBought)))
+    .filter((x) => x).length;
   const achievements = Effects.sum(Achievement(148), Achievement(166));
   return {
     perkShop,
     instability,
     hyperInstability,
     realityUpgrades,
-    achievements
+    achievements,
   };
 }

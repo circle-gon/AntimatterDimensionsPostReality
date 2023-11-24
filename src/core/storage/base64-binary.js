@@ -66,10 +66,8 @@ export function decodeBase64Binary(input, arrayBuffer) {
   let i = 0;
   let j = 0;
 
-  if (arrayBuffer)
-    array = new Uint8Array(arrayBuffer);
-  else
-    array = new Uint8Array(bytes);
+  if (arrayBuffer) array = new Uint8Array(arrayBuffer);
+  else array = new Uint8Array(bytes);
 
   input = input.replace(/[^A-Za-z0-9+/=]/gu, "");
 

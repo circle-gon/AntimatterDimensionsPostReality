@@ -1,7 +1,7 @@
 import { CELESTIAL_NAV_DRAW_ORDER } from "../navigation";
 
 function sigilProgress() {
-  const riftProgress = PelleRifts.all.map(r => Math.clamp(r.realPercentage, 0, 1)).min();
+  const riftProgress = PelleRifts.all.map((r) => Math.clamp(r.realPercentage, 0, 1)).min();
   const generatorProgress = Math.log10(1 + GalaxyGenerator.generatedGalaxies) / 11;
   return Math.clampMax(0.2 * riftProgress + 0.8 * generatorProgress, 1);
 }
@@ -9,7 +9,7 @@ function sigilProgress() {
 // Determines styling, overall visibility, and placement/scaling of the sigil. Center and size are defined such that
 // keeping the sigil within internal coordinates of ±1 will keep the sigil within a ±size box of the center coordinates
 const SigilAttributes = {
-  visible: () => PelleRifts.all.map(r => Math.clamp(r.realPercentage, 0, 1)).min() > 0,
+  visible: () => PelleRifts.all.map((r) => Math.clamp(r.realPercentage, 0, 1)).min() > 0,
   center: new Vector(400, 300),
   size: 400,
   color: "#00ffff",
@@ -52,8 +52,13 @@ function sigilShape(type, att, fill, colorOverride) {
       break;
     case "circle":
       pos = att.center;
-      path = LogarithmicSpiral.fromPolarEndpoints(att.center, 0, att.radius * SigilAttributes.size,
-        1, att.radius * SigilAttributes.size);
+      path = LogarithmicSpiral.fromPolarEndpoints(
+        att.center,
+        0,
+        att.radius * SigilAttributes.size,
+        1,
+        att.radius * SigilAttributes.size
+      );
       pathStart = att.initAngle;
       pathEnd = att.finalAngle;
       break;
@@ -112,57 +117,43 @@ const Positions = Object.freeze({
 // List of specified primitive graphics elements with which to construct the sigil; see docstring of sigilShape
 // for description of proper attribute specifications
 const Shapes = {
-  botCircR: sigilShape("circle",
+  botCircR: sigilShape(
+    "circle",
     { center: Positions.circBot, radius: 0.12, initAngle: 0.5 * Math.PI, finalAngle: -0.5 * Math.PI },
-    { init: 0, weight: 0.2 }),
-  botH: sigilShape("edge",
-    { start: Positions.bot1, end: Positions.bot2 },
-    { init: 0.1, weight: 0.1 }),
-  lowH: sigilShape("edge",
-    { start: Positions.lowC, end: Positions.low1 },
-    { init: 0.3, weight: 0.3 }),
-  circUp: sigilShape("circle",
+    { init: 0, weight: 0.2 }
+  ),
+  botH: sigilShape("edge", { start: Positions.bot1, end: Positions.bot2 }, { init: 0.1, weight: 0.1 }),
+  lowH: sigilShape("edge", { start: Positions.lowC, end: Positions.low1 }, { init: 0.3, weight: 0.3 }),
+  circUp: sigilShape(
+    "circle",
     { center: Positions.circMid, radius: 0.08, initAngle: Math.PI, finalAngle: 0 },
-    { init: 0.6, weight: 0.1 }),
-  circDown: sigilShape("circle",
+    { init: 0.6, weight: 0.1 }
+  ),
+  circDown: sigilShape(
+    "circle",
     { center: Positions.circMid, radius: 0.08, initAngle: Math.PI, finalAngle: 2 * Math.PI },
-    { init: 0.6, weight: 0.1 }),
-  vert2: sigilShape("edge",
-    { start: Positions.bot2, end: Positions.top3 },
-    { init: 0.2, weight: 0.7 }),
-  vertC: sigilShape("edge",
-    { start: Positions.botC, end: Positions.lowC },
-    { init: 0.2, weight: 0.1 }),
-  vertDiag1: sigilShape("edge",
-    { start: Positions.lowC, end: Positions.mid },
-    { init: 0.3, weight: 0.1 }),
-  arm1: sigilShape("edge",
-    { start: Positions.mid, end: Positions.arm1 },
-    { init: 0.4, weight: 0.2 }),
-  arm2: sigilShape("edge",
-    { start: Positions.arm1, end: Positions.arm2 },
-    { init: 0.6, weight: 0.1 }),
-  arm3: sigilShape("edge",
-    { start: Positions.arm2, end: Positions.arm3 },
-    { init: 0.7, weight: 0.1 }),
-  vert1: sigilShape("edge",
-    { start: Positions.mid, end: Positions.top1 },
-    { init: 0.4, weight: 0.3 }),
-  vertDiag2: sigilShape("edge",
-    { start: Positions.top1, end: Positions.topC },
-    { init: 0.7, weight: 0.1 }),
-  vertDiag3: sigilShape("edge",
-    { start: Positions.top1, end: Positions.top2 },
-    { init: 0.7, weight: 0.1 }),
-  topH: sigilShape("edge",
-    { start: Positions.top2, end: Positions.top3 },
-    { init: 0.8, weight: 0.1 }),
-  circTopUp: sigilShape("circle",
+    { init: 0.6, weight: 0.1 }
+  ),
+  vert2: sigilShape("edge", { start: Positions.bot2, end: Positions.top3 }, { init: 0.2, weight: 0.7 }),
+  vertC: sigilShape("edge", { start: Positions.botC, end: Positions.lowC }, { init: 0.2, weight: 0.1 }),
+  vertDiag1: sigilShape("edge", { start: Positions.lowC, end: Positions.mid }, { init: 0.3, weight: 0.1 }),
+  arm1: sigilShape("edge", { start: Positions.mid, end: Positions.arm1 }, { init: 0.4, weight: 0.2 }),
+  arm2: sigilShape("edge", { start: Positions.arm1, end: Positions.arm2 }, { init: 0.6, weight: 0.1 }),
+  arm3: sigilShape("edge", { start: Positions.arm2, end: Positions.arm3 }, { init: 0.7, weight: 0.1 }),
+  vert1: sigilShape("edge", { start: Positions.mid, end: Positions.top1 }, { init: 0.4, weight: 0.3 }),
+  vertDiag2: sigilShape("edge", { start: Positions.top1, end: Positions.topC }, { init: 0.7, weight: 0.1 }),
+  vertDiag3: sigilShape("edge", { start: Positions.top1, end: Positions.top2 }, { init: 0.7, weight: 0.1 }),
+  topH: sigilShape("edge", { start: Positions.top2, end: Positions.top3 }, { init: 0.8, weight: 0.1 }),
+  circTopUp: sigilShape(
+    "circle",
     { center: Positions.circTop, radius: 0.08, initAngle: 0.75 * Math.PI, finalAngle: 1.75 * Math.PI },
-    { init: 0.9, weight: 0.1 }),
-  circTopDown: sigilShape("circle",
+    { init: 0.9, weight: 0.1 }
+  ),
+  circTopDown: sigilShape(
+    "circle",
     { center: Positions.circTop, radius: 0.08, initAngle: 0.75 * Math.PI, finalAngle: -0.25 * Math.PI },
-    { init: 0.9, weight: 0.1 }),
+    { init: 0.9, weight: 0.1 }
+  ),
 };
 
 // The hardcoded elements in Shapes above only specify roughly half of the sigil; here we take all the existing entries
@@ -170,33 +161,45 @@ const Shapes = {
 for (const key of Object.keys(Shapes)) {
   const toReflect = Shapes[key];
   if (toReflect.connector.path instanceof LinearPath) {
-    Shapes[`${key}Ref`] = sigilShape("edge",
+    Shapes[`${key}Ref`] = sigilShape(
+      "edge",
       { start: reflectAcrossVertical(toReflect.att.start), end: reflectAcrossVertical(toReflect.att.end) },
-      toReflect.fill);
+      toReflect.fill
+    );
   } else if (toReflect.connector.path instanceof LogarithmicSpiral) {
-    Shapes[`${key}Ref`] = sigilShape("circle",
-      { center: reflectAcrossVertical(toReflect.att.center), radius: toReflect.att.radius,
-        initAngle: Math.PI - toReflect.att.initAngle, finalAngle: Math.PI - toReflect.att.finalAngle },
-      toReflect.fill);
+    Shapes[`${key}Ref`] = sigilShape(
+      "circle",
+      {
+        center: reflectAcrossVertical(toReflect.att.center),
+        radius: toReflect.att.radius,
+        initAngle: Math.PI - toReflect.att.initAngle,
+        finalAngle: Math.PI - toReflect.att.finalAngle,
+      },
+      toReflect.fill
+    );
   }
 }
 
 // This segment adds multiple circular arcs around the entire sigil, which all fill simultaneously
 const arcSegments = 16;
 for (let arcIndex = 0; arcIndex < arcSegments; arcIndex++) {
-  const len = 2 * Math.PI / arcSegments;
+  const len = (2 * Math.PI) / arcSegments;
   const init = arcIndex * len;
-  Shapes[`arcInner${arcIndex}`] = sigilShape("circle",
-    { center: SigilAttributes.center, radius: 0.75,
-      initAngle: init, finalAngle: init + len },
+  Shapes[`arcInner${arcIndex}`] = sigilShape(
+    "circle",
+    { center: SigilAttributes.center, radius: 0.75, initAngle: init, finalAngle: init + len },
     { init: 0.1, weight: 0.4 },
-    "crimson");
-  Shapes[`arcOuter${arcIndex}`] = sigilShape("circle",
-    { center: SigilAttributes.center, radius: 0.95,
-      initAngle: init, finalAngle: init - len },
+    "crimson"
+  );
+  Shapes[`arcOuter${arcIndex}`] = sigilShape(
+    "circle",
+    { center: SigilAttributes.center, radius: 0.95, initAngle: init, finalAngle: init - len },
     { init: 0.5, weight: 0.4 },
-    "crimson");
+    "crimson"
+  );
 }
 
-export const finalSigil = Object.values(Shapes)
-  .mapToObject((key, idx) => `final-sigil-${idx}`, val => val);
+export const finalSigil = Object.values(Shapes).mapToObject(
+  (key, idx) => `final-sigil-${idx}`,
+  (val) => val
+);

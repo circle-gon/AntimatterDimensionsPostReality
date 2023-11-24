@@ -23,11 +23,7 @@ export function updateNormalAndInfinityChallenges(diff) {
   }
 
   if (NormalChallenge(3).isRunning) {
-    player.chall3Pow = DC.D1_00038
-      .pow(diff.div(100))
-      .mul(player.chall3Pow)
-      .min(Number.MAX_VALUE)
-      .toNumber();
+    player.chall3Pow = DC.D1_00038.pow(diff.div(100)).mul(player.chall3Pow).min(Number.MAX_VALUE).toNumber();
   }
 
   if (NormalChallenge(2).isRunning) {

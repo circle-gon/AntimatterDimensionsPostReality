@@ -1,5 +1,5 @@
 if (!String.prototype.includes) {
-  String.prototype.includes = function(search, start) {
+  String.prototype.includes = function (search, start) {
     if (typeof start !== "number") {
       start = 0;
     }
@@ -8,15 +8,12 @@ if (!String.prototype.includes) {
       return false;
     }
     return this.indexOf(search, start) !== -1;
-
   };
 }
-
 
 if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, "includes", {
     value(searchElement, fromIndex) {
-
       // 1. Let O be ? ToObject(this value).
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
@@ -60,24 +57,28 @@ if (!Array.prototype.includes) {
 
       // 8. Return false
       return false;
-    }
+    },
   });
 }
 
 if (!Math.log10) {
-  Math.log10 = Math.log10 || function(x) {
-    return Math.log(x) * Math.LOG10E;
-  };
+  Math.log10 =
+    Math.log10 ||
+    function (x) {
+      return Math.log(x) * Math.LOG10E;
+    };
 }
 
 if (!Math.log2) {
-  Math.log2 = Math.log2 || function(x) {
-    return Math.log(x) * Math.LOG2E;
-  };
+  Math.log2 =
+    Math.log2 ||
+    function (x) {
+      return Math.log(x) * Math.LOG2E;
+    };
 }
 
 if (window.NodeList && !NodeList.prototype.forEach) {
-  NodeList.prototype.forEach = function(callback, thisArg) {
+  NodeList.prototype.forEach = function (callback, thisArg) {
     thisArg = thisArg || window;
     for (let i = 0; i < this.length; i++) {
       callback.call(thisArg, this[i], i, this);
@@ -125,19 +126,19 @@ if (!Array.prototype.find) {
 
       // 7. Return undefined.
       return undefined;
-    }
+    },
   });
 }
 
-Array.max = function(array) {
+Array.max = function (array) {
   return Math.max.apply(Math, array);
 };
 
-Array.min = function(array) {
+Array.min = function (array) {
   return Math.min.apply(Math, array);
 };
 
-Object.invert = function(obj) {
+Object.invert = function (obj) {
   const result = {};
   const keys = Object.keys(obj);
   for (let i = 0, length = keys.length; i < length; i++) {
@@ -149,9 +150,11 @@ Object.invert = function(obj) {
 if (typeof Object.assign !== "function") {
   // Must be writable: true, enumerable: false, configurable: true
   Object.defineProperty(Object, "assign", {
-    value: function assign(target, varArgs) { // .length of function is 2
+    value: function assign(target, varArgs) {
+      // .length of function is 2
 
-      if (target == null) { // TypeError if undefined or null
+      if (target == null) {
+        // TypeError if undefined or null
         throw new TypeError("Cannot convert undefined or null to object");
       }
 
@@ -160,7 +163,8 @@ if (typeof Object.assign !== "function") {
       for (let index = 1; index < arguments.length; index++) {
         const nextSource = arguments[index];
 
-        if (nextSource != null) { // Skip over if undefined or null
+        if (nextSource != null) {
+          // Skip over if undefined or null
           for (const nextKey in nextSource) {
             // Avoid bugs when hasOwnProperty is shadowed
             if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
@@ -172,6 +176,6 @@ if (typeof Object.assign !== "function") {
       return to;
     },
     writable: true,
-    configurable: true
+    configurable: true,
   });
 }

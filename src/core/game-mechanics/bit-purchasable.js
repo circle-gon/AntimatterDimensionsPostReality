@@ -7,17 +7,23 @@ export class BitPurchasableMechanicState extends PurchasableMechanicState {
   /**
    * @abstract
    */
-  get bits() { throw new NotImplementedError(); }
+  get bits() {
+    throw new NotImplementedError();
+  }
 
   /**
    * @abstract
    */
-  set bits(value) { throw new NotImplementedError(); }
+  set bits(value) {
+    throw new NotImplementedError();
+  }
 
   /**
    * @abstract
    */
-  get bitIndex() { throw new NotImplementedError(); }
+  get bitIndex() {
+    throw new NotImplementedError();
+  }
 
   get isBought() {
     return (this.bits & (1 << this.bitIndex)) !== 0;
@@ -25,7 +31,7 @@ export class BitPurchasableMechanicState extends PurchasableMechanicState {
 
   set isBought(value) {
     if (value) {
-      this.bits |= (1 << this.bitIndex);
+      this.bits |= 1 << this.bitIndex;
     } else {
       this.bits &= ~(1 << this.bitIndex);
     }

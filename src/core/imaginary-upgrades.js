@@ -82,7 +82,7 @@ class ImaginaryUpgradeState extends BitPurchasableMechanicState {
 
   tryUnlock() {
     if (!MachineHandler.isIMUnlocked || this.isAvailableForPurchase || !this.config.checkRequirement()) return;
-    player.reality.imaginaryUpgReqs |= (1 << this.id);
+    player.reality.imaginaryUpgReqs |= 1 << this.id;
     GameUI.notify.reality(`You've unlocked an Imaginary Upgrade: ${this.config.name}`);
     this.hasPlayerLock = false;
   }
@@ -140,14 +140,11 @@ class RebuyableImaginaryUpgradeState extends RebuyableMechanicState {
   }
 }
 
-ImaginaryUpgradeState.index = mapGameData(
-  GameDatabase.reality.imaginaryUpgrades,
-  config => (config.id <= 10
-    ? new RebuyableImaginaryUpgradeState(config)
-    : new ImaginaryUpgradeState(config))
+ImaginaryUpgradeState.index = mapGameData(GameDatabase.reality.imaginaryUpgrades, (config) =>
+  config.id <= 10 ? new RebuyableImaginaryUpgradeState(config) : new ImaginaryUpgradeState(config)
 );
 
-export const ImaginaryUpgrade = id => ImaginaryUpgradeState.index[id];
+export const ImaginaryUpgrade = (id) => ImaginaryUpgradeState.index[id];
 
 export const ImaginaryUpgrades = {
   all: ImaginaryUpgradeState.index.compact(),
@@ -158,9 +155,9 @@ export const ImaginaryUpgrades = {
     return total;
   },
   get totalSinglePurchase() {
-    return this.all.countWhere(u => u.isBought);
+    return this.all.countWhere((u) => u.isBought);
   },
   get allBought() {
     return (player.reality.imaginaryUpgradeBits >> 6) + 1 === 1 << (GameDatabase.reality.imaginaryUpgrades.length - 5);
-  }
+  },
 };

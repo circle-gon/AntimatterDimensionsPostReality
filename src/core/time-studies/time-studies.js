@@ -18,7 +18,7 @@ export function buyStudiesUntil(id, ec = -1) {
   const requestedPath = TimeStudy(id).path;
   const currTree = GameCache.currentStudyTree.value;
   // Makes an array [start, start+1, ... , end], empty if end < start
-  const range = (start, end) => [...Array(Math.clampMin(end - start + 1, 0)).keys()].map(i => i + start);
+  const range = (start, end) => [...Array(Math.clampMin(end - start + 1, 0)).keys()].map((i) => i + start);
   const ecHasRequirement = !Perk.studyECRequirement.isBought;
 
   // If the player tries to buy a study which is immediately buyable, we try to buy it first in case buying other
@@ -44,14 +44,14 @@ export function buyStudiesUntil(id, ec = -1) {
   // - If the player doesn't have a preferred path, we say so and do nothing (stops buying)
   // - Otherwise we do nothing (stops buying)
   if (id < 111) {
-    studyArray.push(...NormalTimeStudies.paths[requestedPath].filter(s => (s <= id)));
+    studyArray.push(...NormalTimeStudies.paths[requestedPath].filter((s) => s <= id));
     return studyArray;
   }
 
   if (ec === 11 && ecHasRequirement) {
-    studyArray.push(...NormalTimeStudies.paths[TIME_STUDY_PATH.ANTIMATTER_DIM].filter(s => (s <= id)));
+    studyArray.push(...NormalTimeStudies.paths[TIME_STUDY_PATH.ANTIMATTER_DIM].filter((s) => s <= id));
   } else if (ec === 12 && ecHasRequirement) {
-    studyArray.push(...NormalTimeStudies.paths[TIME_STUDY_PATH.TIME_DIM].filter(s => (s <= id)));
+    studyArray.push(...NormalTimeStudies.paths[TIME_STUDY_PATH.TIME_DIM].filter((s) => s <= id));
   } else if (currTree.currDimPathCount === currTree.allowedDimPathCount || currTree.allowedDimPathCount === 3) {
     studyArray.push(...TimeStudy.preferredPaths.dimension.studies);
     studyArray.push(...range(71, 103));
@@ -80,12 +80,13 @@ export function buyStudiesUntil(id, ec = -1) {
   // - Fallback case: we have more than one path and intentionally do nothing here (continues onward)
 
   if (id < 151) {
-    studyArray.push(...NormalTimeStudies.paths[TimeStudy(id).path].filter(s => (s <= id)));
+    studyArray.push(...NormalTimeStudies.paths[TimeStudy(id).path].filter((s) => s <= id));
     return studyArray;
   }
 
-  const pacePaths = currTree.pacePaths
-    .map(pathName => NormalTimeStudies.pathList.find(p => p.name === pathName).path);
+  const pacePaths = currTree.pacePaths.map(
+    (pathName) => NormalTimeStudies.pathList.find((p) => p.name === pathName).path
+  );
   if (V.isFullyCompleted && !Pelle.isDoomed) {
     const allPace = NormalTimeStudies.paths[TIME_STUDY_PATH.ACTIVE]
       .concat(NormalTimeStudies.paths[TIME_STUDY_PATH.PASSIVE])
@@ -166,9 +167,7 @@ export class TimeStudyState extends GameMechanicState {
 
   get STCost() {
     const base = this.config.STCost;
-    return VUnlocks.raUnlock.canBeApplied
-      ? base - 2
-      : base;
+    return VUnlocks.raUnlock.canBeApplied ? base - 2 : base;
   }
 
   refund() {

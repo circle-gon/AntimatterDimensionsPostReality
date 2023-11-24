@@ -22,7 +22,7 @@ export const GameSaveSerializer = {
     try {
       const json = this.decodeText(data, "savefile");
       // eslint-disable-next-line no-unused-vars
-      return JSON.parse(json, (k, v) => ((v === Infinity) ? "Infinity" : v));
+      return JSON.parse(json, (k, v) => (v === Infinity ? "Infinity" : v));
     } catch (e) {
       return undefined;
     }
@@ -70,42 +70,47 @@ export const GameSaveSerializer = {
   // It wouldn't be too hard to allow steps to depend on version though.
   steps: [
     // This step transforms saves into unsigned 8-bit arrays, as pako requires.
-    { encode: x => GameSaveSerializer.encoder.encode(x), decode: x => GameSaveSerializer.decoder.decode(x) },
+    { encode: (x) => GameSaveSerializer.encoder.encode(x), decode: (x) => GameSaveSerializer.decoder.decode(x) },
     // This step is  where the compression actually happens. The pako library works with unsigned 8-bit arrays.
-    { encode: x => pako.deflate(x), decode: x => pako.inflate(x) },
+    { encode: (x) => pako.deflate(x), decode: (x) => pako.inflate(x) },
     // This step converts from unsigned 8-bit arrays to strings with codepoints less than 256.
     // We need to do this outselves because GameSaveSerializer.decoder would give us unicode sometimes.
     {
-      encode: x => Array.from(x).map(i => String.fromCharCode(i)).join(""),
-      decode: x => Uint8Array.from(Array.from(x).map(i => i.charCodeAt(0)))
+      encode: (x) =>
+        Array.from(x)
+          .map((i) => String.fromCharCode(i))
+          .join(""),
+      decode: (x) => Uint8Array.from(Array.from(x).map((i) => i.charCodeAt(0))),
     },
     // This step makes the characters in saves printable. At this point in the process, all characters
     // will already have codepoints less than 256 (from the previous step), so emoji in the original save
     // won't break this.
-    { encode: x => btoa(x), decode: x => atob(x) },
+    { encode: (x) => btoa(x), decode: (x) => atob(x) },
     // This step removes + and /, because if they occur, you can double-click on a save and get
     // everything up to the first + or /, which can be hard to debug. We also remove = (always trailing)
     // because btoa just ignores it. These regex have no potentially-unicode characters, I think,
     // and they're applied to strings with just ASCII anyway, but I'm adding u to make Codeacy happy.
     {
-      encode: x => x.replace(/=+$/gu, "").replace(/0/gu, "0a").replace(/\+/gu, "0b").replace(/\//gu, "0c"),
-      decode: x => x.replace(/0b/gu, "+").replace(/0c/gu, "/").replace(/0a/gu, "0")
+      encode: (x) => x.replace(/=+$/gu, "").replace(/0/gu, "0a").replace(/\+/gu, "0b").replace(/\//gu, "0c"),
+      decode: (x) => x.replace(/0b/gu, "+").replace(/0c/gu, "/").replace(/0a/gu, "0"),
     },
     {
       encode: (x, type) => x + GameSaveSerializer.endingString[type],
       decode: (x, type) => x.slice(0, x.length - GameSaveSerializer.endingString[type].length),
-      condition: version => version >= "AAB"
-    }
+      condition: (version) => version >= "AAB",
+    },
   ],
   getSteps(type, version) {
     // This is a version marker, as well as indicating to players that this is from AD
     // and whether it's a save or automator script. We can change the last 3 letters
     // of the string savefiles start with from AAA to something else,
     // if we want a new version of savefile encoding.
-    return this.steps.filter(i => (!i.condition) || i.condition(version)).concat({
-      encode: x => `${GameSaveSerializer.startingString[type] + GameSaveSerializer.version}${x}`,
-      decode: x => x.slice(GameSaveSerializer.startingString[type].length + 3)
-    });
+    return this.steps
+      .filter((i) => !i.condition || i.condition(version))
+      .concat({
+        encode: (x) => `${GameSaveSerializer.startingString[type] + GameSaveSerializer.version}${x}`,
+        decode: (x) => x.slice(GameSaveSerializer.startingString[type].length + 3),
+      });
   },
   // Apply each step's encode function in encoding order.
   encodeText(text, type) {
@@ -128,5 +133,5 @@ export const GameSaveSerializer = {
       return this.getSteps(type, version).reduceRight((x, step) => step.decode(x, type), text);
     }
     return atob(text);
-  }
+  },
 };

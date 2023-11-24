@@ -29,7 +29,7 @@ class CosmeticGlyphType {
     const isNormallyDark = !GlyphAppearanceHandler.isLightBG;
     return {
       border: color,
-      bg: (isNormallyDark === (this.id === "cursed")) ? "white" : "black",
+      bg: isNormallyDark === (this.id === "cursed") ? "white" : "black",
     };
   }
 
@@ -59,20 +59,21 @@ class CosmeticGlyphType {
 
 const functionalGlyphs = mapGameDataToObject(
   GameDatabase.reality.glyphTypes,
-  config => new CosmeticGlyphType(config, false)
+  (config) => new CosmeticGlyphType(config, false)
 );
 
 const cosmeticGlyphs = mapGameDataToObject(
   GameDatabase.reality.cosmeticGlyphs,
-  config => new CosmeticGlyphType(config, true)
+  (config) => new CosmeticGlyphType(config, true)
 );
 
 export const CosmeticGlyphTypes = {
   ...functionalGlyphs,
   ...cosmeticGlyphs,
   get list() {
-    return Object.keys({ ...GameDatabase.reality.glyphTypes, ...GameDatabase.reality.cosmeticGlyphs })
-      .map(e => CosmeticGlyphTypes[e]);
+    return Object.keys({ ...GameDatabase.reality.glyphTypes, ...GameDatabase.reality.cosmeticGlyphs }).map(
+      (e) => CosmeticGlyphTypes[e]
+    );
   },
 };
 
@@ -90,26 +91,27 @@ export const GlyphAppearanceHandler = {
   },
   get availableSymbols() {
     return Object.values(GameDatabase.reality.glyphCosmeticSets)
-      .filter(s => this.unlockedSets.includes(s.id))
-      .map(s => s.symbol)
-      .filter(s => s);
+      .filter((s) => this.unlockedSets.includes(s.id))
+      .map((s) => s.symbol)
+      .filter((s) => s);
   },
   // Sort the colors by hue, otherwise finding specific colors would be a mess for UX.
   // However, colors "close enough to grayscale" are sorted separately and first
   get availableColors() {
     const sortedArray = Object.values(GameDatabase.reality.glyphCosmeticSets)
-      .filter(s => this.unlockedSets.includes(s.id))
-      .flatMap(s => s.color)
+      .filter((s) => this.unlockedSets.includes(s.id))
+      .flatMap((s) => s.color)
       .sort((a, b) => {
-        const getHue = hex => {
+        const getHue = (hex) => {
           const parts = hex.split("#");
           const color = parts[1];
           const rgb = [
             parseInt(color.substring(0, 2), 16) / 255,
             parseInt(color.substring(2, 4), 16) / 255,
-            parseInt(color.substring(4), 16) / 255
+            parseInt(color.substring(4), 16) / 255,
           ];
-          const min = Math.min(...rgb), max = Math.max(...rgb);
+          const min = Math.min(...rgb),
+            max = Math.max(...rgb);
           if (max - min < 0.3) return max;
           let rawHue;
           if (rgb[0] === max) rawHue = (rgb[1] - rgb[2]) / (max - min);
@@ -119,13 +121,13 @@ export const GlyphAppearanceHandler = {
         };
         return getHue(a) - getHue(b);
       })
-      .filter(c => c);
+      .filter((c) => c);
 
     // We want two rows in the color selection Vue component, but that displays options in columns (one column
     // per set of symbol options). Here we do a bit of array manipulation to lay out colors as two rows, separated
     // by BG color and with the longer row on top (UI doesn't handle empty top-row spots well)
-    const blackArr = sortedArray.filter(c => c.charAt(0) === "B");
-    const whiteArr = sortedArray.filter(c => c.charAt(0) === "W");
+    const blackArr = sortedArray.filter((c) => c.charAt(0) === "B");
+    const whiteArr = sortedArray.filter((c) => c.charAt(0) === "W");
     const longer = blackArr.length > whiteArr.length ? blackArr : whiteArr;
     const shorter = blackArr.length > whiteArr.length ? whiteArr : blackArr;
     const combined = [];
@@ -138,14 +140,14 @@ export const GlyphAppearanceHandler = {
   },
   get availableTypes() {
     return Object.values(GameDatabase.reality.cosmeticGlyphs)
-      .map(type => CosmeticGlyphTypes[type.id])
-      .filter(type => type.isUnlocked())
-      .map(type => type.id);
+      .map((type) => CosmeticGlyphTypes[type.id])
+      .filter((type) => type.isUnlocked())
+      .map((type) => type.id);
   },
   get unblurredSymbols() {
     return Object.values(GameDatabase.reality.glyphCosmeticSets)
-      .filter(s => s.preventBlur)
-      .map(s => s.symbol)
+      .filter((s) => s.preventBlur)
+      .map((s) => s.symbol)
       .flat();
   },
   // Note: This can *technically* be inconsistent with the actual number of sets, but only y a cheated save.
@@ -222,7 +224,7 @@ export const GlyphAppearanceHandler = {
     return [...new Set(player.reality.glyphs.cosmetics.unlockedFromNG.concat(ShopPurchaseData.unlockedCosmetics))];
   },
   get lockedSets() {
-    return Object.keys(GameDatabase.reality.glyphCosmeticSets).filter(set => !this.unlockedSets.includes(set));
+    return Object.keys(GameDatabase.reality.glyphCosmeticSets).filter((set) => !this.unlockedSets.includes(set));
   },
   // Unlocks the set chosen in the modal, choosing a random available one as a fallback. This is only called for
   // sets unlocked through game completions; STD purchases are handled with ShopPurchaseData
@@ -273,5 +275,5 @@ export const GlyphAppearanceHandler = {
       const selectedColor = cosmetics.symbolMap[key];
       if (!allColors.includes(selectedColor)) cosmetics.colorMap[key] = undefined;
     }
-  }
+  },
 };

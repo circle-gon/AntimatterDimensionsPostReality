@@ -9,7 +9,7 @@ export const GalaxyGenerator = {
 
   get generationCaps() {
     return PelleRifts.all
-      .map(x => ({ rift: x.config.key, cap: x.config.galaxyGeneratorThreshold }))
+      .map((x) => ({ rift: x.config.key, cap: x.config.galaxyGeneratorThreshold }))
       .sort((a, b) => a.cap - b.cap);
   },
 
@@ -27,12 +27,14 @@ export const GalaxyGenerator = {
 
   get gainPerSecond() {
     if (!Pelle.hasGalaxyGenerator) return 0;
-    return new Decimal(GalaxyGeneratorUpgrades.additive.effectValue).timesEffectsOf(
-      GalaxyGeneratorUpgrades.multiplicative,
-      GalaxyGeneratorUpgrades.antimatterMult,
-      GalaxyGeneratorUpgrades.IPMult,
-      GalaxyGeneratorUpgrades.EPMult,
-    ).toNumber();
+    return new Decimal(GalaxyGeneratorUpgrades.additive.effectValue)
+      .timesEffectsOf(
+        GalaxyGeneratorUpgrades.multiplicative,
+        GalaxyGeneratorUpgrades.antimatterMult,
+        GalaxyGeneratorUpgrades.IPMult,
+        GalaxyGeneratorUpgrades.EPMult
+      )
+      .toNumber();
   },
 
   get capObj() {
@@ -65,7 +67,7 @@ export const GalaxyGenerator = {
       Pelle.quotes.galaxyGeneratorRifts.show();
     }
     if (this.sacrificeActive) {
-      this.capRift.reducedTo = Math.max(this.capRift.reducedTo - 0.03 * diff / 1000, 0);
+      this.capRift.reducedTo = Math.max(this.capRift.reducedTo - (0.03 * diff) / 1000, 0);
       if (this.capRift.reducedTo === 0) {
         player.celestials.pelle.galaxyGenerator.sacrificeActive = false;
         player.celestials.pelle.galaxyGenerator.phase++;
@@ -81,32 +83,31 @@ export const GalaxyGenerator = {
           Pelle.quotes.end.show();
         }
       }
-      PelleRifts.all.forEach(x => x.checkMilestoneStates());
+      PelleRifts.all.forEach((x) => x.checkMilestoneStates());
 
       // Force-unequip glyphs when the player loses the respective milestone. We call the respec option as normally
       // except for one particular case - when we want to respec into protected slots but have no room to do so. In
       // that case, we force-respec into the inventory instead
-      if (!PelleRifts.vacuum.milestones[0].canBeApplied && Glyphs.active.filter(g => g).length > 0) {
+      if (!PelleRifts.vacuum.milestones[0].canBeApplied && Glyphs.active.filter((g) => g).length > 0) {
         Glyphs.unequipAll(player.options.respecIntoProtected && Glyphs.findFreeIndex(true) === -1);
         Glyphs.refreshActive();
       }
-
     }
-    player.celestials.pelle.galaxyGenerator.generatedGalaxies += this.gainPerSecond * diff / 1000;
+    player.celestials.pelle.galaxyGenerator.generatedGalaxies += (this.gainPerSecond * diff) / 1000;
     player.celestials.pelle.galaxyGenerator.generatedGalaxies = Math.min(
       player.celestials.pelle.galaxyGenerator.generatedGalaxies,
       this.generationCap
     );
 
     if (!this.capRift) {
-      PelleRifts.all.forEach(r => r.reducedTo = Math.min(r.reducedTo + 0.03 * diff / 1000, 2));
+      PelleRifts.all.forEach((r) => (r.reducedTo = Math.min(r.reducedTo + (0.03 * diff) / 1000, 2)));
       if (PelleRifts.vacuum.milestones[0].canBeApplied && !this.hasReturnedGlyphSlot) {
         Glyphs.refreshActive();
         EventHub.dispatch(GAME_EVENT.GLYPHS_EQUIPPED_CHANGED);
         this.hasReturnedGlyphSlot = true;
       }
     }
-  }
+  },
 };
 
 export class GalaxyGeneratorUpgrade extends RebuyableMechanicState {
@@ -122,7 +123,9 @@ export class GalaxyGeneratorUpgrade extends RebuyableMechanicState {
     player.celestials.pelle.rebuyables[this.id] = value;
   }
 
-  get isCustomEffect() { return true; }
+  get isCustomEffect() {
+    return true;
+  }
 
   get effectValue() {
     return this.config.effect(this.boughtAmount);
@@ -131,5 +134,5 @@ export class GalaxyGeneratorUpgrade extends RebuyableMechanicState {
 
 export const GalaxyGeneratorUpgrades = mapGameDataToObject(
   GameDatabase.celestials.pelle.galaxyGeneratorUpgrades,
-  config => new GalaxyGeneratorUpgrade(config)
+  (config) => new GalaxyGeneratorUpgrade(config)
 );

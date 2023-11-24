@@ -74,8 +74,9 @@ function bigCrunchGiveRewards() {
 }
 
 function bigCrunchUpdateStatistics() {
-  player.records.bestInfinity.bestIPminEternity =
-    player.records.bestInfinity.bestIPminEternity.clampMin(player.records.thisInfinity.bestIPmin);
+  player.records.bestInfinity.bestIPminEternity = player.records.bestInfinity.bestIPminEternity.clampMin(
+    player.records.thisInfinity.bestIPmin
+  );
   player.records.thisInfinity.bestIPmin = DC.D0;
 
   player.records.thisEternity.bestInfinitiesPerMs = player.records.thisEternity.bestInfinitiesPerMs.clampMin(
@@ -91,17 +92,20 @@ function bigCrunchUpdateStatistics() {
     gainedInfinities().round()
   );
 
-  player.records.bestInfinity.time =
-    player.records.bestInfinity.time.min(player.records.thisInfinity.time);
-  player.records.bestInfinity.realTime =
-    Math.min(player.records.bestInfinity.realTime, player.records.thisInfinity.realTime);
+  player.records.bestInfinity.time = player.records.bestInfinity.time.min(player.records.thisInfinity.time);
+  player.records.bestInfinity.realTime = Math.min(
+    player.records.bestInfinity.realTime,
+    player.records.thisInfinity.realTime
+  );
 
   player.requirementChecks.reality.noInfinities = false;
 
   if (!player.requirementChecks.infinity.maxAll) {
     const bestIpPerMsWithoutMaxAll = infinityPoints.dividedBy(Math.clampMin(33, player.records.thisInfinity.realTime));
-    player.records.thisEternity.bestIPMsWithoutMaxAll =
-      Decimal.max(bestIpPerMsWithoutMaxAll, player.records.thisEternity.bestIPMsWithoutMaxAll);
+    player.records.thisEternity.bestIPMsWithoutMaxAll = Decimal.max(
+      bestIpPerMsWithoutMaxAll,
+      player.records.thisEternity.bestIPMsWithoutMaxAll
+    );
   }
 }
 
@@ -179,7 +183,9 @@ export function preProductionGenerateIP(diff) {
       genCount = Decimal.floor(player.partInfinityPoint);
       player.partInfinityPoint -= genCount.toNumber();
     }
-    let gainedPerGen = player.records.bestInfinity.time.gte(Decimal.MAX_LIMIT) ? DC.D0 : InfinityUpgrade.ipGen.effectValue;
+    let gainedPerGen = player.records.bestInfinity.time.gte(Decimal.MAX_LIMIT)
+      ? DC.D0
+      : InfinityUpgrade.ipGen.effectValue;
     if (Laitela.isRunning) gainedPerGen = dilatedValueOf(gainedPerGen);
     const gainedThisTick = genCount.times(gainedPerGen);
     Currency.infinityPoints.add(gainedThisTick);

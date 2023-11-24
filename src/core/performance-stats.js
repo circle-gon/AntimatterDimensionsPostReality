@@ -24,7 +24,7 @@ export const PerformanceStats = {
     if (block === undefined) {
       block = {
         records: [],
-        childBlocks: {}
+        childBlocks: {},
       };
       blockRoot[blockName] = block;
     }
@@ -81,5 +81,5 @@ export const PerformanceStats = {
     }
     render(this.stats);
     this.container.innerHTML = text;
-  }
+  },
 };

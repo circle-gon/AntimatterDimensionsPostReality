@@ -36,7 +36,7 @@ export const MultiplierTabIcons = {
       case "tesseractID":
         return {
           symbol: `<i class="fas fa-up-right-and-down-left-from-center" />`,
-          color: "var(--color-enslaved--base)"
+          color: "var(--color-enslaved--base)",
         };
       default:
         throw new Error("Unrecognized purchase type in multiplier tab icons");
@@ -215,7 +215,7 @@ export const MultiplierTabIcons = {
   },
   ATOM: {
     symbol: "<i class='fa-solid fa-atom' />",
-    color: "var(--color-atom)"
+    color: "var(--color-atom)",
   },
   IAP: {
     symbol: `<i class="fas fa-coins" />`,

@@ -87,7 +87,9 @@ class AlchemyResourceState extends GameMechanicState {
   /**
    * @abstract
    */
-  get cap() { throw new NotImplementedError(); }
+  get cap() {
+    throw new NotImplementedError();
+  }
 
   get capped() {
     return this.amount >= this.cap;
@@ -117,7 +119,7 @@ class BasicAlchemyResourceState extends AlchemyResourceState {
 
 class AdvancedAlchemyResourceState extends AlchemyResourceState {
   get cap() {
-    const reagentCaps = this.reaction.reagents.map(x => x.resource.cap);
+    const reagentCaps = this.reaction.reagents.map((x) => x.resource.cap);
     return Math.min(...reagentCaps);
   }
 }
@@ -140,13 +142,9 @@ class AlchemyReaction {
   // 100%, but the reaction will be forced to occur at higher than 100% if there is significantly more reagent than
   // product. This allows resources to be created quickly when its reaction is initially turned on with saved reagents.
   get reactionYield() {
-    if (!this._product.isUnlocked || this._reagents.some(r => !r.resource.isUnlocked)) return 0;
-    const forcingFactor = (this._reagents
-      .map(r => r.resource.amount)
-      .min() - this._product.amount) / 100;
-    const totalYield = this._reagents
-      .map(r => r.resource.amount / r.cost)
-      .min();
+    if (!this._product.isUnlocked || this._reagents.some((r) => !r.resource.isUnlocked)) return 0;
+    const forcingFactor = (this._reagents.map((r) => r.resource.amount).min() - this._product.amount) / 100;
+    const totalYield = this._reagents.map((r) => r.resource.amount / r.cost).min();
     return Math.min(totalYield, Math.max(forcingFactor, 1));
   }
 
@@ -162,7 +160,7 @@ class AlchemyReaction {
       const reagentAfter = reagent.resource.amount - this.reactionYield * reagent.cost;
       const diffBefore = reagentBefore - prodBefore;
       const diffAfter = reagentAfter - prodAfter;
-      cappedYield = Math.min(cappedYield, this.reactionYield * diffBefore / (diffBefore - diffAfter));
+      cappedYield = Math.min(cappedYield, (this.reactionYield * diffBefore) / (diffBefore - diffAfter));
     }
     return Math.clampMin(cappedYield, 0);
   }
@@ -224,29 +222,24 @@ class AlchemyReaction {
   }
 }
 
-export const AlchemyResource = mapGameDataToObject(
-  GameDatabase.celestials.alchemy.resources,
-  config => (config.isBaseResource
-    ? new BasicAlchemyResourceState(config)
-    : new AdvancedAlchemyResourceState(config))
+export const AlchemyResource = mapGameDataToObject(GameDatabase.celestials.alchemy.resources, (config) =>
+  config.isBaseResource ? new BasicAlchemyResourceState(config) : new AdvancedAlchemyResourceState(config)
 );
 
 export const AlchemyResources = {
   all: AlchemyResource.all,
-  base: AlchemyResource.all.filter(r => r.isBaseResource)
+  base: AlchemyResource.all.filter((r) => r.isBaseResource),
 };
 
-export const AlchemyReactions = (function() {
+export const AlchemyReactions = (function () {
   // For convenience and readability, stuff is named differently in GameDatabase
   function mapReagents(resource) {
-    return resource.config.reagents
-      .map(r => ({
-        resource: AlchemyResources.all.find(x => x.id === r.resource),
-        cost: r.amount
-      }));
+    return resource.config.reagents.map((r) => ({
+      resource: AlchemyResources.all.find((x) => x.id === r.resource),
+      cost: r.amount,
+    }));
   }
   return {
-    all: AlchemyResources.all
-      .map(r => (r.isBaseResource ? null : new AlchemyReaction(r, mapReagents(r))))
+    all: AlchemyResources.all.map((r) => (r.isBaseResource ? null : new AlchemyReaction(r, mapReagents(r)))),
   };
-}());
+})();

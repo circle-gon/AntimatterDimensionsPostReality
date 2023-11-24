@@ -23,7 +23,6 @@ window.formatInt = function formatInt(value) {
     return formatWithCommas(num.toFixed(0));
   }
   return format(num, 2);
-
 };
 
 window.formatFloat = function formatFloat(value, digits) {
@@ -36,7 +35,6 @@ window.formatFloat = function formatFloat(value, digits) {
     return formatWithCommas(value.toFixed(digits));
   }
   return format(value, digits);
-
 };
 
 window.formatPostBreak = function formatPostBreak(value, places, placesUnder1000) {

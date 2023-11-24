@@ -15,53 +15,54 @@
 /// <reference path="PlayFabProfilesApi.d.ts" />
 
 declare module PlayFabModule {
-    export interface ISettings {
-        titleId: string;
-        developerSecretKey: string;
-        GlobalHeaderInjection?: { [key: string]: string };
-        productionServerUrl: string;
-    }
-    export interface IPlayFabRequestCommon { }
-    export interface IPlayFabError {
-        code: number;
-        status: string;
-        error: string;
-        errorCode: number;
-        errorMessage: string;
-        errorDetails?: { [key: string]: string[] };
-        request?: any;
-        customData?: any;
-        retryAfterSeconds?: number;
-    }
-    export interface SuccessContainer<TResult extends IPlayFabResultCommon> extends IPlayFabError {
-        data: TResult;
-    }
-    export interface IPlayFabResultCommon extends IPlayFabError { }
+  export interface ISettings {
+    titleId: string;
+    developerSecretKey: string;
+    GlobalHeaderInjection?: { [key: string]: string };
+    productionServerUrl: string;
+  }
+  export interface IPlayFabRequestCommon {}
+  export interface IPlayFabError {
+    code: number;
+    status: string;
+    error: string;
+    errorCode: number;
+    errorMessage: string;
+    errorDetails?: { [key: string]: string[] };
+    request?: any;
+    customData?: any;
+    retryAfterSeconds?: number;
+  }
+  export interface SuccessContainer<TResult extends IPlayFabResultCommon> extends IPlayFabError {
+    data: TResult;
+  }
+  export interface IPlayFabResultCommon extends IPlayFabError {}
 
-    export interface ApiCallback<TResult extends IPlayFabResultCommon> { (result: SuccessContainer<TResult>, error: IPlayFabError): void }
+  export interface ApiCallback<TResult extends IPlayFabResultCommon> {
+    (result: SuccessContainer<TResult>, error: IPlayFabError): void;
+  }
 }
 
 declare var PlayFab: {
-    buildIdentifier: string;
-    sdkVersion: string;
-    GenerateErrorReport(IPlayFabError): string;
-    settings: PlayFabModule.ISettings;
-    AdminApi: PlayFabAdminModule.IPlayFabAdmin;
-    ClientApi: PlayFabClientModule.IPlayFabClient;
-    MatchmakerApi: PlayFabMatchmakerModule.IPlayFabMatchmaker;
-    ServerApi: PlayFabServerModule.IPlayFabServer;
-    AuthenticationApi: PlayFabAuthenticationModule.IPlayFabAuthentication;
-    CloudScriptApi: PlayFabCloudScriptModule.IPlayFabCloudScript;
-    DataApi: PlayFabDataModule.IPlayFabData;
-    EconomyApi: PlayFabEconomyModule.IPlayFabEconomy;
-    EventsApi: PlayFabEventsModule.IPlayFabEvents;
-    ExperimentationApi: PlayFabExperimentationModule.IPlayFabExperimentation;
-    InsightsApi: PlayFabInsightsModule.IPlayFabInsights;
-    GroupsApi: PlayFabGroupsModule.IPlayFabGroups;
-    LocalizationApi: PlayFabLocalizationModule.IPlayFabLocalization;
-    MultiplayerApi: PlayFabMultiplayerModule.IPlayFabMultiplayer;
-    ProfilesApi: PlayFabProfilesModule.IPlayFabProfiles;
-
+  buildIdentifier: string;
+  sdkVersion: string;
+  GenerateErrorReport(IPlayFabError): string;
+  settings: PlayFabModule.ISettings;
+  AdminApi: PlayFabAdminModule.IPlayFabAdmin;
+  ClientApi: PlayFabClientModule.IPlayFabClient;
+  MatchmakerApi: PlayFabMatchmakerModule.IPlayFabMatchmaker;
+  ServerApi: PlayFabServerModule.IPlayFabServer;
+  AuthenticationApi: PlayFabAuthenticationModule.IPlayFabAuthentication;
+  CloudScriptApi: PlayFabCloudScriptModule.IPlayFabCloudScript;
+  DataApi: PlayFabDataModule.IPlayFabData;
+  EconomyApi: PlayFabEconomyModule.IPlayFabEconomy;
+  EventsApi: PlayFabEventsModule.IPlayFabEvents;
+  ExperimentationApi: PlayFabExperimentationModule.IPlayFabExperimentation;
+  InsightsApi: PlayFabInsightsModule.IPlayFabInsights;
+  GroupsApi: PlayFabGroupsModule.IPlayFabGroups;
+  LocalizationApi: PlayFabLocalizationModule.IPlayFabLocalization;
+  MultiplayerApi: PlayFabMultiplayerModule.IPlayFabMultiplayer;
+  ProfilesApi: PlayFabProfilesModule.IPlayFabProfiles;
 };
 // Continue to support older usage
 declare var PlayFabAdminSDK: PlayFabAdminModule.IPlayFabAdmin;
@@ -79,4 +80,3 @@ declare var PlayFabGroupsSDK: PlayFabGroupsModule.IPlayFabGroups;
 declare var PlayFabLocalizationSDK: PlayFabLocalizationModule.IPlayFabLocalization;
 declare var PlayFabMultiplayerSDK: PlayFabMultiplayerModule.IPlayFabMultiplayer;
 declare var PlayFabProfilesSDK: PlayFabProfilesModule.IPlayFabProfiles;
-

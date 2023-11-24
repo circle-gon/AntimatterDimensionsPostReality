@@ -13,7 +13,7 @@ export const Celestials = {
   v: V,
   ra: Ra,
   laitela: Laitela,
-  pelle: Pelle
+  pelle: Pelle,
 };
 
 GameDatabase.celestials.descriptions = [
@@ -33,7 +33,7 @@ GameDatabase.celestials.descriptions = [
     },
     description() {
       return `You will exit Effarig's Reality when you complete a Layer of it for the first time.`;
-    }
+    },
   },
   {
     name: "The Nameless Ones",
@@ -47,7 +47,7 @@ GameDatabase.celestials.descriptions = [
       Time Theorem generation from Dilation Glyphs is disabled.
       Certain challenge goals are increased.
       Stored game time is discharged at a reduced effectiveness (exponent^${format(0.55, 2, 2)}).`;
-    }
+    },
   },
   {
     name: "V",
@@ -58,10 +58,8 @@ GameDatabase.celestials.descriptions = [
       const vEffectAdditional = `
       The Exponential Glyph Alchemy effect is disabled.`;
 
-      return Ra.unlocks.unlockGlyphAlchemy.canBeApplied
-        ? vEffect + vEffectAdditional
-        : vEffect;
-    }
+      return Ra.unlocks.unlockGlyphAlchemy.canBeApplied ? vEffect + vEffectAdditional : vEffect;
+    },
   },
   {
     name: "Ra",
@@ -92,9 +90,7 @@ GameDatabase.celestials.descriptions = [
           disabledDims = `${highestActive + 1}th and higher Dimensions`;
           break;
       }
-      const disabledText = highestActive === 8
-        ? ""
-        : `Production from ${disabledDims} is disabled.`;
+      const disabledText = highestActive === 8 ? "" : `Production from ${disabledDims} is disabled.`;
 
       return `Infinity Point and Eternity Point gain are Dilated.
       Game speed is reduced to ${formatInt(1)} and gradually comes back over ${formatInt(10)} minutes.
@@ -108,7 +104,6 @@ GameDatabase.celestials.descriptions = [
       Destabilizing the Reality in less than ${formatInt(30)} seconds makes it become significantly more difficult,\
       in exchange for giving a much stronger reward.\
       Doing this ${formatInt(8)} times will also give a ${formatX(8)} to Dark Energy gain.`;
-    }
+    },
   },
-
 ];

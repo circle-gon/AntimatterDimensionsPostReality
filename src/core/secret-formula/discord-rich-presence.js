@@ -41,9 +41,8 @@ export const discordRichPresence = {
       name: () => `${Teresa.possessiveName} Reality`,
       activityToken: () => Teresa.isRunning,
       // Reward is based on antimatter, but EP is more meaningful pre-completion
-      resource: () => (Teresa.runCompleted
-        ? `${format(player.antimatter, 2, 1)} AM`
-        : `${format(player.eternityPoints, 2)} EP`),
+      resource: () =>
+        Teresa.runCompleted ? `${format(player.antimatter, 2, 1)} AM` : `${format(player.eternityPoints, 2)} EP`,
     },
     {
       name: () => `${Effarig.possessiveName} Reality - ${Effarig.currentStageName}`,
@@ -92,7 +91,7 @@ export const discordRichPresence = {
       resource: () => `${format(player.antimatter, 2, 1)} AM`,
     },
     {
-      name: token => `EC ${token}`,
+      name: (token) => `EC ${token}`,
       // This results in "EC 3x3" (for example) when there are remaining completions, and just "EC 3" if not
       activityToken: () => {
         if (!player.challenge.eternity.current) return false;
@@ -103,12 +102,12 @@ export const discordRichPresence = {
       resource: () => `${format(player.infinityPoints, 2)} IP`,
     },
     {
-      name: token => `IC ${token}`,
+      name: (token) => `IC ${token}`,
       activityToken: () => player.challenge.infinity.current,
       resource: () => `${format(player.antimatter, 2, 1)} AM`,
     },
     {
-      name: token => `NC ${token}`,
+      name: (token) => `NC ${token}`,
       activityToken: () => player.challenge.normal.current,
       resource: () => `${format(player.antimatter, 2, 1)} AM`,
     },
@@ -164,9 +163,15 @@ export const discordRichPresence = {
       hasReached: () => player.eternityChalls.eterc1 > 0,
       mainResource: () => `${format(player.eternityPoints, 2)} EP`,
       resourceList: [
-        () => quantify("EC completion",
-          Object.values(player.eternityChalls).reduce((sum, c) => sum + c, 0), 0, 0, formatInt)
-      ]
+        () =>
+          quantify(
+            "EC completion",
+            Object.values(player.eternityChalls).reduce((sum, c) => sum + c, 0),
+            0,
+            0,
+            formatInt
+          ),
+      ],
     },
     {
       name: "Time Dilation",
@@ -180,8 +185,8 @@ export const discordRichPresence = {
       mainResource: () => `${format(player.reality.realityMachines, 2)} RM`,
       resourceList: [
         () => quantify("Reality", player.realities, 0, 0, formatInt),
-        () => `Best Glyph Level: ${formatInt(player.records.bestReality.glyphLevel)}`
-      ]
+        () => `Best Glyph Level: ${formatInt(player.records.bestReality.glyphLevel)}`,
+      ],
     },
     {
       name: () => Teresa.displayName,
@@ -190,8 +195,8 @@ export const discordRichPresence = {
       resourceList: [
         () => quantify("Reality", player.realities, 0, 0, formatInt),
         () => `Best GL: ${formatInt(player.records.bestReality.glyphLevel)}`,
-        () => `Poured: ${format(player.celestials.teresa.pouredAmount, 2)} RM`
-      ]
+        () => `Poured: ${format(player.celestials.teresa.pouredAmount, 2)} RM`,
+      ],
     },
     {
       name: () => Effarig.displayName,
@@ -199,8 +204,8 @@ export const discordRichPresence = {
       mainResource: () => `${format(player.reality.realityMachines, 2)} RM`,
       resourceList: [
         () => `Best GL: ${formatInt(player.records.bestReality.glyphLevel)}`,
-        () => quantify("Relic Shard", player.celestials.effarig.relicShards, 2, 0, format)
-      ]
+        () => quantify("Relic Shard", player.celestials.effarig.relicShards, 2, 0, format),
+      ],
     },
     {
       name: () => Enslaved.displayName,
@@ -208,7 +213,8 @@ export const discordRichPresence = {
       mainResource: () => `${format(player.reality.realityMachines, 2)} RM`,
       resourceList: [
         () => `Best GL: ${formatInt(player.records.bestReality.glyphLevel)}`,
-        () => `Charged: ${format(DecimalTimeSpan.fromMilliseconds(player.celestials.enslaved.stored).totalYears, 2)} years`
+        () =>
+          `Charged: ${format(DecimalTimeSpan.fromMilliseconds(player.celestials.enslaved.stored).totalYears, 2)} years`,
       ],
     },
     {
@@ -217,7 +223,8 @@ export const discordRichPresence = {
       mainResource: () => `${format(player.reality.realityMachines, 2)} RM`,
       resourceList: [
         () => `Best GL: ${formatInt(player.records.bestReality.glyphLevel)}`,
-        () => quantify("V-Achievement", player.celestials.v.runUnlocks.sum(), 0, 0, formatInt)],
+        () => quantify("V-Achievement", player.celestials.v.runUnlocks.sum(), 0, 0, formatInt),
+      ],
     },
     {
       name: () => Ra.displayName,
@@ -225,7 +232,8 @@ export const discordRichPresence = {
       mainResource: () => `${format(player.reality.realityMachines, 2)} RM`,
       resourceList: [
         () => `Best GL: ${formatInt(player.records.bestReality.glyphLevel)}`,
-        () => `Ra Levels: ${Ra.pets.all.map(p => formatInt(p.level)).join("/")}`],
+        () => `Ra Levels: ${Ra.pets.all.map((p) => formatInt(p.level)).join("/")}`,
+      ],
     },
     {
       // Imaginary Machines unlocked
@@ -235,7 +243,7 @@ export const discordRichPresence = {
         `${format(player.reality.realityMachines)} RM + ${format(player.reality.imaginaryMachines, 2)} iM`,
       resourceList: [
         () => `Best GL: ${formatInt(player.records.bestReality.glyphLevel)}`,
-        () => `Ra Levels: ${Ra.pets.all.map(p => formatInt(p.level)).join("/")}`
+        () => `Ra Levels: ${Ra.pets.all.map((p) => formatInt(p.level)).join("/")}`,
       ],
     },
     {
@@ -245,7 +253,8 @@ export const discordRichPresence = {
         `${format(player.reality.realityMachines)} RM + ${format(player.reality.imaginaryMachines, 2)} iM`,
       resourceList: [
         () => `Best GL: ${formatInt(player.records.bestReality.glyphLevel)}`,
-        () => quantify("Singularity", player.celestials.laitela.singularities, 2, 0, format)],
+        () => quantify("Singularity", player.celestials.laitela.singularities, 2, 0, format),
+      ],
     },
     {
       // We can't use celestial displayName here like the others because that will cause
@@ -261,5 +270,5 @@ export const discordRichPresence = {
       mainResource: () => "END Antimatter",
       resourceList: [() => "Nothing remains."],
     },
-  ]
+  ],
 };

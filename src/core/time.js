@@ -4,7 +4,7 @@ export const DeltaTimeState = {
   update(deltaTime, gameDeltaTime) {
     this.unscaledDeltaTime = TimeSpan.fromMilliseconds(deltaTime);
     this.deltaTime = DecimalTimeSpan.fromMilliseconds(gameDeltaTime);
-  }
+  },
 };
 
 export const Time = {
@@ -18,7 +18,6 @@ export const Time = {
       return DecimalTimeSpan.fromMilliseconds(v);
     }
     return TimeSpan.fromMilliseconds(v);
-
   },
   /**
    * @param {TimeSpan} timespan
@@ -77,7 +76,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set totalTimePlayed(timespan) {
-    this.toMilliseconds(timespan, value => player.records.totalTimePlayed = value);
+    this.toMilliseconds(timespan, (value) => (player.records.totalTimePlayed = value));
   },
 
   /**
@@ -100,7 +99,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set realTimeDoomed(timespan) {
-    this.toMilliseconds(timespan, value => player.records.realTimeDoomed = value);
+    this.toMilliseconds(timespan, (value) => (player.records.realTimeDoomed = value));
   },
 
   /**
@@ -113,7 +112,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set realTimePlayed(timespan) {
-    this.toMilliseconds(timespan, value => player.records.realTimePlayed = value);
+    this.toMilliseconds(timespan, (value) => (player.records.realTimePlayed = value));
   },
 
   /**
@@ -126,7 +125,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set thisInfinity(timespan) {
-    this.toMilliseconds(timespan, value => player.records.thisInfinity.time = value);
+    this.toMilliseconds(timespan, (value) => (player.records.thisInfinity.time = value));
   },
 
   /**
@@ -139,7 +138,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set thisInfinityRealTime(timespan) {
-    this.toMilliseconds(timespan, value => player.records.thisInfinity.realTime = value);
+    this.toMilliseconds(timespan, (value) => (player.records.thisInfinity.realTime = value));
   },
 
   /**
@@ -152,7 +151,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set bestInfinity(timespan) {
-    this.toMilliseconds(timespan, value => player.records.bestInfinity.time = value);
+    this.toMilliseconds(timespan, (value) => (player.records.bestInfinity.time = value));
   },
 
   /**
@@ -165,7 +164,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set bestInfinityRealTime(timespan) {
-    this.toMilliseconds(timespan, value => player.records.bestInfinity.realTime = value);
+    this.toMilliseconds(timespan, (value) => (player.records.bestInfinity.realTime = value));
   },
 
   /**
@@ -178,7 +177,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set thisEternity(timespan) {
-    this.toMilliseconds(timespan, value => player.records.thisEternity.time = value);
+    this.toMilliseconds(timespan, (value) => (player.records.thisEternity.time = value));
   },
 
   /**
@@ -191,7 +190,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set thisEternityRealTime(timespan) {
-    this.toMilliseconds(timespan, value => player.records.thisEternity.realTime = value);
+    this.toMilliseconds(timespan, (value) => (player.records.thisEternity.realTime = value));
   },
 
   /**
@@ -204,7 +203,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set bestEternity(timespan) {
-    this.toMilliseconds(timespan, value => player.records.bestEternity.time = value);
+    this.toMilliseconds(timespan, (value) => (player.records.bestEternity.time = value));
   },
 
   /**
@@ -217,9 +216,8 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set bestEternityRealTime(timespan) {
-    this.toMilliseconds(timespan, value => player.records.bestEternity.realTime = value);
+    this.toMilliseconds(timespan, (value) => (player.records.bestEternity.realTime = value));
   },
-
 
   /**
    * @returns {TimeSpan}
@@ -231,7 +229,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set thisReality(timespan) {
-    this.toMilliseconds(timespan, value => player.records.thisReality.time = value);
+    this.toMilliseconds(timespan, (value) => (player.records.thisReality.time = value));
   },
 
   /**
@@ -244,7 +242,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set thisRealityRealTime(timespan) {
-    this.toMilliseconds(timespan, value => player.records.thisReality.realTime = value);
+    this.toMilliseconds(timespan, (value) => (player.records.thisReality.realTime = value));
   },
 
   /**
@@ -257,7 +255,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set bestReality(timespan) {
-    this.toMilliseconds(timespan, value => player.records.bestReality.time = value);
+    this.toMilliseconds(timespan, (value) => (player.records.bestReality.time = value));
   },
 
   /**
@@ -270,7 +268,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set bestRealityRealTime(timespan) {
-    this.toMilliseconds(timespan, value => player.records.bestReality.realTime = value);
+    this.toMilliseconds(timespan, (value) => (player.records.bestReality.realTime = value));
   },
 
   /**
@@ -283,7 +281,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set thisCollapse(timespan) {
-    this.toMilliseconds(timespan, value => player.records.thisCollapse.time = value);
+    this.toMilliseconds(timespan, (value) => (player.records.thisCollapse.time = value));
   },
 
   /**
@@ -296,7 +294,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set thisCollapseRealTime(timespan) {
-    this.toMilliseconds(timespan, value => player.records.thisCollapse.realTime = value);
+    this.toMilliseconds(timespan, (value) => (player.records.thisCollapse.realTime = value));
   },
 
   /**
@@ -309,7 +307,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set bestCollapse(timespan) {
-    this.toMilliseconds(timespan, value => player.records.bestCollapse.time = value);
+    this.toMilliseconds(timespan, (value) => (player.records.bestCollapse.time = value));
   },
 
   /**
@@ -322,7 +320,7 @@ export const Time = {
    * @param {TimeSpan} timespan
    */
   set bestCollapseRealTime(timespan) {
-    this.toMilliseconds(timespan, value => player.records.bestCollapse.realTime = value);
+    this.toMilliseconds(timespan, (value) => (player.records.bestCollapse.realTime = value));
   },
 
   /**
@@ -344,5 +342,5 @@ export const Time = {
    */
   get infinityChallengeSum() {
     return this.fromMilliseconds(() => GameCache.infinityChallengeTimeSum.value);
-  }
+  },
 };

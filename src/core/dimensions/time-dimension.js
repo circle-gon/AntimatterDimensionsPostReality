@@ -70,7 +70,7 @@ export function buyMaxTimeDimension(tier, portionToSpend = 1, isMaxAll = false) 
   const bulk = bulkBuyBinarySearch(
     canSpend,
     {
-      costFunction: bought => dim.nextCost(bought),
+      costFunction: (bought) => dim.nextCost(bought),
       cumulative: true,
       firstCost: dim.cost,
     },
@@ -96,8 +96,8 @@ export function maxAllTimeDimensions() {
   }
 
   // Loop buying the cheapest dimension possible; explicit infinite loops make me nervous
-  const tierCheck = tier => (RealityUpgrade(13).isLockingMechanics ? tier < 5 : true);
-  const purchasableDimensions = TimeDimensions.all.filter(d => d.isUnlocked && tierCheck(d.tier));
+  const tierCheck = (tier) => (RealityUpgrade(13).isLockingMechanics ? tier < 5 : true);
+  const purchasableDimensions = TimeDimensions.all.filter((d) => d.isUnlocked && tierCheck(d.tier));
   for (let stop = 0; stop < 1000; stop++) {
     const cheapestDim = purchasableDimensions.reduce((a, b) => (b.cost.gte(a.cost) ? a : b));
     if (!buySingleTimeDimension(cheapestDim.tier, true)) break;
@@ -218,7 +218,7 @@ class TimeDimensionState extends DimensionState {
     if (baseTDs <= this.e6000ScalingAmount && this._tier > 4) return baseTDs;
 
     const costMultIncreases = [1, 1.5, 2.2];
-    const idx = this._costIncreaseThresholds.findIndex(i => eterPoints.lt(i));
+    const idx = this._costIncreaseThresholds.findIndex((i) => eterPoints.lt(i));
     if (idx !== -1) return eterPoints.div(this.baseCost).log(this.costMultiplier * costMultIncreases[idx]) + 1;
 
     const base = this.costMultiplier * (this._tier <= 4 ? 2.2 : 1);
@@ -389,7 +389,7 @@ export const TimeDimensions = {
       TimeDimension(1).produceCurrency(Currency.timeShards, diff);
     }
 
-    EternityChallenge(7).reward.applyEffect(production => {
+    EternityChallenge(7).reward.applyEffect((production) => {
       InfinityDimension(8).amount = InfinityDimension(8).totalAmount.plus(production.times(diff.div(1000)));
     });
   },

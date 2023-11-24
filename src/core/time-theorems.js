@@ -5,33 +5,47 @@ import { DC } from "./constants";
  */
 export class TimeTheoremPurchaseType {
   /**
-  * @abstract
-  */
-  get amount() { throw new NotImplementedError(); }
-
-  /**
-  * @abstract
-  */
-  set amount(value) { throw new NotImplementedError(); }
-
-  add(amount) { this.amount += amount; }
-
-  /**
-  * @abstract
-  */
-  get currency() { throw new NotImplementedError(); }
-
-  get cost() { return this.costBase.times(this.costIncrement.pow(this.amount)); }
+   * @abstract
+   */
+  get amount() {
+    throw new NotImplementedError();
+  }
 
   /**
    * @abstract
    */
-  get costBase() { throw new NotImplementedError(); }
+  set amount(value) {
+    throw new NotImplementedError();
+  }
+
+  add(amount) {
+    this.amount += amount;
+  }
 
   /**
    * @abstract
    */
-  get costIncrement() { throw new NotImplementedError(); }
+  get currency() {
+    throw new NotImplementedError();
+  }
+
+  get cost() {
+    return this.costBase.times(this.costIncrement.pow(this.amount));
+  }
+
+  /**
+   * @abstract
+   */
+  get costBase() {
+    throw new NotImplementedError();
+  }
+
+  /**
+   * @abstract
+   */
+  get costIncrement() {
+    throw new NotImplementedError();
+  }
 
   get bulkPossible() {
     if (Perk.ttFree.canBeApplied) {
@@ -50,7 +64,7 @@ export class TimeTheoremPurchaseType {
     if (!this.canAfford) return false;
     let purchased = false;
     const amount = this.bulkPossible;
-    const buyFn = cost => (Perk.ttFree.canBeApplied ? this.currency.gte(cost) : this.currency.purchase(cost));
+    const buyFn = (cost) => (Perk.ttFree.canBeApplied ? this.currency.gte(cost) : this.currency.purchase(cost));
     // This will sometimes buy one too few for EP, so we just have to buy 1 after.
     if (bulk && buyFn(this.bulkCost(amount))) {
       Currency.timeTheorems.add(amount);
@@ -76,43 +90,77 @@ export class TimeTheoremPurchaseType {
   }
 }
 
-TimeTheoremPurchaseType.am = new class extends TimeTheoremPurchaseType {
-  get amount() { return player.timestudy.amBought; }
-  set amount(value) { player.timestudy.amBought = value; }
+TimeTheoremPurchaseType.am = new (class extends TimeTheoremPurchaseType {
+  get amount() {
+    return player.timestudy.amBought;
+  }
+  set amount(value) {
+    player.timestudy.amBought = value;
+  }
 
-  get currency() { return Currency.antimatter; }
-  get costBase() { return DC.E20000; }
-  get costIncrement() { return DC.E20000; }
-}();
+  get currency() {
+    return Currency.antimatter;
+  }
+  get costBase() {
+    return DC.E20000;
+  }
+  get costIncrement() {
+    return DC.E20000;
+  }
+})();
 
-TimeTheoremPurchaseType.ip = new class extends TimeTheoremPurchaseType {
-  get amount() { return player.timestudy.ipBought; }
-  set amount(value) { player.timestudy.ipBought = value; }
+TimeTheoremPurchaseType.ip = new (class extends TimeTheoremPurchaseType {
+  get amount() {
+    return player.timestudy.ipBought;
+  }
+  set amount(value) {
+    player.timestudy.ipBought = value;
+  }
 
-  get currency() { return Currency.infinityPoints; }
-  get costBase() { return DC.D1; }
-  get costIncrement() { return DC.E100; }
-}();
+  get currency() {
+    return Currency.infinityPoints;
+  }
+  get costBase() {
+    return DC.D1;
+  }
+  get costIncrement() {
+    return DC.E100;
+  }
+})();
 
-TimeTheoremPurchaseType.ep = new class extends TimeTheoremPurchaseType {
-  get amount() { return player.timestudy.epBought; }
-  set amount(value) { player.timestudy.epBought = value; }
+TimeTheoremPurchaseType.ep = new (class extends TimeTheoremPurchaseType {
+  get amount() {
+    return player.timestudy.epBought;
+  }
+  set amount(value) {
+    player.timestudy.epBought = value;
+  }
 
-  get currency() { return Currency.eternityPoints; }
-  get costBase() { return DC.D1; }
-  get costIncrement() { return DC.D2; }
+  get currency() {
+    return Currency.eternityPoints;
+  }
+  get costBase() {
+    return DC.D1;
+  }
+  get costIncrement() {
+    return DC.D2;
+  }
 
   bulkCost(amount) {
     if (Perk.ttFree.canBeApplied) return this.cost.times(this.costIncrement.pow(amount - 1));
     return this.costIncrement.pow(amount + this.amount).subtract(this.cost);
   }
-}();
+})();
 
 export const TimeTheorems = {
   checkForBuying(auto) {
     if (PlayerProgress.realityUnlocked() || TimeDimension(1).bought) return true;
-    if (!auto) Modal.message.show(`You need to buy at least ${formatInt(1)} Time Dimension before you can purchase
-      Time Theorems.`, { closeEvent: GAME_EVENT.REALITY_RESET_AFTER });
+    if (!auto)
+      Modal.message.show(
+        `You need to buy at least ${formatInt(1)} Time Dimension before you can purchase
+      Time Theorems.`,
+        { closeEvent: GAME_EVENT.REALITY_RESET_AFTER }
+      );
     return false;
   },
 
@@ -140,14 +188,12 @@ export const TimeTheorems = {
   },
 
   totalPurchased() {
-    return TimeTheoremPurchaseType.am.amount +
-          TimeTheoremPurchaseType.ip.amount +
-          TimeTheoremPurchaseType.ep.amount;
+    return TimeTheoremPurchaseType.am.amount + TimeTheoremPurchaseType.ip.amount + TimeTheoremPurchaseType.ep.amount;
   },
 
   calculateTimeStudiesCost() {
     let totalCost = TimeStudy.boughtNormalTS()
-      .map(ts => ts.cost)
+      .map((ts) => ts.cost)
       .reduce(Number.sumReducer, 0);
     const ecStudy = TimeStudy.eternityChallenge.current();
     if (ecStudy !== undefined) {
@@ -155,5 +201,5 @@ export const TimeTheorems = {
     }
     if (Enslaved.isRunning && player.celestials.enslaved.hasSecretStudy) totalCost -= 100;
     return totalCost;
-  }
+  },
 };

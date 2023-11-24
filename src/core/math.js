@@ -176,7 +176,7 @@ window.LinearMultiplierScaling = class LinearMultiplierScaling {
     const k = this.growth / this.baseRatio;
     // Final refinement step, applying 2nd order iteration directly to the formula of
     // logTotalMultiplierAfterPurchases
-    const refineFinal = g => {
+    const refineFinal = (g) => {
       const u = k * g;
       const Lg = Math.log1p(u);
       const v = (0.5 * k) / (1 + u);
@@ -572,20 +572,20 @@ window.getHybridCostScaling = function getHybridCostScaling(
   return costScale.calculateCost(postInfinityAmount);
 };
 
-window.logFactorial = (function() {
+window.logFactorial = (function () {
   const LOGS = Array.range(1, 11).map(Math.log);
   const TABLE = [0];
   for (const x of LOGS) {
     TABLE.push(TABLE[TABLE.length - 1] + x);
   }
-  return x => {
+  return (x) => {
     if (typeof x !== "number" || x < 0) return NaN;
     if (x < TABLE.length) return TABLE[x];
     return lngamma(x + 1);
   };
-}());
+})();
 
-window.exp1m = function(x) {
+window.exp1m = function (x) {
   if (x.abs().gte(0.001)) {
     return x.exp().minus(1);
   }
@@ -605,17 +605,17 @@ window.xorshift32Update = function xorshift32Update(state) {
   return state;
 };
 
-window.fastRandom = (function() {
+window.fastRandom = (function () {
   let state = Math.floor(Date.now()) % Math.pow(2, 32);
   const scale = 1 / Math.pow(2, 32);
   return () => {
     state = xorshift32Update(state);
     return state * scale + 0.5;
   };
-}());
+})();
 
 // Normal distribution with specified mean and standard deviation
-window.normalDistribution = (function() {
+window.normalDistribution = (function () {
   let haveSpare = false;
   let spare = 0;
   return (mean, stdDev) => {
@@ -635,9 +635,9 @@ window.normalDistribution = (function() {
     spare = v * t;
     return mean + stdDev * u * t;
   };
-}());
+})();
 
-window.normalDistributionDecimal = (function() {
+window.normalDistributionDecimal = (function () {
   let haveSpare = false;
   let spare = 0;
   return (mean, stdDev) => {
@@ -657,19 +657,19 @@ window.normalDistributionDecimal = (function() {
     spare = v * t;
     return mean.add(stdDev).mul(spare);
   };
-}());
+})();
 
 // Helper function for BTRD
-window.binomialGeneratorFC = (function() {
-  const stirlingBase = x => -8.10614667953272582e-2 + (x + 0.5) * Math.log1p(x) - x;
-  const TABLE = Array.range(0, 20).map(x => logFactorial(x) - stirlingBase(x));
-  return x => {
+window.binomialGeneratorFC = (function () {
+  const stirlingBase = (x) => -8.10614667953272582e-2 + (x + 0.5) * Math.log1p(x) - x;
+  const TABLE = Array.range(0, 20).map((x) => logFactorial(x) - stirlingBase(x));
+  return (x) => {
     if (typeof x !== "number" || x < 0) return NaN;
     if (x < TABLE.length) return TABLE[x];
     const xr = 1 / (x + 1);
     return (1 / 12 - (1 / 360 - (xr * xr) / 1260) * (xr * xr)) * xr;
   };
-}());
+})();
 
 /**
  * This manually inverts the cumulative probability distribution
@@ -920,7 +920,7 @@ window.cubicRealRoots = function cubicRealRoots(k3, k2, k1, k0) {
   const p = coa - 3 * bo3a2;
   const q = 2 * bo3a * bo3a2 - bo3a * coa + k0 / k3;
   const dcrr = depressedCubicRealRoots(1, p, q);
-  return dcrr.map(t => t - bo3a);
+  return dcrr.map((t) => t - bo3a);
 };
 
 window.testCRR = function testCRR(k3, k2, k1, k0) {
@@ -928,7 +928,7 @@ window.testCRR = function testCRR(k3, k2, k1, k0) {
   // eslint-disable-next-line no-console
   console.log(r);
   // eslint-disable-next-line no-console
-  console.log(r.map(x => k0 + x * (k1 + x * (k2 + x * k3))));
+  console.log(r.map((x) => k0 + x * (k1 + x * (k2 + x * k3))));
 };
 
 window.depressedQuarticRealRoots = function depressedQuarticRealRoots(k4, k2, k1, k0) {
@@ -980,7 +980,7 @@ window.testDQRR = function testDQRR(k4, k2, k1, k0) {
   // eslint-disable-next-line no-console
   console.log(r);
   // eslint-disable-next-line no-console
-  console.log(r.map(x => k0 + x * (k1 + x * (k2 + x * x * k4))));
+  console.log(r.map((x) => k0 + x * (k1 + x * (k2 + x * x * k4))));
 };
 
 window.solveSimpleBiquadratic = function solveSimpleBiquadratic(A, B, C, D, E, F) {
@@ -1392,7 +1392,7 @@ class CubicBezier extends Curve {
       pathRotation,
       shape1.direction.cross(dP)
     );
-    magSol = reversed ? magSol.filter(o => o.x <= 0 && o.y <= 0) : magSol.filter(o => o.x >= 0 && o.y >= 0);
+    magSol = reversed ? magSol.filter((o) => o.x <= 0 && o.y <= 0) : magSol.filter((o) => o.x >= 0 && o.y >= 0);
     if (magSol.length === 0) return null;
     return new CubicBezier(
       shape0.position,
@@ -1499,7 +1499,7 @@ window.PiecewisePath = class PiecewisePath {
   }
 
   transformedBy(tform) {
-    return new PiecewisePath(this.path.map(x => x.transformed(tform)));
+    return new PiecewisePath(this.path.map((x) => x.transformed(tform)));
   }
 
   toSVG(initialPrefix) {

@@ -10,7 +10,7 @@ export const teresa = {
       id: 1,
       price: 1e18,
       description: "Unlock passive Eternity Point generation.",
-      isDisabledInDoomed: true
+      isDisabledInDoomed: true,
     },
     effarig: {
       id: 2,
@@ -26,8 +26,8 @@ export const teresa = {
     undo: {
       id: 4,
       price: 1e10,
-      description: "Unlock \"Undo\" of equipping a Glyph.",
-      isDisabledInDoomed: true
+      description: 'Unlock "Undo" of equipping a Glyph.',
+      isDisabledInDoomed: true,
     },
     startEU: {
       id: 5,
@@ -37,6 +37,6 @@ export const teresa = {
       onUnlock: () => {
         for (const id of [1, 2, 3, 4, 5, 6]) player.eternityUpgrades.add(id);
       },
-    }
-  }
+    },
+  },
 };

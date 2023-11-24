@@ -9,7 +9,7 @@ export const EFFARIG_STAGES = {
   INFINITY: 1,
   ETERNITY: 2,
   REALITY: 3,
-  COMPLETED: 4
+  COMPLETED: 4,
 };
 
 export const Effarig = {
@@ -63,18 +63,20 @@ export const Effarig = {
   },
   get glyphEffectAmount() {
     const genEffectBitmask = Glyphs.activeWithoutCompanion
-      .filter(g => generatedTypes.includes(g.type))
+      .filter((g) => generatedTypes.includes(g.type))
       .reduce((prev, curr) => prev | curr.effects, 0);
     const nongenEffectBitmask = Glyphs.activeWithoutCompanion
-      .filter(g => !generatedTypes.includes(g.type))
+      .filter((g) => !generatedTypes.includes(g.type))
       .reduce((prev, curr) => prev | curr.effects, 0);
     return countValuesFromBitmask(genEffectBitmask) + countValuesFromBitmask(nongenEffectBitmask);
   },
   get shardsGained() {
     if (!TeresaUnlocks.effarig.canBeApplied) return DC.D0;
     const au2 = AtomUpgrade(2).isBought ? 10 : 1;
-    return Decimal.pow(Currency.eternityPoints.exponent / 7500, this.glyphEffectAmount).floor().mul(
-      AlchemyResource.effarig.effectValue).mul(au2);
+    return Decimal.pow(Currency.eternityPoints.exponent / 7500, this.glyphEffectAmount)
+      .floor()
+      .mul(AlchemyResource.effarig.effectValue)
+      .mul(au2);
   },
   get maxRarityBoost() {
     return 5 * Math.log10(Currency.relicShards.value.add(10).log10());
@@ -114,12 +116,16 @@ export const Effarig = {
     return Math.floor(replicantiCap().pLog10() / LOG10_MAX_VALUE - 1);
   },
   quotes: Quotes.effarig,
-  symbol: "Ϙ"
+  symbol: "Ϙ",
 };
 
 class EffarigUnlockState extends BitUpgradeState {
-  get bits() { return player.celestials.effarig.unlockBits; }
-  set bits(value) { player.celestials.effarig.unlockBits = value; }
+  get bits() {
+    return player.celestials.effarig.unlockBits;
+  }
+  set bits(value) {
+    player.celestials.effarig.unlockBits = value;
+  }
 
   get cost() {
     return this.config.cost;
@@ -138,7 +144,7 @@ class EffarigUnlockState extends BitUpgradeState {
 
 export const EffarigUnlock = mapGameDataToObject(
   GameDatabase.celestials.effarig.unlocks,
-  config => new EffarigUnlockState(config)
+  (config) => new EffarigUnlockState(config)
 );
 
 EventHub.logic.on(GAME_EVENT.TAB_CHANGED, () => {

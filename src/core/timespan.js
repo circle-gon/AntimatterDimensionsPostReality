@@ -659,5 +659,5 @@ const Guard = {
     if (value instanceof DecimalTimeSpan || value instanceof TimeSpan) return;
     if (message) throw message;
     throw "Value is not a DecimalTimeSpan nor a TimeSpan";
-  }
+  },
 };

@@ -30,5 +30,5 @@ export const multiplierTabValues = {
   infinities,
   eternities,
   gamespeed,
-  replicanti
+  replicanti,
 };

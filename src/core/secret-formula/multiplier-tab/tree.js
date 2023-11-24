@@ -5,15 +5,77 @@ import { multiplierTabValues } from "./values";
 
 const dynamicGenProps = ["TP", "DT", "infinities", "eternities", "gamespeed", "replicanti"];
 const propList = {
-  AD: ["purchase", "dimboost", "sacrifice", "achievementMult", "achievement", "infinityUpgrade",
-    "breakInfinityUpgrade", "infinityPower", "infinityChallenge", "timeStudy", "eternityChallenge", "glyph", "v",
-    "alchemy", "pelle", "iap", "effectNC", "nerfIC", "nerfV", "nerfCursed", "nerfPelle"],
-  ID: ["purchase", "achievementMult", "achievement", "replicanti", "infinityChallenge", "timeStudy", "eternityUpgrade",
-    "eternityChallenge", "glyph", "alchemy", "imaginaryUpgrade", "pelle", "iap", "nerfV", "nerfCursed", "nerfPelle"],
-  TD: ["purchase", "achievementMult", "achievement", "timeStudy", "eternityUpgrade", "eternityChallenge",
-    "dilationUpgrade", "realityUpgrade", "glyph", "alchemy", "imaginaryUpgrade", "pelle", "iap", "nerfV", "nerfCursed"],
-  IP: ["base", "infinityUpgrade", "achievement", "timeStudy", "dilationUpgrade", "glyph", "alchemy", "pelle", "iap",
-    "nerfTeresa", "nerfV"],
+  AD: [
+    "purchase",
+    "dimboost",
+    "sacrifice",
+    "achievementMult",
+    "achievement",
+    "infinityUpgrade",
+    "breakInfinityUpgrade",
+    "infinityPower",
+    "infinityChallenge",
+    "timeStudy",
+    "eternityChallenge",
+    "glyph",
+    "v",
+    "alchemy",
+    "pelle",
+    "iap",
+    "effectNC",
+    "nerfIC",
+    "nerfV",
+    "nerfCursed",
+    "nerfPelle",
+  ],
+  ID: [
+    "purchase",
+    "achievementMult",
+    "achievement",
+    "replicanti",
+    "infinityChallenge",
+    "timeStudy",
+    "eternityUpgrade",
+    "eternityChallenge",
+    "glyph",
+    "alchemy",
+    "imaginaryUpgrade",
+    "pelle",
+    "iap",
+    "nerfV",
+    "nerfCursed",
+    "nerfPelle",
+  ],
+  TD: [
+    "purchase",
+    "achievementMult",
+    "achievement",
+    "timeStudy",
+    "eternityUpgrade",
+    "eternityChallenge",
+    "dilationUpgrade",
+    "realityUpgrade",
+    "glyph",
+    "alchemy",
+    "imaginaryUpgrade",
+    "pelle",
+    "iap",
+    "nerfV",
+    "nerfCursed",
+  ],
+  IP: [
+    "base",
+    "infinityUpgrade",
+    "achievement",
+    "timeStudy",
+    "dilationUpgrade",
+    "glyph",
+    "alchemy",
+    "pelle",
+    "iap",
+    "nerfTeresa",
+    "nerfV",
+  ],
   EP: ["base", "eternityUpgrade", "timeStudy", "glyph", "realityUpgrade", "pelle", "iap", "nerfTeresa", "nerfV"],
 };
 
@@ -36,7 +98,7 @@ function append8(key) {
 
 // Helper method to create very long lists of entries in the tree; format is "RESOURCE_SOURCE_DIMENSION"
 function getProps(resource, tier) {
-  const props = propList[resource].map(s => `${resource}_${s}`);
+  const props = propList[resource].map((s) => `${resource}_${s}`);
   if (!tier) return props;
   const newProps = [];
   for (const effect of props) newProps.push(`${effect}_${tier}`);
@@ -47,67 +109,30 @@ function getProps(resource, tier) {
 // initialized props here are the "root" props which are viewable on the tab with full breakdowns. After the initial
 // specification, all children props are dynamically added based on the arrays in the helper functions above
 export const multiplierTabTree = {
-  AM_total: [
-    ["AD_total", "tickspeed_total", "AM_effarigAM"]
-  ],
-  AD_total: [
-    getProps("AD"),
-    append8("AD_total")
-  ],
-  ID_total: [
-    getProps("ID"),
-    append8("ID_total")
-  ],
-  TD_total: [
-    getProps("TD"),
-    append8("TD_total")
-  ],
-  IP_total: [
-    getProps("IP")
-  ],
-  IP_base: [
-    ["IP_antimatter", "IP_divisor"]
-  ],
-  EP_total: [
-    getProps("EP")
-  ],
-  EP_base: [
-    ["EP_IP", "EP_divisor"]
-  ],
-  TP_total: [
-    getProps("TP")
-  ],
-  DT_total: [
-    getProps("DT")
-  ],
-  tickspeed_total: [
-    ["tickspeed_base", "tickspeed_upgrades", "tickspeed_galaxies", "tickspeed_pelleTickspeedPow"]
-  ],
-  tickspeed_upgrades: [
-    ["tickspeedUpgrades_purchased", "tickspeedUpgrades_free"]
-  ],
-  tickspeed_galaxies: [
-    ["galaxies_antimatter", "galaxies_replicanti", "galaxies_tachyon", "galaxies_nerfPelle"]
-  ],
-  infinities_total: [
-    getProps("infinities")
-  ],
-  eternities_total: [
-    getProps("eternities")
-  ],
-  gamespeed_total: [
-    getProps("gamespeed")
-  ],
-  replicanti_total: [
-    getProps("replicanti")
-  ],
+  AM_total: [["AD_total", "tickspeed_total", "AM_effarigAM"]],
+  AD_total: [getProps("AD"), append8("AD_total")],
+  ID_total: [getProps("ID"), append8("ID_total")],
+  TD_total: [getProps("TD"), append8("TD_total")],
+  IP_total: [getProps("IP")],
+  IP_base: [["IP_antimatter", "IP_divisor"]],
+  EP_total: [getProps("EP")],
+  EP_base: [["EP_IP", "EP_divisor"]],
+  TP_total: [getProps("TP")],
+  DT_total: [getProps("DT")],
+  tickspeed_total: [["tickspeed_base", "tickspeed_upgrades", "tickspeed_galaxies", "tickspeed_pelleTickspeedPow"]],
+  tickspeed_upgrades: [["tickspeedUpgrades_purchased", "tickspeedUpgrades_free"]],
+  tickspeed_galaxies: [["galaxies_antimatter", "galaxies_replicanti", "galaxies_tachyon", "galaxies_nerfPelle"]],
+  infinities_total: [getProps("infinities")],
+  eternities_total: [getProps("eternities")],
+  gamespeed_total: [getProps("gamespeed")],
+  replicanti_total: [getProps("replicanti")],
 };
 
 // Gamespeed's two alternate displays are current and average gamespeed, distinguished by which of two
 // mutually-exclusive entries appear in the list. We explicity modify props here as needed
 const allGamespeed = multiplierTabTree.gamespeed_total[0];
-multiplierTabTree.gamespeed_total[0] = [...allGamespeed].filter(key => key !== "gamespeed_blackHoleAvg");
-multiplierTabTree.gamespeed_total[1] = [...allGamespeed].filter(key => key !== "gamespeed_blackHoleCurr");
+multiplierTabTree.gamespeed_total[0] = [...allGamespeed].filter((key) => key !== "gamespeed_blackHoleAvg");
+multiplierTabTree.gamespeed_total[1] = [...allGamespeed].filter((key) => key !== "gamespeed_blackHoleCurr");
 
 // DT doesn't explicitly have an entry to TP, due to it being its own total entry, so we link them together
 multiplierTabTree.DT_total[0].unshift("TP_total");
@@ -165,14 +190,30 @@ for (const res of dimTypes) {
 
 // A few dynamically-generated props are largely useless in terms of what they connect to, in that they have very few
 // entries or have 8 identical entries, so we explicitly remove those lists for a cleaner appearance on the UI
-const removedRegexes = ["AD_sacrifice", "AD_breakInfinityUpgrade", "AD_nerfIC", "AD_infinityUpgrade", "AD_v",
-  "ID_replicanti", "ID_infinityChallenge", "ID_eternityUpgrades",
-  "TD_achievement", "TD_eternityUpgrade", "TD_dilationUpgrade", "TD_realityUpgrade",
-  ".._achievementMult", ".._glyph", ".._alchemy", ".._imaginaryUpgrade", ".._iap",
-  ".._nerfV", ".._nerfCursed", ".._nerfPelle", ".._pelle"
+const removedRegexes = [
+  "AD_sacrifice",
+  "AD_breakInfinityUpgrade",
+  "AD_nerfIC",
+  "AD_infinityUpgrade",
+  "AD_v",
+  "ID_replicanti",
+  "ID_infinityChallenge",
+  "ID_eternityUpgrades",
+  "TD_achievement",
+  "TD_eternityUpgrade",
+  "TD_dilationUpgrade",
+  "TD_realityUpgrade",
+  ".._achievementMult",
+  ".._glyph",
+  ".._alchemy",
+  ".._imaginaryUpgrade",
+  ".._iap",
+  ".._nerfV",
+  ".._nerfCursed",
+  ".._nerfPelle",
+  ".._pelle",
 ];
-const removedProps = Object.keys(multiplierTabTree)
-  .filter(key => removedRegexes.some(regex => key.match(regex)));
+const removedProps = Object.keys(multiplierTabTree).filter((key) => removedRegexes.some((regex) => key.match(regex)));
 for (const prop of removedProps) {
   multiplierTabTree[prop] = undefined;
 }
@@ -185,11 +226,16 @@ for (let dim = 1; dim <= 8; dim++) {
 }
 
 // Tesseracts are added one layer deep, but we don't want to override the existing ID_purchase entry
-multiplierTabTree.ID_purchase.unshift(["ID_basePurchase", "ID_tesseractPurchase",
-  "ID_infinityGlyphSacrifice", "ID_powPurchase"]);
+multiplierTabTree.ID_purchase.unshift([
+  "ID_basePurchase",
+  "ID_tesseractPurchase",
+  "ID_infinityGlyphSacrifice",
+  "ID_powPurchase",
+]);
 for (let dim = 1; dim <= 7; dim++) {
-  multiplierTabTree[`ID_purchase_${dim}`] = [[`ID_basePurchase_${dim}`, `ID_tesseractPurchase_${dim}`,
-    "ID_powPurchase"]];
+  multiplierTabTree[`ID_purchase_${dim}`] = [
+    [`ID_basePurchase_${dim}`, `ID_tesseractPurchase_${dim}`, "ID_powPurchase"],
+  ];
 }
 multiplierTabTree.ID_purchase_8 = [[`ID_basePurchase_8`, `ID_infinityGlyphSacrifice`, "ID_powPurchase"]];
 
