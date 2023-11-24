@@ -86,9 +86,9 @@ export default {
     },
     cssVar() {
       return {
-        "--x-pos": this.isContinuumActive ? "-125%" : "-175%"
+        "--x-pos": this.isContinuumActive ? "-125%" : "-175%",
       };
-    }
+    },
   },
   watch: {
     isAutobuyerOn(newValue) {
@@ -147,10 +147,7 @@ export default {
       :amount-text="format(amount, 2)"
       :rate="rateOfChange"
     />
-    <div
-      class="l-dim-row-multi-button-container c-modern-dim-tooltip-container"
-      :style="cssVar"
-    >
+    <div class="l-dim-row-multi-button-container c-modern-dim-tooltip-container" :style="cssVar">
       <div class="c-modern-dim-purchase-count-tooltip">
         {{ capTooltip }}
       </div>

@@ -4,7 +4,7 @@ import GlyphSetPreview from "@/components/GlyphSetPreview";
 export default {
   name: "GlyphPeek",
   components: {
-    GlyphSetPreview
+    GlyphSetPreview,
   },
   data() {
     return {
@@ -44,21 +44,14 @@ export default {
         isGlyphSelection: true,
         showSetName: false,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="isVisible"
-    class="c-glyph-peek"
-  >
-    <div
-      v-if="canPeek"
-      class="l-glyph-set-preview"
-      @click="showModal"
-    >
+  <div v-if="isVisible" class="c-glyph-peek">
+    <div v-if="canPeek" class="l-glyph-set-preview" @click="showModal">
       <GlyphSetPreview
         :show-name="false"
         :text="'Upcoming Glyph selection:'"
@@ -72,12 +65,10 @@ export default {
     </div>
     <div v-else>
       Purchase the Reality study to see
-      <br>
+      <br />
       this Reality's Glyph choices
     </div>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

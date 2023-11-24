@@ -64,9 +64,8 @@ export class RealityAutobuyerState extends AutobuyerState {
       AUTO_REALITY_MODE.EITHER,
       AUTO_REALITY_MODE.BOTH,
       AUTO_REALITY_MODE.TIME,
-      AUTO_REALITY_MODE.RELIC_SHARD
-    ]
-      .nextSibling(this.mode);
+      AUTO_REALITY_MODE.RELIC_SHARD,
+    ].nextSibling(this.mode);
   }
 
   bumpAmount(mult) {
@@ -82,8 +81,9 @@ export class RealityAutobuyerState extends AutobuyerState {
     // settings are changed (which causes it to check again); otherwise, glyph choices would be generated every tick
     const shouldCheckFilter = EffarigUnlock.glyphFilter.isUnlocked && !player.reality.hasCheckedFilter;
     if (isRealityAvailable() && player.options.autoRealityForFilter && shouldCheckFilter) {
-      const choices = GlyphSelection.glyphList(GlyphSelection.choiceCount, gainedGlyphLevel(),
-        { isChoosingGlyph: false });
+      const choices = GlyphSelection.glyphList(GlyphSelection.choiceCount, gainedGlyphLevel(), {
+        isChoosingGlyph: false,
+      });
       const bestGlyph = AutoGlyphProcessor.pick(choices);
       player.reality.hasCheckedFilter = true;
       if (!AutoGlyphProcessor.wouldKeep(bestGlyph)) {

@@ -4,7 +4,7 @@ import AutomatorDocsManPage from "./AutomatorDocsManPage";
 export default {
   name: "AutomatorDocsCommandList",
   components: {
-    AutomatorDocsManPage
+    AutomatorDocsManPage,
   },
   data() {
     return {
@@ -17,38 +17,26 @@ export default {
   },
   methods: {
     commandsInCategory(category) {
-      return this.commands.filter(c => c.category === category && c.isUnlocked());
-    }
-  }
+      return this.commands.filter((c) => c.category === category && c.isUnlocked());
+    },
+  },
 };
 </script>
 
 <template>
   <div>
     <div v-if="selectedCommand !== -1">
-      <button
-        class="c-automator-docs--button l-return-button fas fa-arrow-left"
-        @click="selectedCommand = -1"
-      />
+      <button class="c-automator-docs--button l-return-button fas fa-arrow-left" @click="selectedCommand = -1" />
       Return to the Command List
     </div>
-    <AutomatorDocsManPage
-      v-if="selectedCommand !== -1"
-      :command="commands[selectedCommand]"
-    />
-    <div
-      v-else
-      class="c-automator-docs-page"
-    >
+    <AutomatorDocsManPage v-if="selectedCommand !== -1" :command="commands[selectedCommand]" />
+    <div v-else class="c-automator-docs-page">
       Click on an underlined command to see more details on syntax, usage, and functionality.
-      <br>
-      <br>
+      <br />
+      <br />
       <span>Command List:</span>
-      <br>
-      <div
-        v-for="(category, i) in categoryNames"
-        :key="i"
-      >
+      <br />
+      <div v-for="(category, i) in categoryNames" :key="i">
         {{ category }} ({{ commandsInCategory(i).length }} commands)
         <div
           v-for="command in commandsInCategory(i)"
@@ -61,7 +49,7 @@ export default {
           </span>
         </div>
       </div>
-      <br>
+      <br />
       <span>
         Note: In the SYNTAX note on each command, <u>underlined</u> inputs are <i>required</i> inputs which you must
         fill and inputs in [square brackets] are optional (if used, they should be input <i>without</i> the brackets).

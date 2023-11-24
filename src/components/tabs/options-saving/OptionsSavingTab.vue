@@ -14,7 +14,7 @@ export default {
     OpenModalHotkeysButton,
     OptionsButton,
     PrimaryToggleButton,
-    SaveFileName
+    SaveFileName,
   },
   data() {
     return {
@@ -46,7 +46,7 @@ export default {
     },
     STEAM() {
       return STEAM;
-    }
+    },
   },
   watch: {
     cloudEnabled(newValue) {
@@ -66,7 +66,7 @@ export default {
     },
     hideGoogleName(newValue) {
       player.options.hideGoogleName = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -91,7 +91,7 @@ export default {
       if (event.target.files.length === 0) return;
 
       const reader = new FileReader();
-      reader.onload = function() {
+      reader.onload = function () {
         // File importing behavior should use the behavior on the existing and to-be-overwritten save instead of the
         // settings in the to-be-imported save. This is largely because the former is more easily edited by the player,
         // and in contrast with the import-as-string case which allows the player to choose.
@@ -110,8 +110,8 @@ export default {
         Modal.message.show(`You cannot modify your seed any more. Glyph RNG has already been used to generate
           at least one Glyph on this run.`);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -156,29 +156,14 @@ export default {
         >
           Choose save
         </OptionsButton>
-        <AutosaveIntervalSlider
-          :min="10"
-          :max="60"
-          :interval="1"
-        />
+        <AutosaveIntervalSlider :min="10" :max="60" :interval="1" />
       </div>
       <div class="l-options-grid__row">
-        <OptionsButton
-          :class="{ 'o-pelle-disabled-pointer': creditsClosed }"
-          onclick="GameStorage.exportAsFile()"
-        >
+        <OptionsButton :class="{ 'o-pelle-disabled-pointer': creditsClosed }" onclick="GameStorage.exportAsFile()">
           Export save as file
         </OptionsButton>
-        <OptionsButton
-          class="c-file-import-button"
-          :class="{ 'o-pelle-disabled-pointer': creditsClosed }"
-        >
-          <input
-            class="c-file-import"
-            type="file"
-            accept=".txt"
-            @change="importAsFile"
-          >
+        <OptionsButton class="c-file-import-button" :class="{ 'o-pelle-disabled-pointer': creditsClosed }">
+          <input class="c-file-import" type="file" accept=".txt" @change="importAsFile" />
           <label for="file">Import save from file</label>
         </OptionsButton>
         <PrimaryToggleButton
@@ -189,10 +174,7 @@ export default {
         />
       </div>
       <div class="l-options-grid__row">
-        <OptionsButton
-          :class="{ 'o-pelle-disabled-pointer': creditsClosed }"
-          onclick="Modal.backupWindows.show()"
-        >
+        <OptionsButton :class="{ 'o-pelle-disabled-pointer': creditsClosed }" onclick="Modal.backupWindows.show()">
           Open Automatic Save Backup Menu
         </OptionsButton>
         <SaveFileName />
@@ -210,7 +192,7 @@ export default {
           v-if="inSpeedrun"
           :class="{
             'o-pelle-disabled-pointer': creditsClosed,
-            'o-primary-btn--disabled': !canModifySeed
+            'o-primary-btn--disabled': !canModifySeed,
           }"
           @click="openSeedModal()"
         >
@@ -219,10 +201,7 @@ export default {
       </div>
       <OpenModalHotkeysButton />
     </div>
-    <h2
-      v-if="cloudAvailable"
-      class="c-cloud-options-header"
-    >
+    <h2 v-if="cloudAvailable" class="c-cloud-options-header">
       <span v-if="hideGoogleName">Logged in to Google <i>(name hidden)</i></span>
       <span v-else-if="loggedIn">Logged in as {{ userName }}</span>
       <span v-else>Not logged in</span>
@@ -231,18 +210,9 @@ export default {
       <span v-if="cloudEnabled">Cloud Saving will occur automatically every 10 minutes.</span>
       <span v-else>Cloud Saving has been disabled on this save.</span>
     </div>
-    <div
-      v-if="cloudAvailable"
-      class="l-options-grid"
-    >
-      <div
-        v-if="!STEAM"
-        class="l-options-grid__row"
-      >
-        <OptionsButton
-          v-if="loggedIn"
-          onclick="GameOptions.logout()"
-        >
+    <div v-if="cloudAvailable" class="l-options-grid">
+      <div v-if="!STEAM" class="l-options-grid__row">
+        <OptionsButton v-if="loggedIn" onclick="GameOptions.logout()">
           Disconnect Google Account and disable Cloud Saving
         </OptionsButton>
         <OptionsButton
@@ -262,20 +232,11 @@ export default {
           label="Hide Google Account name:"
         />
       </div>
-      <div
-        v-if="loggedIn"
-        class="l-options-grid__row"
-      >
-        <OptionsButton
-          onclick="GameOptions.cloudSave()"
-          :class="{ 'o-pelle-disabled-pointer': creditsClosed }"
-        >
+      <div v-if="loggedIn" class="l-options-grid__row">
+        <OptionsButton onclick="GameOptions.cloudSave()" :class="{ 'o-pelle-disabled-pointer': creditsClosed }">
           Cloud save
         </OptionsButton>
-        <OptionsButton
-          onclick="GameOptions.cloudLoad()"
-          :class="{ 'o-pelle-disabled-pointer': creditsClosed }"
-        >
+        <OptionsButton onclick="GameOptions.cloudLoad()" :class="{ 'o-pelle-disabled-pointer': creditsClosed }">
           Cloud load
         </OptionsButton>
         <PrimaryToggleButton
@@ -285,10 +246,7 @@ export default {
           label="Force local save before cloud saving:"
         />
       </div>
-      <div
-        v-if="loggedIn"
-        class="l-options-grid__row"
-      >
+      <div v-if="loggedIn" class="l-options-grid__row">
         <PrimaryToggleButton
           v-model="cloudEnabled"
           class="o-primary-btn--option l-options-grid__button"

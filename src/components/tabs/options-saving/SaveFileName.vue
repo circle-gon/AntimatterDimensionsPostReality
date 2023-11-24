@@ -1,11 +1,10 @@
 <script>
 export default {
   name: "SaveFileName",
-  components: {
-  },
+  components: {},
   data() {
     return {
-      saveFileName: ""
+      saveFileName: "",
     };
   },
   methods: {
@@ -19,8 +18,8 @@ export default {
       const newName = this.removeNotAvailableCharacters(event.target.value.trim());
       player.options.saveFileName = newName;
       event.target.value = newName;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -35,7 +34,7 @@ export default {
         placeholder="Custom save name"
         :value="saveFileName"
         @change="handleChange"
-      >
+      />
     </span>
   </div>
 </template>

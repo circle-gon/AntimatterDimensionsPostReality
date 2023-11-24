@@ -21,10 +21,10 @@ export default {
     },
     textColor(hasBought) {
       return {
-        color: hasBought ? "var(--color-good)" : "var(--color-bad)"
+        color: hasBought ? "var(--color-good)" : "var(--color-bad)",
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -33,16 +33,14 @@ export default {
     <div class="l-header">
       You have {{ formatInt(totalPoints) }} / {{ formatInt(pointsForAutomator) }}
       Automator Points towards unlocking the Automator.
-      <br>
+      <br />
       You gain Automator Points from the following sources:
     </div>
     <div class="l-automator-points-list-container">
       <div class="l-automator-points-list-side-col c-automator-points-list-col">
         <span class="c-automator-points-list-symbol fas fa-project-diagram" />
         <span class="c-automator-points-list-ap--large">{{ formatInt(fromPerks) }} AP</span>
-        <span class="l-large-text">
-          Perks
-        </span>
+        <span class="l-large-text"> Perks </span>
         <div
           v-for="perk in perkSources"
           :key="perk.id"
@@ -55,32 +53,23 @@ export default {
         </div>
       </div>
       <div class="l-automator-points-list-center-col">
-        <div
-          v-for="source in otherSources"
-          :key="source.name"
-          class="c-automator-points-list-cell"
-        >
+        <div v-for="source in otherSources" :key="source.name" class="c-automator-points-list-cell">
           <span class="c-automator-points-list-ap--large">{{ formatInt(source.automatorPoints()) }} AP</span>
           <span class="l-large-text">
             {{ source.name }}
           </span>
-          <br>
-          <br>
+          <br />
+          <br />
           <span :style="textColor(source.automatorPoints() > 0)">
             {{ source.shortDescription() }}
           </span>
-          <span
-            class="c-automator-points-list-symbol"
-            v-html="source.symbol"
-          />
+          <span class="c-automator-points-list-symbol" v-html="source.symbol" />
         </div>
       </div>
       <div class="l-automator-points-list-side-col c-automator-points-list-col">
         <span class="c-automator-points-list-symbol fas fa-arrow-up" />
         <span class="c-automator-points-list-ap--large">{{ formatInt(fromUpgrades) }} AP</span>
-        <span class="l-large-text">
-          Reality Upgrades
-        </span>
+        <span class="l-large-text"> Reality Upgrades </span>
         <div
           v-for="upgrade in upgradeSources"
           :key="upgrade.id"
@@ -89,21 +78,21 @@ export default {
         >
           <b>{{ upgrade.name }}</b>
           <span class="c-automator-points-list-ap">{{ formatInt(upgrade.automatorPoints) }} AP</span>
-          <br>
+          <br />
           {{ upgrade.shortDescription }}
         </div>
       </div>
     </div>
-    <br>
+    <br />
     <div>
-      The Automator allows (amongst other things) buying full Time Study Trees, entering Eternity Challenges,
-      or starting Dilation.
-      <br>
-      It can also force prestige events on certain conditions independently from your Autobuyers or modify
-      some of your Autobuyer settings.
-      <br>
-      The speed of the Automator gradually increases as you get more Realities. If unlocked right now,
-      it would run {{ format(1000 / automatorInterval, 2, 2) }} commands per real-time second.
+      The Automator allows (amongst other things) buying full Time Study Trees, entering Eternity Challenges, or
+      starting Dilation.
+      <br />
+      It can also force prestige events on certain conditions independently from your Autobuyers or modify some of your
+      Autobuyer settings.
+      <br />
+      The speed of the Automator gradually increases as you get more Realities. If unlocked right now, it would run
+      {{ format(1000 / automatorInterval, 2, 2) }} commands per real-time second.
     </div>
   </div>
 </template>

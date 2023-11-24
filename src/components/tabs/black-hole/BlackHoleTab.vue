@@ -11,7 +11,7 @@ export default {
     BlackHoleUpgradeRow,
     BlackHoleStateRow,
     BlackHoleChargingSliders,
-    BlackHoleUnlockButton
+    BlackHoleUnlockButton,
   },
   data() {
     return {
@@ -62,8 +62,10 @@ export default {
       this.isPermanent = BlackHoles.arePermanent;
       this.pauseMode = player.blackHoleAutoPauseMode;
       this.hasBH2 = BlackHole(2).isUnlocked;
-      this.blackHoleUptime = [BlackHole(1).duration / BlackHole(1).cycleLength,
-        BlackHole(2).duration / BlackHole(2).cycleLength];
+      this.blackHoleUptime = [
+        BlackHole(1).duration / BlackHole(1).cycleLength,
+        BlackHole(2).duration / BlackHole(2).cycleLength,
+      ];
       this.detailedBH2 = this.bh2Status();
 
       if (player.blackHoleNegative < 1) this.stateChange = this.isPaused ? "Uninvert" : "Invert";
@@ -80,14 +82,14 @@ export default {
       }
 
       // BH1 active, BH2 will trigger before BH1 runs out
-      if (BlackHole(1).isActive && (bh2Remaining < bh1Remaining)) {
+      if (BlackHole(1).isActive && bh2Remaining < bh1Remaining) {
         const bh2Duration = Math.min(bh1Remaining - bh2Remaining, BlackHole(2).duration);
         return `Black Hole 2 will activate before Black Hole 1 deactivates,
           for ${TimeSpan.fromSeconds(bh2Duration).toStringShort()}`;
       }
 
       // BH2 won't start yet next cycle
-      if (BlackHole(1).isActive || (bh2Remaining > BlackHole(1).duration)) {
+      if (BlackHole(1).isActive || bh2Remaining > BlackHole(1).duration) {
         const cycleCount = BlackHole(1).isActive
           ? Math.floor((bh2Remaining - bh1Remaining) / BlackHole(1).duration) + 1
           : Math.floor(bh2Remaining / BlackHole(1).duration);
@@ -147,34 +149,25 @@ export default {
 
 <template>
   <div class="l-black-hole-tab">
-    <div
-      v-if="isEnslaved || isDoomed"
-      class="c-black-hole-disabled-description"
-    >
+    <div v-if="isEnslaved || isDoomed" class="c-black-hole-disabled-description">
       <i v-if="isEnslaved">
         You must... seek... other methods...
-        <br>
+        <br />
       </i>
       The physics of this Reality do not allow the existence of Black Holes.
     </div>
-    <div
-      v-else-if="!isUnlocked"
-      class="l-pre-unlock-text"
-    >
+    <div v-else-if="!isUnlocked" class="l-pre-unlock-text">
       <BlackHoleUnlockButton @blackholeunlock="startAnimation" />
       The Black Hole makes the entire game run significantly faster for a short period of time.
-      <br>
+      <br />
       Starts at {{ formatX(180) }} faster for {{ formatInt(10) }} seconds, once per hour.
-      <br>
-      <br>
+      <br />
+      <br />
       Unlocking the Black Hole also gives {{ formatInt(10) }} Automator Points.
     </div>
     <template v-else>
       <div class="c-subtab-option-container">
-        <button
-          class="o-primary-btn o-primary-btn--subtab-option"
-          @click="togglePause"
-        >
+        <button class="o-primary-btn o-primary-btn--subtab-option" @click="togglePause">
           {{ stateChange }} Black Hole
         </button>
         <button
@@ -185,41 +178,28 @@ export default {
           Auto-pause: {{ pauseModeString }}
         </button>
       </div>
-      <canvas
-        ref="canvas"
-        class="c-black-hole-canvas"
-        width="400"
-        height="400"
-      />
+      <canvas ref="canvas" class="c-black-hole-canvas" width="400" height="400" />
       <div class="l-black-hole-upgrade-grid">
-        <BlackHoleStateRow
-          v-for="(blackHole, i) in blackHoles"
-          :key="'state' + i"
-          :black-hole="blackHole"
-        />
+        <BlackHoleStateRow v-for="(blackHole, i) in blackHoles" :key="'state' + i" :black-hole="blackHole" />
         <span v-if="hasBH2 && !isPermanent">
           <b>{{ detailedBH2 }}</b>
-          <br>
+          <br />
           The timer for Black Hole 2 only advances while Black Hole 1 is active.
-          <br>
+          <br />
           Upgrades affect the internal timer; the header shows real time until next activation.
         </span>
-        <br>
+        <br />
         <div v-if="!isPermanent">
           Black holes become permanently active when they are active for more than {{ formatPercents(0.9999, 2) }}
           of the time.
-          <br>
+          <br />
           Active time percent: {{ formatPercents(blackHoleUptime[0], 3) }}
           <span v-if="hasBH2">and {{ formatPercents(blackHoleUptime[1], 3) }}</span>
         </div>
         <BlackHoleChargingSliders class="l-enslaved-shop-container" />
       </div>
       <div :class="gridStyle()">
-        <BlackHoleUpgradeRow
-          v-for="(blackHole, i) in blackHoles"
-          :key="'upgrades' + i"
-          :black-hole="blackHole"
-        />
+        <BlackHoleUpgradeRow v-for="(blackHole, i) in blackHoles" :key="'upgrades' + i" :black-hole="blackHole" />
       </div>
     </template>
   </div>

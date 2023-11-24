@@ -4,28 +4,28 @@ import CostDisplay from "@/components/CostDisplay";
 export default {
   name: "TimeStudyButton",
   components: {
-    CostDisplay
+    CostDisplay,
   },
   props: {
     setup: {
       type: Object,
-      required: true
+      required: true,
     },
     showCost: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     showStCost: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     specialClick: {
       type: Function,
       required: false,
       default: null,
-    }
+    },
   },
   data() {
     return {
@@ -44,7 +44,7 @@ export default {
     styleObject() {
       return {
         top: `${this.setup.top}rem`,
-        left: `${this.setup.left}rem`
+        left: `${this.setup.left}rem`,
       };
     },
     classObject() {
@@ -65,15 +65,24 @@ export default {
       switch (this.study.type) {
         case TIME_STUDY_TYPE.NORMAL:
           switch (this.setup.path) {
-            case TIME_STUDY_PATH.ANTIMATTER_DIM: return "o-time-study-antimatter-dim";
-            case TIME_STUDY_PATH.INFINITY_DIM: return "o-time-study-infinity-dim";
-            case TIME_STUDY_PATH.TIME_DIM: return "o-time-study-time-dim";
-            case TIME_STUDY_PATH.ACTIVE: return "o-time-study-active";
-            case TIME_STUDY_PATH.PASSIVE: return "o-time-study-passive";
-            case TIME_STUDY_PATH.IDLE: return "o-time-study-idle";
-            case TIME_STUDY_PATH.LIGHT: return "o-time-study-light";
-            case TIME_STUDY_PATH.DARK: return "o-time-study-dark";
-            default: return "o-time-study-normal";
+            case TIME_STUDY_PATH.ANTIMATTER_DIM:
+              return "o-time-study-antimatter-dim";
+            case TIME_STUDY_PATH.INFINITY_DIM:
+              return "o-time-study-infinity-dim";
+            case TIME_STUDY_PATH.TIME_DIM:
+              return "o-time-study-time-dim";
+            case TIME_STUDY_PATH.ACTIVE:
+              return "o-time-study-active";
+            case TIME_STUDY_PATH.PASSIVE:
+              return "o-time-study-passive";
+            case TIME_STUDY_PATH.IDLE:
+              return "o-time-study-idle";
+            case TIME_STUDY_PATH.LIGHT:
+              return "o-time-study-light";
+            case TIME_STUDY_PATH.DARK:
+              return "o-time-study-dark";
+            default:
+              return "o-time-study-normal";
           }
         case TIME_STUDY_TYPE.ETERNITY_CHALLENGE:
           return "o-time-study-eternity-challenge";
@@ -106,7 +115,7 @@ export default {
       return this.eternityChallengeRunning ? "o-time-study-eternity-challenge--running" : "";
     },
     config() {
-      return { ...this.study.config, formatCost: value => (value >= 1e6 ? format(value) : formatInt(value)) };
+      return { ...this.study.config, formatCost: (value) => (value >= 1e6 ? format(value) : formatInt(value)) };
     },
     showDefaultCostDisplay() {
       const costCond = (this.showCost && !this.showStCost) || this.STCost === 0;
@@ -116,9 +125,7 @@ export default {
       const ttStr = this.setup.isSmall
         ? `${formatInt(this.config.cost)} TT`
         : quantifyInt("Time Theorem", this.config.cost);
-      const stStr = this.setup.isSmall
-        ? `${formatInt(this.STCost)} ST`
-        : quantifyInt("Space Theorem", this.STCost);
+      const stStr = this.setup.isSmall ? `${formatInt(this.STCost)} ST` : quantifyInt("Space Theorem", this.STCost);
 
       const costs = [];
       if (this.config.cost) costs.push(ttStr);
@@ -127,20 +134,21 @@ export default {
     },
     doomedRealityStudy() {
       return this.study.type === TIME_STUDY_TYPE.DILATION && this.study.id === 6 && Pelle.isDoomed;
-    }
+    },
   },
   methods: {
     update() {
       const study = this.study;
       this.isUseless = Pelle.uselessTimeStudies.includes(this.study.id) && Pelle.isDoomed;
       this.isBought = study.isBought;
-      this.eternityChallengeRunning = study.type === TIME_STUDY_TYPE.ETERNITY_CHALLENGE &&
-        EternityChallenge.current?.id === study.id;
+      this.eternityChallengeRunning =
+        study.type === TIME_STUDY_TYPE.ETERNITY_CHALLENGE && EternityChallenge.current?.id === study.id;
       if (!this.isBought) {
         this.isAvailableForPurchase = study.canBeBought && study.isAffordable;
       }
       this.STCost = this.study.STCost;
-      this.isCompleteEC = this.study.type === TIME_STUDY_TYPE.ETERNITY_CHALLENGE &&
+      this.isCompleteEC =
+        this.study.type === TIME_STUDY_TYPE.ETERNITY_CHALLENGE &&
         EternityChallenge(this.study.id).remainingCompletions === 0;
     },
     handleClick() {
@@ -149,8 +157,8 @@ export default {
     },
     shiftClick() {
       if (this.study.purchaseUntil) this.study.purchaseUntil();
-    }
-  }
+    },
+  },
 };
 
 export class TimeStudySetup {
@@ -182,18 +190,9 @@ export class TimeStudySetup {
     @click.shift.exact="shiftClick"
   >
     <slot />
-    <CostDisplay
-      v-if="showDefaultCostDisplay"
-      br
-      :config="config"
-      name="Time Theorem"
-    />
-    <div v-else-if="!doomedRealityStudy">
-      Cost: {{ customCostStr }}
-    </div>
+    <CostDisplay v-if="showDefaultCostDisplay" br :config="config" name="Time Theorem" />
+    <div v-else-if="!doomedRealityStudy">Cost: {{ customCostStr }}</div>
   </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -11,9 +11,7 @@ class AchievementTimer {
   }
 
   advance() {
-    const addedTime = this.realTime
-      ? Time.unscaledDeltaTime.totalSeconds
-      : Time.deltaTime;
+    const addedTime = this.realTime ? Time.unscaledDeltaTime.totalSeconds : Time.deltaTime;
     if (this.realTime) {
       this.time += addedTime;
     } else {
@@ -31,7 +29,6 @@ class AchievementTimer {
       return this.time >= duration;
     }
     return this.time.gte(duration);
-
   }
 }
 
@@ -39,5 +36,5 @@ export const AchievementTimers = {
   marathon1: new AchievementTimer(false),
   marathon2: new AchievementTimer(false),
   pain: new AchievementTimer(true),
-  stats: new AchievementTimer(true)
+  stats: new AchievementTimer(true),
 };

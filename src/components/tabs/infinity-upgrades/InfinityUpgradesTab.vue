@@ -8,7 +8,7 @@ export default {
   components: {
     PrimaryButton,
     InfinityUpgradeButton,
-    IpMultiplierButton
+    IpMultiplierButton,
   },
   data() {
     return {
@@ -21,7 +21,7 @@ export default {
       ipMultHardCap: 0,
       eternityUnlocked: false,
       bottomRowUnlocked: false,
-      styleOfColumnBg: undefined
+      styleOfColumnBg: undefined,
     };
   },
   computed: {
@@ -31,26 +31,21 @@ export default {
           InfinityUpgrade.totalTimeMult,
           InfinityUpgrade.dim18mult,
           InfinityUpgrade.dim36mult,
-          InfinityUpgrade.resetBoost
+          InfinityUpgrade.resetBoost,
         ],
-        [
-          InfinityUpgrade.buy10Mult,
-          InfinityUpgrade.dim27mult,
-          InfinityUpgrade.dim45mult,
-          InfinityUpgrade.galaxyBoost
-        ],
+        [InfinityUpgrade.buy10Mult, InfinityUpgrade.dim27mult, InfinityUpgrade.dim45mult, InfinityUpgrade.galaxyBoost],
         [
           InfinityUpgrade.thisInfinityTimeMult,
           InfinityUpgrade.unspentIPMult,
           InfinityUpgrade.dimboostMult,
-          InfinityUpgrade.ipGen
+          InfinityUpgrade.ipGen,
         ],
         [
           InfinityUpgrade.skipReset1,
           InfinityUpgrade.skipReset2,
           InfinityUpgrade.skipReset3,
-          InfinityUpgrade.skipResetGalaxy
-        ]
+          InfinityUpgrade.skipResetGalaxy,
+        ],
       ];
     },
     allColumnUpgrades() {
@@ -59,15 +54,15 @@ export default {
     disChargeClassObject() {
       return {
         "o-primary-btn--subtab-option": true,
-        "o-primary-btn--charged-respec-active": this.disCharge
+        "o-primary-btn--charged-respec-active": this.disCharge,
       };
     },
-    offlineIpUpgrade: () => InfinityUpgrade.ipOffline
+    offlineIpUpgrade: () => InfinityUpgrade.ipOffline,
   },
   watch: {
     disCharge(newValue) {
       player.celestials.ra.disCharge = newValue;
-    }
+    },
   },
   created() {
     this.on$(GAME_EVENT.INFINITY_UPGRADE_BOUGHT, () => this.setStyleOfColumnBg());
@@ -90,7 +85,7 @@ export default {
     },
     btnClassObject(column) {
       const classObject = {
-        "l-infinity-upgrade-grid__cell": true
+        "l-infinity-upgrade-grid__cell": true,
       };
       if (column > 0) {
         // Indexing starts from 0, while css classes start from 2 (and first column has default css class)
@@ -104,75 +99,53 @@ export default {
       return "transparent";
     },
     setStyleOfColumnBg() {
-      this.styleOfColumnBg = this.grid.map(col => ({
-        background:
-          `linear-gradient(to bottom,
+      this.styleOfColumnBg = this.grid.map((col) => ({
+        background: `linear-gradient(to bottom,
           ${this.getColumnColor(col[0])} 15%,
           ${this.getColumnColor(col[1])} 35% 40%,
           ${this.getColumnColor(col[2])} 60% 65%,
-          ${this.getColumnColor(col[3])} 85% 100%`
+          ${this.getColumnColor(col[3])} 85% 100%`,
       }));
     },
-  }
+  },
 };
 </script>
 
 <template>
   <div class="l-infinity-upgrades-tab">
-    <div
-      v-if="chargeUnlocked"
-      class="c-subtab-option-container"
-    >
-      <PrimaryButton
-        :class="disChargeClassObject"
-        @click="disCharge = !disCharge"
-      >
+    <div v-if="chargeUnlocked" class="c-subtab-option-container">
+      <PrimaryButton :class="disChargeClassObject" @click="disCharge = !disCharge">
         Respec Charged Infinity Upgrades on next Reality
       </PrimaryButton>
     </div>
     <div v-if="chargeUnlocked">
-      You have charged {{ formatInt(chargesUsed) }}/{{ formatInt(totalCharges) }} Infinity Upgrades.
-      Charged Infinity Upgrades have their effect altered.
-      <br>
+      You have charged {{ formatInt(chargesUsed) }}/{{ formatInt(totalCharges) }} Infinity Upgrades. Charged Infinity
+      Upgrades have their effect altered.
+      <br />
       Hold shift to show Charged Infinity Upgrades. You can freely respec your choices on Reality.
     </div>
-    <div v-if="isUseless">
-      You cannot Charge Infinity Upgrades while Doomed.
-    </div>
-    <br>
+    <div v-if="isUseless">You cannot Charge Infinity Upgrades while Doomed.</div>
+    <br />
     Within each column, the upgrades must be purchased from top to bottom.
-    <br>
+    <br />
     <div class="l-infinity-upgrade-grid l-infinity-upgrades-tab__grid">
-      <div
-        v-for="(column, columnId) in grid"
-        :key="columnId"
-        class="c-infinity-upgrade-grid__column"
-      >
+      <div v-for="(column, columnId) in grid" :key="columnId" class="c-infinity-upgrade-grid__column">
         <InfinityUpgradeButton
           v-for="upgrade in column"
           :key="upgrade.id"
           :upgrade="upgrade"
           :class="btnClassObject(columnId)"
         />
-        <div
-          class="c-infinity-upgrade-grid__column--background"
-          :style="styleOfColumnBg[columnId]"
-        />
+        <div class="c-infinity-upgrade-grid__column--background" :style="styleOfColumnBg[columnId]" />
       </div>
     </div>
-    <div
-      v-if="bottomRowUnlocked"
-      class="l-infinity-upgrades-bottom-row"
-    >
+    <div v-if="bottomRowUnlocked" class="l-infinity-upgrades-bottom-row">
       <IpMultiplierButton class="l-infinity-upgrades-tab__mult-btn" />
-      <InfinityUpgradeButton
-        :upgrade="offlineIpUpgrade"
-        :class="btnClassObject(1)"
-      />
+      <InfinityUpgradeButton :upgrade="offlineIpUpgrade" :class="btnClassObject(1)" />
     </div>
     <div v-if="eternityUnlocked && bottomRowUnlocked">
       The Infinity Point multiplier becomes more expensive
-      <br>
+      <br />
       above {{ formatPostBreak(ipMultSoftCap) }} Infinity Points, and cannot be purchased past
       {{ formatPostBreak(ipMultHardCap) }} Infinity Points.
     </div>

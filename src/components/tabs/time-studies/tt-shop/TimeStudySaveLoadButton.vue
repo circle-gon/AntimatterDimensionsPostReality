@@ -9,14 +9,14 @@ export default {
   props: {
     saveslot: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       name: "",
       displayName: "",
-      canEternity: false
+      canEternity: false,
     };
   },
   computed: {
@@ -34,7 +34,7 @@ export default {
       const newName = event.target.value.slice(0, 4).trim();
       if (!this.isASCII(newName)) return;
 
-      const existingNames = player.timestudy.presets.map(p => p.name);
+      const existingNames = player.timestudy.presets.map((p) => p.name);
       if (existingNames.includes(newName)) return;
 
       this.preset.name = newName;
@@ -92,7 +92,7 @@ export default {
     },
     edit() {
       Modal.studyString.show({ id: this.saveslot - 1 });
-    }
+    },
   },
 };
 </script>
@@ -119,33 +119,13 @@ export default {
             :value="name"
             @keyup.esc="hideContextMenu"
             @blur="nicknameBlur"
-          >
+          />
         </span>
-        <div
-          class="l-tt-save-load-btn__menu-item c-tt-save-load-btn__menu-item"
-          @click="edit"
-        >
-          Edit
-        </div>
-        <div
-          class="l-tt-save-load-btn__menu-item c-tt-save-load-btn__menu-item"
-          @click="handleExport"
-        >
-          Export
-        </div>
-        <div
-          class="l-tt-save-load-btn__menu-item c-tt-save-load-btn__menu-item"
-          @click="save"
-        >
-          Save
-        </div>
+        <div class="l-tt-save-load-btn__menu-item c-tt-save-load-btn__menu-item" @click="edit">Edit</div>
+        <div class="l-tt-save-load-btn__menu-item c-tt-save-load-btn__menu-item" @click="handleExport">Export</div>
+        <div class="l-tt-save-load-btn__menu-item c-tt-save-load-btn__menu-item" @click="save">Save</div>
         <div class="l-tt-save-load-btn__menu-item">
-          <div
-            class="c-tt-save-load-btn__menu-item"
-            @click="load"
-          >
-            Load
-          </div>
+          <div class="c-tt-save-load-btn__menu-item" @click="load">Load</div>
           <div class="c-tt-save-load-btn__menu-item__hover-options">
             <div
               :class="{
@@ -158,12 +138,7 @@ export default {
             </div>
           </div>
         </div>
-        <div
-          class="l-tt-save-load-btn__menu-item c-tt-save-load-btn__menu-item"
-          @click="deletePreset"
-        >
-          Delete
-        </div>
+        <div class="l-tt-save-load-btn__menu-item c-tt-save-load-btn__menu-item" @click="deletePreset">Delete</div>
       </div>
     </template>
   </HoverMenu>

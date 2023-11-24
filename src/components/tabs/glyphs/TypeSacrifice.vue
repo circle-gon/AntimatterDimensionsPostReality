@@ -4,12 +4,12 @@ export default {
   props: {
     type: {
       type: String,
-      required: true
+      required: true,
     },
     hasDragover: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -27,7 +27,7 @@ export default {
       return GlyphSacrifice[this.type].config;
     },
     style() {
-      if (!this.isColored) return { };
+      if (!this.isColored) return {};
       const color = GlyphAppearanceHandler.getBorderColor(this.type);
       const animateReality = this.typeConfig.id === "reality" && !player.reality.glyphs.cosmetics.colorMap.reality;
       return {
@@ -52,9 +52,7 @@ export default {
     },
     currentSacrifice() {
       const viewModel = this.$viewModel.tabs.reality;
-      return viewModel.mouseoverGlyphInfo.type === ""
-        ? viewModel.draggingGlyphInfo
-        : viewModel.mouseoverGlyphInfo;
+      return viewModel.mouseoverGlyphInfo.type === "" ? viewModel.draggingGlyphInfo : viewModel.mouseoverGlyphInfo;
     },
     showNewSacrifice() {
       const matchType = this.currentSacrifice.type === this.type;
@@ -79,37 +77,28 @@ export default {
       this.amount.copyFrom(player.reality.glyphs.sac[this.type]);
       this.effectValue = GlyphSacrifice[this.type].effectValue;
       this.isColored = player.options.glyphTextColors;
-      this.willSacrifice = AutoGlyphProcessor.sacMode === AUTO_GLYPH_REJECT.SACRIFICE ||
-        (AutoGlyphProcessor.sacMode === AUTO_GLYPH_REJECT.REFINE_TO_CAP &&
-          this.currentSacrifice.refineValue === 0);
-    }
-  }
+      this.willSacrifice =
+        AutoGlyphProcessor.sacMode === AUTO_GLYPH_REJECT.SACRIFICE ||
+        (AutoGlyphProcessor.sacMode === AUTO_GLYPH_REJECT.REFINE_TO_CAP && this.currentSacrifice.refineValue === 0);
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="amount.gt(0)"
-    :style="style"
-  >
+  <div v-if="amount.gt(0)" :style="style">
     <div>
       <div class="l-sacrificed-glyphs__type-symbol c-sacrificed-glyphs__type-symbol">
         {{ symbol }}
       </div>
       <div class="l-sacrificed-glyphs__type-amount c-sacrificed-glyphs__type-amount">
         {{ formatAmount }}
-        <span
-          v-if="showNewSacrifice"
-          class="c-sacrificed-glyphs__type-new-amount"
-        >
+        <span v-if="showNewSacrifice" class="c-sacrificed-glyphs__type-new-amount">
           + {{ formatNewAmount }} ➜ {{ formatTotalAmount }}
         </span>
       </div>
     </div>
-    <span
-      v-if="showNewSacrifice"
-      class="c-sacrificed-glyphs__type-new-amount"
-    >
+    <span v-if="showNewSacrifice" class="c-sacrificed-glyphs__type-new-amount">
       {{ newDescription }}
     </span>
     <span v-else>

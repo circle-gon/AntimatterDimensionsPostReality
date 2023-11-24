@@ -6,7 +6,7 @@ export default {
   name: "TimeDilationTab",
   components: {
     DilationButton,
-    DilationUpgradeButton
+    DilationUpgradeButton,
   },
   data() {
     return {
@@ -26,24 +26,12 @@ export default {
   },
   computed: {
     rebuyables() {
-      return [
-        DilationUpgrade.dtGain,
-        DilationUpgrade.galaxyThreshold,
-        DilationUpgrade.tachyonGain
-      ];
+      return [DilationUpgrade.dtGain, DilationUpgrade.galaxyThreshold, DilationUpgrade.tachyonGain];
     },
     upgrades() {
       return [
-        [
-          DilationUpgrade.doubleGalaxies,
-          DilationUpgrade.tdMultReplicanti,
-          DilationUpgrade.ndMultDT
-        ],
-        [
-          DilationUpgrade.ipMultDT,
-          DilationUpgrade.timeStudySplit,
-          DilationUpgrade.dilationPenalty
-        ],
+        [DilationUpgrade.doubleGalaxies, DilationUpgrade.tdMultReplicanti, DilationUpgrade.ndMultDT],
+        [DilationUpgrade.ipMultDT, DilationUpgrade.timeStudySplit, DilationUpgrade.dilationPenalty],
       ];
     },
     // This might be negative due to rift drain, so we need to add "+" iff the value is positive. The actual
@@ -53,17 +41,10 @@ export default {
       return `${sign}${format(this.dilatedTimeIncome, 2, 1)}`;
     },
     pelleRebuyables() {
-      return [
-        DilationUpgrade.dtGainPelle,
-        DilationUpgrade.galaxyMultiplier,
-        DilationUpgrade.tickspeedPower
-      ];
+      return [DilationUpgrade.dtGainPelle, DilationUpgrade.galaxyMultiplier, DilationUpgrade.tickspeedPower];
     },
     pelleUpgrades() {
-      return [
-        DilationUpgrade.galaxyThresholdPelle,
-        DilationUpgrade.flatDilationMult
-      ];
+      return [DilationUpgrade.galaxyThresholdPelle, DilationUpgrade.flatDilationMult];
     },
     ttGenerator() {
       return DilationUpgrade.ttGenerator;
@@ -106,7 +87,8 @@ export default {
       this.galaxyThreshold.copyFrom(player.dilation.nextThreshold);
       this.baseGalaxies = player.dilation.baseTachyonGalaxies;
       this.totalGalaxies = player.dilation.totalTachyonGalaxies;
-      this.hasPelleDilationUpgrades = PelleRifts.paradox.milestones[0].canBeApplied || (AtomUpgrade(7).isBought && !Pelle.isDoomed);
+      this.hasPelleDilationUpgrades =
+        PelleRifts.paradox.milestones[0].canBeApplied || (AtomUpgrade(7).isBought && !Pelle.isDoomed);
       if (this.baseGalaxies < 500 && DilationUpgrade.doubleGalaxies.isBought) {
         this.tachyonGalaxyGain = DilationUpgrade.doubleGalaxies.effectValue;
       } else {
@@ -118,8 +100,8 @@ export default {
       const estimateText = getDilationTimeEstimate(this.maxDT);
       if (this.dilatedTimeIncome.lte(0)) this.toMaxTooltip = "No DT gain";
       else this.toMaxTooltip = estimateText.startsWith("<") ? "Currently Increasing" : estimateText;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -130,10 +112,7 @@ export default {
       <span class="c-dilation-tab__tachyons">{{ format(tachyons, 2, 1) }}</span>
       {{ pluralize("Tachyon Particle", tachyons) }}.
     </span>
-    <div
-      @mouseover="isHovering = true"
-      @mouseleave="isHovering = false"
-    >
+    <div @mouseover="isHovering = true" @mouseleave="isHovering = false">
       <DilationButton />
     </div>
     <span>
@@ -146,30 +125,20 @@ export default {
       Next
       <span v-if="tachyonGalaxyGain > 1">{{ formatInt(tachyonGalaxyGain) }}</span>
       {{ pluralize("Tachyon Galaxy", tachyonGalaxyGain) }} at
-      <span
-        class="c-dilation-tab__galaxy-threshold"
-        :ach-tooltip="galaxyTimeEstimate"
-      >{{ format(galaxyThreshold, 2, 1) }}</span>
+      <span class="c-dilation-tab__galaxy-threshold" :ach-tooltip="galaxyTimeEstimate">{{
+        format(galaxyThreshold, 2, 1)
+      }}</span>
       Dilated Time, gained total of
-      <span
-        class="c-dilation-tab__galaxies"
-        :ach-tooltip="baseGalaxyText"
-      >{{ formatInt(totalGalaxies) }}</span>
+      <span class="c-dilation-tab__galaxies" :ach-tooltip="baseGalaxyText">{{ formatInt(totalGalaxies) }}</span>
       {{ pluralize("Tachyon Galaxy", totalGalaxies) }}
     </span>
     <span v-if="hasMaxText">
       Your maximum Dilated Time reached this Reality is
-      <span
-        v-tooltip="toMaxTooltip"
-        class="max-accent"
-      >{{ format(maxDT, 2, 1) }}</span>.
+      <span v-tooltip="toMaxTooltip" class="max-accent">{{ format(maxDT, 2, 1) }}</span
+      >.
     </span>
     <div class="l-dilation-upgrades-grid">
-      <div
-        v-for="(upgradeRow, row) in allRebuyables"
-        :key="'rebuyable' + row"
-        class="l-dilation-upgrades-grid__row"
-      >
+      <div v-for="(upgradeRow, row) in allRebuyables" :key="'rebuyable' + row" class="l-dilation-upgrades-grid__row">
         <DilationUpgradeButton
           v-for="upgrade in upgradeRow"
           :key="upgrade.id"
@@ -179,11 +148,7 @@ export default {
           :show-tooltip="isHovering"
         />
       </div>
-      <div
-        v-for="(upgradeRow, row) in allSingleUpgrades"
-        :key="'single' + row"
-        class="l-dilation-upgrades-grid__row"
-      >
+      <div v-for="(upgradeRow, row) in allSingleUpgrades" :key="'single' + row" class="l-dilation-upgrades-grid__row">
         <DilationUpgradeButton
           v-for="upgrade in upgradeRow"
           :key="upgrade.id"

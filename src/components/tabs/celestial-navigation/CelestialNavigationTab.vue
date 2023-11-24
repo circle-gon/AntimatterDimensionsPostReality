@@ -14,7 +14,7 @@ export default {
     NodeRing,
     NodeBackground,
     NodeOverlay,
-    ProgressConnector
+    ProgressConnector,
   },
   data: () => ({
     nodeState: null,
@@ -23,7 +23,7 @@ export default {
     db() {
       return {
         ...GameDatabase.celestials.navigation,
-        ...GameDatabase.celestials.navSigils
+        ...GameDatabase.celestials.navSigils,
       };
     },
     drawOrder() {
@@ -71,11 +71,11 @@ export default {
         order.sort((a, b) => a.drawOrder - b.drawOrder);
       }
       return order;
-    }
+    },
   },
   created() {
     this.nodeState = Object.keys(this.db).mapToObject(
-      name => name,
+      (name) => name,
       () => ({
         visible: false,
         complete: 0,
@@ -84,17 +84,17 @@ export default {
   },
   mounted() {
     // eslint-disable-next-line no-unused-vars
-    const panLimiter = function(oldPan, newPan) {
+    const panLimiter = function (oldPan, newPan) {
       // In the callback context, "this" is the svgPanZoom object.
       // eslint-disable-next-line no-invalid-this
       const sizes = this.getSizes();
-      const leftLimit = sizes.width - ((sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom);
+      const leftLimit = sizes.width - (sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom;
       const rightLimit = -sizes.viewBox.x * sizes.realZoom;
-      const topLimit = sizes.height - ((sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom);
+      const topLimit = sizes.height - (sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom;
       const bottomLimit = -sizes.viewBox.y * sizes.realZoom;
       return {
         x: Math.max(leftLimit, Math.min(rightLimit, newPan.x)),
-        y: Math.max(topLimit, Math.min(bottomLimit, newPan.y))
+        y: Math.max(topLimit, Math.min(bottomLimit, newPan.y)),
       };
     };
     this.panZoom = svgPanZoom(this.$refs.celestialNavigationSVG, {
@@ -134,11 +134,11 @@ export default {
     nodeVisibility(obj) {
       return this.nodeState[obj.nodeId].visible ? "visible" : "hidden";
     },
-  }
+  },
 };
 export function cubicBezierArrayToPath(a, initialCommand = "M") {
   const prefix = `${initialCommand} ${a[0].p0.x} ${a[0].p0.y}\n`;
-  const parts = a.map(b => `C ${b.p1.x} ${b.p1.y} ${b.p2.x} ${b.p2.y} ${b.p3.x} ${b.p3.y}\n`);
+  const parts = a.map((b) => `C ${b.p1.x} ${b.p1.y} ${b.p2.x} ${b.p2.y} ${b.p3.x} ${b.p3.y}\n`);
   return prefix + parts.join("");
 }
 const CelestialNavigationViewportCache = {
@@ -150,264 +150,80 @@ const CelestialNavigationViewportCache = {
 <template>
   <!-- Need to wrap whole thing in a div because of properties applied to tabs -->
   <div>
-    <svg
-      ref="celestialNavigationSVG"
-      class="c-wide-canvas-element l-celestial-navigation"
-    >
+    <svg ref="celestialNavigationSVG" class="c-wide-canvas-element l-celestial-navigation">
       <defs>
-        <linearGradient
-          id="grad1"
-          x1="0%"
-          y1="0%"
-          x2="100%"
-          y2="0%"
-        >
-          <stop
-            offset="0%"
-            stop-color="#ffff00"
-            stop-opacity="1"
-          />
-          <stop
-            offset="100%"
-            stop-color="#ff0000"
-            stop-opacity="1"
-          />
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ffff00" stop-opacity="1" />
+          <stop offset="100%" stop-color="#ff0000" stop-opacity="1" />
         </linearGradient>
-        <linearGradient
-          id="incompleteFade"
-          x1="0"
-          x2="8"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop
-            offset="0"
-            stop-color="#888"
-            stop-opacity="0"
-          />
-          <stop
-            offset="8"
-            stop-color="#888"
-            stop-opacity="1"
-          />
+        <linearGradient id="incompleteFade" x1="0" x2="8" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#888" stop-opacity="0" />
+          <stop offset="8" stop-color="#888" stop-opacity="1" />
         </linearGradient>
-        <linearGradient
-          id="fadeGrad"
-          y2="0"
-          x2="1"
-        >
-          <stop
-            offset="0.5"
-            stop-color="white"
-            stop-opacity="0"
-          />
-          <stop
-            offset="1"
-            stop-color="white"
-            stop-opacity=".5"
-          />
+        <linearGradient id="fadeGrad" y2="0" x2="1">
+          <stop offset="0.5" stop-color="white" stop-opacity="0" />
+          <stop offset="1" stop-color="white" stop-opacity=".5" />
         </linearGradient>
-        <linearGradient
-          id="gradTeresaEffarig"
-          y2="0"
-          x2="1"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop
-            offset="0"
-            stop-color="#5151ec"
-          />
-          <stop
-            offset="1"
-            stop-color="#d13737"
-          />
+        <linearGradient id="gradTeresaEffarig" y2="0" x2="1" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#5151ec" />
+          <stop offset="1" stop-color="#d13737" />
         </linearGradient>
-        <linearGradient
-          id="gradEffarigEnslaved"
-          y2="0"
-          x2="1"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop
-            offset="0"
-            stop-color="#d13737"
-          />
-          <stop
-            offset="1"
-            stop-color="#ffa337"
-          />
+        <linearGradient id="gradEffarigEnslaved" y2="0" x2="1" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#d13737" />
+          <stop offset="1" stop-color="#ffa337" />
         </linearGradient>
-        <linearGradient
-          id="gradEnslavedV"
-          y2="0"
-          x2="1"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop
-            offset="0"
-            stop-color="#ffa337"
-          />
-          <stop
-            offset="1"
-            stop-color="#ffe066"
-          />
+        <linearGradient id="gradEnslavedV" y2="0" x2="1" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#ffa337" />
+          <stop offset="1" stop-color="#ffe066" />
         </linearGradient>
-        <linearGradient
-          id="gradRaTeresa"
-          y2="0"
-          x2="1"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop
-            offset="0"
-            stop-color="#9063de"
-          />
-          <stop
-            offset="1"
-            stop-color="#5151ec"
-          />
+        <linearGradient id="gradRaTeresa" y2="0" x2="1" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#9063de" />
+          <stop offset="1" stop-color="#5151ec" />
         </linearGradient>
-        <linearGradient
-          id="gradRaEffarig"
-          y2="0"
-          x2="1"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop
-            offset="0"
-            stop-color="#9063de"
-          />
-          <stop
-            offset="1"
-            stop-color="#d13737"
-          />
+        <linearGradient id="gradRaEffarig" y2="0" x2="1" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#9063de" />
+          <stop offset="1" stop-color="#d13737" />
         </linearGradient>
-        <linearGradient
-          id="gradRaEnslaved"
-          y2="0"
-          x2="1"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop
-            offset="0"
-            stop-color="#9063de"
-          />
-          <stop
-            offset="1"
-            stop-color="#ffa337"
-          />
+        <linearGradient id="gradRaEnslaved" y2="0" x2="1" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#9063de" />
+          <stop offset="1" stop-color="#ffa337" />
         </linearGradient>
-        <linearGradient
-          id="gradRaV"
-          y2="0"
-          x2="1"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop
-            offset="0"
-            stop-color="#9063de"
-          />
-          <stop
-            offset="1"
-            stop-color="#ffe066"
-          />
+        <linearGradient id="gradRaV" y2="0" x2="1" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#9063de" />
+          <stop offset="1" stop-color="#ffe066" />
         </linearGradient>
-        <linearGradient
-          id="gradRaLaitela"
-          y2="0"
-          x2="1"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop
-            offset="0"
-            stop-color="#9063de"
-          />
-          <stop
-            offset="1"
-            stop-color="white"
-          />
+        <linearGradient id="gradRaLaitela" y2="0" x2="1" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#9063de" />
+          <stop offset="1" stop-color="white" />
         </linearGradient>
-        <linearGradient
-          id="gradLaitelaPelle"
-          y2="0"
-          x2="1"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop
-            offset="0"
-            stop-color="white"
-          />
-          <stop
-            offset="1"
-            stop-color="crimson"
-          />
+        <linearGradient id="gradLaitelaPelle" y2="0" x2="1" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="white" />
+          <stop offset="1" stop-color="crimson" />
         </linearGradient>
-        <mask
-          id="fade"
-          maskContentUnits="objectBoundingBox"
-        >
-          <rect
-            width="1"
-            height="1"
-            fill="url(#fadeGrad)"
-          />
+        <mask id="fade" maskContentUnits="objectBoundingBox">
+          <rect width="1" height="1" fill="url(#fadeGrad)" />
         </mask>
-        <filter
-          id="completeGlow"
-          x="-100%"
-          y="-100%"
-          width="300%"
-          height="300%"
-        >
-          <feGaussianBlur
-            in="SourceGraphic"
-            result="blurred"
-            stdDeviation="2"
-          />
+        <filter id="completeGlow" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur in="SourceGraphic" result="blurred" stdDeviation="2" />
           <feMerge>
             <feMergeNode in="blurred" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
-        <filter
-          id="backgroundGlow"
-          x="-100%"
-          y="-100%"
-          width="300%"
-          height="300%"
-        >
-          <feGaussianBlur
-            in="SourceGraphic"
-            result="blurred"
-            stdDeviation="4"
-          />
+        <filter id="backgroundGlow" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur in="SourceGraphic" result="blurred" stdDeviation="4" />
           <feMerge>
             <feMergeNode in="blurred" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
       </defs>
-      <image
-        x="-250"
-        y="-350"
-        height="1503"
-        width="1503"
-        href="/images/celestial-navigation-bg.webp"
-      />
-      <g
-        v-for="(obj, index) in drawOrder"
-        :key="index"
-        :visibility="nodeVisibility(obj)"
-      >
-        <component
-          :is="obj.is"
-          :complete="nodeState[obj.nodeId].complete"
-          v-bind="obj.config"
-        />
+      <image x="-250" y="-350" height="1503" width="1503" href="/images/celestial-navigation-bg.webp" />
+      <g v-for="(obj, index) in drawOrder" :key="index" :visibility="nodeVisibility(obj)">
+        <component :is="obj.is" :complete="nodeState[obj.nodeId].complete" v-bind="obj.config" />
       </g>
     </svg>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

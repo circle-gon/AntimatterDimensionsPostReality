@@ -36,17 +36,25 @@ export default {
       if (!this.aliasString) return null;
 
       const isValidName = this.aliasString.match(/^[a-zA-Z_][a-zA-Z_0-9]*$/u);
-      const alreadyExists = Object.keys(player.reality.automator.constants).includes(this.aliasString) &&
+      const alreadyExists =
+        Object.keys(player.reality.automator.constants).includes(this.aliasString) &&
         this.aliasString !== this.oldAlias;
       // Use toLowerCase() in order to check against key words in a case-insensitive manner; all the stored regex
       // patterns in forbiddenConstantPatterns which get meaningfully checked against are a mixture of lowercase
       // letters and regex metacharacters
-      const hasCommandConflict = forbiddenConstantPatterns.some(p => {
+      const hasCommandConflict = forbiddenConstantPatterns.some((p) => {
         const matchObj = this.aliasString.toLowerCase().match(p);
         return matchObj ? matchObj[0] === this.aliasString.toLowerCase() : false;
       });
-      const shadowsPrototype = ["constructor", "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable",
-        "toLocaleString", "toString", "toValueOf"].some(p => this.aliasString.match(p));
+      const shadowsPrototype = [
+        "constructor",
+        "hasOwnProperty",
+        "isPrototypeOf",
+        "propertyIsEnumerable",
+        "toLocaleString",
+        "toString",
+        "toValueOf",
+      ].some((p) => this.aliasString.match(p));
 
       if (!isValidName) return "Constant name must be alphanumeric without spaces and cannot start with a number";
       if (alreadyExists) return "You have already defined a constant with this name";
@@ -66,14 +74,13 @@ export default {
       const error = this.currentError();
       if (!error) return undefined;
       return {
-        content:
-          `<div class="c-block-automator-error">
+        content: `<div class="c-block-automator-error">
           <div>${error}</div>
         </div>`,
         html: true,
         trigger: "manual",
         show: true,
-        classes: ["general-tooltip"]
+        classes: ["general-tooltip"],
       };
     },
     handleFocus(focus) {
@@ -94,8 +101,8 @@ export default {
       this.oldAlias = "";
       this.aliasString = "";
       this.valueString = "";
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -104,29 +111,23 @@ export default {
     <input
       v-model="aliasString"
       class="c-define-textbox c-alias"
-      :class="{ 'l-limit-textbox' : aliasString.length === maxNameLength }"
+      :class="{ 'l-limit-textbox': aliasString.length === maxNameLength }"
       placeholder="New constant..."
       :maxlength="maxNameLength"
       @focusin="handleFocus(true)"
       @focusout="handleFocus(false)"
-    >
-    <span
-      v-if="aliasString"
-      v-tooltip="errorTooltip()"
-      class="o-arrow-padding"
-    >
-      🠈
-    </span>
+    />
+    <span v-if="aliasString" v-tooltip="errorTooltip()" class="o-arrow-padding"> 🠈 </span>
     <input
       v-if="aliasString"
       v-model="valueString"
       class="c-define-textbox c-value"
-      :class="{ 'l-limit-textbox' : valueString && valueString.length === maxValueLength }"
+      :class="{ 'l-limit-textbox': valueString && valueString.length === maxValueLength }"
       placeholder="Value for constant..."
       :maxlength="maxValueLength"
       @focusin="handleFocus(true)"
       @focusout="handleFocus(false)"
-    >
+    />
     <button
       v-if="aliasString"
       v-tooltip="'Delete this constant'"

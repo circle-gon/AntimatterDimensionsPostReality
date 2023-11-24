@@ -10,13 +10,13 @@ export default {
   components: {
     EternityChallengeBoxWrapper,
     DescriptionDisplay,
-    EffectDisplay
+    EffectDisplay,
   },
   props: {
     challenge: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -64,7 +64,7 @@ export default {
     },
     name() {
       return `EC${this.challenge.id}`;
-    }
+    },
   },
   methods: {
     update() {
@@ -76,9 +76,10 @@ export default {
       this.showGoalSpan = PlayerProgress.realityUnlocked();
       this.canBeUnlocked = TimeStudy.eternityChallenge(challenge.id).canBeBought;
 
-      this.lastGoal = (Enslaved.isRunning && this.challenge.id === 1)
-        ? wordShift.wordCycle(this.config.scrambleText.map(x => format(x)))
-        : this.goalAtCompletions(this.challenge.maxCompletions - 1);
+      this.lastGoal =
+        Enslaved.isRunning && this.challenge.id === 1
+          ? wordShift.wordCycle(this.config.scrambleText.map((x) => format(x)))
+          : this.goalAtCompletions(this.challenge.maxCompletions - 1);
     },
     start() {
       if (this.canBeUnlocked) {
@@ -87,8 +88,8 @@ export default {
     },
     goalAtCompletions(completions) {
       return format(this.challenge.goalAtCompletions(completions), 2, 1);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -107,39 +108,21 @@ export default {
     </template>
     <template #bottom>
       <div :style="{ visiblity: completions < 5 ? 'visible' : 'hidden' }">
-        <div>
-          Completed {{ quantifyInt("time", completions) }}
-        </div>
+        <div>Completed {{ quantifyInt("time", completions) }}</div>
         {{ goalDisplay }}
       </div>
-      <span v-if="showGoalSpan">
-        Goal Span: {{ firstGoal }} IP - {{ lastGoal }} IP
-      </span>
+      <span v-if="showGoalSpan"> Goal Span: {{ firstGoal }} IP - {{ lastGoal }} IP </span>
       <span>
         Reward:
-        <DescriptionDisplay
-          :config="config.reward"
-          :length="55"
-          name="c-challenge-box__reward-description"
-        />
+        <DescriptionDisplay :config="config.reward" :length="55" name="c-challenge-box__reward-description" />
       </span>
       <span>
-        <EffectDisplay
-          v-if="completions > 0"
-          :config="currentRewardConfig"
-        />
+        <EffectDisplay v-if="completions > 0" :config="currentRewardConfig" />
         <span v-if="completions > 0 && completions < 5">|</span>
-        <EffectDisplay
-          v-if="completions < 5"
-          :config="nextRewardConfig"
-          label="Next"
-          :ignore-capped="true"
-        />
+        <EffectDisplay v-if="completions < 5" :config="nextRewardConfig" label="Next" :ignore-capped="true" />
       </span>
     </template>
   </EternityChallengeBoxWrapper>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

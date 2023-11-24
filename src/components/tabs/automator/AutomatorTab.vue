@@ -11,7 +11,7 @@ export default {
     SplitPane,
     AutomatorEditor,
     AutomatorPointsList,
-    AutomatorDocs
+    AutomatorDocs,
   },
   data() {
     return {
@@ -55,16 +55,13 @@ export default {
       this.currentChars = AutomatorData.singleScriptCharacters();
       this.totalChars = AutomatorData.totalScriptCharacters();
       this.withinLimit = AutomatorData.isWithinLimit();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    :class="tabClass"
-    class="c-automator-tab l-automator-tab"
-  >
+  <div :class="tabClass" class="c-automator-tab l-automator-tab">
     <div v-if="automatorUnlocked">
       <div>
         {{ intervalText }}
@@ -76,19 +73,12 @@ export default {
       <span :class="{ 'c-overlimit': totalChars > maxTotalChars }">
         Across all scripts: {{ formatInt(totalChars) }} / {{ formatInt(maxTotalChars) }}
       </span>
-      <br>
-      <span
-        v-if="!withinLimit"
-        class="c-overlimit"
-      >
+      <br />
+      <span v-if="!withinLimit" class="c-overlimit">
         (Your changes will not be saved due to being over a character limit!)
       </span>
       <div class="c-automator-split-pane">
-        <SplitPane
-          :min-percent="44"
-          :default-percent="50"
-          split="vertical"
-        >
+        <SplitPane :min-percent="44" :default-percent="50" split="vertical">
           <template #paneL>
             <AutomatorEditor />
           </template>

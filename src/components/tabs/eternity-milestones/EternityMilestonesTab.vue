@@ -4,7 +4,7 @@ import EternityMilestoneButton from "./EternityMilestoneButton";
 export default {
   name: "EternityMilestonesTab",
   components: {
-    EternityMilestoneButton
+    EternityMilestoneButton,
   },
   data() {
     return {
@@ -15,11 +15,11 @@ export default {
     milestones() {
       return Object.values(GameDatabase.eternity.milestones)
         .sort((a, b) => a.eternities - b.eternities)
-        .map(config => new EternityMilestoneState(config));
+        .map((config) => new EternityMilestoneState(config));
     },
     rows() {
       return Math.ceil(this.milestones.length / 3);
-    }
+    },
   },
   methods: {
     update() {
@@ -27,8 +27,8 @@ export default {
     },
     getMilestone(row, column) {
       return () => this.milestones[(row - 1) * 3 + column - 1];
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -38,11 +38,7 @@ export default {
     <div>
       Offline generation milestones are only active under certain conditions, mouse-over to see these conditions.
     </div>
-    <div
-      v-for="row in rows"
-      :key="row"
-      class="l-eternity-milestone-grid__row"
-    >
+    <div v-for="row in rows" :key="row" class="l-eternity-milestone-grid__row">
       <EternityMilestoneButton
         v-for="column in 3"
         :key="row * 3 + column"
@@ -53,6 +49,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

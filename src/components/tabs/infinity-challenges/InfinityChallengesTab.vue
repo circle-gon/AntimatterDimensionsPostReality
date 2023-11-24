@@ -8,12 +8,12 @@ export default {
   components: {
     ChallengeGrid,
     ChallengeTabHeader,
-    InfinityChallengeBox
+    InfinityChallengeBox,
   },
   data() {
     return {
       nextIC: 0,
-      showAllChallenges: false
+      showAllChallenges: false,
     };
   },
   computed: {
@@ -28,7 +28,7 @@ export default {
       return next === undefined
         ? "All Infinity Challenges unlocked"
         : `Next Infinity Challenge unlocks at ${format(next)} antimatter.`;
-    }
+    },
   },
   methods: {
     update() {
@@ -37,8 +37,8 @@ export default {
     },
     isChallengeVisible(challenge) {
       return challenge.isUnlocked || (this.showAllChallenges && PlayerProgress.eternityUnlocked());
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -46,20 +46,14 @@ export default {
   <div class="l-challenges-tab">
     <ChallengeTabHeader />
     <div>
-      An active Big Crunch Autobuyer will Crunch immediately when
-      reaching an Infinity Challenge's antimatter goal, regardless of settings.
+      An active Big Crunch Autobuyer will Crunch immediately when reaching an Infinity Challenge's antimatter goal,
+      regardless of settings.
     </div>
     <div>{{ nextAtDisplay }}</div>
-    <ChallengeGrid
-      v-slot="{ challenge }"
-      :challenges="challenges"
-      :is-challenge-visible="isChallengeVisible"
-    >
+    <ChallengeGrid v-slot="{ challenge }" :challenges="challenges" :is-challenge-visible="isChallengeVisible">
       <InfinityChallengeBox :challenge="challenge" />
     </ChallengeGrid>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

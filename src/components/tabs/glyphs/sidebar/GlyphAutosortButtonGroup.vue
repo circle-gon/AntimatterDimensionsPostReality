@@ -6,7 +6,7 @@ export default {
   name: "GlyphAutosortButtonGroup",
   components: {
     ToggleButton,
-    ButtonCycle
+    ButtonCycle,
   },
   data() {
     return {
@@ -30,7 +30,7 @@ export default {
     },
     keepTooltip() {
       return "If set to ON, Glyphs which your filter accepts will never be auto-purged even if they are worse";
-    }
+    },
   },
   watch: {
     autoSort(newValue) {
@@ -55,32 +55,18 @@ export default {
       this.autoAutoClean = player.reality.autoAutoClean;
       this.applyFilterToPurge = player.reality.applyFilterToPurge;
     },
-  }
+  },
 };
 </script>
 
 <template>
   <div class="o-glyph-inventory-management-group">
     <div class="l-glyph-sacrifice-options__header">
-      <div
-        v-tooltip="questionMarkTooltip"
-        class="o-questionmark"
-      >
-        ?
-      </div>
+      <div v-tooltip="questionMarkTooltip" class="o-questionmark">?</div>
       Auto Glyph Arrangement:
     </div>
-    <ButtonCycle
-      v-model="autoSort"
-      class="c-glyph-inventory-option"
-      text="Auto-sort Mode:"
-      :labels="sortModes"
-    />
-    <ToggleButton
-      v-model="autoCollapse"
-      class="c-glyph-inventory-option"
-      label="Auto-collapse space:"
-    />
+    <ButtonCycle v-model="autoSort" class="c-glyph-inventory-option" text="Auto-sort Mode:" :labels="sortModes" />
+    <ToggleButton v-model="autoCollapse" class="c-glyph-inventory-option" label="Auto-collapse space:" />
     <ToggleButton
       v-if="showAutoAutoClean"
       v-model="autoAutoClean"
@@ -98,6 +84,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

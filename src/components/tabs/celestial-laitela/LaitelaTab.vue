@@ -18,7 +18,7 @@ export default {
     AnnihilationButton,
     LaitelaAutobuyerPane,
     CelestialQuoteHistory,
-    PrimaryButton
+    PrimaryButton,
   },
   data() {
     return {
@@ -34,7 +34,7 @@ export default {
       singularitiesUnlocked: false,
       singularityCap: new Decimal(0),
       singularityWaitTime: 0,
-      showAnnihilation: false
+      showAnnihilation: false,
     };
   },
   computed: {
@@ -52,15 +52,17 @@ export default {
       this.maxDarkMatter.copyFrom(Currency.darkMatter.max);
       this.darkEnergy.copyFrom(player.celestials.laitela.darkEnergy);
       this.matterExtraPurchasePercentage = Laitela.matterExtraPurchaseFactor - 1;
-      this.autobuyersUnlocked = SingularityMilestone.darkDimensionAutobuyers.canBeApplied ||
+      this.autobuyersUnlocked =
+        SingularityMilestone.darkDimensionAutobuyers.canBeApplied ||
         SingularityMilestone.darkDimensionAutobuyers.canBeApplied ||
         SingularityMilestone.autoCondense.canBeApplied ||
         Laitela.darkMatterMult.gt(1);
       this.singularityPanelVisible = Currency.singularities.gt(0);
       this.singularitiesUnlocked = Singularity.capIsReached || this.singularityPanelVisible;
       this.singularityCap = Singularity.cap;
-      this.singularityWaitTime = TimeSpan.fromSeconds(this.singularityCap.sub(this.darkEnergy).div(
-        Currency.darkEnergy.productionPerSecond).toNumber()).toStringShort();
+      this.singularityWaitTime = TimeSpan.fromSeconds(
+        this.singularityCap.sub(this.darkEnergy).div(Currency.darkEnergy.productionPerSecond).toNumber()
+      ).toStringShort();
       this.showAnnihilation = Laitela.annihilationUnlocked;
 
       const d1 = DarkMatterDimension(1);
@@ -70,10 +72,10 @@ export default {
       Laitela.maxAllDMDimensions(4);
     },
     showLaitelaHowTo() {
-      ui.view.h2pForcedTab = GameDatabase.h2p.tabs.filter(tab => tab.name === "Lai'tela")[0];
+      ui.view.h2pForcedTab = GameDatabase.h2p.tabs.filter((tab) => tab.name === "Lai'tela")[0];
       Modal.h2p.show();
     },
-  }
+  },
 };
 </script>
 
@@ -81,16 +83,10 @@ export default {
   <div class="l-laitela-celestial-tab">
     <CelestialQuoteHistory celestial="laitela" />
     <div class="c-subtab-option-container">
-      <PrimaryButton
-        class="o-primary-btn--subtab-option"
-        @click="showLaitelaHowTo()"
-      >
+      <PrimaryButton class="o-primary-btn--subtab-option" @click="showLaitelaHowTo()">
         Click for Lai'tela info
       </PrimaryButton>
-      <PrimaryButton
-        class="o-primary-btn--subtab-option"
-        @click="maxAll"
-      >
+      <PrimaryButton class="o-primary-btn--subtab-option" @click="maxAll">
         Max all Dark Matter Dimensions
       </PrimaryButton>
     </div>
@@ -102,18 +98,17 @@ export default {
     </div>
     <div class="o-laitela-matter-amount">
       Your maximum Dark Matter ever is
-      <span :style="styleObject">{{ format(maxDarkMatter, 2) }}</span><span v-if="!isDoomed">,
-        giving {{ formatPercents(matterExtraPurchasePercentage, 2) }} more purchases from Continuum</span>.
+      <span :style="styleObject">{{ format(maxDarkMatter, 2) }}</span
+      ><span v-if="!isDoomed"
+        >, giving {{ formatPercents(matterExtraPurchasePercentage, 2) }} more purchases from Continuum</span
+      >.
     </div>
-    <div class="o-laitela-matter-amount">
-      Dark Matter Dimensions are unaffected by storing real time.
-    </div>
-    <h2
-      v-if="!singularitiesUnlocked"
-      class="c-laitela-singularity-container"
-    >
-      Unlock Singularities in {{ singularityWaitTime }}.
-      ({{ format(darkEnergy, 2, 2) }}/{{ format(singularityCap, 2) }} Dark Energy)
+    <div class="o-laitela-matter-amount">Dark Matter Dimensions are unaffected by storing real time.</div>
+    <h2 v-if="!singularitiesUnlocked" class="c-laitela-singularity-container">
+      Unlock Singularities in {{ singularityWaitTime }}. ({{ format(darkEnergy, 2, 2) }}/{{
+        format(singularityCap, 2)
+      }}
+      Dark Energy)
     </h2>
     <SingularityPane v-if="singularitiesUnlocked" />
     <LaitelaAutobuyerPane v-if="autobuyersUnlocked" />

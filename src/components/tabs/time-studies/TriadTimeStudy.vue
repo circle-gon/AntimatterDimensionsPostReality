@@ -10,13 +10,13 @@ export default {
     DescriptionDisplay,
     EffectDisplay,
     HintText,
-    TimeStudyButton
+    TimeStudyButton,
   },
   props: {
     setup: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     study() {
@@ -28,30 +28,16 @@ export default {
     config() {
       return this.study.config;
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <TimeStudyButton
-    :setup="setup"
-    class="o-time-study--triad"
-    :show-st-cost="true"
-  >
-    <HintText
-      type="studies"
-      class="l-hint-text--time-study"
-    >
-      {{ id }} Triad
-    </HintText>
+  <TimeStudyButton :setup="setup" class="o-time-study--triad" :show-st-cost="true">
+    <HintText type="studies" class="l-hint-text--time-study"> {{ id }} Triad </HintText>
     <DescriptionDisplay :config="study.config" />
-    <EffectDisplay
-      br
-      :config="study.config"
-    />
+    <EffectDisplay br :config="study.config" />
   </TimeStudyButton>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

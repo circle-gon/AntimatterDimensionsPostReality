@@ -4,32 +4,32 @@ import HintText from "@/components/HintText";
 export default {
   name: "EternityChallengeBoxWrapper",
   components: {
-    HintText
+    HintText,
   },
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     isUnlocked: {
       type: Boolean,
-      required: true
+      required: true,
     },
     isRunning: {
       type: Boolean,
-      required: true
+      required: true,
     },
     isCompleted: {
       type: Boolean,
-      required: true
+      required: true,
     },
     canBeUnlocked: {
       type: Boolean,
-      required: true
+      required: true,
     },
     completionCount: {
       type: Number,
-      required: true
+      required: true,
     },
     overrideLabel: {
       type: String,
@@ -85,27 +85,21 @@ export default {
       if (this.isUnlocked) return "Start";
       if (this.canBeUnlocked) return "Unlock";
       return "Locked";
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="c-challenge-box l-challenge-box c-challenge-box--eternity">
-    <HintText
-      type="challenges"
-      class="l-hint-text--challenge"
-    >
+    <HintText type="challenges" class="l-hint-text--challenge">
       {{ name }}
     </HintText>
     <slot name="top" />
     <div class="l-challenge-box__fill" />
     <div>
       <div :style="completionOverlay" />
-      <button
-        :class="buttonClassObject"
-        @click="$emit('start')"
-      >
+      <button :class="buttonClassObject" @click="$emit('start')">
         {{ buttonText }}
       </button>
     </div>
@@ -113,6 +107,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

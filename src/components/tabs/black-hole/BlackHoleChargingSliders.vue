@@ -6,7 +6,7 @@ import SliderComponent from "@/components/SliderComponent";
 export default {
   name: "BlackHoleChargingSliders",
   components: {
-    SliderComponent
+    SliderComponent,
   },
   data() {
     return {
@@ -28,7 +28,7 @@ export default {
     reqLockText() {
       return `Inversion strength cannot be modified due to Lock for
         "${ImaginaryUpgrade(24).name}"`;
-    }
+    },
   },
   methods: {
     update() {
@@ -54,27 +54,22 @@ export default {
         max: negative ? this.maxNegativeBlackHole : 990,
         interval: 1,
         width: "55rem",
-        tooltip: false
+        tooltip: false,
       };
     },
-  }
+  },
 };
 </script>
 
 <template>
   <div>
-    <div
-      v-if="isNegativeBHUnlocked"
-      class="l-black-hole-sliders"
-    >
+    <div v-if="isNegativeBHUnlocked" class="l-black-hole-sliders">
       <b>
-        Inverted Black Hole divides game speed by {{ format(negativeBHDivisor, 2, 2) }}.
-        (Currently {{ isInverted ? "active" : "inactive" }}<span
-          v-if="negativeSlider !== 0 && !isInverted"
-          :ach-tooltip="infoTooltip"
-        >
-          <i class="fas fa-question-circle l-margin-left" />
-        </span>)
+        Inverted Black Hole divides game speed by {{ format(negativeBHDivisor, 2, 2) }}. (Currently
+        {{ isInverted ? "active" : "inactive"
+        }}<span v-if="negativeSlider !== 0 && !isInverted" :ach-tooltip="infoTooltip">
+          <i class="fas fa-question-circle l-margin-left" /> </span
+        >)
       </b>
       <SliderComponent
         v-if="!isDisabled"
@@ -82,15 +77,12 @@ export default {
         :value="negativeSlider"
         @input="adjustSliderNegative($event)"
       />
-      <div
-        v-else
-        class="l-lock-text"
-      >
+      <div v-else class="l-lock-text">
         {{ reqLockText }}
       </div>
-      <br>
-      Inverting the Black Hole only affects its own speedup, no other upgrades or effects, although
-      it will also indirectly affect the Effarig Game speed power effect.
+      <br />
+      Inverting the Black Hole only affects its own speedup, no other upgrades or effects, although it will also
+      indirectly affect the Effarig Game speed power effect.
     </div>
   </div>
 </template>

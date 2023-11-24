@@ -23,19 +23,21 @@ export default {
     buttonClassObject() {
       return {
         "o-infinity-button--unavailable": !this.canCrunch,
-        "o-pelle-disabled-pointer": this.creditsClosed
+        "o-pelle-disabled-pointer": this.creditsClosed,
       };
     },
     // Show IP/min below this threshold, color the IP number above it
     rateThreshold: () => 5e11,
     amountStyle() {
-      if (!this.headerTextColored || this.currentIP.lt(this.rateThreshold)) return {
-        "transition-duration": "0s"
-      };
-      if (this.hover) return {
-        color: "black",
-        "transition-duration": "0.2s"
-      };
+      if (!this.headerTextColored || this.currentIP.lt(this.rateThreshold))
+        return {
+          "transition-duration": "0s",
+        };
+      if (this.hover)
+        return {
+          color: "black",
+          "transition-duration": "0.2s",
+        };
 
       // Dynamically generate red-text-green based on the CSS entry for text color, returning a raw 6-digit hex color
       // code. stepRGB is an array specifying the three RGB codes, which are then interpolated between in order to
@@ -46,12 +48,12 @@ export default {
         [
           parseInt(textHexCode.substring(0, 2), 16),
           parseInt(textHexCode.substring(2, 4), 16),
-          parseInt(textHexCode.substring(4), 16)
+          parseInt(textHexCode.substring(4), 16),
         ],
-        [0, 255, 0]
+        [0, 255, 0],
       ];
       const ratio = this.gainedIP.log10() / this.currentIP.log10();
-      const interFn = index => {
+      const interFn = (index) => {
         if (ratio < 0.9) return stepRGB[0][index];
         if (ratio < 1) {
           const r = 10 * (ratio - 0.9);
@@ -66,7 +68,7 @@ export default {
       const rgb = [interFn(0), interFn(1), interFn(2)];
       return {
         color: `rgb(${rgb.join(",")})`,
-        "transition-duration": "0.2s"
+        "transition-duration": "0.2s",
       };
     },
   },
@@ -95,7 +97,7 @@ export default {
     crunch() {
       if (!Player.canCrunch) return;
       manualBigCrunchResetRequest();
-    }
+    },
   },
 };
 </script>
@@ -112,14 +114,14 @@ export default {
     <!-- Cannot Crunch -->
     <template v-if="!canCrunch">
       Reach {{ format(infinityGoal, 2, 2) }}
-      <br>
+      <br />
       antimatter
     </template>
 
     <!-- Can Crunch in challenge -->
     <template v-else-if="inAntimatterChallenge">
       Big Crunch to
-      <br>
+      <br />
       complete the challenge
     </template>
 
@@ -133,11 +135,11 @@ export default {
         <span v-else> Infinity {{ pluralize("Point", gainedIP) }}</span>
       </b>
       <template v-if="showIPRate">
-        <br>
+        <br />
         Current: {{ format(currentIPRate, 2) }} IP/min
-        <br>
+        <br />
         Peak: {{ format(peakIPRate, 2) }} IP/min
-        <br>
+        <br />
         at {{ format(peakIPRateVal, 2) }} IP
       </template>
       <div v-else />
@@ -150,12 +152,8 @@ export default {
     :class="{ 'o-pelle-disabled-pointer': creditsClosed }"
     @click="switchToInfinity"
   >
-    <b>
-      You have enough Infinity Points to buy a Tesseract
-    </b>
+    <b> You have enough Infinity Points to buy a Tesseract </b>
   </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

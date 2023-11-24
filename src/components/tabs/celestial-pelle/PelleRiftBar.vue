@@ -6,12 +6,12 @@ import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 export default {
   name: "PelleRiftBar",
   components: {
-    CustomizeableTooltip
+    CustomizeableTooltip,
   },
   props: {
     rift: {
       type: Object,
-      required: true
+      required: true,
     },
   },
   data() {
@@ -32,9 +32,9 @@ export default {
   computed: {
     tooltipArrowStyle() {
       return {
-        borderTop: "0.55rem solid var(--color-pelle--base)"
+        borderTop: "0.55rem solid var(--color-pelle--base)",
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -79,19 +79,21 @@ export default {
     handleMilestoneRequirementTooltipDisplay(event) {
       const mouseX = event.clientX - this.$refs.pelleRiftBar.getBoundingClientRect().x;
 
-      const milestonesCloseTo = this.rift.milestones.filter(m => {
-        // Gets distance from the milestone bar in terms of rem
-        // 31.6: the width of the bar is 32 rem, but adjusted to a border with 0.2rem on both sides
-        const dist = Math.abs((m.requirement * 31.6) - mouseX / this.remToPx);
-        if (dist < 1) m.dist = dist;
-        return dist < 1;
-      }).map(m => {
-        const dist = m.dist;
-        delete m.dist;
-        // Temporarily store the distance without recalculation to sort the list by distance
-        // and get the closest item
-        return { dist, m };
-      });
+      const milestonesCloseTo = this.rift.milestones
+        .filter((m) => {
+          // Gets distance from the milestone bar in terms of rem
+          // 31.6: the width of the bar is 32 rem, but adjusted to a border with 0.2rem on both sides
+          const dist = Math.abs(m.requirement * 31.6 - mouseX / this.remToPx);
+          if (dist < 1) m.dist = dist;
+          return dist < 1;
+        })
+        .map((m) => {
+          const dist = m.dist;
+          delete m.dist;
+          // Temporarily store the distance without recalculation to sort the list by distance
+          // and get the closest item
+          return { dist, m };
+        });
 
       if (milestonesCloseTo.length) {
         this.selectedHoverMilestone = milestonesCloseTo.sort((a, b) => a.dist - b.dist)[0].m;
@@ -101,10 +103,10 @@ export default {
       const hasMilestone = this.hasMilestone(this.selectedHoverMilestone);
       return {
         "c-pelle-milestone-tooltip": true,
-        "c-pelle-milestone-tooltip--unlocked": hasMilestone
+        "c-pelle-milestone-tooltip--unlocked": hasMilestone,
       };
     },
-  }
+  },
 };
 </script>
 
@@ -115,7 +117,7 @@ export default {
     :class="{
       'c-pelle-rift-bar-overfill-container': percentage > 1,
       'c-pelle-rift-bar--idle': !isActive && !isMaxed,
-      'c-pelle-rift-bar--filling': isActive
+      'c-pelle-rift-bar--filling': isActive,
     }"
     @mousemove="handleMilestoneRequirementTooltipDisplay"
     @click="toggle"
@@ -137,23 +139,18 @@ export default {
         }"
       />
       <!-- This bar overlay adds the shadow within the bar so the ugly edges don't show -->
-      <div
-        class="o-pelle-rift-bar-overlay"
-      />
-      <div
-        v-if="isActive && !isMaxed"
-        class="o-pelle-rift-bar-active-fill"
-      />
+      <div class="o-pelle-rift-bar-overlay" />
+      <div v-if="isActive && !isMaxed" class="o-pelle-rift-bar-active-fill" />
       <div
         v-for="(milestone, idx) in rift.milestones"
         :key="'milestone-line-' + idx"
         class="o-pelle-rift-bar-milestone-line"
         :class="{
           'o-pelle-rift-bar-milestone-line--unlocked': hasMilestone(milestone),
-          'o-pelle-rift-bar-milestone-line--disabled': reducedTo < milestone.requirement
+          'o-pelle-rift-bar-milestone-line--disabled': reducedTo < milestone.requirement,
         }"
         :style="{
-          left: `calc(${milestone.requirement * 100}% - 0.25rem)`
+          left: `calc(${milestone.requirement * 100}% - 0.25rem)`,
         }"
       />
     </div>
@@ -170,8 +167,8 @@ export default {
     >
       <template #tooltipContent>
         {{ selectedMilestoneResourceText }}
-        <br>
-        <br>
+        <br />
+        <br />
         {{ selectedMilestoneDescriptionText }}
       </template>
     </CustomizeableTooltip>
@@ -181,15 +178,27 @@ export default {
 <style scoped>
 @keyframes a-pelle-bar-overfill-pulse {
   /* #ed143d66 is the base pelle colour except transparent. */
-  0% { box-shadow: 0 0 0.7rem 1rem rgba(237, 20, 61, 40%); }
-  50% { box-shadow: 0 0 1.5rem 0 rgba(237, 20, 61, 40%); }
-  100% { box-shadow: 0 0 0.7rem 1rem rgba(237, 20, 61, 40%); }
+  0% {
+    box-shadow: 0 0 0.7rem 1rem rgba(237, 20, 61, 40%);
+  }
+  50% {
+    box-shadow: 0 0 1.5rem 0 rgba(237, 20, 61, 40%);
+  }
+  100% {
+    box-shadow: 0 0 0.7rem 1rem rgba(237, 20, 61, 40%);
+  }
 }
 
 @keyframes a-pelle-bar-overfill-pulse-but-green {
-  0% { box-shadow: 0 0 0.7rem 1rem rgba(124, 183, 39, 53.3%); }
-  50% { box-shadow: 0 0 1.5rem 0 rgba(124, 183, 39, 53.3%); }
-  100% { box-shadow: 0 0 0.7rem 1rem rgba(124, 183, 39, 53.3%); }
+  0% {
+    box-shadow: 0 0 0.7rem 1rem rgba(124, 183, 39, 53.3%);
+  }
+  50% {
+    box-shadow: 0 0 1.5rem 0 rgba(124, 183, 39, 53.3%);
+  }
+  100% {
+    box-shadow: 0 0 0.7rem 1rem rgba(124, 183, 39, 53.3%);
+  }
 }
 
 /* ACTIVE RIFT FILLING STYLES */
@@ -216,11 +225,21 @@ export default {
 }
 
 @keyframes a-pelle-bar-unfinished-milestone-flash {
-  0% { opacity: 1; }
-  20% { opacity: 1; }
-  50% { opacity: 0.3; }
-  80% { opacity: 1; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* #region CONTAINER STYLES */

@@ -8,12 +8,12 @@ export default {
   name: "PelleRift",
   components: {
     PelleStrike,
-    PelleRiftBar
+    PelleRiftBar,
   },
   props: {
     strike: {
       type: Object,
-      required: true
+      required: true,
     },
   },
   data() {
@@ -24,7 +24,7 @@ export default {
       totalFill: new Decimal(),
       resource: new Decimal(),
       hasEffectiveFill: false,
-      effects: []
+      effects: [],
     };
   },
   computed: {
@@ -39,7 +39,7 @@ export default {
     infoTooltip() {
       return `The Replicanti requirement for the 2nd Rift is based on the total amount you have ever filled, including
         any amount drained to fill this Rift.`;
-    }
+    },
   },
   methods: {
     update() {
@@ -66,19 +66,14 @@ export default {
       return wordShift.wordCycle(this.rift.name, true);
     },
     drainResource() {
-      return this.specialRift
-        ? wordShift.wordCycle(this.rift.drainResource)
-        : this.rift.drainResource;
-    }
+      return this.specialRift ? wordShift.wordCycle(this.rift.drainResource) : this.rift.drainResource;
+    },
   },
 };
 </script>
 
 <template>
-  <div
-    v-if="hasStrike"
-    class="c-pelle-single-bar"
-  >
+  <div v-if="hasStrike" class="c-pelle-single-bar">
     <div class="c-pelle-rift">
       <div class="c-pelle-rift-row">
         <div class="c-pelle-rift-column c-pelle-rift-status">
@@ -86,10 +81,7 @@ export default {
             {{ riftName() }}
           </h2>
           <div class="c-pelle-rift-rift-info-container">
-            <div
-              v-for="(effect, idx) in effects"
-              :key="idx"
-            >
+            <div v-for="(effect, idx) in effects" :key="idx">
               {{ effect || "" }}
             </div>
           </div>
@@ -105,17 +97,12 @@ export default {
             </h2>
             <div class="c-pelle-rift-rift-info-container">
               Drains {{ drainResource() }} to fill.
-              <span
-                v-if="specialRift"
-                :ach-tooltip="infoTooltip"
-              >
+              <span v-if="specialRift" :ach-tooltip="infoTooltip">
                 <i class="fas fa-question-circle" />
               </span>
-              <br>
-              <template v-if="!isMaxed">
-                Current Amount: {{ formatRift(resource) }}
-              </template>
-              <br>
+              <br />
+              <template v-if="!isMaxed"> Current Amount: {{ formatRift(resource) }} </template>
+              <br />
               Total Filled: {{ formatRift(rift.totalFill) }}
             </div>
           </div>

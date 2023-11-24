@@ -6,13 +6,13 @@ export default {
   name: "RaPet",
   components: {
     RaUpgradeIcon,
-    RaPetLevelBar
+    RaPetLevelBar,
   },
   props: {
     petConfig: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -38,7 +38,9 @@ export default {
     };
   },
   computed: {
-    levelCap() { return Ra.levelCap; },
+    levelCap() {
+      return Ra.levelCap;
+    },
     showScalingUpgrade() {
       return this.petConfig.scalingUpgradeVisible(this.level);
     },
@@ -53,7 +55,7 @@ export default {
     },
     petStyle() {
       return {
-        color: this.pet.color
+        color: this.pet.color,
       };
     },
     unlocks() {
@@ -78,7 +80,10 @@ export default {
       this.requiredMemories = pet.requiredMemories;
       this.memoryChunks = pet.memoryChunks;
       this.memoryChunksPerSecond = pet.memoryChunksPerSecond;
-      this.memoriesPerSecond = Math.pow(pet.memoryChunks * Ra.productionPerMemoryChunk * this.currentMemoryMult, Ra.productionExponent);
+      this.memoriesPerSecond = Math.pow(
+        pet.memoryChunks * Ra.productionPerMemoryChunk * this.currentMemoryMult,
+        Ra.productionExponent
+      );
       this.canGetMemoryChunks = pet.canGetMemoryChunks;
       this.memoryMultiplier = pet.memoryProductionMultiplier;
       this.memoryUpgradeCost = pet.memoryUpgradeCost;
@@ -92,15 +97,12 @@ export default {
       this.nextMemoryChunkUpgradeEstimate = Ra.timeToGoalString(pet, this.chunkUpgradeCost - this.memories);
     },
     nextUnlockLevel() {
-      const missingUpgrades = this.pet.unlocks
-        .map(u => u.level)
-        .filter(goal => goal > this.level);
+      const missingUpgrades = this.pet.unlocks.map((u) => u.level).filter((goal) => goal > this.level);
       return missingUpgrades.length === 0 ? 25 : missingUpgrades.min();
     },
     upgradeClassObject(type) {
-      const available = type === "memory"
-        ? this.memoryUpgradeCost <= this.memories
-        : this.chunkUpgradeCost <= this.memories;
+      const available =
+        type === "memory" ? this.memoryUpgradeCost <= this.memories : this.chunkUpgradeCost <= this.memories;
       const capped = type === "memory" ? this.memoryUpgradeCapped : this.chunkUpgradeCapped;
       const pet = this.pet;
       return {
@@ -110,17 +112,18 @@ export default {
         "c-ra-pet-btn--available": available,
         [`c-ra-pet-btn--${pet.id}`]: available,
         "c-ra-pet-btn--available__capped": capped,
-        [`c-ra-pet-btn--${pet.id}__capped`]: capped
+        [`c-ra-pet-btn--${pet.id}__capped`]: capped,
       };
     },
     barStyle(type) {
       const cost = type === "memory" ? this.memoryUpgradeCost : this.chunkUpgradeCost;
-      const gone = (type === "memory" && this.memoryUpgradeCapped || type === "chunk" && this.chunkUpgradeCapped)
-        ? cost
-        : this.memories;
+      const gone =
+        (type === "memory" && this.memoryUpgradeCapped) || (type === "chunk" && this.chunkUpgradeCapped)
+          ? cost
+          : this.memories;
       return {
         width: `${100 * Math.min(1, gone / cost)}%`,
-        background: this.pet.color
+        background: this.pet.color,
       };
     },
   },
@@ -128,92 +131,50 @@ export default {
 </script>
 
 <template>
-  <div
-    v-if="isUnlocked"
-    class="l-ra-pet-container"
-  >
-    <div
-      class="c-ra-pet-header"
-      :style="petStyle"
-    >
+  <div v-if="isUnlocked" class="l-ra-pet-container">
+    <div class="c-ra-pet-header" :style="petStyle">
       <div class="c-ra-pet-title">
         <!-- The full name doesn't fit here, so we shorten it as a special case -->
         {{ pet.id === "enslaved" ? "Nameless" : name }} Level {{ formatInt(level) }}/{{ formatInt(levelCap) }}
       </div>
-      <div
-        v-if="showScalingUpgrade"
-        :key="level"
-      >
+      <div v-if="showScalingUpgrade" :key="level">
         {{ scalingUpgradeText }}
       </div>
-      <br v-else>
+      <br v-else />
       <div v-if="!isCapped">
-        <div>
-          {{ name }} {{ pet.id === "enslaved" ? "have" : "has" }} {{ quantify("Memory", memories, 2) }}
-        </div>
+        <div>{{ name }} {{ pet.id === "enslaved" ? "have" : "has" }} {{ quantify("Memory", memories, 2) }}</div>
       </div>
-      <div
-        v-if="!isCapped"
-        class="l-ra-pet-middle-container"
-      >
+      <div v-if="!isCapped" class="l-ra-pet-middle-container">
         <div class="l-ra-pet-upgrade-container">
           <div class="l-ra-pet-upgrade c-ra-pet-upgrade__top">
-            <div
-              :class="upgradeClassObject('memory')"
-              @click="pet.purchaseMemoryUpgrade()"
-            >
+            <div :class="upgradeClassObject('memory')" @click="pet.purchaseMemoryUpgrade()">
               <span class="fas fa-brain" />
-              <div
-                v-if="!memoryUpgradeCapped"
-                class="c-ra-pet-upgrade__tooltip"
-              >
-                <div class="c-ra-pet-upgrade__tooltip__name">
-                  {{ name }}'s Recollection
-                </div>
-                <div class="c-ra-pet-upgrade__tooltip__description">
-                  Gain {{ formatPercents(0.3) }} more Memories
-                </div>
+              <div v-if="!memoryUpgradeCapped" class="c-ra-pet-upgrade__tooltip">
+                <div class="c-ra-pet-upgrade__tooltip__name">{{ name }}'s Recollection</div>
+                <div class="c-ra-pet-upgrade__tooltip__description">Gain {{ formatPercents(0.3) }} more Memories</div>
                 <div class="c-ra-pet-upgrade__tooltip__footer">
                   Cost: {{ quantify("Memory", memoryUpgradeCost, 2, 2) }}
                   <span v-if="memories <= memoryUpgradeCost">
                     {{ nextMemoryUpgradeEstimate }}
                   </span>
-                  <br>
+                  <br />
                   Currently: {{ formatX(currentMemoryMult, 2, 2) }}
                 </div>
               </div>
-              <div
-                v-else
-                class="c-ra-pet-upgrade__tooltip"
-              >
-                <div class="c-ra-pet-upgrade__tooltip__name">
-                  {{ name }}'s Recollection
-                </div>
-                <div class="c-ra-pet-upgrade__tooltip__description">
-                  Capped: {{ formatX(currentMemoryMult, 2, 2) }}
-                </div>
+              <div v-else class="c-ra-pet-upgrade__tooltip">
+                <div class="c-ra-pet-upgrade__tooltip__name">{{ name }}'s Recollection</div>
+                <div class="c-ra-pet-upgrade__tooltip__description">Capped: {{ formatX(currentMemoryMult, 2, 2) }}</div>
               </div>
             </div>
             <div class="c-ra-upgrade-bar">
-              <div
-                class="c-ra-upgrade-bar__inner"
-                :style="barStyle('memory')"
-              />
+              <div class="c-ra-upgrade-bar__inner" :style="barStyle('memory')" />
             </div>
           </div>
           <div class="l-ra-pet-upgrade c-ra-pet-upgrade__bottom">
-            <div
-              :class="upgradeClassObject('chunk')"
-              @click="pet.purchaseChunkUpgrade()"
-            >
+            <div :class="upgradeClassObject('chunk')" @click="pet.purchaseChunkUpgrade()">
               <span class="fas fa-dice-d6" />
-              <div
-                v-if="!chunkUpgradeCapped"
-                class="c-ra-pet-upgrade__tooltip"
-              >
-                <div class="c-ra-pet-upgrade__tooltip__name">
-                  {{ name }}'s Fragmentation
-                </div>
+              <div v-if="!chunkUpgradeCapped" class="c-ra-pet-upgrade__tooltip">
+                <div class="c-ra-pet-upgrade__tooltip__name">{{ name }}'s Fragmentation</div>
                 <div class="c-ra-pet-upgrade__tooltip__description">
                   Gain {{ formatPercents(0.5) }} more Memory Chunks
                 </div>
@@ -222,34 +183,21 @@ export default {
                   <span v-if="memories <= chunkUpgradeCost">
                     {{ nextMemoryChunkUpgradeEstimate }}
                   </span>
-                  <br>
+                  <br />
                   Currently: {{ formatX(currentChunkMult, 2, 2) }}
                 </div>
               </div>
-              <div
-                v-else
-                class="c-ra-pet-upgrade__tooltip"
-              >
-                <div class="c-ra-pet-upgrade__tooltip__name">
-                  {{ name }}'s Fragmentation
-                </div>
-                <div class="c-ra-pet-upgrade__tooltip__description">
-                  Capped: {{ formatX(currentChunkMult, 2, 2) }}
-                </div>
+              <div v-else class="c-ra-pet-upgrade__tooltip">
+                <div class="c-ra-pet-upgrade__tooltip__name">{{ name }}'s Fragmentation</div>
+                <div class="c-ra-pet-upgrade__tooltip__description">Capped: {{ formatX(currentChunkMult, 2, 2) }}</div>
               </div>
             </div>
             <div class="c-ra-upgrade-bar c-ra-upgrade-bar--bottom">
-              <div
-                class="c-ra-upgrade-bar__inner"
-                :style="barStyle('chunk')"
-              />
+              <div class="c-ra-upgrade-bar__inner" :style="barStyle('chunk')" />
             </div>
           </div>
         </div>
-        <RaPetLevelBar
-          v-if="!isCapped"
-          :pet-config="petConfig"
-        />
+        <RaPetLevelBar v-if="!isCapped" :pet-config="petConfig" />
       </div>
       <div v-if="!isCapped">
         <div>
@@ -268,19 +216,12 @@ export default {
           <i class="fas fa-question-circle" />
         </span>
       </div>
-      <br v-else-if="!isRaCapped">
-      <br v-if="!isRaCapped">
-      <div
-        v-else
-        class="l-ra-pet-postcompletion-spacer"
-      />
+      <br v-else-if="!isRaCapped" />
+      <br v-if="!isRaCapped" />
+      <div v-else class="l-ra-pet-postcompletion-spacer" />
       <div class="l-ra-pet-milestones">
         <!-- This choice of key forces a UI update every level up -->
-        <RaUpgradeIcon
-          v-for="(unlock, i) in unlocks"
-          :key="25 * level + i"
-          :unlock="unlock"
-        />
+        <RaUpgradeIcon v-for="(unlock, i) in unlocks" :key="25 * level + i" :unlock="unlock" />
       </div>
     </div>
   </div>

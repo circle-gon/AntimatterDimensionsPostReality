@@ -4,7 +4,7 @@ export default {
   props: {
     milestone: {
       type: Object,
-      required: true
+      required: true,
     },
     currTime: {
       type: Number,
@@ -23,7 +23,7 @@ export default {
     runIndices: {
       type: Array,
       required: true,
-    }
+    },
   },
   data() {
     return {
@@ -50,19 +50,17 @@ export default {
       const diff = this.currTime > 0 ? this.currTime - ms : this.realTime - ms;
       let gapStr = TimeSpan.fromMilliseconds(Math.abs(diff)).toStringShort(true, true);
       gapStr = `${this.currTime > ms ? "-" : "+"}${gapStr}`;
-      return ms > 0
-        ? `${timeStr}${showGap ? ` (${gapStr})` : ""}`
-        : "Not reached yet";
+      return ms > 0 ? `${timeStr}${showGap ? ` (${gapStr})` : ""}` : "Not reached yet";
     },
     timeStyle(time) {
-      const isFastest = time === [this.currTime, this.refTime, this.bestTime].filter(t => t !== 0).min();
+      const isFastest = time === [this.currTime, this.refTime, this.bestTime].filter((t) => t !== 0).min();
       return {
         color: "var(--color-text)",
         opacity: isFastest ? 1 : 0.85,
         "font-weight": isFastest ? "bold" : null,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -70,12 +68,7 @@ export default {
   <div :class="classObject">
     <span class="l-milestone-title">{{ milestone.name }}</span>
     <span :style="timeStyle(currTime)">Current run: {{ timeString(currTime) }}</span>
-    <span
-      v-if="refTime"
-      :style="timeStyle(refTime)"
-    >
-      Run {{ runIndices[0] }}: {{ timeString(refTime, true) }}
-    </span>
+    <span v-if="refTime" :style="timeStyle(refTime)"> Run {{ runIndices[0] }}: {{ timeString(refTime, true) }} </span>
     <span :style="timeStyle(bestTime)">Best ({{ runIndices[1] }}): {{ timeString(bestTime, true) }}</span>
   </div>
 </template>

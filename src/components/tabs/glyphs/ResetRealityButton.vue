@@ -28,25 +28,28 @@ export default {
       const confirms = player.options.confirmations;
       if (GameEnd.creditsClosed) return;
       if (this.isInCelestialReality) {
-        if (confirms.exitChallenge) Modal.exitChallenge.show({
-          challengeName: "a Celestial Reality",
-          normalName: "Reality",
-          hasHigherLayers: false,
-          exitFn: () => beginProcessReality(getRealityProps(true))
-        });
+        if (confirms.exitChallenge)
+          Modal.exitChallenge.show({
+            challengeName: "a Celestial Reality",
+            normalName: "Reality",
+            hasHigherLayers: false,
+            exitFn: () => beginProcessReality(getRealityProps(true)),
+          });
         else beginProcessReality(getRealityProps(true));
       } else if (confirms.resetReality) Modal.resetReality.show();
       else beginProcessReality(getRealityProps(true));
     },
-  }
+  },
 };
 </script>
 
 <template>
   <button
-    :class="['l-reset-reality-button',
-             'c-reset-reality-button',
-             {'c-reset-reality-button-celestial': isInCelestialReality}]"
+    :class="[
+      'l-reset-reality-button',
+      'c-reset-reality-button',
+      { 'c-reset-reality-button-celestial': isInCelestialReality },
+    ]"
     @click="resetReality"
   >
     <div class="l-reality-button__contents">
@@ -55,6 +58,4 @@ export default {
   </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

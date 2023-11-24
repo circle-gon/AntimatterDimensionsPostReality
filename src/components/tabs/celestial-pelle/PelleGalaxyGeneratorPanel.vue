@@ -6,7 +6,7 @@ import PelleUpgrade from "./PelleUpgrade";
 export default {
   name: "GalaxyGeneratorPanel",
   components: {
-    PelleUpgrade
+    PelleUpgrade,
   },
   data() {
     return {
@@ -25,9 +25,7 @@ export default {
   },
   computed: {
     collapseIcon() {
-      return this.isCollapsed
-        ? "fas fa-expand-arrows-alt"
-        : "fas fa-compress-arrows-alt";
+      return this.isCollapsed ? "fas fa-expand-arrows-alt" : "fas fa-compress-arrows-alt";
     },
     upgrades() {
       return GalaxyGeneratorUpgrades.all;
@@ -42,7 +40,7 @@ export default {
     },
     emphasisedStart() {
       return Math.pow(this.generatedGalaxies / this.cap, 0.45);
-    }
+    },
   },
   methods: {
     update() {
@@ -56,7 +54,7 @@ export default {
       this.cap = GalaxyGenerator.generationCap;
       this.capRift = GalaxyGenerator.capRift;
       this.sacrificeActive = GalaxyGenerator.sacrificeActive;
-      this.barWidth = (this.isCapped ? this.capRift.reducedTo : this.emphasisedStart);
+      this.barWidth = this.isCapped ? this.capRift.reducedTo : this.emphasisedStart;
       if (this.capRift) this.capRiftName = wordShift.wordCycle(this.capRift.name);
     },
     increaseCap() {
@@ -68,7 +66,7 @@ export default {
     unlock() {
       player.celestials.pelle.galaxyGenerator.unlocked = true;
       Pelle.quotes.galaxyGeneratorUnlock.show();
-    }
+    },
   },
 };
 </script>
@@ -76,18 +74,10 @@ export default {
 <template>
   <div class="l-pelle-panel-container">
     <div class="c-pelle-panel-title">
-      <i
-        v-if="!isCapped"
-        :class="collapseIcon"
-        class="c-collapse-icon-clickable"
-        @click="toggleCollapse"
-      />
+      <i v-if="!isCapped" :class="collapseIcon" class="c-collapse-icon-clickable" @click="toggleCollapse" />
       Galaxy Generator
     </div>
-    <div
-      v-if="!isCollapsed"
-      class="l-pelle-content-container"
-    >
+    <div v-if="!isCollapsed" class="l-pelle-content-container">
       <div v-if="isUnlocked">
         <div>
           You have a total of
@@ -100,36 +90,17 @@ export default {
             class="c-increase-cap"
             :class="{
               'c-increase-cap-available': isCapped && capRift && !sacrificeActive,
-              'tutorial--glow': cap === Infinity
+              'tutorial--glow': cap === Infinity,
             }"
             @click="increaseCap"
           >
-            <div
-              class="c-increase-cap-background"
-              :style="{ 'width': `${barWidth * 100}%` }"
-            />
-            <div
-              v-if="isCapped && capRift"
-              class="c-increase-cap-text"
-            >
-              {{ sacrificeText }}. <br><br>
-              <span
-                v-if="!sacrificeActive"
-                class="c-big-text"
-              >
-                Sacrifice your {{ capRiftName }}
-              </span>
-              <span
-                v-else
-                class="c-big-text"
-              >
-                Getting rid of all that {{ capRiftName }}...
-              </span>
+            <div class="c-increase-cap-background" :style="{ width: `${barWidth * 100}%` }" />
+            <div v-if="isCapped && capRift" class="c-increase-cap-text">
+              {{ sacrificeText }}. <br /><br />
+              <span v-if="!sacrificeActive" class="c-big-text"> Sacrifice your {{ capRiftName }} </span>
+              <span v-else class="c-big-text"> Getting rid of all that {{ capRiftName }}... </span>
             </div>
-            <div
-              v-else
-              class="c-increase-cap-text c-medium-text"
-            >
+            <div v-else class="c-increase-cap-text c-medium-text">
               {{ format(generatedGalaxies, 2) }} / {{ format(cap, 2) }} Galaxies generated
             </div>
           </button>
@@ -143,13 +114,7 @@ export default {
           />
         </div>
       </div>
-      <button
-        v-else
-        class="c-generator-unlock-button"
-        @click="unlock"
-      >
-        Unlock the Galaxy Generator
-      </button>
+      <button v-else class="c-generator-unlock-button" @click="unlock">Unlock the Galaxy Generator</button>
     </div>
   </div>
 </template>

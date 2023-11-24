@@ -4,25 +4,21 @@ export default {
   computed: {
     resourceDB: () => GameDatabase.sidebarResources,
     resources() {
-      return this.resourceDB.filter(e => e.isAvailable());
-    }
+      return this.resourceDB.filter((e) => e.isAvailable());
+    },
   },
   methods: {
     setResource(id) {
       player.options.sidebarResourceID = id;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-select-theme">
     <div class="l-select-theme__inner">
-      <div
-        key="Default"
-        class="o-primary-btn l-select-theme__item c-select-theme__item"
-        @click="setResource(0)"
-      >
+      <div key="Default" class="o-primary-btn l-select-theme__item c-select-theme__item" @click="setResource(0)">
         Latest Resource
       </div>
       <div

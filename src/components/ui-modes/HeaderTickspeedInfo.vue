@@ -4,7 +4,7 @@ import GameSpeedDisplay from "@/components/GameSpeedDisplay";
 export default {
   name: "HeaderTickspeedInfo",
   components: {
-    GameSpeedDisplay
+    GameSpeedDisplay,
   },
   data() {
     return {
@@ -20,7 +20,8 @@ export default {
       return `Total Tickspeed: ${format(this.tickspeed, 2, 3)} / sec`;
     },
     perUpgrade() {
-      if (InfinityChallenge(3).isRunning) return `Tickspeed upgrades give
+      if (InfinityChallenge(3).isRunning)
+        return `Tickspeed upgrades give
         ${formatX(1.05 + this.galaxyCount * 0.005, 3, 3)} to all ADs`;
       return `ADs produce ${formatX(this.mult.reciprocal(), 2, 3)} faster per Tickspeed upgrade`;
     },
@@ -39,15 +40,13 @@ export default {
 
 <template>
   <div>
-    <br>
+    <br />
     {{ perUpgrade }}
-    <br>
+    <br />
     {{ tickspeedDisplay }}
-    <br>
+    <br />
     <GameSpeedDisplay />
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

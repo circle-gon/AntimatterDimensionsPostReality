@@ -48,7 +48,7 @@ export default {
     },
     hiddenName() {
       return player.options.hideGoogleName;
-    }
+    },
   },
   methods: {
     update() {
@@ -87,9 +87,9 @@ export default {
       return {
         "o-primary-btn--subtab-option": true,
         "o-pelle-disabled-pointer": this.creditsClosed,
-        "o-primary-btn--disabled": !this.loggedIn || !this.canRespec
+        "o-primary-btn--disabled": !this.loggedIn || !this.canRespec,
       };
-    }
+    },
   },
 };
 </script>
@@ -97,12 +97,12 @@ export default {
 <template>
   <div class="tab shop">
     <div class="c-shop-disclaimer">
-      Disclaimer: These are not required to progress in the game, they are just for supporting the developer.
-      The game is balanced without the use of any microtransactions.
+      Disclaimer: These are not required to progress in the game, they are just for supporting the developer. The game
+      is balanced without the use of any microtransactions.
     </div>
     <div>
-      Note: Shop purchases made on the Android, Steam, and Web versions are
-      separate and non-transferable due to legal reasons.
+      Note: Shop purchases made on the Android, Steam, and Web versions are separate and non-transferable due to legal
+      reasons.
     </div>
     <div class="c-subtab-option-container">
       <PrimaryButton
@@ -113,54 +113,26 @@ export default {
       >
         {{ enableText }}
       </PrimaryButton>
-      <PrimaryButton
-        v-if="!STEAM"
-        v-tooltip="respecText"
-        :class="respecClass()"
-        @click="respec()"
-      >
+      <PrimaryButton v-if="!STEAM" v-tooltip="respecText" :class="respecClass()" @click="respec()">
         Respec Shop
       </PrimaryButton>
     </div>
-    <div v-if="loggedIn && !canRespec && !STEAM">
-      Time until respec available: {{ respecTimeStr }}
-    </div>
-    <div
-      v-if="loggedIn"
-      class="c-login-info"
-    >
-      <template v-if="STEAM">
-        You are logged in as {{ username }}.
-      </template>
+    <div v-if="loggedIn && !canRespec && !STEAM">Time until respec available: {{ respecTimeStr }}</div>
+    <div v-if="loggedIn" class="c-login-info">
+      <template v-if="STEAM"> You are logged in as {{ username }}. </template>
       <template v-else>
         <span v-if="hiddenName">You are logged in. <i>(name hidden)</i></span>
         <span v-else>You are logged in as {{ username }}.</span>
-        <button
-          class="o-shop-button-button"
-          onclick="GameOptions.logout()"
-        >
-          Disconnect Google Account
-        </button>
+        <button class="o-shop-button-button" onclick="GameOptions.logout()">Disconnect Google Account</button>
       </template>
     </div>
-    <div
-      v-else
-      class="c-login-info"
-    >
+    <div v-else class="c-login-info">
       You must be logged in to purchase STD coins or use these upgrades.
-      <button
-        class="o-shop-button-button"
-        onclick="GameOptions.login()"
-      >
-        Login with Google
-      </button>
+      <button class="o-shop-button-button" onclick="GameOptions.login()">Login with Google</button>
     </div>
     <div class="c-shop-header">
       <span>You have {{ availableSTD }}</span>
-      <img
-        src="/images/std_coin.png"
-        class="c-shop-header__img"
-      >
+      <img src="/images/std_coin.png" class="c-shop-header__img" />
       <button
         class="o-shop-button-button"
         :class="{ 'o-shop-button-button--disabled': !loggedIn }"
@@ -171,18 +143,9 @@ export default {
     </div>
     Note: All numbers on this page are intentionally unaffected by your notation settings
     <div class="l-shop-buttons-container">
-      <ShopButton
-        v-for="purchase in purchases"
-        :key="purchase.key"
-        :purchase="purchase"
-      />
+      <ShopButton v-for="purchase in purchases" :key="purchase.key" :purchase="purchase" />
     </div>
-    <loading
-      :active="isLoading"
-      :can-cancel="true"
-      :on-cancel="onCancel"
-      :is-full-page="true"
-    />
+    <loading :active="isLoading" :can-cancel="true" :on-cancel="onCancel" :is-full-page="true" />
   </div>
 </template>
 

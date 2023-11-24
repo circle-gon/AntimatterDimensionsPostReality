@@ -21,7 +21,7 @@ export default {
     enslavedText() {
       return `${Enslaved.displayName} are helping you look for cracks in their Reality -
         they can give you some advice in ${this.enslavedTimer}`;
-    }
+    },
   },
   methods: {
     update() {
@@ -49,8 +49,7 @@ export default {
 
       this.waitingforHint = Enslaved.canTickHintTimer;
       const rawMsUntilHints = 5 * 3600 * 1000 - player.celestials.enslaved.hintUnlockProgress;
-      this.enslavedTimer = TimeSpan.fromMilliseconds(rawMsUntilHints / (Enslaved.isRunning ? 1 : 0.4))
-        .toStringShort();
+      this.enslavedTimer = TimeSpan.fromMilliseconds(rawMsUntilHints / (Enslaved.isRunning ? 1 : 0.4)).toStringShort();
     },
     updateChallengePower() {
       const isC2Running = NormalChallenge(2).isRunning;
@@ -63,9 +62,11 @@ export default {
         const powerArray = [];
         if (isC2Running) powerArray.push(`Production: ${formatPercents(player.chall2Pow, 2, 2)}`);
         if (isC3Running) powerArray.push(`First dimension: ${formatX(player.chall3Pow, 3, 4)}`);
-        if (isIC6Running) powerArray.push(`Matter: Antimatter Dimensions /
+        if (isIC6Running)
+          powerArray.push(`Matter: Antimatter Dimensions /
           ${format(new Decimal(1).timesEffectOf(InfinityChallenge(6)), 2, 2)}`);
-        if (isIC8Running) powerArray.push(`Production: /
+        if (isIC8Running)
+          powerArray.push(`Production: /
           ${format(new Decimal(1).timesEffectOf(InfinityChallenge(8)).reciprocal(), 2, 2)}`);
         this.challengePower = powerArray.join(", ");
       }
@@ -81,21 +82,15 @@ export default {
     </div>
     <div v-if="isInEffarig">
       Game speed and multipliers are Dilated {{ effarigMultNerfText }}
-      <br>
+      <br />
       Tickspeed is Dilated {{ effarigTickNerfText }}
     </div>
-    <div v-if="isInLaitela">
-      Entropy: {{ laitelaEntropy }} ({{ laitelaTimer }})
-    </div>
-    <div v-if="isInMatterChallenge">
-      There is {{ format(matter, 2, 1) }} matter.
-    </div>
+    <div v-if="isInLaitela">Entropy: {{ laitelaEntropy }} ({{ laitelaTimer }})</div>
+    <div v-if="isInMatterChallenge">There is {{ format(matter, 2, 1) }} matter.</div>
     <div v-if="isChallengePowerVisible">
       {{ challengePower }}
     </div>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -4,7 +4,7 @@ import PrimaryButton from "@/components/PrimaryButton";
 export default {
   name: "PerkPointLabel",
   components: {
-    PrimaryButton
+    PrimaryButton,
   },
   data() {
     return {
@@ -19,9 +19,9 @@ export default {
       return PerkLayouts[this.treeLayout].buttonText;
     },
     physicsText() {
-      const enableStr = (this.physicsOverride ?? this.physicsEnabled) ? "Enabled" : "Disabled";
+      const enableStr = this.physicsOverride ?? this.physicsEnabled ? "Enabled" : "Disabled";
       return `${enableStr}${this.physicsOverride === undefined ? "" : " (fixed)"}`;
-    }
+    },
   },
   created() {
     this.treeLayout = player.options.perkLayout;
@@ -40,7 +40,7 @@ export default {
     physicsClassObject() {
       return {
         "o-primary-btn c-button-physics": true,
-        "o-primary-btn--disabled": this.physicsOverride !== undefined
+        "o-primary-btn--disabled": this.physicsOverride !== undefined,
       };
     },
     centerTree() {
@@ -63,45 +63,27 @@ export default {
       PerkNetwork.currentLayout = PerkLayouts[this.treeLayout];
       PerkNetwork.setPhysics(player.options.perkPhysicsEnabled);
       PerkNetwork.moveToDefaultLayoutPositions(this.treeLayout);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="c-perk-tab__header">
     You have <span class="c-perk-tab__perk-points">{{ format(pp, 2) }}</span> {{ pluralize("Perk Point", pp) }}.
-    <br>
+    <br />
     Perk choices are permanent and cannot be respecced.
-    <br>
+    <br />
     Diamond-shaped perks also give Automator Points.
-    <br>
+    <br />
     <div class="perk-settings">
-      <PrimaryButton
-        class="o-primary-btn c-button-perk-layout"
-        @click="cycleLayout"
-      >
+      <PrimaryButton class="o-primary-btn c-button-perk-layout" @click="cycleLayout">
         Perk Layout: {{ layoutText }}
       </PrimaryButton>
-      <PrimaryButton
-        :class="physicsClassObject()"
-        @click="togglePhysics"
-      >
-        Physics: {{ physicsText }}
-      </PrimaryButton>
-      <br>
-      <PrimaryButton
-        class="o-primary-btn"
-        @click="centerTree"
-      >
-        Center Tree on START
-      </PrimaryButton>
-      <PrimaryButton
-        class="o-primary-btn"
-        @click="straightenEdges"
-      >
-        Straighten Edges
-      </PrimaryButton>
+      <PrimaryButton :class="physicsClassObject()" @click="togglePhysics"> Physics: {{ physicsText }} </PrimaryButton>
+      <br />
+      <PrimaryButton class="o-primary-btn" @click="centerTree"> Center Tree on START </PrimaryButton>
+      <PrimaryButton class="o-primary-btn" @click="straightenEdges"> Straighten Edges </PrimaryButton>
     </div>
   </div>
 </template>

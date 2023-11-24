@@ -20,7 +20,7 @@ export const AutomatorPanels = {
   DATA_TRANSFER: 4,
   CONSTANTS: 5,
   TEMPLATES: 6,
-  BLOCKS: 7
+  BLOCKS: 7,
 };
 
 export default {
@@ -49,7 +49,7 @@ export default {
       runningScriptID: 0,
       totalChars: 0,
       scriptCount: 0,
-      canMakeNewScript: true
+      canMakeNewScript: true,
     };
   },
   computed: {
@@ -60,7 +60,7 @@ export default {
       set(value) {
         this.$viewModel.tabs.reality.automator.fullScreen = value;
         AutomatorData.isEditorFullscreen = value;
-      }
+      },
     },
     fullScreenIconClass() {
       return this.fullScreen ? "fa-compress-arrows-alt" : "fa-expand-arrows-alt";
@@ -83,7 +83,7 @@ export default {
       set(value) {
         this.$viewModel.tabs.reality.automator.editorScriptID = value;
         if (AutomatorTextUI.editor) AutomatorTextUI.editor.performLint();
-      }
+      },
     },
     currentScriptContent() {
       return player.reality.automator.scripts[this.currentScriptID].content;
@@ -93,7 +93,7 @@ export default {
     },
     errorStyle() {
       return {
-        "background-color": this.errorCount === 0 ? "" : "red"
+        "background-color": this.errorCount === 0 ? "" : "red",
       };
     },
     maxTotalChars() {
@@ -111,13 +111,13 @@ export default {
         : "You have too many scripts to import another!";
     },
     currentEditorScriptName() {
-      return this.scripts.find(s => s.id === this.currentScriptID).name;
+      return this.scripts.find((s) => s.id === this.currentScriptID).name;
     },
   },
   watch: {
     infoPaneID(newValue) {
       player.reality.automator.currentInfoPane = newValue;
-    }
+    },
   },
   created() {
     this.on$(GAME_EVENT.GAME_LOAD, () => this.onGameLoad());
@@ -158,7 +158,7 @@ export default {
       this.fixAutomatorTypeDocs();
     },
     updateScriptList() {
-      this.scripts = Object.values(player.reality.automator.scripts).map(script => ({
+      this.scripts = Object.values(player.reality.automator.scripts).map((script) => ({
         id: script.id,
         name: script.name,
       }));
@@ -198,9 +198,8 @@ export default {
     },
     openMatchingAutomatorTypeDocs() {
       const automator = player.reality.automator;
-      automator.currentInfoPane = automator.type === AUTOMATOR_TYPE.BLOCK
-        ? AutomatorPanels.BLOCKS
-        : AutomatorPanels.COMMANDS;
+      automator.currentInfoPane =
+        automator.type === AUTOMATOR_TYPE.BLOCK ? AutomatorPanels.BLOCKS : AutomatorPanels.COMMANDS;
     },
     rename() {
       this.editingName = true;
@@ -226,14 +225,14 @@ export default {
       this.isNameTooLong = false;
       player.reality.automator.scripts[this.currentScriptID].name = newName;
       this.updateScriptList();
-      this.$nextTick(() => this.editingName = false);
+      this.$nextTick(() => (this.editingName = false));
     },
     activePanelClass(id) {
       return {
         "c-automator__button--active": this.infoPaneID === id,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -294,7 +293,7 @@ export default {
         <span
           v-if="fullScreen"
           class="c-automator__status-text c-automator__status-text--small"
-          :class="{ 'c-automator__status-text--error' : totalChars > maxTotalChars }"
+          :class="{ 'c-automator__status-text--error': totalChars > maxTotalChars }"
         >
           Across all scripts: {{ formatInt(totalChars) }}/{{ formatInt(maxTotalChars) }}
         </span>
@@ -306,53 +305,36 @@ export default {
         />
       </div>
       <div class="l-automator-button-row">
-        <AutomatorButton
-          v-tooltip="'Export single automator script'"
-          class="fa-file-export"
-          @click="exportScript"
-        />
+        <AutomatorButton v-tooltip="'Export single automator script'" class="fa-file-export" @click="exportScript" />
         <AutomatorButton
           v-tooltip="importTooltip"
           class="fa-file-import"
-          :class="{ 'c-automator__status-text--error' : !canMakeNewScript }"
+          :class="{ 'c-automator__status-text--error': !canMakeNewScript }"
           @click="importScript"
         />
         <div class="l-automator__script-names">
           <template v-if="!editingName">
-            <ExpandingControlBox
-              class="l-automator__scripts-dropdown"
-              :auto-close="true"
-            >
+            <ExpandingControlBox class="l-automator__scripts-dropdown" :auto-close="true">
               <template #header>
-                <div class="c-automator-docs-script-select">
-                  ▼ Current Script: {{ currentEditorScriptName }}
-                </div>
+                <div class="c-automator-docs-script-select">▼ Current Script: {{ currentEditorScriptName }}</div>
               </template>
               <template #dropdown>
                 <AutomatorScriptDropdownEntryList :key="scriptCount" />
               </template>
             </ExpandingControlBox>
-            <AutomatorButton
-              v-tooltip="'Rename script'"
-              class="far fa-edit"
-              @click="rename"
-            />
+            <AutomatorButton v-tooltip="'Rename script'" class="far fa-edit" @click="rename" />
           </template>
           <input
             v-else
             ref="renameInput"
             v-tooltip="nameTooltip"
             class="l-automator__rename-input c-automator__rename-input"
-            :class="{ 'c-long-name-box' : isNameTooLong }"
+            :class="{ 'c-long-name-box': isNameTooLong }"
             @blur="nameEdited"
             @keyup.enter="$refs.renameInput.blur()"
-          >
+          />
         </div>
-        <AutomatorButton
-          v-tooltip="'Delete this script'"
-          class="fas fa-trash"
-          @click="deleteScript"
-        />
+        <AutomatorButton v-tooltip="'Delete this script'" class="fas fa-trash" @click="deleteScript" />
       </div>
     </div>
     <div class="c-automator-docs l-automator-pane__content">

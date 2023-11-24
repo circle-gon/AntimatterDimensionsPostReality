@@ -57,32 +57,14 @@ export default {
 
 <template>
   <div class="l-time-dim-tab l-centered-vertical-tab">
-    <div
-      v-if="isContinuumUnlocked"
-      class="c-subtab-option-container"
-    >
-      <PrimaryButton
-        class="o-primary-btn--subtab-option"
-        @click="toggleContinuum"
-      >
+    <div v-if="isContinuumUnlocked" class="c-subtab-option-container">
+      <PrimaryButton class="o-primary-btn--subtab-option" @click="toggleContinuum">
         {{ isContinuumActive ? "Disable" : "Enable" }} Continuum
       </PrimaryButton>
     </div>
-    <div
-      v-if="!isContinuumActive"
-      class="c-subtab-option-container"
-    >
-      <PrimaryButton
-        class="o-primary-btn--subtab-option"
-        @click="maxAll"
-      >
-        Max all
-      </PrimaryButton>
-      <PrimaryButton
-        v-if="areAutobuyersUnlocked"
-        class="o-primary-btn--subtab-option"
-        @click="toggleAllAutobuyers"
-      >
+    <div v-if="!isContinuumActive" class="c-subtab-option-container">
+      <PrimaryButton class="o-primary-btn--subtab-option" @click="maxAll"> Max all </PrimaryButton>
+      <PrimaryButton v-if="areAutobuyersUnlocked" class="o-primary-btn--subtab-option" @click="toggleAllAutobuyers">
         Toggle all autobuyers
       </PrimaryButton>
     </div>
@@ -94,7 +76,8 @@ export default {
       </p>
       <p>
         Next Tickspeed upgrade at
-        <span class="c-time-dim-description__accent">{{ format(upgradeThreshold, 2, 1) }}</span>, increasing by <span class="c-time-dim-description__accent">{{ formatX(multPerTickspeed, 2, 2) }}</span> per
+        <span class="c-time-dim-description__accent">{{ format(upgradeThreshold, 2, 1) }}</span
+        >, increasing by <span class="c-time-dim-description__accent">{{ formatX(multPerTickspeed, 2, 2) }}</span> per
         Tickspeed upgrade gained.
       </p>
     </div>
@@ -114,12 +97,10 @@ export default {
     <div>
       Time Dimension costs jump at {{ format(costIncreases[0], 2, 2) }} and {{ format(costIncreases[1]) }} Eternity
       Points,
-      <br>
+      <br />
       and costs increase much faster after {{ format(costIncreases[2]) }} Eternity Points.
-      <br>
-      <div v-if="showLockedDimCostNote">
-        Hold shift to see the Eternity Point cost for locked Time Dimensions.
-      </div>
+      <br />
+      <div v-if="showLockedDimCostNote">Hold shift to see the Eternity Point cost for locked Time Dimensions.</div>
       Any 8th Time Dimensions purchased above {{ format(1e8) }} will not further increase the multiplier.
     </div>
   </div>

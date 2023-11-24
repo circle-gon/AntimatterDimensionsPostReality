@@ -4,8 +4,8 @@ export default {
   props: {
     blackHole: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -16,23 +16,19 @@ export default {
   computed: {
     id() {
       return this.blackHole.id;
-    }
+    },
   },
   methods: {
     update() {
       this.isUnlocked = this.blackHole.isUnlocked;
       this.state = this.blackHole.displayState;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <span v-if="isUnlocked">
-    🌀{{ id }}:<span v-html="state" />
-  </span>
+  <span v-if="isUnlocked"> 🌀{{ id }}:<span v-html="state" /> </span>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -4,7 +4,7 @@ import GlyphComponent from "@/components/GlyphComponent";
 export default {
   name: "EquippedGlyphs",
   components: {
-    GlyphComponent
+    GlyphComponent,
   },
   data() {
     return {
@@ -37,8 +37,8 @@ export default {
     undoTooltip() {
       if (!this.undoSlotsAvailable) return "You do not have available inventory space to unequip Glyphs to";
       return this.undoAvailable
-        ? ("Unequip the last equipped Glyph and rewind Reality to when you equipped it." +
-          " (Most resources will be fully reset)")
+        ? "Unequip the last equipped Glyph and rewind Reality to when you equipped it." +
+            " (Most resources will be fully reset)"
         : "Undo is only available for Glyphs equipped during this Reality";
     },
     unequipText() {
@@ -68,7 +68,7 @@ export default {
         "l-glyph-equip-button": this.isDoomed,
         "l-glyph-equip-button-short": !this.isDoomed,
       };
-    }
+    },
   },
   created() {
     this.on$(GAME_EVENT.GLYPHS_EQUIPPED_CHANGED, this.glyphsChanged);
@@ -86,7 +86,7 @@ export default {
       this.cosmeticGlow = player.reality.glyphs.cosmetics.glowNotification;
     },
     glyphPositionStyle(idx) {
-      const angle = 2 * Math.PI * idx / this.slotCount;
+      const angle = (2 * Math.PI * idx) / this.slotCount;
       const dx = -this.GLYPH_SIZE / 2 + this.arrangementRadius * Math.sin(angle);
       const dy = -this.GLYPH_SIZE / 2 + this.arrangementRadius * Math.cos(angle);
       return {
@@ -128,14 +128,14 @@ export default {
     },
     dragEvents(idx) {
       return {
-        dragover: $event => this.dragover($event, idx),
+        dragover: ($event) => this.dragover($event, idx),
         dragleave: () => this.dragleave(idx),
-        drop: $event => this.drop($event, idx),
+        drop: ($event) => this.drop($event, idx),
       };
     },
     showEquippedModal() {
       // If there aren't any glyphs equipped, the array is full of nulls which get filtered out by x => x
-      if (this.glyphs.filter(x => x).length === 0) return;
+      if (this.glyphs.filter((x) => x).length === 0) return;
       Modal.glyphShowcasePanel.show({
         name: "Equipped Glyphs",
         glyphSet: this.glyphs,
@@ -151,8 +151,8 @@ export default {
         const sound = idx + (increaseSound ? 6 : 1);
         new Audio(`audio/note${sound}.mp3`).play();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -182,8 +182,11 @@ export default {
         />
         <div
           v-else
-          :class="['l-equipped-glyphs__empty', 'c-equipped-glyphs__empty',
-                   {'c-equipped-glyphs__empty--dragover': dragoverIndex === idx}]"
+          :class="[
+            'l-equipped-glyphs__empty',
+            'c-equipped-glyphs__empty',
+            { 'c-equipped-glyphs__empty--dragover': dragoverIndex === idx },
+          ]"
         />
       </div>
     </div>
@@ -200,24 +203,21 @@ export default {
       <button
         v-if="undoVisible"
         class="l-glyph-equip-button c-reality-upgrade-btn"
-        :class="{'c-reality-upgrade-btn--unavailable': !undoAvailable}"
+        :class="{ 'c-reality-upgrade-btn--unavailable': !undoAvailable }"
         :ach-tooltip="undoTooltip"
         @click="undo"
       >
         <span>Rewind to <b>undo</b> the last equipped Glyph</span>
       </button>
-      <button
-        class="l-glyph-equip-button c-reality-upgrade-btn"
-        @click="toggleRespecIntoProtected"
-      >
+      <button class="l-glyph-equip-button c-reality-upgrade-btn" @click="toggleRespecIntoProtected">
         Unequip Glyphs to:
-        <br>
+        <br />
         <span v-if="respecIntoProtected">Protected slots</span>
         <span v-else>Main inventory</span>
       </button>
       <button
         class="l-glyph-equip-button-short c-reality-upgrade-btn"
-        :class="{'tutorial--glow': cosmeticGlow}"
+        :class="{ 'tutorial--glow': cosmeticGlow }"
         @click="showOptionModal"
       >
         Open Glyph Visual Options

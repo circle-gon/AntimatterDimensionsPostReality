@@ -4,8 +4,8 @@ export default {
   props: {
     tier: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -46,21 +46,21 @@ export default {
       return {
         "o-dark-matter-dimension-button": true,
         "o-dark-matter-dimension-button--available": this.canBuyInterval,
-        "o-dark-matter-dimension-button--ascend": this.isIntervalCapped
+        "o-dark-matter-dimension-button--ascend": this.isIntervalCapped,
       };
     },
     darkMatterClassObject() {
       return {
         "o-dark-matter-dimension-button": true,
         "o-dark-matter-dimension-button--available": this.hoverOverAscension || this.canBuyPowerDM,
-        "o-dark-matter-dimension-button--accent": this.hoverOverAscension
+        "o-dark-matter-dimension-button--accent": this.hoverOverAscension,
       };
     },
     darkEnergyClassObject() {
       return {
         "o-dark-matter-dimension-button": true,
         "o-dark-matter-dimension-button--available": this.hoverOverAscension || this.canBuyPowerDE,
-        "o-dark-matter-dimension-button--accent": this.hoverOverAscension
+        "o-dark-matter-dimension-button--accent": this.hoverOverAscension,
       };
     },
     intervalText() {
@@ -78,7 +78,7 @@ export default {
       const str = `DM ${formatX(dm, 2, 2)}`;
       const line1 = this.hoverOverAscension ? `<b>${str}</b>` : str;
 
-      const ascMult = this.powerDMPerAscension * this.interval / this.intervalAfterAscension;
+      const ascMult = (this.powerDMPerAscension * this.interval) / this.intervalAfterAscension;
       const line2 = this.hoverOverAscension
         ? `${formatX(ascMult, 2, 2)} / sec`
         : `Cost: ${this.formatDMCost(this.powerDMCost)} DM`;
@@ -88,7 +88,7 @@ export default {
       const de = this.powerDE.mul(this.hoverOverAscension ? POWER_DE_PER_ASCENSION : 1);
       const str = `DE +${format(de, 2, 4)}`;
       const line1 = this.hoverOverAscension ? `<b>${str}</b>` : str;
-      const ascMult = POWER_DE_PER_ASCENSION * this.interval / this.intervalAfterAscension;
+      const ascMult = (POWER_DE_PER_ASCENSION * this.interval) / this.intervalAfterAscension;
       const line2 = this.hoverOverAscension
         ? `${formatX(ascMult, 2, 2)} / sec`
         : `Cost: ${this.formatDMCost(this.powerDECost)} DM`;
@@ -98,7 +98,7 @@ export default {
       return `Interval is capped at ${formatInt(DarkMatterDimension(this.tier).intervalPurchaseCap)}ms.
         Ascension multiplies interval by ${formatInt(this.intervalAscensionBump)},
         DM by ${formatInt(this.powerDMPerAscension)}, and DE by ${formatInt(POWER_DE_PER_ASCENSION)}.`;
-    }
+    },
   },
   methods: {
     update() {
@@ -152,23 +152,18 @@ export default {
     hoverState(state) {
       if (!this.isIntervalCapped) return;
       this.hoverOverAscension = state;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="isUnlocked"
-    class="c-dark-matter-dimension-container"
-  >
+  <div v-if="isUnlocked" class="c-dark-matter-dimension-container">
     <div class="o-dark-matter-dimension-amount">
-      {{ name }}<span v-if="hasAscended"> {{ ascensionText }}</span>: {{ format(amount, 2) }}
+      {{ name }}<span v-if="hasAscended"> {{ ascensionText }}</span
+      >: {{ format(amount, 2) }}
     </div>
-    <div>
-      Average gain: {{ format(productionPerSecond, 2, 2) }}/s
-      (+{{ format(percentPerSecond, 2, 2) }}%/s)
-    </div>
+    <div>Average gain: {{ format(productionPerSecond, 2, 2) }}/s (+{{ format(percentPerSecond, 2, 2) }}%/s)</div>
     <div class="c-dark-matter-dimension-buttons">
       <button
         :class="intervalClassObject"
@@ -176,35 +171,20 @@ export default {
         @mouseover="hoverState(true)"
         @mouseleave="hoverState(false)"
       >
-        <span
-          v-if="isIntervalCapped"
-          :ach-tooltip="ascensionTooltip"
-        >
+        <span v-if="isIntervalCapped" :ach-tooltip="ascensionTooltip">
           <i class="fas fa-question-circle" />
         </span>
         <span v-html="intervalText" />
       </button>
-      <button
-        :class="darkMatterClassObject"
-        @click="buyPowerDM"
-      >
+      <button :class="darkMatterClassObject" @click="buyPowerDM">
         <span v-html="darkMatterText" />
       </button>
-      <button
-        :class="darkEnergyClassObject"
-        @click="buyPowerDE"
-      >
+      <button :class="darkEnergyClassObject" @click="buyPowerDE">
         <span v-html="darkEnergyText" />
       </button>
     </div>
-    <div v-if="interval > 200">
-      Tick: {{ formatInt(timer) }} ms ({{ formatPercents(timerPercent, 1) }})
-    </div>
-    <div v-else>
-      {{ format(1000 / interval, 2, 2) }} ticks / sec
-    </div>
-    <div>
-      Dark Energy: {{ format(darkEnergyPerSecond, 2, 4) }}/s ({{ formatPercents(portionDE, 1) }} of total)
-    </div>
+    <div v-if="interval > 200">Tick: {{ formatInt(timer) }} ms ({{ formatPercents(timerPercent, 1) }})</div>
+    <div v-else>{{ format(1000 / interval, 2, 2) }} ticks / sec</div>
+    <div>Dark Energy: {{ format(darkEnergyPerSecond, 2, 4) }}/s ({{ formatPercents(portionDE, 1) }} of total)</div>
   </div>
 </template>

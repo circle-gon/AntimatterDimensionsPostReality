@@ -4,7 +4,7 @@ export default {
   props: {
     currentScriptId: {
       type: [Number, String],
-      required: true
+      required: true,
     },
   },
   data() {
@@ -41,7 +41,7 @@ export default {
     },
     fullScreen() {
       this.$nextTick(() => this.UI.editor.refresh());
-    }
+    },
   },
   created() {
     AutomatorTextUI.initialize();
@@ -91,7 +91,7 @@ export default {
       if (`${this.currentScriptId}` === scriptID) this.markActiveLine(lineNumber);
       else this.unmarkActiveLine();
     },
-  }
+  },
 };
 
 export const AutomatorTextUI = {
@@ -107,17 +107,17 @@ export const AutomatorTextUI = {
     theme: "liquibyte",
     tabSize: 2,
     extraKeys: {
-      Tab: cm => cm.execCommand("indentMore"),
-      "Shift-Tab": cm => cm.execCommand("indentLess"),
+      Tab: (cm) => cm.execCommand("indentMore"),
+      "Shift-Tab": (cm) => cm.execCommand("indentLess"),
     },
     autoCloseBrackets: true,
-    lineWrapping: true
+    lineWrapping: true,
   },
   initialize() {
     if (this.container) return;
     this.setUpContainer();
     this.setUpEditor();
-    EventHub.ui.on(GAME_EVENT.GAME_LOAD, () => this.documents = {});
+    EventHub.ui.on(GAME_EVENT.GAME_LOAD, () => (this.documents = {}));
   },
   setUpContainer() {
     this.container = document.createElement("div");
@@ -181,8 +181,5 @@ export const AutomatorTextUI = {
 </script>
 
 <template>
-  <div
-    ref="container"
-    class="c-automator-editor l-automator-editor l-automator-pane__content"
-  />
+  <div ref="container" class="c-automator-editor l-automator-editor l-automator-pane__content" />
 </template>

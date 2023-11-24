@@ -12,7 +12,7 @@ export default {
   computed: {
     lineClass() {
       return this.enableAnimation ? undefined : "c-disable-ticker-animation";
-    }
+    },
   },
   beforeCreate() {
     this.recentTickers = [];
@@ -51,20 +51,20 @@ export default {
       if (line === undefined) return;
 
       // Prevent tickers from repeating if they aren't unlocked or were seen recently
-      const canShow = news => (news.unlocked ?? true) && !this.recentTickers.includes(news.id);
+      const canShow = (news) => (news.unlocked ?? true) && !this.recentTickers.includes(news.id);
 
-      if (nextNewsMessageId && GameDatabase.news.find(message => message.id === nextNewsMessageId)) {
-        this.currentNews = GameDatabase.news.find(message => message.id === nextNewsMessageId);
+      if (nextNewsMessageId && GameDatabase.news.find((message) => message.id === nextNewsMessageId)) {
+        this.currentNews = GameDatabase.news.find((message) => message.id === nextNewsMessageId);
         nextNewsMessageId = undefined;
       } else if (this.currentNews && this.currentNews.id === "a236") {
         this.currentNews = GameDatabase.news
-          .filter(message => message.isAdvertising && canShow(message))
+          .filter((message) => message.isAdvertising && canShow(message))
           .randomElement();
       } else {
         const isAI = Math.random() < player.options.news.AIChance;
         this.currentNews = GameDatabase.news
-          .filter(message => message.id.includes("ai") === isAI)
-          .filter(message => canShow(message))
+          .filter((message) => message.id.includes("ai") === isAI)
+          .filter((message) => canShow(message))
           .randomElement();
       }
 
@@ -78,10 +78,7 @@ export default {
       let text = this.currentNews.text;
       if (STEAM) {
         window.openNewsLink = openExternalLink;
-        text = text.replace(
-          /href=['"]([^"']+)['"]/gu,
-          "href onClick='window.openNewsLink(\"$1\"); return false;'"
-        );
+        text = text.replace(/href=['"]([^"']+)['"]/gu, "href onClick='window.openNewsLink(\"$1\"); return false;'");
       }
       line.innerHTML = text;
 
@@ -123,21 +120,13 @@ export default {
       if (updatedText !== undefined) {
         this.$refs.line.innerHTML = updatedText;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    ref="ticker"
-    class="c-news-ticker"
-  >
-    <span
-      ref="line"
-      class="c-news-line c-news-ticker__line"
-      :class="lineClass"
-      @click="onLineClick"
-    />
+  <div ref="ticker" class="c-news-ticker">
+    <span ref="line" class="c-news-line c-news-ticker__line" :class="lineClass" @click="onLineClick" />
   </div>
 </template>

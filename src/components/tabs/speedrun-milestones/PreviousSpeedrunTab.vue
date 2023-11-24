@@ -54,13 +54,11 @@ export default {
       return Object.keys(this.previousRuns).length;
     },
     highestIndex() {
-      return Math.max(this.previousRuns.map(k => Number(k.id)).max(), player.records.fullGameCompletions);
+      return Math.max(this.previousRuns.map((k) => Number(k.id)).max(), player.records.fullGameCompletions);
     },
     spectateText() {
-      return this.isSpectating
-        ? "Numbers here are unaffected by END so that you can see your final records."
-        : null;
-    }
+      return this.isSpectating ? "Numbers here are unaffected by END so that you can see your final records." : null;
+    },
   },
   methods: {
     update() {
@@ -71,74 +69,54 @@ export default {
       this.selectedRun = index;
     },
     findRun(index) {
-      return this.previousRuns.find(r => r?.id === 10 * this.runPage + index);
+      return this.previousRuns.find((r) => r?.id === 10 * this.runPage + index);
     },
     changePage(dir) {
       this.runPage = Math.clamp(this.runPage + dir, 0, Math.floor(this.highestIndex / 10));
-    }
+    },
   },
 };
 </script>
 
 <template>
   <div class="c-previous-runs">
-    <b>You have completed {{ quantify("speedrun", numRuns, 0, 0, x => x) }} prior to this playthrough.</b>
+    <b>You have completed {{ quantify("speedrun", numRuns, 0, 0, (x) => x) }} prior to this playthrough.</b>
     <b>Statistics of previous runs are below, mouseover icons for more details.</b>
     <b>Click the magnifying glass to compare the milestones on a particular run to this run.</b>
     <b>{{ spectateText }}</b>
-    <br>
-    <div
-      v-if="highestIndex > 10"
-      class="c-run-page-nav"
-    >
+    <br />
+    <div v-if="highestIndex > 10" class="c-run-page-nav">
       <PrimaryButton
         class="o-primary-btn--subtab-option fas fa-arrow-left"
-        :class="{ 'o-primary-btn--disabled' : runPage === 0 }"
+        :class="{ 'o-primary-btn--disabled': runPage === 0 }"
         @click="changePage(-1)"
       />
       Showing runs {{ 10 * runPage + 1 }} to {{ 10 * (runPage + 1) }} ({{ highestIndex }} total runs)
       <PrimaryButton
         class="o-primary-btn--subtab-option fas fa-arrow-right"
-        :class="{ 'o-primary-btn--disabled' : runPage + 1 > highestIndex / 10 }"
+        :class="{ 'o-primary-btn--disabled': runPage + 1 > highestIndex / 10 }"
         @click="changePage(1)"
       />
     </div>
     <div class="c-previous-runs">
-      <span
-        v-for="entry in 10"
-        :key="entry"
-      >
-        <span
-          v-if="10 * runPage + entry <= highestIndex"
-          class="c-single-run"
-        >
+      <span v-for="entry in 10" :key="entry">
+        <span v-if="10 * runPage + entry <= highestIndex" class="c-single-run">
           <PrimaryButton
             v-if="findRun(entry)"
             class="o-primary-btn--subtab-option fas fa-magnifying-glass"
-            :class="{ 'o-selected-btn' : selectedRun === 10 * runPage + entry }"
+            :class="{ 'o-selected-btn': selectedRun === 10 * runPage + entry }"
             @click="selectRun(10 * runPage + entry)"
           />
-          <PreviousSpeedrunInfo
-            :prev-run-info="findRun(entry)"
-            :index="10 * runPage + entry"
-          />
+          <PreviousSpeedrunInfo :prev-run-info="findRun(entry)" :index="10 * runPage + entry" />
         </span>
       </span>
     </div>
-    <br>
+    <br />
     <div class="c-legend">
-      <div class="c-legend-cell">
-        <span class="o-box l-milestone-none" /> Not reached this run
-      </div>
-      <div class="c-legend-cell">
-        <span class="o-box l-milestone-slow" /> Slower than comparison
-      </div>
-      <div class="c-legend-cell">
-        <span class="o-box l-milestone-fast" /> Faster than comparison
-      </div>
-      <div class="c-legend-cell">
-        <span class="o-box l-milestone-fastest" /> Faster than best
-      </div>
+      <div class="c-legend-cell"><span class="o-box l-milestone-none" /> Not reached this run</div>
+      <div class="c-legend-cell"><span class="o-box l-milestone-slow" /> Slower than comparison</div>
+      <div class="c-legend-cell"><span class="o-box l-milestone-fast" /> Faster than comparison</div>
+      <div class="c-legend-cell"><span class="o-box l-milestone-fastest" /> Faster than best</div>
     </div>
     <div class="l-speedrun-milestone-tab">
       <SpeedrunMilestoneCompare
@@ -146,7 +124,7 @@ export default {
         :key="milestone.id"
         :milestone="milestone"
         :curr-time="milestoneTimes[milestone.id]"
-        :ref-time="selectedRun ? previousRuns.find(run => run.id === selectedRun).records[milestone.id] : null"
+        :ref-time="selectedRun ? previousRuns.find((run) => run.id === selectedRun).records[milestone.id] : null"
         :best-time="bestPreviousTimes[milestone.id].time"
         :run-indices="[selectedRun, bestPreviousTimes[milestone.id].index]"
       />

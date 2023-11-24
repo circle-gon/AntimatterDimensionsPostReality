@@ -13,7 +13,7 @@ export class PercentageRollingAverage {
   }
 
   get average() {
-    const dataPoints = this.dataPoints.filter(p => p !== undefined);
+    const dataPoints = this.dataPoints.filter((p) => p !== undefined);
     if (dataPoints.length === 0) {
       return [];
     }
@@ -21,7 +21,7 @@ export class PercentageRollingAverage {
     const average = [];
     const reference = dataPoints[0];
     for (let i = 0; i < reference.length; i++) {
-      average[i] = dataPoints.map(p => p[i]).sum() / dataPoints.length;
+      average[i] = dataPoints.map((p) => p[i]).sum() / dataPoints.length;
     }
 
     return average;

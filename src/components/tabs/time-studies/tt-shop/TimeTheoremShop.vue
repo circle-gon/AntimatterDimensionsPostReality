@@ -8,7 +8,7 @@ export default {
   components: {
     PrimaryToggleButton,
     TimeTheoremBuyButton,
-    TimeStudySaveLoadButton
+    TimeStudySaveLoadButton,
   },
   data() {
     return {
@@ -22,12 +22,12 @@ export default {
       budget: {
         am: new Decimal(0),
         ip: new Decimal(0),
-        ep: new Decimal(0)
+        ep: new Decimal(0),
       },
       costs: {
         am: new Decimal(0),
         ip: new Decimal(0),
-        ep: new Decimal(0)
+        ep: new Decimal(0),
       },
       showST: false,
       STamount: 0,
@@ -44,16 +44,20 @@ export default {
       if (this.theoremAmount.gte(1e6)) {
         return format;
       }
-      if (!(Teresa.isRunning || Enslaved.isRunning) &&
-        getAdjustedGlyphEffect("dilationTTgen") > 0 && !DilationUpgrade.ttGenerator.isBought) {
+      if (
+        !(Teresa.isRunning || Enslaved.isRunning) &&
+        getAdjustedGlyphEffect("dilationTTgen") > 0 &&
+        !DilationUpgrade.ttGenerator.isBought
+      ) {
         return formatFloat;
       }
       return formatInt;
     },
     TTgenRateText() {
       if (this.theoremGeneration.lt(1 / 3600)) {
-        return `one TT every ${TimeSpan.fromSeconds(
-          this.theoremGeneration.reciprocal().toNumber()).toStringShort(false)}`;
+        return `one TT every ${TimeSpan.fromSeconds(this.theoremGeneration.reciprocal().toNumber()).toStringShort(
+          false
+        )}`;
       }
       if (this.theoremGeneration.lt(0.1)) {
         return `${format(this.theoremGeneration.times(3600), 2, 2)} TT/hour`;
@@ -66,7 +70,7 @@ export default {
     minimizeArrowStyle() {
       return {
         transform: this.minimized ? "rotate(-180deg)" : "",
-        transition: "all 0.25s ease-out"
+        transition: "all 0.25s ease-out",
       };
     },
     saveLoadText() {
@@ -76,7 +80,7 @@ export default {
       return {
         height: this.hasTTAutobuyer ? "6.7rem" : "4.4rem",
       };
-    }
+    },
   },
   watch: {
     isAutobuyerOn(newValue) {
@@ -130,12 +134,12 @@ export default {
       this.showST = V.spaceTheorems > 0 && !Pelle.isDoomed;
       this.STamount = V.availableST;
       this.hasTTGen = this.theoremGeneration.gt(0);
-      this.showTTGen = this.hasTTGen && (ui.view.shiftDown === this.invertTTgenDisplay);
+      this.showTTGen = this.hasTTGen && ui.view.shiftDown === this.invertTTgenDisplay;
       this.invertTTgenDisplay = player.options.invertTTgenDisplay;
     },
     toggleTTgen() {
       this.invertTTgenDisplay = !this.invertTTgenDisplay;
-    }
+    },
   },
 };
 </script>
@@ -143,10 +147,7 @@ export default {
 <template>
   <div class="time-theorem-buttons">
     <div class="ttshop-container ttshop-background">
-      <div
-        data-role="page"
-        class="ttbuttons-row ttbuttons-top-row"
-      >
+      <div data-role="page" class="ttbuttons-row ttbuttons-top-row">
         <button
           class="l-tt-save-load-btn c-tt-buy-button c-tt-buy-button--unlocked"
           onClick="Modal.preferredTree.show()"
@@ -158,18 +159,14 @@ export default {
             {{ quantify("Time Theorem", theoremAmount, 2, 0, formatTimeTheoremType) }}
           </span>
           <span v-if="showST">
-            <br>
+            <br />
             {{ quantifyInt("Space Theorem", STamount) }}
           </span>
         </p>
         <div class="l-load-tree-area">
           <div class="l-tree-load-button-wrapper">
             <span class="c-ttshop__save-load-text">{{ saveLoadText }}</span>
-            <TimeStudySaveLoadButton
-              v-for="saveslot in 6"
-              :key="saveslot"
-              :saveslot="saveslot"
-            />
+            <TimeStudySaveLoadButton v-for="saveslot in 6" :key="saveslot" :saveslot="saveslot" />
           </div>
           <div class="tt-gen-container">
             <span
@@ -184,40 +181,17 @@ export default {
                 :value="invertTTgenDisplay"
                 class="o-clickable"
                 @input="toggleTTgen()"
-              >
+              />
             </span>
-            <span v-if="showTTGen">
-              You are gaining {{ TTgenRateText }}.
-            </span>
-            <span v-else>
-              You have {{ totalTimeTheoremText }}.
-            </span>
+            <span v-if="showTTGen"> You are gaining {{ TTgenRateText }}. </span>
+            <span v-else> You have {{ totalTimeTheoremText }}. </span>
           </div>
         </div>
       </div>
-      <div
-        v-if="!minimized"
-        class="ttbuttons-row"
-        :style="shopBottomRowHeightStyle"
-      >
-        <TimeTheoremBuyButton
-          :budget="budget.am"
-          :cost="costs.am"
-          :format-cost="formatAM"
-          :action="buyWithAM"
-        />
-        <TimeTheoremBuyButton
-          :budget="budget.ip"
-          :cost="costs.ip"
-          :format-cost="formatIP"
-          :action="buyWithIP"
-        />
-        <TimeTheoremBuyButton
-          :budget="budget.ep"
-          :cost="costs.ep"
-          :format-cost="formatEP"
-          :action="buyWithEP"
-        />
+      <div v-if="!minimized" class="ttbuttons-row" :style="shopBottomRowHeightStyle">
+        <TimeTheoremBuyButton :budget="budget.am" :cost="costs.am" :format-cost="formatAM" :action="buyWithAM" />
+        <TimeTheoremBuyButton :budget="budget.ip" :cost="costs.ip" :format-cost="formatIP" :action="buyWithIP" />
+        <TimeTheoremBuyButton :budget="budget.ep" :cost="costs.ep" :format-cost="formatEP" :action="buyWithEP" />
         <div class="l-tt-buy-max-vbox">
           <button
             v-if="!minimized"
@@ -234,20 +208,10 @@ export default {
           />
         </div>
       </div>
-      <div
-        v-else
-        class="ttbuttons-row ttbuttons-bottom-row-hide"
-      />
+      <div v-else class="ttbuttons-row ttbuttons-bottom-row-hide" />
     </div>
-    <button
-      v-if="minimizeAvailable"
-      class="ttshop-minimize-btn ttshop-background"
-      @click="minimize"
-    >
-      <span
-        class="minimize-arrow"
-        :style="minimizeArrowStyle"
-      >▼</span>
+    <button v-if="minimizeAvailable" class="ttshop-minimize-btn ttshop-background" @click="minimize">
+      <span class="minimize-arrow" :style="minimizeArrowStyle">▼</span>
     </button>
   </div>
 </template>

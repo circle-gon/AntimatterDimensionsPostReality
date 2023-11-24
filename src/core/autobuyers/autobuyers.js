@@ -44,21 +44,17 @@ export const Autobuyer = {
   singularity: new SingularityAutobuyerState(),
   tickspeed: new TickspeedAutobuyerState(),
   timeDimension: TimeDimensionAutobuyerState.createAccessor(),
-  timeTheorem: new TimeTheoremAutobuyerState()
+  timeTheorem: new TimeTheoremAutobuyerState(),
 };
 
-export const Autobuyers = (function() {
+export const Autobuyers = (function () {
   const antimatterDimensions = Autobuyer.antimatterDimension.zeroIndexed;
   const infinityDimensions = Autobuyer.infinityDimension.zeroIndexed;
   const timeDimensions = Autobuyer.timeDimension.zeroIndexed;
 
   const dimensions = [antimatterDimensions, infinityDimensions, timeDimensions];
 
-  const prestige = [
-    Autobuyer.bigCrunch,
-    Autobuyer.eternity,
-    Autobuyer.reality,
-  ];
+  const prestige = [Autobuyer.bigCrunch, Autobuyer.eternity, Autobuyer.reality];
 
   const single = [
     Autobuyer.sacrifice,
@@ -72,11 +68,7 @@ export const Autobuyers = (function() {
     Autobuyer.annihilation,
   ];
 
-  const singleComplex = [
-    Autobuyer.tickspeed,
-    Autobuyer.galaxy,
-    Autobuyer.dimboost,
-  ].concat(single);
+  const singleComplex = [Autobuyer.tickspeed, Autobuyer.galaxy, Autobuyer.dimboost].concat(single);
 
   const arrays = [
     Autobuyer.replicantiUpgrade.zeroIndexed,
@@ -104,19 +96,17 @@ export const Autobuyers = (function() {
       Autobuyer.tickspeed,
       Autobuyer.dimboost,
       Autobuyer.galaxy,
-      Autobuyer.bigCrunch,
+      Autobuyer.bigCrunch
     ),
 
     get unlocked() {
-      return Autobuyers.all.filter(a => a.isUnlocked || a.isBought);
+      return Autobuyers.all.filter((a) => a.isUnlocked || a.isBought);
     },
 
     get hasAutobuyersForEditModal() {
-      return [Autobuyer.dimboost,
-        Autobuyer.galaxy,
-        Autobuyer.bigCrunch,
-        Autobuyer.eternity,
-        Autobuyer.reality].some(autobuyer => autobuyer.isUnlocked);
+      return [Autobuyer.dimboost, Autobuyer.galaxy, Autobuyer.bigCrunch, Autobuyer.eternity, Autobuyer.reality].some(
+        (autobuyer) => autobuyer.isUnlocked
+      );
     },
 
     toggle() {
@@ -137,7 +127,7 @@ export const Autobuyers = (function() {
     },
 
     resetTick(prestigeEvent) {
-      const autobuyers = Autobuyers.all.filter(n => n.resetTick !== undefined);
+      const autobuyers = Autobuyers.all.filter((n) => n.resetTick !== undefined);
       for (const autobuyer of autobuyers) {
         autobuyer.resetTick(prestigeEvent);
       }
@@ -147,9 +137,9 @@ export const Autobuyers = (function() {
       for (const autobuyer of Autobuyers.all) {
         autobuyer.reset();
       }
-    }
+    },
   };
-}());
+})();
 
 EventHub.logic.on(GAME_EVENT.ETERNITY_RESET_AFTER, () => Autobuyers.reset());
 EventHub.logic.on(GAME_EVENT.REALITY_RESET_AFTER, () => Autobuyers.reset());

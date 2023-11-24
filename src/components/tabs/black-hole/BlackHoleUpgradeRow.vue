@@ -4,13 +4,13 @@ import BlackHoleUpgradeButton from "@/components/tabs/black-hole/BlackHoleUpgrad
 export default {
   name: "BlackHoleUpgradeRow",
   components: {
-    BlackHoleUpgradeButton
+    BlackHoleUpgradeButton,
   },
   props: {
     blackHole: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -29,7 +29,7 @@ export default {
         upgrade: this.blackHole.intervalUpgrade,
         description: () => `Reduce ${this.blackHoleDescription}'s inactive time by ${formatPercents(0.2)}`,
         effectTitle: "Current interval",
-        formatEffect: () => `${TimeSpan.fromSeconds(this.blackHole.rawInterval).toStringShort(false)}`
+        formatEffect: () => `${TimeSpan.fromSeconds(this.blackHole.rawInterval).toStringShort(false)}`,
       };
     },
     powerConfig() {
@@ -37,7 +37,7 @@ export default {
         upgrade: this.blackHole.powerUpgrade,
         description: () => `Make ${this.blackHoleDescription} ${formatPercents(0.35)} stronger`,
         effectTitle: "Current power",
-        formatEffect: value => `${formatX(value, 2, 2)}`
+        formatEffect: (value) => `${formatX(value, 2, 2)}`,
       };
     },
     durationConfig() {
@@ -45,9 +45,9 @@ export default {
         upgrade: this.blackHole.durationUpgrade,
         description: () => `Extend ${this.blackHoleDescription}'s duration by ${formatPercents(0.3)}`,
         effectTitle: "Current duration",
-        formatEffect: () => `${TimeSpan.fromSeconds(this.blackHole.duration).toStringShort(false)}`
+        formatEffect: () => `${TimeSpan.fromSeconds(this.blackHole.duration).toStringShort(false)}`,
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -59,30 +59,17 @@ export default {
       // we use these values as keys so that the buttons are forced to re-render immediately if they're ever changed
       this.intervalVal = bh.rawInterval;
       this.durationVal = bh.duration;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="isUnlocked"
-    class="l-black-hole-upgrade-grid__row"
-  >
-    <BlackHoleUpgradeButton
-      v-if="!isPermanent"
-      :key="intervalVal"
-      :config="intervalConfig"
-    />
+  <div v-if="isUnlocked" class="l-black-hole-upgrade-grid__row">
+    <BlackHoleUpgradeButton v-if="!isPermanent" :key="intervalVal" :config="intervalConfig" />
     <BlackHoleUpgradeButton :config="powerConfig" />
-    <BlackHoleUpgradeButton
-      v-if="!isPermanent"
-      :key="durationVal"
-      :config="durationConfig"
-    />
+    <BlackHoleUpgradeButton v-if="!isPermanent" :key="durationVal" :config="durationConfig" />
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

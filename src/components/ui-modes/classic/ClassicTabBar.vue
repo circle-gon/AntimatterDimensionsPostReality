@@ -14,15 +14,8 @@ export default {
 
 <template>
   <div>
-    <ClassicTabButton
-      v-for="(tab, i) in tabs"
-      :key="i"
-      :tab-position="i"
-      :tab="tab"
-    />
+    <ClassicTabButton v-for="(tab, i) in tabs" :key="i" :tab-position="i" :tab="tab" />
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

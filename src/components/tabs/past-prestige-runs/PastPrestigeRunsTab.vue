@@ -4,7 +4,7 @@ import PastPrestigeRunsContainer from "./PastPrestigeRunsContainer";
 export default {
   name: "PastPrestigeRunsTab",
   components: {
-    PastPrestigeRunsContainer
+    PastPrestigeRunsContainer,
   },
   data() {
     return {
@@ -14,7 +14,7 @@ export default {
           plural: "Collapses",
           currency: "Atom",
           condition: () => PlayerProgress.atomUnlocked(),
-          getRuns: () => player.records.recentCollapses
+          getRuns: () => player.records.recentCollapses,
         },
         reality: {
           name: "Reality",
@@ -24,7 +24,7 @@ export default {
           getRuns: () => player.records.recentRealities,
           extra: ["Glyph Level", "Relic Shards"],
           showExtra: [() => true, () => TeresaUnlocks.effarig.canBeApplied],
-          formatExtra: [x => formatInt(x), x => format(x, 2)],
+          formatExtra: [(x) => formatInt(x), (x) => format(x, 2)],
           allowRate: [false, true],
           rateString: ["", "Relic Shard Rate"],
         },
@@ -36,7 +36,7 @@ export default {
           getRuns: () => player.records.recentEternities,
           extra: ["Tachyon Particles"],
           showExtra: [() => PlayerProgress.dilationUnlocked()],
-          formatExtra: [x => format(x, 2)],
+          formatExtra: [(x) => format(x, 2)],
           allowRate: [false],
         },
         infinity: {
@@ -64,7 +64,7 @@ export default {
         default:
           throw new Error("Unrecognized Statistics tab resource type");
       }
-    }
+    },
   },
   methods: {
     update() {
@@ -74,24 +74,17 @@ export default {
       const stateCount = Object.keys(RECENT_PRESTIGE_RESOURCE).length;
       player.options.statTabResources = (player.options.statTabResources + 1) % stateCount;
     },
-  }
+  },
 };
 </script>
 
 <template>
   <div class="c-stats-tab">
     <div class="c-subtab-option-container">
-      <button
-        class="o-primary-btn o-primary-btn--subtab-option"
-        @click="cycleButton()"
-      >
+      <button class="o-primary-btn o-primary-btn--subtab-option" @click="cycleButton()">
         Showing {{ resourceText }}
       </button>
     </div>
-    <PastPrestigeRunsContainer
-      v-for="layer in layers"
-      :key="layer.name"
-      :layer="layer"
-    />
+    <PastPrestigeRunsContainer v-for="layer in layers" :key="layer.name" :layer="layer" />
   </div>
 </template>

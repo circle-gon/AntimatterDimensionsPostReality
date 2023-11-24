@@ -1,4 +1,4 @@
-export const BlackHoleAnimation = (function() {
+export const BlackHoleAnimation = (function () {
   const PLANET_SIZE = 1.5;
   const PARTICLE_SIZE = 0.5;
   const PARTICLE_COUNT = 120;
@@ -34,12 +34,12 @@ export const BlackHoleAnimation = (function() {
      * @abstract
      */
     // eslint-disable-next-line no-empty-function, no-unused-vars
-    performDraw(context) { }
+    performDraw(context) {}
 
     static calculatePosition(distance, angle) {
       return {
         x: distance * Math.sin(2 * Math.PI * angle),
-        y: distance * Math.cos(2 * Math.PI * angle)
+        y: distance * Math.cos(2 * Math.PI * angle),
       };
     }
   }
@@ -55,9 +55,9 @@ export const BlackHoleAnimation = (function() {
     update(totalPhase, eccentricity, period) {
       // Update orbital position parameters (polar coordinates centered on hole,
       // theta goes 0 to 1 because I'm apparently stupid)
-      const E0 = eccentricAnomaly(eccentricity, 2 * Math.PI * totalPhase / period);
+      const E0 = eccentricAnomaly(eccentricity, (2 * Math.PI * totalPhase) / period);
       const r = SEMIMAJOR_AXIS * (1 - eccentricity * Math.cos(E0));
-      let theta = 2 * Math.atan(Math.sqrt((1 + eccentricity) / (1 - eccentricity) * Math.pow(Math.tan(E0 / 2), 2)));
+      let theta = 2 * Math.atan(Math.sqrt(((1 + eccentricity) / (1 - eccentricity)) * Math.pow(Math.tan(E0 / 2), 2)));
       if (Math.tan(E0 / 2) < 0) theta *= -1;
       this.distance = r;
       this.angle = theta / (2 * Math.PI);
@@ -126,7 +126,7 @@ export const BlackHoleAnimation = (function() {
     update(delta, dilationFactor) {
       const baseSpeed = 1.5;
       const speedFactor = Math.min(Math.pow(Math.max(dilationFactor, 2) / 2, 3), 5);
-      const particleSpeed = baseSpeed * speedFactor * Math.min(delta, 16) / 1000;
+      const particleSpeed = (baseSpeed * speedFactor * Math.min(delta, 16)) / 1000;
 
       if (!this.isInside) {
         this.preLastAngle = this.lastAngle;
@@ -170,7 +170,7 @@ export const BlackHoleAnimation = (function() {
 
       if (distance > holeSize) {
         // Trails outside black hole
-        const dist = Math.floor(127 * (distance - holeSize) / SEMIMAJOR_AXIS);
+        const dist = Math.floor((127 * (distance - holeSize)) / SEMIMAJOR_AXIS);
         context.strokeStyle = `rgb(${135 - dist}, ${dist}, ${dist})`;
       }
 
@@ -253,11 +253,11 @@ export const BlackHoleAnimation = (function() {
 
       // Particles (scaled to take the same range as the orbit)
       this.particles = Array.range(0, PARTICLE_COUNT).map(() => new Particle());
-      this.frameRequest = requestAnimationFrame(time => this.update(time));
+      this.frameRequest = requestAnimationFrame((time) => this.update(time));
     }
 
     update(time) {
-      this.frameRequest = requestAnimationFrame(t => this.update(t));
+      this.frameRequest = requestAnimationFrame((t) => this.update(t));
       if (time === undefined || this.lastFrame === undefined) {
         this.lastFrame = time;
         return;
@@ -274,7 +274,6 @@ export const BlackHoleAnimation = (function() {
       }
 
       if (BlackHoles.arePaused && !BlackHoles.areNegative) return;
-
 
       // Time dilation factor (Realistic formula, but only actually used for particle speed)
       const dilationFactor = 1 / Math.sqrt(1 - holeSize / this.planet.distance);
@@ -300,4 +299,4 @@ export const BlackHoleAnimation = (function() {
       cancelAnimationFrame(this.frameRequest);
     }
   };
-}());
+})();

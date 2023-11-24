@@ -25,7 +25,8 @@ export default {
   computed: {
     isDoomed: () => Pelle.isDoomed,
     singularityFormText() {
-      const formText = this.singularitiesGained.eq(1) ? "all Dark Energy into a Singularity"
+      const formText = this.singularitiesGained.eq(1)
+        ? "all Dark Energy into a Singularity"
         : `all Dark Energy into ${quantify("Singularity", this.singularitiesGained, 2)}`;
       if (this.canPerformSingularity) {
         return `Condense ${formText}`;
@@ -65,7 +66,7 @@ export default {
         ? `Decreasing the cap will immediately auto-condense for
           ${quantify("Singularity", singularities, 2)}!`
         : null;
-    }
+    },
   },
   methods: {
     update() {
@@ -109,25 +110,20 @@ export default {
         "o-pelle-disabled": this.isDoomed,
         "o-pelle-disabled-pointer": this.isDoomed,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="c-laitela-singularity-container">
     <div>
-      <h2>
-        You have {{ quantify("Singularity", singularities, 2) }}
-      </h2>
-      <button
-        :class="condenseClassObject()"
-        @click="doSingularity"
-      >
+      <h2>You have {{ quantify("Singularity", singularities, 2) }}</h2>
+      <button :class="condenseClassObject()" @click="doSingularity">
         <h2>
           {{ singularityFormText }}
         </h2>
-        <br v-if="singularityWaitText !== ''">
+        <br v-if="singularityWaitText !== ''" />
         <h2>
           {{ singularityWaitText }}
         </h2>
@@ -140,7 +136,7 @@ export default {
       <div v-if="unlockedBulkSingularity">
         <button
           class="c-laitela-singularity__cap-control"
-          :class="{ 'c-laitela-singularity__cap-control--available' : singularityCapIncreases > 0 }"
+          :class="{ 'c-laitela-singularity__cap-control--available': singularityCapIncreases > 0 }"
           :ach-tooltip="decreaseTooltip"
           @click="decreaseCap"
         >
@@ -152,28 +148,26 @@ export default {
         >
           Increase Singularity cap.
         </button>
-        <br>
+        <br />
         Each step increases the required Dark Energy by {{ formatX(10) }},
-        <br>
+        <br />
         but also increases gained Singularities by {{ formatX(perStepFactor) }}.
       </div>
       <div v-else>
-        <br>
+        <br />
         Reach {{ format(10) }} Singularities
-        <br>
+        <br />
         to unlock Bulk Singularities.
-        <br>
+        <br />
       </div>
-      <br>
+      <br />
       Total time to <span v-if="hasAutoSingularity">(auto-)</span>condense:
       {{ baseSingularityTime }}
-      <span v-if="hasAutoSingularity && autoSingularityFactor !== 1">
-        (+{{ additionalSingularityTime }})
-      </span>
-      <br>
+      <span v-if="hasAutoSingularity && autoSingularityFactor !== 1"> (+{{ additionalSingularityTime }}) </span>
+      <br />
       <span v-if="hasAutoSingularity && autoSingularityFactor !== 1">Manual </span>
       Singularity gain rate: {{ manualSingularityRate }}
-      <br>
+      <br />
       <span v-if="hasAutoSingularity && autoSingularityFactor !== 1">
         Automatic Singularity gain rate: {{ autoSingularityRate }}
       </span>

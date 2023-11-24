@@ -6,13 +6,13 @@ export default {
   name: "DilationTimeStudy",
   components: {
     DescriptionDisplay,
-    TimeStudyButton
+    TimeStudyButton,
   },
   props: {
     setup: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -45,7 +45,7 @@ export default {
       if (this.study.isBought || !this.study.cost || this.ttGen.eq(0)) return null;
       const time = Decimal.sub(this.study.cost, this.currTT).dividedBy(this.ttGen);
       return time.gt(0) ? `Enough TT in ${TimeSpan.fromSeconds(time.toNumber()).toStringShort()}` : null;
-    }
+    },
   },
   methods: {
     update() {
@@ -73,25 +73,19 @@ export default {
         default:
           throw new Error("Unrecognized Dilation study was clicked");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <TimeStudyButton
-    :setup="setup"
-    :ach-tooltip="theoremTimeEstimate"
-    :special-click="clickHandler()"
-  >
+  <TimeStudyButton :setup="setup" :ach-tooltip="theoremTimeEstimate" :special-click="clickHandler()">
     <DescriptionDisplay :config="study.config" />
     <template v-if="showRequirement">
-      <br>
+      <br />
       <span>{{ requirement }}</span>
     </template>
   </TimeStudyButton>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

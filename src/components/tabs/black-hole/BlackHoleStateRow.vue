@@ -4,8 +4,8 @@ export default {
   props: {
     blackHole: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -23,7 +23,7 @@ export default {
     },
     id() {
       return this.blackHole.id;
-    }
+    },
   },
   methods: {
     update() {
@@ -35,29 +35,21 @@ export default {
       this.isCharged = blackHole.isCharged;
       this.nextChange = TimeSpan.fromSeconds(blackHole.timeWithPreviousActiveToNextStateChange).toStringShort();
       this.state = blackHole.displayState;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <h3 v-if="isUnlocked">
     {{ description }} State:
-    <template v-if="isPermanent">
-      Permanently Active
-    </template>
-    <template v-else-if="isActive">
-      Active ({{ nextChange }} remaining)
-    </template>
+    <template v-if="isPermanent"> Permanently Active </template>
+    <template v-else-if="isActive"> Active ({{ nextChange }} remaining) </template>
     <template v-else-if="id === 2 && isCharged">
       Charged (Activates with Black Hole 1, {{ nextChange }} remaining)
     </template>
-    <template v-else>
-      Inactive (Activation in {{ nextChange }})
-    </template>
+    <template v-else> Inactive (Activation in {{ nextChange }}) </template>
   </h3>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

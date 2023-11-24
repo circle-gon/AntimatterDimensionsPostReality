@@ -9,12 +9,12 @@ export default {
     },
     action: {
       type: Function,
-      required: true
+      required: true,
     },
   },
   data() {
     return {
-      isLocked: false
+      isLocked: false,
     };
   },
   computed: {
@@ -26,22 +26,18 @@ export default {
       if (!this.isEnabled || this.isLocked) return "c-tt-buy-button--locked";
 
       return "c-tt-buy-button--unlocked";
-    }
+    },
   },
   methods: {
     update() {
       this.isLocked = player.eternities.eq(0);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <button
-    class="l-tt-buy-button c-tt-buy-button"
-    :class="enabledClass"
-    @click="action"
-  >
+  <button class="l-tt-buy-button c-tt-buy-button" :class="enabledClass" @click="action">
     {{ isLocked ? "Requires an Eternity to unlock" : formatCost(cost) }}
   </button>
 </template>

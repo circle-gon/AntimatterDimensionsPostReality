@@ -5,7 +5,7 @@ export default {
     return {
       isVisible: true,
       canCollapse: false,
-      shouldShow: false
+      shouldShow: false,
     };
   },
   computed: {
@@ -30,12 +30,6 @@ export default {
 
 <template>
   <div v-if="shouldShow">
-    <button
-      :class="buttonClassObject"
-      class="c-collapse-button"
-      @click="collapse"
-    >
-      Collapse this Universe
-    </button>
+    <button :class="buttonClassObject" class="c-collapse-button" @click="collapse">Collapse this Universe</button>
   </div>
 </template>

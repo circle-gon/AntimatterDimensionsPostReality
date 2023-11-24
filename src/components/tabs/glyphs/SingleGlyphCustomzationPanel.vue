@@ -6,7 +6,7 @@ export default {
   name: "SingleGlyphCustomzationPanel",
   components: {
     GlyphComponent,
-    PrimaryButton
+    PrimaryButton,
   },
   data() {
     return {
@@ -42,7 +42,7 @@ export default {
       if (this.glyph.color) changes.push("Color");
       if (changes.length === 0) return "None";
       return changes.join("/");
-    }
+    },
   },
   created() {
     // Whenever the inventory changes, this glyph might not exist afterwards
@@ -56,8 +56,10 @@ export default {
   },
   methods: {
     update() {
-      this.isVisible = player.reality.glyphs.cosmetics.active && (GlyphAppearanceHandler.availableTypes.length > 0 ||
-        CosmeticGlyphTypes.list.some(t => t.isCosmetic && t.isUnlocked()));
+      this.isVisible =
+        player.reality.glyphs.cosmetics.active &&
+        (GlyphAppearanceHandler.availableTypes.length > 0 ||
+          CosmeticGlyphTypes.list.some((t) => t.isCosmetic && t.isUnlocked()));
     },
     dragover(event) {
       if (!event.dataTransfer.types.includes(GLYPH_MIME_TYPE)) return;
@@ -74,53 +76,32 @@ export default {
     openModal() {
       Modal.singleGlyphAppearance.show({ glyphId: this.glyphID });
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="isVisible"
-    class="c-single-glyph-cosmetic"
-    @dragover="dragover"
-    @drop="drop"
-  >
-    <div
-      v-if="glyph"
-      class="c-glyph-info"
-    >
+  <div v-if="isVisible" class="c-single-glyph-cosmetic" @dragover="dragover" @drop="drop">
+    <div v-if="glyph" class="c-glyph-info">
       <div class="c-glyph-info-section">
-        <GlyphComponent
-          :glyph="glyph"
-          :flip-tooltip="true"
-        />
+        <GlyphComponent :glyph="glyph" :flip-tooltip="true" />
       </div>
       <div class="c-glyph-info-section c-cosmetic-text">
         <u>Cosmetic Attributes</u>
         Type: {{ glyph.type.capitalize() }}
-        <br>
+        <br />
         All: {{ typeCosmetic }}
-        <br>
+        <br />
         Single: {{ specialCosmetic }}
       </div>
       <div class="c-glyph-info-section">
-        <PrimaryButton
-          class="o-primary-btn--subtab-option"
-          @click="openModal"
-        >
-          Customize!
-        </PrimaryButton>
-        <PrimaryButton
-          class="o-primary-btn--subtab-option"
-          @click="glyphID = -1"
-        >
-          Clear Box
-        </PrimaryButton>
+        <PrimaryButton class="o-primary-btn--subtab-option" @click="openModal"> Customize! </PrimaryButton>
+        <PrimaryButton class="o-primary-btn--subtab-option" @click="glyphID = -1"> Clear Box </PrimaryButton>
       </div>
     </div>
     <div v-else>
-      Drag a Glyph over this box to change its appearance! This will make a visual copy of it here,
-      but leave the actual Glyph itself in your inventory. Removing, gaining, or moving any Glyphs will clear this box.
+      Drag a Glyph over this box to change its appearance! This will make a visual copy of it here, but leave the actual
+      Glyph itself in your inventory. Removing, gaining, or moving any Glyphs will clear this box.
     </div>
   </div>
 </template>

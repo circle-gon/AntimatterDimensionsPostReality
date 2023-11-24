@@ -3,14 +3,14 @@ export default {
   name: "FadeAway",
   data() {
     return {
-      opacity: 0
+      opacity: 0,
     };
   },
   methods: {
     update() {
       this.opacity = (GameEnd.endState - END_STATE_MARKERS.FADE_AWAY) / 2;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -19,7 +19,7 @@ export default {
     class="c-background-overlay"
     :style="{
       opacity,
-      pointerEvents: opacity > 1 ? 'auto' : 'none'
+      pointerEvents: opacity > 1 ? 'auto' : 'none',
     }"
   />
 </template>
@@ -64,9 +64,8 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  background-image: url("../../../../public/images/snow1.png"),
-  url("../../../../public/images/snow2.png"),
-  url("../../../../public/images/snow3.png");
+  background-image: url("../../../../public/images/snow1.png"), url("../../../../public/images/snow2.png"),
+    url("../../../../public/images/snow3.png");
   animation: a-snow 10s linear infinite, a-snow-fade 10s cubic-bezier(0, 0.3, 1, 0.7) infinite;
 }
 

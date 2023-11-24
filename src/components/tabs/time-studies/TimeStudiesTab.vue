@@ -22,7 +22,7 @@ export default {
     TriadTimeStudy,
     SecretTimeStudy,
     TimeStudyConnection,
-    HiddenTimeStudyConnection
+    HiddenTimeStudyConnection,
   },
   data() {
     return {
@@ -54,15 +54,15 @@ export default {
     treeStyleObject() {
       return {
         width: `${this.layout.width}rem`,
-        height: `${this.layout.height}rem`
+        height: `${this.layout.height}rem`,
       };
     },
     respecClassObject() {
       return {
         "o-primary-btn--subtab-option": true,
-        "o-primary-btn--respec-active": this.respec
+        "o-primary-btn--respec-active": this.respec,
       };
-    }
+    },
   },
   watch: {
     respec(newValue) {
@@ -71,7 +71,7 @@ export default {
     vLevel() {
       // When vLevel changes, we recompute the study tree because of triad studies
       this.$recompute("layout");
-    }
+    },
   },
   created() {
     const incrementRenderedCount = () => {
@@ -94,9 +94,7 @@ export default {
     // Removing it normally via key-switching ends up getting rid of it immediately without animating, which we do if it
     // wasn't purchased - otherwise it animates to the unbought state and then remove it after the animation finishes.
     this.on$(GAME_EVENT.REALITY_RESET_AFTER, () => {
-      this.delayTimer = player.celestials.enslaved.hasSecretStudy
-        ? Date.now()
-        : 0;
+      this.delayTimer = player.celestials.enslaved.hasSecretStudy ? Date.now() : 0;
     });
 
     // Scroll to top because time studies tab is rendered progressively
@@ -115,10 +113,14 @@ export default {
     },
     studyComponent(study) {
       switch (study.type) {
-        case TIME_STUDY_TYPE.NORMAL: return NormalTimeStudy;
-        case TIME_STUDY_TYPE.ETERNITY_CHALLENGE: return ECTimeStudy;
-        case TIME_STUDY_TYPE.DILATION: return DilationTimeStudy;
-        case TIME_STUDY_TYPE.TRIAD: return TriadTimeStudy;
+        case TIME_STUDY_TYPE.NORMAL:
+          return NormalTimeStudy;
+        case TIME_STUDY_TYPE.ETERNITY_CHALLENGE:
+          return ECTimeStudy;
+        case TIME_STUDY_TYPE.DILATION:
+          return DilationTimeStudy;
+        case TIME_STUDY_TYPE.TRIAD:
+          return TriadTimeStudy;
       }
       throw "Unknown Time Study type";
     },
@@ -129,57 +131,33 @@ export default {
         copyToClipboard(GameCache.currentStudyTree.value.exportString);
         GameUI.notify.info("Exported current Time Studies to your clipboard");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-time-studies-tab">
     <div class="c-subtab-option-container">
-      <PrimaryButton
-        class="o-primary-btn--subtab-option"
-        @click="exportStudyTree"
-      >
-        Export tree
-      </PrimaryButton>
-      <PrimaryButton
-        :class="respecClassObject"
-        @click="respec = !respec"
-      >
+      <PrimaryButton class="o-primary-btn--subtab-option" @click="exportStudyTree"> Export tree </PrimaryButton>
+      <PrimaryButton :class="respecClassObject" @click="respec = !respec">
         Respec Time Studies on next Eternity
       </PrimaryButton>
-      <PrimaryButton
-        class="o-primary-btn--subtab-option"
-        onclick="Modal.studyString.show({ id: -1 })"
-      >
+      <PrimaryButton class="o-primary-btn--subtab-option" onclick="Modal.studyString.show({ id: -1 })">
         Import tree
       </PrimaryButton>
     </div>
-    <div
-      class="l-time-study-tree l-time-studies-tab__tree"
-      :style="treeStyleObject"
-    >
+    <div class="l-time-study-tree l-time-studies-tab__tree" :style="treeStyleObject">
       <component
         :is="studyComponent(setup.study)"
-        v-for="(setup) in studies"
+        v-for="setup in studies"
         :key="setup.study.type.toString() + setup.study.id.toString()"
         :setup="setup"
       />
       <SecretTimeStudy :setup="layout.secretStudy" />
-      <EnslavedTimeStudy
-        v-if="isEnslaved"
-        :setup="layout.enslavedStudy"
-      />
-      <svg
-        :style="treeStyleObject"
-        class="l-time-study-connection"
-      >
-        <TimeStudyConnection
-          v-for="(setup, index) in connections"
-          :key="'connection' + index"
-          :setup="setup"
-        />
+      <EnslavedTimeStudy v-if="isEnslaved" :setup="layout.enslavedStudy" />
+      <svg :style="treeStyleObject" class="l-time-study-connection">
+        <TimeStudyConnection v-for="(setup, index) in connections" :key="'connection' + index" :setup="setup" />
         <HiddenTimeStudyConnection :setup="layout.secretStudyConnection" />
         <HiddenTimeStudyConnection
           v-if="isEnslaved"
@@ -191,6 +169,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

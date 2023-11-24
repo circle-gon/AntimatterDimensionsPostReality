@@ -9,7 +9,7 @@ export const MatterScale = {
       return [
         `If you wrote ${formatInt(3)} numbers a second, it would take you`,
         TimeSpan.fromSeconds(matter.log10() / 3).toString(),
-        "to write down your antimatter amount."
+        "to write down your antimatter amount.",
       ];
     }
     const planck = new Decimal("4.22419e-105");
@@ -17,12 +17,16 @@ export const MatterScale = {
     if (planckedMatter.gt(this.proton)) {
       const scale = this.macroScale(planckedMatter);
       const amount = format(planckedMatter.dividedBy(scale.amount), 2, 1);
-      return [`If every antimatter were a planck volume, you would have
-        enough to ${scale.verb} ${amount} ${scale.name}`];
+      return [
+        `If every antimatter were a planck volume, you would have
+        enough to ${scale.verb} ${amount} ${scale.name}`,
+      ];
     }
     const scale = this.microScale(matter);
-    return [`If every antimatter were ${format(this.proton.div(scale.amount).div(matter), 2, 1)} ${scale.name},
-      you would have enough to make a proton.`];
+    return [
+      `If every antimatter were ${format(this.proton.div(scale.amount).div(matter), 2, 1)} ${scale.name},
+      you would have enough to make a proton.`,
+    ];
   },
 
   microScale(matter) {
@@ -57,7 +61,7 @@ export const MatterScale = {
     { amount: new Decimal("1e-54"), name: "attometers cubed" },
     { amount: new Decimal("1e-63"), name: "zeptometers cubed" },
     { amount: new Decimal("1e-72"), name: "yoctometers cubed" },
-    { amount: new Decimal("4.22419e-105"), name: "planck volumes" }
+    { amount: new Decimal("4.22419e-105"), name: "planck volumes" },
   ],
 
   macroObjects: [
@@ -90,6 +94,6 @@ export const MatterScale = {
     { amount: new Decimal("3.4e80"), name: "observable universes", verb: "make" },
     { amount: new Decimal("1e113"), name: "Dimensions", verb: "make" },
     { amount: DC.C2P1024, name: "Infinity Dimensions", verb: "make" },
-    { amount: new Decimal("1e65000"), name: "Time Dimensions", verb: "make" }
-  ]
+    { amount: new Decimal("1e65000"), name: "Time Dimensions", verb: "make" },
+  ],
 };

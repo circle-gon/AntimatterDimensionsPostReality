@@ -4,39 +4,66 @@ import draggable from "vuedraggable";
 export default {
   name: "AutomatorBlocks",
   components: {
-    draggable
+    draggable,
   },
   data() {
     return {
-      allBlocks: automatorBlocks.filter(b => !AUTOMATOR_BLOCKS_BLACKLIST.includes(b.cmd)),
-      blocks: []
+      allBlocks: automatorBlocks.filter((b) => !AUTOMATOR_BLOCKS_BLACKLIST.includes(b.cmd)),
+      blocks: [],
     };
   },
   methods: {
     update() {
-      this.blocks = this.allBlocks.filter(b => (b.isUnlocked?.() ?? true));
+      this.blocks = this.allBlocks.filter((b) => b.isUnlocked?.() ?? true);
     },
     clone(block) {
       const b = {
         ...block,
-        id: UIID.next()
+        id: UIID.next(),
       };
 
       if (block.nested && !block.nest) b.nest = [];
       AutomatorData.recalculateErrors();
       return b;
     },
-  }
+  },
 };
 
 const AUTOMATOR_BLOCKS_COMPARISON_OPERATORS = ["<", ">", ">=", "<="];
 const AUTOMATOR_BLOCKS_COMPARISON_CURRENCIES = [
-  "AM", "IP", "EP", "RM", "INFINITIES", "BANKED INFINITIES", "ETERNITIES", "REALITIES",
-  "PENDING IP", "PENDING EP", "PENDING TP", "PENDING RM", "PENDING GLYPH LEVEL",
-  "DT", "TP", "RG", "REP", "TT", "TOTAL TT", "TOTAL COMPLETIONS", "PENDING COMPLETIONS",
-  "EC1 COMPLETIONS", "EC2 COMPLETIONS", "EC3 COMPLETIONS", "EC4 COMPLETIONS",
-  "EC5 COMPLETIONS", "EC6 COMPLETIONS", "EC7 COMPLETIONS", "EC8 COMPLETIONS",
-  "EC9 COMPLETIONS", "EC10 COMPLETIONS", "EC11 COMPLETIONS", "EC12 COMPLETIONS",
+  "AM",
+  "IP",
+  "EP",
+  "RM",
+  "INFINITIES",
+  "BANKED INFINITIES",
+  "ETERNITIES",
+  "REALITIES",
+  "PENDING IP",
+  "PENDING EP",
+  "PENDING TP",
+  "PENDING RM",
+  "PENDING GLYPH LEVEL",
+  "DT",
+  "TP",
+  "RG",
+  "REP",
+  "TT",
+  "TOTAL TT",
+  "TOTAL COMPLETIONS",
+  "PENDING COMPLETIONS",
+  "EC1 COMPLETIONS",
+  "EC2 COMPLETIONS",
+  "EC3 COMPLETIONS",
+  "EC4 COMPLETIONS",
+  "EC5 COMPLETIONS",
+  "EC6 COMPLETIONS",
+  "EC7 COMPLETIONS",
+  "EC8 COMPLETIONS",
+  "EC9 COMPLETIONS",
+  "EC10 COMPLETIONS",
+  "EC11 COMPLETIONS",
+  "EC12 COMPLETIONS",
 ];
 
 const AUTOMATOR_BLOCKS_RESETS = ["INFINITY", "ETERNITY", "REALITY"];
@@ -60,83 +87,96 @@ const AUTOMATOR_BLOCKS_RESETS = ["INFINITY", "ETERNITY", "REALITY"];
 export const automatorBlocks = [
   {
     cmd: "STUDIES RESPEC",
-    alias: "RESPEC TIME STUDIES"
-  }, {
+    alias: "RESPEC TIME STUDIES",
+  },
+  {
     cmd: "STUDIES LOAD",
     alias: "LOAD STUDY PRESET",
     allowedPatterns: ["AB"],
     A: ["ID", "NAME"],
     B: ["*"],
     targets: ["singleSelectionInput", "singleTextInput"],
-    canWait: true
-  }, {
+    canWait: true,
+  },
+  {
     cmd: "STUDIES PURCHASE",
     alias: "PURCHASE STUDIES",
     allowedPatterns: ["A"],
     A: ["*"],
     targets: ["singleTextInput"],
-    canWait: true
-  }, {
+    canWait: true,
+  },
+  {
     cmd: "INFINITY",
-    canWait: true
-  }, {
+    canWait: true,
+  },
+  {
     cmd: "ETERNITY",
     canRespec: true,
-    canWait: true
-  }, {
+    canWait: true,
+  },
+  {
     cmd: "REALITY",
     canRespec: true,
     canWait: true,
-    isUnlocked: () => RealityUpgrade(25).isBought
-  }, {
+    isUnlocked: () => RealityUpgrade(25).isBought,
+  },
+  {
     cmd: "UNLOCK",
     allowedPatterns: ["AB", "C"],
     A: ["EC"],
     B: ["*"],
     C: ["DILATION"],
     targets: ["singleSelectionInput", "singleTextInput"],
-    canWait: true
-  }, {
+    canWait: true,
+  },
+  {
     cmd: "START",
     allowedPatterns: ["AB", "C"],
     A: ["EC"],
     B: ["*"],
     C: ["DILATION"],
     targets: ["singleSelectionInput", "singleTextInput"],
-  }, {
+  },
+  {
     cmd: "AUTO",
     alias: "CHANGE AUTOBUYER SETTING",
     allowedPatterns: ["AB"],
     A: AUTOMATOR_BLOCKS_RESETS,
     B: ["ON", "OFF", "* AUTOBUYER SETTING"],
     targets: ["singleSelectionInput", "singleTextInput"],
-  }, {
+  },
+  {
     cmd: "BLACK HOLE",
     alias: "TURN BLACK HOLE",
     allowedPatterns: ["A"],
     A: ["ON", "OFF"],
     targets: ["singleSelectionInput"],
-    isUnlocked: () => BlackHole(1).isUnlocked
-  }, {
+    isUnlocked: () => BlackHole(1).isUnlocked,
+  },
+  {
     cmd: "STORE GAME TIME",
     alias: "SET GAME TIME STORAGE TO",
     allowedPatterns: ["A"],
     A: ["ON", "OFF", "USE"],
     targets: ["singleSelectionInput"],
-    isUnlocked: () => Enslaved.isUnlocked
-  }, {
+    isUnlocked: () => Enslaved.isUnlocked,
+  },
+  {
     cmd: "NOTIFY",
     alias: "GAME NOTIFICATION:",
     allowedPatterns: ["A"],
     A: ["*"],
     targets: ["singleTextInput"],
-  }, {
+  },
+  {
     cmd: "COMMENT",
     alias: "NOTE:",
     allowedPatterns: ["A"],
     A: ["*"],
     targets: ["singleTextInput"],
-  }, {
+  },
+  {
     cmd: "WAIT",
     alias: "PAUSE AUTOMATOR UNTIL",
     allowedPatterns: ["A", "DE", "BCB"],
@@ -145,22 +185,25 @@ export const automatorBlocks = [
     C: AUTOMATOR_BLOCKS_COMPARISON_OPERATORS,
     D: ["BLACK HOLE"],
     E: ["OFF", "BH1", "BH2"],
-    targets: ["genericInput1", "compOperator", "genericInput2"]
-  }, {
+    targets: ["genericInput1", "compOperator", "genericInput2"],
+  },
+  {
     cmd: "PAUSE",
     alias: "PAUSE AUTOMATOR FOR",
     allowedPatterns: ["A"],
     A: ["*"],
     targets: ["singleTextInput"],
-  }, {
+  },
+  {
     cmd: "IF",
     alias: "ENTER BLOCK IF",
     allowedPatterns: ["ABA"],
     A: [...AUTOMATOR_BLOCKS_COMPARISON_CURRENCIES, "* SPECIFIED CONSTANT"],
     B: AUTOMATOR_BLOCKS_COMPARISON_OPERATORS,
     targets: ["genericInput1", "compOperator", "genericInput2"],
-    nested: true
-  }, {
+    nested: true,
+  },
+  {
     cmd: "UNTIL",
     alias: "REPEAT BLOCK UNTIL",
     allowedPatterns: ["A", "BCB"],
@@ -168,46 +211,48 @@ export const automatorBlocks = [
     B: [...AUTOMATOR_BLOCKS_COMPARISON_CURRENCIES, "* SPECIFIED CONSTANT"],
     C: AUTOMATOR_BLOCKS_COMPARISON_OPERATORS,
     targets: ["genericInput1", "compOperator", "genericInput2"],
-    nested: true
-  }, {
+    nested: true,
+  },
+  {
     cmd: "WHILE",
     alias: "REPEAT BLOCK WHILE",
     allowedPatterns: ["ABA"],
     A: [...AUTOMATOR_BLOCKS_COMPARISON_CURRENCIES, "* SPECIFIED CONSTANT"],
     B: AUTOMATOR_BLOCKS_COMPARISON_OPERATORS,
     targets: ["genericInput1", "compOperator", "genericInput2"],
-    nested: true
-  }, {
+    nested: true,
+  },
+  {
     cmd: "GLYPHS EQUIP",
     alias: "EQUIP GLYPH",
     allowedPatterns: ["A"],
     A: ["*"],
     targets: ["singleTextInput"],
-  }, {
-    cmd: "BLOB"
-  }, {
+  },
+  {
+    cmd: "BLOB",
+  },
+  {
     cmd: "STOP",
-    alias: "STOP EXECUTION"
-  }
+    alias: "STOP EXECUTION",
+  },
 ];
 const AUTOMATOR_BLOCKS_BLACKLIST = ["BLOB"];
 
-export const automatorBlocksMap = automatorBlocks.mapToObject(b => b.cmd, b => b);
+export const automatorBlocksMap = automatorBlocks.mapToObject(
+  (b) => b.cmd,
+  (b) => b
+);
 </script>
 
 <template>
-  <draggable
-    class="o-drag-cancel-region"
-    group="code-blocks"
-    ghost-class="null-block"
-    draggable=".draggable-blocks"
-  >
+  <draggable class="o-drag-cancel-region" group="code-blocks" ghost-class="null-block" draggable=".draggable-blocks">
     <p>
       Drag and drop these blocks to the area on the left! The blocks have names matching the commands in the reference
-      page, but may change appearance after being placed to describe what they do in a more natural-sounding manner.
-      If a block changes in this way, the alternate text will be shown as a tooltip when going to drag it over.
+      page, but may change appearance after being placed to describe what they do in a more natural-sounding manner. If
+      a block changes in this way, the alternate text will be shown as a tooltip when going to drag it over.
     </p>
-    <br>
+    <br />
     <p>
       Inputs with a <span class="c-automator-input-optional">brown</span> color are optional, while inputs with a
       <span class="c-automator-input-required">teal</span> color are required.
@@ -234,9 +279,7 @@ export const automatorBlocksMap = automatorBlocks.mapToObject(b => b.cmd, b => b
         {{ block.cmd }}
       </div>
     </draggable>
-    <p>
-      Note: Blocks and their contents count towards the character limits as if the command was typed in text mode.
-    </p>
+    <p>Note: Blocks and their contents count towards the character limits as if the command was typed in text mode.</p>
   </draggable>
 </template>
 

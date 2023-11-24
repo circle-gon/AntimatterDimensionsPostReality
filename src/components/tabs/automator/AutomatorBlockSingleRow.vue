@@ -7,21 +7,21 @@ export default {
   name: "AutomatorBlockSingleRow",
   components: {
     draggable,
-    AutomatorBlockSingleInput
+    AutomatorBlockSingleInput,
   },
   props: {
     block: {
       type: Object,
-      required: true
+      required: true,
     },
     updateBlock: {
       type: Function,
-      required: true
+      required: true,
     },
     deleteBlock: {
       type: Function,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -65,11 +65,15 @@ export default {
       BlockAutomator.parseTextFromBlocks();
     },
     deleteBlockFromNest(id) {
-      const idx = this.b.nest.findIndex(x => x.id === id);
+      const idx = this.b.nest.findIndex((x) => x.id === id);
       this.b.nest.splice(idx, 1);
     },
     updateBlockFromNest(block, id) {
-      this.$set(this.b.nest, this.b.nest.findIndex(x => x.id === id), block);
+      this.$set(
+        this.b.nest,
+        this.b.nest.findIndex((x) => x.id === id),
+        block
+      );
       this.parseRequest();
     },
 
@@ -93,7 +97,7 @@ export default {
       return {
         "c-automator-block-row-active": this.isActiveLine,
         "c-automator-block-row-event": this.isEventLine,
-        "c-automator-block-row-error": this.isErrorLine
+        "c-automator-block-row-error": this.isErrorLine,
       };
     },
     // The target value is either a String or some kind of a number - we need to force it to be a String for the
@@ -101,22 +105,15 @@ export default {
     nextSelection() {
       const val = this.b.targets ? this.b[this.b.targets[0]] : "";
       return val;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="c-automator-block-row--container">
-    <div
-      class="c-automator-block-row"
-      :class="highlightClass()"
-    >
-      <AutomatorBlockSingleInput
-        :constant="b.alias ? b.alias : b.cmd"
-        :block="b"
-        :update-function="updateBlock"
-      />
+    <div class="c-automator-block-row" :class="highlightClass()">
+      <AutomatorBlockSingleInput :constant="b.alias ? b.alias : b.cmd" :block="b" :update-function="updateBlock" />
       <AutomatorBlockSingleInput
         v-if="b.canWait"
         :block="b"
@@ -140,19 +137,9 @@ export default {
         :update-function="updateBlock"
         :recursive="true"
       />
-      <div
-        class="o-automator-block-delete"
-        @click="removeBlock(b.id)"
-      >
-        X
-      </div>
+      <div class="o-automator-block-delete" @click="removeBlock(b.id)">X</div>
     </div>
-    <draggable
-      v-if="block.nested"
-      v-model="block.nest"
-      class="l-automator-nested-block"
-      group="code-blocks"
-    >
+    <draggable v-if="block.nested" v-model="block.nest" class="l-automator-nested-block" group="code-blocks">
       <AutomatorBlockSingleRow
         v-for="subblock in block.nest"
         :key="subblock.id"

@@ -26,7 +26,7 @@ export default {
     text() {
       if (this.isEnslaved) return "FEEL ETERNITY";
       return this.isBroken ? "INFINITY IS BROKEN" : "BREAK INFINITY";
-    }
+    },
   },
   methods: {
     update() {
@@ -37,21 +37,15 @@ export default {
     clicked() {
       if (this.isEnslaved) Enslaved.feelEternity();
       else if (!this.isBroken && this.isUnlocked) Modal.breakInfinity.show();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <button
-    v-tooltip="tooltip"
-    :class="classObject"
-    @click="clicked"
-  >
+  <button v-tooltip="tooltip" :class="classObject" @click="clicked">
     {{ text }}
   </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

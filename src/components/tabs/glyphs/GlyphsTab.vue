@@ -26,7 +26,7 @@ export default {
     GlyphLevelsAndWeights,
     ResetRealityButton,
     RealityReminder,
-    SingleGlyphCustomzationPanel
+    SingleGlyphCustomzationPanel,
   },
   data() {
     return {
@@ -69,7 +69,7 @@ export default {
       this.sacrificeUnlocked = GlyphSacrificeHandler.canSacrifice;
       this.sacrificeDisplayed = player.reality.showGlyphSacrifice;
       if (!Enslaved.isRunning) return;
-      const haveBoost = Glyphs.activeWithoutCompanion.find(e => e.level < Enslaved.glyphLevelMin) !== undefined;
+      const haveBoost = Glyphs.activeWithoutCompanion.find((e) => e.level < Enslaved.glyphLevelMin) !== undefined;
       if (haveBoost) {
         this.enslavedHint = "done... what little... I can... with Glyphs...";
       }
@@ -85,7 +85,7 @@ export default {
         "l-glyph-info-button": true,
         "c-glyph-info-button": true,
         "c-glyph-info-button--active": isSacrificeOption,
-        "c-glyph-info-button--inactive": !isSacrificeOption
+        "c-glyph-info-button--inactive": !isSacrificeOption,
       };
     },
     setInfoState(state) {
@@ -96,15 +96,15 @@ export default {
     },
     glyphInfoBorderClass() {
       return {
-        "c-current-glyph-effects-with-top-border": !this.sacrificeUnlocked
+        "c-current-glyph-effects-with-top-border": !this.sacrificeUnlocked,
       };
     },
     buttonGroupClass() {
       return {
-        "l-half-width": this.canAmplify
+        "l-half-width": this.canAmplify,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -114,21 +114,12 @@ export default {
       <div class="l-reality-button-column">
         <GlyphPeek />
 
-        <div
-          v-if="resetRealityDisplayed"
-          class="l-reality-button-group"
-        >
-          <RealityAmplifyButton
-            v-if="!isInCelestialReality"
-            :class="buttonGroupClass()"
-          />
+        <div v-if="resetRealityDisplayed" class="l-reality-button-group">
+          <RealityAmplifyButton v-if="!isInCelestialReality" :class="buttonGroupClass()" />
           <ResetRealityButton :class="buttonGroupClass()" />
         </div>
 
-        <div
-          v-if="isInCelestialReality"
-          class="l-celestial-auto-restart-checkbox"
-        >
+        <div v-if="isInCelestialReality" class="l-celestial-auto-restart-checkbox">
           <input
             id="autoRestart"
             v-model="autoRestartCelestialRuns"
@@ -136,25 +127,20 @@ export default {
             :value="autoRestartCelestialRuns"
             class="o-clickable"
             @input="toggleAutoRestartCelestial()"
-          >
-          <label
-            for="autoRestart"
-            class="o-clickable"
-          >
-            Repeat this Celestial's Reality
-          </label>
+          />
+          <label for="autoRestart" class="o-clickable"> Repeat this Celestial's Reality </label>
         </div>
 
-        <br>
+        <br />
 
         <RealityReminder />
 
         <div v-if="showInstability">
-          <br>
+          <br />
           Glyphs are becoming unstable.
-          <br>
+          <br />
           Glyph levels higher than {{ formatInt(instabilityThreshold) }} are harder to reach.
-          <br>
+          <br />
           This effect is even stronger above level {{ formatInt(hyperInstabilityThreshold) }}.
         </div>
         <SingleGlyphCustomzationPanel />
@@ -171,48 +157,27 @@ export default {
         <GlyphTabSidebar />
       </div>
       <div class="l-player-glyphs-column">
-        <div
-          v-if="showEnslavedHint"
-          class="o-teresa-quotes"
-          v-html="enslavedHint"
-        />
+        <div v-if="showEnslavedHint" class="o-teresa-quotes" v-html="enslavedHint" />
         <div class="l-equipped-glyphs-and-effects-container">
           <EquippedGlyphs />
           <div class="l-glyph-info-wrapper">
-            <span
-              class="l-glyph-color-box"
-              @click="toggleGlyphTextColors"
-            >
+            <span class="l-glyph-color-box" @click="toggleGlyphTextColors">
               <div :class="glyphColorPosition()">
-                <label
-                  :class="glyphColorState"
-                >
+                <label :class="glyphColorState">
                   <span class="fas fa-palette" />
                 </label>
               </div>
             </span>
-            <div
-              v-if="sacrificeUnlocked"
-              class="c-glyph-info-options"
-            >
-              <button
-                :class="glyphInfoClass(!sacrificeDisplayed)"
-                @click="setInfoState(false)"
-              >
+            <div v-if="sacrificeUnlocked" class="c-glyph-info-options">
+              <button :class="glyphInfoClass(!sacrificeDisplayed)" @click="setInfoState(false)">
                 Current Glyph effects
               </button>
-              <button
-                :class="glyphInfoClass(sacrificeDisplayed)"
-                @click="setInfoState(true)"
-              >
+              <button :class="glyphInfoClass(sacrificeDisplayed)" @click="setInfoState(true)">
                 Glyph Sacrifice totals
               </button>
             </div>
             <SacrificedGlyphs v-if="sacrificeUnlocked && sacrificeDisplayed" />
-            <CurrentGlyphEffects
-              v-else
-              :class="glyphInfoBorderClass()"
-            />
+            <CurrentGlyphEffects v-else :class="glyphInfoBorderClass()" />
           </div>
         </div>
         <GlyphInventory />

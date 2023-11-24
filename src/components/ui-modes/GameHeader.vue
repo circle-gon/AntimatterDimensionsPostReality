@@ -34,11 +34,9 @@ export default {
     <HeaderChallengeEffects />
     <HeaderPrestigeGroup />
     <GameSpeedDisplay v-if="hasReality" />
-    <br v-if="hasReality">
+    <br v-if="hasReality" />
     <HeaderBlackHole />
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

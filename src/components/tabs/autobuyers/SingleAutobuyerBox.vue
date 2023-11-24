@@ -9,13 +9,13 @@ export default {
   components: {
     AutobuyerSingleToggleLabel,
     AutobuyerIntervalLabel,
-    AutobuyerInput
+    AutobuyerInput,
   },
   props: {
     autobuyer: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -30,37 +30,26 @@ export default {
     },
     isSacrifice() {
       return this.name === "Dimensional Sacrifice";
-    }
+    },
   },
   methods: {
     update() {
       this.isUnlocked = this.autobuyer.isUnlocked;
       this.isHiddenSacrifice = this.isSacrifice && Achievement(118).canBeApplied;
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <span
-    v-if="isUnlocked"
-    class="c-autobuyer-box-row"
-  >
+  <span v-if="isUnlocked" class="c-autobuyer-box-row">
     <AutobuyerSingleToggleLabel :autobuyer="autobuyer" />
     <div>
       {{ name }}
       <AutobuyerIntervalLabel :autobuyer="autobuyer" />
 
-      <b
-        v-if="isHiddenSacrifice"
-        class="c-autobuyer-box__small-text"
-      >
-        Automatic (Achievement 118)
-      </b>
-      <span
-        v-else-if="autobuyer.hasInput"
-        class="c-autobuyer-box__small-text"
-      >
+      <b v-if="isHiddenSacrifice" class="c-autobuyer-box__small-text"> Automatic (Achievement 118) </b>
+      <span v-else-if="autobuyer.hasInput" class="c-autobuyer-box__small-text">
         Multiplier:
         <AutobuyerInput
           class="c-small-autobuyer-input"
@@ -73,6 +62,4 @@ export default {
   </span>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -19,7 +19,7 @@ function padPercents(percents) {
 export default {
   name: "MultiplierBreakdownEntry",
   components: {
-    PrimaryToggleButton
+    PrimaryToggleButton,
   },
   props: {
     resource: {
@@ -30,7 +30,7 @@ export default {
       type: Boolean,
       required: false,
       default: false,
-    }
+    },
   },
   data() {
     return {
@@ -94,7 +94,7 @@ export default {
       const forbiddenEntries = ["AD_infinityPower", "galaxies", "tickspeed"];
       // Uses startsWith instead of String equality since it has to match both the top-level entry and any
       // related children entries further down the tree.
-      return !forbiddenEntries.some(key => this.resource.key.startsWith(key));
+      return !forbiddenEntries.some((key) => this.resource.key.startsWith(key));
     },
   },
   watch: {
@@ -112,8 +112,7 @@ export default {
       for (let i = 0; i < this.entries.length; i++) {
         const entry = this.entries[i];
         entry.update();
-        const hasChildEntries = getResourceEntryInfoGroups(entry.key)
-          .some(group => group.hasVisibleEntries);
+        const hasChildEntries = getResourceEntryInfoGroups(entry.key).some((group) => group.hasVisibleEntries);
         if (hasChildEntries) {
           this.hadChildEntriesAt[i] = Date.now();
         }
@@ -135,9 +134,9 @@ export default {
       this.update();
     },
     calculatePercents() {
-      const powList = this.entries.map(e => e.data.pow);
-      const totalPosPow = powList.filter(p => p > 1).reduce((x, y) => x * y, 1);
-      const totalNegPow = powList.filter(p => p < 1).reduce((x, y) => x * y, 1);
+      const powList = this.entries.map((e) => e.data.pow);
+      const totalPosPow = powList.filter((p) => p > 1).reduce((x, y) => x * y, 1);
+      const totalNegPow = powList.filter((p) => p < 1).reduce((x, y) => x * y, 1);
       const log10Mult = (this.resource.fakeValue ?? this.resource.mult).log10() / totalPosPow;
       const isEmpty = log10Mult === 0;
       if (!isEmpty) {
@@ -145,20 +144,20 @@ export default {
       }
       let percentList = [];
       for (const entry of this.entries) {
-        const multFrac = log10Mult === 0
-          ? 0
-          : Decimal.log10(entry.data.mult) / log10Mult;
+        const multFrac = log10Mult === 0 ? 0 : Decimal.log10(entry.data.mult) / log10Mult;
         const powFrac = totalPosPow === 1 ? 0 : Math.log(entry.data.pow) / Math.log(totalPosPow);
 
         // Handle nerf powers differently from everything else in order to render them with the correct bar percentage
-        const perc = entry.data.pow >= 1
-          ? multFrac / totalPosPow + powFrac * (1 - 1 / totalPosPow)
-          : Math.log(entry.data.pow) / Math.log(totalNegPow) * (totalNegPow - 1);
+        const perc =
+          entry.data.pow >= 1
+            ? multFrac / totalPosPow + powFrac * (1 - 1 / totalPosPow)
+            : (Math.log(entry.data.pow) / Math.log(totalNegPow)) * (totalNegPow - 1);
 
         // This is clamped to a minimum of something that's still nonzero in order to show it at <0.1% instead of 0%
-        percentList.push(
-          [entry.ignoresNerfPowers, nerfBlacklist.includes(entry.key) ? Math.clampMin(perc, 0.0001) : perc]
-        );
+        percentList.push([
+          entry.ignoresNerfPowers,
+          nerfBlacklist.includes(entry.key) ? Math.clampMin(perc, 0.0001) : perc,
+        ]);
       }
 
       // Shortly after a prestige, these may add up to a lot more than the base amount as production catches up. This
@@ -168,14 +167,18 @@ export default {
       // power effects already had them applied; there is support in the classes to allow for some to be affected but
       // not others. The only actual case of this occurring is V's Reality not affecting gamespeed for DT, but it was
       // cleaner to adjust the class structure instead of specifically special-casing it here
-      const totalPerc = percentList.filter(p => p[1] > 0).map(p => p[1]).sum();
-      const nerfedPerc = percentList.filter(p => p[1] > 0)
+      const totalPerc = percentList
+        .filter((p) => p[1] > 0)
+        .map((p) => p[1])
+        .sum();
+      const nerfedPerc = percentList
+        .filter((p) => p[1] > 0)
         .reduce((x, y) => x + (y[0] ? y[1] : y[1] * totalNegPow), 0);
-      percentList = percentList.map(p => {
+      percentList = percentList.map((p) => {
         if (p[1] > 0) {
           return (p[0] ? p[1] : p[1] * totalNegPow) / nerfedPerc;
         }
-        return Math.clampMin(p[1] * (totalPerc - nerfedPerc) / totalPerc / totalNegPow, -1);
+        return Math.clampMin((p[1] * (totalPerc - nerfedPerc)) / totalPerc / totalNegPow, -1);
       });
       this.percentList = percentList;
       this.rollingAverage.add(isEmpty ? undefined : percentList);
@@ -188,10 +191,16 @@ export default {
       const isNerf = this.averagedPercentList[index] < 0;
       const iconObj = this.entries[index].icon;
       const percents = this.averagedPercentList[index];
-      const barSize = perc => (perc > 0 ? perc * netPerc : -perc);
+      const barSize = (perc) => (perc > 0 ? perc * netPerc : -perc);
       return {
         position: "absolute",
-        top: `${100 * this.averagedPercentList.slice(0, index).map(p => barSize(p)).sum()}%`,
+        top: `${
+          100 *
+          this.averagedPercentList
+            .slice(0, index)
+            .map((p) => barSize(p))
+            .sum()
+        }%`,
         height: `${100 * barSize(percents)}%`,
         width: "100%",
         "transition-duration": this.isRecent(this.lastLayoutChange) ? undefined : "0.2s",
@@ -222,7 +231,7 @@ export default {
     },
     expandIconStyle(index) {
       return {
-        opacity: this.hasChildEntries(index) ? 1 : 0
+        opacity: this.hasChildEntries(index) ? 1 : 0,
       };
     },
     entryString(index) {
@@ -251,15 +260,13 @@ export default {
       if (overrideStr) valueStr = `(${overrideStr})`;
       else {
         const values = [];
-        const formatFn = x => {
+        const formatFn = (x) => {
           const isDilated = entry.isDilated;
           if (isDilated && this.dilationExponent !== 1) {
             const undilated = this.applyDilationExp(x, 1 / this.dilationExponent);
             return `${formatX(undilated, 2, 2)} ➜ ${formatX(x, 2, 2)}`;
           }
-          return entry.isBase
-            ? format(x, 2, 2)
-            : formatX(x, 2, 2);
+          return entry.isBase ? format(x, 2, 2) : formatX(x, 2, 2);
         };
         if (this.replacePowers && entry.data.pow !== 1) {
           // For replacing powers with equivalent multipliers, we calculate what the total additional multiplier
@@ -284,9 +291,7 @@ export default {
       // Display both multiplier and powers, but make sure to give an empty string if there's neither
       const overrideStr = entry.displayOverride;
       let valueStr;
-      const formatFn = entry.isBase
-        ? x => format(x, 2, 2)
-        : x => `/${format(x.reciprocal(), 2, 2)}`;
+      const formatFn = entry.isBase ? (x) => format(x, 2, 2) : (x) => `/${format(x.reciprocal(), 2, 2)}`;
 
       if (overrideStr) valueStr = `(${overrideStr})`;
       else {
@@ -312,9 +317,7 @@ export default {
       if (overrideStr) return `${name}: ${overrideStr}`;
 
       const val = resource.mult;
-      return resource.isBase
-        ? `${name}: ${format(val, 2, 2)}`
-        : `${name}: ${formatX(val, 2, 2)}`;
+      return resource.isBase ? `${name}: ${format(val, 2, 2)}` : `${name}: ${formatX(val, 2, 2)}`;
     },
     applyDilationExp(value, exp) {
       return Decimal.pow10(value.log10() ** exp);
@@ -331,9 +334,9 @@ export default {
       let beforeMult, afterMult;
       if (this.isDilated && resource.isDilated) {
         const dilProd = this.entries
-          .filter(entry => entry.isVisible && entry.isDilated)
-          .map(entry => entry.mult)
-          .map(val => this.applyDilationExp(val, 1 / this.dilationExponent))
+          .filter((entry) => entry.isVisible && entry.isDilated)
+          .map((entry) => entry.mult)
+          .map((val) => this.applyDilationExp(val, 1 / this.dilationExponent))
           .reduce((x, y) => x.times(y), DC.D1);
         beforeMult = dilProd.neq(1) ? dilProd : this.applyDilationExp(baseMult, 1 / this.dilationExponent);
         afterMult = resource.mult;
@@ -342,38 +345,30 @@ export default {
         afterMult = this.applyDilationExp(beforeMult, this.dilationExponent);
       }
 
-      const formatFn = resource.isBase
-        ? x => format(x, 2, 2)
-        : x => formatX(x, 2, 2);
+      const formatFn = resource.isBase ? (x) => format(x, 2, 2) : (x) => formatX(x, 2, 2);
       return `Dilation Effect: Exponent${formatPow(this.dilationExponent, 2, 3)}
         (${formatFn(beforeMult, 2, 2)} ➜ ${formatFn(afterMult, 2, 2)})`;
     },
     isRecent(date) {
-      return (this.now - date) < 200;
-    }
+      return this.now - date < 200;
+    },
   },
 };
 </script>
 
 <template>
   <div :class="containerClass">
-    <div
-      v-if="!isEmpty"
-      class="c-stacked-bars"
-    >
+    <div v-if="!isEmpty" class="c-stacked-bars">
       <div
         v-for="(perc, index) in averagedPercentList"
         :key="100 + index"
         :style="styleObject(index)"
-        :class="{ 'c-bar-highlight' : mouseoverIndex === index }"
+        :class="{ 'c-bar-highlight': mouseoverIndex === index }"
         @mouseover="mouseoverIndex = index"
         @mouseleave="mouseoverIndex = -1"
         @click="showGroup[index] = !showGroup[index]"
       >
-        <span
-          class="c-bar-overlay"
-          v-html="barSymbol(index)"
-        />
+        <span class="c-bar-overlay" v-html="barSymbol(index)" />
       </div>
     </div>
     <div />
@@ -399,13 +394,10 @@ export default {
           />
         </span>
       </div>
-      <div
-        v-if="isEmpty"
-        class="c-no-effect"
-      >
+      <div v-if="isEmpty" class="c-no-effect">
         No Active Effects
-        <br>
-        <br>
+        <br />
+        <br />
         {{ disabledText }}
       </div>
       <div
@@ -415,21 +407,12 @@ export default {
         @mouseover="mouseoverIndex = index"
         @mouseleave="mouseoverIndex = -1"
       >
-        <div
-          v-if="shouldShowEntry(entry)"
-          :class="singleEntryClass(index)"
-        >
+        <div v-if="shouldShowEntry(entry)" :class="singleEntryClass(index)">
           <div @click="showGroup[index] = !showGroup[index]">
-            <span
-              :class="expandIcon(index)"
-              :style="expandIconStyle(index)"
-            />
+            <span :class="expandIcon(index)" :style="expandIconStyle(index)" />
             {{ entryString(index) }}
           </div>
-          <MultiplierBreakdownEntry
-            v-if="showGroup[index] && hasChildEntries(index)"
-            :resource="entry"
-          />
+          <MultiplierBreakdownEntry v-if="showGroup[index] && hasChildEntries(index)" :resource="entry" />
         </div>
       </div>
       <div v-if="isDilated && !isEmpty">
@@ -439,20 +422,17 @@ export default {
           </div>
         </div>
       </div>
-      <div
-        v-if="resource.key === 'AD_total'"
-        class="c-no-effect"
-      >
+      <div v-if="resource.key === 'AD_total'" class="c-no-effect">
         <div>
-          "Base AD Production" is the amount of Antimatter that you would be producing with your current AD upgrades
-          as if you had waited a fixed amount of time ({{ formatInt(10) }}-{{ formatInt(40) }} seconds depending on
-          your AD count) after a Sacrifice. This may misrepresent your actual production if your ADs have been
-          producing for a while, but the relative mismatch will become smaller as you progress further in the game
-          and numbers become larger.
+          "Base AD Production" is the amount of Antimatter that you would be producing with your current AD upgrades as
+          if you had waited a fixed amount of time ({{ formatInt(10) }}-{{ formatInt(40) }} seconds depending on your AD
+          count) after a Sacrifice. This may misrepresent your actual production if your ADs have been producing for a
+          while, but the relative mismatch will become smaller as you progress further in the game and numbers become
+          larger.
         </div>
         <div v-if="inNC12">
-          The breakdown in this tab within Normal Challenge 12 may be inaccurate for some entries, and might count
-          extra multipliers which apply to all Antimatter Dimensions rather than just the ones which are displayed.
+          The breakdown in this tab within Normal Challenge 12 may be inaccurate for some entries, and might count extra
+          multipliers which apply to all Antimatter Dimensions rather than just the ones which are displayed.
         </div>
       </div>
     </div>
@@ -504,12 +484,16 @@ export default {
 }
 
 @keyframes a-glow-bar {
-  0% { box-shadow: inset 0 0 0.3rem 0; }
+  0% {
+    box-shadow: inset 0 0 0.3rem 0;
+  }
   50% {
     box-shadow: inset 0 0 0.6rem 0;
     filter: brightness(130%);
   }
-  100% { box-shadow: inset 0 0 0.3rem 0; }
+  100% {
+    box-shadow: inset 0 0 0.3rem 0;
+  }
 }
 
 .c-info-list {
@@ -565,7 +549,9 @@ export default {
 }
 
 @keyframes a-glow-text {
-  50% { background-color: var(--color-accent); }
+  50% {
+    background-color: var(--color-accent);
+  }
 }
 
 .c-dilation-entry {
@@ -575,6 +561,8 @@ export default {
 }
 
 @keyframes a-glow-dilation-nerf {
-  50% { background-color: var(--color-bad); }
+  50% {
+    background-color: var(--color-bad);
+  }
 }
 </style>

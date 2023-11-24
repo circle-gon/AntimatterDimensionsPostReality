@@ -6,7 +6,7 @@ export default {
   name: "GlyphSetSavePanel",
   components: {
     ToggleButton,
-    GlyphSetPreview
+    GlyphSetPreview,
   },
   data() {
     return {
@@ -54,7 +54,7 @@ export default {
       this.level = player.options.ignoreGlyphLevel;
     },
     refreshGlyphSets() {
-      this.glyphSets = player.reality.glyphs.sets.map(g => Glyphs.copyForRecords(g.glyphs));
+      this.glyphSets = player.reality.glyphs.sets.map((g) => Glyphs.copyForRecords(g.glyphs));
     },
     setName(id) {
       const name = this.names[id] === "" ? "" : `: ${this.names[id]}`;
@@ -72,7 +72,7 @@ export default {
     loadGlyphSet(set, id) {
       if (!this.setLengthValid(set)) return;
       let glyphsToLoad = [...set];
-      const activeGlyphs = [...Glyphs.active.filter(g => g)];
+      const activeGlyphs = [...Glyphs.active.filter((g) => g)];
 
       // Create an array where each entry contains a single active glyph and all its matches in the preset which it
       // could fill in for, based on the preset loading settings
@@ -81,7 +81,7 @@ export default {
         const options = Glyphs.findByValues(glyph, glyphsToLoad, {
           level: this.level ? -1 : 0,
           strength: this.rarity ? -1 : 0,
-          effects: this.effects ? -1 : 0
+          effects: this.effects ? -1 : 0,
         });
         activeOptions.push({ glyph, options });
       }
@@ -89,7 +89,7 @@ export default {
       // Using the active glyphs one by one, select matching to-be-loaded preset glyphs to be removed from the list.
       // This makes sure the inventory doesn't attempt to match a glyph which is already satisfied by an equipped one
       const selectedFromActive = this.findSelectedGlyphs(activeOptions, 5);
-      for (const glyph of selectedFromActive) glyphsToLoad = glyphsToLoad.filter(g => g !== glyph);
+      for (const glyph of selectedFromActive) glyphsToLoad = glyphsToLoad.filter((g) => g !== glyph);
 
       // For the remaining glyphs to load from the preset, find all their appropriate matches within the inventory.
       // This is largely the same as earlier with the equipped glyphs
@@ -99,16 +99,18 @@ export default {
         const options = Glyphs.findByValues(glyph, Glyphs.sortedInventoryList, {
           level: this.level ? 1 : 0,
           strength: this.rarity ? 1 : 0,
-          effects: this.effects ? 1 : 0
+          effects: this.effects ? 1 : 0,
         });
         remainingOptions[index] = { glyph, options };
       }
 
       // This is scanned through similarly to the active slot glyphs, except we need to make sure we don't try to
       // match more glyphs than we have room for
-      const selectedFromInventory = this.findSelectedGlyphs(remainingOptions,
-        Glyphs.active.countWhere(g => g === null));
-      for (const glyph of selectedFromInventory) glyphsToLoad = glyphsToLoad.filter(g => g !== glyph);
+      const selectedFromInventory = this.findSelectedGlyphs(
+        remainingOptions,
+        Glyphs.active.countWhere((g) => g === null)
+      );
+      for (const glyph of selectedFromInventory) glyphsToLoad = glyphsToLoad.filter((g) => g !== glyph);
 
       // Actually equip the glyphs and then notify how successful (or not) the loading was
       let missingGlyphs = glyphsToLoad.length;
@@ -136,7 +138,7 @@ export default {
       // We do a weird composite function here in order to make sure that glyphs get treated by type individually; then
       // within type they are generally ordered in strictest to most lenient in terms of matches. Note that the options
       // are sorted internally starting with the strictest match first
-      const compFn = o => 1000 * (10 * o.glyph.type.length + o.glyph.type.codePointAt(0)) + o.options.length;
+      const compFn = (o) => 1000 * (10 * o.glyph.type.length + o.glyph.type.codePointAt(0)) + o.options.length;
       optionList.sort((a, b) => compFn(a) - compFn(b));
 
       const toLoad = [];
@@ -146,9 +148,9 @@ export default {
         const entry = optionList[index];
         const greedyPick = index === optionList.length - 1 || optionList[index + 1].options.length > 1;
 
-        const filteredOptions = entry.options.filter(g => !toLoad.includes(g));
+        const filteredOptions = entry.options.filter((g) => !toLoad.includes(g));
         if (filteredOptions.length === 0) continue;
-        const selectedGlyph = filteredOptions[greedyPick ? 0 : (filteredOptions.length - 1)];
+        const selectedGlyph = filteredOptions[greedyPick ? 0 : filteredOptions.length - 1];
         toLoad.push(selectedGlyph);
         slotsLeft--;
       }
@@ -178,8 +180,8 @@ export default {
     },
     glyphSetKey(set, index) {
       return `${index} ${Glyphs.hash(set)}`;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -192,9 +194,8 @@ export default {
       ?
     </span>
     <div class="l-glyph-set-save__header">
-      When loading a preset, try to match the following attributes. "Exact" will only equip Glyphs
-      identical to the ones in the preset. The other settings will, loosely speaking, allow "better" Glyphs to be
-      equipped in their place.
+      When loading a preset, try to match the following attributes. "Exact" will only equip Glyphs identical to the ones
+      in the preset. The other settings will, loosely speaking, allow "better" Glyphs to be equipped in their place.
     </div>
     <div class="c-glyph-set-save-container">
       <ToggleButton
@@ -204,13 +205,7 @@ export default {
         on="Including"
         off="Exact"
       />
-      <ToggleButton
-        v-model="level"
-        class="c-glyph-set-save-setting-button"
-        label="Level:"
-        on="Increased"
-        off="Exact"
-      />
+      <ToggleButton v-model="level" class="c-glyph-set-save-setting-button" label="Level:" on="Increased" off="Exact" />
       <ToggleButton
         v-model="rarity"
         class="c-glyph-set-save-setting-button"
@@ -219,11 +214,7 @@ export default {
         off="Exact"
       />
     </div>
-    <div
-      v-for="(set, id) in glyphSets"
-      :key="id"
-      class="c-glyph-single-set-save"
-    >
+    <div v-for="(set, id) in glyphSets" :key="id" class="c-glyph-single-set-save">
       <div class="c-glyph-set-preview-area">
         <GlyphSetPreview
           :key="glyphSetKey(set, id)"
@@ -245,12 +236,12 @@ export default {
             class="c-glyph-sets-save-name__input"
             :value="names[id]"
             @blur="nicknameBlur"
-          >
+          />
         </div>
         <div class="c-glyph-single-set-save-flexbox-buttons">
           <button
             class="c-glyph-set-save-button"
-            :class="{'c-glyph-set-save-button--unavailable': !hasEquipped || set.length}"
+            :class="{ 'c-glyph-set-save-button--unavailable': !hasEquipped || set.length }"
             @click="saveGlyphSet(id)"
           >
             Save
@@ -258,14 +249,14 @@ export default {
           <button
             v-tooltip="loadingTooltip(set)"
             class="c-glyph-set-save-button"
-            :class="{'c-glyph-set-save-button--unavailable': !setLengthValid(set)}"
+            :class="{ 'c-glyph-set-save-button--unavailable': !setLengthValid(set) }"
             @click="loadGlyphSet(set, id)"
           >
             Load
           </button>
           <button
             class="c-glyph-set-save-button"
-            :class="{'c-glyph-set-save-button--unavailable': !set.length}"
+            :class="{ 'c-glyph-set-save-button--unavailable': !set.length }"
             @click="deleteGlyphSet(id)"
           >
             Delete

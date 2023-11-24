@@ -6,7 +6,7 @@ export default {
   name: "ReplicantiGalaxyButton",
   components: {
     PrimaryButton,
-    PrimaryToggleButton
+    PrimaryToggleButton,
   },
   data() {
     return {
@@ -16,7 +16,7 @@ export default {
       isAutoEnabled: false,
       isDivideUnlocked: false,
       boughtGalaxies: 0,
-      extraGalaxies: 0
+      extraGalaxies: 0,
     };
   },
   computed: {
@@ -58,20 +58,16 @@ export default {
     },
     handleClick() {
       replicantiGalaxyRequest();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-spoon-btn-group">
-    <PrimaryButton
-      :enabled="isAvailable"
-      class="o-primary-btn--replicanti-galaxy"
-      @click="handleClick"
-    >
+    <PrimaryButton :enabled="isAvailable" class="o-primary-btn--replicanti-galaxy" @click="handleClick">
       {{ resetActionDisplay }} for a Replicanti Galaxy
-      <br>
+      <br />
       {{ galaxyCountDisplay }}
     </PrimaryButton>
     <PrimaryToggleButton
@@ -85,6 +81,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

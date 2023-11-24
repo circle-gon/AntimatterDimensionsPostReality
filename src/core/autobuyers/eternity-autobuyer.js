@@ -58,11 +58,15 @@ export class EternityAutobuyerState extends AutobuyerState {
   }
 
   autoEternitiesAvailable(considerMilestoneReached) {
-    return (considerMilestoneReached || EternityMilestone.autoEternities.isReached) &&
-      !Player.isInAnyChallenge && !player.dilation.active &&
-      player.auto.autobuyersOn && this.data.isActive &&
+    return (
+      (considerMilestoneReached || EternityMilestone.autoEternities.isReached) &&
+      !Player.isInAnyChallenge &&
+      !player.dilation.active &&
+      player.auto.autobuyersOn &&
+      this.data.isActive &&
       this.mode === AUTO_ETERNITY_MODE.AMOUNT &&
-      this.amount.equals(0);
+      this.amount.equals(0)
+    );
   }
 
   bumpAmount(mult) {

@@ -10,17 +10,20 @@ export default {
     AutoSacrificeEffectTab,
     AutoSacrificeAdvancedTab,
     SliderComponent,
-    GlyphComponent
+    GlyphComponent,
   },
   data() {
     return {
       mode: AUTO_GLYPH_SCORE.LOWEST_SACRIFICE,
       effectCount: 0,
-      lockedTypes: GlyphTypes.locked.map(e => e.id),
+      lockedTypes: GlyphTypes.locked.map((e) => e.id),
       advancedType: GLYPH_TYPES[0],
       alchemyUnlocked: false,
       // Note: there are two units at play: strength is from 1..3.5+; rarity is 0..100
-      rarityThresholds: GLYPH_TYPES.mapToObject(e => e, () => 0),
+      rarityThresholds: GLYPH_TYPES.mapToObject(
+        (e) => e,
+        () => 0
+      ),
       autoRealityForFilter: player.options.autoRealityForFilter,
     };
   },
@@ -29,7 +32,7 @@ export default {
       return AUTO_GLYPH_SCORE;
     },
     glyphTypes() {
-      return GlyphTypes.list.filter(e => !this.lockedTypes.includes(e.id));
+      return GlyphTypes.list.filter((e) => !this.lockedTypes.includes(e.id));
     },
     raritySliderProps() {
       return {
@@ -45,7 +48,7 @@ export default {
         "process-class": "c-glyph-sacrifice-options__rarity-slider-process",
         style: {
           "margin-left": "1rem",
-        }
+        },
       };
     },
     glyphIconProps() {
@@ -53,7 +56,7 @@ export default {
         size: "3rem",
         "glow-blur": "0.3rem",
         "glow-spread": "0.1rem",
-        "text-proportion": 0.66
+        "text-proportion": 0.66,
       };
     },
     questionmarkTooltip() {
@@ -66,8 +69,8 @@ export default {
         Glyphs would be kept`;
     },
     unlockedModes() {
-      return Object.values(this.modes).filter(idx => this.isUnlocked(idx));
-    }
+      return Object.values(this.modes).filter((idx) => this.isUnlocked(idx));
+    },
   },
   methods: {
     update() {
@@ -76,17 +79,15 @@ export default {
       for (const type of generatedTypes) {
         this.rarityThresholds[type] = AutoGlyphProcessor.types[type].rarity;
       }
-      this.lockedTypes = GlyphTypes.locked.map(e => e.id);
+      this.lockedTypes = GlyphTypes.locked.map((e) => e.id);
       this.alchemyUnlocked = Ra.unlocks.unlockGlyphAlchemy.canBeApplied;
     },
     optionClass(idx) {
       const icon = this.modeIcon(idx);
       return [
         "c-glyph-sacrifice-options__option",
-        idx === this.mode
-          ? "c-glyph-sacrifice-options__option--active"
-          : "c-glyph-sacrifice-options__option--inactive",
-        icon
+        idx === this.mode ? "c-glyph-sacrifice-options__option--active" : "c-glyph-sacrifice-options__option--inactive",
+        icon,
       ];
     },
     modeIcon(idx) {
@@ -114,10 +115,12 @@ export default {
     },
     advancedTypeSelectStyle(type) {
       const color = GlyphAppearanceHandler.getBorderColor(type.id);
-      return type.id === this.advancedType ? {
-        color,
-        "text-shadow": `0 0 0.25rem ${color}, 0 0 0.5rem ${color}, 0 0 0.75rem ${color}, 0 0 1rem ${color}`,
-      } : {};
+      return type.id === this.advancedType
+        ? {
+            color,
+            "text-shadow": `0 0 0.25rem ${color}, 0 0 0.5rem ${color}, 0 0 0.75rem ${color}, 0 0 1rem ${color}`,
+          }
+        : {};
     },
     setMode(m) {
       AutoGlyphProcessor.scoreMode = m;
@@ -154,19 +157,19 @@ export default {
     // Clicking bumps the rarity over to adjacent thresholds between rarities; normal clicks move to the higher one
     // and shift-clicks move to the lower one. There is a loop-around that makes 100 go to 0 next and vice versa
     bumpRarity(type) {
-      const rarityThresholds = GlyphRarities.map(r => strengthToRarity(r.minStrength));
+      const rarityThresholds = GlyphRarities.map((r) => strengthToRarity(r.minStrength));
       let newRarity;
       if (ui.view.shiftDown) {
-        const lower = rarityThresholds.filter(s => s < this.rarityThresholds[type]);
+        const lower = rarityThresholds.filter((s) => s < this.rarityThresholds[type]);
         newRarity = lower.length === 0 ? 100 : lower.max();
       } else {
         // Note: As the minimum of an empty array is zero, this wraps around to 0% again if clicked at 100% rarity
-        newRarity = rarityThresholds.filter(s => s > this.rarityThresholds[type]).min();
+        newRarity = rarityThresholds.filter((s) => s > this.rarityThresholds[type]).min();
       }
       this.setRarityThreshold(type, newRarity);
     },
     showFilterHowTo() {
-      ui.view.h2pForcedTab = GameDatabase.h2p.tabs.filter(tab => tab.name === "Advanced Glyph Mechanics")[0];
+      ui.view.h2pForcedTab = GameDatabase.h2p.tabs.filter((tab) => tab.name === "Advanced Glyph Mechanics")[0];
       Modal.h2p.show();
     },
     getSymbol(type) {
@@ -179,17 +182,23 @@ export default {
     },
     exportFilterSettings() {
       const filter = player.reality.glyphs.filter;
-      const serializeType = settings => [settings.rarity, settings.score, settings.effectCount,
-        settings.specifiedMask, settings.effectScores.join("/")].join(",");
+      const serializeType = (settings) =>
+        [
+          settings.rarity,
+          settings.score,
+          settings.effectCount,
+          settings.specifiedMask,
+          settings.effectScores.join("/"),
+        ].join(",");
       const simpleData = [filter.select, filter.simple, filter.trash].join("|");
-      const typeData = ALCHEMY_BASIC_GLYPH_TYPES.map(t => serializeType(filter.types[t])).join("|");
+      const typeData = ALCHEMY_BASIC_GLYPH_TYPES.map((t) => serializeType(filter.types[t])).join("|");
       copyToClipboard(GameSaveSerializer.encodeText(`${simpleData}|${typeData}`, "glyph filter"));
       GameUI.notify.info("Filter settings copied to clipboard");
     },
     importFilterSettings() {
       Modal.importFilter.show();
     },
-  }
+  },
 };
 </script>
 
@@ -212,7 +221,7 @@ export default {
         <i
           v-tooltip="autoRealityTooltip"
           class="fas fa-recycle l-top-right-btn"
-          :class="{ 'o-quick-reality' : autoRealityForFilter }"
+          :class="{ 'o-quick-reality': autoRealityForFilter }"
           @click="toggleAutoReality"
         />
         <i
@@ -222,38 +231,27 @@ export default {
         />
       </div>
       Current Filter Mode:
-      <br>
+      <br />
       {{ filterMode(mode) }}
-      <br>
+      <br />
       <div class="c-glyph-filter-mode-container">
-        <div
-          v-for="index in unlockedModes"
-          :key="index"
-          :class="optionClass(index)"
-          @click="setMode(index)"
-        >
+        <div v-for="index in unlockedModes" :key="index" :class="optionClass(index)" @click="setMode(index)">
           <div class="c-glyph-sacrifice-options__option__tooltip">
             {{ filterMode(index) }}
           </div>
         </div>
       </div>
     </div>
-    <div
-      v-if="mode === modes.LOWEST_SACRIFICE"
-      class="c-glyph-sacrifice-options__advanced"
-    >
-      <br>
-      Glyph score is assigned based on type. Priority is given to Glyphs belonging to the type of which you have
-      the least total Glyph Sacrifice value.
-      <br>
-      <br>
+    <div v-if="mode === modes.LOWEST_SACRIFICE" class="c-glyph-sacrifice-options__advanced">
+      <br />
+      Glyph score is assigned based on type. Priority is given to Glyphs belonging to the type of which you have the
+      least total Glyph Sacrifice value.
+      <br />
+      <br />
       This mode never keeps Glyphs, but will instead always sacrifice the Glyph it chooses.
     </div>
-    <div
-      v-if="mode === modes.EFFECT_COUNT"
-      class=" c-glyph-sacrifice-options__advanced"
-    >
-      <br>
+    <div v-if="mode === modes.EFFECT_COUNT" class="c-glyph-sacrifice-options__advanced">
+      <br />
       Glyphs must have at least
       <input
         ref="effectCount"
@@ -263,24 +261,17 @@ export default {
         class="c-auto-sac-effect-tab__input"
         :value="effectCount"
         @blur="setEffectCount"
-      >
+      />
       effects to be chosen. Rarer Glyphs are preferred in ties.
     </div>
-    <div
-      v-if="mode === modes.RARITY_THRESHOLD"
-      class="l-glyph-sacrifice-options__rarity-sliders"
-    >
+    <div v-if="mode === modes.RARITY_THRESHOLD" class="l-glyph-sacrifice-options__rarity-sliders">
       <span class="c-glyph-sacrifice-options__advanced">
         Any Glyphs with rarity below these thresholds will be sacrificed.
       </span>
-      <div
-        v-for="type in glyphTypes"
-        :key="type.id"
-        class="l-glyph-sacrifice-options__rarity-slider-div"
-      >
+      <div v-for="type in glyphTypes" :key="type.id" class="l-glyph-sacrifice-options__rarity-slider-div">
         <span @click="bumpRarity(type.id)">
           <GlyphComponent
-            :glyph="{type: type.id, strength: strengthThreshold(type.id) }"
+            :glyph="{ type: type.id, strength: strengthThreshold(type.id) }"
             v-bind="glyphIconProps"
             class="o-clickable"
           />
@@ -293,10 +284,7 @@ export default {
         />
       </div>
     </div>
-    <div
-      v-if="mode === modes.SPECIFIED_EFFECT"
-      class="c-glyph-sacrifice-options__advanced"
-    >
+    <div v-if="mode === modes.SPECIFIED_EFFECT" class="c-glyph-sacrifice-options__advanced">
       <div>
         Glyph Type:
         <span
@@ -305,16 +293,16 @@ export default {
           v-tooltip="type.id.capitalize()"
           class="l-glyph-sacrifice-options__advanced-type-select c-glyph-sacrifice-options__advanced-type-select"
           :style="advancedTypeSelectStyle(type)"
-          @click="advancedType=type.id"
+          @click="advancedType = type.id"
         >
           {{ getSymbol(type.id) }}
         </span>
       </div>
-      <br>
+      <br />
       <div class="l-glyph-sacrifice-options__rarity-slider-div">
         <span @click="bumpRarity(advancedType)">
           <GlyphComponent
-            :glyph="{type: advancedType, strength: strengthThreshold(advancedType) }"
+            :glyph="{ type: advancedType, strength: strengthThreshold(advancedType) }"
             v-bind="glyphIconProps"
             class="o-clickable"
           />
@@ -327,17 +315,10 @@ export default {
         />
       </div>
       <template v-for="type in glyphTypes">
-        <AutoSacrificeEffectTab
-          v-show="type.id === advancedType"
-          :key="type.id"
-          :glyph-type="type.id"
-        />
+        <AutoSacrificeEffectTab v-show="type.id === advancedType" :key="type.id" :glyph-type="type.id" />
       </template>
     </div>
-    <div
-      v-if="mode === modes.EFFECT_SCORE"
-      class="c-glyph-sacrifice-options__advanced"
-    >
+    <div v-if="mode === modes.EFFECT_SCORE" class="c-glyph-sacrifice-options__advanced">
       <div>
         Glyph Type:
         <span
@@ -346,41 +327,31 @@ export default {
           v-tooltip="type.id.capitalize()"
           class="l-glyph-sacrifice-options__advanced-type-select c-glyph-sacrifice-options__advanced-type-select"
           :style="advancedTypeSelectStyle(type)"
-          @click="advancedType=type.id"
+          @click="advancedType = type.id"
         >
           {{ getSymbol(type.id) }}
         </span>
       </div>
-      <br>
+      <br />
       <template v-for="type in glyphTypes">
-        <AutoSacrificeAdvancedTab
-          v-show="type.id === advancedType"
-          :key="type.id"
-          :glyph-type="type.id"
-        />
+        <AutoSacrificeAdvancedTab v-show="type.id === advancedType" :key="type.id" :glyph-type="type.id" />
       </template>
     </div>
-    <div
-      v-if="mode === modes.LOWEST_ALCHEMY"
-      class="c-glyph-sacrifice-options__advanced"
-    >
-      <br>
-      Glyph score is assigned based on current Alchemy Resource totals. Priority is given to the Glyph type with
-      the lowest associated alchemy resource total.
-      <br>
-      <br>
+    <div v-if="mode === modes.LOWEST_ALCHEMY" class="c-glyph-sacrifice-options__advanced">
+      <br />
+      Glyph score is assigned based on current Alchemy Resource totals. Priority is given to the Glyph type with the
+      lowest associated alchemy resource total.
+      <br />
+      <br />
       This mode never keeps Glyphs.
     </div>
-    <div
-      v-if="mode === modes.ALCHEMY_VALUE"
-      class="c-glyph-sacrifice-options__advanced"
-    >
-      <br>
-      Glyphs will be assigned values based on <i>current</i> refinement value, accounting for the type-specific
-      resource caps. Priority is given to Glyphs which are worth the most alchemy resources; Glyphs which would
-      cause you to hit a cap are effectively worth less.
-      <br>
-      <br>
+    <div v-if="mode === modes.ALCHEMY_VALUE" class="c-glyph-sacrifice-options__advanced">
+      <br />
+      Glyphs will be assigned values based on <i>current</i> refinement value, accounting for the type-specific resource
+      caps. Priority is given to Glyphs which are worth the most alchemy resources; Glyphs which would cause you to hit
+      a cap are effectively worth less.
+      <br />
+      <br />
       This mode never keeps Glyphs.
     </div>
   </div>

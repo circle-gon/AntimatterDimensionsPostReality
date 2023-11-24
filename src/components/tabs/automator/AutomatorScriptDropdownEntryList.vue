@@ -13,7 +13,7 @@ export default {
   },
   computed: {
     scripts() {
-      return Object.values(player.reality.automator.scripts).map(script => ({
+      return Object.values(player.reality.automator.scripts).map((script) => ({
         id: script.id,
         name: script.name,
       }));
@@ -86,8 +86,8 @@ export default {
         "l-active-script": id === this.runningScriptID && highlightRunning,
         "l-selected-script": id === this.currentScriptID && (id !== this.runningScriptID || !highlightRunning),
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -109,10 +109,7 @@ export default {
     >
       <i>Create a new script (You have {{ formatInt(scriptCount) }} / {{ formatInt(maxScriptCount) }})</i>
     </div>
-    <div
-      v-else
-      class="l-create-script c-automator-docs-script-select l-max-scripts"
-    >
+    <div v-else class="l-create-script c-automator-docs-script-select l-max-scripts">
       <i>You can only have {{ formatInt(maxScriptCount) }} scripts!</i>
     </div>
   </div>

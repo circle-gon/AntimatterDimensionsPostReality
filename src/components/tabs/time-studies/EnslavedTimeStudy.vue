@@ -4,8 +4,8 @@ export default {
   props: {
     setup: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -17,7 +17,7 @@ export default {
     styleObject() {
       return {
         top: `${this.setup.top}rem`,
-        left: `${this.setup.left}rem`
+        left: `${this.setup.left}rem`,
       };
     },
     classObject() {
@@ -30,7 +30,7 @@ export default {
         "o-time-study--enslaved": true,
         "o-time-study--enslaved-unlocked": this.isVisible,
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -42,26 +42,19 @@ export default {
       EnslavedProgress.secretStudy.giveProgress();
       Currency.timeTheorems.add(this.enslavedTT);
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <button
-    ref="study"
-    :class="classObject"
-    :style="styleObject"
-    @click="handleClick"
-  >
+  <button ref="study" :class="classObject" :style="styleObject" @click="handleClick">
     <span>
       ... you ... have great potential ...
-      <br>
-      <br>
+      <br />
+      <br />
       Cost: {{ format(-enslavedTT) }} Time Theorems
     </span>
   </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

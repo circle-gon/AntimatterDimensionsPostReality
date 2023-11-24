@@ -13,8 +13,8 @@ export const S12Windows = {
         this.hoveringTab = undefined;
         return;
       }
-      subtabTimeoutId = setTimeout(() => this.hoveringTab = undefined, 1000);
+      subtabTimeoutId = setTimeout(() => (this.hoveringTab = undefined), 1000);
     },
     tabButtonPositions: [],
-  }
+  },
 };

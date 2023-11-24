@@ -6,7 +6,7 @@ export default {
   name: "GlyphLevelsAndWeights",
   components: {
     ToggleButton,
-    SliderComponent
+    SliderComponent,
   },
   data() {
     return {
@@ -54,7 +54,7 @@ export default {
         "plus-minus-buttons": true,
         "dot-class": "c-glyph-levels-and-weights__slider-handle",
         "bg-class": "c-glyph-levels-and-weights__slider-bg",
-        "process-class": "c-glyph-levels-and-weights__slider-process"
+        "process-class": "c-glyph-levels-and-weights__slider-process",
       };
     },
     totalWeights() {
@@ -86,12 +86,12 @@ export default {
     },
     singularityVisible() {
       return SingularityMilestone.glyphLevelFromSingularities.canBeApplied;
-    }
+    },
   },
   watch: {
     isAutoAdjustWeightsOn(newValue) {
       player.celestials.effarig.autoAdjustGlyphWeights = newValue;
-    }
+    },
   },
   created() {
     this.glyphWeightFields = Object.keys(player.celestials.effarig.glyphWeights);
@@ -135,7 +135,7 @@ export default {
       this.factors = glyphFactors;
       this.shardsGained = Effarig.shardsGained;
       let same = true;
-      this.glyphWeightFields.forEach(e => {
+      this.glyphWeightFields.forEach((e) => {
         if (this.weights[e] !== player.celestials.effarig.glyphWeights[e]) same = false;
         this.weights[e] = player.celestials.effarig.glyphWeights[e];
       });
@@ -148,7 +148,7 @@ export default {
       this.isAutoAdjustWeightsOn = player.celestials.effarig.autoAdjustGlyphWeights;
     },
     rowStyle(factor) {
-      const row = this.visibleRows.findIndex(r => r === factor) + 1;
+      const row = this.visibleRows.findIndex((r) => r === factor) + 1;
       // A bit of a hack, if we can't find the resource then factor is actually a number for the padding div
       if (row === 0) return this.makeRowStyle(factor);
       return this.makeRowStyle(row);
@@ -156,14 +156,10 @@ export default {
     formatFactor(x) {
       // Not applied to + perks since it's always whole; for factors < 1, the slice makes the
       // factor be fixed point.
-      return Notations.current.isPainful || x > 1000
-        ? format(x, 2, 2)
-        : x.toPrecision(5).slice(0, 6);
+      return Notations.current.isPainful || x > 1000 ? format(x, 2, 2) : x.toPrecision(5).slice(0, 6);
     },
     formatLevel(x) {
-      return x > 1000
-        ? formatInt(Math.floor(x))
-        : format(x, 2, 4);
+      return x > 1000 ? formatInt(Math.floor(x)) : format(x, 2, 4);
     },
     makeRowStyle(r) {
       return {
@@ -174,11 +170,11 @@ export default {
     resetWeightsButtonClass() {
       return {
         "c-glyph-levels-and-weights__reset-btn": true,
-        "c-glyph-levels-and-weights__reset-btn-clickable": !this.isAutoAdjustWeightsOn
+        "c-glyph-levels-and-weights__reset-btn-clickable": !this.isAutoAdjustWeightsOn,
       };
     },
     resetWeights() {
-      this.glyphWeightFields.forEach(e => player.celestials.effarig.glyphWeights[e] = 25);
+      this.glyphWeightFields.forEach((e) => (player.celestials.effarig.glyphWeights[e] = 25));
       this.resetSavedWeights();
     },
     adjustSlider(which, value) {
@@ -198,19 +194,16 @@ export default {
         // the sum to be 100:   100 == value + restSum * k   --->  k == (100-value)/restSum
         // Except we use the saved values instead of the current ones:
         const savedRestSum =
-          this.savedWeights.ep +
-          this.savedWeights.repl +
-          this.savedWeights.dt +
-          this.savedWeights.eternities;
+          this.savedWeights.ep + this.savedWeights.repl + this.savedWeights.dt + this.savedWeights.eternities;
         const reduceRatio = (100 - value) / savedRestSum;
         const newWeights = [];
-        this.glyphWeightFields.forEach(x => {
+        this.glyphWeightFields.forEach((x) => {
           if (x !== which) {
             newWeights.push(this.savedWeights[x] * reduceRatio);
           }
         });
         roundPreservingSum(newWeights);
-        this.glyphWeightFields.forEach(x => {
+        this.glyphWeightFields.forEach((x) => {
           if (x !== which) {
             player.celestials.effarig.glyphWeights[x] = newWeights.shift();
           }
@@ -225,8 +218,8 @@ export default {
     factorString(source) {
       const name = this.adjustVisible ? source.name.substring(0, 4) : source.name;
       return `${format(source.coeff, 2, 4)}×${name}^${format(source.exp, 2, 3)}`;
-    }
-  }
+    },
+  },
 };
 
 // This function takes an array of data (3 elements), which add up to an integer, but
@@ -257,7 +250,7 @@ function roundPreservingSum(data) {
       // Shouldn't happen, but a divide by 0 would be bad
       break;
     }
-    err /= (nonIntegers - 1);
+    err /= nonIntegers - 1;
     for (let s = 0; s < data.length; ++s) {
       if (data[s] !== Math.round(data[s])) {
         // Closest is covered by this
@@ -269,242 +262,98 @@ function roundPreservingSum(data) {
 </script>
 
 <template>
-  <div
-    ref="grid"
-    :style="gridStyle"
-    class="l-glyph-levels-and-weights c-glyph-levels-and-weights"
-  >
+  <div ref="grid" :style="gridStyle" class="l-glyph-levels-and-weights c-glyph-levels-and-weights">
     <!-- Put down a placeholder div to keep the adjuster from getting cramped -->
-    <div
-      v-if="adjustVisible"
-      :style="makeRowStyle(6)"
-    />
-    <div
-      :style="rowStyle('ep')"
-      class="l-glyph-levels-and-weights__factor"
-    >
+    <div v-if="adjustVisible" :style="makeRowStyle(6)" />
+    <div :style="rowStyle('ep')" class="l-glyph-levels-and-weights__factor">
       {{ factorString(factors.ep) }}
     </div>
-    <div
-      :style="rowStyle('ep')"
-      class="l-glyph-levels-and-weights__factor-val"
-    >
+    <div :style="rowStyle('ep')" class="l-glyph-levels-and-weights__factor-val">
       {{ formatFactor(factors.ep.value) }}
     </div>
-    <div
-      :style="rowStyle('replicanti')"
-      class="l-glyph-levels-and-weights__factor"
-    >
+    <div :style="rowStyle('replicanti')" class="l-glyph-levels-and-weights__factor">
       {{ factorString(factors.repl) }}
     </div>
-    <div
-      :style="rowStyle('replicanti')"
-      class="l-glyph-levels-and-weights__operator"
-    >
-      ×
-    </div>
-    <div
-      :style="rowStyle('replicanti')"
-      class="l-glyph-levels-and-weights__factor-val"
-    >
+    <div :style="rowStyle('replicanti')" class="l-glyph-levels-and-weights__operator">×</div>
+    <div :style="rowStyle('replicanti')" class="l-glyph-levels-and-weights__factor-val">
       {{ formatFactor(factors.repl.value) }}
     </div>
-    <div
-      :style="rowStyle('dt')"
-      class="l-glyph-levels-and-weights__factor"
-    >
+    <div :style="rowStyle('dt')" class="l-glyph-levels-and-weights__factor">
       {{ factorString(factors.dt) }}
     </div>
-    <div
-      :style="rowStyle('dt')"
-      class="l-glyph-levels-and-weights__operator"
-    >
-      ×
-    </div>
-    <div
-      :style="rowStyle('dt')"
-      class="l-glyph-levels-and-weights__factor-val"
-    >
+    <div :style="rowStyle('dt')" class="l-glyph-levels-and-weights__operator">×</div>
+    <div :style="rowStyle('dt')" class="l-glyph-levels-and-weights__factor-val">
       {{ formatFactor(factors.dt.value) }}
     </div>
     <template v-if="eternityVisible">
-      <div
-        :style="rowStyle('eternities')"
-        class="l-glyph-levels-and-weights__factor"
-      >
+      <div :style="rowStyle('eternities')" class="l-glyph-levels-and-weights__factor">
         {{ factorString(factors.eter) }}
       </div>
-      <div
-        :style="rowStyle('eternities')"
-        class="l-glyph-levels-and-weights__operator"
-      >
-        ×
-      </div>
-      <div
-        :style="rowStyle('eternities')"
-        class="l-glyph-levels-and-weights__factor-val"
-      >
+      <div :style="rowStyle('eternities')" class="l-glyph-levels-and-weights__operator">×</div>
+      <div :style="rowStyle('eternities')" class="l-glyph-levels-and-weights__factor-val">
         {{ formatFactor(factors.eter.value) }}
       </div>
     </template>
     <template v-if="perkShopVisible">
-      <div
-        :style="rowStyle('perk shop')"
-        class="l-glyph-levels-and-weights__factor"
-      >
-        Teresa's Perk shop
-      </div>
-      <div
-        :style="rowStyle('perk shop')"
-        class="l-glyph-levels-and-weights__operator"
-      >
-        +
-      </div>
-      <div
-        :style="rowStyle('perk shop')"
-        class="l-glyph-levels-and-weights__factor-val"
-      >
+      <div :style="rowStyle('perk shop')" class="l-glyph-levels-and-weights__factor">Teresa's Perk shop</div>
+      <div :style="rowStyle('perk shop')" class="l-glyph-levels-and-weights__operator">+</div>
+      <div :style="rowStyle('perk shop')" class="l-glyph-levels-and-weights__factor-val">
         {{ formatPerkShop }}
       </div>
     </template>
     <template v-if="shardVisible">
-      <div
-        :style="rowStyle('shards')"
-        class="l-glyph-levels-and-weights__factor"
-      >
+      <div :style="rowStyle('shards')" class="l-glyph-levels-and-weights__factor">
         {{ formatInt(100) }}×Shards{{ formatPow(2) }}
       </div>
-      <div
-        :style="rowStyle('shards')"
-        class="l-glyph-levels-and-weights__operator"
-      >
-        +
-      </div>
-      <div
-        :style="rowStyle('shards')"
-        class="l-glyph-levels-and-weights__factor-val"
-      >
+      <div :style="rowStyle('shards')" class="l-glyph-levels-and-weights__operator">+</div>
+      <div :style="rowStyle('shards')" class="l-glyph-levels-and-weights__factor-val">
         {{ formatFactor(factors.shardFactor) }}
       </div>
     </template>
     <template v-if="singularityVisible">
-      <div
-        :style="rowStyle('singularities')"
-        class="l-glyph-levels-and-weights__factor"
-      >
-        Singularities
-      </div>
-      <div
-        :style="rowStyle('singularities')"
-        class="l-glyph-levels-and-weights__operator"
-      >
-        ×
-      </div>
-      <div
-        :style="rowStyle('singularities')"
-        class="l-glyph-levels-and-weights__factor-val"
-      >
+      <div :style="rowStyle('singularities')" class="l-glyph-levels-and-weights__factor">Singularities</div>
+      <div :style="rowStyle('singularities')" class="l-glyph-levels-and-weights__operator">×</div>
+      <div :style="rowStyle('singularities')" class="l-glyph-levels-and-weights__factor-val">
         {{ formatFactor(factors.singularityEffect) }}
       </div>
     </template>
     <template v-if="penaltyVisible">
-      <div
-        :style="rowStyle('instability')"
-        class="l-glyph-levels-and-weights__factor"
-      >
-        Instability
-      </div>
-      <div
-        :style="rowStyle('instability')"
-        class="l-glyph-levels-and-weights__operator"
-      >
-        /
-      </div>
-      <div
-        :style="rowStyle('instability')"
-        class="l-glyph-levels-and-weights__factor-val"
-      >
+      <div :style="rowStyle('instability')" class="l-glyph-levels-and-weights__factor">Instability</div>
+      <div :style="rowStyle('instability')" class="l-glyph-levels-and-weights__operator">/</div>
+      <div :style="rowStyle('instability')" class="l-glyph-levels-and-weights__factor-val">
         {{ formatFactor(factors.scalePenalty) }}
       </div>
     </template>
     <template v-if="rowVisible">
-      <div
-        :style="rowStyle('upgrade rows')"
-        class="l-glyph-levels-and-weights__factor"
-      >
-        Upgrade Rows
-      </div>
-      <div
-        :style="rowStyle('upgrade rows')"
-        class="l-glyph-levels-and-weights__operator"
-      >
-        +
-      </div>
-      <div
-        :style="rowStyle('upgrade rows')"
-        class="l-glyph-levels-and-weights__factor-val"
-      >
+      <div :style="rowStyle('upgrade rows')" class="l-glyph-levels-and-weights__factor">Upgrade Rows</div>
+      <div :style="rowStyle('upgrade rows')" class="l-glyph-levels-and-weights__operator">+</div>
+      <div :style="rowStyle('upgrade rows')" class="l-glyph-levels-and-weights__factor-val">
         {{ formatInt(factors.rowFactor) }}
       </div>
     </template>
     <template v-if="achievementVisible">
-      <div
-        :style="rowStyle('achievements')"
-        class="l-glyph-levels-and-weights__factor"
-      >
-        Achievements
-      </div>
-      <div
-        :style="rowStyle('achievements')"
-        class="l-glyph-levels-and-weights__operator"
-      >
-        +
-      </div>
-      <div
-        :style="rowStyle('achievements')"
-        class="l-glyph-levels-and-weights__factor-val"
-      >
+      <div :style="rowStyle('achievements')" class="l-glyph-levels-and-weights__factor">Achievements</div>
+      <div :style="rowStyle('achievements')" class="l-glyph-levels-and-weights__operator">+</div>
+      <div :style="rowStyle('achievements')" class="l-glyph-levels-and-weights__factor-val">
         {{ formatInt(factors.achievementFactor) }}
       </div>
     </template>
-    <div
-      :style="rowStyle('level')"
-      class="l-glyph-levels-and-weights__factor"
-    >
-      Final Level
-    </div>
-    <div
-      :style="rowStyle('level')"
-      class="l-glyph-levels-and-weights__factor-val"
-    >
+    <div :style="rowStyle('level')" class="l-glyph-levels-and-weights__factor">Final Level</div>
+    <div :style="rowStyle('level')" class="l-glyph-levels-and-weights__factor-val">
       {{ formatLevel(factors.actualLevel) }}
     </div>
-    <div
-      :style="rowStyle('info')"
-      class="l-glyph-levels-and-weights__factor l-glyph-level-and-weights-note"
-    >
+    <div :style="rowStyle('info')" class="l-glyph-levels-and-weights__factor l-glyph-level-and-weights-note">
       Note: All resources here are log10 of their actual values.
     </div>
-    <div
-      :style="rowStyle('info2')"
-      class="l-glyph-levels-and-weights__factor l-glyph-level-and-weights-note"
-    >
+    <div :style="rowStyle('info2')" class="l-glyph-levels-and-weights__factor l-glyph-level-and-weights-note">
       EP, Replicanti, and DT use their highest values this Reality.
     </div>
     <template v-if="adjustVisible">
-      <div
-        :style="adjustOutlineStyle"
-        class="l-glyph-levels-and-weights__adjust-outline"
-      />
+      <div :style="adjustOutlineStyle" class="l-glyph-levels-and-weights__adjust-outline" />
       <div class="l-glyph-levels-and-weights__adjust-label">
         Adjust weights
         <div class="l-glyph-levels-and-weights__reset-btn-outer">
-          <div
-            :class="resetWeightsButtonClass()"
-            @click="resetWeights"
-          >
-            Reset
-          </div>
+          <div :class="resetWeightsButtonClass()" @click="resetWeights">Reset</div>
         </div>
       </div>
       <div class="l-glyph-levels-and-weights__adjust-auto">
@@ -515,21 +364,10 @@ function roundPreservingSum(data) {
           label="Auto adjustment:"
         />
       </div>
-      <div
-        class="l-glyph-levels-and-weights__slider"
-        :style="rowStyle('ep')"
-      >
-        <SliderComponent
-          v-bind="sliderProps"
-          :value="weights.ep"
-          :width="'100%'"
-          @input="adjustSlider('ep', $event)"
-        />
+      <div class="l-glyph-levels-and-weights__slider" :style="rowStyle('ep')">
+        <SliderComponent v-bind="sliderProps" :value="weights.ep" :width="'100%'" @input="adjustSlider('ep', $event)" />
       </div>
-      <div
-        class="l-glyph-levels-and-weights__slider"
-        :style="rowStyle('replicanti')"
-      >
+      <div class="l-glyph-levels-and-weights__slider" :style="rowStyle('replicanti')">
         <SliderComponent
           v-bind="sliderProps"
           :value="weights.repl"
@@ -537,21 +375,10 @@ function roundPreservingSum(data) {
           @input="adjustSlider('repl', $event)"
         />
       </div>
-      <div
-        class="l-glyph-levels-and-weights__slider"
-        :style="rowStyle('dt')"
-      >
-        <SliderComponent
-          v-bind="sliderProps"
-          :value="weights.dt"
-          :width="'100%'"
-          @input="adjustSlider('dt', $event)"
-        />
+      <div class="l-glyph-levels-and-weights__slider" :style="rowStyle('dt')">
+        <SliderComponent v-bind="sliderProps" :value="weights.dt" :width="'100%'" @input="adjustSlider('dt', $event)" />
       </div>
-      <div
-        class="l-glyph-levels-and-weights__slider"
-        :style="rowStyle('eternities')"
-      >
+      <div class="l-glyph-levels-and-weights__slider" :style="rowStyle('eternities')">
         <SliderComponent
           v-bind="sliderProps"
           :value="weights.eternities"

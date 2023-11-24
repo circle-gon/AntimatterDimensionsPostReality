@@ -6,12 +6,12 @@ export default {
   props: {
     tab: {
       type: Object,
-      required: true
+      required: true,
     },
     tabPosition: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -25,7 +25,7 @@ export default {
   computed: {
     isCurrentTab() {
       return this.tab.isOpen && !S12Windows.isMinimised;
-    }
+    },
   },
   methods: {
     update() {
@@ -57,21 +57,19 @@ export default {
     ref="taskbarIcon"
     :class="{
       'c-taskbar-icon': true,
-      'c-taskbar-icon--active': isCurrentTab
+      'c-taskbar-icon--active': isCurrentTab,
     }"
     :title="tab.name"
     @mouseenter="S12Windows.tabs.setHoveringTab(tab)"
     @mouseleave="S12Windows.tabs.unsetHoveringTab()"
-    @click="tab.show(true); S12Windows.isMinimised = false; S12Windows.tabs.unsetHoveringTab(true);"
+    @click="
+      tab.show(true);
+      S12Windows.isMinimised = false;
+      S12Windows.tabs.unsetHoveringTab(true);
+    "
   >
-    <img
-      class="c-taskbar-icon__image"
-      :src="`images/s12/${tab.key}.png`"
-    >
-    <div
-      v-if="hasNotification"
-      class="fas fa-circle-exclamation l-notification-icon"
-    />
+    <img class="c-taskbar-icon__image" :src="`images/s12/${tab.key}.png`" />
+    <div v-if="hasNotification" class="fas fa-circle-exclamation l-notification-icon" />
   </div>
 </template>
 

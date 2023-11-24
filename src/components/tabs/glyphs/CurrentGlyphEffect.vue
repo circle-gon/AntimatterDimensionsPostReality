@@ -4,12 +4,12 @@ export default {
   props: {
     isColored: {
       type: Boolean,
-      default: true
+      default: true,
     },
     effect: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     effectConfig() {
@@ -19,19 +19,19 @@ export default {
       if (this.effectConfig.isDisabledByDoomed) return "";
       const baseValue = this.effect.value.value;
       const value1 = this.effectConfig.formatEffect(baseValue);
-      const value2 = this.effectConfig.conversion === undefined
-        ? ""
-        : this.effectConfig.formatSecondaryEffect(this.effectConfig.conversion(baseValue));
+      const value2 =
+        this.effectConfig.conversion === undefined
+          ? ""
+          : this.effectConfig.formatSecondaryEffect(this.effectConfig.conversion(baseValue));
       const desc = this.effectConfig.totalDesc;
-      return desc
-        .replace("{value}", value1)
-        .replace("{value2}", value2);
+      return desc.replace("{value}", value1).replace("{value2}", value2);
     },
     textColor() {
-      if (!this.isColored) return { };
-      const typeObject = this.effectConfig.id === "timeshardpow"
-        ? CosmeticGlyphTypes.time
-        : CosmeticGlyphTypes[this.effectConfig.glyphTypes];
+      if (!this.isColored) return {};
+      const typeObject =
+        this.effectConfig.id === "timeshardpow"
+          ? CosmeticGlyphTypes.time
+          : CosmeticGlyphTypes[this.effectConfig.glyphTypes];
 
       let glyphColor = typeObject.currentColor.border;
       if (typeObject.id === "cursed") glyphColor = "var(--color-celestials)";
@@ -46,27 +46,22 @@ export default {
     },
     valueClass() {
       return this.effect.value.capped ? "c-current-glyph-effects__effect--capped" : "";
-    }
+    },
   },
   created() {
     this.on$(GAME_EVENT.GLYPH_VISUAL_CHANGE, () => {
       this.$recompute("effectConfig");
     });
-  }
+  },
 };
 </script>
 
 <template>
   <div>
-    <span
-      :style="textColor"
-      :class="valueClass"
-    >
+    <span :style="textColor" :class="valueClass">
       {{ formatValue }}
     </span>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

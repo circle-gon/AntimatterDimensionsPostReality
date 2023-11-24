@@ -4,12 +4,12 @@ export default {
   props: {
     effect: {
       type: Object,
-      required: true
+      required: true,
     },
     glyphType: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -17,8 +17,8 @@ export default {
       noExclude: false,
       effarigSettings: {
         effarigrm: false,
-        effarigglyph: false
-      }
+        effarigglyph: false,
+      },
     };
   },
   computed: {
@@ -37,8 +37,11 @@ export default {
       if (this.noExclude) return "";
 
       const effarigSettings = this.effarigSettings;
-      if (effarigSettings.RM && effarigSettings.glyph &&
-        (this.effect.id === "effarigrm" || this.effect.id === "effarigglyph")) {
+      if (
+        effarigSettings.RM &&
+        effarigSettings.glyph &&
+        (this.effect.id === "effarigrm" || this.effect.id === "effarigglyph")
+      ) {
         return "RM multiplier and Glyph instability cannot occur together on the same Glyph!";
       }
       if (this.effect.id === "effarigrm" && effarigSettings.glyph) {
@@ -58,7 +61,7 @@ export default {
         RM: effectDB.effarigrm.bitmaskIndex,
         glyph: effectDB.effarigglyph.bitmaskIndex,
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -66,7 +69,7 @@ export default {
       const effarigMask = AutoGlyphProcessor.types.effarig.specifiedMask;
       this.effarigSettings = {
         RM: (effarigMask & (1 << this.effarigBits.RM)) !== 0,
-        glyph: (effarigMask & (1 << this.effarigBits.glyph)) !== 0
+        glyph: (effarigMask & (1 << this.effarigBits.glyph)) !== 0,
       };
       this.noExclude = Ra.unlocks.glyphEffectCount.canBeApplied;
     },
@@ -79,26 +82,16 @@ export default {
         this.autoSacrificeSettings.effectCount = Math.clamp(inputValue, 0, 8);
       }
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <div
-    v-tooltip="exclusionTooltip"
-    :class="classObject"
-    @click="toggleSelection()"
-  >
+  <div v-tooltip="exclusionTooltip" :class="classObject" @click="toggleSelection()">
     <span>
-      <i
-        v-if="isExcluded"
-        class="fas fa-exclamation l-dock l-dock-left"
-      />
+      <i v-if="isExcluded" class="fas fa-exclamation l-dock l-dock-left" />
       {{ description }}
-      <i
-        v-if="isExcluded"
-        class="fas fa-exclamation l-dock l-dock-right"
-      />
+      <i v-if="isExcluded" class="fas fa-exclamation l-dock l-dock-right" />
     </span>
     <i
       v-if="isActive"

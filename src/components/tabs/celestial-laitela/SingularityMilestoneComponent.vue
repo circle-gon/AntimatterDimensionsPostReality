@@ -6,12 +6,12 @@ export default {
   props: {
     milestone: {
       type: Object,
-      required: true
+      required: true,
     },
     suppressGlow: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data: () => ({
     isMaxed: false,
@@ -31,7 +31,7 @@ export default {
     autoCondenseDelay: 0,
     lastCheckedMilestones: new Decimal(0),
     autoSingActive: false,
-    isMetro: false
+    isMetro: false,
   }),
   computed: {
     // The bar is a mask that inverts colors for any element with a lower z-index (including text).
@@ -45,22 +45,25 @@ export default {
       return {
         "c-laitela-milestone__progress": true,
         "c-laitela-milestone-mask": true,
-        "c-laitela-milestone--completed": this.isMaxed
+        "c-laitela-milestone--completed": this.isMaxed,
       };
     },
     containerClass() {
       return {
         "c-laitela-milestone": true,
-        "o-laitela-milestone--glow": !this.suppressGlow &&
-          this.milestone.previousGoal.gt(this.lastCheckedMilestones)
+        "o-laitela-milestone--glow": !this.suppressGlow && this.milestone.previousGoal.gt(this.lastCheckedMilestones),
       };
     },
     upgradeDirectionIcon() {
       switch (this.milestone.config.upgradeDirection) {
-        case LAITELA_UPGRADE_DIRECTION.SELF_BOOST: return `<b>ᛝ</b>`;
-        case LAITELA_UPGRADE_DIRECTION.BOOSTS_MAIN: return `<i class="fas fa-arrows-alt"></i>`;
-        case LAITELA_UPGRADE_DIRECTION.BOOSTS_LAITELA: return `<i class="fas fa-compress-arrows-alt"></i>`;
-        default: throw new Error("Unspecified Lai'tela upgrade direction in singularity milestone");
+        case LAITELA_UPGRADE_DIRECTION.SELF_BOOST:
+          return `<b>ᛝ</b>`;
+        case LAITELA_UPGRADE_DIRECTION.BOOSTS_MAIN:
+          return `<i class="fas fa-arrows-alt"></i>`;
+        case LAITELA_UPGRADE_DIRECTION.BOOSTS_LAITELA:
+          return `<i class="fas fa-compress-arrows-alt"></i>`;
+        default:
+          throw new Error("Unspecified Lai'tela upgrade direction in singularity milestone");
       }
     },
     maxCompletions() {
@@ -84,7 +87,11 @@ export default {
           return `In ${TimeSpan.fromSeconds(thisSingularityTime + extraTime).toStringShort()} (manual)`;
         case SINGULARITY_MILESTONE_RESOURCE.AUTO_TIME:
           thisSingularityTime = Math.clampMin(0, this.currentCondenseTime + this.autoCondenseDelay);
-          extraTime = condenseCount.sub(1).ceil().mul(this.baseCondenseTime + this.autoCondenseDelay).toNumber();
+          extraTime = condenseCount
+            .sub(1)
+            .ceil()
+            .mul(this.baseCondenseTime + this.autoCondenseDelay)
+            .toNumber();
           timeText = `In ${TimeSpan.fromSeconds(thisSingularityTime + extraTime).toStringShort()}`;
           return this.autoSingActive ? timeText : `Auto-Singularity is OFF`;
         default:
@@ -113,27 +120,19 @@ export default {
       this.lastCheckedMilestones.copyFrom(player.celestials.laitela.lastCheckedMilestones);
       this.isMetro = Theme.current().isMetro;
     },
-  }
+  },
 };
 </script>
 
 <template>
   <div :class="containerClass">
-    <div
-      v-if="!isMetro && !isMaxed"
-      class="c-laitela-milestone--bar-border-fix"
-    />
-    <div
-      :class="barClass"
-      :style="barStyle"
-    />
+    <div v-if="!isMetro && !isMaxed" class="c-laitela-milestone--bar-border-fix" />
+    <div :class="barClass" :style="barStyle" />
     <span :class="{ 'o-pelle-disabled': isDoomed }">
       <b v-if="!isMaxed">
         {{ progressDisplay }}
       </b>
-      <p>
-        <span v-html="upgradeDirectionIcon" /> {{ description }}
-      </p>
+      <p><span v-html="upgradeDirectionIcon" /> {{ description }}</p>
       <b>
         {{ effectDisplay }}
         <span v-if="!isUnique && !isMaxed">➜ {{ nextEffectDisplay }}</span>

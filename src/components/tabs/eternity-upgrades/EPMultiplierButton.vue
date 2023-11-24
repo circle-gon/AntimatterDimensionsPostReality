@@ -6,7 +6,7 @@ export default {
   name: "EPMultiplierButton",
   components: {
     PrimaryButton,
-    PrimaryToggleButton
+    PrimaryToggleButton,
   },
   data() {
     return {
@@ -14,7 +14,7 @@ export default {
       isAutoUnlocked: false,
       isAffordable: false,
       multiplier: new Decimal(),
-      cost: new Decimal()
+      cost: new Decimal(),
     };
   },
   computed: {
@@ -36,7 +36,7 @@ export default {
       return {
         "o-eternity-upgrade": true,
         "o-eternity-upgrade--available": this.isAffordable,
-        "o-eternity-upgrade--unavailable": !this.isAffordable
+        "o-eternity-upgrade--unavailable": !this.isAffordable,
       };
     },
     isDoomed: () => Pelle.isDoomed,
@@ -44,7 +44,7 @@ export default {
   watch: {
     isAutobuyerActive(newValue) {
       Autobuyer.epMult.isActive = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -58,29 +58,23 @@ export default {
     purchaseUpgrade() {
       if (RealityUpgrade(15).isLockingMechanics) RealityUpgrade(15).tryShowWarningModal();
       else this.upgrade.purchase();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-spoon-btn-group l-margin-top">
-    <button
-      :class="classObject"
-      @click="purchaseUpgrade"
-    >
+    <button :class="classObject" @click="purchaseUpgrade">
       <div :class="{ 'o-pelle-disabled': isDoomed }">
         Multiply Eternity Points from all sources by {{ formatX(5) }}
-        <br>
+        <br />
         Currently: {{ formatX(multiplier, 2, 0) }}
       </div>
-      <br>
+      <br />
       Cost: {{ quantify("Eternity Point", cost, 2, 0) }}
     </button>
-    <PrimaryButton
-      class="l--spoon-btn-group__little-spoon o-primary-btn--small-spoon"
-      @click="upgrade.buyMax(false)"
-    >
+    <PrimaryButton class="l--spoon-btn-group__little-spoon o-primary-btn--small-spoon" @click="upgrade.buyMax(false)">
       Max Eternity Point mult
     </PrimaryButton>
     <PrimaryToggleButton

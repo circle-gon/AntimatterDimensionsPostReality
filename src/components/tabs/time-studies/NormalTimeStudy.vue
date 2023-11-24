@@ -10,17 +10,17 @@ export default {
     DescriptionDisplay,
     EffectDisplay,
     HintText,
-    TimeStudyButton
+    TimeStudyButton,
   },
   props: {
     setup: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
     showCost: true,
-    showSTCost: false
+    showSTCost: false,
   }),
   computed: {
     study() {
@@ -29,12 +29,12 @@ export default {
     hintText() {
       const id = this.study.id;
       if (!this.setup.path) return id;
-      const pathEntry = NormalTimeStudies.pathList.find(p => p.path === this.setup.path);
+      const pathEntry = NormalTimeStudies.pathList.find((p) => p.path === this.setup.path);
       return `${id} ${pathEntry.name}`;
     },
     isUseless() {
       return Pelle.uselessTimeStudies.includes(this.study.id) && Pelle.isDoomed;
-    }
+    },
   },
   methods: {
     update() {
@@ -43,37 +43,26 @@ export default {
       // particularly sensible way to accurately display the actual ST spent other than tracing through buy order
       // of all current studies for every study, and even then it looks odd in practice because then a few studies
       // appear more expensive simply due to buy order.
-      this.showSTCost = VUnlocks.vAchievementUnlock.isUnlocked && !TimeStudy(this.study.id).isBought &&
-        TimeStudy(this.study.id).costsST() && !Pelle.isDoomed;
+      this.showSTCost =
+        VUnlocks.vAchievementUnlock.isUnlocked &&
+        !TimeStudy(this.study.id).isBought &&
+        TimeStudy(this.study.id).costsST() &&
+        !Pelle.isDoomed;
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <TimeStudyButton
-    :setup="setup"
-    :show-cost="showCost"
-    :show-st-cost="showSTCost"
-  >
-    <HintText
-      type="studies"
-      class="l-hint-text--time-study"
-    >
+  <TimeStudyButton :setup="setup" :show-cost="showCost" :show-st-cost="showSTCost">
+    <HintText type="studies" class="l-hint-text--time-study">
       {{ hintText }}
     </HintText>
     <span :class="{ 'o-pelle-disabled': isUseless }">
-      <DescriptionDisplay
-        :config="study.config"
-      />
-      <EffectDisplay
-        br
-        :config="study.config"
-      />
+      <DescriptionDisplay :config="study.config" />
+      <EffectDisplay br :config="study.config" />
     </span>
   </TimeStudyButton>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

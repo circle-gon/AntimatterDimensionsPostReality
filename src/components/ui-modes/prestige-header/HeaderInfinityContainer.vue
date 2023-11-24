@@ -33,18 +33,12 @@ export default {
 </script>
 
 <template>
-  <div
-    v-if="showContainer"
-    class="c-prestige-button-container"
-  >
+  <div v-if="showContainer" class="c-prestige-button-container">
     <div class="c-infinity-points">
       You have
       <span class="c-game-header__ip-amount">{{ format(infinityPoints, 2) }}</span>
       {{ pluralize("Infinity Point", infinityPoints) }}.
-      <span
-        v-if="isTesseractUnlocked"
-        v-html="tesseractText"
-      />
+      <span v-if="isTesseractUnlocked" v-html="tesseractText" />
     </div>
     <BigCrunchButton />
   </div>

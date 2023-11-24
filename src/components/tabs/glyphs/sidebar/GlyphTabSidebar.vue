@@ -26,7 +26,7 @@ export default {
   computed: {
     isDoomed() {
       return Pelle.isDoomed;
-    }
+    },
   },
   methods: {
     update() {
@@ -37,7 +37,7 @@ export default {
       this.unlockedAlchemy = Ra.unlocks.unlockGlyphAlchemy.canBeApplied;
       // We always have inventory management available, but there's no point in showing options if it's the only one
       this.hasMoreOptions = this.unlockedFilter || this.unlockedSets || this.unlockedAlchemy;
-      this.hasRefined = AlchemyResources.all.map(res => res.amount).some(a => a > 0);
+      this.hasRefined = AlchemyResources.all.map((res) => res.amount).some((a) => a > 0);
     },
     setSidebarState(state) {
       player.reality.showSidebarPanel = state;
@@ -47,20 +47,17 @@ export default {
         "l-glyph-sidebar-button": true,
         "c-glyph-sidebar-button": true,
         "c-glyph-sidebar-button--active": index === player.reality.showSidebarPanel,
-        "l-glyph-sidebar-button--attention": index === this.sidebarEnum.SACRIFICE_TYPE &&
-          !this.hasRefined && !this.isDoomed
+        "l-glyph-sidebar-button--attention":
+          index === this.sidebarEnum.SACRIFICE_TYPE && !this.hasRefined && !this.isDoomed,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-glyph-sidebar-option-container">
-    <div
-      v-if="hasMoreOptions"
-      class="l-glyph-sidebar-tab-container"
-    >
+    <div v-if="hasMoreOptions" class="l-glyph-sidebar-tab-container">
       <button
         :class="sidebarClass(sidebarEnum.INVENTORY_MANAGEMENT)"
         @click="setSidebarState(sidebarEnum.INVENTORY_MANAGEMENT)"
@@ -99,6 +96,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

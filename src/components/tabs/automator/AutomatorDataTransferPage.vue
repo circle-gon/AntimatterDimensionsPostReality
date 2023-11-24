@@ -22,12 +22,12 @@ export default {
   },
   methods: {
     loadScripts() {
-      this.scripts = Object.values(player.reality.automator.scripts).map(script => ({
+      this.scripts = Object.values(player.reality.automator.scripts).map((script) => ({
         id: script.id,
         name: script.name,
       }));
     },
-  }
+  },
 };
 </script>
 
@@ -38,21 +38,15 @@ export default {
     scripts between different save files, but you may have to overwrite existing data in the process due to limited
     space for study presets and constants. Data exported from this page is also imported in the same way that single
     script data is imported.
-    <br>
-    <br>
+    <br />
+    <br />
     Note: Any mentions of constant names or full study-buying commands within comments will also be counted as being
-    "used" within a script. This is intentional, as the comment is assumed to be indicative of what the script itself
-    is attempting to do with presets or constants.
-    <br>
-    <br>
-    <div
-      v-for="(script, id) in scripts"
-      :key="id"
-    >
-      <AutomatorDataTransferSingleEntry
-        class="l-entry-margin"
-        :script="script"
-      />
+    "used" within a script. This is intentional, as the comment is assumed to be indicative of what the script itself is
+    attempting to do with presets or constants.
+    <br />
+    <br />
+    <div v-for="(script, id) in scripts" :key="id">
+      <AutomatorDataTransferSingleEntry class="l-entry-margin" :script="script" />
     </div>
   </div>
 </template>

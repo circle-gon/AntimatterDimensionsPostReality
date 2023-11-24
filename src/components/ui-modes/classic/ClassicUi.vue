@@ -3,7 +3,6 @@ import BigCrunchButton from "../BigCrunchButton";
 import GameHeader from "../GameHeader";
 import NewsTicker from "../NewsTicker";
 
-
 import ClassicSubtabBar from "./ClassicSubtabBar";
 import ClassicTabBar from "./ClassicTabBar";
 import EternityPointsHeader from "@/components/EternityPointsHeader";
@@ -18,7 +17,7 @@ export default {
     NewsTicker,
     InfinityPointsHeader,
     EternityPointsHeader,
-    BigCrunchButton
+    BigCrunchButton,
   },
   data() {
     return {
@@ -31,7 +30,7 @@ export default {
     tab: () => Tabs.current,
     news() {
       return this.$viewModel.news;
-    }
+    },
   },
   methods: {
     update() {
@@ -40,34 +39,20 @@ export default {
       // This only exists to force a key-swap after pressing the button to start a new game; the news ticker can break
       // if it isn't redrawn
       this.newGameKey = Pelle.isDoomed;
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <div
-    id="container"
-    :key="newGameKey"
-    class="container c-old-ui l-old-ui"
-  >
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="stylesheets/old-ui.css"
-    >
+  <div id="container" :key="newGameKey" class="container c-old-ui l-old-ui">
+    <link rel="stylesheet" type="text/css" href="stylesheets/old-ui.css" />
     <BigCrunchButton />
     <template v-if="!bigCrunch">
-      <NewsTicker
-        v-if="news"
-        class="l-old-ui__news-bar"
-      />
+      <NewsTicker v-if="news" class="l-old-ui__news-bar" />
       <GameHeader class="l-old-ui__header" />
       <ClassicTabBar />
-      <component
-        :is="tab.config.before"
-        v-if="tab.config.before"
-      />
+      <component :is="tab.config.before" v-if="tab.config.before" />
       <ClassicSubtabBar />
       <div class="l-old-ui__page">
         <slot />
@@ -76,6 +61,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

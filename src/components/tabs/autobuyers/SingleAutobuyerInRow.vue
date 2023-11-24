@@ -10,12 +10,12 @@ export default {
   components: {
     AutobuyerSingleToggleLabel,
     AutobuyerIntervalLabel,
-    AutobuyerModeButton
+    AutobuyerModeButton,
   },
   props: {
     autobuyer: {
       type: Object,
-      required: true
+      required: true,
     },
     showIndividual: Boolean,
     parentDisabled: Boolean,
@@ -38,31 +38,17 @@ export default {
       const buyer = this.autobuyer;
       this.isVisible = buyer.isUnlocked || buyer.isBought;
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <span
-    v-if="isVisible"
-    class="c-autobuyer-box-slot"
-  >
-    <AutobuyerSingleToggleLabel
-      :autobuyer="autobuyer"
-      :parent-disabled="parentDisabled"
-    />
+  <span v-if="isVisible" class="c-autobuyer-box-slot">
+    <AutobuyerSingleToggleLabel :autobuyer="autobuyer" :parent-disabled="parentDisabled" />
     {{ name }}
-    <AutobuyerIntervalLabel
-      v-if="showIndividual"
-      :autobuyer="autobuyer"
-    />
-    <AutobuyerModeButton
-      v-if="hasMode"
-      :autobuyer="autobuyer"
-    />
+    <AutobuyerIntervalLabel v-if="showIndividual" :autobuyer="autobuyer" />
+    <AutobuyerModeButton v-if="hasMode" :autobuyer="autobuyer" />
   </span>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -20,23 +20,22 @@ export default {
   computed: {
     milestones: () => GameDatabase.speedrunMilestones,
     spectateText() {
-      return this.isSpectating
-        ? "Times here are unaffected by END so that you can see your final records"
-        : null;
-    }
+      return this.isSpectating ? "Times here are unaffected by END so that you can see your final records" : null;
+    },
   },
   watch: {
     displayAll(newValue) {
       player.speedrun.displayAllMilestones = newValue;
-    }
+    },
   },
   methods: {
     update() {
       this.milestoneTimes = [...player.speedrun.records];
-      this.maxMilestone = this.milestoneTimes.map(i => Boolean(i)).lastIndexOf(true) + 1;
-      this.startTimeStr = player.speedrun.startDate === 0
-        ? "Speedrun not started yet."
-        : `Speedrun started at ${Time.toDateTimeString(player.speedrun.startDate)}`;
+      this.maxMilestone = this.milestoneTimes.map((i) => Boolean(i)).lastIndexOf(true) + 1;
+      this.startTimeStr =
+        player.speedrun.startDate === 0
+          ? "Speedrun not started yet."
+          : `Speedrun started at ${Time.toDateTimeString(player.speedrun.startDate)}`;
       this.displayAll = player.speedrun.displayAllMilestones;
       this.isSpectating = GameEnd.endState > END_STATE_MARKERS.SPECTATE_GAME;
     },
@@ -46,16 +45,12 @@ export default {
 
 <template>
   <div>
-    <PrimaryToggleButton
-      v-model="displayAll"
-      class="o-primary-btn--subtab-option"
-      label="Describe all milestones:"
-    />
-    <br>
+    <PrimaryToggleButton v-model="displayAll" class="o-primary-btn--subtab-option" label="Describe all milestones:" />
+    <br />
     <b>{{ startTimeStr }}</b>
-    <br>
+    <br />
     <b>{{ spectateText }}</b>
-    <br>
+    <br />
     <div class="l-speedrun-milestone-tab">
       <SpeedrunMilestoneSingle
         v-for="milestone in milestones"

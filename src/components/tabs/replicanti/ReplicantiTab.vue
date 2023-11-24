@@ -48,8 +48,8 @@ export default {
     replicantiChanceSetup() {
       return new ReplicantiUpgradeButtonSetup(
         ReplicantiUpgrade.chance,
-        value => `Replicate chance: ${formatPercents(value)}`,
-        cost => `+${formatPercents(0.01)} Costs: ${format(cost)} IP`
+        (value) => `Replicate chance: ${formatPercents(value)}`,
+        (cost) => `+${formatPercents(0.01)} Costs: ${format(cost)} IP`
       );
     },
     replicantiIntervalSetup() {
@@ -57,31 +57,25 @@ export default {
       function formatInterval(interval) {
         const actualInterval = upgrade.applyModifiers(interval);
         const intervalNum = actualInterval.toNumber();
-        if (
-          Number.isFinite(intervalNum) &&
-          intervalNum > 1 &&
-          upgrade.isCapped
-        ) {
+        if (Number.isFinite(intervalNum) && intervalNum > 1 && upgrade.isCapped) {
           // Checking isCapped() prevents text overflow when formatted as "__ ➜ __"
           return TimeSpan.fromMilliseconds(intervalNum).toStringShort(false);
         }
         if (actualInterval.lt(0.01)) return `< ${format(0.01, 2, 2)}ms`;
-        if (actualInterval.gt(1000))
-          return `${format(actualInterval.div(1000), 2, 2)}s`;
+        if (actualInterval.gt(1000)) return `${format(actualInterval.div(1000), 2, 2)}s`;
         return `${format(actualInterval, 2, 2)}ms`;
       }
       return new ReplicantiUpgradeButtonSetup(
         upgrade,
-        value => `Interval: ${formatInterval(value)}`,
-        cost =>
-          `➜ ${formatInterval(upgrade.nextValue)} Costs: ${format(cost)} IP`
+        (value) => `Interval: ${formatInterval(value)}`,
+        (cost) => `➜ ${formatInterval(upgrade.nextValue)} Costs: ${format(cost)} IP`
       );
     },
     maxGalaxySetup() {
       const upgrade = ReplicantiUpgrade.galaxies;
       return new ReplicantiUpgradeButtonSetup(
         upgrade,
-        value => {
+        (value) => {
           let description = `Max Replicanti Galaxies: `;
           const extra = upgrade.extra;
           if (extra > 0) {
@@ -92,7 +86,7 @@ export default {
           }
           return description;
         },
-        cost => `+${formatInt(1)} Costs: ${format(cost)} IP`
+        (cost) => `+${formatInt(1)} Costs: ${format(cost)} IP`
       );
     },
     boostText() {
@@ -122,7 +116,7 @@ export default {
       return this.estimateToMax.lt(0.01)
         ? "Currently Increasing"
         : TimeSpan.fromSeconds(this.estimateToMax.toNumber()).toStringShort();
-    }
+    },
   },
   methods: {
     update() {
@@ -142,11 +136,7 @@ export default {
       this.hasTDMult = DilationUpgrade.tdMultReplicanti.isBought;
       this.multTD.copyFrom(DilationUpgrade.tdMultReplicanti.effectValue);
       this.hasDTMult = getAdjustedGlyphEffect("replicationdtgain") !== 0 && !Pelle.isDoomed;
-      this.multDT = Math.clampMin(
-        Decimal.log10(Replicanti.amount) *
-          getAdjustedGlyphEffect("replicationdtgain"),
-        1
-      );
+      this.multDT = Math.clampMin(Decimal.log10(Replicanti.amount) * getAdjustedGlyphEffect("replicationdtgain"), 1);
       this.hasIPMult = AlchemyResource.exponential.amount > 0 && !this.isDoomed;
       this.multIP = Replicanti.amount.powEffectOf(AlchemyResource.exponential);
       this.isUncapped = PelleRifts.vacuum.milestones[1].canBeApplied;
@@ -161,11 +151,8 @@ export default {
       this.distantRG = ReplicantiUpgrade.galaxies.distantRGStart;
       this.remoteRG = ReplicantiUpgrade.galaxies.remoteRGStart;
       this.effarigInfinityBonusRG = Effarig.bonusRG;
-      this.nextEffarigRGThreshold = Decimal.NUMBER_MAX_VALUE.pow(
-        Effarig.bonusRG + 2
-      );
-      this.canSeeGalaxyButton =
-        Replicanti.galaxies.max >= 1 || PlayerProgress.eternityUnlocked();
+      this.nextEffarigRGThreshold = Decimal.NUMBER_MAX_VALUE.pow(Effarig.bonusRG + 2);
+      this.canSeeGalaxyButton = Replicanti.galaxies.max >= 1 || PlayerProgress.eternityUnlocked();
       this.maxReplicanti.copyFrom(player.records.thisReality.maxReplicanti);
       this.estimateToMax = this.calculateEstimate();
     },
@@ -175,20 +162,22 @@ export default {
     // This is copied out of a short segment of ReplicantiGainText with comments and unneeded variables stripped
     calculateEstimate() {
       const updateRateMs = player.options.updateRate;
-      const logGainFactorPerTick = getGameSpeedupForDisplay().mul(updateRateMs).mul(
-        Math.log(player.replicanti.chance + 1)).div(getReplicantiInterval());
+      const logGainFactorPerTick = getGameSpeedupForDisplay()
+        .mul(updateRateMs)
+        .mul(Math.log(player.replicanti.chance + 1))
+        .div(getReplicantiInterval());
       const postScale = Math.log10(ReplicantiGrowth.scaleFactor) / ReplicantiGrowth.scaleLog10;
       const nextMilestone = this.maxReplicanti;
       const coeff = Decimal.divide(updateRateMs / 1000, logGainFactorPerTick.times(postScale));
       return coeff.times(nextMilestone.divide(this.amount).pow(postScale).minus(1));
-    }
+    },
   },
 };
 </script>
 
 <template>
   <div class="l-replicanti-tab">
-    <br>
+    <br />
     <PrimaryButton
       v-if="!isUnlocked"
       :enabled="isUnlockAffordable"
@@ -196,25 +185,18 @@ export default {
       onclick="Replicanti.unlock();"
     >
       Unlock Replicanti
-      <br>
+      <br />
       Cost: {{ format(unlockCost) }} IP
     </PrimaryButton>
     <template v-else>
-      <div
-        v-if="isDoomed"
-        class="modified-cap"
-      >
+      <div v-if="isDoomed" class="modified-cap">
         Your Replicanti cap has been removed due to the second {{ scrambledText }} milestone.
       </div>
-      <div
-        v-else-if="hasRaisedCap"
-        class="modified-cap"
-      >
+      <div v-else-if="hasRaisedCap" class="modified-cap">
         Completion of Effarig's Infinity is giving you the following rewards:
-        <br>
-        Your Replicanti cap without TS192 is now {{ format(replicantiCap, 2) }}
-        ({{ capMultText }})
-        <br>
+        <br />
+        Your Replicanti cap without TS192 is now {{ format(replicantiCap, 2) }} ({{ capMultText }})
+        <br />
         {{ quantifyInt("extra Replicanti Galaxy", effarigInfinityBonusRG) }}
         (Next Replicanti Galaxy at {{ format(nextEffarigRGThreshold, 2) }} cap)
       </div>
@@ -222,23 +204,16 @@ export default {
         You have
         <span class="c-replicanti-description__accent">{{ format(amount, 2, 0) }}</span>
         Replicanti, translated to
-        <br>
+        <br />
         <span v-html="boostText" />
       </p>
-      <div
-        v-if="hasMaxText"
-        class="c-replicanti-description"
-      >
+      <div v-if="hasMaxText" class="c-replicanti-description">
         Your maximum Replicanti reached this Reality is
-        <span
-          v-tooltip="toMaxTooltip"
-          class="max-accent"
-        >{{ format(maxReplicanti, 2) }}</span>.
+        <span v-tooltip="toMaxTooltip" class="max-accent">{{ format(maxReplicanti, 2) }}</span
+        >.
       </div>
-      <br>
-      <div v-if="isInEC8">
-        You have {{ quantifyInt("purchase", ec8Purchases) }} left within Eternity Challenge 8.
-      </div>
+      <br />
+      <div v-if="isInEC8">You have {{ quantifyInt("purchase", ec8Purchases) }} left within Eternity Challenge 8.</div>
       <div class="l-replicanti-upgrade-row">
         <ReplicantiUpgradeButton :setup="replicantiChanceSetup" />
         <ReplicantiUpgradeButton :setup="replicantiIntervalSetup" />
@@ -246,13 +221,13 @@ export default {
       </div>
       <div>
         The Max Replicanti Galaxy upgrade can be purchased endlessly, but costs increase
-        <br>
-        more rapidly above {{ formatInt(distantRG) }} Replicanti Galaxies
-        and even more so above {{ formatInt(remoteRG) }} Replicanti Galaxies.
+        <br />
+        more rapidly above {{ formatInt(distantRG) }} Replicanti Galaxies and even more so above
+        {{ formatInt(remoteRG) }} Replicanti Galaxies.
       </div>
-      <br><br>
+      <br /><br />
       <ReplicantiGainText />
-      <br>
+      <br />
       <ReplicantiGalaxyButton v-if="canSeeGalaxyButton" />
     </template>
   </div>

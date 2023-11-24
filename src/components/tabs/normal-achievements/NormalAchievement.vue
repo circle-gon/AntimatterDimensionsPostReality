@@ -8,17 +8,17 @@ export default {
   name: "NormalAchievement",
   components: {
     EffectDisplay,
-    HintText
+    HintText,
   },
   props: {
     achievement: {
       type: Object,
-      required: true
+      required: true,
     },
     isObscuredProp: {
       type: Boolean,
-      required: false
-    }
+      required: false,
+    },
   },
   data() {
     return {
@@ -48,7 +48,7 @@ export default {
     },
     styleObject() {
       return {
-        "background-position": `-${(this.achievement.column - 1) * 104}px -${(this.achievement.row - 1) * 104}px`
+        "background-position": `-${(this.achievement.column - 1) * 104}px -${(this.achievement.row - 1) * 104}px`,
       };
     },
     classObject() {
@@ -107,7 +107,7 @@ export default {
       return this.achievementTime === 0
         ? "Given at Speedrun start"
         : `Achieved after ${TimeSpan.fromMilliseconds(this.achievementTime).toStringShort()}`;
-    }
+    },
   },
   beforeDestroy() {
     clearTimeout(this.mouseOverInterval);
@@ -139,7 +139,7 @@ export default {
       this.isMouseOver = true;
     },
     onMouseLeave() {
-      this.mouseOverInterval = setTimeout(() => this.isMouseOver = false, 300);
+      this.mouseOverInterval = setTimeout(() => (this.isMouseOver = false), 300);
     },
     // We don't want to expose the original text for Pelle achievements, so we generate a random string with the same
     // length of the original text in order to make something that fits reasonably within their respective places
@@ -171,67 +171,37 @@ export default {
         else modified += raw[i];
       }
       return modified;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    :class="classObject"
-    :style="styleObject"
-    @mouseenter="onMouseEnter"
-    @mouseleave="onMouseLeave"
-  >
-    <HintText
-      :key="garbleKey"
-      type="achievements"
-      class="l-hint-text--achievement"
-    >
+  <div :class="classObject" :style="styleObject" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+    <HintText :key="garbleKey" type="achievements" class="l-hint-text--achievement">
       {{ processedId }}
     </HintText>
     <div class="o-achievement__tooltip">
       <template v-if="isMouseOver">
-        <div class="o-achievement__tooltip__name">
-          {{ processedName }} ({{ processedId }})
-        </div>
+        <div class="o-achievement__tooltip__name">{{ processedName }} ({{ processedId }})</div>
         <div class="o-achievement__tooltip__description">
           {{ processedDescription }}
         </div>
-        <div
-          v-if="config.reward"
-          class="o-achievement__tooltip__reward"
-        >
-          <span
-            v-if="!isObscured"
-            :class="{ 'o-pelle-disabled': isDisabled }"
-          >
+        <div v-if="config.reward" class="o-achievement__tooltip__reward">
+          <span v-if="!isObscured" :class="{ 'o-pelle-disabled': isDisabled }">
             Reward: {{ config.reward }}
-            <EffectDisplay
-              v-if="config.formatEffect"
-              br
-              :config="config"
-            />
+            <EffectDisplay v-if="config.formatEffect" br :config="config" />
           </span>
         </div>
-        <div
-          v-if="achievedTime"
-          class="o-achievement-time"
-        >
+        <div v-if="achievedTime" class="o-achievement-time">
           {{ achievedTime }}
         </div>
       </template>
     </div>
-    <div
-      v-if="showUnlockState"
-      :class="indicatorClassObject"
-    >
+    <div v-if="showUnlockState" :class="indicatorClassObject">
       <i :class="indicatorIconClass" />
     </div>
-    <div
-      v-if="hasReward"
-      :class="rewardClassObject"
-    >
+    <div v-if="hasReward" :class="rewardClassObject">
       <i class="fas fa-star" />
     </div>
   </div>

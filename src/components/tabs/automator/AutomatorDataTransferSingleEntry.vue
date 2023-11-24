@@ -5,7 +5,7 @@ export default {
     script: {
       type: Object,
       required: true,
-    }
+    },
   },
   data() {
     return {
@@ -41,8 +41,8 @@ export default {
       } else {
         GameUI.notify.error("Could not export data from blank Automator script!");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -54,21 +54,15 @@ export default {
       @click="exportData(script.id)"
     />
     <b>Script name: {{ script.name }}</b>
-    <br>
+    <br />
     <span v-if="hasPresets">
-      <span
-        :class="iconClass(hidePresets)"
-        @click="hidePresets = !hidePresets"
-      />
+      <span :class="iconClass(hidePresets)" @click="hidePresets = !hidePresets" />
       References {{ quantifyInt("recognized study preset", presets.length) }}
       <span v-if="!hidePresets">
-        <div
-          v-for="id in presets"
-          :key="id"
-        >
+        <div v-for="id in presets" :key="id">
           <span v-if="presetData[id].name">"{{ presetData[id].name }}" (slot {{ id + 1 }}):</span>
           <span v-else>Preset slot {{ id + 1 }}:</span>
-          <br>
+          <br />
           <div class="l-value-padding">
             <span v-if="presetData[id].studies">{{ presetData[id].studies }}</span>
             <i v-else>Empty Study Preset</i>
@@ -76,32 +70,22 @@ export default {
         </div>
       </span>
     </span>
-    <span v-else>
-      Does not reference any study presets.
-    </span>
-    <br>
+    <span v-else> Does not reference any study presets. </span>
+    <br />
     <span v-if="hasConstants">
-      <span
-        :class="iconClass(hideConstants)"
-        @click="hideConstants = !hideConstants"
-      />
+      <span :class="iconClass(hideConstants)" @click="hideConstants = !hideConstants" />
       References {{ quantifyInt("defined constant", constants.length) }}
       <span v-if="!hideConstants">
-        <div
-          v-for="name in constants"
-          :key="name"
-        >
+        <div v-for="name in constants" :key="name">
           "{{ name }}":
-          <br>
+          <br />
           <div class="l-value-padding">
             {{ constantData[name] }}
           </div>
         </div>
       </span>
     </span>
-    <span v-else>
-      Does not reference any defined constants.
-    </span>
+    <span v-else> Does not reference any defined constants. </span>
   </div>
 </template>
 

@@ -6,7 +6,7 @@ export default {
   props: {
     tab: {
       type: Object,
-      required: true
+      required: true,
     },
   },
   data() {
@@ -25,7 +25,7 @@ export default {
     update() {
       this.isAvailable = this.tab.isAvailable;
       this.isHidden = this.tab.isHidden;
-      this.subtabVisibilities = this.tab.subtabs.map(x => x.isAvailable);
+      this.subtabVisibilities = this.tab.subtabs.map((x) => x.isAvailable);
       this.windowWidth = window.innerWidth;
       this.useCompact = this.subtabVisibilities.reduce((a, v) => a + v) * 180 > window.innerWidth - 10;
 
@@ -38,9 +38,10 @@ export default {
       if (!this.$refs.subtabs) return "0px";
       const centerPt = S12Windows.tabs.tabButtonPositions[this.tab.id];
       const subtabsWidth = this.$refs.subtabs.offsetWidth;
-      const minLeft = 5 + subtabsWidth / 2, maxLeft = this.windowWidth - minLeft;
+      const minLeft = 5 + subtabsWidth / 2,
+        maxLeft = this.windowWidth - minLeft;
       // Reference isAvailable and isHidden so this gets updated correctly
-      return (this.isAvailable, this.isHidden, `${Math.clamp(centerPt, minLeft, maxLeft)}px`);
+      return this.isAvailable, this.isHidden, `${Math.clamp(centerPt, minLeft, maxLeft)}px`;
     },
   },
 };
@@ -58,33 +59,24 @@ export default {
     @mouseenter="S12Windows.tabs.setHoveringTab(tab)"
     @mouseleave="S12Windows.tabs.unsetHoveringTab()"
   >
-    <template
-      v-for="(subtab, index) in tab.subtabs"
-    >
+    <template v-for="(subtab, index) in tab.subtabs">
       <div
         v-if="subtabVisibilities[index]"
         :key="index"
         class="c-s12-subtab-btn"
         :class="{ 'c-s12-subtab-btn--active': isCurrentSubtab(subtab.id) }"
-        @click="subtab.show(true); S12Windows.isMinimised = false; S12Windows.tabs.unsetHoveringTab(true);"
+        @click="
+          subtab.show(true);
+          S12Windows.isMinimised = false;
+          S12Windows.tabs.unsetHoveringTab(true);
+        "
       >
         <span class="c-s12-subtab-btn__text">
-          <span
-            v-if="useCompact"
-            class="c-s12-subtab-btn__symbol--small"
-            v-html="subtab.symbol"
-          />
+          <span v-if="useCompact" class="c-s12-subtab-btn__symbol--small" v-html="subtab.symbol" />
           {{ subtab.name }}
         </span>
-        <span
-          v-if="!useCompact"
-          class="c-s12-subtab-btn__symbol"
-          v-html="subtab.symbol"
-        />
-        <div
-          v-if="subtab.hasNotification"
-          class="fas fa-circle-exclamation l-notification-icon"
-        />
+        <span v-if="!useCompact" class="c-s12-subtab-btn__symbol" v-html="subtab.symbol" />
+        <div v-if="subtab.hasNotification" class="fas fa-circle-exclamation l-notification-icon" />
       </div>
     </template>
   </div>
@@ -102,8 +94,7 @@ export default {
   background-image: var(--s12-background-gradient);
   border: 0.15rem solid var(--s12-border-color);
   border-radius: 0.5rem;
-  box-shadow: 0 0 1rem 0.2rem var(--s12-border-color),
-    inset 0 0 0.4rem 0.1rem rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 1rem 0.2rem var(--s12-border-color), inset 0 0 0.4rem 0.1rem rgba(255, 255, 255, 0.7);
   transform: translate(-50%, 20%);
   transition: transform 0.2s, opacity 0.2s, visibility 0.2s;
   pointer-events: none;

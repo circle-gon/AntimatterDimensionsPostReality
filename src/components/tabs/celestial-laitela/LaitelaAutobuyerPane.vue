@@ -4,7 +4,7 @@ import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 export default {
   name: "LaitelaAutobuyerPane",
   components: {
-    PrimaryToggleButton
+    PrimaryToggleButton,
   },
   data() {
     return {
@@ -24,19 +24,13 @@ export default {
   },
   computed: {
     autobuyStr() {
-      return this.maxAutobuy === 4
-        ? "ON (all DMD)"
-        : `ON (max. DMD ${this.maxAutobuy})`;
+      return this.maxAutobuy === 4 ? "ON (all DMD)" : `ON (max. DMD ${this.maxAutobuy})`;
     },
     autoAscendStr() {
-      return this.maxAutoAscend === 4
-        ? "ON (all DMD)"
-        : `ON (max. DMD ${this.maxAutoAscend})`;
+      return this.maxAutoAscend === 4 ? "ON (all DMD)" : `ON (max. DMD ${this.maxAutoAscend})`;
     },
     autoSingularityStr() {
-      return this.autoSingularityFactor === 1
-        ? "At Cap"
-        : `Cap ${formatX(this.autoSingularityFactor, 2, 2)}`;
+      return this.autoSingularityFactor === 1 ? "At Cap" : `Cap ${formatX(this.autoSingularityFactor, 2, 2)}`;
     },
   },
   watch: {
@@ -69,15 +63,12 @@ export default {
       this.maxAutoAscend = SingularityMilestone.ascensionAutobuyers.effectValue;
       this.autoSingularityFactor = SingularityMilestone.autoCondense.effectValue;
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="hasDimension || hasAscension || hasSingularity || hasAnnihilated"
-    class="c-laitela-singularity-container"
-  >
+  <div v-if="hasDimension || hasAscension || hasSingularity || hasAnnihilated" class="c-laitela-singularity-container">
     <PrimaryToggleButton
       v-if="hasDimension"
       v-model="dimension"

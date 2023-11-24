@@ -4,8 +4,8 @@ export default {
   props: {
     glyphType: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -25,8 +25,8 @@ export default {
     },
     descStyle() {
       return {
-        "color": GlyphAppearanceHandler.getBorderColor(this.glyphType),
-        "border-color": this.typeConfig.color
+        color: GlyphAppearanceHandler.getBorderColor(this.glyphType),
+        "border-color": this.typeConfig.color,
       };
     },
     minScoreInputStyle() {
@@ -45,7 +45,7 @@ export default {
     },
     indexOffset() {
       return AutoGlyphProcessor.bitmaskIndexOffset(this.glyphType);
-    }
+    },
   },
   created() {
     this.effectScores = [...AutoGlyphProcessor.types[this.glyphType].effectScores];
@@ -73,7 +73,7 @@ export default {
         this.autoSacrificeSettings.effectScores[index] = this.limitedInput(inputValue);
       }
     },
-  }
+  },
 };
 </script>
 
@@ -81,12 +81,7 @@ export default {
   <div class="l-auto-sac-type-tab">
     <div class="l-auto-sac-type-tab__row-wrapper">
       <div>
-        <div
-          :ach-tooltip="questionmarkTooltip"
-          class="o-questionmark"
-        >
-          ?
-        </div>
+        <div :ach-tooltip="questionmarkTooltip" class="o-questionmark">?</div>
         <b> Threshold score</b> (rarity % + effect scores)
       </div>
       <input
@@ -98,17 +93,10 @@ export default {
         :value="scoreThreshold"
         :style="minScoreInputStyle"
         @blur="setScoreThreshold"
-      >
+      />
     </div>
-    <div
-      v-for="effect in effects"
-      :key="effect.id"
-      class="l-auto-sac-type-tab__row-wrapper"
-    >
-      <div
-        class="c-auto-sac-type-tab__effect-desc l-auto-sac-type-tab__effect-desc"
-        :style="descStyle"
-      >
+    <div v-for="effect in effects" :key="effect.id" class="l-auto-sac-type-tab__row-wrapper">
+      <div class="c-auto-sac-type-tab__effect-desc l-auto-sac-type-tab__effect-desc" :style="descStyle">
         {{ effect.genericDesc }}
       </div>
       <input
@@ -118,11 +106,9 @@ export default {
         class="c-auto-sac-type-tab__input"
         :value="effectScores[effect.bitmaskIndex - indexOffset]"
         @blur="setEffectScore(effect.bitmaskIndex - indexOffset, $event)"
-      >
+      />
     </div>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

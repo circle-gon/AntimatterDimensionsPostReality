@@ -78,11 +78,7 @@ export class AntimatterDimensionAutobuyerState extends UpgradeableAutobuyerState
   }
 
   toggleMode() {
-    this.mode = [
-      AUTOBUYER_MODE.BUY_SINGLE,
-      AUTOBUYER_MODE.BUY_10
-    ]
-      .nextSibling(this.mode);
+    this.mode = [AUTOBUYER_MODE.BUY_SINGLE, AUTOBUYER_MODE.BUY_10].nextSibling(this.mode);
   }
 
   // We don't want to directly call super.canTick here because the game logic works really weirdly in terms of
@@ -150,21 +146,29 @@ export class AntimatterDimensionAutobuyerState extends UpgradeableAutobuyerState
     TabNotification.newAutobuyer.clearTrigger();
   }
 
-  static get entryCount() { return 8; }
-  static get autobuyerGroupName() { return "Antimatter Dimension"; }
+  static get entryCount() {
+    return 8;
+  }
+  static get autobuyerGroupName() {
+    return "Antimatter Dimension";
+  }
 
   // These are toggled on and off from the group autobuyer checkbox
-  static get isActive() { return player.auto.antimatterDims.isActive; }
-  static set isActive(value) { player.auto.antimatterDims.isActive = value; }
+  static get isActive() {
+    return player.auto.antimatterDims.isActive;
+  }
+  static set isActive(value) {
+    player.auto.antimatterDims.isActive = value;
+  }
 
   static createAccessor() {
     const accessor = super.createAccessor();
     Object.defineProperties(accessor, {
-      allBought: { get: () => accessor.zeroIndexed.every(x => x.isBought) },
+      allBought: { get: () => accessor.zeroIndexed.every((x) => x.isBought) },
       // We can get away with this since allUnlimitedBulk is the same for all AD autos
       allUnlimitedBulk: { get: () => accessor.zeroIndexed[0].hasUnlimitedBulk },
       bulkCap: { get: () => accessor.zeroIndexed[0].bulkCap },
-      collapseDisplay: { get: () => accessor.allMaxedInterval && accessor.allUnlocked && accessor.allUnlimitedBulk }
+      collapseDisplay: { get: () => accessor.allMaxedInterval && accessor.allUnlocked && accessor.allUnlimitedBulk },
     });
     return accessor;
   }

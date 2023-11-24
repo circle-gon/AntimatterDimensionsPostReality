@@ -4,19 +4,19 @@ export default {
   props: {
     subtab: {
       type: Object,
-      required: true
+      required: true,
     },
     parentName: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       isAvailable: false,
       hasNotification: false,
       isCurrentSubtab: false,
-      tabName: ""
+      tabName: "",
     };
   },
   computed: {
@@ -28,7 +28,7 @@ export default {
         "o-tab-btn--infinity": this.parentName === "Infinity",
         "o-tab-btn--eternity": this.parentName === "Eternity",
         "o-tab-btn--reality": this.parentName === "Reality",
-        "o-tab-btn--celestial": this.parentName === "Celestials"
+        "o-tab-btn--celestial": this.parentName === "Celestials",
       };
     },
   },
@@ -40,24 +40,17 @@ export default {
       this.tabName = Pelle.transitionText(
         this.subtab.name,
         this.subtab.name,
-        Math.max(Math.min(GameEnd.endState - (this.subtab.id) % 4 / 10, 1), 0)
+        Math.max(Math.min(GameEnd.endState - (this.subtab.id % 4) / 10, 1), 0)
       );
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <button
-    v-if="isAvailable"
-    :class="classObject"
-    @click="subtab.show(true)"
-  >
+  <button v-if="isAvailable" :class="classObject" @click="subtab.show(true)">
     {{ tabName }}
-    <div
-      v-if="hasNotification"
-      class="fas fa-circle-exclamation l-notification-icon"
-    />
+    <div v-if="hasNotification" class="fas fa-circle-exclamation l-notification-icon" />
   </button>
 </template>
 

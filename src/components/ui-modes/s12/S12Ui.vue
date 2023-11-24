@@ -13,7 +13,6 @@ import GameSpeedDisplay from "@/components/GameSpeedDisplay";
 
 import { S12Windows } from "./windows";
 
-
 export default {
   name: "S12Ui",
   components: {
@@ -63,20 +62,13 @@ export default {
 </script>
 
 <template>
-  <div
-    id="page"
-    class="c-s12-window__outer"
-    :class="S12Windows.isMinimised ? 'c-s12-window__outer--minimised' : ''"
-  >
+  <div id="page" class="c-s12-window__outer" :class="S12Windows.isMinimised ? 'c-s12-window__outer--minimised' : ''">
     <link
       rel="stylesheet"
       type="text/css"
       :href="isOldUi ? 'stylesheets/old-ui.css' : 'stylesheets/new-ui-styles.css'"
-    >
-    <span
-      class="c-s12-close-button"
-      @click="S12Windows.isMinimised = true"
     />
+    <span class="c-s12-close-button" @click="S12Windows.isMinimised = true" />
     <span class="c-modal__title">
       {{ tabName }}
     </span>
@@ -89,20 +81,15 @@ export default {
       <GameUiComponentFixed />
       <BackgroundAnimations />
       <div class="c-s12-window__content-container">
-        <NewsTicker
-          v-if="news"
-        />
+        <NewsTicker v-if="news" />
         <BigCrunchButton />
-        <div
-          v-if="!bigCrunch"
-          class="tab-container"
-        >
+        <div v-if="!bigCrunch" class="tab-container">
           <HeaderPrestigeGroup />
           <div class="information-header">
             <HeaderChallengeDisplay />
             <HeaderChallengeEffects />
             <GameSpeedDisplay v-if="hasReality" />
-            <br v-if="hasReality">
+            <br v-if="hasReality" />
             <HeaderBlackHole />
           </div>
           <slot />

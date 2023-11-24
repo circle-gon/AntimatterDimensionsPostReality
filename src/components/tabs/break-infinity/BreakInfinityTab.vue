@@ -6,21 +6,17 @@ export default {
   name: "BreakInfinityTab",
   components: {
     BreakInfinityButton,
-    InfinityUpgradeButton
+    InfinityUpgradeButton,
   },
   data() {
     return {
-      isUnlocked: false
+      isUnlocked: false,
     };
   },
   computed: {
     grid() {
       return [
-        [
-          BreakInfinityUpgrade.totalAMMult,
-          BreakInfinityUpgrade.currentAMMult,
-          BreakInfinityUpgrade.galaxyBoost,
-        ],
+        [BreakInfinityUpgrade.totalAMMult, BreakInfinityUpgrade.currentAMMult, BreakInfinityUpgrade.galaxyBoost],
         [
           BreakInfinityUpgrade.infinitiedMult,
           BreakInfinityUpgrade.achievementMult,
@@ -29,15 +25,11 @@ export default {
         [
           BreakInfinityUpgrade.infinitiedGen,
           BreakInfinityUpgrade.autobuyMaxDimboosts,
-          BreakInfinityUpgrade.autobuyerSpeed
+          BreakInfinityUpgrade.autobuyerSpeed,
         ],
-        [
-          BreakInfinityUpgrade.tickspeedCostMult,
-          BreakInfinityUpgrade.dimCostMult,
-          BreakInfinityUpgrade.ipGen
-        ]
+        [BreakInfinityUpgrade.tickspeedCostMult, BreakInfinityUpgrade.dimCostMult, BreakInfinityUpgrade.ipGen],
       ];
-    }
+    },
   },
   methods: {
     update() {
@@ -46,13 +38,13 @@ export default {
     btnClassObject(column) {
       return {
         "l-infinity-upgrade-grid__cell": true,
-        "o-infinity-upgrade-btn--multiplier": column === 3
+        "o-infinity-upgrade-btn--multiplier": column === 3,
       };
     },
     timeDisplayShort(time) {
       return timeDisplayShort(time);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -63,15 +55,8 @@ export default {
       {{ format(0.1, 1, 1) }} seconds to unlock Break Infinity.
     </div>
     <BreakInfinityButton class="l-break-infinity-tab__break-btn" />
-    <div
-      v-if="isUnlocked"
-      class="l-break-infinity-upgrade-grid l-break-infinity-tab__grid"
-    >
-      <div
-        v-for="(column, columnId) in grid"
-        :key="columnId"
-        class="l-break-infinity-upgrade-grid__row"
-      >
+    <div v-if="isUnlocked" class="l-break-infinity-upgrade-grid l-break-infinity-tab__grid">
+      <div v-for="(column, columnId) in grid" :key="columnId" class="l-break-infinity-upgrade-grid__row">
         <InfinityUpgradeButton
           v-for="upgrade in column"
           :key="upgrade.id"
@@ -83,6 +68,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

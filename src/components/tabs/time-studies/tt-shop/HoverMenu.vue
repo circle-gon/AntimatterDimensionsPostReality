@@ -9,8 +9,8 @@ export default {
   props: {
     saveslot: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   data: () => ({
     componentID: UIID.next(),
@@ -27,7 +27,7 @@ export default {
         mouseenter: () => this.startShowTimer(),
         mouseleave: () => this.startHideTimer(),
       });
-    }
+    },
   },
   methods: {
     startShowTimer() {
@@ -81,22 +81,11 @@ export default {
 </script>
 
 <template>
-  <div
-    class="hover-menu__wrapper"
-    v-on="listeners"
-    @contextmenu.prevent="toggleContextMenu"
-  >
-    <slot
-      ref="clown"
-      name="object"
-    />
-    <slot
-      v-if="contextMenuIsVisible"
-      name="menu"
-    />
+  <div class="hover-menu__wrapper" v-on="listeners" @contextmenu.prevent="toggleContextMenu">
+    <slot ref="clown" name="object" />
+    <slot v-if="contextMenuIsVisible" name="menu" />
   </div>
 </template>
-
 
 <style scoped>
 .hover-menu__wrapper {

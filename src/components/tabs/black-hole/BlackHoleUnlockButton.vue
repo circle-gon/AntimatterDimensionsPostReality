@@ -9,7 +9,7 @@ export default {
   computed: {
     classObject() {
       return {
-        "c-reality-upgrade-btn--unavailable": !this.canBeUnlocked
+        "c-reality-upgrade-btn--unavailable": !this.canBeUnlocked,
       };
     },
   },
@@ -20,8 +20,8 @@ export default {
     unlock() {
       BlackHoles.unlock();
       this.$emit("blackholeunlock");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -32,11 +32,9 @@ export default {
     @click="unlock"
   >
     Unleash the Black Hole
-    <br>
+    <br />
     Cost: {{ formatInt(100) }} Reality Machines
   </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

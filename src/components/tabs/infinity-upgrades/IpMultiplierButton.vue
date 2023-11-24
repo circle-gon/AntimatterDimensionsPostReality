@@ -8,24 +8,24 @@ export default {
   components: {
     PrimaryButton,
     PrimaryToggleButton,
-    InfinityUpgradeButton
+    InfinityUpgradeButton,
   },
   data() {
     return {
       isAutobuyerActive: false,
       isAutoUnlocked: false,
-      isCapped: false
+      isCapped: false,
     };
   },
   computed: {
     upgrade() {
       return InfinityUpgrade.ipMult;
-    }
+    },
   },
   watch: {
     isAutobuyerActive(newValue) {
       Autobuyer.ipMult.isActive = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -35,26 +35,20 @@ export default {
     },
     buyMaxIPMult() {
       InfinityUpgrade.ipMult.buyMax();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-spoon-btn-group">
-    <InfinityUpgradeButton
-      :upgrade="upgrade"
-      class="o-infinity-upgrade-btn--multiplier"
-    >
+    <InfinityUpgradeButton :upgrade="upgrade" class="o-infinity-upgrade-btn--multiplier">
       <template v-if="isCapped">
-        <br>
+        <br />
         <span>(Capped at {{ quantify("Infinity Point", upgrade.config.costCap) }})</span>
       </template>
     </InfinityUpgradeButton>
-    <PrimaryButton
-      class="l--spoon-btn-group__little-spoon o-primary-btn--small-spoon"
-      @click="buyMaxIPMult()"
-    >
+    <PrimaryButton class="l--spoon-btn-group__little-spoon o-primary-btn--small-spoon" @click="buyMaxIPMult()">
       Max Infinity Point mult
     </PrimaryButton>
     <PrimaryToggleButton
@@ -66,6 +60,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

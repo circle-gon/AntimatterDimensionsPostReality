@@ -50,9 +50,9 @@ export default {
       return this.canReality && this.suggestions.length !== 0;
     },
     styleObject() {
-      const color = (!this.canReality || this.canBeExpanded) ? "var(--color-bad)" : "var(--color-good)";
+      const color = !this.canReality || this.canBeExpanded ? "var(--color-bad)" : "var(--color-good)";
       // Has both is and canBe in order to force the height back to its minimum size when all suggestions are done
-      const height = (this.canBeExpanded && this.isExpanded) ? `${6.5 + 1.5 * this.suggestions.length}rem` : "5rem";
+      const height = this.canBeExpanded && this.isExpanded ? `${6.5 + 1.5 * this.suggestions.length}rem` : "5rem";
       return {
         color,
         height,
@@ -69,26 +69,28 @@ export default {
     },
     dropDownIconClass() {
       return this.isExpanded ? "far fa-minus-square" : "far fa-plus-square";
-    }
+    },
   },
   created() {
     // Collapsing it after every reality resets the height to its fixed minimum value, stopping screen jitter
-    this.on$(GAME_EVENT.REALITY_RESET_AFTER, () => this.isExpanded = false);
+    this.on$(GAME_EVENT.REALITY_RESET_AFTER, () => (this.isExpanded = false));
   },
   methods: {
     update() {
       this.canReality = TimeStudy.reality.isBought;
       this.isVisible = !isInCelestialReality();
       this.ecCount = EternityChallenges.completions;
-      this.missingAchievements = Achievements.preReality.countWhere(a => !a.isUnlocked);
+      this.missingAchievements = Achievements.preReality.countWhere((a) => !a.isUnlocked);
       // Repeatable dilation upgrades don't have isBought, but do have boughtAmount
-      this.unpurchasedDilationUpgrades = DilationUpgrade.all
-        .countWhere(u => (u.isBought === undefined ? u.boughtAmount === 0 : !u.isBought) && !u.config.pelleOnly);
+      this.unpurchasedDilationUpgrades = DilationUpgrade.all.countWhere(
+        (u) => (u.isBought === undefined ? u.boughtAmount === 0 : !u.isBought) && !u.config.pelleOnly
+      );
       this.currLog10EP = player.eternityPoints.log10();
-      this.cheapestLog10TD = Math.min(...TimeDimensions.all.map(x => x.cost.log10()));
+      this.cheapestLog10TD = Math.min(...TimeDimensions.all.map((x) => x.cost.log10()));
       this.multEPLog10Cost = EternityUpgrade.epMult.cost.log10();
-      this.purchasableTS = NormalTimeStudyState.studies.countWhere(s => s && s.canBeBought && !s.isBought);
-      this.hasDilated = Perk.startTP.canBeApplied ? player.dilation.lastEP.gt(0)
+      this.purchasableTS = NormalTimeStudyState.studies.countWhere((s) => s && s.canBeBought && !s.isBought);
+      this.hasDilated = Perk.startTP.canBeApplied
+        ? player.dilation.lastEP.gt(0)
         : player.dilation.tachyonParticles.gt(0);
       this.availableCharges = Ra.chargesLeft;
     },
@@ -96,36 +98,22 @@ export default {
       if (!this.canBeExpanded) return;
       this.isExpanded = !this.isExpanded;
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="isVisible"
-    :class="realityReminderClass"
-    :style="styleObject"
-    @click="clicked"
-  >
-    <span v-if="!canReality">
-      You still need to unlock Reality in the Time Study Tree.
-    </span>
+  <div v-if="isVisible" :class="realityReminderClass" :style="styleObject" @click="clicked">
+    <span v-if="!canReality"> You still need to unlock Reality in the Time Study Tree. </span>
     <span v-else-if="suggestions.length === 0">
       Ready to Reality! You have unlocked every available upgrade within this Reality.
     </span>
     <span v-else>
       <i :class="dropDownIconClass" />
-      You have {{ quantifyInt("thing", suggestions.length) }}
-      you may want to do before Reality. {{ clickText }}
-      <div
-        v-if="isExpanded"
-        class="l-suggestions"
-      >
-        <br>
-        <div
-          v-for="suggestion in suggestions"
-          :key="suggestion"
-        >
+      You have {{ quantifyInt("thing", suggestions.length) }} you may want to do before Reality. {{ clickText }}
+      <div v-if="isExpanded" class="l-suggestions">
+        <br />
+        <div v-for="suggestion in suggestions" :key="suggestion">
           {{ suggestion }}
         </div>
       </div>

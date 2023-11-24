@@ -4,12 +4,12 @@ export default {
   props: {
     complete: {
       type: Number,
-      required: true
+      required: true,
     },
     completeWidth: {
       type: Number,
       required: false,
-      default: 8
+      default: 8,
     },
     incompleteWidth: {
       type: Number,
@@ -38,15 +38,15 @@ export default {
     },
     path: {
       type: Object,
-      required: true
+      required: true,
     },
     pathStart: {
       type: Number,
-      required: true
+      required: true,
     },
     pathEnd: {
       type: Number,
-      required: true
+      required: true,
     },
     pathPadStart: {
       type: Number,
@@ -61,12 +61,10 @@ export default {
   },
   computed: {
     unpaddedSpan() {
-      return (this.pathEnd - this.pathPadEnd) - (this.pathStart + this.pathPadStart);
+      return this.pathEnd - this.pathPadEnd - (this.pathStart + this.pathPadStart);
     },
     incompleteStart() {
-      return this.complete >= 1
-        ? this.pathEnd
-        : this.pathStart + this.pathPadStart + this.unpaddedSpan * this.complete;
+      return this.complete >= 1 ? this.pathEnd : this.pathStart + this.pathPadStart + this.unpaddedSpan * this.complete;
     },
     incompleteStartShape() {
       return this.shapeAt(this.incompleteStart);
@@ -103,16 +101,18 @@ export default {
     },
     incompleteSolidPath() {
       return this.generateIncompletePath(
-        this.incompleteFadeEnd - 1e-3 * (this.pathEnd - this.incompleteFadeEnd), this.pathEnd);
+        this.incompleteFadeEnd - 1e-3 * (this.pathEnd - this.incompleteFadeEnd),
+        this.pathEnd
+      );
     },
     completePath() {
       const startShape = this.completeStartShape;
       const scale = 1 / this.totalPathOffsetPx.length;
-      const tform = AffineTransform
-        .translation(startShape.position.negative)
+      const tform = AffineTransform.translation(startShape.position.negative)
         .rotated(-startShape.direction.angle)
         .scaled(scale);
-      const tStart = this.pathStart, tEnd = this.incompleteStart;
+      const tStart = this.pathStart,
+        tEnd = this.incompleteStart;
       const w = this.completeWidth;
       const insetPath = this.getOffsetPath(-w / 2, tStart, tEnd).transformedBy(tform);
       const outsetPath = this.getOffsetPath(w / 2, tEnd, tStart).transformedBy(tform);
@@ -153,39 +153,21 @@ export default {
         shape.derivative = shape.derivative.negative;
       }
       return shape;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <g>
-    <g
-      v-if="!noBG"
-      :transform="incompleteTransform"
-    >
-      <path
-        :d="incompleteFadePath"
-        fill="url(#incompleteFade)"
-      />
-      <path
-        v-if="hasIncompleteSolidPath"
-        :d="incompleteSolidPath"
-        fill="#888"
-      />
+    <g v-if="!noBG" :transform="incompleteTransform">
+      <path :d="incompleteFadePath" fill="url(#incompleteFade)" />
+      <path v-if="hasIncompleteSolidPath" :d="incompleteSolidPath" fill="#888" />
     </g>
     <g :filter="filter">
-      <path
-        :transform="completeTransform"
-        :fill="fill"
-        stroke="none"
-        :d="completePath"
-        :style="{ 'opacity': opacity }"
-      />
+      <path :transform="completeTransform" :fill="fill" stroke="none" :d="completePath" :style="{ opacity: opacity }" />
     </g>
   </g>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

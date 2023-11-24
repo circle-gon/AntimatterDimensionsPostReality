@@ -12,22 +12,22 @@ export default {
     DescriptionDisplay,
     EffectDisplay,
     CostDisplay,
-    CustomizeableTooltip
+    CustomizeableTooltip,
   },
   props: {
     upgrade: {
       type: Object,
-      required: true
+      required: true,
     },
     isRebuyable: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     showTooltip: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -73,12 +73,12 @@ export default {
     rightAutobuyerID() {
       if (!this.isRebuyable) return null;
       return this.upgrade.id <= 3 ? this.upgrade.id : this.upgrade.id - 7;
-    }
+    },
   },
   watch: {
     isAutobuyerOn(newValue) {
       Autobuyer.dilationUpgrade(this.rightAutobuyerID).isActive = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -102,8 +102,8 @@ export default {
       if (!this.isBought) {
         this.isAffordable = upgrade.isAffordable;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -116,34 +116,16 @@ export default {
       @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
     >
-      <CustomizeableTooltip
-        v-if="timeEstimate"
-        :show="showTooltip && !isHovering && !hideEstimate"
-        left="50%"
-        top="0"
-      >
+      <CustomizeableTooltip v-if="timeEstimate" :show="showTooltip && !isHovering && !hideEstimate" left="50%" top="0">
         <template #tooltipContent>
           {{ timeEstimate }}
         </template>
       </CustomizeableTooltip>
       <span>
-        <DescriptionDisplay
-          :config="upgrade.config"
-          :length="70"
-          name="o-dilation-upgrade__description"
-        />
-        <EffectDisplay
-          :key="boughtAmount"
-          br
-          :config="upgrade.config"
-        />
+        <DescriptionDisplay :config="upgrade.config" :length="70" name="o-dilation-upgrade__description" />
+        <EffectDisplay :key="boughtAmount" br :config="upgrade.config" />
       </span>
-      <CostDisplay
-        v-if="!isBought && !isCapped"
-        br
-        :config="upgrade.config"
-        name="Dilated Time"
-      />
+      <CostDisplay v-if="!isBought && !isCapped" br :config="upgrade.config" name="Dilated Time" />
     </button>
     <PrimaryToggleButton
       v-if="isRebuyable && isAutoUnlocked"

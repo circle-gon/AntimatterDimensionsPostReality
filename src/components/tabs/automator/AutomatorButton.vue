@@ -1,14 +1,11 @@
 <script>
 export default {
-  name: "AutomatorButton"
+  name: "AutomatorButton",
 };
 </script>
 
 <template>
-  <button
-    class="c-automator__button l-automator__button fas"
-    @click="emitClick"
-  />
+  <button class="c-automator__button l-automator__button fas" @click="emitClick" />
 </template>
 
 <style scoped>

@@ -4,7 +4,7 @@ export default {
   props: {
     purchase: {
       type: Object,
-      required: true
+      required: true,
     },
   },
   data() {
@@ -29,7 +29,7 @@ export default {
     // Note: This will always be false on non-cosmetic buttons and thus will never disable them in purchaseButtonObject
     allSetsUnlocked() {
       return (this.isSingleCosmeticSet || this.isAllCosmeticSets) && !this.lockedCount;
-    }
+    },
   },
   methods: {
     update() {
@@ -55,9 +55,9 @@ export default {
       const lockCosmetics = (this.isSingleCosmeticSet && !this.hasChosen) || this.allSetsUnlocked;
       return {
         "o-shop-button-button": true,
-        "o-shop-button-button--disabled": !this.canAfford || lockCosmetics
+        "o-shop-button-button--disabled": !this.canAfford || lockCosmetics,
       };
-    }
+    },
   },
 };
 </script>
@@ -66,7 +66,7 @@ export default {
   <div class="c-shop-button-container">
     <div class="o-shop-button-description">
       {{ purchase.description }}
-      <br>
+      <br />
       <span
         v-if="purchase.shouldDisplayMult"
         class="o-shop-button-multiplier"
@@ -77,48 +77,22 @@ export default {
     </div>
     <div>
       <div v-if="isSingleCosmeticSet">
-        <div
-          v-if="allSetsUnlocked"
-          class="o-shop-button-multiplier"
-        >
-          All Sets unlocked!
-        </div>
+        <div v-if="allSetsUnlocked" class="o-shop-button-multiplier">All Sets unlocked!</div>
         <div v-else>
-          <button
-            class="o-shop-button-button"
-            @click="openSelectionModal"
-          >
-            Choose Set
-          </button>
+          <button class="o-shop-button-button" @click="openSelectionModal">Choose Set</button>
           Chosen Set: {{ chosenSet }}
         </div>
       </div>
-      <div
-        v-if="isAllCosmeticSets"
-        class="o-shop-button-multiplier"
-      >
-        <div v-if="allSetsUnlocked">
-          All Sets unlocked!
-        </div>
-        <div v-else>
-          Will unlock {{ quantify("set", lockedCount) }}
-        </div>
+      <div v-if="isAllCosmeticSets" class="o-shop-button-multiplier">
+        <div v-if="allSetsUnlocked">All Sets unlocked!</div>
+        <div v-else>Will unlock {{ quantify("set", lockedCount) }}</div>
       </div>
     </div>
-    <button
-      :class="purchaseButtonObject()"
-      @click="performPurchase"
-    >
+    <button :class="purchaseButtonObject()" @click="performPurchase">
       Cost: {{ cost }}
-      <img
-        src="/images/std_coin.png"
-        class="o-shop-button-button__img"
-      >
+      <img src="/images/std_coin.png" class="o-shop-button-button__img" />
     </button>
-    <div
-      v-if="!purchase.isUnlocked()"
-      class="o-shop-button-locked-text"
-    >
+    <div v-if="!purchase.isUnlocked()" class="o-shop-button-locked-text">
       This affects a feature you have not unlocked yet ({{ purchase.lockText }})
     </div>
   </div>

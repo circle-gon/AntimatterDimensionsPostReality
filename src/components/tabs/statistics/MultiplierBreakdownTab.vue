@@ -20,7 +20,7 @@ const MULT_TAB_OPTIONS = [
 export default {
   name: "MultiplierBreakdownTab",
   components: {
-    MultiplierBreakdownEntry
+    MultiplierBreakdownEntry,
   },
   data() {
     return {
@@ -30,21 +30,21 @@ export default {
   },
   computed: {
     currentKey() {
-      return MULT_TAB_OPTIONS.find(opt => opt.id === this.currentID).key;
+      return MULT_TAB_OPTIONS.find((opt) => opt.id === this.currentID).key;
     },
     resource() {
       return createEntryInfo(`${this.currentKey}_total`);
     },
     resourceSymbols() {
       return GameDatabase.multiplierTabValues[this.currentKey].total.overlay;
-    }
+    },
   },
   methods: {
     update() {
-      this.availableOptions = MULT_TAB_OPTIONS.map(opt => ({
+      this.availableOptions = MULT_TAB_OPTIONS.map((opt) => ({
         ...opt,
-        isActive: this.checkActiveKey(opt.key)
-      })).filter(opt => opt.isActive);
+        isActive: this.checkActiveKey(opt.key),
+      })).filter((opt) => opt.isActive);
     },
     checkActiveKey(key) {
       const act = GameDatabase.multiplierTabValues[key].total.isActive;
@@ -61,9 +61,9 @@ export default {
     },
     clickSubtab(index) {
       this.currentID = this.availableOptions[index].id;
-      player.options.multiplierTab.currTab = MULT_TAB_OPTIONS.find(opt => opt.key === this.currentKey).id;
-    }
-  }
+      player.options.multiplierTab.currTab = MULT_TAB_OPTIONS.find((opt) => opt.key === this.currentKey).id;
+    },
+  },
 };
 </script>
 
@@ -80,29 +80,19 @@ export default {
       </button>
     </div>
     <div class="c-list-container">
-      <span
-        v-for="symbol in resourceSymbols"
-        :key="symbol"
-      >
-        <span
-          class="c-symbol-overlay"
-          v-html="symbol"
-        />
+      <span v-for="symbol in resourceSymbols" :key="symbol">
+        <span class="c-symbol-overlay" v-html="symbol" />
       </span>
-      <MultiplierBreakdownEntry
-        :key="resource.key"
-        :resource="resource"
-        :is-root="true"
-      />
+      <MultiplierBreakdownEntry :key="resource.key" :resource="resource" :is-root="true" />
       <div class="c-multiplier-tab-text-line">
-        Note: Entries are only expandable if they contain multiple sources which can be different values.
-        For example, any effects which affect all Dimensions of any type equally will not expand into a
-        list of eight identical numbers.
-        <br>
+        Note: Entries are only expandable if they contain multiple sources which can be different values. For example,
+        any effects which affect all Dimensions of any type equally will not expand into a list of eight identical
+        numbers.
+        <br />
         <b>
-          Some entries may cause lag if expanded out fully. Resizing happens over 200 ms (instead of instantly)
-          in order to reduce possible adverse effects due to photosensitivity. This may cause some visual weirdness
-          after prestige events.
+          Some entries may cause lag if expanded out fully. Resizing happens over 200 ms (instead of instantly) in order
+          to reduce possible adverse effects due to photosensitivity. This may cause some visual weirdness after
+          prestige events.
         </b>
       </div>
     </div>

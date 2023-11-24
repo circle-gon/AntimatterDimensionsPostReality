@@ -6,41 +6,41 @@ export default {
   props: {
     complete: {
       type: Number,
-      required: true
+      required: true,
     },
     position: {
       type: Object,
-      required: true
+      required: true,
     },
     legend: {
       type: Object,
       required: false,
-      default: undefined
+      default: undefined,
     },
     ring: {
       type: Object,
-      required: true
+      required: true,
     },
     fill: {
       type: String,
       required: false,
-      default: undefined
+      default: undefined,
     },
     alwaysShowLegend: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     forceLegend: {
       type: Function,
       required: false,
-      default: undefined
+      default: undefined,
     },
     clickAction: {
       type: Function,
       required: false,
-      default: undefined
-    }
+      default: undefined,
+    },
   },
   data() {
     return {
@@ -81,7 +81,7 @@ export default {
     nodeClass() {
       return {
         "o-celestial-nav__force-hover": this.hoverOverride,
-        "o-celestial-nav__clickable": this.clickAction !== undefined
+        "o-celestial-nav__clickable": this.clickAction !== undefined,
       };
     },
   },
@@ -91,17 +91,16 @@ export default {
       this.hoverOverride = this.alwaysShowLegend || (this.forceLegend && this.forceLegend());
     },
     legendLineY(idx) {
-      const spacing = Math.round(this.LEGEND_FONT_SIZE * 1.25 / 2);
+      const spacing = Math.round((this.LEGEND_FONT_SIZE * 1.25) / 2);
       const num = this.legendLines.length;
       return (2 * idx - (num - 1)) * spacing;
     },
     getLines() {
       if (!this.legend) return null;
-      const data = typeof (this.legend.text) === "function"
-        ? this.legend.text(this.complete) : this.legend.text;
-      return typeof (data) === "string" ? [data] : data;
+      const data = typeof this.legend.text === "function" ? this.legend.text(this.complete) : this.legend.text;
+      return typeof data === "string" ? [data] : data;
     },
-  }
+  },
 };
 </script>
 
@@ -112,23 +111,11 @@ export default {
     :transform="baseTransform"
     v-on="clickAction ? { click: clickAction } : {}"
   >
-    <path
-      :d="pathData"
-      class="o-celestial-nav__node-overlay"
-    />
-    <g
-      v-if="hasLegend"
-      class="tooltiptext"
-    >
-      <polyline
-        :points="legendArrowPointString"
-        class="o-celestial-nav__legend-arrow"
-      />
+    <path :d="pathData" class="o-celestial-nav__node-overlay" />
+    <g v-if="hasLegend" class="tooltiptext">
+      <polyline :points="legendArrowPointString" class="o-celestial-nav__legend-arrow" />
       <!-- The ring radii are adjusted slightly to offset the stroke outside the node -->
-      <path
-        :d="pathData"
-        class="o-celestial-nav__legend-outline"
-      />
+      <path :d="pathData" class="o-celestial-nav__legend-outline" />
       <g :transform="legendTransform">
         <text
           class="o-celestial-nav__legend-text"
@@ -136,12 +123,7 @@ export default {
           dominant-baseline="middle"
           :font-size="LEGEND_FONT_SIZE"
         >
-          <tspan
-            v-for="(line, idx) in legendLines"
-            :key="idx"
-            x="0"
-            :y="legendLineY(idx)"
-          >
+          <tspan v-for="(line, idx) in legendLines" :key="idx" x="0" :y="legendLineY(idx)">
             {{ line }}
           </tspan>
         </text>

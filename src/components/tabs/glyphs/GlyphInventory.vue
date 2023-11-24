@@ -4,7 +4,7 @@ import GlyphComponent from "@/components/GlyphComponent";
 export default {
   name: "GlyphInventory",
   components: {
-    GlyphComponent
+    GlyphComponent,
   },
   data() {
     return {
@@ -81,19 +81,15 @@ export default {
     },
     isUnequipped(index) {
       return player.options.showUnequippedGlyphIcon && this.unequippedGlyphs.includes(this.inventory[index].id);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-glyph-inventory">
     Click and drag or double-click to equip Glyphs.
-    <div
-      v-for="row in rowCount"
-      :key="protectedRows + row"
-      class="l-glyph-inventory__row"
-    >
+    <div v-for="row in rowCount" :key="protectedRows + row" class="l-glyph-inventory__row">
       <div
         v-for="col in colCount"
         :key="col"
@@ -119,6 +115,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

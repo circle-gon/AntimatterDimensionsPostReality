@@ -7,41 +7,41 @@ export default {
     constant: {
       type: String,
       required: false,
-      default: ""
+      default: "",
     },
     block: {
       type: Object,
-      required: true
+      required: true,
     },
     blockTarget: {
       type: String,
       required: false,
-      default: ""
+      default: "",
     },
     updateFunction: {
       type: Function,
-      required: true
+      required: true,
     },
     initialSelection: {
       type: String,
       required: false,
-      default: ""
+      default: "",
     },
     patterns: {
       type: Array,
       required: false,
-      default: () => []
+      default: () => [],
     },
     recursive: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     currentPath: {
       type: String,
       required: false,
-      default: ""
-    }
+      default: "",
+    },
   },
   data() {
     return {
@@ -70,7 +70,7 @@ export default {
         // \uE010 is :blob:
         return this.constant === "BLOB" ? "\uE010" : this.constant;
       }
-      return (this.dropdownOptions.length === 1 && !this.isBoolTarget && !this.isTextInput)
+      return this.dropdownOptions.length === 1 && !this.isBoolTarget && !this.isTextInput
         ? this.dropdownOptions[0]
         : "";
     },
@@ -90,7 +90,7 @@ export default {
     // phrases in String format, so we want to give some extra room
     hasLongTextInput() {
       return this.block.cmd === "NOTIFY" || this.block.cmd === "COMMENT";
-    }
+    },
   },
   created() {
     this.scriptID = player.reality.automator.state.editorScript;
@@ -107,8 +107,8 @@ export default {
     // This is used for sequences of inputs, which are traversed by recursion
     if (this.recursive) {
       const availableOptions = this.patterns
-        .filter(s => s.startsWith(this.currentPath) && s.length > this.currentPath.length)
-        .map(s => s.charAt(this.currentPath.length));
+        .filter((s) => s.startsWith(this.currentPath) && s.length > this.currentPath.length)
+        .map((s) => s.charAt(this.currentPath.length));
       for (const node of availableOptions) {
         if (this.pathRef[node]) continue;
         const entries = this.block[node];
@@ -151,8 +151,11 @@ export default {
   //   but we still need to verify error count and parse the script again since we avoid doing that within
   //   changeBlock() for performance reasons
   destroyed() {
-    if (player.reality.automator.type === AUTOMATOR_TYPE.TEXT || Tabs.current._currentSubtab.key !== "automator" ||
-      this.scriptID !== player.reality.automator.state.editorScript) {
+    if (
+      player.reality.automator.type === AUTOMATOR_TYPE.TEXT ||
+      Tabs.current._currentSubtab.key !== "automator" ||
+      this.scriptID !== player.reality.automator.state.editorScript
+    ) {
       return;
     }
 
@@ -174,20 +177,20 @@ export default {
   methods: {
     update() {
       this.errors = AutomatorData.cachedErrors;
-      this.hasError = this.errors.some(e => e.startLine === this.lineNumber);
+      this.hasError = this.errors.some((e) => e.startLine === this.lineNumber);
       if (this.dropdownSelection.startsWith("*")) this.isTextInput = true;
       this.calculatePath();
     },
     calculatePath() {
       this.currentNodeOnPath = " ";
       for (const node of Object.keys(this.pathRef)) {
-        const isValidText = this.pathRef[node].some(o => o.startsWith("*")) && this.isTextInput;
+        const isValidText = this.pathRef[node].some((o) => o.startsWith("*")) && this.isTextInput;
         if (this.pathRef[node].includes(this.dropdownSelection) || isValidText) {
           this.currentNodeOnPath = node;
         }
       }
       const fullPath = this.currentPath + this.currentNodeOnPath;
-      this.nextNodeCount = this.patterns.filter(p => p.length > fullPath.length && p.startsWith(fullPath)).length;
+      this.nextNodeCount = this.patterns.filter((p) => p.length > fullPath.length && p.startsWith(fullPath)).length;
       this.unknownNext = this.nextNodeCount > 1 || (this.dropdownSelection === "" && !this.isTextInput);
     },
     validateInput() {
@@ -212,7 +215,7 @@ export default {
       // any) because multiple errors on the same line are generally redundant, and sometimes the parser hiccups and
       // duplicates errors onto the last line of the script (which we explicitly ignore)
       const newErrors = [];
-      const lastLine = BlockAutomator._idArray.filter(id => id).length;
+      const lastLine = BlockAutomator._idArray.filter((id) => id).length;
       for (const error of AutomatorData.cachedErrors) {
         if (error.startLine !== this.lineNumber && error.startLine < lastLine) {
           newErrors.push(error);
@@ -268,19 +271,18 @@ export default {
 
       // We want to keep the verbose error info for the error panel, but we need to shorten it for the tooltips here
       // The problematic errors all seem to have the same format, which we can explicitly modify
-      let errorInfo = this.errors.find(e => e.startLine === this.lineNumber).info;
+      let errorInfo = this.errors.find((e) => e.startLine === this.lineNumber).info;
       errorInfo = errorInfo
         .replaceAll("\n", "")
-        .replace(/Expecting: one of these possible Token sequences:.*but found: (.*)/ui, "Unexpected input format: $1");
+        .replace(/Expecting: one of these possible Token sequences:.*but found: (.*)/iu, "Unexpected input format: $1");
       return {
-        content:
-          `<div class="c-block-automator-error">
+        content: `<div class="c-block-automator-error">
           <div>${errorInfo}</div>
         </div>`,
         html: true,
         trigger: "manual",
         show: true,
-        classes: ["c-block-automator-error-container", "general-tooltip"]
+        classes: ["c-block-automator-error-container", "general-tooltip"],
       };
     },
     textInputClassObject() {
@@ -303,8 +305,8 @@ export default {
       this.isTextInput = false;
       this.dropdownSelection = "";
       this.textContents = "";
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -313,14 +315,11 @@ export default {
     <div
       v-if="displayedConstant"
       class="c-automator-single-block o-automator-command c-automator-constant-block"
-      :class="{ 'l-blob' : constant === 'BLOB' }"
+      :class="{ 'l-blob': constant === 'BLOB' }"
     >
       {{ displayedConstant }}
     </div>
-    <div
-      v-else-if="isTextInput"
-      class="c-automator-text-input-container"
-    >
+    <div v-else-if="isTextInput" class="c-automator-text-input-container">
       <input
         v-model="textContents"
         v-tooltip="errorTooltip()"
@@ -328,24 +327,15 @@ export default {
         @keyup="changeBlock()"
         @focusin="handleFocus(true)"
         @focusout="handleFocus(false)"
-      >
+      />
       <div
         v-if="dropdownOptions.length > 1"
         class="c-automator-close-text-input fa-solid fa-circle-xmark"
         @click="revertToDropdown"
       />
     </div>
-    <select
-      v-else
-      v-model="dropdownSelection"
-      :class="dropdownClassObject()"
-      @change="changeBlock()"
-    >
-      <option
-        v-for="target in ['', ...dropdownOptions]"
-        :key="target"
-        :value="target"
-      >
+    <select v-else v-model="dropdownSelection" :class="dropdownClassObject()" @change="changeBlock()">
+      <option v-for="target in ['', ...dropdownOptions]" :key="target" :value="target">
         {{ target }}
       </option>
     </select>

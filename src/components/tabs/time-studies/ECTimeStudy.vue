@@ -6,20 +6,20 @@ export default {
   name: "ECTimeStudy",
   components: {
     TimeStudyButton,
-    HintText
+    HintText,
   },
   props: {
     setup: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       hasRequirement: false,
       requirement: {
         current: new Decimal(),
-        total: new Decimal()
+        total: new Decimal(),
       },
       completions: 0,
       showTotalCompletions: false,
@@ -49,7 +49,7 @@ export default {
     },
     needsSecondLinebreak() {
       return [3, 4, 7].includes(this.study.id);
-    }
+    },
   },
   methods: {
     update() {
@@ -70,37 +70,30 @@ export default {
         requirement.total.copyFrom(study.requirementTotal);
         requirement.current.copyFrom(study.requirementCurrent.min(requirement.total));
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <TimeStudyButton :setup="setup">
-    <HintText
-      type="studies"
-      class="l-hint-text--time-study"
-    >
-      EC{{ id }}
-    </HintText>
-    Eternity Challenge {{ id }}
-    ({{ formatInt(completions) }}<span v-if="showTotalCompletions">/{{ formatInt(5) }}</span>)
+    <HintText type="studies" class="l-hint-text--time-study"> EC{{ id }} </HintText>
+    Eternity Challenge {{ id }} ({{ formatInt(completions) }}<span v-if="showTotalCompletions">/{{ formatInt(5) }}</span
+    >)
     <template v-if="hasRequirement">
-      <br>
+      <br />
       Requirement:
-      <br v-if="needsFirstLinebreak">
+      <br v-if="needsFirstLinebreak" />
       <span v-if="config.secondary.path">Use only the {{ config.secondary.path }} path</span>
       <span v-else>
         {{ formatValue(requirement.current) }}/{{ formatValue(requirement.total) }}
-        <br v-if="needsSecondLinebreak">
+        <br v-if="needsSecondLinebreak" />
         {{ config.secondary.resource }}
       </span>
     </template>
-    <span v-if="isUnlocked && !isRunning"><br>Double click to start</span>
-    <span v-else-if="isRunning"><br>Currently Running</span>
+    <span v-if="isUnlocked && !isRunning"><br />Double click to start</span>
+    <span v-else-if="isRunning"><br />Currently Running</span>
   </TimeStudyButton>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -2,10 +2,10 @@
 function averageRun(allRuns) {
   // Filter out all runs which have the default infinite value for time, but if we're left with no valid runs then we
   // take just one entry so that the averages also have the same value and we don't get division by zero.
-  let runs = allRuns.filter(run => run[0].neq(Decimal.MAX_LIMIT));
+  let runs = allRuns.filter((run) => run[0].neq(Decimal.MAX_LIMIT));
   if (runs.length === 0) runs = [allRuns[0]];
 
-  const longestRow = allRuns.map(r => r.length).max();
+  const longestRow = allRuns.map((r) => r.length).max();
   const avgAttr = [];
   for (let index = 0; index < longestRow; index++) {
     if (typeof runs[0][index] === "string") {
@@ -13,7 +13,7 @@ function averageRun(allRuns) {
       continue;
     }
     const isNumber = typeof runs[0][index] === "number";
-    const total = runs.map(run => run[index]).reduce(isNumber ? Number.sumReducer : Decimal.sumReducer);
+    const total = runs.map((run) => run[index]).reduce(isNumber ? Number.sumReducer : Decimal.sumReducer);
     avgAttr.push(isNumber ? total / runs.length : Decimal.div(total, runs.length));
   }
   return avgAttr;
@@ -79,7 +79,7 @@ export default {
       this.shown = player.shownRuns[this.singular];
       this.resourceType = player.options.statTabResources;
       this.showRate = this.resourceType === RECENT_PRESTIGE_RESOURCE.RATE;
-      this.hasChallenges = this.runs.map(r => this.challengeText(r)).some(t => t);
+      this.hasChallenges = this.runs.map((r) => this.challengeText(r)).some((t) => t);
       this.hasIM = MachineHandler.currentIMCap.gt(0);
 
       // We have 4 different "useful" stat pairings we could display, but this ends up being pretty boilerplatey
@@ -103,7 +103,7 @@ export default {
       this.resourceTitles = [names[this.selectedResources[0]], names[this.selectedResources[1]]];
 
       // Entries always have all values, but sometimes the trailing ones will be blank or zero which we want to hide
-      const lastIndex = arr => {
+      const lastIndex = (arr) => {
         let val = arr.length;
         while (val > 0) {
           const curr = arr[val - 1];
@@ -113,10 +113,10 @@ export default {
         }
         return 0;
       };
-      this.longestRow = this.runs.map(r => lastIndex(r)).max();
+      this.longestRow = this.runs.map((r) => lastIndex(r)).max();
     },
     clone(runs) {
-      return runs.map(run => run.map(item => (item instanceof Decimal ? Decimal.fromDecimal(item) : item)));
+      return runs.map((run) => run.map((item) => (item instanceof Decimal ? Decimal.fromDecimal(item) : item)));
     },
     infoArray(run, index) {
       let name;
@@ -229,10 +229,7 @@ export default {
 
 <template>
   <div v-if="condition">
-    <div
-      class="c-past-runs-header"
-      @click="toggleShown"
-    >
+    <div class="c-past-runs-header" @click="toggleShown">
       <span class="o-run-drop-down-icon">
         <i :class="dropDownIconClass" />
       </span>
@@ -242,39 +239,22 @@ export default {
     </div>
     <div v-show="shown">
       <div class="c-row-container">
-        <span
-          v-for="(entry, col) in infoCol()"
-          :key="col"
-          :style="cellStyle(col, true)"
-        >
+        <span v-for="(entry, col) in infoCol()" :key="col" :style="cellStyle(col, true)">
           {{ entry }}
         </span>
       </div>
-      <div
-        v-for="(run, index) in runs"
-        :key="index"
-      >
-        <span
-          v-if="run[0].eq(MAX_LIMIT)"
-          class="c-empty-row"
-        >
+      <div v-for="(run, index) in runs" :key="index">
+        <span v-if="run[0].eq(MAX_LIMIT)" class="c-empty-row">
           <i v-if="index === 10"> An average cannot be calculated with no {{ plural }}. </i>
           <i v-else> You have not done {{ formatInt(index + 1) }} {{ index === 0 ? singular : plural }} yet. </i>
         </span>
-        <span
-          v-else
-          class="c-row-container"
-        >
-          <span
-            v-for="(entry, col) in infoArray(run, index)"
-            :key="10 * index + col"
-            :style="cellStyle(col, false)"
-          >
+        <span v-else class="c-row-container">
+          <span v-for="(entry, col) in infoArray(run, index)" :key="10 * index + col" :style="cellStyle(col, false)">
             {{ entry }}
           </span>
         </span>
       </div>
-      <br>
+      <br />
     </div>
   </div>
 </template>

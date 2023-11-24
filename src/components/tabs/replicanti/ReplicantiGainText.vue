@@ -4,20 +4,25 @@ export default {
   data() {
     return {
       remainingTimeText: "",
-      galaxyText: ""
+      galaxyText: "",
     };
   },
   methods: {
     update() {
       const updateRateMs = player.options.updateRate;
       const ticksPerSecond = 1000 / updateRateMs;
-      const logGainFactorPerTick = getGameSpeedupForDisplay().mul(updateRateMs).mul(
-        Math.log(player.replicanti.chance + 1)).div(getReplicantiInterval());
+      const logGainFactorPerTick = getGameSpeedupForDisplay()
+        .mul(updateRateMs)
+        .mul(Math.log(player.replicanti.chance + 1))
+        .div(getReplicantiInterval());
       const log10GainFactorPerTick = logGainFactorPerTick.dividedBy(Math.LN10);
 
       // The uncapped factor is needed for galaxy speed calculations
-      const log10GainFactorPerTickUncapped = getGameSpeedupForDisplay().mul(updateRateMs).mul(
-        Math.log(player.replicanti.chance + 1)).div(getReplicantiInterval(false)).dividedBy(Math.LN10);
+      const log10GainFactorPerTickUncapped = getGameSpeedupForDisplay()
+        .mul(updateRateMs)
+        .mul(Math.log(player.replicanti.chance + 1))
+        .div(getReplicantiInterval(false))
+        .dividedBy(Math.LN10);
 
       const replicantiAmount = Replicanti.amount;
       const isAbove308 = Replicanti.isUncapped && replicantiAmount.log10() > LOG10_MAX_VALUE;
@@ -38,28 +43,31 @@ export default {
         const timeEstimateText = timeToThousand.eq(0)
           ? "an extremely long time"
           : `${TimeSpan.fromSeconds(timeToThousand.toNumber())}`;
-        this.remainingTimeText = `You are gaining ${formatX(gainFactorPerSecond, 2, 1)} Replicanti per second` +
+        this.remainingTimeText =
+          `You are gaining ${formatX(gainFactorPerSecond, 2, 1)} Replicanti per second` +
           ` (${timeEstimateText} until ${format(nextMilestone)})`;
       } else {
         this.remainingTimeText = "";
       }
 
       const totalTime = LOG10_MAX_VALUE / (ticksPerSecond * log10GainFactorPerTick.toNumber());
-      let remainingTime = (LOG10_MAX_VALUE - replicantiAmount.log10()) /
-        (ticksPerSecond * log10GainFactorPerTick.toNumber());
+      let remainingTime =
+        (LOG10_MAX_VALUE - replicantiAmount.log10()) / (ticksPerSecond * log10GainFactorPerTick.toNumber());
       if (remainingTime < 0) {
         // If the cap is raised via Effarig Infinity but the player doesn't have TS192, this will be a negative number
         remainingTime = 0;
       }
 
       const galaxiesPerSecond = log10GainFactorPerTickUncapped.times(ticksPerSecond / LOG10_MAX_VALUE);
-      const timeFromZeroRG = galaxies => 50 * Math.log((galaxies + 49.5) / 49.5);
+      const timeFromZeroRG = (galaxies) => 50 * Math.log((galaxies + 49.5) / 49.5);
       let baseGalaxiesPerSecond, effectiveMaxRG, effectiveCurrentRG;
       if (RealityUpgrade(6).isBought && !Pelle.isDoomed) {
         baseGalaxiesPerSecond = galaxiesPerSecond.divide(RealityUpgrade(6).effectValue);
-        effectiveMaxRG = timeFromZeroRG(Replicanti.galaxies.max + Replicanti.galaxies.extra) -
+        effectiveMaxRG =
+          timeFromZeroRG(Replicanti.galaxies.max + Replicanti.galaxies.extra) -
           timeFromZeroRG(Replicanti.galaxies.extra);
-        effectiveCurrentRG = timeFromZeroRG(Replicanti.galaxies.bought + Replicanti.galaxies.extra) -
+        effectiveCurrentRG =
+          timeFromZeroRG(Replicanti.galaxies.bought + Replicanti.galaxies.extra) -
           timeFromZeroRG(Replicanti.galaxies.extra);
       } else {
         baseGalaxiesPerSecond = galaxiesPerSecond;
@@ -85,7 +93,6 @@ export default {
       if (Replicanti.galaxies.max === 0 && !isAbove308) {
         this.remainingTimeText += ` (${TimeSpan.fromSeconds(totalTime)} total)`;
       }
-
 
       if (Replicanti.galaxies.max > 0) {
         // If the player has max RGs, don't display the "You are gaining blah" text
@@ -124,15 +131,13 @@ export default {
       } else {
         this.galaxyText = ``;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <p>{{ remainingTimeText }}<br>{{ galaxyText }}</p>
+  <p>{{ remainingTimeText }}<br />{{ galaxyText }}</p>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

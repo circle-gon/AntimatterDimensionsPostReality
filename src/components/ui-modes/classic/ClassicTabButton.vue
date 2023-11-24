@@ -4,24 +4,24 @@ export default {
   props: {
     tab: {
       type: Object,
-      required: true
+      required: true,
     },
     tabPosition: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       isAvailable: false,
       hasNotification: false,
-      tabName: ""
+      tabName: "",
     };
   },
   computed: {
     isCurrentTab() {
       return this.tab.isOpen && Theme.currentName() !== "S9";
-    }
+    },
   },
   methods: {
     update() {
@@ -31,12 +31,12 @@ export default {
         this.tabName = Pelle.transitionText(
           this.tab.name,
           Pelle.endTabNames[this.tabPosition],
-          Math.max(Math.min(GameEnd.endState - (this.tab.id) % 4 / 10, 1), 0)
+          Math.max(Math.min(GameEnd.endState - (this.tab.id % 4) / 10, 1), 0)
         );
       } else {
         this.tabName = this.tab.name;
       }
-    }
+    },
   },
 };
 </script>
@@ -44,18 +44,12 @@ export default {
 <template>
   <button
     v-if="isAvailable"
-    :class="
-      [tab.config.UIClass,
-       { 'o-tab-btn--active': isCurrentTab }]
-    "
+    :class="[tab.config.UIClass, { 'o-tab-btn--active': isCurrentTab }]"
     class="o-tab-btn"
     @click="tab.show(true)"
   >
     {{ tabName }}
-    <div
-      v-if="hasNotification"
-      class="fas fa-circle-exclamation l-notification-icon"
-    />
+    <div v-if="hasNotification" class="fas fa-circle-exclamation l-notification-icon" />
   </button>
 </template>
 

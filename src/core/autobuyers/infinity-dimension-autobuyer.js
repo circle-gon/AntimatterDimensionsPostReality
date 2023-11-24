@@ -22,7 +22,7 @@ export class InfinityDimensionAutobuyerState extends IntervaledAutobuyerState {
   }
 
   get interval() {
-    return 1000 * Perk.autobuyerFasterID.effectOrDefault(1) / PerkShopUpgrade.autoSpeed.effectOrDefault(1);
+    return (1000 * Perk.autobuyerFasterID.effectOrDefault(1)) / PerkShopUpgrade.autoSpeed.effectOrDefault(1);
   }
 
   get isUnlocked() {
@@ -46,8 +46,16 @@ export class InfinityDimensionAutobuyerState extends IntervaledAutobuyerState {
     this.dimension.buyMax(true);
   }
 
-  static get entryCount() { return 8; }
-  static get autobuyerGroupName() { return "Infinity Dimension"; }
-  static get isActive() { return player.auto.infinityDims.isActive; }
-  static set isActive(value) { player.auto.infinityDims.isActive = value; }
+  static get entryCount() {
+    return 8;
+  }
+  static get autobuyerGroupName() {
+    return "Infinity Dimension";
+  }
+  static get isActive() {
+    return player.auto.infinityDims.isActive;
+  }
+  static set isActive(value) {
+    player.auto.infinityDims.isActive = value;
+  }
 }

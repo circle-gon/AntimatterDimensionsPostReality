@@ -11,7 +11,7 @@ export default {
     CelestialQuoteHistory,
     VUnlockRequirement,
     PrimaryButton,
-    GlyphSetPreview
+    GlyphSetPreview,
   },
   data() {
     return {
@@ -35,48 +35,30 @@ export default {
       return {
         "o-v-milestone": true,
         "o-v-milestone--unlocked": this.canUnlockCelestial,
-        "c-v-unlock-button--enabled": this.canUnlockCelestial
+        "c-v-unlock-button--enabled": this.canUnlockCelestial,
       };
     },
     // If V is flipped, change the layout of the grid
     hexGrid() {
       return this.isFlipped && this.wantsFlipped
-        ? [
-          VRunUnlocks.all[6],
-          {},
-          {},
-          {},
-          { isRunButton: true },
-          VRunUnlocks.all[7],
-          VRunUnlocks.all[8],
-          {},
-          {}
-        ]
+        ? [VRunUnlocks.all[6], {}, {}, {}, { isRunButton: true }, VRunUnlocks.all[7], VRunUnlocks.all[8], {}, {}]
         : [
-          VRunUnlocks.all[0],
-          VRunUnlocks.all[1],
-          {},
-          VRunUnlocks.all[5],
-          { isRunButton: true },
-          VRunUnlocks.all[2],
-          VRunUnlocks.all[4],
-          VRunUnlocks.all[3],
-          {}
-        ];
+            VRunUnlocks.all[0],
+            VRunUnlocks.all[1],
+            {},
+            VRunUnlocks.all[5],
+            { isRunButton: true },
+            VRunUnlocks.all[2],
+            VRunUnlocks.all[4],
+            VRunUnlocks.all[3],
+            {},
+          ];
     },
     vUnlock: () => VUnlocks.vAchievementUnlock,
     runMilestones() {
       return [
-        [
-          VUnlocks.shardReduction,
-          VUnlocks.adPow,
-          VUnlocks.fastAutoEC
-        ],
-        [
-          VUnlocks.autoAutoClean,
-          VUnlocks.achievementBH,
-          VUnlocks.raUnlock
-        ],
+        [VUnlocks.shardReduction, VUnlocks.adPow, VUnlocks.fastAutoEC],
+        [VUnlocks.autoAutoClean, VUnlocks.achievementBH, VUnlocks.raUnlock],
       ];
     },
     runButtonClassObject() {
@@ -85,11 +67,11 @@ export default {
         "c-v-run-button": true,
         "c-v-run-button--running": this.isRunning,
         "c-celestial-run-button--clickable": !this.isDoomed,
-        "o-pelle-disabled-pointer": this.isDoomed
+        "o-pelle-disabled-pointer": this.isDoomed,
       };
     },
     runDescription() {
-      return GameDatabase.celestials.descriptions[3].effects().replace(/^\w/u, c => c.toUpperCase());
+      return GameDatabase.celestials.descriptions[3].effects().replace(/^\w/u, (c) => c.toUpperCase());
     },
     isDoomed: () => Pelle.isDoomed,
   },
@@ -101,7 +83,7 @@ export default {
       this.pp = Currency.perkPoints.value;
       this.showReduction = VUnlocks.shardReduction.isUnlocked;
       this.runRecords = Array.from(player.celestials.v.runRecords);
-      this.runGlyphs = player.celestials.v.runGlyphs.map(gList => Glyphs.copyForRecords(gList));
+      this.runGlyphs = player.celestials.v.runGlyphs.map((gList) => Glyphs.copyForRecords(gList));
       this.isFlipped = V.isFlipped;
       this.wantsFlipped = player.celestials.v.wantsFlipped;
       this.isRunning = V.isRunning;
@@ -156,107 +138,65 @@ export default {
     },
     createCursedGlyph() {
       Glyphs.giveCursedGlyph();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-v-celestial-tab">
     <CelestialQuoteHistory celestial="v" />
-    <div
-      v-if="!mainUnlock"
-      class="c-v-info-text"
-    >
-      <v-unlock-requirement
-        v-for="req in mainUnlockDB"
-        :key="req.name"
-        :db-entry="req"
-      />
+    <div v-if="!mainUnlock" class="c-v-info-text">
+      <v-unlock-requirement v-for="req in mainUnlockDB" :key="req.name" :db-entry="req" />
       <div class="l-v-milestones-grid__row">
-        <div
-          :class="celestialUnlockClassObject"
-          @click="unlockCelestial"
-        >
+        <div :class="celestialUnlockClassObject" @click="unlockCelestial">
           <p>{{ vUnlock.description }}</p>
           <p>{{ vUnlock.rewardText }}</p>
         </div>
       </div>
     </div>
     <div v-else>
-      <div
-        v-if="isFlipped"
-        class="c-v-info-text"
-      >
-        <PrimaryButton
-          class="o-primary-btn--subtab-option"
-          @click="toggleFlipped"
-        >
+      <div v-if="isFlipped" class="c-v-info-text">
+        <PrimaryButton class="o-primary-btn--subtab-option" @click="toggleFlipped">
           <span v-if="wantsFlipped">Hide</span>
           <span v-else>Show</span>
           Hard V
         </PrimaryButton>
-        <PrimaryButton
-          class="o-primary-btn--subtab-option l-cursed-glyph-creation"
-          @click="createCursedGlyph"
-        >
+        <PrimaryButton class="o-primary-btn--subtab-option l-cursed-glyph-creation" @click="createCursedGlyph">
           Create a Cursed Glyph
         </PrimaryButton>
-        <br>
+        <br />
         Cursed Glyphs can be created here or in the Effarig tab.
-        <br>
+        <br />
         Cursed Glyphs count as {{ formatInt(-3) }} Glyphs for the purposes of all requirements related to Glyph count.
-        <br>
+        <br />
         <span v-if="!isDoomed">The Black Hole can now be used to slow down time if they are both permanent.</span>
-        <br><br>
-        Each Hard V-Achievement counts as two V-Achievements and will award {{ formatInt(2 * theoremMultiplier) }} Space Theorems
-        instead of {{ formatInt(theoremMultiplier) }}.
-        <br>
+        <br /><br />
+        Each Hard V-Achievement counts as two V-Achievements and will award {{ formatInt(2 * theoremMultiplier) }} Space
+        Theorems instead of {{ formatInt(theoremMultiplier) }}.
+        <br />
         Goal reduction is significantly more expensive for Hard V-Achievements.
       </div>
-      <div
-        v-if="showReduction"
-        class="c-v-info-text"
-      >
-        You have {{ quantify("Perk Point", pp, 2, 0) }}.
-      </div>
+      <div v-if="showReduction" class="c-v-info-text">You have {{ quantify("Perk Point", pp, 2, 0) }}.</div>
       <div class="l-v-unlocks-container">
         <li
           v-for="(hex, hexId) in hexGrid"
           :key="hexId + '-v-hex'"
-          :style="[hex.isRunButton ? {zIndex: 1} : {zIndex: 0}]"
+          :style="[hex.isRunButton ? { zIndex: 1 } : { zIndex: 0 }]"
         >
-          <div
-            v-if="hex.config"
-            class="l-v-hexagon c-v-unlock"
-            :style="'background-color: ' + hexColor(hex)"
-          >
-            <p class="o-v-unlock-name">
-              <br v-if="hex.canBeReduced && showReduction">{{ hex.config.name }}
-            </p>
-            <p
-              class="o-v-unlock-desc"
-              v-html="hex.formattedDescription"
-            />
-            <p
-              v-if="has(runMilestones[0][0]) && hex.isReduced"
-              class="o-v-unlock-goal-reduction"
-            >
+          <div v-if="hex.config" class="l-v-hexagon c-v-unlock" :style="'background-color: ' + hexColor(hex)">
+            <p class="o-v-unlock-name"><br v-if="hex.canBeReduced && showReduction" />{{ hex.config.name }}</p>
+            <p class="o-v-unlock-desc" v-html="hex.formattedDescription" />
+            <p v-if="has(runMilestones[0][0]) && hex.isReduced" class="o-v-unlock-goal-reduction">
               Goal has been {{ mode(hex) }} by {{ reductionValue(hex) }}
             </p>
             <p class="o-v-unlock-amount">
               {{ formatInt(hex.completions) }}/{{ formatInt(hex.config.values.length) }} done
             </p>
             <div v-if="showRecord(hex)">
-              <p class="o-v-unlock-record">
-                Best: {{ hex.config.formatRecord(runRecords[hex.id]) }}
-              </p>
+              <p class="o-v-unlock-record">Best: {{ hex.config.formatRecord(runRecords[hex.id]) }}</p>
               <p>
-                <GlyphSetPreview
-                  :glyphs="runGlyphs[hex.id]"
-                  :text="hex.config.name"
-                  :text-hidden="true"
-                />
+                <GlyphSetPreview :glyphs="runGlyphs[hex.id]" :text="hex.config.name" :text-hidden="true" />
               </p>
               <div v-if="hex.canBeReduced && showReduction">
                 <div class="l-v-goal-reduction-spacer" />
@@ -271,20 +211,13 @@ export default {
               </div>
             </div>
           </div>
-          <div
-            v-else-if="hex.isRunButton"
-            :class="runButtonClassObject"
-            @click="startRun()"
-          >
-            <b
-              class="o-v-start-text"
-              :class="{ 'o-pelle-disabled': isDoomed }"
-            >
+          <div v-else-if="hex.isRunButton" :class="runButtonClassObject" @click="startRun()">
+            <b class="o-v-start-text" :class="{ 'o-pelle-disabled': isDoomed }">
               <span v-if="isRunning">You are in </span>
               <span v-else>Start </span>
               V's Reality.
             </b>
-            <br>
+            <br />
             <div :style="{ 'font-size': hasAlchemy ? '1.2rem' : '' }">
               {{ runDescription }}
             </div>
@@ -298,31 +231,26 @@ export default {
         </li>
       </div>
       <div class="c-v-info-text">
-        V-Achievements can only be completed within V's Reality, but are permanent and do not reset upon leaving
-        and re-entering the Reality.
+        V-Achievements can only be completed within V's Reality, but are permanent and do not reset upon leaving and
+        re-entering the Reality.
       </div>
       <div class="c-v-info-text">
         You have {{ formatInt(totalUnlocks) }} {{ pluralize("V-Achievement", totalUnlocks) }} done.
         <span v-if="!isDoomed">
-          You gain {{ formatInt(theoremMultiplier) }} {{ pluralize("Space Theorem", theoremMultiplier) }} for each completion,
-          allowing you to purchase Time Studies which are normally locked.
-          <br>
+          You gain {{ formatInt(theoremMultiplier) }} {{ pluralize("Space Theorem", theoremMultiplier) }} for each
+          completion, allowing you to purchase Time Studies which are normally locked.
+          <br />
           Space Theorems can also be used as a Currency in the Automator.
         </span>
       </div>
-      <br>
+      <br />
       <div class="l-v-milestones-grid">
-        <div
-          v-for="(row, rowId) in runMilestones"
-          :key="rowId + '-v-ms-row'"
-          class="l-v-milestones-grid__row"
-        >
+        <div v-for="(row, rowId) in runMilestones" :key="rowId + '-v-ms-row'" class="l-v-milestones-grid__row">
           <div
             v-for="(milestone, colId) in row"
-            :key="colId + rowId*10 + '-v-ms'"
+            :key="colId + rowId * 10 + '-v-ms'"
             class="o-v-milestone"
-            :class="{'o-v-milestone--unlocked':
-              has(milestone)}"
+            :class="{ 'o-v-milestone--unlocked': has(milestone) }"
           >
             <div :class="{ 'o-pelle-disabled': isDoomed }">
               <p>{{ milestone.description }}</p>

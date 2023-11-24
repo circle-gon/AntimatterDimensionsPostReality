@@ -7,8 +7,8 @@ export function migrateSaves(player) {
   player.reality.imaginaryMachines = new Decimal(player.reality.imaginaryMachines);
   player.reality.iMCap = new Decimal(player.reality.iMCap);
   player.celestials.ra.peakGamespeed = new Decimal(player.celestials.ra.peakGamespeed);
-  player.challenge.normal.bestTimes = player.challenge.normal.bestTimes.map(i => new Decimal(i));
-  player.challenge.infinity.bestTimes = player.challenge.infinity.bestTimes.map(i => new Decimal(i));
+  player.challenge.normal.bestTimes = player.challenge.normal.bestTimes.map((i) => new Decimal(i));
+  player.challenge.infinity.bestTimes = player.challenge.infinity.bestTimes.map((i) => new Decimal(i));
 
   player.records.thisReality.bestRSMin = new Decimal(player.records.thisReality.bestRSMin);
   player.records.thisReality.bestRSMinVal = new Decimal(player.records.thisReality.bestRSMinVal);
@@ -23,7 +23,7 @@ export function migrateSaves(player) {
   }
 
   function fixRecents(name) {
-    player.records[`recent${name}`] = player.records[`recent${name}`].map(i => [patchTime(i[0]), ...i.slice(1)]);
+    player.records[`recent${name}`] = player.records[`recent${name}`].map((i) => [patchTime(i[0]), ...i.slice(1)]);
   }
 
   swapToDecimal("Infinity");
@@ -46,7 +46,7 @@ export function migrateSaves(player) {
   l.darkMatterMult = new Decimal(l.darkMatterMult);
   player.auto.annihilation.multiplier = new Decimal(player.auto.annihilation.multiplier);
   player.reality.glyphs.sac = Object.fromEntries(
-    Object.entries(player.reality.glyphs.sac).map(i => [i[0], new Decimal(i[1])])
+    Object.entries(player.reality.glyphs.sac).map((i) => [i[0], new Decimal(i[1])])
   );
   player.records.achTimer = new Decimal(player.records.achTimer);
 
@@ -354,7 +354,7 @@ export function collapse() {
     player.reality.imaginaryRebuyables[i] = 0;
   }
 
-  player.blackHole = Array.range(0, 2).map(id => ({
+  player.blackHole = Array.range(0, 2).map((id) => ({
     id,
     intervalUpgrades: 0,
     powerUpgrades: 0,
@@ -529,7 +529,7 @@ export function collapse() {
       Currency.perkPoints.add(1);
       const perk = toVisit.shift();
       visited.push(perk);
-      toVisit.push(...perk.connectedPerks.filter(p => !visited.includes(p)));
+      toVisit.push(...perk.connectedPerks.filter((p) => !visited.includes(p)));
       perk.purchase();
     }
 
@@ -582,7 +582,7 @@ export class AtomMilestoneState {
 
 export const AtomMilestone = mapGameDataToObject(
   GameDatabase.atom.milestones,
-  config => new AtomMilestoneState(config)
+  (config) => new AtomMilestoneState(config)
 );
 
 class AtomUpgradeState extends BitPurchasableMechanicState {
@@ -677,11 +677,11 @@ class RebuyableAtomUpgradeState extends RebuyableMechanicState {
   }
 }
 
-const AUIndex = mapGameData(GameDatabase.atom.upgrades, config =>
-  (config.id % 5 === 1 ? new RebuyableAtomUpgradeState(config) : new AtomUpgradeState(config))
+const AUIndex = mapGameData(GameDatabase.atom.upgrades, (config) =>
+  config.id % 5 === 1 ? new RebuyableAtomUpgradeState(config) : new AtomUpgradeState(config)
 );
 
-export const AtomUpgrade = id => AUIndex[id];
+export const AtomUpgrade = (id) => AUIndex[id];
 
 export const AtomUpgrades = {
   all: AUIndex.compact(),

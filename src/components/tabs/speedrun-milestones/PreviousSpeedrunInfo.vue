@@ -6,7 +6,7 @@ export default {
     prevRunInfo: {
       type: Object,
       required: false,
-      default: () => {}
+      default: () => {},
     },
     index: {
       type: Number,
@@ -76,27 +76,14 @@ export default {
 </script>
 
 <template>
-  <div
-    v-if="prevRunInfo"
-    class="c-icon-container"
-  >
+  <div v-if="prevRunInfo" class="c-icon-container">
     <span>Run {{ index }}</span>
     <span>{{ prevRunInfo.name }}</span>
-    <span
-      v-for="attr in iconAttrs"
-      :key="attr.icon"
-      v-tooltip="attr.text"
-      :class="attr.icon"
-    />
+    <span v-for="attr in iconAttrs" :key="attr.icon" v-tooltip="attr.text" :class="attr.icon" />
     <span>Started: {{ startDate }}</span>
     <span>Final Time: {{ finalTime }}</span>
   </div>
-  <div
-    v-else
-    class="c-no-record"
-  >
-    No speedrun records found for run {{ index }}.
-  </div>
+  <div v-else class="c-no-record">No speedrun records found for run {{ index }}.</div>
 </template>
 
 <style scoped>

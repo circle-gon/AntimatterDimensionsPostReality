@@ -24,7 +24,7 @@ export default {
         "l-reality-amplify-button--clickable": !this.isDoomed && this.canAmplify,
         "o-enslaved-mechanic-button--storing-time": this.isActive,
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -38,33 +38,22 @@ export default {
     toggleActive() {
       if (!this.canAmplify) return;
       Enslaved.boostReality = !Enslaved.boostReality;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <button
-    v-if="isVisible"
-    :class="buttonClass"
-    :ach-tooltip="tooltip"
-    @click="toggleActive"
-  >
-    <div v-if="isDoomed">
-      You cannot amplify Doomed Realities.
-    </div>
+  <button v-if="isVisible" :class="buttonClass" :ach-tooltip="tooltip" @click="toggleActive">
+    <div v-if="isDoomed">You cannot amplify Doomed Realities.</div>
     <div v-else-if="canAmplify">
       <span v-if="isActive">Will be amplified:</span>
       <span v-else>Amplify this Reality:</span>
-      <br>
+      <br />
       All rewards ×{{ formatInt(ratio) }}
     </div>
-    <div v-else>
-      Not enough stored real time to amplify.
-    </div>
+    <div v-else>Not enough stored real time to amplify.</div>
   </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

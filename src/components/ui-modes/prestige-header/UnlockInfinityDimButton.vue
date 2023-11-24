@@ -27,13 +27,16 @@ export default {
       return {
         "o-prestige-button": true,
         "o-infinity-button": true,
-        "o-infinity-button--unavailable": !this.canUnlock
+        "o-infinity-button--unavailable": !this.canUnlock,
       };
     },
   },
   methods: {
     update() {
-      this.isVisible = player.break && !InfinityDimension(8).isUnlocked && !Player.canEternity &&
+      this.isVisible =
+        player.break &&
+        !InfinityDimension(8).isUnlocked &&
+        !Player.canEternity &&
         !EternityMilestone.autoUnlockID.isReached;
       if (!this.isVisible) return;
       const nextDimension = InfinityDimensions.next();
@@ -44,21 +47,15 @@ export default {
     },
     tryUnlockNextInfinityDimension() {
       InfinityDimensions.unlockNext();
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <button
-    v-if="isVisible"
-    :class="buttonClassObject"
-    @click="tryUnlockNextInfinityDimension"
-  >
+  <button v-if="isVisible" :class="buttonClassObject" @click="tryUnlockNextInfinityDimension">
     {{ text }}
   </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

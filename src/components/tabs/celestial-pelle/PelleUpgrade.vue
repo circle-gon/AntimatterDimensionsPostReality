@@ -8,16 +8,16 @@ export default {
   components: {
     DescriptionDisplay,
     CostDisplay,
-    CustomizeableTooltip
+    CustomizeableTooltip,
   },
   props: {
     upgrade: {
       type: Object,
-      required: true
+      required: true,
     },
     faded: {
       type: Boolean,
-      required: false
+      required: false,
     },
     galaxyGenerator: {
       type: Boolean,
@@ -39,7 +39,7 @@ export default {
       hovering: false,
       hasRemnants: false,
       galaxyCap: 0,
-      notAffordable: false
+      notAffordable: false,
     };
   },
   computed: {
@@ -49,11 +49,9 @@ export default {
     effectText() {
       if (!this.config.formatEffect) return false;
       const prefix = this.isCapped ? "Capped:" : "Currently:";
-      const formattedEffect = x => this.config.formatEffect(this.config.effect(x));
+      const formattedEffect = (x) => this.config.formatEffect(this.config.effect(x));
       const value = formattedEffect(this.purchases);
-      const next = (!this.isCapped && this.hovering)
-        ? formattedEffect(this.purchases + 1)
-        : undefined;
+      const next = !this.isCapped && this.hovering ? formattedEffect(this.purchases + 1) : undefined;
       return { prefix, value, next };
     },
     timeEstimate() {
@@ -62,7 +60,8 @@ export default {
       return this.currentTimeEstimate;
     },
     hasTimeEstimate() {
-      return !(this.canBuy ||
+      return !(
+        this.canBuy ||
         this.isBought ||
         this.isCapped ||
         (this.galaxyGenerator && this.config.currencyLabel !== "Galaxy")
@@ -85,24 +84,26 @@ export default {
       this.isBought = this.upgrade.isBought;
       this.isCapped = this.upgrade.isCapped;
       this.purchases = player.celestials.pelle.rebuyables[this.upgrade.config.id];
-      this.currentTimeEstimate = TimeSpan
-        .fromSeconds(this.secondsUntilCost(this.galaxyGenerator ? GalaxyGenerator.gainPerSecond
-          : Pelle.realityShardGainPerSecond).toNumber())
-        .toTimeEstimate();
-      this.projectedTimeEstimate = TimeSpan
-        .fromSeconds(this.secondsUntilCost(Pelle.nextRealityShardGain).toNumber())
-        .toTimeEstimate();
+      this.currentTimeEstimate = TimeSpan.fromSeconds(
+        this.secondsUntilCost(
+          this.galaxyGenerator ? GalaxyGenerator.gainPerSecond : Pelle.realityShardGainPerSecond
+        ).toNumber()
+      ).toTimeEstimate();
+      this.projectedTimeEstimate = TimeSpan.fromSeconds(
+        this.secondsUntilCost(Pelle.nextRealityShardGain).toNumber()
+      ).toTimeEstimate();
       this.hasRemnants = Pelle.cel.remnants > 0;
       this.galaxyCap = GalaxyGenerator.generationCap;
       const genDB = GameDatabase.celestials.pelle.galaxyGeneratorUpgrades;
-      this.notAffordable = (this.config === genDB.additive || this.config === genDB.multiplicative) &&
-        (Decimal.gt(this.upgrade.cost, this.galaxyCap - GalaxyGenerator.generatedGalaxies + player.galaxies));
+      this.notAffordable =
+        (this.config === genDB.additive || this.config === genDB.multiplicative) &&
+        Decimal.gt(this.upgrade.cost, this.galaxyCap - GalaxyGenerator.generatedGalaxies + player.galaxies);
     },
     secondsUntilCost(rate) {
       const value = this.galaxyGenerator ? player.galaxies + GalaxyGenerator.galaxies : Currency.realityShards.value;
       return Decimal.sub(this.upgrade.cost, value).div(rate);
     },
-  }
+  },
 };
 </script>
 
@@ -113,27 +114,18 @@ export default {
       'c-pelle-upgrade--unavailable': !canBuy && !(isBought || isCapped),
       'c-pelle-upgrade--bought': isBought || isCapped,
       'c-pelle-upgrade--faded': faded,
-      'c-pelle-upgrade--galaxyGenerator': galaxyGenerator
+      'c-pelle-upgrade--galaxyGenerator': galaxyGenerator,
     }"
     @click="!faded && upgrade.purchase()"
     @mouseover="hovering = true"
     @mouseleave="hovering = false"
   >
-    <CustomizeableTooltip
-      :show="shouldEstimateImprovement"
-      left="50%"
-      top="0"
-    >
+    <CustomizeableTooltip :show="shouldEstimateImprovement" left="50%" top="0">
       <template #tooltipContent>
         {{ estimateImprovement }}
       </template>
     </CustomizeableTooltip>
-    <CustomizeableTooltip
-      v-if="timeEstimate"
-      left="50%"
-      top="0"
-      content-class="l-fill-container"
-    >
+    <CustomizeableTooltip v-if="timeEstimate" left="50%" top="0" content-class="l-fill-container">
       <template #tooltipContent>
         {{ timeEstimate }}
       </template>
@@ -143,7 +135,8 @@ export default {
     <div v-if="effectText">
       {{ effectText.prefix }} {{ effectText.value }}
       <template v-if="effectText.next">
-        ➜ <span
+        ➜
+        <span
           :class="{
             'c-improved-effect': canBuy,
             'c-improved-effect--unavailable': !canBuy,
@@ -154,11 +147,7 @@ export default {
       </template>
       <div class="l-pelle-upgrade-gap" />
     </div>
-    <CostDisplay
-      v-if="!isCapped"
-      :config="config"
-      :name="galaxyGenerator ? config.currencyLabel : 'Reality Shard'"
-    />
+    <CostDisplay v-if="!isCapped" :config="config" :name="galaxyGenerator ? config.currencyLabel : 'Reality Shard'" />
   </button>
 </template>
 

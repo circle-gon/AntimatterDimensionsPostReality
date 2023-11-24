@@ -4,17 +4,17 @@ export default {
   props: {
     unlock: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      isUnlocked: false
+      isUnlocked: false,
     };
   },
   computed: {
     descriptionLines() {
-      return this.unlock.config.description.split("\n").map(x => x.trim());
+      return this.unlock.config.description.split("\n").map((x) => x.trim());
     },
     symbol: () => GLYPH_SYMBOLS.effarig,
     isDoomed: () => Pelle.isDoomed,
@@ -22,20 +22,15 @@ export default {
   methods: {
     update() {
       this.isUnlocked = this.unlock.isUnlocked;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-effarig-tab__reward">
-    <div class="c-effarig-tab__reward-label">
-      {{ unlock.config.label }}:
-    </div>
-    <div
-      v-if="isUnlocked"
-      class="l-effarig-tab__reward-descriptions"
-    >
+    <div class="c-effarig-tab__reward-label">{{ unlock.config.label }}:</div>
+    <div v-if="isUnlocked" class="l-effarig-tab__reward-descriptions">
       <div
         v-for="(description, descriptionKey) in descriptionLines"
         :key="descriptionKey + '-effarig-reward-description'"
@@ -49,9 +44,6 @@ export default {
         </span>
       </div>
     </div>
-    <span
-      v-else
-      class="c-effarig-tab__reward-symbol"
-    >?</span>
+    <span v-else class="c-effarig-tab__reward-symbol">?</span>
   </div>
 </template>

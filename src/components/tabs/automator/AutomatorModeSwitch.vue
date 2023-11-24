@@ -15,7 +15,7 @@ export default {
       },
       set(value) {
         this.$viewModel.tabs.reality.automator.editorScriptID = value;
-      }
+      },
     },
     currentScriptContent() {
       return player.reality.automator.scripts[this.currentScriptID].content;
@@ -32,7 +32,7 @@ export default {
     },
     tutorialClass() {
       return {
-        "tutorial--glow": ui.view.tutorialState === TUTORIAL_STATE.AUTOMATOR && ui.view.tutorialActive
+        "tutorial--glow": ui.view.tutorialState === TUTORIAL_STATE.AUTOMATOR && ui.view.tutorialActive,
       };
     },
   },
@@ -57,8 +57,10 @@ export default {
         player.reality.automator.state.editorScript = this.currentScriptID;
         AutomatorData.clearUndoData();
       }
-      if (BlockAutomator.hasUnparsableCommands(this.currentScript) &&
-        player.reality.automator.type === AUTOMATOR_TYPE.BLOCK) {
+      if (
+        BlockAutomator.hasUnparsableCommands(this.currentScript) &&
+        player.reality.automator.type === AUTOMATOR_TYPE.BLOCK
+      ) {
         Modal.message.show(`Some script commands were unrecognizable - defaulting to text editor.`);
         AutomatorBackend.changeModes(this.currentScriptID);
       }
@@ -66,7 +68,8 @@ export default {
     },
     toggleAutomatorMode() {
       const currScript = player.reality.automator.scripts[this.currentScriptID].content;
-      const hasTextErrors = this.automatorType === AUTOMATOR_TYPE.TEXT &&
+      const hasTextErrors =
+        this.automatorType === AUTOMATOR_TYPE.TEXT &&
         (BlockAutomator.hasUnparsableCommands(currScript) || AutomatorData.currentErrors().length !== 0);
 
       if (player.options.confirmations.switchAutomatorMode && (hasTextErrors || AutomatorBackend.isRunning)) {
@@ -74,9 +77,8 @@ export default {
 
         // We explicitly pass in 0 for lostBlocks if converting from block to text since nothing is ever lost in that
         // conversion direction
-        const lostBlocks = this.automatorType === AUTOMATOR_TYPE.TEXT
-          ? blockified.validatedBlocks - blockified.visitedBlocks
-          : 0;
+        const lostBlocks =
+          this.automatorType === AUTOMATOR_TYPE.TEXT ? blockified.validatedBlocks - blockified.visitedBlocks : 0;
         Modal.switchAutomatorEditorMode.show({
           callBack: () => this.$recompute("currentScriptContent"),
           lostBlocks,
@@ -85,8 +87,8 @@ export default {
         AutomatorBackend.changeModes(this.currentScriptID);
       }
       AutomatorData.clearUndoData();
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -94,12 +96,12 @@ export default {
   <button
     v-tooltip="{
       content: automatorModeTooltip,
-      hideOnTargetClick: false
+      hideOnTargetClick: false,
     }"
     :class="{
       'c-slider-toggle-button': true,
       'c-slider-toggle-button--right': isTextAutomator,
-      ...tutorialClass
+      ...tutorialClass,
     }"
     @click="toggleAutomatorMode"
   >

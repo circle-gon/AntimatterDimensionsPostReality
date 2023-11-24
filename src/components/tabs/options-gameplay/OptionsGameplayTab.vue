@@ -10,7 +10,7 @@ export default {
     OpenModalHotkeysButton,
     OptionsButton,
     PrimaryToggleButton,
-    SliderComponent
+    SliderComponent,
   },
   data() {
     return {
@@ -32,7 +32,7 @@ export default {
         max: 54,
         interval: 1,
         width: "100%",
-        tooltip: false
+        tooltip: false,
       };
     },
     sliderPropsAutomatorLogSize() {
@@ -41,9 +41,9 @@ export default {
         max: 500,
         interval: 50,
         width: "100%",
-        tooltip: false
+        tooltip: false,
       };
-    }
+    },
   },
   watch: {
     offlineProgress(newValue) {
@@ -69,7 +69,7 @@ export default {
   created() {
     const ticks = player.options.offlineTicks;
     const exponent = Math.floor(Math.log10(ticks));
-    const mantissa = (ticks / Math.pow(10, exponent)) - 1;
+    const mantissa = ticks / Math.pow(10, exponent) - 1;
     this.offlineSlider = 9 * exponent + mantissa;
   },
   methods: {
@@ -88,7 +88,7 @@ export default {
     // It's essentially 10^(x/10) but with the mantissa spaced linearly instead of logarithmically
     parseOfflineSlider(str) {
       const value = parseInt(str, 10);
-      return (1 + value % 9) * Math.pow(10, Math.floor(value / 9));
+      return (1 + (value % 9)) * Math.pow(10, Math.floor(value / 9));
     },
     adjustSliderValueOfflineTicks(value) {
       this.offlineSlider = value;
@@ -97,8 +97,8 @@ export default {
     adjustSliderValueAutomatorLogSize(value) {
       this.automatorLogSize = value;
       player.options.automatorEvents.maxEntries = this.automatorLogSize;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -106,10 +106,7 @@ export default {
   <div class="l-options-tab">
     <div class="l-options-grid">
       <div class="l-options-grid__row">
-        <OptionsButton
-          class="o-primary-btn--option"
-          onclick="Modal.confirmationOptions.show()"
-        >
+        <OptionsButton class="o-primary-btn--option" onclick="Modal.confirmationOptions.show()">
           Open Confirmation Options
         </OptionsButton>
         <PrimaryToggleButton

@@ -8,7 +8,7 @@ export default {
   components: {
     PrimaryButton,
     PrimaryToggleButton,
-    HeaderBlackHoleStatusText
+    HeaderBlackHoleStatusText,
   },
   data() {
     return {
@@ -38,7 +38,7 @@ export default {
   watch: {
     isAutoReleasing(newValue) {
       player.celestials.enslaved.isAutoReleasing = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -68,48 +68,27 @@ export default {
     chargingClassObject() {
       return {
         "o-primary-btn--buy-max c-primary-btn--black-hole-header": true,
-        "o-bh-charge-disabled": this.isAutoReleasing
+        "o-bh-charge-disabled": this.isAutoReleasing,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <span
-    v-if="canModifyBlackHoles"
-    class="c-black-hole-header"
-  >
-    <PrimaryButton
-      class="o-primary-btn--buy-max c-primary-btn--black-hole-header"
-      onclick="BlackHoles.togglePause()"
-    >
+  <span v-if="canModifyBlackHoles" class="c-black-hole-header">
+    <PrimaryButton class="o-primary-btn--buy-max c-primary-btn--black-hole-header" onclick="BlackHoles.togglePause()">
       {{ pauseText }}
     </PrimaryButton>
     <span v-if="canCharge">
-      <PrimaryButton
-        :class="chargingClassObject()"
-        onclick="Enslaved.toggleStoreBlackHole()"
-      >
-        <span v-if="isCharging">
-          Stop Charging
-        </span>
-        <span v-else>
-          Charge
-        </span>
+      <PrimaryButton :class="chargingClassObject()" onclick="Enslaved.toggleStoreBlackHole()">
+        <span v-if="isCharging"> Stop Charging </span>
+        <span v-else> Charge </span>
       </PrimaryButton>
     </span>
-    <span
-      v-if="displaySingle"
-      class="c-black-hole-status-text"
-      v-html="'🌀:' + singleState"
-    />
+    <span v-if="displaySingle" class="c-black-hole-status-text" v-html="'🌀:' + singleState" />
     <span v-else>
-      <HeaderBlackHoleStatusText
-        v-for="(blackHole, i) in blackHoles"
-        :key="'state' + i"
-        :black-hole="blackHole"
-      />
+      <HeaderBlackHoleStatusText v-for="(blackHole, i) in blackHoles" :key="'state' + i" :black-hole="blackHole" />
     </span>
     <span v-if="canCharge">
       <PrimaryButton

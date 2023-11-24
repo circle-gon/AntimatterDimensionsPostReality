@@ -8,7 +8,7 @@ export default {
   name: "AutomatorBlockEditor",
   components: {
     AutomatorBlockSingleRow,
-    draggable
+    draggable,
   },
   computed: {
     lines: {
@@ -17,7 +17,7 @@ export default {
       },
       set(value) {
         this.$viewModel.tabs.reality.automator.lines = value;
-      }
+      },
     },
     numberOfLines() {
       return this.lines.reduce((a, l) => a + BlockAutomator.numberOfLinesInBlock(l), 0);
@@ -47,15 +47,15 @@ export default {
       BlockAutomator.parseTextFromBlocks();
     },
     updateBlock(block, id) {
-      this.lines[this.lines.findIndex(x => x.id === id)] = block;
+      this.lines[this.lines.findIndex((x) => x.id === id)] = block;
       this.parseRequest();
     },
     deleteBlock(id) {
-      const idx = this.lines.findIndex(x => x.id === id);
+      const idx = this.lines.findIndex((x) => x.id === id);
       this.lines.splice(idx, 1);
       this.parseRequest();
     },
-  }
+  },
 };
 
 export const BlockAutomator = {
@@ -86,8 +86,8 @@ export const BlockAutomator = {
   // actual commands have defined values. This means that every time a closing curly brace } occurs, all further
   // line numbers between on block will be one less than the corresponding text line number
   lineNumber(textLine) {
-    const skipLines = this._idArray.map((id, index) => (id ? -1 : index + 1)).filter(v => v !== -1);
-    return textLine - skipLines.countWhere(line => line <= textLine);
+    const skipLines = this._idArray.map((id, index) => (id ? -1 : index + 1)).filter((v) => v !== -1);
+    return textLine - skipLines.countWhere((line) => line <= textLine);
   },
 
   lineNumberFromBlockID(id) {
@@ -120,9 +120,7 @@ export const BlockAutomator = {
     // errors slightly less harsh; some errors which wiped entire lines now just fail to parse arguments instead
     let parsed = `${"\t".repeat(indentation)}${block.cmd} `;
 
-    parsed = parsed
-      .replace("COMMENT", "//")
-      .replace("BLOB", "blob  ");
+    parsed = parsed.replace("COMMENT", "//").replace("BLOB", "blob  ");
 
     if (block.canWait && block.nowait) {
       parsed = parsed.replace(/(\S+)/u, "$1 NOWAIT");
@@ -167,13 +165,18 @@ export const BlockAutomator = {
   },
 
   numberOfLinesInBlock(block) {
-    return block.nested ? Math.max(block.nest.reduce((v, b) => v + this.numberOfLinesInBlock(b), 1), 2) : 1;
+    return block.nested
+      ? Math.max(
+          block.nest.reduce((v, b) => v + this.numberOfLinesInBlock(b), 1),
+          2
+        )
+      : 1;
   },
 
   clearEditor() {
     // I genuinely don't understand why this needs to be done asynchronously, but removing the setTimeout makes this
     // method not do anything at all. Even setting the array in the console without the setTimeout works fine.
-    setTimeout(() => this.lines = [], 0);
+    setTimeout(() => (this.lines = []), 0);
   },
 
   previousScrollPosition: 0,
@@ -182,26 +185,19 @@ export const BlockAutomator = {
 
 <template>
   <div class="c-automator-block-editor--container">
-    <div
-      ref="editorGutter"
-      class="c-automator-block-editor--gutter"
-    >
+    <div ref="editorGutter" class="c-automator-block-editor--gutter">
       <div
         v-for="i in numberOfLines"
         :key="i"
         class="c-automator-block-line-number"
         :style="{
-          top: `${(i - 1) * 3.45}rem`
+          top: `${(i - 1) * 3.45}rem`,
         }"
       >
         {{ i }}
       </div>
     </div>
-    <div
-      ref="blockEditorElement"
-      class="c-automator-block-editor"
-      @scroll="setPreviousScroll()"
-    >
+    <div ref="blockEditorElement" class="c-automator-block-editor" @scroll="setPreviousScroll()">
       <draggable
         v-model="lines"
         group="code-blocks"

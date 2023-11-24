@@ -5,8 +5,8 @@ export default {
     isHeader: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -26,9 +26,9 @@ export default {
         "l-armageddon-button": !this.isHeader,
         "l-reality-button": this.isHeader,
         "l-armageddon-button--header": this.isHeader,
-        "c-armageddon-button--unavailable": !this.canArmageddon
+        "c-armageddon-button--unavailable": !this.canArmageddon,
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -42,26 +42,24 @@ export default {
 
       if (player.options.confirmations.armageddon) Modal.armageddon.show();
       else Pelle.armageddon(true);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <button
-    :class="buttonClassObject"
-    @click="manualArmageddon"
-  >
-    <span v-if="isHeader">You cannot escape a Doomed Reality!<br></span>
+  <button :class="buttonClassObject" @click="manualArmageddon">
+    <span v-if="isHeader">You cannot escape a Doomed Reality!<br /></span>
     <span class="c-remnant-gain-display">
       Armageddon for
       <span class="c-remnant-gain">{{ remnants }}</span>
       Remnants
     </span>
-    <br>
+    <br />
     Reality Shards
-    <span class="c-reality-shard-gain">{{ format(realityShardGain, 2, 2) }}</span>/s ➜
-    <span class="c-reality-shard-gain">{{ format(nextRealityShardGain, 2, 2) }}</span>/s
+    <span class="c-reality-shard-gain">{{ format(realityShardGain, 2, 2) }}</span
+    >/s ➜ <span class="c-reality-shard-gain">{{ format(nextRealityShardGain, 2, 2) }}</span
+    >/s
   </button>
 </template>
 

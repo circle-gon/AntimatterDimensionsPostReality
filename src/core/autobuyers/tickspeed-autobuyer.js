@@ -57,11 +57,7 @@ export class TickspeedAutobuyerState extends UpgradeableAutobuyerState {
   }
 
   toggleMode() {
-    this.mode = [
-      AUTOBUYER_MODE.BUY_SINGLE,
-      AUTOBUYER_MODE.BUY_MAX
-    ]
-      .nextSibling(this.mode);
+    this.mode = [AUTOBUYER_MODE.BUY_SINGLE, AUTOBUYER_MODE.BUY_MAX].nextSibling(this.mode);
   }
 
   get canTick() {

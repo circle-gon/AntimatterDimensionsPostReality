@@ -6,45 +6,33 @@ export default {
   name: "ModernSidebar",
   components: {
     ModernSidebarCurrency,
-    ModernTabButton
+    ModernTabButton,
   },
   data() {
     return {
       isHidden: false,
-      tabVisibilities: []
+      tabVisibilities: [],
     };
   },
   computed: {
-    tabs: () => Tabs.newUI
+    tabs: () => Tabs.newUI,
   },
   methods: {
     update() {
       this.isHidden = AutomatorData.isEditorFullscreen;
-      this.tabVisibilities = Tabs.newUI.map(x => x.isAvailable);
+      this.tabVisibilities = Tabs.newUI.map((x) => x.isAvailable);
     },
   },
 };
 </script>
 
 <template>
-  <div
-    v-if="!isHidden"
-    class="c-modern-sidebar"
-  >
+  <div v-if="!isHidden" class="c-modern-sidebar">
     <ModernSidebarCurrency />
-    <template
-      v-for="(tab, tabPosition) in tabs"
-    >
-      <ModernTabButton
-        v-if="tabVisibilities[tabPosition]"
-        :key="tab.name"
-        :tab="tab"
-        :tab-position="tabPosition"
-      />
+    <template v-for="(tab, tabPosition) in tabs">
+      <ModernTabButton v-if="tabVisibilities[tabPosition]" :key="tab.name" :tab="tab" :tab-position="tabPosition" />
     </template>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

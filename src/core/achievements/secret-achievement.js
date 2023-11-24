@@ -7,7 +7,7 @@ class SecretAchievementState extends GameMechanicState {
     this._column = this.id % 10;
     this._bitmask = 1 << (this.column - 1);
     this._inverseBitmask = ~this._bitmask;
-    this.registerEvents(config.checkEvent, args => this.tryUnlock(args));
+    this.registerEvents(config.checkEvent, (args) => this.tryUnlock(args));
   }
 
   get name() {
@@ -57,11 +57,11 @@ export const SecretAchievements = {
   all: SecretAchievement.index.compact(),
 
   get allRows() {
-    const count = SecretAchievements.all.map(a => a.row).max();
+    const count = SecretAchievements.all.map((a) => a.row).max();
     return SecretAchievements.rows(1, count);
   },
 
   rows: (start, count) => Array.range(start, count).map(SecretAchievements.row),
 
-  row: row => Array.range(row * 10 + 1, 8).map(SecretAchievement),
+  row: (row) => Array.range(row * 10 + 1, 8).map(SecretAchievement),
 };

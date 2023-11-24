@@ -18,7 +18,7 @@ export default {
       bestShardRate: new Decimal(),
       bestShardRateVal: new Decimal(),
       ppGained: 0,
-      celestialRunText: ["", "", "", "", ""]
+      celestialRunText: ["", "", "", "", ""],
     };
   },
   computed: {
@@ -60,7 +60,7 @@ export default {
         "c-reality-button--locked": !this.canReality,
         "c-reality-button--special": this.showSpecialEffect,
       };
-    }
+    },
   },
   methods: {
     percentToNextGlyphLevelText() {
@@ -68,7 +68,7 @@ export default {
       let level = glyphState.actualLevel;
       if (!isFinite(level)) level = 0;
       const decimalPoints = this.glyphLevel > 1000 ? 0 : 1;
-      return `${formatPercents(Math.min(((level - Math.floor(level))), 0.999), decimalPoints)}`;
+      return `${formatPercents(Math.min(level - Math.floor(level), 0.999), decimalPoints)}`;
     },
     update() {
       this.hasRealityStudy = TimeStudy.reality.isBought;
@@ -81,7 +81,7 @@ export default {
       function EPforRM(rm) {
         const adjusted = Decimal.divide(rm, MachineHandler.realityMachineMultiplier);
         if (adjusted.lte(1)) return Decimal.pow10(4000);
-        if (adjusted.lte(10)) return Decimal.pow10(4000 / 27 * (adjusted.toNumber() + 26));
+        if (adjusted.lte(10)) return Decimal.pow10((4000 / 27) * (adjusted.toNumber() + 26));
         let result = Decimal.pow10(4000 * (adjusted.log10() / 3 + 1));
         if (!PlayerProgress.realityUnlocked() && result.gte("1e6000")) {
           result = result.div("1e6000").pow(4).times("1e6000");
@@ -90,8 +90,7 @@ export default {
       }
 
       const multiplier = simulatedRealityCount(false) + 1;
-      this.projectedRM = MachineHandler.gainedRealityMachines.times(multiplier)
-        .clampMax(MachineHandler.hardcapRM);
+      this.projectedRM = MachineHandler.gainedRealityMachines.times(multiplier).clampMax(MachineHandler.hardcapRM);
       this.newIMCap = MachineHandler.projectedIMCap;
       this.machinesGained = this.projectedRM.clampMax(MachineHandler.distanceToRMCap);
       this.realityTime = Time.thisRealityRealTime.totalMinutes;
@@ -107,13 +106,14 @@ export default {
       const teresaReward = this.formatScalingMultiplierText(
         "Glyph Sacrifice",
         Teresa.runRewardMultiplier,
-        Teresa.runRewardMultiplier.max(Teresa.rewardMultiplier(Currency.antimatter.value)));
+        Teresa.runRewardMultiplier.max(Teresa.rewardMultiplier(Currency.antimatter.value))
+      );
       const teresaThreshold = this.formatThresholdText(
         Teresa.rewardMultiplier(Currency.antimatter.value).gt(Teresa.runRewardMultiplier),
         player.celestials.teresa.bestRunAM,
-        "antimatter");
-      this.celestialRunText = [
-        [Teresa.isRunning, teresaReward, teresaThreshold]];
+        "antimatter"
+      );
+      this.celestialRunText = [[Teresa.isRunning, teresaReward, teresaThreshold]];
     },
     handleClick() {
       if (this.canReality) {
@@ -132,25 +132,21 @@ export default {
       if (Teresa.isRunning && Teresa.rewardMultiplier(Currency.antimatter.value).gt(Teresa.runRewardMultiplier)) {
         return true;
       }
-      return Currency.eternityPoints.value.exponent > 4000 &&
-        ((Effarig.isRunning && !EffarigUnlock.reality.isUnlocked) || (Enslaved.isRunning && !Enslaved.isCompleted));
-    }
-  }
+      return (
+        Currency.eternityPoints.value.exponent > 4000 &&
+        ((Effarig.isRunning && !EffarigUnlock.reality.isUnlocked) || (Enslaved.isRunning && !Enslaved.isCompleted))
+      );
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-reality-button">
-    <button
-      class="c-reality-button infotooltip"
-      :class="classObject"
-      @click="handleClick"
-    >
+    <button class="c-reality-button infotooltip" :class="classObject" @click="handleClick">
       <div class="l-reality-button__contents">
         <template v-if="canReality">
-          <div class="c-reality-button__header">
-            Make a new Reality
-          </div>
+          <div class="c-reality-button__header">Make a new Reality</div>
           <div>{{ formatMachinesGained }} {{ formatMachineStats }}</div>
           <div>{{ formatGlyphLevel }}</div>
         </template>
@@ -160,24 +156,18 @@ export default {
         <template v-else>
           <div>Purchase the study in the Eternity tab to unlock a new Reality</div>
         </template>
-        <div
-          v-if="canReality"
-          class="infotooltiptext"
-        >
+        <div v-if="canReality" class="infotooltiptext">
           <div>Other resources gained:</div>
           <div>{{ quantifyInt("Perk Point", ppGained) }}</div>
           <div v-if="shardsGained.neq(0)">
             {{ shardsGainedText }} ({{ format(currentShardsRate, 2) }}/min)
-            <br>
+            <br />
             Peak: {{ format(bestShardRate, 2) }}/min at {{ format(bestShardRateVal, 2) }} RS
           </div>
-          <div
-            v-for="(celestialInfo, i) in celestialRunText"
-            :key="i"
-          >
+          <div v-for="(celestialInfo, i) in celestialRunText" :key="i">
             <span v-if="celestialInfo[0]">
               {{ celestialInfo[1] }}
-              <br>
+              <br />
               {{ celestialInfo[2] }}
             </span>
           </div>
@@ -187,6 +177,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

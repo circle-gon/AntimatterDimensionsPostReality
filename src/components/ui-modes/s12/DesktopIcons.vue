@@ -6,7 +6,7 @@ export default {
   name: "DesktopIcons",
   data() {
     return {
-      DesktopIcons
+      DesktopIcons,
     };
   },
   mounted() {
@@ -27,12 +27,12 @@ export default {
       if (DesktopIcons.selected !== idx) {
         DesktopIcons.selected = idx;
         isSelectingIcon = true;
-        setTimeout(() => isSelectingIcon = false, 0);
+        setTimeout(() => (isSelectingIcon = false), 0);
       } else {
         DesktopIcons.entries[idx].action();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -42,14 +42,11 @@ export default {
       v-for="(icon, idx) in DesktopIcons.entries"
       :key="icon.name"
       class="c-s12-desktop-icon"
-      :class="{ 'c-s12-desktop-icon--selected': DesktopIcons.selected === idx, }"
+      :class="{ 'c-s12-desktop-icon--selected': DesktopIcons.selected === idx }"
       @click="handleClick(idx)"
     >
       <div class="c-s12-desktop-icon__inner">
-        <img
-          :src="`images/s12/${icon.image}`"
-          class="c-s12-desktop-icon__img"
-        >
+        <img :src="`images/s12/${icon.image}`" class="c-s12-desktop-icon__img" />
         <div class="c-s12-desktop-icon__text">
           {{ icon.name }}
         </div>
@@ -66,9 +63,8 @@ export default {
   --icon-margin: 0.2rem;
   --icon-inner-padding: 0.3rem;
   --total-icon-height: calc(
-    var(--icon-size) + var(--icon-margin) * 2 +
-    var(--icon-font-size) * var(--icon-line-height) * 2 +
-    var(--icon-inner-padding) * 2
+    var(--icon-size) + var(--icon-margin) * 2 + var(--icon-font-size) * var(--icon-line-height) * 2 +
+      var(--icon-inner-padding) * 2
   );
 
   display: inline-flex;

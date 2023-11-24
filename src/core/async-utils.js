@@ -15,7 +15,7 @@ window.Async = {
     const batchSize = config.batchSize || 1;
     const maxTime = config.maxTime;
     const t0 = Date.now();
-    for (let remaining = maxIter; remaining > 0;) {
+    for (let remaining = maxIter; remaining > 0; ) {
       for (let j = 0; j < Math.min(remaining, batchSize); ++j) {
         fun(remaining);
         --remaining;
@@ -24,7 +24,7 @@ window.Async = {
     }
     return 0;
   },
-  sleepPromise: ms => new Promise(resolve => setTimeout(resolve, ms)),
+  sleepPromise: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
   /**
    * Asynchronously run the specified function maxIter times, letting the event
    * loop run periodically. The function is run in chunks of config.batchSize;
@@ -52,10 +52,12 @@ window.Async = {
       // Disable async if we're already doing async
       this.enabled = false;
       const runResult = this._run(fun, maxIter, config);
-      return config.then ? runResult.then(() => {
-        config.then();
-        this.enabled = true;
-      }) : runResult;
+      return config.then
+        ? runResult.then(() => {
+            config.then();
+            this.enabled = true;
+          })
+        : runResult;
     }
     for (let i = 0; i < maxIter; ++i) {
       fun(i);
@@ -80,5 +82,5 @@ window.Async = {
       if (config.asyncProgress) config.asyncProgress(config.progress.maxIter - config.progress.remaining);
     } while (config.progress.remaining > 0);
     if (config.asyncExit) config.asyncExit();
-  }
+  },
 };

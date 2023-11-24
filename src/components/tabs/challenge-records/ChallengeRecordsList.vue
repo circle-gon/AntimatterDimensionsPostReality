@@ -4,24 +4,24 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     start: {
       type: Number,
-      required: true
+      required: true,
     },
     times: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     timeSum() {
       return this.times.sumDecimal();
     },
     completedAllChallenges() {
-      return this.times.every(i => i.lt(Decimal.MAX_LIMIT));
-    }
+      return this.times.every((i) => i.lt(Decimal.MAX_LIMIT));
+    },
   },
   methods: {
     decimalTimeDisplayShort,
@@ -29,26 +29,19 @@ export default {
       return time.lt(Decimal.MAX_LIMIT)
         ? `record time: ${decimalTimeDisplayShort(time)}`
         : "has not yet been completed";
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div>
-    <br>
-    <div
-      v-for="(time, i) in times"
-      :key="i"
-    >
+    <br />
+    <div v-for="(time, i) in times" :key="i">
       <span>{{ name }} {{ start + i }} {{ completionString(time) }}</span>
     </div>
-    <br>
-    <div v-if="completedAllChallenges">
-      Sum of {{ name }} record times: {{ decimalTimeDisplayShort(timeSum) }}
-    </div>
-    <div v-else>
-      You have not completed all {{ name }}s yet.
-    </div>
+    <br />
+    <div v-if="completedAllChallenges">Sum of {{ name }} record times: {{ decimalTimeDisplayShort(timeSum) }}</div>
+    <div v-else>You have not completed all {{ name }}s yet.</div>
   </div>
 </template>

@@ -4,7 +4,7 @@ import CreditsDisplay from "@/components/CreditsDisplay";
 export default {
   name: "CreditsContainer",
   components: {
-    CreditsDisplay
+    CreditsDisplay,
   },
   data() {
     return {
@@ -18,13 +18,13 @@ export default {
     creditStyles() {
       return {
         bottom: `${this.scroll}rem`,
-        display: this.rolling ? "block" : "none"
+        display: this.rolling ? "block" : "none",
       };
     },
     muteStyle() {
       return {
         top: `calc(${this.scroll + 2}rem - 100vh)`,
-        display: this.rolling ? "block" : "none"
+        display: this.rolling ? "block" : "none",
       };
     },
     muteIconClass() {
@@ -38,9 +38,9 @@ export default {
         v: V.symbol,
         ra: Ra.symbol,
         laitela: Laitela.symbol,
-        pelle: Pelle.symbol
+        pelle: Pelle.symbol,
       };
-    }
+    },
   },
   watch: {
     rolling(newVal, oldVal) {
@@ -49,7 +49,7 @@ export default {
         this.audio = new Audio(`audio/credits.mp3`);
         this.audio.play();
       }
-    }
+    },
   },
   created() {
     // Use a hardcoded 33ms in order to make the end credits scroll smoothly; if the player normally plays
@@ -63,28 +63,18 @@ export default {
   methods: {
     update() {
       this.rolling = GameEnd.endState > END_STATE_MARKERS.CREDITS_START;
-      this.scroll = (
-        Math.clampMax(GameEnd.endState, END_STATE_MARKERS.CREDITS_END) - END_STATE_MARKERS.CREDITS_START
-      ) * 60;
-      if (this.audio) this.audio.volume = this.isMuted
-        ? 0
-        : Math.clamp((GameEnd.endState - END_STATE_MARKERS.CREDITS_START), 0, 0.3);
+      this.scroll =
+        (Math.clampMax(GameEnd.endState, END_STATE_MARKERS.CREDITS_END) - END_STATE_MARKERS.CREDITS_START) * 60;
+      if (this.audio)
+        this.audio.volume = this.isMuted ? 0 : Math.clamp(GameEnd.endState - END_STATE_MARKERS.CREDITS_START, 0, 0.3);
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <div
-    class="c-credits-container"
-    :style="creditStyles"
-  >
-    <i
-      class="c-mute-button fa-solid"
-      :class="muteIconClass"
-      :style="muteStyle"
-      @click="isMuted = !isMuted"
-    />
+  <div class="c-credits-container" :style="creditStyles">
+    <i class="c-mute-button fa-solid" :class="muteIconClass" :style="muteStyle" @click="isMuted = !isMuted" />
     <div
       v-for="(celSymbol, celIndex) in celestialDisplays"
       :key="celIndex + '-end-credit-symbol-disp'"
@@ -98,17 +88,39 @@ export default {
 
 <style scoped>
 @keyframes a-teresa-credits {
-  0% { transform: rotate(61deg); }
-  10% { transform: rotate(322deg); }
-  20% { transform: rotate(235deg); }
-  30% { transform: rotate(222deg); }
-  40% { transform: rotate(105deg); }
-  50% { transform: rotate(33deg); }
-  60% { transform: rotate(103deg); }
-  70% { transform: rotate(158deg); }
-  80% { transform: rotate(41deg); }
-  90% { transform: rotate(73deg); }
-  100% { transform: rotate(61deg); }
+  0% {
+    transform: rotate(61deg);
+  }
+  10% {
+    transform: rotate(322deg);
+  }
+  20% {
+    transform: rotate(235deg);
+  }
+  30% {
+    transform: rotate(222deg);
+  }
+  40% {
+    transform: rotate(105deg);
+  }
+  50% {
+    transform: rotate(33deg);
+  }
+  60% {
+    transform: rotate(103deg);
+  }
+  70% {
+    transform: rotate(158deg);
+  }
+  80% {
+    transform: rotate(41deg);
+  }
+  90% {
+    transform: rotate(73deg);
+  }
+  100% {
+    transform: rotate(61deg);
+  }
 }
 
 @keyframes a-effarig-credits {
@@ -129,20 +141,38 @@ export default {
 }
 
 @keyframes a-enslaved-credits {
-  0% { transform: translateX(-50%) rotate(0); }
-  100% { transform: translateX(-50%) rotate(360deg); }
+  0% {
+    transform: translateX(-50%) rotate(0);
+  }
+  100% {
+    transform: translateX(-50%) rotate(360deg);
+  }
 }
 
 /* We unfortunately have to do it this way, because due to how the benzene unicode symbol works, 0 and 120deg aren't
 perfectly the same. */
 @keyframes a-v-credits {
-  0% { transform: translateX(-50%) rotate(0) scale(0.8); }
-  16.67% { transform: translateX(-50%) rotate(60deg) scale(1.2); }
-  33.33% { transform: translateX(-50%) rotate(120deg) scale(0.8); }
-  50% { transform: translateX(-50%) rotate(180deg) scale(1.2); }
-  66.67% { transform: translateX(-50%) rotate(240deg) scale(0.8); }
-  83.33% { transform: translateX(-50%) rotate(300deg) scale(1.2); }
-  100% { transform: translateX(-50%) rotate(360deg) scale(0.8); }
+  0% {
+    transform: translateX(-50%) rotate(0) scale(0.8);
+  }
+  16.67% {
+    transform: translateX(-50%) rotate(60deg) scale(1.2);
+  }
+  33.33% {
+    transform: translateX(-50%) rotate(120deg) scale(0.8);
+  }
+  50% {
+    transform: translateX(-50%) rotate(180deg) scale(1.2);
+  }
+  66.67% {
+    transform: translateX(-50%) rotate(240deg) scale(0.8);
+  }
+  83.33% {
+    transform: translateX(-50%) rotate(300deg) scale(1.2);
+  }
+  100% {
+    transform: translateX(-50%) rotate(360deg) scale(0.8);
+  }
 }
 
 @keyframes a-ra-credits {
@@ -180,19 +210,39 @@ perfectly the same. */
 }
 
 @keyframes a-laitela-credits {
-  0% { transform: translate(-50%, 30%); }
-  25% { transform: translate(-50%, -20%); }
-  50% { transform: translate(-50%, 30%); }
-  75% { transform: translate(0%, 30%); }
-  100% { transform: translate(-50%, 30%); }
+  0% {
+    transform: translate(-50%, 30%);
+  }
+  25% {
+    transform: translate(-50%, -20%);
+  }
+  50% {
+    transform: translate(-50%, 30%);
+  }
+  75% {
+    transform: translate(0%, 30%);
+  }
+  100% {
+    transform: translate(-50%, 30%);
+  }
 }
 
 @keyframes a-pelle-credits {
-  0% { transform: translateX(-50%) rotate3d(0, 1, 0, 0) scaleY(1); }
-  25% { transform: translateX(-50%) rotate3d(0, 1, 0, 90deg) scaleY(1.3); }
-  50% { transform: translateX(-50%) rotate3d(0, 1, 0, 180deg) scaleY(1); }
-  75% { transform: translateX(-50%) rotate3d(0, 1, 0, 270deg) scaleY(1.3); }
-  100% { transform: translateX(-50%) rotate3d(0, 1, 0, 360deg) scaleY(1); }
+  0% {
+    transform: translateX(-50%) rotate3d(0, 1, 0, 0) scaleY(1);
+  }
+  25% {
+    transform: translateX(-50%) rotate3d(0, 1, 0, 90deg) scaleY(1.3);
+  }
+  50% {
+    transform: translateX(-50%) rotate3d(0, 1, 0, 180deg) scaleY(1);
+  }
+  75% {
+    transform: translateX(-50%) rotate3d(0, 1, 0, 270deg) scaleY(1.3);
+  }
+  100% {
+    transform: translateX(-50%) rotate3d(0, 1, 0, 360deg) scaleY(1);
+  }
 }
 
 .c-mute-button {

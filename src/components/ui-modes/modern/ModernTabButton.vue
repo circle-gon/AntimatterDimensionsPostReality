@@ -38,7 +38,7 @@ export default {
     update() {
       this.isAvailable = this.tab.isAvailable;
       this.isHidden = this.tab.isHidden;
-      this.subtabVisibilities = this.tab.subtabs.map(x => x.isAvailable);
+      this.subtabVisibilities = this.tab.subtabs.map((x) => x.isAvailable);
       this.showSubtabs = this.isAvailable && this.subtabVisibilities.length >= 1;
       this.hasNotification = this.tab.hasNotification;
       if (this.tabPosition < Pelle.endTabNames.length) {
@@ -59,24 +59,12 @@ export default {
 </script>
 
 <template>
-  <div
-    v-if="!isHidden && isAvailable"
-    :class="[classObject, tab.config.UIClass]"
-  >
-    <div
-      class="l-tab-btn-inner"
-      @click="tab.show(true)"
-    >
+  <div v-if="!isHidden && isAvailable" :class="[classObject, tab.config.UIClass]">
+    <div class="l-tab-btn-inner" @click="tab.show(true)">
       {{ tabName }}
-      <div
-        v-if="hasNotification"
-        class="fas fa-circle-exclamation l-notification-icon"
-      />
+      <div v-if="hasNotification" class="fas fa-circle-exclamation l-notification-icon" />
     </div>
-    <div
-      v-if="showSubtabs"
-      class="subtabs"
-    >
+    <div v-if="showSubtabs" class="subtabs">
       <template v-for="(subtab, index) in tab.subtabs">
         <div
           v-if="subtabVisibilities[index]"
@@ -86,10 +74,7 @@ export default {
           @click="subtab.show(true)"
         >
           <span v-html="subtab.symbol" />
-          <div
-            v-if="subtab.hasNotification"
-            class="fas fa-circle-exclamation l-notification-icon"
-          />
+          <div v-if="subtab.hasNotification" class="fas fa-circle-exclamation l-notification-icon" />
           <div class="o-subtab__tooltip">
             {{ subtab.name }}
           </div>

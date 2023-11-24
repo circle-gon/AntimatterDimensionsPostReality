@@ -12,13 +12,13 @@ export default {
     DescriptionDisplay,
     EffectDisplay,
     CostDisplay,
-    HintText
+    HintText,
   },
   props: {
     upgrade: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -49,7 +49,7 @@ export default {
     },
     requirementConfig() {
       return {
-        description: this.config.requirement
+        description: this.config.requirement,
       };
     },
     canLock() {
@@ -60,7 +60,7 @@ export default {
   watch: {
     isAutobuyerOn(newValue) {
       Autobuyer.imaginaryUpgrade(this.upgrade.id).isActive = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -85,32 +85,26 @@ export default {
     toggleLock(upgrade) {
       if (this.isRebuyable) return;
       upgrade.toggleMechanicLock();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-tooltip="etaText"
-    class="l-spoon-btn-group"
-  >
+  <div v-tooltip="etaText" class="l-spoon-btn-group">
     <button
       :class="classObject"
       class="l-reality-upgrade-btn c-reality-upgrade-btn"
       @click.shift.exact="toggleLock(upgrade)"
       @click.exact="upgrade.purchase()"
     >
-      <HintText
-        type="realityUpgrades"
-        class="l-hint-text--reality-upgrade c-hint-text--reality-upgrade"
-      >
+      <HintText type="realityUpgrades" class="l-hint-text--reality-upgrade c-hint-text--reality-upgrade">
         {{ config.name }}
       </HintText>
       <span :class="{ 'o-pelle-disabled': upgrade.pelleDisabled }">
         <DescriptionDisplay :config="config" />
-        <template v-if="($viewModel.shiftDown === isAvailableForPurchase) && !isRebuyable">
-          <br>
+        <template v-if="$viewModel.shiftDown === isAvailableForPurchase && !isRebuyable">
+          <br />
           <DescriptionDisplay
             :config="requirementConfig"
             label="Requirement:"
@@ -118,31 +112,14 @@ export default {
           />
         </template>
         <template v-else>
-          <EffectDisplay
-            :config="config"
-            br
-          />
-          <CostDisplay
-            v-if="!isBought"
-            :config="config"
-            br
-            name="Imaginary Machine"
-          />
+          <EffectDisplay :config="config" br />
+          <CostDisplay v-if="!isBought" :config="config" br name="Imaginary Machine" />
         </template>
       </span>
     </button>
-    <div
-      v-if="canBeLocked"
-      class="o-requirement-lock"
-    >
-      <i
-        v-if="hasRequirementLock"
-        class="fas fa-lock"
-      />
-      <i
-        v-else-if="canLock"
-        class="fas fa-lock-open"
-      />
+    <div v-if="canBeLocked" class="o-requirement-lock">
+      <i v-if="hasRequirementLock" class="fas fa-lock" />
+      <i v-else-if="canLock" class="fas fa-lock-open" />
     </div>
     <PrimaryToggleButton
       v-if="isRebuyable && isAutoUnlocked"
@@ -153,6 +130,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

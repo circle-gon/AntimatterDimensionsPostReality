@@ -12,7 +12,7 @@ export default {
     GlyphSetPreview,
     PerkShopUpgradeButton,
     CelestialQuoteHistory,
-    CustomizeableTooltip
+    CustomizeableTooltip,
   },
   data() {
     return {
@@ -59,7 +59,7 @@ export default {
         "c-teresa-run-button__icon": true,
         "c-teresa-run-button__icon--running": this.isRunning,
         "c-celestial-run-button--clickable": !this.isDoomed,
-        "o-pelle-disabled-pointer": this.isDoomed
+        "o-pelle-disabled-pointer": this.isDoomed,
       };
     },
     pourButtonClassObject() {
@@ -69,7 +69,7 @@ export default {
         "o-teresa-shop-button--available": !this.isPouredAmountCapped,
         "o-teresa-shop-button--capped": this.isPouredAmountCapped,
         "c-teresa-pour--unlock-available": this.canUnlockNextPour,
-        "c-disabled-pour": this.isPouredAmountCapped
+        "c-disabled-pour": this.isPouredAmountCapped,
       };
     },
     pourText() {
@@ -85,7 +85,7 @@ export default {
     },
     unlockInfoTooltipArrowStyle() {
       return {
-        borderRight: "0.5rem solid var(--color-teresa--base)"
+        borderRight: "0.5rem solid var(--color-teresa--base)",
       };
     },
     isDoomed: () => Pelle.isDoomed,
@@ -116,8 +116,9 @@ export default {
       this.perkPoints = Currency.perkPoints.value;
       this.rm.copyFrom(Currency.realityMachines);
       this.isRunning = Teresa.isRunning;
-      this.canUnlockNextPour = TeresaUnlocks.all
-        .filter(unlock => this.rm.plus(this.pouredAmount).gte(unlock.price) && !unlock.isUnlocked).length > 0;
+      this.canUnlockNextPour =
+        TeresaUnlocks.all.filter((unlock) => this.rm.plus(this.pouredAmount).gte(unlock.price) && !unlock.isUnlocked)
+          .length > 0;
     },
     startRun() {
       if (this.isDoomed) return;
@@ -134,43 +135,30 @@ export default {
     unlockInfoTooltipClass(unlockInfo) {
       return {
         "c-teresa-unlock-description": true,
-        "c-teresa-unlock-description--unlocked": this.hasUnlock(unlockInfo)
+        "c-teresa-unlock-description--unlocked": this.hasUnlock(unlockInfo),
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-teresa-celestial-tab">
     <CelestialQuoteHistory celestial="teresa" />
-    <div>
-      You have {{ quantify("Reality Machine", rm, 2, 2) }}.
-    </div>
+    <div>You have {{ quantify("Reality Machine", rm, 2, 2) }}.</div>
     <div class="l-mechanics-container">
-      <div
-        v-if="hasReality"
-        class="l-teresa-mechanic-container"
-      >
+      <div v-if="hasReality" class="l-teresa-mechanic-container">
         <div class="c-teresa-unlock c-teresa-run-button">
-          <span :class="{ 'o-pelle-disabled': isDoomed }">
-            Start Teresa's Reality.
-          </span>
-          <div
-            :class="runButtonClassObject"
-            @click="startRun()"
-          >
-            Ϟ
-          </div>
+          <span :class="{ 'o-pelle-disabled': isDoomed }"> Start Teresa's Reality. </span>
+          <div :class="runButtonClassObject" @click="startRun()">Ϟ</div>
           {{ runDescription }}
-          <br><br>
+          <br /><br />
           <div>
             This Reality can be repeated for a stronger reward based on the antimatter gained within it.
-            <br><br>
+            <br /><br />
             <span v-if="showRunReward">
-              Your record antimatter in Teresa's Reality is {{ format(bestAM, 2) }},
-              achieved with {{ lastMachinesString }}.
-              <br><br>
+              Your record antimatter in Teresa's Reality is {{ format(bestAM, 2) }}, achieved with
+              {{ lastMachinesString }}. <br /><br />
               Glyph Set used:
               <GlyphSetPreview
                 text="Teresa's Best Glyph Set"
@@ -179,21 +167,13 @@ export default {
                 :glyphs="bestAMSet"
               />
             </span>
-            <span v-else>
-              You have not completed Teresa's Reality yet.
-            </span>
+            <span v-else> You have not completed Teresa's Reality yet. </span>
           </div>
         </div>
-        <div
-          v-if="showRunReward"
-          class="c-teresa-unlock"
-        >
+        <div v-if="showRunReward" class="c-teresa-unlock">
           Teresa Reality reward: Glyph Sacrifice power {{ formatX(runReward, 2, 2) }}
         </div>
-        <div
-          v-if="hasEPGen"
-          class="c-teresa-unlock"
-        >
+        <div v-if="hasEPGen" class="c-teresa-unlock">
           <span :class="{ 'o-pelle-disabled': isDoomed }">
             Every second, you gain {{ formatPercents(0.01) }} of your peaked Eternity Points per minute this Reality.
           </span>
@@ -211,17 +191,11 @@ export default {
           {{ pourText }}
         </button>
         <div class="c-rm-store">
-          <div
-            class="c-rm-store-inner c-rm-store-inner--light"
-            :style="{ height: possibleFillPercentage}"
-          />
-          <div
-            class="c-rm-store-inner"
-            :style="{ height: percentage}"
-          >
+          <div class="c-rm-store-inner c-rm-store-inner--light" :style="{ height: possibleFillPercentage }" />
+          <div class="c-rm-store-inner" :style="{ height: percentage }">
             <div class="c-rm-store-label">
               {{ formatX(rmMult, 2, 2) }} RM gain
-              <br>
+              <br />
               {{ format(pouredAmount, 2, 2) }}/{{ format(pouredAmountCap, 2, 2) }}
             </div>
           </div>
@@ -250,22 +224,10 @@ export default {
           </CustomizeableTooltip>
         </div>
       </div>
-      <div
-        v-if="pouredAmount < pouredAmountCap"
-        class="l-rm-container-labels l-teresa-mechanic-container"
-      />
-      <div
-        v-if="hasPerkShop"
-        class="c-teresa-shop"
-      >
-        <span class="o-teresa-pp">
-          You have {{ quantify("Perk Point", perkPoints, 2, 0) }}.
-        </span>
-        <PerkShopUpgradeButton
-          v-for="upgrade in upgrades"
-          :key="upgrade.id"
-          :upgrade="upgrade"
-        />
+      <div v-if="pouredAmount < pouredAmountCap" class="l-rm-container-labels l-teresa-mechanic-container" />
+      <div v-if="hasPerkShop" class="c-teresa-shop">
+        <span class="o-teresa-pp"> You have {{ quantify("Perk Point", perkPoints, 2, 0) }}. </span>
+        <PerkShopUpgradeButton v-for="upgrade in upgrades" :key="upgrade.id" :upgrade="upgrade" />
         You can now modify the appearance of your Glyphs to look like Music Glyphs.
       </div>
     </div>

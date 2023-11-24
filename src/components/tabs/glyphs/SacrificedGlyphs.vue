@@ -6,7 +6,7 @@ import TypeSacrifice from "./TypeSacrifice";
 export default {
   name: "SacrificedGlyphs",
   components: {
-    TypeSacrifice
+    TypeSacrifice,
   },
   data() {
     return {
@@ -20,7 +20,7 @@ export default {
     };
   },
   computed: {
-    types: () => GLYPH_TYPES.filter(type => type !== "cursed" && type !== "companion"),
+    types: () => GLYPH_TYPES.filter((type) => type !== "cursed" && type !== "companion"),
     lastMachines() {
       return this.lastMachinesTeresa.lt(DC.E10000)
         ? `${quantify("Reality Machine", this.lastMachinesTeresa, 2)}`
@@ -53,7 +53,7 @@ export default {
     },
     hasSeenRealityGlyph() {
       return player.reality.glyphs.createdRealityGlyph;
-    }
+    },
   },
   created() {
     this.on$(GAME_EVENT.GLYPH_VISUAL_CHANGE, () => {
@@ -86,7 +86,9 @@ export default {
         event.relatedTarget.classList.contains("l-sacrificed-glyphs__type-symbol") ||
         event.relatedTarget.classList.contains("l-sacrificed-glyphs__type-amount") ||
         event.relatedTarget.classList.contains("c-sacrificed-glyphs__type-new-amount") ||
-        event.relatedTarget.classList.length === 0) return;
+        event.relatedTarget.classList.length === 0
+      )
+        return;
       this.hasDragover = false;
     },
     drop(event) {
@@ -103,90 +105,67 @@ export default {
     },
     glyphSymbol(type) {
       return this.cosmeticTypes[type].currentSymbol.symbol;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div
     class="c-current-glyph-effects l-current-glyph-effects"
-    :class="{'c-sacrificed-glyphs--dragover': hasDragover}"
+    :class="{ 'c-sacrificed-glyphs--dragover': hasDragover }"
     @dragover="dragover"
     @dragleave="dragleave"
     @drop="drop"
   >
     <div class="l-sacrificed-glyphs__help">
-      <span
-        v-if="isDoomed"
-        class="pelle-current-glyph-effects"
-      >
-        You cannot sacrifice Glyphs while Doomed.
-      </span>
+      <span v-if="isDoomed" class="pelle-current-glyph-effects"> You cannot sacrifice Glyphs while Doomed. </span>
       <span v-else>
         <div>Drag Glyphs here or shift-click to Sacrifice.</div>
         <div>The confirmation can be disabled in Options or by holding Ctrl.</div>
       </span>
     </div>
     <div v-if="hasAlteration">
-      <span
-        class="c-altered-glyphs-toggle-button"
-        @click="toggleAlteration"
-      >
+      <span class="c-altered-glyphs-toggle-button" @click="toggleAlteration">
         <i :class="dropDownIconClass" />
         <b> Altered Glyphs</b>
       </span>
-      <br>
-      <div v-if="hideAlteration">
-        (Details hidden, click to unhide)
-      </div>
+      <br />
+      <div v-if="hideAlteration">(Details hidden, click to unhide)</div>
       <div v-else>
-        Glyph types will have one of their effects improved<br>
+        Glyph types will have one of their effects improved<br />
         when their Glyph type's total sacrifice value is above:
-        <br><br>
+        <br /><br />
         <b>
           <span :style="addStyle">{{ format(addThreshold) }} - an additional secondary effect</span>
-          <br>
+          <br />
           <span :style="empowerStyle">{{ format(empowerThreshold) }} - formula drastically improved</span>
-          <br>
+          <br />
           <span :style="boostStyle">{{ format(boostThreshold) }} - a boost depending on Glyph Sacrifice</span>
         </b>
-        <br><br>
+        <br /><br />
         All effects from Glyph Sacrifice can no longer be increased once they reach {{ format(maxSacrifice) }}.
       </div>
     </div>
-    <br>
-    <div class="c-sacrificed-glyphs__header">
-      Glyph Sacrifice Boosts:
-    </div>
+    <br />
+    <div class="c-sacrificed-glyphs__header">Glyph Sacrifice Boosts:</div>
     <div v-if="anySacrifices && !isDoomed">
       <div v-if="teresaMult.gt(1)">
-        Glyph sacrifice values are multiplied by {{ formatX(teresaMult, 2, 2) }};
-        Teresa was last done at {{ lastMachines }}.
+        Glyph sacrifice values are multiplied by {{ formatX(teresaMult, 2, 2) }}; Teresa was last done at
+        {{ lastMachines }}.
         <span v-if="hasSeenRealityGlyph">
           Reality Glyphs are unaffected by this multiplier and have no altered effects.
         </span>
       </div>
       <template v-for="type in types">
-        <TypeSacrifice
-          :key="type + glyphSymbol(type)"
-          :type="type"
-          :has-dragover="hasDragover"
-        />
+        <TypeSacrifice :key="type + glyphSymbol(type)" :type="type" :has-dragover="hasDragover" />
       </template>
     </div>
-    <div
-      v-else-if="isDoomed"
-      class="pelle-current-glyph-effects"
-    >
+    <div v-else-if="isDoomed" class="pelle-current-glyph-effects">
       All boosts from Glyph Sacrifice are disabled while Doomed, including changes to effects due to Altered Glyphs.
     </div>
-    <div v-else>
-      You haven't Sacrificed any Glyphs yet!
-    </div>
+    <div v-else>You haven't Sacrificed any Glyphs yet!</div>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

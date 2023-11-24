@@ -6,11 +6,11 @@ export default {
   props: {
     position: {
       type: Object,
-      required: true
+      required: true,
     },
     ring: {
       type: Object,
-      required: true
+      required: true,
     },
     isStacked: {
       type: Boolean,
@@ -28,7 +28,7 @@ export default {
     ringBackgroundFilter() {
       return this.isStacked ? "" : "url(#backgroundGlow)";
     },
-  }
+  },
 };
 </script>
 
@@ -42,6 +42,4 @@ export default {
   />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

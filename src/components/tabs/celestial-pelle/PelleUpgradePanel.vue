@@ -19,18 +19,20 @@ export default {
       realityShards: new Decimal(0),
       shardRate: new Decimal(0),
       upgrades: [],
-      boughtUpgrades: []
+      boughtUpgrades: [],
     };
   },
   computed: {
     collapseIcon() {
-      return this.isCollapsed
-        ? "fas fa-expand-arrows-alt"
-        : "fas fa-compress-arrows-alt";
+      return this.isCollapsed ? "fas fa-expand-arrows-alt" : "fas fa-compress-arrows-alt";
     },
     rebuyables: () => PelleUpgrade.rebuyables,
-    visibleUpgrades() { return this.upgrades.slice(0, 5); },
-    fadedUpgrades() { return this.upgrades.slice(5, 10); },
+    visibleUpgrades() {
+      return this.upgrades.slice(0, 5);
+    },
+    fadedUpgrades() {
+      return this.upgrades.slice(5, 10);
+    },
     allUpgrades() {
       let upgrades = [];
       if (this.showBought) upgrades = this.boughtUpgrades;
@@ -39,7 +41,7 @@ export default {
     },
     showImprovedEstimate() {
       return this.isHovering && !this.shardRate.eq(0);
-    }
+    },
   },
   methods: {
     update() {
@@ -48,8 +50,8 @@ export default {
       this.remnants = Pelle.cel.remnants;
       this.realityShards.copyFrom(Pelle.cel.realityShards);
       this.shardRate.copyFrom(Pelle.realityShardGainPerSecond);
-      this.upgrades = PelleUpgrade.singles.filter(u => !u.isBought);
-      this.boughtUpgrades = PelleUpgrade.singles.filter(u => u.isBought);
+      this.upgrades = PelleUpgrade.singles.filter((u) => !u.isBought);
+      this.boughtUpgrades = PelleUpgrade.singles.filter((u) => u.isBought);
     },
     toggleBought() {
       Pelle.cel.showBought = !Pelle.cel.showBought;
@@ -57,32 +59,21 @@ export default {
     },
     toggleCollapse() {
       player.celestials.pelle.collapsed.upgrades = !this.isCollapsed;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-pelle-panel-container">
     <div class="c-pelle-panel-title">
-      <i
-        :class="collapseIcon"
-        class="c-collapse-icon-clickable"
-        @click="toggleCollapse"
-      />
+      <i :class="collapseIcon" class="c-collapse-icon-clickable" @click="toggleCollapse" />
       Pelle Upgrades
     </div>
-    <div
-      v-if="!isCollapsed"
-      class="l-pelle-content-container"
-    >
+    <div v-if="!isCollapsed" class="l-pelle-content-container">
       <div class="c-armageddon-container">
         <div>
-          <div
-            class="c-armageddon-button-container"
-            @mouseover="isHovering = true"
-            @mouseleave="isHovering = false"
-          >
+          <div class="c-armageddon-button-container" @mouseover="isHovering = true" @mouseleave="isHovering = false">
             <ArmageddonButton />
           </div>
           <RemnantGainFactor :hide="showImprovedEstimate" />
@@ -105,32 +96,19 @@ export default {
           :show-improved-estimate="showImprovedEstimate"
         />
       </div>
-      <button
-        class="o-pelle-button"
-        @click="toggleBought"
-      >
+      <button class="o-pelle-button" @click="toggleBought">
         {{ showBought ? "Showing bought upgrades" : "Bought upgrades hidden" }}
       </button>
-      <div
-        v-if="allUpgrades.length"
-        class="c-pelle-upgrade-container"
-      >
+      <div v-if="allUpgrades.length" class="c-pelle-upgrade-container">
         <PelleUpgradeVue
           v-for="upgrade in allUpgrades"
           :key="upgrade.config.id"
           :upgrade="upgrade"
           :show-improved-estimate="showImprovedEstimate"
         />
-        <PelleUpgradeVue
-          v-for="upgrade in fadedUpgrades"
-          :key="upgrade.config.id"
-          :upgrade="upgrade"
-          faded
-        />
+        <PelleUpgradeVue v-for="upgrade in fadedUpgrades" :key="upgrade.config.id" :upgrade="upgrade" faded />
       </div>
-      <div v-else>
-        No upgrades to show!
-      </div>
+      <div v-else>No upgrades to show!</div>
     </div>
   </div>
 </template>

@@ -4,19 +4,19 @@ import HintText from "@/components/HintText";
 export default {
   name: "SecretAchievement",
   components: {
-    HintText
+    HintText,
   },
   props: {
     achievement: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       isUnlocked: false,
       isMouseOver: false,
-      showUnlockState: false
+      showUnlockState: false,
     };
   },
   computed: {
@@ -29,7 +29,7 @@ export default {
     styleObject() {
       if (!this.isUnlocked) return undefined;
       return {
-        "background-position": `-${(this.achievement.column - 1) * 104}px -${(this.achievement.row - 1) * 104}px`
+        "background-position": `-${(this.achievement.column - 1) * 104}px -${(this.achievement.row - 1) * 104}px`,
       };
     },
     classObject() {
@@ -37,7 +37,7 @@ export default {
         "o-achievement": true,
         "o-achievement--hidden": !this.isUnlocked,
         "o-achievement--unlocked": this.isUnlocked,
-        "o-achievement--secret": true
+        "o-achievement--secret": true,
       };
     },
     indicatorIconClass() {
@@ -46,7 +46,7 @@ export default {
     indicatorClassObject() {
       return {
         "o-achievement__indicator": true,
-        "o-achievement__indicator--locked": !this.isUnlocked
+        "o-achievement__indicator--locked": !this.isUnlocked,
       };
     },
   },
@@ -63,48 +63,29 @@ export default {
       this.isMouseOver = true;
     },
     onMouseLeave() {
-      this.mouseOverInterval = setTimeout(() => this.isMouseOver = false, 300);
+      this.mouseOverInterval = setTimeout(() => (this.isMouseOver = false), 300);
     },
     onClick() {
       if (this.id === 11) {
         SecretAchievement(11).unlock();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    :class="classObject"
-    :style="styleObject"
-    @click="onClick"
-    @mouseenter="onMouseEnter"
-    @mouseleave="onMouseLeave"
-  >
-    <HintText
-      type="achievements"
-      class="l-hint-text--achievement"
-    >
-      S{{ id }}
-    </HintText>
+  <div :class="classObject" :style="styleObject" @click="onClick" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+    <HintText type="achievements" class="l-hint-text--achievement"> S{{ id }} </HintText>
     <div class="o-achievement__tooltip">
       <template v-if="isMouseOver">
-        <div class="o-achievement__tooltip__name">
-          {{ config.name }} (S{{ id }})
-        </div>
-        <div
-          v-if="isUnlocked"
-          class="o-achievement__tooltip__description"
-        >
+        <div class="o-achievement__tooltip__name">{{ config.name }} (S{{ id }})</div>
+        <div v-if="isUnlocked" class="o-achievement__tooltip__description">
           {{ config.description }}
         </div>
       </template>
     </div>
-    <div
-      v-if="showUnlockState"
-      :class="indicatorClassObject"
-    >
+    <div v-if="showUnlockState" :class="indicatorClassObject">
       <i :class="indicatorIconClass" />
     </div>
   </div>
