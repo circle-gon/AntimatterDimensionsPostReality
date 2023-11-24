@@ -11,22 +11,16 @@ export default {
   computed: {
     all() {
       return AwayProgressTypes.showOption;
-    }
+    },
   },
 };
 </script>
 
 <template>
   <ModalWrapperOptions class="l-wrapper">
-    <template #header>
-      Away Progress Options
-    </template>
+    <template #header> Away Progress Options </template>
     <div class="c-modal-options__button-container">
-      <AwayProgressOptionsEntry
-        v-for="name of all"
-        :key="name"
-        :name="name"
-      />
+      <AwayProgressOptionsEntry v-for="name of all" :key="name" :name="name" />
     </div>
     Note: Selected resources will only show if they've increased.
   </ModalWrapperOptions>

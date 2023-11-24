@@ -34,9 +34,7 @@ export default {
     handleSeedInput() {
       if (this.inputSeed.match(/^-?\d+$/gu)) {
         const num = Number(this.inputSeed);
-        this.seedValue = Math.abs(num) > 9e15
-          ? this.hashStringToSeed(this.inputSeed)
-          : Number(this.inputSeed);
+        this.seedValue = Math.abs(num) > 9e15 ? this.hashStringToSeed(this.inputSeed) : Number(this.inputSeed);
       } else {
         this.seedValue = this.hashStringToSeed(this.inputSeed);
       }
@@ -59,7 +57,8 @@ export default {
     // See https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
     hashStringToSeed(str) {
       const seed = 17977308;
-      let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+      let h1 = 0xdeadbeef ^ seed,
+        h2 = 0x41c6ce57 ^ seed;
       for (let i = 0, ch; i < str.length; i++) {
         ch = str.charCodeAt(i);
         h1 = Math.imul(h1 ^ ch, 2654435761);
@@ -68,50 +67,42 @@ export default {
       h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
       h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
       return 4294967296 * (2097151 & h2) + (h1 >>> 0);
-    }
+    },
   },
 };
 </script>
 
 <template>
   <ModalWrapper>
-    <template #header>
-      Modifying Glyph RNG Seed
-    </template>
+    <template #header> Modifying Glyph RNG Seed </template>
     <div>
       All Glyph options beyond the first Reality for an entire playthrough are randomly determined from the very
       beginning, based on the value of an initial seed number. The role of this seed is that it chooses a single,
-      <i>particular</i> set of Glyph options for your playthrough. If you or anyone else chooses the same seed
-      in a different run, you will get the same options for Glyphs.
-      <br>
-      <br>
+      <i>particular</i> set of Glyph options for your playthrough. If you or anyone else chooses the same seed in a
+      different run, you will get the same options for Glyphs.
+      <br />
+      <br />
       You can switch between these three options any point before you generate your first Glyph.
-      <br>
+      <br />
       Current Setting: <b>{{ seedText }}</b>
-      <br>
-      <br>
-      <PrimaryButton
-        :class="buttonClass(choiceEnum.FIXED)"
-        @click="setMode(choiceEnum.FIXED)"
-      >
+      <br />
+      <br />
+      <PrimaryButton :class="buttonClass(choiceEnum.FIXED)" @click="setMode(choiceEnum.FIXED)">
         Official Preset Seed
       </PrimaryButton>
-      <br>
-      This is the default option which chooses the seed <b>{{ officialSeed }}</b>. Anyone who
-      chooses to not modify the seed at all will get these Glyph options.
-      <br>
-      <br>
-      <PrimaryButton
-        :class="buttonClass(choiceEnum.RANDOM)"
-        @click="setMode(choiceEnum.RANDOM)"
-      >
+      <br />
+      This is the default option which chooses the seed <b>{{ officialSeed }}</b
+      >. Anyone who chooses to not modify the seed at all will get these Glyph options.
+      <br />
+      <br />
+      <PrimaryButton :class="buttonClass(choiceEnum.RANDOM)" @click="setMode(choiceEnum.RANDOM)">
         Randomized Seed
       </PrimaryButton>
-      <br>
-      This selects a completely randomized seed value, producing Glyph options which are very likely to be
-      different from anyone else's playthrough unless they intentionally choose the same value.
-      <br>
-      <br>
+      <br />
+      This selects a completely randomized seed value, producing Glyph options which are very likely to be different
+      from anyone else's playthrough unless they intentionally choose the same value.
+      <br />
+      <br />
       <PrimaryButton
         v-tooltip="seedValue === 0 ? 'Input seed cannot be zero!' : ''"
         :class="buttonClass(choiceEnum.PLAYER)"
@@ -119,24 +110,19 @@ export default {
       >
         Player-selected Seed:
       </PrimaryButton>
-      <input
-        ref="inputSeed"
-        v-model="inputSeed"
-        type="text"
-        class="c-modal-input"
-        @input="handleSeedInput()"
-      >
-      <br>
+      <input ref="inputSeed" v-model="inputSeed" type="text" class="c-modal-input" @input="handleSeedInput()" />
+      <br />
       This option sets your seed to the value you type into the text box.
-      <br>
+      <br />
       <span v-if="seedValue !== 0">
-        Your current input will be {{ convertedInput ? "converted to" : "used as" }} the number <b>{{ seedValue }}</b>.
+        Your current input will be {{ convertedInput ? "converted to" : "used as" }} the number <b>{{ seedValue }}</b
+        >.
       </span>
       <span v-else>
-        Your current input {{ convertedInput ? "converts to" : "is equal to" }} <b>0</b>;
-        the seed will default to Official Preset.
+        Your current input {{ convertedInput ? "converts to" : "is equal to" }} <b>0</b>; the seed will default to
+        Official Preset.
       </span>
-      <br>
+      <br />
       For technical reasons, this value must be must be non-zero to be accepted.
     </div>
   </ModalWrapper>

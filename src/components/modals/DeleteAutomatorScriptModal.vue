@@ -4,13 +4,13 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "DeleteAutomatorScriptModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   props: {
     scriptID: {
       type: [String, Number],
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     handleYesClick() {
@@ -19,7 +19,7 @@ export default {
 
       AutomatorBackend.deleteScript(script);
 
-      const scriptList = Object.values(player.reality.automator.scripts).map(sc => ({
+      const scriptList = Object.values(player.reality.automator.scripts).map((sc) => ({
         id: sc.id,
         name: sc.name,
       }));
@@ -38,14 +38,8 @@ export default {
 
 <template>
   <ModalWrapperChoice @confirm="handleYesClick">
-    <template #header>
-      Delete this script
-    </template>
-    <div class="c-modal-message__text">
-      Please confirm your desire to delete this Automator script.
-    </div>
-    <template #confirm-text>
-      Delete
-    </template>
+    <template #header> Delete this script </template>
+    <div class="c-modal-message__text">Please confirm your desire to delete this Automator script.</div>
+    <template #confirm-text> Delete </template>
   </ModalWrapperChoice>
 </template>

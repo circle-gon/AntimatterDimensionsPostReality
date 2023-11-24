@@ -4,15 +4,15 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     playerBefore: {
       type: Object,
-      required: true
+      required: true,
     },
     playerAfter: {
       type: Object,
-      required: true
+      required: true,
     },
   },
   data() {
@@ -52,9 +52,7 @@ export default {
       const before = this.before;
       const after = this.after;
 
-      return after instanceof Decimal
-        ? after.gt(before)
-        : after > before;
+      return after instanceof Decimal ? after.gt(before) : after > before;
     },
     show() {
       if (!this.item.appearsInAwayModal) return false;
@@ -72,10 +70,8 @@ export default {
       return quantifyInt("time", activations);
     },
     isVeryLarge() {
-      return this.isBlackHole
-        ? false
-        : Decimal.gt(this.before, Decimal.pow10(1e9));
-    }
+      return this.isBlackHole ? false : Decimal.gt(this.before, Decimal.pow10(1e9));
+    },
   },
   methods: {
     // We want different formatting above and below 1e9 to improve readability
@@ -96,17 +92,13 @@ export default {
     hideEntry() {
       this.removed = !this.removed;
       this.item.option = !this.item.option;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="show"
-    :class="classObject"
-    @click="hideEntry"
-  >
+  <div v-if="show" :class="classObject" @click="hideEntry">
     <span v-if="isBlackHole">
       Your
       <b>{{ formattedName }}</b>
@@ -174,11 +166,8 @@ export default {
 .c-modal-away-progress__dark-energy,
 .c-modal-away-progress__singularities {
   color: var(--color-laitela--base);
-  text-shadow:
-    0 0 0.2rem var(--color-laitela--accent),
-    0 0 0.2rem var(--color-laitela--accent),
-    0 0 0.2rem var(--color-laitela--accent),
-    0 0 0.2rem var(--color-laitela--accent);
+  text-shadow: 0 0 0.2rem var(--color-laitela--accent), 0 0 0.2rem var(--color-laitela--accent),
+    0 0 0.2rem var(--color-laitela--accent), 0 0 0.2rem var(--color-laitela--accent);
 }
 
 .c-modal-away-progress__replicanti-galaxies,
@@ -220,17 +209,13 @@ export default {
 .c-modal-away-progress__black-hole b,
 .c-modal-away-progress__black-hole {
   color: black;
-  text-shadow:
-    0 0 0.2rem #e67919,
-    0 0 0.3rem #e67919;
+  text-shadow: 0 0 0.2rem #e67919, 0 0 0.3rem #e67919;
 }
 
 .s-base--dark .c-modal-away-progress__black-hole b,
 .s-base--dark .c-modal-away-progress__black-hole {
   color: #de5a1d;
-  text-shadow:
-    0 0 0.2rem black,
-    0 0 0.3rem black;
+  text-shadow: 0 0 0.2rem black, 0 0 0.3rem black;
 }
 
 .c-modal-away-progress__reality-shards {

@@ -13,8 +13,8 @@ export default {
   props: {
     diff: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     progressStage: () => ProgressChecker.getProgressStage(player).id,
@@ -28,13 +28,13 @@ export default {
     },
     titleText() {
       return this.diff ? "Content Catch-up" : "Content Summary";
-    }
+    },
   },
   methods: {
     stageName(stage) {
       return GameProgress(stage).name;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -47,29 +47,17 @@ export default {
       {{ timeString }}
       If you need a refresher, here is a quick summary of all the content you have unlocked so far from the beginning of
       the game, separated into different stages of progression. These are only very brief descriptions; you can check
-      the related How To Play entries by clicking the contents title or <i class="fas fa-question-circle" /> icons
-      to view more detailed information.
+      the related How To Play entries by clicking the contents title or <i class="fas fa-question-circle" /> icons to
+      view more detailed information.
     </div>
-    <div
-      class="l-catchup-group-container"
-      :style="{ 'height' : `${Math.clamp(3 * progressStage + 5, 15, 35)}rem` }"
-    >
-      <CatchupGroup
-        v-for="group of progressStage"
-        :key="group"
-        :group="group"
-        :name="stageName(group)"
-      />
+    <div class="l-catchup-group-container" :style="{ height: `${Math.clamp(3 * progressStage + 5, 15, 35)}rem` }">
+      <CatchupGroup v-for="group of progressStage" :key="group" :group="group" :name="stageName(group)" />
     </div>
     <span class="c-suggestion-text">
       Based on your current progression, it will probably be useful to try to increase your {{ suggestedResource }}.
     </span>
     <div class="l-confirm-padding">
-      <PrimaryButton
-        @click="emitClose"
-      >
-        Confirm
-      </PrimaryButton>
+      <PrimaryButton @click="emitClose"> Confirm </PrimaryButton>
     </div>
   </div>
 </template>

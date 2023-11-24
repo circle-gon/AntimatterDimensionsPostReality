@@ -13,7 +13,7 @@ export default {
     newSettings: {
       type: Object,
       required: true,
-    }
+    },
   },
   computed: {
     settingsChanged() {
@@ -26,7 +26,7 @@ export default {
       return `${this.type.charAt(0).toUpperCase()}${this.type.substring(1)}`;
     },
     rarityStr() {
-      return this.changedValue(this.currSettings.rarity, this.newSettings.rarity, x => formatPercents(x / 100));
+      return this.changedValue(this.currSettings.rarity, this.newSettings.rarity, (x) => formatPercents(x / 100));
     },
     effectStr() {
       return this.changedValue(this.currSettings.effectCount, this.newSettings.effectCount, formatInt);
@@ -47,7 +47,7 @@ export default {
         });
       }
       return changes;
-    }
+    },
   },
   methods: {
     changedValue(oldVal, newVal, applyFn) {
@@ -78,8 +78,8 @@ export default {
       };
     },
     getEffectDesc(effectEntry) {
-      return GlyphEffects.all.find(e => e.bitmaskIndex === effectEntry.bitmaskIndex && e.isGenerated).genericDesc;
-    }
+      return GlyphEffects.all.find((e) => e.bitmaskIndex === effectEntry.bitmaskIndex && e.isGenerated).genericDesc;
+    },
   },
 };
 </script>
@@ -103,15 +103,11 @@ export default {
         >
           Minimum Effects: {{ effectStr }}
         </span>
-        <span
-          class="c-target-score"
-          :class="topLevelClassObject('score')"
-          ach-tooltip="Threshold for Effect Score"
-        >
+        <span class="c-target-score" :class="topLevelClassObject('score')" ach-tooltip="Threshold for Effect Score">
           Score: {{ scoreStr }}
         </span>
       </span>
-      <br>
+      <br />
       <span class="c-single-row">
         <span
           v-for="effect in effectData.slice(0, 4)"
@@ -123,11 +119,8 @@ export default {
           {{ effectScoreStr(effect) }}
         </span>
       </span>
-      <span
-        v-if="effectData.length > 4"
-        class="c-single-row c-second-row"
-      >
-        <br>
+      <span v-if="effectData.length > 4" class="c-single-row c-second-row">
+        <br />
         <span
           v-for="effect in effectData.slice(4)"
           :key="effect.bitmaskIndex"
@@ -139,9 +132,7 @@ export default {
         </span>
       </span>
     </span>
-    <span v-else>
-      (No changes)
-    </span>
+    <span v-else> (No changes) </span>
   </div>
 </template>
 

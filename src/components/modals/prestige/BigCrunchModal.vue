@@ -4,7 +4,7 @@ import ResetModal from "@/components/modals/prestige/ResetModal";
 export default {
   name: "BigCrunchModal",
   components: {
-    ResetModal
+    ResetModal,
   },
   data() {
     return {
@@ -12,7 +12,7 @@ export default {
       gainedInfinityPoints: new Decimal(),
       startingBoosts: 0,
       startingAM: 10,
-      willStartWithGalaxy: false
+      willStartWithGalaxy: false,
     };
   },
   computed: {
@@ -38,7 +38,7 @@ export default {
       if (this.willStartWithGalaxy) gainedResources.push(`${quantify("Galaxy", 1)}`);
 
       return `You will start your next Infinity with ${makeEnumeration(gainedResources)}.`;
-    }
+    },
   },
   methods: {
     update() {
@@ -52,11 +52,19 @@ export default {
       bigCrunchResetRequest();
       EventHub.ui.offAll(this);
       if (this.isFirstInfinity) {
-        setTimeout(() => Modal.message.show(`This animation will occur after every manually-triggered Infinity. If
+        setTimeout(
+          () =>
+            Modal.message.show(
+              `This animation will occur after every manually-triggered Infinity. If
           you would like to disable it, there is a setting to do so in the Options tab. This can be done for any
-          visual animation effect in the game after seeing it for the first time.`, {}, 3), 2000);
+          visual animation effect in the game after seeing it for the first time.`,
+              {},
+              3
+            ),
+          2000
+        );
       }
-    }
+    },
   },
 };
 </script>

@@ -40,9 +40,11 @@ export default {
     realSpeedAlteration() {
       if (!this.enslavedDischargeActive) return 1;
       return (
-        1 + (this.enslavedDischargeMode
-          ? this.realTimeStored * this.enslavedSettingValue / 100
-          : this.enslavedSettingValue * 1000) / 1000
+        1 +
+        (this.enslavedDischargeMode
+          ? (this.realTimeStored * this.enslavedSettingValue) / 100
+          : this.enslavedSettingValue * 1000) /
+          1000
       );
     },
     baseRealText() {
@@ -92,7 +94,7 @@ export default {
     </span>
     <span v-if="isPulsing">(<i class="fas fa-expand-arrows-alt u-fa-padding" /> {{ pulseSpeedText }})</span>
     <span v-if="hasSeenRealAlteredSpeed">
-      <br>
+      <br />
       {{ baseRealText }}
     </span>
   </span>

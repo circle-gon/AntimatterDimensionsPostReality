@@ -41,35 +41,19 @@ export default {
     },
     themeCss() {
       return `stylesheets/theme-${this.view.theme}.css`;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="view.initialized"
-    id="ui-container"
-    :class="containerClass"
-    class="ui-wrapper"
-  >
-    <div
-      id="ui"
-      class="c-game-ui"
-    >
+  <div v-if="view.initialized" id="ui-container" :class="containerClass" class="ui-wrapper">
+    <div id="ui" class="c-game-ui">
       <component :is="uiLayout">
-        <component
-          :is="page"
-          class="c-game-tab"
-        />
+        <component :is="page" class="c-game-tab" />
       </component>
       <S12DesktopIcons v-if="isThemeS12" />
-      <link
-        v-if="view.theme !== 'Normal'"
-        type="text/css"
-        rel="stylesheet"
-        :href="themeCss"
-      >
+      <link v-if="view.theme !== 'Normal'" type="text/css" rel="stylesheet" :href="themeCss" />
     </div>
     <GameUiComponentFixed v-if="!isThemeS12" />
     <BackgroundAnimations v-if="!isThemeS12" />

@@ -6,17 +6,17 @@ export default {
   props: {
     setup: {
       type: Object,
-      required: true
+      required: true,
     },
     forceIsBought: {
       type: Number,
-      default: 1
+      default: 1,
     },
   },
   data() {
     return {
       isOverridden: false,
-      isBought: false
+      isBought: false,
     };
   },
   computed: {
@@ -31,13 +31,20 @@ export default {
       const to = connection.to;
       function pathClassOf(study) {
         switch (study.path) {
-          case TIME_STUDY_PATH.ANTIMATTER_DIM: return "o-time-study-connection--antimatter-dim";
-          case TIME_STUDY_PATH.INFINITY_DIM: return "o-time-study-connection--infinity-dim";
-          case TIME_STUDY_PATH.TIME_DIM: return "o-time-study-connection--time-dim";
-          case TIME_STUDY_PATH.ACTIVE: return "o-time-study-connection--active";
-          case TIME_STUDY_PATH.PASSIVE: return "o-time-study-connection--passive";
-          case TIME_STUDY_PATH.IDLE: return "o-time-study-connection--idle";
-          default: return undefined;
+          case TIME_STUDY_PATH.ANTIMATTER_DIM:
+            return "o-time-study-connection--antimatter-dim";
+          case TIME_STUDY_PATH.INFINITY_DIM:
+            return "o-time-study-connection--infinity-dim";
+          case TIME_STUDY_PATH.TIME_DIM:
+            return "o-time-study-connection--time-dim";
+          case TIME_STUDY_PATH.ACTIVE:
+            return "o-time-study-connection--active";
+          case TIME_STUDY_PATH.PASSIVE:
+            return "o-time-study-connection--passive";
+          case TIME_STUDY_PATH.IDLE:
+            return "o-time-study-connection--idle";
+          default:
+            return undefined;
         }
       }
       switch (to.type) {
@@ -56,7 +63,7 @@ export default {
         classObject[pathClass] = true;
       }
       return classObject;
-    }
+    },
   },
   methods: {
     update() {
@@ -65,8 +72,8 @@ export default {
     },
     percents(value) {
       return `${value * 100}%`;
-    }
-  }
+    },
+  },
 };
 </script>
 

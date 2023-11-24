@@ -4,7 +4,7 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "ClearConstantsModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   data() {
     return {
@@ -19,28 +19,20 @@ export default {
     deleteConstants() {
       player.reality.automator.constants = {};
       player.reality.automator.constantSortOrder = [];
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <ModalWrapperChoice
-    @confirm="deleteConstants"
-  >
-    <template #header>
-      Deleting Automator Constants
-    </template>
+  <ModalWrapperChoice @confirm="deleteConstants">
+    <template #header> Deleting Automator Constants </template>
     <div class="c-modal-message__text">
       Are you sure you wish to delete all of your currently-defined automator constants?
-      <br>
-      <span class="l-lost-text">
-        This will irreversibly delete {{ quantify("constant", constantCount) }}!
-      </span>
+      <br />
+      <span class="l-lost-text"> This will irreversibly delete {{ quantify("constant", constantCount) }}! </span>
     </div>
-    <template #confirm-text>
-      Delete All
-    </template>
+    <template #confirm-text> Delete All </template>
   </ModalWrapperChoice>
 </template>
 

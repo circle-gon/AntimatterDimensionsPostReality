@@ -9,7 +9,7 @@ export default {
   components: {
     PrimaryButton,
     AlchemyCircleNode,
-    AlchemyResourceInfo
+    AlchemyResourceInfo,
   },
   data() {
     return {
@@ -38,42 +38,43 @@ export default {
       return {
         width: `${size}rem`,
         height: `${size}rem`,
-        opacity: this.isDoomed ? 0.8 : 1
+        opacity: this.isDoomed ? 0.8 : 1,
       };
     },
     orbitClass() {
-      return (this.focusedResourceId === -1 || this.isDoomed) ? undefined : "o-alchemy-orbit--unfocused";
+      return this.focusedResourceId === -1 || this.isDoomed ? undefined : "o-alchemy-orbit--unfocused";
     },
     realityGlyphCreationClass() {
       return {
         "o-primary-btn--subtab-option": true,
-        "tutorial--glow": !this.createdRealityGlyph
+        "tutorial--glow": !this.createdRealityGlyph,
       };
     },
     reactions() {
-      return AlchemyReactions.all.compact().filter(r => r.product.isUnlocked);
+      return AlchemyReactions.all.compact().filter((r) => r.product.isUnlocked);
     },
     isDoomed() {
       return Pelle.isDoomed;
     },
     pelleSymbol() {
       return Pelle.symbol;
-    }
+    },
   },
   methods: {
     update() {
-      this.reactionsAvailable = AlchemyResources.all.filter(res => !res.isBaseResource && res.isUnlocked).length !== 0;
+      this.reactionsAvailable =
+        AlchemyResources.all.filter((res) => !res.isBaseResource && res.isUnlocked).length !== 0;
       this.realityCreationVisible = Ra.pets.effarig.level === 25;
       this.animationTimer += 35;
       this.alchemyCap = Ra.alchemyResourceCap;
       this.capFactor = 1 / GlyphSacrificeHandler.glyphRefinementEfficiency;
       this.createdRealityGlyph = player.reality.glyphs.createdRealityGlyph;
-      this.allReactionsDisabled = this.reactions.every(reaction => !reaction.isActive);
+      this.allReactionsDisabled = this.reactions.every((reaction) => !reaction.isActive);
       this.realityAmount = AlchemyResource.reality.amount;
     },
     orbitSize(orbit) {
-      const maxRadius = this.layout.orbits.map(o => o.radius).max();
-      return `${(orbit.radius / maxRadius * 50)}%`;
+      const maxRadius = this.layout.orbits.map((o) => o.radius).max();
+      return `${(orbit.radius / maxRadius) * 50}%`;
     },
     handleMouseEnter(node) {
       this.infoResourceId = node.resource.id;
@@ -107,27 +108,35 @@ export default {
       return (outRes.amount > 0 && outRes.amount >= inRes.amount) || outRes.amount >= outRes.cap;
     },
     isLessThanRequired(reactionArrow) {
-      return reactionArrow.product.resource.amount > 0 &&
-        reactionArrow.reagent.cost < reactionArrow.reagent.resource.cap;
+      return (
+        reactionArrow.product.resource.amount > 0 && reactionArrow.reagent.cost < reactionArrow.reagent.resource.cap
+      );
     },
     isActiveReaction(reactionArrow) {
       return reactionArrow.reaction.isActive && !this.isDoomed;
     },
     isFocusedReaction(reactionArrow) {
       if (this.isDoomed) return false;
-      return this.isUnlocked(reactionArrow) && (reactionArrow.product.resource.id === this.focusedResourceId ||
-        reactionArrow.reagent.resource.id === this.focusedResourceId);
+      return (
+        this.isUnlocked(reactionArrow) &&
+        (reactionArrow.product.resource.id === this.focusedResourceId ||
+          reactionArrow.reagent.resource.id === this.focusedResourceId)
+      );
     },
     isDisplayed(reactionArrow) {
-      return this.isUnlocked(reactionArrow) &&
-        (this.isActiveReaction(reactionArrow) || this.isFocusedReaction(reactionArrow));
+      return (
+        this.isUnlocked(reactionArrow) &&
+        (this.isActiveReaction(reactionArrow) || this.isFocusedReaction(reactionArrow))
+      );
     },
     isFocusedNode(node) {
       if (this.focusedResourceId === -1 || this.isDoomed) return true;
       const focusedResource = this.resources[this.focusedResourceId];
       if (focusedResource === node.resource) return true;
-      return focusedResource.reaction?.reagents.some(r => r.resource === node.resource) ||
-        node.resource.reaction?.reagents.some(r => r.resource === focusedResource);
+      return (
+        focusedResource.reaction?.reagents.some((r) => r.resource === node.resource) ||
+        node.resource.reaction?.reagents.some((r) => r.resource === focusedResource)
+      );
     },
     reactionArrowPositions(reactionArrow) {
       if (!this.isDisplayed(reactionArrow) || this.isCapped(reactionArrow)) return undefined;
@@ -159,11 +168,11 @@ export default {
       return {
         "o-alchemy-reaction-path": this.isUnlocked(reactionArrow),
         "o-alchemy-reaction-path--capped": this.isCapped(reactionArrow) && this.isDisplayed(reactionArrow),
-        "o-alchemy-reaction-path--less-than-required": this.isLessThanRequired(reactionArrow) &&
-          this.isDisplayed(reactionArrow),
+        "o-alchemy-reaction-path--less-than-required":
+          this.isLessThanRequired(reactionArrow) && this.isDisplayed(reactionArrow),
         "o-alchemy-reaction-path--focused": !this.isCapped(reactionArrow) && this.isFocusedReaction(reactionArrow),
         "o-alchemy-reaction-path--not-focused": !this.isFocusedReaction(reactionArrow) && this.focusedResourceId !== -1,
-        "o-alchemy-reaction-path--doomed": this.isDoomed
+        "o-alchemy-reaction-path--doomed": this.isDoomed,
       };
     },
     reactionArrowClass(reactionArrow) {
@@ -173,7 +182,7 @@ export default {
       };
     },
     showAlchemyHowTo() {
-      ui.view.h2pForcedTab = GameDatabase.h2p.tabs.filter(tab => tab.name === "Glyph Alchemy")[0];
+      ui.view.h2pForcedTab = GameDatabase.h2p.tabs.filter((tab) => tab.name === "Glyph Alchemy")[0];
       Modal.h2p.show();
     },
     toggleAllReactions() {
@@ -185,27 +194,20 @@ export default {
     nodeClass(node) {
       const resource = node.resource;
       return {
-        "o-clickable": resource.isUnlocked && !resource.isBaseResource && !this.isDoomed
+        "o-clickable": resource.isUnlocked && !resource.isBaseResource && !this.isDoomed,
       };
     },
-  }
+  },
 };
 </script>
 
 <template>
   <div class="l-ra-alchemy-tab">
     <div class="c-subtab-option-container">
-      <PrimaryButton
-        class="o-primary-btn--subtab-option"
-        @click="showAlchemyHowTo"
-      >
+      <PrimaryButton class="o-primary-btn--subtab-option" @click="showAlchemyHowTo">
         Click for alchemy info
       </PrimaryButton>
-      <PrimaryButton
-        v-if="!isDoomed"
-        class="o-primary-btn--subtab-option"
-        @click="toggleAllReactions"
-      >
+      <PrimaryButton v-if="!isDoomed" class="o-primary-btn--subtab-option" @click="toggleAllReactions">
         {{ allReactionsDisabled ? "Enable" : "Disable" }} all reactions
       </PrimaryButton>
       <PrimaryButton
@@ -216,27 +218,17 @@ export default {
         View Reality Glyph creation
       </PrimaryButton>
     </div>
-    <AlchemyResourceInfo
-      :key="infoResourceId"
-      :resource="infoResource"
-    />
-    <br>
+    <AlchemyResourceInfo :key="infoResourceId" :resource="infoResource" />
+    <br />
     Glyphs can now be refined using your Glyph filter in the Glyphs tab.
-    <br>
-    When refining a Glyph, it will only give you resources up to a cap
-    of {{ formatX(capFactor) }} its highest refinement value.
+    <br />
+    When refining a Glyph, it will only give you resources up to a cap of {{ formatX(capFactor) }} its highest
+    refinement value.
     <span v-if="reactionsAvailable">
       Reactions trigger once every time you Reality, unaffected by amplification from stored real time.
     </span>
-    <div
-      class="l-alchemy-circle"
-      :style="circleStyle"
-    >
-      <span
-        v-if="isDoomed"
-        class="c-pelle-symbol-overlay"
-        v-html="pelleSymbol"
-      />
+    <div class="l-alchemy-circle" :style="circleStyle">
+      <span v-if="isDoomed" class="c-pelle-symbol-overlay" v-html="pelleSymbol" />
       <svg class="l-alchemy-orbit-canvas">
         <circle
           v-for="(orbit, i) in layout.orbits"

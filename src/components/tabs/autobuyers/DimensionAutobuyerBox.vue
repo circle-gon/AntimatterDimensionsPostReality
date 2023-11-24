@@ -8,17 +8,17 @@ export default {
   components: {
     DimensionBulkButton,
     AutobuyerBox,
-    AutobuyerIntervalButton
+    AutobuyerIntervalButton,
   },
   props: {
     tier: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      mode: AUTOBUYER_MODE.BUY_SINGLE
+      mode: AUTOBUYER_MODE.BUY_SINGLE,
     };
   },
   computed: {
@@ -30,11 +30,13 @@ export default {
     },
     modeDisplay() {
       switch (this.mode) {
-        case AUTOBUYER_MODE.BUY_SINGLE: return "Buys singles";
-        case AUTOBUYER_MODE.BUY_10: return "Buys max";
+        case AUTOBUYER_MODE.BUY_SINGLE:
+          return "Buys singles";
+        case AUTOBUYER_MODE.BUY_10:
+          return "Buys max";
       }
       throw "Unknown Dimension Autobuyer mode";
-    }
+    },
   },
   methods: {
     update() {
@@ -43,32 +45,23 @@ export default {
     toggleMode() {
       this.autobuyer.toggleMode();
       this.update();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <AutobuyerBox
-    :autobuyer="autobuyer"
-    :name="name"
-    show-interval
-  >
+  <AutobuyerBox :autobuyer="autobuyer" :name="name" show-interval>
     <template #intervalSlot>
       <DimensionBulkButton :autobuyer="autobuyer" />
       <AutobuyerIntervalButton :autobuyer="autobuyer" />
     </template>
     <template #toggleSlot>
-      <button
-        class="o-autobuyer-btn"
-        @click="toggleMode"
-      >
+      <button class="o-autobuyer-btn" @click="toggleMode">
         {{ modeDisplay }}
       </button>
     </template>
   </AutobuyerBox>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -6,21 +6,21 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     icon: {
       type: String,
-      required: true
+      required: true,
     },
     link: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     showModal: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
   },
   methods: {
@@ -29,28 +29,17 @@ export default {
     },
     openLink() {
       openExternalLink(this.link);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <span
-    :ach-tooltip="name"
-    class="c-socials--icon__wrapper"
-  >
-    <a
-      v-if="link"
-      class="c-socials--icon"
-      @click="openLink"
-    >
+  <span :ach-tooltip="name" class="c-socials--icon__wrapper">
+    <a v-if="link" class="c-socials--icon" @click="openLink">
       <i :class="icon" />
     </a>
-    <a
-      v-else
-      class="c-socials--icon"
-      @click="openAssociatedModal"
-    >
+    <a v-else class="c-socials--icon" @click="openAssociatedModal">
       <i :class="icon" />
     </a>
   </span>
@@ -63,7 +52,7 @@ export default {
 }
 
 .c-socials--icon__wrapper {
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .c-socials--icon__wrapper:hover {

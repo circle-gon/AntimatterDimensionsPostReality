@@ -6,7 +6,7 @@ export default {
   name: "InformationModal",
   components: {
     ModalCloseButton,
-    InformationModalButton
+    InformationModalButton,
   },
 };
 </script>
@@ -15,17 +15,15 @@ export default {
   <div class="l-information-modal c-information-modal">
     <ModalCloseButton @click="emitClose" />
     <div class="l-h2p-header">
-      <div class="c-h2p-title">
-        About the game
-      </div>
+      <div class="c-h2p-title">About the game</div>
     </div>
     <div class="c-info-body">
       Antimatter Dimensions is an Idle Incremental game created by Finnish developer Hevipelle. Originating as a solo
       project in 2016, it was expanded upon by a large team of developers and testers from then on.
-      <br>
-      <br>
-      The game has unfolding gameplay and multiple prestige layers. The "How to Play" button contains useful
-      information about progressing.
+      <br />
+      <br />
+      The game has unfolding gameplay and multiple prestige layers. The "How to Play" button contains useful information
+      about progressing.
     </div>
     <div class="l-socials">
       <InformationModalButton
@@ -53,16 +51,8 @@ export default {
         icon="fa-brands fa-steam"
         link="https://store.steampowered.com/app/1399720/Antimatter_Dimensions/"
       />
-      <InformationModalButton
-        name="Credits"
-        icon="fa-solid fa-users"
-        show-modal="credits"
-      />
-      <InformationModalButton
-        name="Game Changelog"
-        icon="fa-solid fa-file-lines"
-        show-modal="changelog"
-      />
+      <InformationModalButton name="Credits" icon="fa-solid fa-users" show-modal="credits" />
+      <InformationModalButton name="Game Changelog" icon="fa-solid fa-file-lines" show-modal="changelog" />
     </div>
   </div>
 </template>

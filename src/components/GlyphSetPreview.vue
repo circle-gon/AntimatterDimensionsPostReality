@@ -6,63 +6,63 @@ export default {
   name: "GlyphSetPreview",
   components: {
     GlyphComponent,
-    GlyphSetName
+    GlyphSetName,
   },
   props: {
     text: {
       type: String,
       required: false,
-      default: ""
+      default: "",
     },
     textHidden: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     glyphs: {
       type: Array,
-      required: true
+      required: true,
     },
     ignoreModifiedLevel: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     flipTooltip: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     isInModal: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     showName: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     forceNameColor: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     showSacrifice: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     noneText: {
       type: String,
       required: false,
-      default: "(No Glyphs equipped)"
+      default: "(No Glyphs equipped)",
     },
     sort: {
       type: Boolean,
       required: false,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
@@ -72,8 +72,17 @@ export default {
   computed: {
     orderedGlyphs() {
       if (!this.sort) return this.glyphs;
-      const standardOrder = ["reality", "effarig", "power", "infinity", "replication", "time", "dilation",
-        "cursed", "companion"];
+      const standardOrder = [
+        "reality",
+        "effarig",
+        "power",
+        "infinity",
+        "replication",
+        "time",
+        "dilation",
+        "cursed",
+        "companion",
+      ];
       const order = Glyphs.copyForRecords(this.glyphs);
       // Technically doesn't stable sort between glyphs of the same type, probably fine though
       order.sort((a, b) => standardOrder.indexOf(a.type) - standardOrder.indexOf(b.type));
@@ -83,15 +92,13 @@ export default {
   watch: {
     glyphs() {
       this.$recompute("orderedGlyphs");
-    }
+    },
   },
   methods: {
     update() {
       // There should only be one reality glyph; this picks one pseudo-randomly if multiple are cheated/glitched in
-      const realityGlyph = this.glyphs.filter(g => g.type === "reality")[0];
-      this.realityGlyphBoost = realityGlyph
-        ? GlyphEffects.realityglyphlevel.effect(realityGlyph.level)
-        : 0;
+      const realityGlyph = this.glyphs.filter((g) => g.type === "reality")[0];
+      this.realityGlyphBoost = realityGlyph ? GlyphEffects.realityglyphlevel.effect(realityGlyph.level) : 0;
     },
     showModal() {
       if (this.isInModal) return;
@@ -105,8 +112,8 @@ export default {
     // Necessary to force a re-render for the set name if the set itself changes
     glyphHash() {
       return Glyphs.hash(this.glyphs);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -114,19 +121,10 @@ export default {
   <div>
     <span v-if="text && !textHidden">
       {{ text }}
-      <br>
+      <br />
     </span>
-    <span
-      v-if="glyphs.length !== 0"
-      :class="{ 'l-glyph-set-preview': !isInModal}"
-      @click="showModal"
-    >
-      <GlyphSetName
-        v-if="showName"
-        :key="glyphHash()"
-        :glyph-set="glyphs"
-        :force-color="forceNameColor"
-      />
+    <span v-if="glyphs.length !== 0" :class="{ 'l-glyph-set-preview': !isInModal }" @click="showModal">
+      <GlyphSetName v-if="showName" :key="glyphHash()" :glyph-set="glyphs" :force-color="forceNameColor" />
       <GlyphComponent
         v-for="(g, idx) in orderedGlyphs"
         :key="idx"
@@ -146,11 +144,7 @@ export default {
       />
     </span>
     <span v-else>
-      <GlyphSetName
-        v-if="showName"
-        :glyph-set="glyphs"
-        :force-color="forceNameColor"
-      />
+      <GlyphSetName v-if="showName" :glyph-set="glyphs" :force-color="forceNameColor" />
       {{ noneText }}
     </span>
   </div>

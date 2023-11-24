@@ -23,7 +23,7 @@ export default {
     saveType: {
       type: String,
       required: true,
-    }
+    },
   },
   computed: {
     timePlayed() {
@@ -52,7 +52,7 @@ export default {
       return this.compareLayeredValues(
         ["realityShards", "imaginaryMachines", "realityMachines", "eternityPoints", "infinityPoints"],
         ["Reality Shards:", "Reality Machines:", "Reality Machines:", "Eternity Points:", "Infinity Points:"],
-        [format, x => formatMachines(this.saveData.realityMachines, x), format, format, format],
+        [format, (x) => formatMachines(this.saveData.realityMachines, x), format, format, format],
         ""
       );
     },
@@ -107,7 +107,8 @@ export default {
       }
 
       // Figure out what the raw text should be, based on the first nonzero value
-      let layerName = fallbackString, layerValue = "";
+      let layerName = fallbackString,
+        layerValue = "";
       for (let index = 0; index < propArray.length; index++) {
         const prop = propArray[index];
         if (Decimal.gt(this.saveData[prop], 0)) {
@@ -120,35 +121,33 @@ export default {
 
       // Style it appropriately
       if (isBetter === 0) return `${layerName} ${layerValue}`;
-      const parseColor = color => getComputedStyle(document.body).getPropertyValue(`--color-${color}`).split("#")[1];
+      const parseColor = (color) => getComputedStyle(document.body).getPropertyValue(`--color-${color}`).split("#")[1];
       const colorTag = `<span style="color:#${parseColor(isBetter === 1 ? "good" : "infinity")}">`;
       return isSameLayer
         ? `${layerName} ${colorTag}${layerValue}</span>`
         : `${colorTag}${layerName} ${layerValue}</span>`;
-    }
+    },
   },
 };
 </script>
 
 <template>
   <div class="l-modal-options__save-record">
-    <h3>{{ saveType }} <span v-if="saveId">(Slot #{{ saveId + 1 }}):</span></h3>
+    <h3>
+      {{ saveType }} <span v-if="saveId">(Slot #{{ saveId + 1 }}):</span>
+    </h3>
     <span v-if="showName">
-      <span v-if="name">
-        Save Name: {{ name }}
-      </span>
-      <span v-else>
-        Unnamed Save
-      </span>
-      <br>
+      <span v-if="name"> Save Name: {{ name }} </span>
+      <span v-else> Unnamed Save </span>
+      <br />
     </span>
     {{ timePlayed }}
-    <br>
+    <br />
     <span v-html="antimatter" />
     <span v-html="prestigeCount" />
     <span v-html="prestigeResource" />
     <span v-html="extraProgressIndicator" />
-    <br>
+    <br />
     <slot />
   </div>
 </template>

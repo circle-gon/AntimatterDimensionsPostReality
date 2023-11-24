@@ -5,7 +5,7 @@ export default {
     bounds: {
       type: Object,
       required: true,
-    }
+    },
   },
   mounted() {
     this.drop();
@@ -17,7 +17,7 @@ export default {
       const bounds = this.bounds;
       const snowPos = {
         x: Math.random() * (bounds.x - windowBorderOffset),
-        y: windowBorderOffset + Math.random() * (bounds.y - windowBorderOffset)
+        y: windowBorderOffset + Math.random() * (bounds.y - windowBorderOffset),
       };
       this.$el.textContent = snowText();
       this.$el.setAttribute("x", snowPos.x);
@@ -48,10 +48,7 @@ export default {
   overflow: visible;
   fill: #fbc21b;
   opacity: 0.3;
-  text-shadow:
-    0 0 5px #000000,
-    0 0 5px #000000,
-    0 0 5px #000000;
+  text-shadow: 0 0 5px #000000, 0 0 5px #000000, 0 0 5px #000000;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;

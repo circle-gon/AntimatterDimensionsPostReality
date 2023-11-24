@@ -8,12 +8,12 @@ export default {
   props: {
     amount: {
       type: Number,
-      required: true
+      required: true,
     },
     cost: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     purchase() {
@@ -22,21 +22,15 @@ export default {
       } else {
         Payments.buyMoreSTD(this.amount, this.cost);
       }
-    }
+    },
   },
-
 };
 </script>
 
 <template>
   <div class="c-modal-store-btn-container">
-    <div class="o-modal-store-label">
-      {{ amount }} STDs
-    </div>
-    <button
-      class="o-modal-store-btn"
-      @click="purchase"
-    >
+    <div class="o-modal-store-label">{{ amount }} STDs</div>
+    <button class="o-modal-store-btn" @click="purchase">
       $<span>{{ cost }}</span>
     </button>
   </div>

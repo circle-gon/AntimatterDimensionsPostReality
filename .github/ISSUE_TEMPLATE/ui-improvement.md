@@ -1,10 +1,9 @@
 ---
 name: UI improvement
 about: Move sacrifice checkbox to options tab pls
-title: ''
-labels: 'ui improvement'
-assignees: ''
-
+title: ""
+labels: "ui improvement"
+assignees: ""
 ---
 
 **Is your feature request related to a problem? Please describe.**

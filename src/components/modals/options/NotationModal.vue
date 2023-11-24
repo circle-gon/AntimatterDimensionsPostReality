@@ -8,7 +8,7 @@ export default {
   name: "NotationModal",
   components: {
     ModalWrapper,
-    SliderComponent
+    SliderComponent,
   },
   data() {
     return {
@@ -29,7 +29,7 @@ export default {
         max: 15,
         interval: 1,
         width: "100%",
-        tooltip: false
+        tooltip: false,
       };
     },
   },
@@ -66,22 +66,20 @@ export default {
       this.notationDigits = value;
       player.options.notationDigits.notation = value;
       if (value < this.commaDigits) this.adjustSliderComma(value);
-    }
+    },
   },
 };
 </script>
 
 <template>
   <ModalWrapper>
-    <template #header>
-      Exponent Notation Settings
-    </template>
-    You can adjust what your numbers look like when very large. With small values, the exponent will
-    be directly displayed with no additional formatting. Larger values will have commas inserted into the exponent
-    for clarity, and the largest values will apply notation formatting to the exponent in order to shorten it. You can
-    adjust the two thresholds between these regions below:
-    <br>
-    <br>
+    <template #header> Exponent Notation Settings </template>
+    You can adjust what your numbers look like when very large. With small values, the exponent will be directly
+    displayed with no additional formatting. Larger values will have commas inserted into the exponent for clarity, and
+    the largest values will apply notation formatting to the exponent in order to shorten it. You can adjust the two
+    thresholds between these regions below:
+    <br />
+    <br />
     <div class="c-single-slider">
       <b class="o-digit-text">Minimum for commas in exponent: {{ formatInt(commaDigits) }} digits</b>
       <SliderComponent
@@ -100,22 +98,17 @@ export default {
         @input="adjustSliderNotation($event)"
       />
     </div>
-    <br>
+    <br />
     Sample numbers for exponent formatting:
     <div class="c-sample-numbers">
-      <span
-        v-for="(num, id) in sampleNums"
-        :key="id"
-        class="o-single-number"
-      >
+      <span v-for="(num, id) in sampleNums" :key="id" class="o-single-number">
         {{ formatPostBreak(num) }}
       </span>
     </div>
-    <br>
-    Note: The interface is generally optimized for Scientific notation with settings of {{ formatInt(5) }}
-    and {{ formatInt(9) }} digits. Some text may look odd or overflow out of boxes if you
-    differ significantly from these values. Additionally, these settings might not cause any visual changes
-    when using certain notations.
+    <br />
+    Note: The interface is generally optimized for Scientific notation with settings of {{ formatInt(5) }} and
+    {{ formatInt(9) }} digits. Some text may look odd or overflow out of boxes if you differ significantly from these
+    values. Additionally, these settings might not cause any visual changes when using certain notations.
   </ModalWrapper>
 </template>
 

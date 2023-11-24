@@ -9,11 +9,11 @@ export default {
   props: {
     button: {
       type: Object,
-      required: true
+      required: true,
     },
     progress: {
       type: Object,
-      required: true
+      required: true,
     },
   },
   computed: {
@@ -25,22 +25,19 @@ export default {
         "o-primary-btn--width-medium": true,
         "o-primary-btn--disabled": !this.canBeClicked,
       };
-    }
+    },
   },
   methods: {
     buttonClicked() {
       if (!this.canBeClicked) return;
       this.button.click();
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <PrimaryButton
-    :class="buttonClass"
-    @click="buttonClicked"
-  >
+  <PrimaryButton :class="buttonClass" @click="buttonClicked">
     {{ button.text }}
   </PrimaryButton>
 </template>

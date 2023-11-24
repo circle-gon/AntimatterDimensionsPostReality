@@ -10,7 +10,7 @@ export default {
   },
   data() {
     return {
-      message: ""
+      message: "",
     };
   },
   computed: {
@@ -19,7 +19,7 @@ export default {
     },
     isThemeS12() {
       return this.$viewModel.theme === "S12";
-    }
+    },
   },
   created() {
     this.on$(GAME_EVENT.ENTER_PRESSED, this.handleClick);
@@ -35,7 +35,7 @@ export default {
       this.modal.callback?.();
       this.emitClose();
       EventHub.ui.offAll(this);
-    }
+    },
   },
 };
 </script>
@@ -47,25 +47,14 @@ export default {
       :class="isThemeS12 ? 'c-modal__close-btn' : 'c-modal__close-btn--tiny'"
       @click="emitClose"
     />
-    <ModalCloseButton
-      v-else-if="isThemeS12"
-      class="c-modal__close-btn c-modal__close-btn--disabled"
-    />
-    <div
-      class="c-modal-message__text"
-      v-html="message"
-    />
+    <ModalCloseButton v-else-if="isThemeS12" class="c-modal__close-btn c-modal__close-btn--disabled" />
+    <div class="c-modal-message__text" v-html="message" />
     <PrimaryButton
       class="o-primary-btn--width-medium c-modal-message__okay-btn c-modal__confirm-btn"
       @click="handleClick"
     >
       Okay
     </PrimaryButton>
-    <div
-      v-if="isThemeS12"
-      class="c-modal__title"
-    >
-      Message
-    </div>
+    <div v-if="isThemeS12" class="c-modal__title">Message</div>
   </div>
 </template>

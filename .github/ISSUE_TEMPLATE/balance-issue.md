@@ -1,10 +1,9 @@
 ---
 name: Balance issue
 about: Galaxies are OP pls fix
-title: ''
+title: ""
 labels: balance
-assignees: ''
-
+assignees: ""
 ---
 
 **Describe the issue**

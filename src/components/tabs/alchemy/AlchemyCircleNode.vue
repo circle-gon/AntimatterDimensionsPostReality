@@ -6,25 +6,25 @@ export default {
   name: "AlchemyCircleNode",
   components: {
     HintText,
-    AlchemyResourceArc
+    AlchemyResourceArc,
   },
   props: {
     node: {
       type: Object,
-      required: true
+      required: true,
     },
     isFocused: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       isReactionActive: false,
       amount: 0,
       flow: 0,
-      isUnlocked: false
+      isUnlocked: false,
     };
   },
   computed: {
@@ -40,7 +40,7 @@ export default {
         left: `${this.node.x}%`,
         top: `${this.node.y}%`,
         "box-shadow": `0 0 0.3rem 0.3rem
-          rgba(${this.flow > 0 ? "156, 204, 101" : "204, 102, 102"}, ${scaledFlow})`
+          rgba(${this.flow > 0 ? "156, 204, 101" : "204, 102, 102"}, ${scaledFlow})`,
       };
     },
     classObject() {
@@ -53,7 +53,7 @@ export default {
     },
     hintClassObject() {
       return this.isFocused ? undefined : "o-hint-text--alchemy-node--unfocused";
-    }
+    },
   },
   methods: {
     update() {
@@ -61,8 +61,8 @@ export default {
       this.amount = this.resource.amount;
       this.flow = this.resource.flow;
       this.isUnlocked = this.resource.isUnlocked;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -75,22 +75,13 @@ export default {
     @mouseleave="$emit('mouseleave')"
     @click="emitClick"
   >
-    <AlchemyResourceArc
-      :resource="resource"
-      :class-object="classObject"
-    />
+    <AlchemyResourceArc :resource="resource" :class-object="classObject" />
     <span v-if="isUnlocked">
-      <HintText
-        type="alchemy"
-        :class="hintClassObject"
-        class="o-hint-text--alchemy-node l-hint-text--alchemy-node"
-      >
+      <HintText type="alchemy" :class="hintClassObject" class="o-hint-text--alchemy-node l-hint-text--alchemy-node">
         {{ formatInt(amount) }}
       </HintText>
     </span>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

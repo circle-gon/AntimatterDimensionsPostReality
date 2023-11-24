@@ -1,6 +1,5 @@
 <script>
-import GlyphCustomizationSlidingWindow
-  from "@/components/modals/options/glyph-appearance/GlyphCustomizationSlidingWindow";
+import GlyphCustomizationSlidingWindow from "@/components/modals/options/glyph-appearance/GlyphCustomizationSlidingWindow";
 
 export default {
   name: "GlyphCustomizationSingleType",
@@ -16,7 +15,7 @@ export default {
       type: Number,
       required: false,
       default: -1,
-    }
+    },
   },
   computed: {
     name() {
@@ -34,28 +33,10 @@ export default {
 
 <template>
   <div class="c-glyph-customization-entry">
-    <span
-      v-if="glyphId === -1"
-      class="c-name"
-    >
-      Appearance Options for {{ name }} Glyphs
-    </span>
-    <div v-if="type === 'companion'">
-      Companion Glyphs cannot have their symbol modified.
-    </div>
-    <GlyphCustomizationSlidingWindow
-      v-else
-      :type="type"
-      :is-symbol="true"
-      :options="symbols"
-      :glyph-id="glyphId"
-    />
-    <GlyphCustomizationSlidingWindow
-      :type="type"
-      :is-symbol="false"
-      :options="colors"
-      :glyph-id="glyphId"
-    />
+    <span v-if="glyphId === -1" class="c-name"> Appearance Options for {{ name }} Glyphs </span>
+    <div v-if="type === 'companion'">Companion Glyphs cannot have their symbol modified.</div>
+    <GlyphCustomizationSlidingWindow v-else :type="type" :is-symbol="true" :options="symbols" :glyph-id="glyphId" />
+    <GlyphCustomizationSlidingWindow :type="type" :is-symbol="false" :options="colors" :glyph-id="glyphId" />
   </div>
 </template>
 

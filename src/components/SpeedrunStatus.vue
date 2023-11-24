@@ -37,16 +37,15 @@ export default {
       const stateText = this.offlineProgress
         ? `<span style="color: var(--color-good)">Enabled</span>`
         : `<span style="color: var(--color-bad)">Disabled</span>`;
-      const fractionText = this.offlineFraction === 0
-        ? "(No offline time used)"
-        : `(${formatPercents(this.offlineFraction, 2)} time spent offline)`;
+      const fractionText =
+        this.offlineFraction === 0
+          ? "(No offline time used)"
+          : `(${formatPercents(this.offlineFraction, 2)} time spent offline)`;
       return `${stateText} ${fractionText}`;
     },
     collapseIcon() {
-      return this.isCollapsed
-        ? "fas fa-expand-arrows-alt"
-        : "fas fa-compress-arrows-alt";
-    }
+      return this.isCollapsed ? "fas fa-expand-arrows-alt" : "fas fa-compress-arrows-alt";
+    },
   },
   methods: {
     update() {
@@ -67,13 +66,14 @@ export default {
       this.offlineProgress = player.options.offlineProgress;
       this.offlineFraction = speedrun.offlineTimeUsed / Math.clampMin(player.records.realTimePlayed, 1);
       this.mostRecent = Speedrun.mostRecentMilestone();
-      this.timeSince = Time.realTimePlayed.minus(TimeSpan.fromMilliseconds(speedrun.records[this.mostRecent] ?? 0))
+      this.timeSince = Time.realTimePlayed
+        .minus(TimeSpan.fromMilliseconds(speedrun.records[this.mostRecent] ?? 0))
         .toStringShort();
       this.seedText = Speedrun.seedModeText();
     },
     milestoneName(id) {
       const db = GameDatabase.speedrunMilestones;
-      return id === 0 ? "None" : db.find(m => m.id === id).name;
+      return id === 0 ? "None" : db.find((m) => m.id === id).name;
     },
     changeName() {
       if (this.hasStarted) return;
@@ -88,46 +88,34 @@ export default {
     openSeedModal() {
       if (!this.canModifySeed) return;
       Modal.modifySeed.show();
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <div
-    v-if="isActive"
-    class="c-speedrun-status"
-  >
+  <div v-if="isActive" class="c-speedrun-status">
     <div v-if="!isCollapsed">
       <b>Speedrun Status (<span v-html="statusText" />)</b>
-      <br>
-      <span
-        :class="{ 'c-speedrun-status--can-change': !hasStarted }"
-        @click="changeName"
-      >
+      <br />
+      <span :class="{ 'c-speedrun-status--can-change': !hasStarted }" @click="changeName">
         Player Name: {{ saveName }}
       </span>
-      <br>
+      <br />
       <i>{{ segmentText }}</i>
-      <br>
+      <br />
       <i>{{ iapText }}</i>
-      <br>
-      <span
-        :class="{ 'c-speedrun-status--can-change': canModifySeed }"
-        @click="openSeedModal()"
-      >{{ seedText }}</span>
-      <br>
+      <br />
+      <span :class="{ 'c-speedrun-status--can-change': canModifySeed }" @click="openSeedModal()">{{ seedText }}</span>
+      <br />
       Total real playtime since start: {{ timePlayedStr }}
-      <br>
+      <br />
       Offline Progress: <span v-html="offlineText" />
-      <br>
+      <br />
       Most Recent Milestone: {{ milestoneName(mostRecent) }} <span v-if="mostRecent">({{ timeSince }} ago)</span>
-      <br>
+      <br />
     </div>
-    <div
-      class="c-speedrun-status--collapse"
-      @click="toggleCollapse"
-    >
+    <div class="c-speedrun-status--collapse" @click="toggleCollapse">
       <i :class="collapseIcon" />
       {{ collapseText() }}
       <i :class="collapseIcon" />

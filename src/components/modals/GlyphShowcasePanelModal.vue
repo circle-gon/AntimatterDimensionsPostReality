@@ -13,23 +13,23 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     glyphSet: {
       type: Array,
-      required: true
+      required: true,
     },
     isGlyphSelection: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showSetName: {
       type: Boolean,
-      default: true
+      default: true,
     },
     displaySacrifice: {
       type: Boolean,
-      default: true
+      default: true,
     },
   },
   data() {
@@ -44,7 +44,10 @@ export default {
     maxGlyphEffects() {
       let maxEffects = 1;
       for (const glyph of this.glyphs) {
-        maxEffects = Math.max(getGlyphEffectsFromBitmask(glyph.effects).filter(e => e.isGenerated).length, maxEffects);
+        maxEffects = Math.max(
+          getGlyphEffectsFromBitmask(glyph.effects).filter((e) => e.isGenerated).length,
+          maxEffects
+        );
       }
       return maxEffects;
     },
@@ -53,26 +56,33 @@ export default {
         "c-glyph-choice-container": true,
         "c-glyph-choice-container-single": this.glyphs.length === 1,
       };
-    }
+    },
   },
   methods: {
     update() {
       this.glyphs = this.isGlyphSelection
         ? GlyphSelection.glyphList(GlyphSelection.choiceCount, gainedGlyphLevel(), { isChoosingGlyph: false })
-        : this.glyphSet.filter(x => x);
+        : this.glyphSet.filter((x) => x);
       this.sortGlyphs();
       this.gainedLevel = gainedGlyphLevel().actualLevel;
       // There should only be one reality glyph; this picks one pseudo-randomly if multiple are cheated/glitched in
-      const realityGlyph = this.glyphs.filter(g => g.type === "reality")[0];
-      this.realityGlyphBoost = realityGlyph
-        ? GlyphEffects.realityglyphlevel.effect(realityGlyph.level)
-        : 0;
+      const realityGlyph = this.glyphs.filter((g) => g.type === "reality")[0];
+      this.realityGlyphBoost = realityGlyph ? GlyphEffects.realityglyphlevel.effect(realityGlyph.level) : 0;
     },
     sortGlyphs() {
-      const standardOrder = ["reality", "effarig", "power", "infinity", "replication", "time", "dilation",
-        "cursed", "companion"];
+      const standardOrder = [
+        "reality",
+        "effarig",
+        "power",
+        "infinity",
+        "replication",
+        "time",
+        "dilation",
+        "cursed",
+        "companion",
+      ];
       this.glyphs.sort((a, b) => standardOrder.indexOf(a.type) - standardOrder.indexOf(b.type));
-    }
+    },
   },
 };
 </script>
@@ -82,14 +92,8 @@ export default {
     <template #header>
       {{ name }}
     </template>
-    <div v-if="isGlyphSelection">
-      Projected Glyph Level: {{ formatInt(gainedLevel) }}
-    </div>
-    <GlyphSetName
-      v-if="showSetName"
-      :glyph-set="glyphs"
-      :force-color="true"
-    />
+    <div v-if="isGlyphSelection">Projected Glyph Level: {{ formatInt(gainedLevel) }}</div>
+    <GlyphSetName v-if="showSetName" :glyph-set="glyphs" :force-color="true" />
     <div :class="containerClass">
       <GlyphShowcasePanelEntry
         v-for="(glyph, idx) in glyphs"

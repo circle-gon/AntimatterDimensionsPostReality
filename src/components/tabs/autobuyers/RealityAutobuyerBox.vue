@@ -10,14 +10,14 @@ export default {
     AutobuyerBox,
     AutobuyerInput,
     ExpandingControlBox,
-    AutobuyerDropdownEntry
+    AutobuyerDropdownEntry,
   },
   props: {
     isModal: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -36,7 +36,7 @@ export default {
         AUTO_REALITY_MODE.GLYPH,
         AUTO_REALITY_MODE.EITHER,
         AUTO_REALITY_MODE.BOTH,
-        AUTO_REALITY_MODE.TIME
+        AUTO_REALITY_MODE.TIME,
       ];
       if (this.hasRelicMode) availableModes.push(AUTO_REALITY_MODE.RELIC_SHARD);
       return availableModes;
@@ -52,50 +52,44 @@ export default {
     },
     modeName(mode) {
       switch (mode) {
-        case AUTO_REALITY_MODE.RM: return "Reality Machines";
-        case AUTO_REALITY_MODE.GLYPH: return "Glyph level";
-        case AUTO_REALITY_MODE.EITHER: return "RM OR Level";
-        case AUTO_REALITY_MODE.BOTH: return "RM AND Level";
-        case AUTO_REALITY_MODE.TIME: return "Real-time seconds";
-        case AUTO_REALITY_MODE.RELIC_SHARD: return "Relic Shards";
+        case AUTO_REALITY_MODE.RM:
+          return "Reality Machines";
+        case AUTO_REALITY_MODE.GLYPH:
+          return "Glyph level";
+        case AUTO_REALITY_MODE.EITHER:
+          return "RM OR Level";
+        case AUTO_REALITY_MODE.BOTH:
+          return "RM AND Level";
+        case AUTO_REALITY_MODE.TIME:
+          return "Real-time seconds";
+        case AUTO_REALITY_MODE.RELIC_SHARD:
+          return "Relic Shards";
       }
       throw new Error("Unknown Auto Reality mode");
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <AutobuyerBox
-    :autobuyer="autobuyer"
-    :is-modal="isModal"
-    name="Automatic Reality"
-  >
+  <AutobuyerBox :autobuyer="autobuyer" :is-modal="isModal" name="Automatic Reality">
     <template #intervalSlot>
       <ExpandingControlBox :auto-close="true">
         <template #header>
           <div class="o-primary-btn c-autobuyer-box__mode-select c-autobuyer-box__mode-select-header">
             ▼ Current Setting: ▼
-            <br>
+            <br />
             {{ modeName(mode) }}
           </div>
         </template>
         <template #dropdown>
-          <AutobuyerDropdownEntry
-            :autobuyer="autobuyer"
-            :modes="modes"
-            :mode-name-fn="modeName"
-          />
+          <AutobuyerDropdownEntry :autobuyer="autobuyer" :modes="modes" :mode-name-fn="modeName" />
         </template>
       </ExpandingControlBox>
     </template>
     <template #toggleSlot>
-      <div v-if="hasAlternateInputs">
-        Target Time (seconds):
-      </div>
-      <div v-else>
-        Target Reality Machines:
-      </div>
+      <div v-if="hasAlternateInputs">Target Time (seconds):</div>
+      <div v-else>Target Reality Machines:</div>
       <AutobuyerInput
         :autobuyer="autobuyer"
         :type="hasAlternateInputs ? 'float' : 'decimal'"
@@ -103,24 +97,16 @@ export default {
       />
     </template>
     <template #checkboxSlot>
-      <div v-if="hasAlternateInputs && hasRelicMode">
-        Target Relic Shards:
-      </div>
-      <div v-else>
-        Target Glyph level:
-      </div>
+      <div v-if="hasAlternateInputs && hasRelicMode">Target Relic Shards:</div>
+      <div v-else>Target Glyph level:</div>
       <AutobuyerInput
         :autobuyer="autobuyer"
-        :type="(hasAlternateInputs && hasRelicMode) ? 'decimal' : 'int'"
-        :property="(hasAlternateInputs && hasRelicMode) ? 'shard' : 'glyph'"
+        :type="hasAlternateInputs && hasRelicMode ? 'decimal' : 'int'"
+        :property="hasAlternateInputs && hasRelicMode ? 'shard' : 'glyph'"
       />
-      <div v-if="isOverCap">
-        Autobuyer will trigger at the Glyph level cap of {{ formatInt(levelCap) }}.
-      </div>
+      <div v-if="isOverCap">Autobuyer will trigger at the Glyph level cap of {{ formatInt(levelCap) }}.</div>
     </template>
   </AutobuyerBox>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

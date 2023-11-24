@@ -7,7 +7,7 @@ export default {
     bounds: {
       type: Object,
       required: true,
-    }
+    },
   },
   mounted() {
     this.fly();
@@ -86,12 +86,10 @@ export default {
         }
         // \uE024 is :blobdead: and gets transitioned into as the game is ending, reaching
         // 100% at the same time the final achievement and speedrun milestone is given
-        return Math.random() < GameEnd.endState ** 2
-          ? "\uE024"
-          : SNOW[Math.floor(Math.random() * SNOW.length)];
+        return Math.random() < GameEnd.endState ** 2 ? "\uE024" : SNOW[Math.floor(Math.random() * SNOW.length)];
       }
     },
-  }
+  },
 };
 </script>
 
@@ -104,10 +102,7 @@ export default {
   overflow: visible;
   fill: #fbc21b;
   opacity: 0.9;
-  text-shadow:
-    0 0 5px #000000,
-    0 0 5px #000000,
-    0 0 5px #000000;
+  text-shadow: 0 0 5px #000000, 0 0 5px #000000, 0 0 5px #000000;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;

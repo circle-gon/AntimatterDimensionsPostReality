@@ -6,17 +6,17 @@ export default {
   name: "GlyphSetSaveDeleteModal",
   components: {
     ModalWrapperChoice,
-    GlyphSetPreview
+    GlyphSetPreview,
   },
   props: {
     glyphSetId: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      glyphSet: []
+      glyphSet: [],
     };
   },
   methods: {
@@ -32,23 +32,13 @@ export default {
 </script>
 
 <template>
-  <ModalWrapperChoice
-    option="deleteGlyphSetSave"
-    @confirm="handleYesClick"
-  >
-    <template #header>
-      Delete this Glyph Set
-    </template>
+  <ModalWrapperChoice option="deleteGlyphSetSave" @confirm="handleYesClick">
+    <template #header> Delete this Glyph Set </template>
     <div class="c-modal-message__text">
       Please confirm your desire to delete this Glyph Set:
-      <GlyphSetPreview
-        :is-in-modal="true"
-        :glyphs="glyphSet"
-      />
+      <GlyphSetPreview :is-in-modal="true" :glyphs="glyphSet" />
       This will not affect your actual Glyphs, only the saved preset.
     </div>
-    <template #confirm-text>
-      Delete
-    </template>
+    <template #confirm-text> Delete </template>
   </ModalWrapperChoice>
 </template>

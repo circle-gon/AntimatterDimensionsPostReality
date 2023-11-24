@@ -26,7 +26,7 @@ export default {
       buy10Mult: new Decimal(0),
       currentSacrifice: new Decimal(0),
       hasRealityButton: false,
-      multiplierText: ""
+      multiplierText: "",
     };
   },
   methods: {
@@ -44,8 +44,8 @@ export default {
     },
     quickReset() {
       softReset(-1, true, true);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -55,19 +55,11 @@ export default {
     {{ multiplierText }}
     <TickspeedRow />
     <div class="l-dimensions-container">
-      <AntimatterDimensionRow
-        v-for="tier in 8"
-        :key="tier"
-        :tier="tier"
-      />
+      <AntimatterDimensionRow v-for="tier in 8" :key="tier" :tier="tier" />
       <DimensionBoostRow />
       <AntimatterGalaxyRow />
     </div>
-    <PrimaryButton
-      v-if="isQuickResetAvailable"
-      class="o-primary-btn--quick-reset"
-      @click="quickReset"
-    >
+    <PrimaryButton v-if="isQuickResetAvailable" class="o-primary-btn--quick-reset" @click="quickReset">
       Perform a Dimension Boost reset
       <span v-if="hasDimensionBoosts"> but lose a Dimension Boost</span>
       <span v-else> for no gain</span>

@@ -6,14 +6,12 @@ export default {
   name: "AntimatterDimensionsTab",
   components: {
     ClassicAntimatterDimensionsTab,
-    ModernAntimatterDimensionsTab
+    ModernAntimatterDimensionsTab,
   },
   computed: {
     activeComponent() {
-      return this.$viewModel.newUI
-        ? "ModernAntimatterDimensionsTab"
-        : "ClassicAntimatterDimensionsTab";
-    }
+      return this.$viewModel.newUI ? "ModernAntimatterDimensionsTab" : "ClassicAntimatterDimensionsTab";
+    },
   },
 };
 </script>

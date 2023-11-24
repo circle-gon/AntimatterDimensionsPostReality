@@ -4,15 +4,15 @@ export default {
   props: {
     autobuyer: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       cost: 0,
       isMaxed: false,
       isUpgradeable: false,
-      isAffordable: false
+      isAffordable: false,
     };
   },
   computed: {
@@ -20,9 +20,9 @@ export default {
       return {
         "o-autobuyer-btn": true,
         "l-autobuyer-box__button": true,
-        "o-autobuyer-btn--unavailable": !this.isAffordable
+        "o-autobuyer-btn--unavailable": !this.isAffordable,
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -33,29 +33,20 @@ export default {
     },
     upgradeInterval() {
       this.autobuyer.upgradeInterval();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <button
-    v-if="!isMaxed && isUpgradeable"
-    :class="classObject"
-    @click="upgradeInterval"
-  >
+  <button v-if="!isMaxed && isUpgradeable" :class="classObject" @click="upgradeInterval">
     {{ formatPercents(0.4) }} smaller interval
-    <br>
+    <br />
     Cost: {{ format(cost, 2) }} IP
   </button>
-  <button
-    v-else-if="!isMaxed"
-    class="o-autobuyer-btn l-autobuyer-box__button o-autobuyer-btn--unavailable"
-  >
+  <button v-else-if="!isMaxed" class="o-autobuyer-btn l-autobuyer-box__button o-autobuyer-btn--unavailable">
     Complete the challenge to upgrade interval
   </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -18,11 +18,11 @@ export default {
       },
       set(entry) {
         this.entryId = entry.id;
-      }
+      },
     },
     entries() {
       return GameDatabase.changelog;
-    }
+    },
   },
   methods: {
     setShownEntry(tab) {
@@ -30,8 +30,8 @@ export default {
       this.$refs.changelogBody.scrollTop = 0;
     },
     formatDate(date) {
-      return date.map(n => (Math.log10(n) >= 2 ? n : `0${n}`.slice(-2))).join("-");
-    }
+      return date.map((n) => (Math.log10(n) >= 2 ? n : `0${n}`.slice(-2))).join("-");
+    },
   },
 };
 </script>
@@ -40,9 +40,7 @@ export default {
   <div class="l-changelog-modal">
     <ModalCloseButton @click="emitClose" />
     <div class="l-changelog-header">
-      <div class="c-changelog-title">
-        Changelog
-      </div>
+      <div class="c-changelog-title">Changelog</div>
     </div>
     <div class="l-changelog-container">
       <div class="l-changelog-search-tab">
@@ -52,7 +50,7 @@ export default {
             :key="entry.id"
             class="o-changelog-tab-button"
             :class="{
-              'o-changelog-tab-button--selected': entry === shownEntry
+              'o-changelog-tab-button--selected': entry === shownEntry,
             }"
             @click="setShownEntry(entry)"
           >
@@ -64,11 +62,7 @@ export default {
         <div class="c-changelog-body--title">
           {{ formatDate(shownEntry.date) }}<span v-if="shownEntry.name">: "{{ shownEntry.name }}" update</span>
         </div>
-        <div
-          ref="changelogBody"
-          class="l-changelog-body c-changelog-body"
-          v-html="shownEntry.info"
-        />
+        <div ref="changelogBody" class="l-changelog-body c-changelog-body" v-html="shownEntry.info" />
       </div>
     </div>
   </div>

@@ -56,10 +56,7 @@ export default {
     <div class="c-modal-away-progress__header">
       {{ headerText }}
     </div>
-    <div
-      v-if="!nothingHappened"
-      class="c-modal-away-progress__resources c-modal--short"
-    >
+    <div v-if="!nothingHappened" class="c-modal-away-progress__resources c-modal--short">
       <AwayProgressEntry
         v-for="name of offlineStats"
         :key="name"

@@ -6,13 +6,13 @@ import { BACKUP_SLOT_TYPE } from "@/core/storage";
 export default {
   name: "BackupEntry",
   components: {
-    PrimaryButton
+    PrimaryButton,
   },
   props: {
     slotData: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -27,19 +27,22 @@ export default {
       if (!this.save) return "(Empty)";
 
       // These will be checked in order; the first nonzero resource will be returned
-      const resources = [this.save.celestials.pelle.realityShards,
+      const resources = [
+        this.save.celestials.pelle.realityShards,
         this.save.reality.iMCap,
         this.save.reality.realityMachines,
         this.save.eternityPoints,
         this.save.infinityPoints,
-        this.save.antimatter
+        this.save.antimatter,
       ];
-      const names = ["Reality Shards",
+      const names = [
+        "Reality Shards",
         "Imaginary Machine Cap",
         "Reality Machines",
         "Eternity Points",
         "Infinity Points",
-        "Antimatter"];
+        "Antimatter",
+      ];
 
       for (let index = 0; index < resources.length; index++) {
         const val = new Decimal(resources[index]);
@@ -107,11 +110,7 @@ export default {
       {{ slotType }}
     </span>
     <span class="c-fixed-height">{{ lastSaved }}</span>
-    <PrimaryButton
-      class="o-primary-btn--width-medium"
-      :class="{ 'o-primary-btn--disabled' : !save }"
-      @click="load()"
-    >
+    <PrimaryButton class="o-primary-btn--width-medium" :class="{ 'o-primary-btn--disabled': !save }" @click="load()">
       Load
     </PrimaryButton>
   </div>

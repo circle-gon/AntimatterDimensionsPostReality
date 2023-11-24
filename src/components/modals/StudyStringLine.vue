@@ -9,19 +9,19 @@ export default {
     intoEmpty: {
       type: Boolean,
       required: true,
-    }
+    },
   },
   computed: {
     importDestString() {
       return this.intoEmpty ? "into an empty Tree" : "with your current Tree";
-    }
+    },
   },
   methods: {
     formatTheoremCost(tt, st) {
       const strTT = `${formatWithCommas(tt)} TT`;
       const strST = `${formatWithCommas(st)} ST`;
       return st === 0 ? strTT : `${strTT} + ${strST}`;
-    }
+    },
   },
 };
 </script>
@@ -33,10 +33,10 @@ export default {
     </div>
     <div v-else>
       Importing {{ importDestString }} will purchase:
-      <br>
+      <br />
       {{ tree.newStudies }}
       (Cost: {{ formatTheoremCost(tree.timeTheorems, tree.spaceTheorems) }})
     </div>
-    <br>
+    <br />
   </div>
 </template>

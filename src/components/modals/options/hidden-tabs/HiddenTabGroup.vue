@@ -9,12 +9,12 @@ export default {
   props: {
     tab: {
       type: Object,
-      required: true
+      required: true,
     },
     changeEnabled: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -43,13 +43,13 @@ export default {
         "l-hide-modal-subtab-container": true,
         "c-hidden-tabs-background__visible": !this.isHidden,
         "c-hidden-tabs-background__hidden": this.isHidden,
-        "c-hidden-tabs-background__always-visible": this.alwaysVisible
+        "c-hidden-tabs-background__always-visible": this.alwaysVisible,
       };
     },
     rowVisibleIndicatorClass() {
       return {
         "c-indicator-icon": true,
-        "fas": true,
+        fas: true,
         "fa-check": !this.isHidden,
         "fa-times": this.isHidden,
         "fa-exclamation": this.alwaysVisible,
@@ -67,12 +67,12 @@ export default {
       this.isVisible = tab.isUnlocked;
       this.isHidable = tab.hidable;
       this.isHidden = tab.isHidden && this.isHidable;
-      this.unlockedSubtabs = this.subtabs.filter(sub => sub.isUnlocked);
+      this.unlockedSubtabs = this.subtabs.filter((sub) => sub.isUnlocked);
     },
     toggleVisibility() {
       if (!this.changeEnabled) return;
       // If this tab and all unlocked subtabs are hidden, unhide all subtabs in addition to the tab
-      if (this.tab.isHidden && this.unlockedSubtabs.every(t => t.isHidden)) {
+      if (this.tab.isHidden && this.unlockedSubtabs.every((t) => t.isHidden)) {
         for (const subtab of this.unlockedSubtabs) {
           subtab.toggleVisibility();
         }
@@ -80,17 +80,13 @@ export default {
       } else {
         this.tab.toggleVisibility();
       }
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <div
-    v-if="isVisible"
-    :class="rowClass"
-    @click.self="toggleVisibility"
-  >
+  <div v-if="isVisible" :class="rowClass" @click.self="toggleVisibility">
     <HiddenSubtabsButton
       v-for="(subtab, i) in unlockedSubtabs"
       :key="i"
@@ -98,11 +94,7 @@ export default {
       :tab="tab"
       :change-enabled="changeEnabled"
     />
-    <div
-      v-tooltip="rowVisibleIndicatorTooltip"
-      :class="rowVisibleIndicatorClass"
-      @click="toggleVisibility"
-    />
+    <div v-tooltip="rowVisibleIndicatorTooltip" :class="rowVisibleIndicatorClass" @click="toggleVisibility" />
   </div>
 </template>
 

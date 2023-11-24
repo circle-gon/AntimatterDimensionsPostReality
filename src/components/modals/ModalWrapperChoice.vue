@@ -8,44 +8,44 @@ export default {
   components: {
     PrimaryButton,
     ModalConfirmationCheck,
-    ModalCloseButton
+    ModalCloseButton,
   },
   props: {
     cancelClass: {
       type: String,
       required: false,
-      default: "o-primary-btn--width-medium c-modal-message__okay-btn"
+      default: "o-primary-btn--width-medium c-modal-message__okay-btn",
     },
     confirmClass: {
       type: String,
       required: false,
-      default: "o-primary-btn--width-medium c-modal-message__okay-btn c-modal__confirm-btn"
+      default: "o-primary-btn--width-medium c-modal-message__okay-btn c-modal__confirm-btn",
     },
     showCancel: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     showConfirm: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     option: {
       type: String,
       required: false,
-      default: undefined
+      default: undefined,
     },
     confirmFn: {
       type: Function,
       required: false,
-      default: undefined
+      default: undefined,
     },
     cancelFn: {
       type: Function,
       required: false,
-      default: undefined
-    }
+      default: undefined,
+    },
   },
   created() {
     this.on$(GAME_EVENT.ENTER_PRESSED, this.doConfirm);
@@ -67,8 +67,8 @@ export default {
     },
     closeModal() {
       EventHub.dispatch(GAME_EVENT.CLOSE_MODAL);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -76,43 +76,24 @@ export default {
   <div class="c-modal-message l-modal-content--centered">
     <span class="c-modal__header">
       <ModalCloseButton @click="closeModal" />
-      <span
-        v-if="$slots.header"
-        class="c-modal__title"
-      >
+      <span v-if="$slots.header" class="c-modal__title">
         <slot name="header" />
       </span>
     </span>
 
-
     <slot />
 
-    <ModalConfirmationCheck
-      v-if="option"
-      :option="option"
-    />
+    <ModalConfirmationCheck v-if="option" :option="option" />
 
     <div class="l-modal-buttons">
-      <PrimaryButton
-        v-if="showCancel"
-        :class="cancelClass"
-        @click="doCancel"
-      >
-        <slot name="cancel-text">
-          Cancel
-        </slot>
+      <PrimaryButton v-if="showCancel" :class="cancelClass" @click="doCancel">
+        <slot name="cancel-text"> Cancel </slot>
       </PrimaryButton>
 
       <slot name="extra-buttons" />
 
-      <PrimaryButton
-        v-if="showConfirm"
-        :class="confirmClass"
-        @click="doConfirm"
-      >
-        <slot name="confirm-text">
-          Confirm
-        </slot>
+      <PrimaryButton v-if="showConfirm" :class="confirmClass" @click="doConfirm">
+        <slot name="confirm-text"> Confirm </slot>
       </PrimaryButton>
     </div>
   </div>

@@ -6,13 +6,13 @@ export default {
   name: "ClassicAntimatterDimensionRow",
   components: {
     GenericDimensionRowText,
-    PrimaryButton
+    PrimaryButton,
   },
   props: {
     tier: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -85,9 +85,9 @@ export default {
         "o-primary-btn--buy-ad o-primary-btn--buy-dim c-dim-tooltip-container": true,
         "o-primary-btn--buy-10-ad": !this.isContinuumActive,
         "o-primary-btn--continuum-ad o-continuum": this.isContinuumActive,
-        "l-dim-row-small-text": this.isLongText(this.until10Text) && !this.isContinuumActive
+        "l-dim-row-small-text": this.isLongText(this.until10Text) && !this.isContinuumActive,
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -114,7 +114,8 @@ export default {
       this.isShown =
         (DimBoost.totalBoosts > 0 && DimBoost.totalBoosts + 3 >= tier) || PlayerProgress.infinityUnlocked();
       this.isCostsAD = NormalChallenge(6).isRunning && tier > 2 && !this.isContinuumActive;
-      this.hasTutorial = (tier === 1 && Tutorial.isActive(TUTORIAL_STATE.DIM1)) ||
+      this.hasTutorial =
+        (tier === 1 && Tutorial.isActive(TUTORIAL_STATE.DIM1)) ||
         (tier === 2 && Tutorial.isActive(TUTORIAL_STATE.DIM2));
     },
     buySingle() {
@@ -134,10 +135,10 @@ export default {
     tutorialClass() {
       return {
         "l-glow-container": true,
-        "tutorial--glow": this.isAffordable && this.hasTutorial
+        "tutorial--glow": this.isAffordable && this.hasTutorial,
       };
     },
-  }
+  },
 };
 </script>
 
@@ -167,10 +168,7 @@ export default {
         <div class="c-dim-purchase-count-tooltip">
           {{ boughtTooltip }}
         </div>
-        <div
-          v-if="hasTutorial"
-          class="fas fa-circle-exclamation l-notification-icon"
-        />
+        <div v-if="hasTutorial" class="fas fa-circle-exclamation l-notification-icon" />
       </PrimaryButton>
       <PrimaryButton
         :enabled="(isAffordableUntil10 || isContinuumActive) && !isCapped && isUnlocked"

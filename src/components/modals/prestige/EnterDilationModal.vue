@@ -6,7 +6,7 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "EnterDilationModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   computed: {
     message() {
@@ -27,7 +27,7 @@ export default {
           Teresa's Level ${formatInt(25)} reward.`;
       }
       return `You last completed Dilation at ${format(player.dilation.lastEP, 2, 2)} Eternity Points.`;
-    }
+    },
   },
   methods: {
     handleYesClick() {
@@ -45,21 +45,16 @@ export default {
 </script>
 
 <template>
-  <ModalWrapperChoice
-    option="dilation"
-    @confirm="handleYesClick"
-  >
+  <ModalWrapperChoice option="dilation" @confirm="handleYesClick">
     <template #header>
       {{ entranceLabel }}
     </template>
     <div class="c-modal-message__text">
       {{ EPSinceLabel }}
-      <br>
-      <br>
+      <br />
+      <br />
       {{ message }}
     </div>
-    <template #confirm-text>
-      Enter
-    </template>
+    <template #confirm-text> Enter </template>
   </ModalWrapperChoice>
 </template>

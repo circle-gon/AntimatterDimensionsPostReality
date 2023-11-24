@@ -22,7 +22,7 @@ export default {
     DimensionBoostAutobuyerBox,
     TickspeedAutobuyerBox,
     DimensionAutobuyerBox,
-    SimpleAutobuyersMultiBox
+    SimpleAutobuyersMultiBox,
   },
   data() {
     return {
@@ -40,7 +40,7 @@ export default {
     },
     gameTickLength() {
       return `${formatInt(player.options.updateRate)} ms`;
-    }
+    },
   },
   methods: {
     update() {
@@ -53,14 +53,15 @@ export default {
       // Since you don't need to buy autobuyers in Doomed and unbought ones are hidden, we can check if only the
       // autobuyers you can see (ie, have unlocked) have been maxed.
       if (Pelle.isDoomed) {
-        this.displayADAutobuyersIndividually = !ad.zeroIndexed.filter(x => x.isUnlocked)
-          .every(x => x.hasUnlimitedBulk && x.hasMaxedInterval);
+        this.displayADAutobuyersIndividually = !ad.zeroIndexed
+          .filter((x) => x.isUnlocked)
+          .every((x) => x.hasUnlimitedBulk && x.hasMaxedInterval);
         return;
       }
       this.hasInstant = ad.hasInstant;
       this.displayADAutobuyersIndividually = !ad.collapseDisplay;
     },
-  }
+  },
 };
 </script>
 
@@ -70,14 +71,12 @@ export default {
     <OpenModalHotkeysButton />
     <div v-if="hasSeenGamespeedAlteringEffects">
       Autobuyer intervals and time-based settings are always <b>real time</b> and therefore
-      <br>
+      <br />
       unaffected by anything which may alter how fast the game itself is running.
-      <br>
-      <br>
+      <br />
+      <br />
     </div>
-    <div v-if="!hasInfinity">
-      Challenges for upgrading autobuyers are unlocked by reaching Infinity.
-    </div>
+    <div v-if="!hasInfinity">Challenges for upgrading autobuyers are unlocked by reaching Infinity.</div>
     <b>Autobuyers with no displayed bulk have unlimited bulk by default.</b>
     <b>
       Antimatter Dimension Autobuyers can have their bulk upgraded once interval is below {{ formatInt(100) }} ms.
@@ -90,11 +89,7 @@ export default {
     <DimensionBoostAutobuyerBox />
     <TickspeedAutobuyerBox v-if="!hasContinuum" />
     <template v-if="displayADAutobuyersIndividually">
-      <DimensionAutobuyerBox
-        v-for="tier in 8"
-        :key="tier"
-        :tier="tier"
-      />
+      <DimensionAutobuyerBox v-for="tier in 8" :key="tier" :tier="tier" />
     </template>
     <SimpleAutobuyersMultiBox />
   </div>

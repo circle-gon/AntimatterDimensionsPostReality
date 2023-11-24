@@ -4,12 +4,12 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "UpgradeMechanicLockModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   props: {
     upgrade: {
       type: Object,
-      required: true
+      required: true,
     },
     isImaginary: {
       type: Boolean,
@@ -19,7 +19,7 @@ export default {
       type: String,
       required: false,
       default: null,
-    }
+    },
   },
   computed: {
     upgradeStr() {
@@ -27,42 +27,34 @@ export default {
     },
     lockEvent() {
       return this.specialLockText ?? this.upgrade.lockEvent;
-    }
+    },
   },
   methods: {
     disableLock() {
       this.upgrade.setMechanicLock(false);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <ModalWrapperChoice
-    @confirm="disableLock"
-  >
-    <template #header>
-      {{ upgradeStr }} Condition Lock
-    </template>
+  <ModalWrapperChoice @confirm="disableLock">
+    <template #header> {{ upgradeStr }} Condition Lock </template>
     <div class="c-modal-message__text">
       Are you sure you wish to {{ lockEvent }}? Doing this right now will cause you to
-      <span class="l-emphasis">
-        fail the requirement for the {{ upgradeStr }} "{{ upgrade.name }}"
-      </span>
+      <span class="l-emphasis"> fail the requirement for the {{ upgradeStr }} "{{ upgrade.name }}" </span>
       <span :ach-tooltip="upgrade.requirement">
         <i class="fas fa-question-circle" />
       </span>
-      <br>
-      <br>
+      <br />
+      <br />
       Selecting "Cancel" will close this modal with no effect, while selecting "Disable Lock" will disable the
       requirement check for this upgrade and prevent this message from reappearing unless you turn it back on.
-      <br>
-      <br>
+      <br />
+      <br />
       Neither of these options will perform the action you just attempted, so you will need to try again.
     </div>
-    <template #confirm-text>
-      Disable Lock
-    </template>
+    <template #confirm-text> Disable Lock </template>
   </ModalWrapperChoice>
 </template>
 

@@ -60,10 +60,7 @@ export default {
 <template>
   <div class="l-atom-milestone">
     <span class="o-atom-milestone__goal"> {{ timeDisplay(timeFormatted) }}: </span>
-    <button
-      v-tooltip="tooltip"
-      :class="rewardClassObject"
-    >
+    <button v-tooltip="tooltip" :class="rewardClassObject">
       <span>
         {{ reward }}
       </span>

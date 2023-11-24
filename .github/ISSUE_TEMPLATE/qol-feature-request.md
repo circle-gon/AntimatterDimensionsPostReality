@@ -1,10 +1,9 @@
 ---
 name: QoL feature request
 about: You want some Quality in your Life
-title: ''
+title: ""
 labels: QoL
-assignees: ''
-
+assignees: ""
 ---
 
 **Is your feature request related to a problem? Please describe.**

@@ -11,11 +11,11 @@ export default {
   props: {
     group: {
       type: Number,
-      required: true
+      required: true,
     },
     name: {
       type: String,
-      required: true
+      required: true,
     },
   },
   data() {
@@ -25,30 +25,22 @@ export default {
   },
   computed: {
     shownResources() {
-      return CatchupResources.all.filter(r => r.requiredStage === this.group);
+      return CatchupResources.all.filter((r) => r.requiredStage === this.group);
     },
     dropDownIconClass() {
       return this.collapsed ? "far fa-plus-square" : "far fa-minus-square";
     },
-  }
+  },
 };
 </script>
 
 <template>
   <div v-if="shownResources.length !== 0">
-    <span
-      class="o-catchup-group-title"
-      @click="collapsed = !collapsed"
-    >
+    <span class="o-catchup-group-title" @click="collapsed = !collapsed">
       <i :class="dropDownIconClass" /> {{ name }}
     </span>
     <div v-if="!collapsed">
-      <CatchupEntry
-        v-for="(resource, i) of shownResources"
-        :key="i"
-        class="l-left"
-        :info="resource"
-      />
+      <CatchupEntry v-for="(resource, i) of shownResources" :key="i" class="l-left" :info="resource" />
     </div>
   </div>
 </template>

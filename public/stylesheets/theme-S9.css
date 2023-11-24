@@ -65,7 +65,9 @@
 }
 
 @keyframes a-reality-glyph-description-cycle {
-  0% { color: transparent; }
+  0% {
+    color: transparent;
+  }
 }
 
 .o-celestial-nav__legend-text {

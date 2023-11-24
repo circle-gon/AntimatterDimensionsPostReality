@@ -13,9 +13,9 @@ export default {
   computed: {
     progressBarStyle() {
       return {
-        width: `${(this.fill * 100).toFixed(2)}%`
+        width: `${(this.fill * 100).toFixed(2)}%`,
       };
-    }
+    },
   },
   methods: {
     // eslint-disable-next-line complexity
@@ -34,8 +34,8 @@ export default {
       // than normal and therefore default filling won't be meaningful. Since challenges get completed or abandoned from
       // the inside outwards, we show the goals in that priority as well. It only makes sense to check cel6 and not the
       // others because pre-cel3 completion it'll default to e4000 and cel4/5 don't have meaningful single goals
-      const inSpecialRun = Player.isInAntimatterChallenge || EternityChallenge.isRunning || player.dilation.active ||
-        Laitela.isRunning;
+      const inSpecialRun =
+        Player.isInAntimatterChallenge || EternityChallenge.isRunning || player.dilation.active || Laitela.isRunning;
       if (inSpecialRun) {
         if (Player.isInAntimatterChallenge) {
           setProgress(Currency.antimatter.value, Player.antimatterChallenge.goal, "Percentage to Challenge goal");
@@ -70,8 +70,11 @@ export default {
         } else if (PelleStrikes.ECs.hasStrike) {
           setLinearProgress(
             (Math.min(Currency.timeTheorems.max.toNumber() / 12900, 1) +
-            Math.min(EternityChallenges.completions / 60, 1)) / 2,
-            1, "Percentage to fifth Strike");
+              Math.min(EternityChallenges.completions / 60, 1)) /
+              2,
+            1,
+            "Percentage to fifth Strike"
+          );
         } else if (PelleStrikes.eternity.hasStrike) {
           setLinearProgress(Currency.timeTheorems.max.toNumber(), 115, "Percentage to fourth Strike");
         } else if (PelleStrikes.powerGalaxies.hasStrike) {
@@ -93,9 +96,9 @@ export default {
       } else if (InfinityDimension(8).isUnlocked) {
         setProgress(Currency.infinityPoints.value, Player.eternityGoal, "Percentage to Eternity");
       } else if (player.break) {
-        const text = `Percentage to unlock a new ${InfinityDimensions.next().hasIPUnlock
-          ? "type of Dimension"
-          : "Infinity Dimension"}`;
+        const text = `Percentage to unlock a new ${
+          InfinityDimensions.next().hasIPUnlock ? "type of Dimension" : "Infinity Dimension"
+        }`;
         const nextID = InfinityDimensions.next();
         if (nextID.ipRequirementReached) {
           setProgress(player.records.thisEternity.maxAM, nextID.amRequirement, text);
@@ -105,21 +108,15 @@ export default {
       } else {
         setProgress(Currency.antimatter.value, Decimal.NUMBER_MAX_VALUE, "Percentage to Infinity");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="c-progress-bar">
-    <div
-      :style="progressBarStyle"
-      class="c-progress-bar__fill"
-    >
-      <span
-        v-tooltip="tooltip"
-        class="c-progress-bar__percents"
-      >
+    <div :style="progressBarStyle" class="c-progress-bar__fill">
+      <span v-tooltip="tooltip" class="c-progress-bar__percents">
         {{ displayPercents }}
       </span>
     </div>

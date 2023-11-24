@@ -4,7 +4,7 @@ import PrimaryButton from "@/components/PrimaryButton";
 export default {
   name: "ClassicAntimatterDimensionsTabHeader",
   components: {
-    PrimaryButton
+    PrimaryButton,
   },
   data() {
     return {
@@ -35,8 +35,8 @@ export default {
     },
     maxAll() {
       maxAll();
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -49,18 +49,9 @@ export default {
       class="o-primary-btn--sacrifice"
       @click="sacrifice"
     >
-      <span v-if="isSacrificeAffordable">
-        Dimensional Sacrifice ({{ formatX(sacrificeBoost, 2, 2) }})
-      </span>
-      <span v-else>
-        Dimensional Sacrifice Disabled ({{ disabledCondition }})
-      </span>
+      <span v-if="isSacrificeAffordable"> Dimensional Sacrifice ({{ formatX(sacrificeBoost, 2, 2) }}) </span>
+      <span v-else> Dimensional Sacrifice Disabled ({{ disabledCondition }}) </span>
     </PrimaryButton>
-    <PrimaryButton
-      class="o-primary-btn--buy-max"
-      @click="maxAll"
-    >
-      Max all (M)
-    </PrimaryButton>
+    <PrimaryButton class="o-primary-btn--buy-max" @click="maxAll"> Max all (M) </PrimaryButton>
   </div>
 </template>

@@ -15,8 +15,8 @@ export default {
       initialized: false,
       bounds: {
         x: 0,
-        y: 0
-      }
+        y: 0,
+      },
     };
   },
   mounted() {
@@ -35,32 +35,18 @@ export default {
     updateSize() {
       this.bounds.x = document.documentElement.clientWidth;
       this.bounds.y = document.documentElement.clientHeight;
-    }
+    },
   },
 };
 </script>
 
 <template>
   <div v-if="initialized">
-    <svg
-      v-if="animateBackground"
-      class="c-blob-snowflake-container"
-    >
-      <BlobSnowflake
-        v-for="i in count"
-        :key="i"
-        :bounds="bounds"
-      />
+    <svg v-if="animateBackground" class="c-blob-snowflake-container">
+      <BlobSnowflake v-for="i in count" :key="i" :bounds="bounds" />
     </svg>
-    <svg
-      v-else
-      class="c-blob-background-container"
-    >
-      <BlobBackground
-        v-for="i in count"
-        :key="i"
-        :bounds="bounds"
-      />
+    <svg v-else class="c-blob-background-container">
+      <BlobBackground v-for="i in count" :key="i" :bounds="bounds" />
     </svg>
   </div>
 </template>

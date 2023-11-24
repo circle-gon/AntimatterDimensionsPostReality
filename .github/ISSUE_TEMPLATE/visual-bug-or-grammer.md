@@ -1,10 +1,9 @@
 ---
 name: Visual bug or grammer
 about: Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn
-title: ''
+title: ""
 labels: visual bug
-assignees: ''
-
+assignees: ""
 ---
 
 **Describe the bug**
@@ -12,6 +11,7 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 If applicable, steps to reproduce the behavior:
+
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'

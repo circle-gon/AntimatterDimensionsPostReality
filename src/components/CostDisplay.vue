@@ -8,33 +8,33 @@ export default {
     config: {
       type: Object,
       required: false,
-      default: undefined
+      default: undefined,
     },
     br: {
       type: Boolean,
-      required: false
+      required: false,
     },
     name: {
       type: String,
-      required: true
+      required: true,
     },
     label: {
       type: String,
       default: "Cost:",
-      required: false
-    }
+      required: false,
+    },
   },
   data() {
     return {
       isVisible: false,
-      cost: 0
+      cost: 0,
     };
   },
   watch: {
     config: {
       immediate: true,
       handler(config) {
-        this.updateFunction = () => { };
+        this.updateFunction = () => {};
         const cost = config?.cost;
         this.isVisible = cost !== undefined;
         if (!this.isVisible) return;
@@ -58,7 +58,7 @@ export default {
 
         if (isNumber(value)) {
           this.cost = value;
-          this.updateFunction = () => this.cost = cost();
+          this.updateFunction = () => (this.cost = cost());
           return;
         }
 
@@ -68,26 +68,25 @@ export default {
           return;
         }
 
-        throw new Error(`CostDisplay config.cost is a function which returns` +
-          ` unsupported type "${typeof value}"`);
-      }
-    }
+        throw new Error(`CostDisplay config.cost is a function which returns` + ` unsupported type "${typeof value}"`);
+      },
+    },
   },
   beforeCreate() {
-    this.updateFunction = () => { };
+    this.updateFunction = () => {};
   },
   methods: {
     update() {
       this.updateFunction();
     },
-    quantify
-  }
+    quantify,
+  },
 };
 </script>
 
 <template>
   <span v-if="isVisible">
-    <br v-if="br">
+    <br v-if="br" />
     {{ label }} {{ quantify(name, cost, 0, 0, formatCost) }}
   </span>
 </template>

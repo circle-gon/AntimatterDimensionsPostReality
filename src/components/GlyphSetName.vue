@@ -2,45 +2,45 @@
 const GLYPH_NAMES = {
   companion: {
     adjective: "Huggable",
-    noun: "Companion"
+    noun: "Companion",
   },
   reality: {
     adjective: "Real",
-    noun: "Reality"
+    noun: "Reality",
   },
   music: {
     adjective: { high: "Melodic", mid: "Chordal", low: "Tuned" },
     // This noun is only used in the case of a single companion reskinned as music (resulting in "Huggable Music");
     // otherwise the set's noun will always come from an actual glyph type instead of music
-    noun: "Music"
+    noun: "Music",
   },
   effarig: {
     adjective: { both: "Meta", glyph: "Stable", rm: "Mechanical", none: "Fragmented" },
-    noun: { both: "Effarig", glyph: "Stability", rm: "Mechanism", none: "Fragmentation" }
+    noun: { both: "Effarig", glyph: "Stability", rm: "Mechanism", none: "Fragmentation" },
   },
   cursed: {
     adjective: { high: "Cursed", mid: "Hexed", low: "Jinxed" },
-    noun: "Curse"
+    noun: "Curse",
   },
   power: {
     adjective: { high: "Powerful", mid: "Mastered", low: "Potential" },
-    noun: "Power"
+    noun: "Power",
   },
   infinity: {
     adjective: { high: "Infinite", mid: "Boundless", low: "Immense" },
-    noun: "Infinity"
+    noun: "Infinity",
   },
   replication: {
     adjective: { high: "Replicated", mid: "Simulated", low: "Duplicated" },
-    noun: "Replication"
+    noun: "Replication",
   },
   time: {
     adjective: { high: "Temporal", mid: "Chronal", low: "Transient" },
-    noun: "Time"
+    noun: "Time",
   },
   dilation: {
     adjective: { high: "Dilated", mid: "Attenuated", low: "Diluted" },
-    noun: "Dilation"
+    noun: "Dilation",
   },
 };
 
@@ -49,13 +49,13 @@ export default {
   props: {
     glyphSet: {
       type: Array,
-      required: true
+      required: true,
     },
     forceColor: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -74,7 +74,7 @@ export default {
         { type: "cursed", perc: 0, adjOrder: 6 },
       ],
       sortedGlyphs: [],
-      slotCount: 0
+      slotCount: 0,
     };
   },
   computed: {
@@ -87,8 +87,8 @@ export default {
       // Figure out the noun part of the name first. If we have basic glyphs, this is generated through examining those
       // specifically. Otherwise, we take the lowest-priority special glyph and turn it into its noun form
       let adjList, nounPhrase;
-      if (this.sortedGlyphs.some(t => t.adjOrder === 1)) {
-        adjList = this.sortedGlyphs.filter(t => t.adjOrder !== 1);
+      if (this.sortedGlyphs.some((t) => t.adjOrder === 1)) {
+        adjList = this.sortedGlyphs.filter((t) => t.adjOrder !== 1);
         nounPhrase = this.basicTypePhrase;
       } else {
         adjList = [...this.sortedGlyphs];
@@ -100,24 +100,22 @@ export default {
       return `${adjectives.join(" ")} ${nounPhrase}`;
     },
     basicTypePhrase() {
-      const basicGlyphList = this.sortedGlyphs.filter(t => BASIC_GLYPH_TYPES.includes(t.type) && t.perc !== 0);
+      const basicGlyphList = this.sortedGlyphs.filter((t) => BASIC_GLYPH_TYPES.includes(t.type) && t.perc !== 0);
       switch (basicGlyphList.length) {
         case 1:
           return GLYPH_NAMES[basicGlyphList[0].type].noun;
         case 2:
           // Call it a mixture if they're equal and apply adjectives of appropriate magnitude
           if (basicGlyphList[0].perc === basicGlyphList[1].perc) {
-            return [this.getAdjective(basicGlyphList[0]),
-              this.getAdjective(basicGlyphList[1]),
-              "Mixture"
-            ].join(" ");
+            return [this.getAdjective(basicGlyphList[0]), this.getAdjective(basicGlyphList[1]), "Mixture"].join(" ");
           }
           // Otherwise, give it a noun from the largest component
           return `${this.getAdjective(basicGlyphList[1])} ${this.getNoun(basicGlyphList[0])}`;
         case 3:
           // Give it a noun if there's a clear majority
           if (basicGlyphList[0].perc > basicGlyphList[1].perc) {
-            return [this.getAdjective(basicGlyphList[1]),
+            return [
+              this.getAdjective(basicGlyphList[1]),
               this.getAdjective(basicGlyphList[2]),
               this.getNoun(basicGlyphList[0]),
             ].join(" ");
@@ -126,10 +124,11 @@ export default {
           // In this case we make an exception and shorten the name instead of providing another 4 words
           if (basicGlyphList[0].perc === basicGlyphList[2].perc) return "Mixed Irregularity";
           // The only case left is 2/2/1, where we have plenty of room for words
-          return [this.getAdjective(basicGlyphList[0]),
+          return [
+            this.getAdjective(basicGlyphList[0]),
             this.getAdjective(basicGlyphList[1]),
             this.getAdjective(basicGlyphList[2]),
-            "Irregularity"
+            "Irregularity",
           ].join(" ");
         case 4:
           // Don't bother filling the name with excessive adjectives if we have an equal proportion (1/1/1/1),
@@ -169,7 +168,7 @@ export default {
       if (this.calculateGlyphPercent("companion")) return CosmeticGlyphTypes.companion;
       if (this.calculateGlyphPercent("reality")) return CosmeticGlyphTypes.reality;
       if (this.calculateGlyphPercent("music") >= 50) return CosmeticGlyphTypes.music;
-      const primaryType = this.sortedGlyphs.filter(t => t.adjOrder === 1)[0];
+      const primaryType = this.sortedGlyphs.filter((t) => t.adjOrder === 1)[0];
       if (primaryType?.perc >= 50) return CosmeticGlyphTypes[primaryType.type];
       if (this.calculateGlyphPercent("effarig")) return CosmeticGlyphTypes.effarig;
       return CosmeticGlyphTypes[primaryType.type];
@@ -199,7 +198,7 @@ export default {
                         0 0 3px ${this.textColor}`,
         animation: this.mainGlyphName.id === "reality" ? "a-reality-glyph-description-cycle 10s infinite" : undefined,
       };
-    }
+    },
   },
   created() {
     this.on$(GAME_EVENT.GLYPHS_CHANGED, this.sortGlyphList);
@@ -214,8 +213,8 @@ export default {
       this.slotCount = Math.max(Glyphs.activeSlotCount, this.glyphSet.length);
     },
     getEffarigProp() {
-      const effarigRM = this.glyphSet.some(i => getSingleGlyphEffectFromBitmask("effarigrm", i));
-      const effarigGlyph = this.glyphSet.some(i => getSingleGlyphEffectFromBitmask("effarigglyph", i));
+      const effarigRM = this.glyphSet.some((i) => getSingleGlyphEffectFromBitmask("effarigrm", i));
+      const effarigGlyph = this.glyphSet.some((i) => getSingleGlyphEffectFromBitmask("effarigglyph", i));
       if (effarigRM && effarigGlyph) return "both";
       if (effarigRM) return "rm";
       if (effarigGlyph) return "glyph";
@@ -223,22 +222,22 @@ export default {
     },
     calculateGlyphPercent(name) {
       const percentPerGlyph = this.slotCount ? 100 / this.slotCount : 0;
-      if (name === "music") return this.glyphSet.filter(i => Glyphs.isMusicGlyph(i)).length * percentPerGlyph;
+      if (name === "music") return this.glyphSet.filter((i) => Glyphs.isMusicGlyph(i)).length * percentPerGlyph;
       // Take the amount of a type of glyph in the set, divide by the maximum number of glyphs, then * 100 to get %
-      return this.glyphSet.filter(i => i.type === name).length * percentPerGlyph;
+      return this.glyphSet.filter((i) => i.type === name).length * percentPerGlyph;
     },
     sortGlyphList() {
       this.$recompute("textColor");
-      this.glyphTypeList.forEach(t => t.perc = this.calculateGlyphPercent(t.type));
-      this.sortedGlyphs = this.glyphTypeList.filter(t => t.perc !== 0);
+      this.glyphTypeList.forEach((t) => (t.perc = this.calculateGlyphPercent(t.type)));
+      this.sortedGlyphs = this.glyphTypeList.filter((t) => t.perc !== 0);
       // This composite function is required in order to ensure consistent names with equal percentages, as JS doesn't
       // guarantee .sort() operations are stable sorts. Sorts by adjOrder, followed by perc, followed by alphabetical.
-      const sortFn = t => 100 * t.adjOrder + t.perc + t.type.charCodeAt(0) / 1000;
+      const sortFn = (t) => 100 * t.adjOrder + t.perc + t.type.charCodeAt(0) / 1000;
       this.sortedGlyphs.sort((a, b) => sortFn(b) - sortFn(a));
     },
     getAdjective(listEntry) {
       if (listEntry.type === "effarig") return GLYPH_NAMES.effarig.adjective[this.getEffarigProp()];
-      const adjFn = val => {
+      const adjFn = (val) => {
         if (val >= 60) return "high";
         if (val >= 40) return "mid";
         return "low";
@@ -250,16 +249,13 @@ export default {
       if (listEntry.type === "effarig") return GLYPH_NAMES.effarig.noun[this.getEffarigProp()];
       return GLYPH_NAMES[listEntry.type].noun;
     },
-  }
+  },
 };
 </script>
 
 <template>
   <div>
-    <span
-      :style="textStyle"
-      class="c-current-glyph-effects__header"
-    >
+    <span :style="textStyle" class="c-current-glyph-effects__header">
       {{ setName }}
     </span>
   </div>

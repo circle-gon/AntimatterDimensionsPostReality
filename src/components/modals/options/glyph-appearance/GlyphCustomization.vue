@@ -10,7 +10,7 @@ export default {
     GlyphCustomizationSingleType,
     PrimaryButton,
     PrimaryToggleButton,
-    GlyphComponent
+    GlyphComponent,
   },
   data() {
     return {
@@ -24,7 +24,10 @@ export default {
     cosmeticTypes() {
       // We want to sort the base types in a way consistent with type orders within most of the rest of the game. We
       // can safely slice the first 5 and insert them back in the correct order because they'll always be unlocked.
-      const nonBaseTypes = CosmeticGlyphTypes.list.filter(t => t.canCustomize).map(t => t.id).slice(5);
+      const nonBaseTypes = CosmeticGlyphTypes.list
+        .filter((t) => t.canCustomize)
+        .map((t) => t.id)
+        .slice(5);
       const sortedBase = ["power", "infinity", "replication", "time", "dilation"];
       return sortedBase.concat(nonBaseTypes);
     },
@@ -33,7 +36,7 @@ export default {
         size: "2.5rem",
         "glow-blur": "0.3rem",
         "glow-spread": "0.1rem",
-        "text-proportion": 0.7
+        "text-proportion": 0.7,
       };
     },
     hasCustomSets() {
@@ -41,7 +44,7 @@ export default {
     },
     hasSpecialTypes() {
       return GlyphAppearanceHandler.availableTypes.length > 0;
-    }
+    },
   },
   watch: {
     enabled(newValue) {
@@ -99,42 +102,37 @@ export default {
       this.defaultKeySwap = false;
       EventHub.dispatch(GAME_EVENT.GLYPH_VISUAL_CHANGE);
     },
-  }
+  },
 };
 </script>
 
 <template>
   <div class="c-glyph-customization-group">
     <b>Custom Glyph Appearance</b>
-    <PrimaryToggleButton
-      v-model="enabled"
-      class="o-primary-btn--subtab-option"
-      on="Enabled"
-      off="Disabled"
-    />
-    <br>
+    <PrimaryToggleButton v-model="enabled" class="o-primary-btn--subtab-option" on="Enabled" off="Disabled" />
+    <br />
     <div v-if="hasCustomSets">
       Reset Appearances to Default:
       <PrimaryButton
         class="o-primary-btn--subtab-option"
-        :class="{ 'o-primary-btn--disabled' : !enabled }"
+        :class="{ 'o-primary-btn--disabled': !enabled }"
         @click="resetAll"
       >
         All Types
       </PrimaryButton>
       <PrimaryButton
         class="o-primary-btn--subtab-option"
-        :class="{ 'o-primary-btn--disabled' : !enabled }"
+        :class="{ 'o-primary-btn--disabled': !enabled }"
         @click="resetSingle"
       >
         This Type
       </PrimaryButton>
-      <br>
+      <br />
       <i>This will not reset any individually-modified Glyphs.</i>
-      <br>
-      <br>
+      <br />
+      <br />
       Glyph Type:
-      <br>
+      <br />
       <div class="c-type-selection">
         <div
           v-for="(type, index) in cosmeticTypes"
@@ -142,11 +140,7 @@ export default {
           :class="typeClass(index)"
           @click="selectedIndex = index"
         >
-          <GlyphComponent
-            v-tooltip="type.capitalize()"
-            v-bind="glyphIconProps"
-            :glyph="fakeGlyph(type)"
-          />
+          <GlyphComponent v-tooltip="type.capitalize()" v-bind="glyphIconProps" :glyph="fakeGlyph(type)" />
         </div>
       </div>
       <GlyphCustomizationSingleType
@@ -158,19 +152,14 @@ export default {
     <div v-else>
       You currently have no available options for changing the default appearance of your Glyphs. To unlock some, visit
       the Shop Tab or beat the game.
-      <br>
-      <br>
+      <br />
+      <br />
       <span v-if="hasSpecialTypes">
         Enabling this setting will allow you to change individual Glyphs to special cosmetic types you have unlocked.
       </span>
-      <span v-else>
-        Enabling or disabling this option will currently do nothing.
-      </span>
+      <span v-else> Enabling or disabling this option will currently do nothing. </span>
     </div>
-    <PrimaryButton
-      class="o-primary-btn--subtab-option"
-      @click="resetIndividual"
-    >
+    <PrimaryButton class="o-primary-btn--subtab-option" @click="resetIndividual">
       Reset all individual Glyph cosmetics
     </PrimaryButton>
   </div>

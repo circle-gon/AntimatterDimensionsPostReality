@@ -5,53 +5,46 @@ export default {
     label: {
       type: String,
       required: false,
-      default: ""
+      default: "",
     },
     on: {
       type: String,
       required: false,
-      default: "ON"
+      default: "ON",
     },
     off: {
       type: String,
       required: false,
-      default: "OFF"
+      default: "OFF",
     },
     value: {
       type: Boolean,
-      required: true
+      required: true,
     },
     tooltipClass: {
       type: String,
       required: false,
-      default: ""
+      default: "",
     },
     tooltipContent: {
       type: String,
       required: false,
-      default: ""
-    }
+      default: "",
+    },
   },
   computed: {
     displayText() {
       return `${this.label} ${this.value ? this.on : this.off}`.trim();
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <button
-    v-bind="$attrs"
-    @click="emitInput(!value)"
-  >
+  <button v-bind="$attrs" @click="emitInput(!value)">
     {{ displayText }}
-    <div
-      v-if="tooltipClass"
-      :class="tooltipClass"
-    >
+    <div v-if="tooltipClass" :class="tooltipClass">
       {{ tooltipContent }}
     </div>
   </button>
 </template>
-

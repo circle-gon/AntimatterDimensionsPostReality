@@ -8,7 +8,7 @@ export default {
   components: {
     ModalWrapperChoice,
     PrimaryButton,
-    ImportFilterSingleType
+    ImportFilterSingleType,
   },
   data() {
     return {
@@ -41,7 +41,7 @@ export default {
           score: Number(subparts[1]),
           effectCount: Number(subparts[2]),
           specifiedMask: Number(subparts[3]),
-          effectScores: subparts[4].split("/").map(s => Number(s)),
+          effectScores: subparts[4].split("/").map((s) => Number(s)),
         };
         partIndex++;
       }
@@ -54,24 +54,26 @@ export default {
       };
     },
     selectStr() {
-      return this.changedValue(this.parsedSettings.select, this.currentSettings.select,
-        x => AutoGlyphProcessor.filterModeName(x));
+      return this.changedValue(this.parsedSettings.select, this.currentSettings.select, (x) =>
+        AutoGlyphProcessor.filterModeName(x)
+      );
     },
     basicCountStr() {
       return this.changedValue(this.parsedSettings.simple, this.currentSettings.simple, formatInt);
     },
     trashStr() {
-      return this.changedValue(this.parsedSettings.trash, this.currentSettings.trash,
-        x => AutoGlyphProcessor.trashModeDesc(x));
+      return this.changedValue(this.parsedSettings.trash, this.currentSettings.trash, (x) =>
+        AutoGlyphProcessor.trashModeDesc(x)
+      );
     },
     // Hide effarig if it hasn't been unlocked yet
     availableTypes() {
-      return ALCHEMY_BASIC_GLYPH_TYPES.filter(t => !GlyphTypes.locked.map(e => e.id).includes(t));
+      return ALCHEMY_BASIC_GLYPH_TYPES.filter((t) => !GlyphTypes.locked.map((e) => e.id).includes(t));
     },
     settingTooltipText() {
       return `Mouseover each box for more details. ✔ and ✘ symbols denote an effect
         selected/unselected for Specified Effect mode.`;
-    }
+    },
   },
   mounted() {
     this.$refs.input.select();
@@ -94,15 +96,10 @@ export default {
 </script>
 
 <template>
-  <ModalWrapperChoice
-    :show-cancel="!inputIsValid"
-    :show-confirm="false"
-  >
-    <template #header>
-      Import Glyph filter settings
-    </template>
+  <ModalWrapperChoice :show-cancel="!inputIsValid" :show-confirm="false">
+    <template #header> Import Glyph filter settings </template>
     Note: Importing Glyph filter options will overwrite settings
-    <br>
+    <br />
     in all filter modes, not just the currently-selected one.
     <input
       ref="input"
@@ -111,20 +108,21 @@ export default {
       class="c-modal-input c-modal-import__input"
       @keyup.enter="importSave"
       @keyup.esc="emitClose"
-    >
+    />
     <div class="c-modal-import__save-info">
       <div v-if="!input" />
       <div v-else-if="inputIsValid">
         <b>Selection mode:</b> {{ selectStr }}
-        <br>
+        <br />
         <b>Effect Count ("Number of Effects"):</b> {{ basicCountStr }}
-        <br>
+        <br />
         <b>Rejected Glyphs:</b> {{ trashStr }}
-        <br>
-        <u><b>Type-specific Settings</b></u> <span :ach-tooltip="settingTooltipText">
+        <br />
+        <u><b>Type-specific Settings</b></u>
+        <span :ach-tooltip="settingTooltipText">
           <i class="fas fa-question-circle" />
         </span>
-        <br>
+        <br />
         <ImportFilterSingleType
           v-for="type in availableTypes"
           :key="type"
@@ -134,9 +132,7 @@ export default {
           :new-settings="parsedSettings.types[type]"
         />
       </div>
-      <div v-else>
-        Not a valid Glyph filter string
-      </div>
+      <div v-else>Not a valid Glyph filter string</div>
     </div>
 
     <PrimaryButton

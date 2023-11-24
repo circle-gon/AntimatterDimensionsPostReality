@@ -16,26 +16,14 @@ export default {
 
 <template>
   <div class="c-tree-info">
-    <span
-      class="l-tree-info-header"
-      v-html="headerText"
-    />
-    <div
-      v-if="treeStatus.firstPaths"
-      class="l-modal-import-tree__tree-info-line"
-    >
+    <span class="l-tree-info-header" v-html="headerText" />
+    <div v-if="treeStatus.firstPaths" class="l-modal-import-tree__tree-info-line">
       Dimension Split: {{ treeStatus.firstPaths }}
     </div>
-    <div
-      v-if="treeStatus.secondPaths"
-      class="l-modal-import-tree__tree-info-line"
-    >
+    <div v-if="treeStatus.secondPaths" class="l-modal-import-tree__tree-info-line">
       Pace Split: {{ treeStatus.secondPaths }}
     </div>
-    <div
-      v-if="treeStatus.ec > 0"
-      class="l-modal-import-tree__tree-info-line"
-    >
+    <div v-if="treeStatus.ec > 0" class="l-modal-import-tree__tree-info-line">
       Eternity Challenge: {{ treeStatus.ec }} {{ treeStatus.startEC ? "(will start)" : "" }}
     </div>
   </div>

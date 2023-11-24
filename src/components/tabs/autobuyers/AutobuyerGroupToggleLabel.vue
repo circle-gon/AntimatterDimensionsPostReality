@@ -4,14 +4,14 @@ import AutobuyerToggleLabel from "./AutobuyerToggleLabel";
 export default {
   name: "AutobuyerGroupToggleLabel",
   components: {
-    AutobuyerToggleLabel
+    AutobuyerToggleLabel,
   },
   props: {
     isActive: Boolean,
     name: {
       type: String,
       required: true,
-    }
+    },
   },
   data() {
     return {
@@ -22,19 +22,12 @@ export default {
     update() {
       this.isDisabled = !player.auto.autobuyersOn;
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <AutobuyerToggleLabel
-    :is-active="isActive"
-    :is-disabled="isDisabled"
-    :name="name"
-    @click="emitClick"
-  />
+  <AutobuyerToggleLabel :is-active="isActive" :is-disabled="isDisabled" :name="name" @click="emitClick" />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

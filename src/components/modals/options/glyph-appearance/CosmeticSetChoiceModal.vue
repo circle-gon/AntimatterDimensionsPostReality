@@ -10,7 +10,7 @@ export default {
     ModalWrapperChoice,
     ExpandingControlBox,
     CosmeticSetDropdown,
-    GlyphComponent
+    GlyphComponent,
   },
   data() {
     return {
@@ -23,7 +23,7 @@ export default {
       return GlyphAppearanceHandler.lockedSets;
     },
     cosmeticTypes() {
-      return CosmeticGlyphTypes.list.filter(t => t.isCosmetic && t.isUnlocked).map(t => t.id);
+      return CosmeticGlyphTypes.list.filter((t) => t.isCosmetic && t.isUnlocked).map((t) => t.id);
     },
     setName() {
       return this.currentSet?.name ?? "None Selected";
@@ -32,8 +32,8 @@ export default {
       const contents = [];
       // We explicitly pass in x => x as the formatting function in order to override END formatting; if we don't,
       // this modal will show END symbols/colors when opened at game completion
-      if (this.symbols) contents.push(quantify("symbol", this.symbols.length, 0, 0, x => x));
-      if (this.colors) contents.push(quantify("color scheme", this.colors.length, 0, 0, x => x));
+      if (this.symbols) contents.push(quantify("symbol", this.symbols.length, 0, 0, (x) => x));
+      if (this.colors) contents.push(quantify("color scheme", this.colors.length, 0, 0, (x) => x));
       return contents.join(" and ");
     },
     symbols() {
@@ -73,26 +73,19 @@ export default {
         color,
       };
     },
-  }
+  },
 };
 </script>
 
 <template>
-  <ModalWrapperChoice
-    :cancel-fn="cancelSet"
-    @confirm="chooseSet"
-  >
-    <template #header>
-      Choose a Glyph Cosmetic Set
-    </template>
+  <ModalWrapperChoice :cancel-fn="cancelSet" @confirm="chooseSet">
+    <template #header> Choose a Glyph Cosmetic Set </template>
     <div class="c-center">
-      <ExpandingControlBox
-        class="o-primary-btn c-dropdown-btn"
-      >
+      <ExpandingControlBox class="o-primary-btn c-dropdown-btn">
         <template #header>
           <div class="c-dropdown-header">
             ▼ Available Sets ▼
-            <br>
+            <br />
             {{ setName }}
           </div>
         </template>
@@ -102,24 +95,13 @@ export default {
       </ExpandingControlBox>
       <div v-if="currentSet">
         The "{{ currentSet.name }}" Set contains the following {{ setContents }}:
-        <br>
-        <span
-          v-for="symbol of symbols"
-          :key="symbol"
-          class="o-single-symbol"
-        >
+        <br />
+        <span v-for="symbol of symbols" :key="symbol" class="o-single-symbol">
           {{ symbol }}
         </span>
-        <br>
-        <span
-          v-for="color of colors"
-          :key="color"
-          class="o-single-glyph"
-        >
-          <GlyphComponent
-            v-bind="glyphIconProps"
-            :glyph="fakeGlyph(color)"
-          />
+        <br />
+        <span v-for="color of colors" :key="color" class="o-single-glyph">
+          <GlyphComponent v-bind="glyphIconProps" :glyph="fakeGlyph(color)" />
         </span>
       </div>
     </div>

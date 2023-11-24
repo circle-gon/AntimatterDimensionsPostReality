@@ -3,15 +3,15 @@ export default {
   name: "CosmeticSetDropdown",
   computed: {
     lockedSets() {
-      return GlyphAppearanceHandler.lockedSets.map(key => GameDatabase.reality.glyphCosmeticSets[key]);
-    }
+      return GlyphAppearanceHandler.lockedSets.map((key) => GameDatabase.reality.glyphCosmeticSets[key]);
+    },
   },
   methods: {
     select(set) {
       GlyphAppearanceHandler.setInModal = set;
       this.$parent.openRequest = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

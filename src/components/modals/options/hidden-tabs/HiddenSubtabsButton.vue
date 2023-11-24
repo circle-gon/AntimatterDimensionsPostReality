@@ -4,16 +4,16 @@ export default {
   props: {
     subtab: {
       type: Object,
-      required: true
+      required: true,
     },
     tab: {
       type: Object,
-      required: true
+      required: true,
     },
     changeEnabled: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -23,8 +23,7 @@ export default {
   },
   computed: {
     isCurrentSubtab() {
-      return this.tab.id === Tabs.current.id &&
-        this.subtab.id === Tabs.current._currentSubtab.id;
+      return this.tab.id === Tabs.current.id && this.subtab.id === Tabs.current._currentSubtab.id;
     },
     classObject() {
       return {
@@ -54,16 +53,14 @@ export default {
 
 <template>
   <div
-    v-tooltip="hidable ? isCurrentSubtab ? 'You cannot hide the tab you are on' : '' : 'Options tabs cannot be hidden'"
+    v-tooltip="
+      hidable ? (isCurrentSubtab ? 'You cannot hide the tab you are on' : '') : 'Options tabs cannot be hidden'
+    "
     :class="classObject"
     @click="toggleVisibility"
   >
     <div class="l-hide-modal-button">
-      <div
-        v-if="isModernUI"
-        class="l-hide-modal-button__subtab-icon"
-        v-html="subtab.symbol"
-      />
+      <div v-if="isModernUI" class="l-hide-modal-button__subtab-icon" v-html="subtab.symbol" />
       <div class="l-hide-modal-button__subtab-name">
         {{ subtab.name }}
       </div>

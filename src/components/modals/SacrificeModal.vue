@@ -4,7 +4,7 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "SacrificeModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   data() {
     return {
@@ -34,26 +34,21 @@ export default {
     },
     handleYesClick() {
       sacrificeReset();
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <ModalWrapperChoice
-    option="sacrifice"
-    @confirm="handleYesClick"
-  >
-    <template #header>
-      Dimensional Sacrifice
-    </template>
+  <ModalWrapperChoice option="sacrifice" @confirm="handleYesClick">
+    <template #header> Dimensional Sacrifice </template>
     <div class="c-modal-message__text">
       {{ message }}
     </div>
-    <br>
+    <br />
     <div class="c-modal-message__text">
       {{ multiplierText }}
-      <br>
+      <br />
     </div>
   </ModalWrapperChoice>
 </template>

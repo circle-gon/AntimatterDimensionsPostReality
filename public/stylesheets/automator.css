@@ -143,7 +143,6 @@
 
 .cm-s-liquibyte.CodeMirror,
 .cm-s-panda-syntax.CodeMirror {
-
   /* required for expanding into pane */
   flex: 1 1 auto;
   font-family: Typewriter, serif;

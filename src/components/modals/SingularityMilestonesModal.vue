@@ -24,8 +24,13 @@ export default {
       return states[this.resourceVal];
     },
     sortStr() {
-      const states = ["Singularities needed", "Current Completions", "Progress to full completion",
-        "Final Singularities", "Most Recent"];
+      const states = [
+        "Singularities needed",
+        "Current Completions",
+        "Progress to full completion",
+        "Final Singularities",
+        "Most Recent",
+      ];
       return states[this.sortVal];
     },
     completedStr() {
@@ -94,75 +99,49 @@ export default {
     glowOptionClass() {
       return {
         "c-modal__confirmation-toggle__checkbox": true,
-        "c-modal__confirmation-toggle__checkbox--active": this.milestoneGlow
+        "c-modal__confirmation-toggle__checkbox--active": this.milestoneGlow,
       };
     },
     toggleGlow() {
       this.milestoneGlow = !this.milestoneGlow;
-    }
+    },
   },
 };
 </script>
 
 <template>
   <ModalWrapper>
-    <template #header>
-      Singularity Milestones
-    </template>
-    <div
-      class="c-modal__confirmation-toggle"
-      @click="toggleGlow"
-    >
+    <template #header> Singularity Milestones </template>
+    <div class="c-modal__confirmation-toggle" @click="toggleGlow">
       <div :class="glowOptionClass()">
-        <span
-          v-if="milestoneGlow"
-          class="fas fa-check"
-        />
+        <span v-if="milestoneGlow" class="fas fa-check" />
       </div>
-      <span class="c-modal__confirmation-toggle__text">
-        Make button glow when new milestones have been reached
-      </span>
+      <span class="c-modal__confirmation-toggle__text"> Make button glow when new milestones have been reached </span>
     </div>
     <div class="l-singularity-milestone-modal-container-outer">
       <div class="l-singularity-milestone-modal-container-inner">
-        <SingularityMilestoneComponent
-          v-for="milestone in milestones"
-          :key="milestone.id"
-          :milestone="milestone"
-        />
+        <SingularityMilestoneComponent v-for="milestone in milestones" :key="milestone.id" :milestone="milestone" />
       </div>
     </div>
     <div class="l-singularity-milestone-sort-container">
-      <button
-        class="c-singularity-milestone-modal-sort-button"
-        @click="cycleButton(0)"
-      >
+      <button class="c-singularity-milestone-modal-sort-button" @click="cycleButton(0)">
         To Milestone:
-        <br>
+        <br />
         {{ resourceStr }}
       </button>
-      <button
-        class="c-singularity-milestone-modal-sort-button"
-        @click="cycleButton(1)"
-      >
+      <button class="c-singularity-milestone-modal-sort-button" @click="cycleButton(1)">
         Sort by:
-        <br>
+        <br />
         {{ sortStr }}
       </button>
-      <button
-        class="c-singularity-milestone-modal-sort-button"
-        @click="cycleButton(2)"
-      >
+      <button class="c-singularity-milestone-modal-sort-button" @click="cycleButton(2)">
         Completed Milestones:
-        <br>
+        <br />
         {{ completedStr }}
       </button>
-      <button
-        class="c-singularity-milestone-modal-sort-button"
-        @click="cycleButton(3)"
-      >
+      <button class="c-singularity-milestone-modal-sort-button" @click="cycleButton(3)">
         Sort Order:
-        <br>
+        <br />
         {{ orderStr }}
       </button>
     </div>

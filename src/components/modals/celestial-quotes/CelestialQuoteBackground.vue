@@ -5,16 +5,16 @@ export default {
     celestialSymbols: {
       // Array elements are String
       type: Array,
-      required: true
+      required: true,
     },
     celestials: {
       // Array elements are [String, Number]
       type: Array,
-      required: true
+      required: true,
     },
     primary: {
       type: Boolean,
-      required: true
+      required: true,
     },
   },
   computed: {
@@ -31,12 +31,12 @@ export default {
         return {
           color: `var(--color-${celEntry[0]}--accent)`,
           background: isText ? undefined : baseCol,
-          opacity: opac * celEntry[1]
+          opacity: opac * celEntry[1],
         };
       }
       return {
         color: baseCol,
-        opacity: opac * celEntry[1]
+        opacity: opac * celEntry[1],
       };
     },
   },
@@ -110,7 +110,7 @@ export default {
 }
 
 .s-base--metro .c-modal-celestial-quote__shadow {
-  box-shadow: 0 0 1rem 0.2rem, 0 0 1rem 0.1rem inset
+  box-shadow: 0 0 1rem 0.2rem, 0 0 1rem 0.1rem inset;
 }
 
 .c-modal-celestial-quote__text {

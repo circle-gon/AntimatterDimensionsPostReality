@@ -5,7 +5,7 @@ export default {
     return {
       requirement: {
         tier: 1,
-        amount: 0
+        amount: 0,
       },
       isBuyable: false,
       purchasedBoosts: 0,
@@ -39,9 +39,9 @@ export default {
         "o-primary-btn o-primary-btn--new o-primary-btn--dimension-reset": true,
         "tutorial--glow": this.isBuyable && this.hasTutorial,
         "o-primary-btn--disabled": !this.isBuyable,
-        "o-pelle-disabled-pointer": this.creditsClosed
+        "o-pelle-disabled-pointer": this.creditsClosed,
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -60,8 +60,8 @@ export default {
     dimensionBoost(bulk) {
       if (!DimBoost.requirement.isSatisfied || !DimBoost.canBeBought) return;
       manualRequestDimensionBoost(bulk);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -69,16 +69,9 @@ export default {
   <div class="reset-container dimboost">
     <h4>Dimension Boost ({{ boostCountText }})</h4>
     <span>Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter D</span>
-    <button
-      :class="classObject"
-      @click.exact="dimensionBoost(true)"
-      @click.shift.exact="dimensionBoost(false)"
-    >
+    <button :class="classObject" @click.exact="dimensionBoost(true)" @click.shift.exact="dimensionBoost(false)">
       {{ unlockedByBoost }}
-      <div
-        v-if="hasTutorial"
-        class="fas fa-circle-exclamation l-notification-icon"
-      />
+      <div v-if="hasTutorial" class="fas fa-circle-exclamation l-notification-icon" />
     </button>
   </div>
 </template>

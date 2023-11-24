@@ -5,12 +5,11 @@ const path = require("path");
 const proc = require("child_process");
 const readline = require("readline");
 
-
 function getHash(string) {
   let hash = 0;
   for (let i = 0; i < string.length; i++) {
     const char = string.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     // Convert to 32bit integer
     hash &= hash;
   }
@@ -35,7 +34,7 @@ if (newHash !== currentHash) {
 
   const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
   });
 
   console.log("package-lock.json changes were detected");
@@ -47,9 +46,12 @@ if (newHash !== currentHash) {
   }, 5000);
 
   // eslint-disable-next-line max-len
-  rl.question(`Press enter within the next five seconds to skip running 'npm ci' - this will leave your packages out of sync!`, () => {
-    console.log(`'npm ci' step skipped`);
-    rl.close();
-    clearTimeout(timeout);
-  });
+  rl.question(
+    `Press enter within the next five seconds to skip running 'npm ci' - this will leave your packages out of sync!`,
+    () => {
+      console.log(`'npm ci' step skipped`);
+      rl.close();
+      clearTimeout(timeout);
+    }
+  );
 }

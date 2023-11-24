@@ -8,25 +8,25 @@ export default {
   components: {
     AutobuyerBox,
     AutobuyerIntervalButton,
-    AutobuyerInput
+    AutobuyerInput,
   },
   props: {
     isModal: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       hasMaxedInterval: false,
       limitDimBoosts: false,
       limitUntilGalaxies: false,
-      isBuyMaxUnlocked: false
+      isBuyMaxUnlocked: false,
     };
   },
   computed: {
-    autobuyer: () => Autobuyer.dimboost
+    autobuyer: () => Autobuyer.dimboost,
   },
   watch: {
     limitDimBoosts(newValue) {
@@ -34,7 +34,7 @@ export default {
     },
     limitUntilGalaxies(newValue) {
       this.autobuyer.limitUntilGalaxies = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -43,8 +43,8 @@ export default {
       this.isBuyMaxUnlocked = autobuyer.isBuyMaxUnlocked;
       this.limitDimBoosts = autobuyer.limitDimBoosts;
       this.limitUntilGalaxies = autobuyer.limitUntilGalaxies;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -55,71 +55,36 @@ export default {
     :show-interval="!isBuyMaxUnlocked"
     name="Automatic Dimension Boosts"
   >
-    <template
-      v-if="!hasMaxedInterval"
-      #intervalSlot
-    >
+    <template v-if="!hasMaxedInterval" #intervalSlot>
       <AutobuyerIntervalButton :autobuyer="autobuyer" />
     </template>
-    <template
-      v-else-if="isBuyMaxUnlocked"
-      #intervalSlot
-    >
-      <div
-        class="c-autobuyer-box__small-text"
-      >
-        <br>
+    <template v-else-if="isBuyMaxUnlocked" #intervalSlot>
+      <div class="c-autobuyer-box__small-text">
+        <br />
         Activates every X seconds:
       </div>
-      <AutobuyerInput
-        :autobuyer="autobuyer"
-        type="float"
-        property="buyMaxInterval"
-      />
+      <AutobuyerInput :autobuyer="autobuyer" type="float" property="buyMaxInterval" />
     </template>
-    <template
-      v-if="!isBuyMaxUnlocked"
-      #checkboxSlot
-    >
-      <label
-        class="o-autobuyer-toggle-checkbox c-autobuyer-box__small-text l-top-margin o-clickable"
-      >
-        <input
-          v-model="limitDimBoosts"
-          type="checkbox"
-          class="o-clickable"
-        >
+    <template v-if="!isBuyMaxUnlocked" #checkboxSlot>
+      <label class="o-autobuyer-toggle-checkbox c-autobuyer-box__small-text l-top-margin o-clickable">
+        <input v-model="limitDimBoosts" type="checkbox" class="o-clickable" />
         Limit Dimension Boosts to:
       </label>
-      <AutobuyerInput
-        :autobuyer="autobuyer"
-        type="int"
-        property="maxDimBoosts"
-      />
+      <AutobuyerInput :autobuyer="autobuyer" type="int" property="maxDimBoosts" />
     </template>
     <template #toggleSlot>
-      <label
-        class="o-autobuyer-toggle-checkbox c-autobuyer-box__small-text l-autobuyer-text-area o-clickable"
-      >
-        <input
-          v-model="limitUntilGalaxies"
-          type="checkbox"
-          class="o-clickable"
-        >
+      <label class="o-autobuyer-toggle-checkbox c-autobuyer-box__small-text l-autobuyer-text-area o-clickable">
+        <input v-model="limitUntilGalaxies" type="checkbox" class="o-clickable" />
         <span v-if="isBuyMaxUnlocked">
-          Only Dimboost to unlock new<br>
+          Only Dimboost to unlock new<br />
           Dimensions until X Galaxies:
         </span>
         <span v-else>
-          Galaxies required to always<br>
+          Galaxies required to always<br />
           Dimboost, ignoring the limit:
         </span>
       </label>
-      <AutobuyerInput
-        :autobuyer="autobuyer"
-        type="int"
-        property="galaxies"
-      />
+      <AutobuyerInput :autobuyer="autobuyer" type="int" property="galaxies" />
     </template>
   </AutobuyerBox>
 </template>

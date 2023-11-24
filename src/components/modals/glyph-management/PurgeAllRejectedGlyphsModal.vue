@@ -4,7 +4,7 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "PurgeAllRejectedGlyphsModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   data() {
     return {
@@ -35,7 +35,7 @@ export default {
 
     // These two don't need to be reactive since the modal force-closes itself whenever glyphs change
     glyphsTotal() {
-      return Glyphs.inventory.filter(slot => slot !== null).length;
+      return Glyphs.inventory.filter((slot) => slot !== null).length;
     },
     glyphsDeleted() {
       return Glyphs.deleteAllRejected(false);
@@ -53,17 +53,14 @@ export default {
 </script>
 
 <template>
-  <ModalWrapperChoice
-    option="sacrificeAll"
-    @confirm="handleYesClick"
-  >
+  <ModalWrapperChoice option="sacrificeAll" @confirm="handleYesClick">
     <template #header>
       {{ topLabel }}
     </template>
     <div class="c-modal-message__text">
       {{ message }}
     </div>
-    <br>
+    <br />
     <div class="c-modal-hard-reset-danger">
       {{ extraMessage }}
     </div>

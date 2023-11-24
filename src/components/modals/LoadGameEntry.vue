@@ -4,25 +4,25 @@ import PrimaryButton from "@/components/PrimaryButton";
 export default {
   name: "LoadGameEntry",
   components: {
-    PrimaryButton
+    PrimaryButton,
   },
   props: {
     saveId: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     const save = GameStorage.saves[this.saveId];
     return {
       antimatter: new Decimal(save ? save.antimatter || save.money : 10),
-      fileName: save ? save.options.saveFileName : ""
+      fileName: save ? save.options.saveFileName : "",
     };
   },
   computed: {
     isSelected() {
       return GameStorage.currentSlot === this.saveId;
-    }
+    },
   },
   methods: {
     load() {
@@ -35,7 +35,7 @@ export default {
       if (this.isSelected) {
         this.antimatter.copyFrom(Currency.antimatter);
       }
-    }
+    },
   },
 };
 </script>
@@ -45,11 +45,6 @@ export default {
     <h3>Save #{{ saveId + 1 }}:<span v-if="isSelected"> (selected)</span></h3>
     <span v-if="fileName">File name: {{ fileName }}</span>
     <span>Antimatter: {{ formatAntimatter(antimatter) }}</span>
-    <PrimaryButton
-      class="o-primary-btn--width-medium"
-      @click="load"
-    >
-      Load
-    </PrimaryButton>
+    <PrimaryButton class="o-primary-btn--width-medium" @click="load"> Load </PrimaryButton>
   </div>
 </template>

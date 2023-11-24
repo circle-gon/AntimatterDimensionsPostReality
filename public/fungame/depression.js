@@ -16,7 +16,7 @@ let game = {
   amounts: [new Decimal(0)],
   purchases: [new Decimal(0)],
   depression: new Decimal(1),
-  prestige: [new Decimal(1)]
+  prestige: [new Decimal(1)],
 };
 
 class StuffState {
@@ -102,7 +102,7 @@ class StuffState {
       amounts: [new Decimal(0)],
       purchases: [new Decimal(0)],
       depression: new Decimal(1),
-      prestige: game.prestige
+      prestige: game.prestige,
     };
     updateUI();
   }
@@ -117,7 +117,7 @@ class StuffState {
   }
 }
 
-const Stuff = id => new StuffState(id);
+const Stuff = (id) => new StuffState(id);
 
 const Stuffs = {
   get count() {
@@ -140,7 +140,7 @@ const Stuffs = {
   },
   get last() {
     return Stuff(Stuffs.count);
-  }
+  },
 };
 
 function save() {
@@ -191,7 +191,6 @@ function gameLoop() {
   updateUI();
 }
 
-
 function format(value, places, placesUnder1000) {
   return notation.format(value, places, placesUnder1000);
 }
@@ -203,7 +202,7 @@ function formatX(value, places, placesUnder1000) {
 Vue.mixin({
   methods: {
     format,
-    formatX
+    formatX,
   },
   created() {
     if (this.update) {
@@ -212,18 +211,18 @@ Vue.mixin({
     }
   },
   destroyed() {
-    uiUpdateHooks = uiUpdateHooks.filter(h => h !== this);
-  }
+    uiUpdateHooks = uiUpdateHooks.filter((h) => h !== this);
+  },
 });
 
 const StuffButton = {
   props: {
-    stuff: Object
+    stuff: Object,
   },
   data: () => ({
     amount: new Decimal(0),
     cost: new Decimal(0),
-    prestige: new Decimal(1)
+    prestige: new Decimal(1),
   }),
   methods: {
     update() {
@@ -231,7 +230,7 @@ const StuffButton = {
       this.amount.fromDecimal(this.stuff.amount);
       this.cost.fromDecimal(this.stuff.cost);
       this.prestige.fromDecimal(this.stuff.prestige);
-    }
+    },
   },
   template: `
     <button class="button button--stuff" @click="stuff.purchase()">
@@ -240,49 +239,49 @@ const StuffButton = {
       Power: {{ formatX(prestige, 2) }}
       <br>
       Cost: {{ format(cost, 2) }}
-    </button>`
+    </button>`,
 };
 
 const PrestigeButton = {
   props: {
-    stuff: Object
+    stuff: Object,
   },
   data: () => ({
     canPrestige: false,
-    nextPrestige: new Decimal(1)
+    nextPrestige: new Decimal(1),
   }),
   methods: {
     update() {
       if (!this.stuff.isUnlocked) return;
       this.canPrestige = this.stuff.canPrestige;
       this.nextPrestige.fromDecimal(this.stuff.nextPrestige);
-    }
+    },
   },
   template: `
     <button v-if="canPrestige" class="button button--prestige" @click="stuff.doPrestige()">
       Reset to increase bonus to {{ formatX(nextPrestige, 2) }} boost.
-    </button>`
+    </button>`,
 };
 
 const Depression = {
   components: {
     "stuff-button": StuffButton,
-    "prestige-button": PrestigeButton
+    "prestige-button": PrestigeButton,
   },
   data: () => ({
     depression: new Decimal(1),
-    stuffCount: 0
+    stuffCount: 0,
   }),
   computed: {
     stuffs() {
       return Stuffs.range(this.stuffCount);
-    }
+    },
   },
   methods: {
     update() {
       this.depression.fromDecimal(game.depression);
       this.stuffCount = Stuffs.count;
-    }
+    },
   },
   template: `
     <div class="app">
@@ -294,7 +293,7 @@ const Depression = {
           <prestige-button :stuff="stuff" />
         </template>
       </div>
-    </div>`
+    </div>`,
 };
 
 let vue;
@@ -306,8 +305,8 @@ window.onload = () => {
   vue = new Vue({
     el: "#depression",
     components: {
-      depression: Depression
+      depression: Depression,
     },
-    template: "<depression/>"
+    template: "<depression/>",
   });
 };

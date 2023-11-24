@@ -17,7 +17,7 @@ export default {
     StudyStringLine,
     PrimaryButton,
     StudyStringPreview,
-    StudyTreeInfo
+    StudyTreeInfo,
   },
   props: {
     id: {
@@ -28,14 +28,14 @@ export default {
       type: Boolean,
       required: false,
       default: false,
-    }
+    },
   },
   data() {
     return {
       input: "",
       name: "",
       respecAndLoad: false,
-      canEternity: false
+      canEternity: false,
     };
   },
   computed: {
@@ -47,7 +47,7 @@ export default {
     importedTree() {
       if (!this.inputIsValidTree) return {};
       const importedTree = new TimeStudyTree(this.truncatedInput);
-      const newStudiesArray = importedTree.purchasedStudies.map(s => this.studyString(s));
+      const newStudiesArray = importedTree.purchasedStudies.map((s) => this.studyString(s));
       return {
         timeTheorems: importedTree.spentTheorems[0],
         spaceTheorems: importedTree.spentTheorems[1],
@@ -68,7 +68,8 @@ export default {
       const currentStudyTree = GameCache.currentStudyTree.value;
       const combinedTree = this.combinedTreeObject;
       const newStudiesArray = combinedTree.purchasedStudies
-        .filter(s => !currentStudyTree.purchasedStudies.includes(s)).map(s => this.studyString(s));
+        .filter((s) => !currentStudyTree.purchasedStudies.includes(s))
+        .map((s) => this.studyString(s));
       // To start an EC using the ! functionality, we want to make sure all the following are true:
       // - The imported string needs to end with "!" (this is parsed out in time-study-tree.js and stored into the
       //   canStart prop for tree objects)
@@ -114,12 +115,16 @@ export default {
         const num = parseInt(id[2], 10);
         switch (id[1]) {
           case "EC":
-            coloredString = coloredString.replaceAll(new RegExp(`\\|(${num})`, "gu"),
-              `|<span style="color: var(--color-bad);">$1</span>`);
+            coloredString = coloredString.replaceAll(
+              new RegExp(`\\|(${num})`, "gu"),
+              `|<span style="color: var(--color-bad);">$1</span>`
+            );
             break;
           default:
-            coloredString = coloredString.replaceAll(new RegExp(`(\\D)(${num})(\\D)`, "gu"),
-              `$1<span style="color: var(--color-bad);">$2</span>$3`);
+            coloredString = coloredString.replaceAll(
+              new RegExp(`(\\D)(${num})(\\D)`, "gu"),
+              `$1<span style="color: var(--color-bad);">$2</span>$3`
+            );
             break;
         }
       }
@@ -143,19 +148,19 @@ export default {
       // we should allow either to unlock the secret achievement
       const secretStrings = [
         "08b819f253b684773e876df530f95dcb85d2fb052046fa16ec321c65f3330608",
-        "bb450c2a3869bae412ed0b4304dc229521fc69f0fdcc95b3b61460aaf5658fc4"
+        "bb450c2a3869bae412ed0b4304dc229521fc69f0fdcc95b3b61460aaf5658fc4",
       ];
       return secretStrings.includes(sha512_256(this.input.toLowerCase()));
     },
     confirmText() {
       if (this.deleting) return "Delete";
       return this.isImporting ? "Import" : "Save";
-    }
+    },
   },
   watch: {
     input(newInput) {
       savedImportString = newInput;
-    }
+    },
   },
   // Needs to be assigned in created() or else they will end up being undefined when importing
   created() {
@@ -213,7 +218,7 @@ export default {
     },
     studyString(study) {
       return study instanceof ECTimeStudyState ? `EC${study.id}` : `${study.id}`;
-    }
+    },
   },
 };
 </script>
@@ -234,31 +239,18 @@ export default {
       type="text"
       maxlength="1500"
       class="c-modal-input c-modal-import-tree__input"
-      :class="{ 'l-delete-input' : deleting }"
+      :class="{ 'l-delete-input': deleting }"
       :disabled="deleting"
       @keyup.enter="confirm"
       @keyup.esc="emitClose"
-    >
+    />
     <div class="c-two-column">
       <div class="c-study-info l-modal-import-tree__tree-info">
-        <div v-if="inputIsSecret">
-          ???
-        </div>
+        <div v-if="inputIsSecret">???</div>
         <template v-else-if="inputIsValidTree">
-          <div
-            v-if="invalidMessage"
-            class="l-modal-import-tree__tree-info-line"
-            v-html="invalidMessage"
-          />
-          <StudyStringLine
-            v-if="isImporting"
-            :tree="combinedTree"
-            :into-empty="false"
-          />
-          <StudyStringLine
-            :tree="importedTree"
-            :into-empty="true"
-          />
+          <div v-if="invalidMessage" class="l-modal-import-tree__tree-info-line" v-html="invalidMessage" />
+          <StudyStringLine v-if="isImporting" :tree="combinedTree" :into-empty="false" />
+          <StudyStringLine :tree="importedTree" :into-empty="true" />
           <StudyTreeInfo
             v-if="deleting && importedTree.hasInfo"
             header-text="Study Preset contains:"
@@ -275,21 +267,20 @@ export default {
             :tree-status="combinedTree"
           />
         </template>
-        <div v-if="!deleting && !inputIsValidTree && hasInput">
-          Not a valid tree
-        </div>
+        <div v-if="!deleting && !inputIsValidTree && hasInput">Not a valid tree</div>
       </div>
       <div class="c-study-preview">
         <StudyStringPreview
           :show-preview="inputIsValidTree"
-          :new-studies="!isImporting || (canEternity && respecAndLoad) ? importedTree.newStudiesArray
-            : combinedTree.newStudiesArray"
+          :new-studies="
+            !isImporting || (canEternity && respecAndLoad) ? importedTree.newStudiesArray : combinedTree.newStudiesArray
+          "
           :disregard-current-studies="!isImporting || (canEternity && respecAndLoad)"
         />
       </div>
     </div>
     <div v-if="!isImporting && inputIsValidTree">
-      <br>
+      <br />
       <PrimaryButton
         v-if="!deleting"
         v-tooltip="'This will format the study preset text, for example, changing \'a,b,c|d\' to \'a, b, c | d\'.'"
@@ -299,7 +290,7 @@ export default {
       </PrimaryButton>
     </div>
     <span v-if="isImporting">
-      <br>
+      <br />
       <div
         v-tooltip="canEternity ? '' : 'You are currently unable to eternity, so this will only do a normal load.'"
         class="c-modal__confirmation-toggle"
@@ -311,19 +302,11 @@ export default {
             'c-modal__confirmation-toggle__checkbox--active': respecAndLoad,
           }"
         >
-          <span
-            v-if="respecAndLoad"
-            class="fas fa-check"
-          />
+          <span v-if="respecAndLoad" class="fas fa-check" />
         </div>
         <span class="c-modal__confirmation-toggle__text">
           Also respec tree and eternity
-          <span
-            v-if="!canEternity"
-            class="c-modal__confirmation-toggle__warning"
-          >
-            !
-          </span>
+          <span v-if="!canEternity" class="c-modal__confirmation-toggle__warning"> ! </span>
         </span>
       </div>
     </span>

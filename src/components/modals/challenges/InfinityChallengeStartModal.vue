@@ -4,13 +4,13 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "InfinityChallengeStartModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   props: {
     id: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     challenge() {
@@ -43,7 +43,7 @@ export default {
         conditionOfChallenge = conditionOfChallenge();
       }
       return `Inside this Infinity Challenge, ${conditionOfChallenge}`;
-    }
+    },
   },
   created() {
     this.on$(GAME_EVENT.ETERNITY_RESET_AFTER, this.emitClose);
@@ -58,27 +58,19 @@ export default {
 </script>
 
 <template>
-  <ModalWrapperChoice
-    option="challenges"
-    @confirm="handleYesClick"
-  >
+  <ModalWrapperChoice option="challenges" @confirm="handleYesClick">
     <template #header>
       {{ entranceLabel }}
     </template>
     <div class="c-modal-message__text">
       {{ message }}
-      <br><br>
+      <br /><br />
       {{ condition }}
     </div>
-    <div
-      v-if="!challengeIsCompleted"
-      class="c-modal-message__text"
-    >
-      <br>
+    <div v-if="!challengeIsCompleted" class="c-modal-message__text">
+      <br />
       {{ reward }}
     </div>
-    <template #confirm-text>
-      Begin
-    </template>
+    <template #confirm-text> Begin </template>
   </ModalWrapperChoice>
 </template>

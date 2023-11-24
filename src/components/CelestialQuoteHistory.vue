@@ -4,12 +4,12 @@ export default {
   props: {
     celestial: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      isShown: false
+      isShown: false,
     };
   },
   computed: {
@@ -18,16 +18,16 @@ export default {
     },
     possessiveForm() {
       return Celestials[this.celestial].possessiveName;
-    }
+    },
   },
   methods: {
     update() {
-      this.isShown = Celestials[this.celestial].quotes.all.some(x => x.isUnlocked);
+      this.isShown = Celestials[this.celestial].quotes.all.some((x) => x.isUnlocked);
     },
     show() {
       Quote.showHistory(Celestials[this.celestial].quotes.all);
     },
-  }
+  },
 };
 </script>
 
@@ -36,7 +36,7 @@ export default {
     v-if="isShown"
     class="c-celestial-quote-history--button"
     :style="{
-      '--scoped-cel-color': color
+      '--scoped-cel-color': color,
     }"
     @click="show"
   >

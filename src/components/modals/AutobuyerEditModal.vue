@@ -45,18 +45,9 @@ export default {
       We only include these autobuyers as these are (probably) the ones that users will want to change
       most often.
     -->
-    <RealityAutobuyerBox
-      class="c-reality-pos"
-      is-modal
-    />
-    <EternityAutobuyerBox
-      class="c-eternity-pos"
-      is-modal
-    />
-    <BigCrunchAutobuyerBox
-      class="c-infinity-pos"
-      is-modal
-    />
+    <RealityAutobuyerBox class="c-reality-pos" is-modal />
+    <EternityAutobuyerBox class="c-eternity-pos" is-modal />
+    <BigCrunchAutobuyerBox class="c-infinity-pos" is-modal />
     <GalaxyAutobuyerBox is-modal />
     <DimensionBoostAutobuyerBox is-modal />
   </ModalWrapper>

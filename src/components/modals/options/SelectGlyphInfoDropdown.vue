@@ -9,10 +9,16 @@ export const GlyphInfo = {
     CURRENT_REFINE: 5,
     MAX_REFINE: 6,
   },
-  labels: ["None", "Level", "Rarity", "Sacrifice Value", "Glyph Filter Score",
-    "Current Refinement Value", "Maximum Refinement Value"]
+  labels: [
+    "None",
+    "Level",
+    "Rarity",
+    "Sacrifice Value",
+    "Glyph Filter Score",
+    "Current Refinement Value",
+    "Maximum Refinement Value",
+  ],
 };
-
 
 export default {
   name: "SelectGlyphInfoDropdown",
@@ -27,7 +33,7 @@ export default {
         options.push(typeEnum.MAX_REFINE);
       }
       return options;
-    }
+    },
   },
   methods: {
     setType(type) {
@@ -36,8 +42,8 @@ export default {
     },
     getType(type) {
       return GlyphInfo.labels[type];
-    }
-  }
+    },
+  },
 };
 </script>
 

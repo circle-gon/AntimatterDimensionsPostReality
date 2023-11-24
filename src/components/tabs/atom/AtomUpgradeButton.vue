@@ -12,13 +12,13 @@ export default {
     DescriptionDisplay,
     EffectDisplay,
     CostDisplay,
-    HintText
+    HintText,
   },
   props: {
     upgrade: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -47,7 +47,7 @@ export default {
     },
     requirementConfig() {
       return {
-        description: this.config.requirement
+        description: this.config.requirement,
       };
     },
     canLock() {
@@ -75,8 +75,8 @@ export default {
     toggleLock(upgrade) {
       if (this.isRebuyable) return;
       upgrade.toggleMechanicLock();
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -88,16 +88,13 @@ export default {
       @click.shift.exact="toggleLock(upgrade)"
       @click.exact="upgrade.purchase()"
     >
-      <HintText
-        type="atomUpgrades"
-        class="l-hint-text--atom-upgrade c-hint-text--atom-upgrade"
-      >
+      <HintText type="atomUpgrades" class="l-hint-text--atom-upgrade c-hint-text--atom-upgrade">
         {{ config.name }}
       </HintText>
       <span>
         <DescriptionDisplay :config="config" />
-        <template v-if="($viewModel.shiftDown === isAvailableForPurchase) && !isRebuyable">
-          <br>
+        <template v-if="$viewModel.shiftDown === isAvailableForPurchase && !isRebuyable">
+          <br />
           <DescriptionDisplay
             :config="requirementConfig"
             label="Requirement:"
@@ -105,31 +102,14 @@ export default {
           />
         </template>
         <template v-else>
-          <EffectDisplay
-            :config="config"
-            br
-          />
-          <CostDisplay
-            v-if="!isBought"
-            :config="config"
-            br
-            name="Atom"
-          />
+          <EffectDisplay :config="config" br />
+          <CostDisplay v-if="!isBought" :config="config" br name="Atom" />
         </template>
       </span>
     </button>
-    <div
-      v-if="canBeLocked"
-      class="o-requirement-lock"
-    >
-      <i
-        v-if="hasRequirementLock"
-        class="fas fa-lock"
-      />
-      <i
-        v-else-if="canLock"
-        class="fas fa-lock-open"
-      />
+    <div v-if="canBeLocked" class="o-requirement-lock">
+      <i v-if="hasRequirementLock" class="fas fa-lock" />
+      <i v-else-if="canLock" class="fas fa-lock-open" />
     </div>
     <PrimaryToggleButton
       v-if="isRebuyable && isAutoUnlocked"
@@ -140,6 +120,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

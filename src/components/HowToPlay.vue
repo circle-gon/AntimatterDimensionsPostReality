@@ -17,7 +17,7 @@ export default {
       return {
         "margin-top": this.isModern ? "4.5rem" : "1rem",
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -29,37 +29,19 @@ export default {
     },
     showInfo() {
       Modal.information.show();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div>
-    <div
-      :class="h2pClassObject"
-      :style="topMargin"
-      @click="showH2P"
-    >
+    <div :class="h2pClassObject" :style="topMargin" @click="showH2P">
       ?
-      <div
-        v-if="hasTutorial"
-        class="h2p-tooltip"
-      >
-        Click for info
-      </div>
+      <div v-if="hasTutorial" class="h2p-tooltip">Click for info</div>
     </div>
-    <div
-      v-if="hasTutorial"
-      class="h2p-tutorial--glow"
-      :style="topMargin"
-    />
-    <div
-      class="o-tab-btn l-information l-help-me"
-      @click="showInfo"
-    >
-      i
-    </div>
+    <div v-if="hasTutorial" class="h2p-tutorial--glow" :style="topMargin" />
+    <div class="o-tab-btn l-information l-help-me" @click="showInfo">i</div>
   </div>
 </template>
 

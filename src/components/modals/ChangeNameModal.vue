@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       input: "",
-      actualName: ""
+      actualName: "",
     };
   },
   created() {
@@ -33,9 +33,7 @@ export default {
 
 <template>
   <ModalWrapperChoice @confirm="confirmChange">
-    <template #header>
-      Change your Speedrun Player Name
-    </template>
+    <template #header> Change your Speedrun Player Name </template>
     <input
       ref="input"
       v-model="input"
@@ -44,15 +42,11 @@ export default {
       @keyup="updateName"
       @keyup.enter="confirmChange"
       @keyup.esc="emitClose"
-    >
+    />
     <i>
       This can no longer be changed once the timer starts, and there is a limit of {{ formatInt(40) }} characters.
     </i>
-    <div>
-      Your new name will be {{ actualName }}
-    </div>
-    <template #confirm-text>
-      Change Name
-    </template>
+    <div>Your new name will be {{ actualName }}</div>
+    <template #confirm-text> Change Name </template>
   </ModalWrapperChoice>
 </template>

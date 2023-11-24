@@ -19,20 +19,20 @@ export default {
       },
       set(tab) {
         this.tabId = tab.id;
-      }
+      },
     },
     matchingTabs() {
-      return GameDatabase.h2p.search(this.searchValue).filter(searchObj => searchObj.tab.isUnlocked());
+      return GameDatabase.h2p.search(this.searchValue).filter((searchObj) => searchObj.tab.isUnlocked());
     },
     topThreshold() {
       return Math.min(this.matchingTabs[Math.min(this.matchingTabs.length - 1, 4)].relevance + 0.01, 0.5);
-    }
+    },
   },
   created() {
-    const unlockedTabs = GameDatabase.h2p.tabs.filter(tab => tab.isUnlocked());
+    const unlockedTabs = GameDatabase.h2p.tabs.filter((tab) => tab.isUnlocked());
     const tab = this.$viewModel.tab;
     const subtab = `${tab}/${this.$viewModel.subtab}`;
-    const matchedEntry = unlockedTabs.find(h2pTab => h2pTab.tab === subtab || h2pTab.tab === tab);
+    const matchedEntry = unlockedTabs.find((h2pTab) => h2pTab.tab === subtab || h2pTab.tab === tab);
     this.activeTab = ui.view.h2pForcedTab || matchedEntry || unlockedTabs[0];
     ui.view.h2pForcedTab = undefined;
     // Force-show the H2P info initally regardless of tab while the tooltip for the H2P button is still active
@@ -51,10 +51,8 @@ export default {
       const searchObjThis = matches[idx];
       const searchObjOther = matches[idx - 1];
 
-      return idx > 0 &&
-        searchObjThis.relevance >= this.topThreshold &&
-        searchObjOther.relevance < this.topThreshold;
-    }
+      return idx > 0 && searchObjThis.relevance >= this.topThreshold && searchObjOther.relevance < this.topThreshold;
+    },
   },
 };
 </script>
@@ -63,9 +61,7 @@ export default {
   <div class="l-h2p-modal">
     <ModalCloseButton @click="emitClose" />
     <div class="l-h2p-header">
-      <div class="c-h2p-title">
-        How To Play
-      </div>
+      <div class="c-h2p-title">How To Play</div>
     </div>
     <div class="l-h2p-container">
       <div class="l-h2p-search-tab">
@@ -75,7 +71,7 @@ export default {
           placeholder="Type to search..."
           class="c-h2p-search-bar"
           @keyup.esc="emitClose"
-        >
+        />
         <div class="l-h2p-tab-list">
           <div
             v-for="(searchObj, searchObjId) in matchingTabs"
@@ -84,7 +80,7 @@ export default {
             :class="{
               'o-h2p-tab-button--selected': searchObj.tab === activeTab,
               'o-h2p-tab-button--relevant': searchObj.relevance < topThreshold,
-              'o-h2p-tab-button--first-irrelevant': isFirstIrrelevant(searchObjId)
+              'o-h2p-tab-button--first-irrelevant': isFirstIrrelevant(searchObjId),
             }"
             @click="setActiveTab(searchObj.tab)"
           >
@@ -96,11 +92,7 @@ export default {
         <div class="c-h2p-body--title">
           {{ activeTab.name }}
         </div>
-        <div
-          id="h2p-body"
-          class="l-h2p-body c-h2p-body"
-          v-html="activeTab.info()"
-        />
+        <div id="h2p-body" class="l-h2p-body c-h2p-body" v-html="activeTab.info()" />
       </div>
     </div>
   </div>

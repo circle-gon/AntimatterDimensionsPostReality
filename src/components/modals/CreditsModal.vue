@@ -6,7 +6,7 @@ export default {
   name: "CreditsModal",
   components: {
     CreditsDisplay,
-    ModalWrapper
+    ModalWrapper,
   },
 };
 </script>
@@ -14,9 +14,7 @@ export default {
 <template>
   <ModalWrapper class="l-credits-modal c-credits-modal">
     <template #header>
-      <h1 class="c-game-header__antimatter">
-        Antimatter Dimensions
-      </h1>
+      <h1 class="c-game-header__antimatter">Antimatter Dimensions</h1>
     </template>
     <div class="c-credits-modal__body">
       <CreditsDisplay :is-modal="true" />

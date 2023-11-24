@@ -14,7 +14,7 @@ export default {
     AntimatterDimensionRow,
     AntimatterGalaxyRow,
     DimensionBoostRow,
-    TickspeedRow
+    TickspeedRow,
   },
   data() {
     return {
@@ -90,18 +90,15 @@ export default {
         ? ` | Dimensional Sacrifice multiplier: ${formatX(this.currentSacrifice, 2, 2)}`
         : "";
       this.multiplierText += sacText;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-antimatter-dim-tab">
     <div class="modes-container">
-      <button
-        class="o-primary-btn l-button-container"
-        @click="changeBuyMode"
-      >
+      <button class="o-primary-btn l-button-container" @click="changeBuyMode">
         {{ getUntil10Display() }}
       </button>
       <PrimaryButton
@@ -114,21 +111,12 @@ export default {
         <span v-if="isSacrificeAffordable">Dimensional Sacrifice ({{ formatX(sacrificeBoost, 2, 2) }})</span>
         <span v-else>Dimensional Sacrifice Disabled ({{ disabledCondition }})</span>
       </PrimaryButton>
-      <button
-        class="o-primary-btn l-button-container"
-        @click="maxAll"
-      >
-        Max All (M)
-      </button>
+      <button class="o-primary-btn l-button-container" @click="maxAll">Max All (M)</button>
     </div>
     <span>{{ multiplierText }}</span>
     <TickspeedRow />
     <div class="l-dimensions-container">
-      <AntimatterDimensionRow
-        v-for="tier in 8"
-        :key="tier"
-        :tier="tier"
-      />
+      <AntimatterDimensionRow v-for="tier in 8" :key="tier" :tier="tier" />
     </div>
     <div class="resets-container">
       <DimensionBoostRow />

@@ -28,11 +28,11 @@ export default {
     FadeAway,
     CreditsContainer,
     SpectateGame,
-    NewGame
+    NewGame,
   },
   data() {
     return {
-      ending: false
+      ending: false,
     };
   },
   computed: {
@@ -41,54 +41,32 @@ export default {
     },
     hideIfMatoFullscreen() {
       return {
-        visibility: ui.view.tabs.reality.automator.fullScreen ? "hidden" : "visible"
+        visibility: ui.view.tabs.reality.automator.fullScreen ? "hidden" : "visible",
       };
-    }
+    },
   },
   methods: {
     update() {
       this.ending = GameEnd.endState >= END_STATE_MARKERS.FADE_AWAY && !GameEnd.creditsClosed;
-    }
-  }
+    },
+  },
 };
 </script>
 
-
 <template>
   <!-- Hide the button if the automator is in fullscreen mode: Nothing here needs to be visible during fullscreen -->
-  <div
-    id="ui-fixed"
-    class="c-game-ui--fixed"
-  >
-    <div
-      id="notification-container"
-      class="l-notification-container"
-    />
+  <div id="ui-fixed" class="c-game-ui--fixed">
+    <div id="notification-container" class="l-notification-container" />
     <HowToPlay :style="hideIfMatoFullscreen" />
-    <TimeTheoremShop
-      v-if="view.subtab === 'studies'"
-      class="l-time-studies-tab__tt-shop"
-    />
-    <ModernSidebar
-      v-if="view.newUI && view.theme !== 'S12'"
-      :style="hideIfMatoFullscreen"
-    />
+    <TimeTheoremShop v-if="view.subtab === 'studies'" class="l-time-studies-tab__tt-shop" />
+    <ModernSidebar v-if="view.newUI && view.theme !== 'S12'" :style="hideIfMatoFullscreen" />
     <SaveTimer :style="hideIfMatoFullscreen" />
     <SpeedrunStatus :style="hideIfMatoFullscreen" />
     <template v-if="view.theme !== 'S12'">
       <ModalProgressBar v-if="view.modal.progressBar" />
-      <CelestialQuoteModal
-        v-else-if="view.quotes.current"
-        :quote="view.quotes.current"
-      />
-      <CelestialQuoteHistoryDisplay
-        v-else-if="view.quotes.history"
-        :quotes="view.quotes.history"
-      />
-      <PopupModal
-        v-else-if="view.modal.current"
-        :modal="view.modal.current"
-      />
+      <CelestialQuoteModal v-else-if="view.quotes.current" :quote="view.quotes.current" />
+      <CelestialQuoteHistoryDisplay v-else-if="view.quotes.history" :quotes="view.quotes.history" />
+      <PopupModal v-else-if="view.modal.current" :modal="view.modal.current" />
       <ModalProgressBar v-if="view.modal.progressBar" />
       <FadeAway v-if="ending" />
       <CreditsContainer v-if="ending" />

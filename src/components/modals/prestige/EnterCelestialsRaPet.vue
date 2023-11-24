@@ -5,7 +5,7 @@ export default {
     petId: {
       type: Number,
       required: true,
-    }
+    },
   },
   data() {
     return {
@@ -38,17 +38,14 @@ export default {
   methods: {
     update() {
       this.isUnlocked = this.pet.isUnlocked;
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <span
-    v-if="isUnlocked"
-    :style="color"
-  >
+  <span v-if="isUnlocked" :style="color">
     {{ name }} {{ gainText }}.
-    <br>
+    <br />
   </span>
 </template>

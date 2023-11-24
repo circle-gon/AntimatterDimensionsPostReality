@@ -5,7 +5,7 @@ export default {
   name: "BreakUniverse",
   components: {
     BreakUniverseButton,
-  }
+  },
 };
 </script>
 
@@ -15,6 +15,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

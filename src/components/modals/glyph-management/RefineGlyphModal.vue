@@ -4,13 +4,13 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "RefineGlyphModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   props: {
     idx: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -19,7 +19,7 @@ export default {
       gain: 0,
       after: 0,
       cap: 0,
-      confirmedRefine: false
+      confirmedRefine: false,
     };
   },
   computed: {
@@ -45,7 +45,6 @@ export default {
 
       const newGlyph = Glyphs.findByInventoryIndex(this.idx);
       if (this.glyph !== newGlyph && !this.confirmedRefine) {
-
         // Why is confirmedRefine here: refer to SacrificeGlyphModal.vue
 
         this.emitClose();
@@ -61,29 +60,16 @@ export default {
 </script>
 
 <template>
-  <ModalWrapperChoice
-    option="glyphRefine"
-    @confirm="handleYesClick"
-  >
-    <template #header>
-      You are about to refine a Glyph
-    </template>
-    <div
-      v-if="resourceUnlocked"
-      class="c-modal-message__text"
-    >
-      Refining a Glyph will remove the Glyph from your inventory, and in return,
-      you will increase your {{ resourceName }} Alchemy resource from
-      {{ format(resourceAmount, 2, 2) }} to {{ format(after, 2, 2) }}.
-      This Glyph can raise your {{ resourceName }} resource to at most {{ format(cap, 2, 2) }}.
+  <ModalWrapperChoice option="glyphRefine" @confirm="handleYesClick">
+    <template #header> You are about to refine a Glyph </template>
+    <div v-if="resourceUnlocked" class="c-modal-message__text">
+      Refining a Glyph will remove the Glyph from your inventory, and in return, you will increase your
+      {{ resourceName }} Alchemy resource from {{ format(resourceAmount, 2, 2) }} to {{ format(after, 2, 2) }}. This
+      Glyph can raise your {{ resourceName }} resource to at most {{ format(cap, 2, 2) }}.
     </div>
-    <div
-      v-else
-      class="c-modal-message__text"
-    >
-      You cannot gain any {{ resourceName }} alchemy resource because you have not
-      unlocked this Glyph's resource yet. You can still refine it anyway, but nothing
-      will happen. Consider sacrificing the Glyph instead.
+    <div v-else class="c-modal-message__text">
+      You cannot gain any {{ resourceName }} alchemy resource because you have not unlocked this Glyph's resource yet.
+      You can still refine it anyway, but nothing will happen. Consider sacrificing the Glyph instead.
     </div>
   </ModalWrapperChoice>
 </template>

@@ -4,35 +4,30 @@ export default {
   props: {
     challenge: {
       type: Object,
-      required: true
+      required: true,
     },
     isChallengeVisible: {
       type: Function,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      isVisible: false
+      isVisible: false,
     };
   },
   methods: {
     update() {
       this.isVisible = this.isChallengeVisible(this.challenge);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-show="isVisible"
-    class="l-challenge-grid__cell"
-  >
+  <div v-show="isVisible" class="l-challenge-grid__cell">
     <slot />
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,10 +1,9 @@
 ---
 name: Feature request
 about: So I have this idea of a new prestige layer...
-title: ''
+title: ""
 labels: feature
-assignees: ''
-
+assignees: ""
 ---
 
 **Is your feature request related to a problem? Please describe.**

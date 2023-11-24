@@ -29,11 +29,14 @@ export default {
       const badStyle = `style="color: var(--color-infinity)"`;
 
       const suggestions = ["Saving to the Cloud "];
-      const cloudProg = this.conflict.cloud.compositeProgress, localProg = this.conflict.local.compositeProgress;
+      const cloudProg = this.conflict.cloud.compositeProgress,
+        localProg = this.conflict.local.compositeProgress;
       const warnOverwrite = this.farther && Math.abs(cloudProg - localProg) > 0.15;
-      suggestions.push(warnOverwrite
-        ? `<b ${badStyle}>would overwrite a save with significantly more progress</b>`
-        : `<b ${goodStyle}>is probably safe</b>`);
+      suggestions.push(
+        warnOverwrite
+          ? `<b ${badStyle}>would overwrite a save with significantly more progress</b>`
+          : `<b ${goodStyle}>is probably safe</b>`
+      );
       if (this.hasDifferentName || this.wrongHash) {
         suggestions.push(` ${warnOverwrite ? "Additionally" : "However"}, you may be overwriting a 
           <b ${badStyle}>save from a different device</b>.`);
@@ -49,7 +52,7 @@ export default {
     overwriteInfo() {
       return `If another device is also saving to the cloud on this Google Account at the same time,
         this modal may appear repeatedly.`;
-    }
+    },
   },
   methods: {
     doNotSave() {
@@ -59,7 +62,7 @@ export default {
     overwrite() {
       this.conflict.onAccept?.();
       EventHub.dispatch(GAME_EVENT.CLOSE_MODAL);
-    }
+    },
   },
 };
 </script>
@@ -72,25 +75,15 @@ export default {
     :cancel-fn="overwrite"
     @confirm="doNotSave()"
   >
-    <template #header>
-      Save Game to Cloud
-    </template>
+    <template #header> Save Game to Cloud </template>
     <span v-if="wrongHash">
       Your Cloud Save has been <b>changed by a different device</b> since you last saved to the Cloud this session.
     </span>
-    <span v-else-if="hasDifferentName">
-      Your Local and Cloud Saves have <b>different names</b>.
-    </span>
-    <span v-else-if="older">
-      Saving to the Cloud would <b>overwrite an older save</b>.
-    </span>
-    <span v-else-if="farther">
-      Saving to the Cloud would <b>overwrite a save with more progress</b>.
-    </span>
-    <span v-else>
-      Your Local Save and Cloud Save <b>appear to have similar amounts of progress</b>.
-    </span>
-    <br>
+    <span v-else-if="hasDifferentName"> Your Local and Cloud Saves have <b>different names</b>. </span>
+    <span v-else-if="older"> Saving to the Cloud would <b>overwrite an older save</b>. </span>
+    <span v-else-if="farther"> Saving to the Cloud would <b>overwrite a save with more progress</b>. </span>
+    <span v-else> Your Local Save and Cloud Save <b>appear to have similar amounts of progress</b>. </span>
+    <br />
     <SaveInfoEntry
       :save-data="conflict.local"
       :other-data="conflict.cloud"
@@ -106,26 +99,22 @@ export default {
       save-type="Cloud Save"
     />
     <span v-html="suggestionText" />
-    <br>
+    <br />
     <span>
-      Not overwriting will turn off Cloud saving and you will need to manually turn it back on again
-      if you want to use it.
+      Not overwriting will turn off Cloud saving and you will need to manually turn it back on again if you want to use
+      it.
       <span :ach-tooltip="noOverwriteInfo">
         <i class="fas fa-question-circle" />
       </span>
     </span>
     <span>
-      Overwriting will force a save to the Cloud in this particular instance; in most
-      cases this should prevent this modal from reappearing afterwards.
+      Overwriting will force a save to the Cloud in this particular instance; in most cases this should prevent this
+      modal from reappearing afterwards.
       <span :ach-tooltip="overwriteInfo">
         <i class="fas fa-question-circle" />
       </span>
     </span>
-    <template #cancel-text>
-      Overwrite Cloud Save
-    </template>
-    <template #confirm-text>
-      Do not overwrite
-    </template>
+    <template #cancel-text> Overwrite Cloud Save </template>
+    <template #confirm-text> Do not overwrite </template>
   </ModalWrapperChoice>
 </template>

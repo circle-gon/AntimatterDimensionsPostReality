@@ -4,32 +4,32 @@ import GlyphComponent from "@/components/GlyphComponent";
 export default {
   name: "GlyphShowcasePanelEntry",
   components: {
-    GlyphComponent
+    GlyphComponent,
   },
   props: {
     idx: {
       type: Number,
-      required: true
+      required: true,
     },
     glyph: {
       type: Object,
-      required: true
+      required: true,
     },
     showLevel: {
       type: Boolean,
-      required: true
+      required: true,
     },
     realityGlyphBoost: {
       type: Number,
-      default: 0
+      default: 0,
     },
     maxGlyphEffects: {
       type: Number,
-      required: true
+      required: true,
     },
     showSacrifice: {
       type: Boolean,
-      required: true
+      required: true,
     },
   },
   data() {
@@ -61,11 +61,11 @@ export default {
       // eslint-disable-next-line no-nested-ternary
       const arrow = this.isLevelCapped
         ? "<i class='fas fa-sort-down'></i>"
-        : (this.isLevelBoosted ? "<i class='fas fa-sort-up'></i>" : "");
+        : this.isLevelBoosted
+        ? "<i class='fas fa-sort-up'></i>"
+        : "";
       // eslint-disable-next-line no-nested-ternary
-      const color = this.isLevelCapped
-        ? "#ff4444"
-        : (this.isLevelBoosted ? "#44FF44" : "var(--color-text);");
+      const color = this.isLevelCapped ? "#ff4444" : this.isLevelBoosted ? "#44FF44" : "var(--color-text);";
       return `<span style="color: ${color}">
                   ${arrow}${formatInt(this.effectiveLevel)}${arrow}
                   </span>`;
@@ -86,24 +86,26 @@ export default {
         : getRarity(this.glyph.strength)[Theme.current().isDark() ? "darkColor" : "lightColor"];
       return {
         color,
-        "font-weight": "bold"
+        "font-weight": "bold",
       };
     },
     effectStyle() {
       return {
         "font-size": `${this.type === "effarig" ? 1 : 1.2}rem`,
-        "height": this.glyphEffectListHeight(this.maxGlyphEffects)
+        height: this.glyphEffectListHeight(this.maxGlyphEffects),
       };
     },
     glyphEffectList() {
       const db = GlyphEffects;
-      const effects =
-      getGlyphEffectValuesFromBitmask(this.glyph.effects, this.effectiveLevel, this.glyph.strength, this.type)
-        .filter(e => db[e.id].isGenerated === generatedTypes.includes(this.type));
-      const effectStrings = effects
-        .map(e => this.formatEffectString(db[e.id], e.value));
+      const effects = getGlyphEffectValuesFromBitmask(
+        this.glyph.effects,
+        this.effectiveLevel,
+        this.glyph.strength,
+        this.type
+      ).filter((e) => db[e.id].isGenerated === generatedTypes.includes(this.type));
+      const effectStrings = effects.map((e) => this.formatEffectString(db[e.id], e.value));
       // Filter out undefined results since shortDesc only exists for generated effects
-      return effectStrings.filter(s => s !== "undefined");
+      return effectStrings.filter((s) => s !== "undefined");
     },
     rarityPercent() {
       if (this.glyph.type === "companion" || this.glyph.type === "cursed") return "";
@@ -115,27 +117,16 @@ export default {
       this.canSacrifice = GlyphSacrificeHandler.canSacrifice;
     },
     glyphEffectListHeight(effects) {
-      const heights = [
-        "3rem",
-        "6rem",
-        "8rem",
-        "11rem"
-      ];
+      const heights = ["3rem", "6rem", "8rem", "11rem"];
       return heights[effects - 1];
     },
     formatEffectString(dbEntry, value) {
       const rawDesc = dbEntry.shortDesc;
-      const singleValue = dbEntry.formatSingleEffect
-        ? dbEntry.formatSingleEffect(value)
-        : dbEntry.formatEffect(value);
-      const alteredValue = dbEntry.conversion
-        ? dbEntry.formatSecondaryEffect(dbEntry.conversion(value))
-        : "";
+      const singleValue = dbEntry.formatSingleEffect ? dbEntry.formatSingleEffect(value) : dbEntry.formatEffect(value);
+      const alteredValue = dbEntry.conversion ? dbEntry.formatSecondaryEffect(dbEntry.conversion(value)) : "";
       return {
-        text: `${rawDesc}`
-          .replace("{value}", singleValue)
-          .replace("{value2}", alteredValue),
-        isPelleDisabled: dbEntry.isDisabledByDoomed
+        text: `${rawDesc}`.replace("{value}", singleValue).replace("{value2}", alteredValue),
+        isPelleDisabled: dbEntry.isDisabledByDoomed,
       };
     },
     clickGlyph(glyph) {
@@ -151,10 +142,7 @@ export default {
   <div>
     <div class="c-glyph-choice-icon">
       <span :style="typeStyle">{{ typeCapitalized }}</span>
-      <div
-        v-if="showLevel"
-        v-html="levelText"
-      />
+      <div v-if="showLevel" v-html="levelText" />
       <GlyphComponent
         :key="idx"
         class="c-glyph-component-container"
@@ -175,10 +163,7 @@ export default {
         {{ rarityPercent }}
       </div>
     </div>
-    <div
-      class="c-glyph-choice-effect-list"
-      :style="effectStyle"
-    >
+    <div class="c-glyph-choice-effect-list" :style="effectStyle">
       <div
         v-for="(effectObj, index) in glyphEffectList"
         :key="index"

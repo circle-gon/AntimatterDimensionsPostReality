@@ -6,27 +6,27 @@ import AutobuyerIntervalLabel from "./AutobuyerIntervalLabel";
 export default {
   name: "AutobuyerBox",
   components: {
-    AutobuyerIntervalLabel
+    AutobuyerIntervalLabel,
   },
   props: {
     autobuyer: {
       type: Object,
-      required: true
+      required: true,
     },
     name: {
       type: String,
-      required: true
+      required: true,
     },
     showInterval: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     isModal: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -49,13 +49,13 @@ export default {
         "c-autobuyer-buy-box": true,
         "o-primary-btn": true,
         "o-primary-btn--enabled": this.isUnlockable,
-        "o-primary-btn--disabled": !this.isUnlockable
+        "o-primary-btn--disabled": !this.isUnlockable,
       };
     },
     autobuyerBoxRowClass() {
       return {
         "c-autobuyer-box-row": true,
-        "c-autobuyer-box-row__modal": this.isModal
+        "c-autobuyer-box-row__modal": this.isModal,
       };
     },
     autobuyerToggleClass() {
@@ -71,20 +71,18 @@ export default {
           "o-autobuyer-toggle-checkbox__label-modal": this.isModal,
           "o-autobuyer-toggle-checkbox__label--active-paused": this.isActive,
           "o-autobuyer-toggle-checkbox__label--deactive-paused": !this.isActive,
-          "o-autobuyer-toggle-checkbox__label--disabled": !this.globalToggle
+          "o-autobuyer-toggle-checkbox__label--disabled": !this.globalToggle,
         };
       }
       return {
         "o-autobuyer-toggle-checkbox__label": true,
         "o-autobuyer-toggle-checkbox__label-modal": this.isModal,
         "o-autobuyer-toggle-checkbox__label--active": this.isActive,
-        "o-autobuyer-toggle-checkbox__label--disabled": !this.globalToggle
+        "o-autobuyer-toggle-checkbox__label--disabled": !this.globalToggle,
       };
     },
     showEternity() {
-      return PlayerProgress.eternityUnlocked()
-        ? "this Eternity"
-        : "";
+      return PlayerProgress.eternityUnlocked() ? "this Eternity" : "";
     },
     isShowingStateInfo() {
       // Prestiging for a static amount is zero in both AUTO_CRUNCH_MODE and AUTO_ETERNITY_MODE
@@ -101,13 +99,13 @@ export default {
         default:
           return `Will trigger at ${format(this.nextValue, 2)} ${this.autobuyer.name === "Infinity" ? "IP" : "EP"}`;
       }
-    }
+    },
   },
   watch: {
     isActive(newValue) {
       // eslint-disable-next-line vue/no-mutating-props
       this.autobuyer.isActive = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -134,22 +132,16 @@ export default {
       this.autobuyer.purchase();
       TabNotification.newAutobuyer.clearTrigger();
       GameCache.cheapestAntimatterAutobuyer.invalidate();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="isUnlocked || isBought"
-    :class="autobuyerBoxRowClass"
-  >
+  <div v-if="isUnlocked || isBought" :class="autobuyerBoxRowClass">
     <div class="l-autobuyer-box__header">
       {{ name }}
-      <AutobuyerIntervalLabel
-        v-if="showInterval"
-        :autobuyer="autobuyer"
-      />
+      <AutobuyerIntervalLabel v-if="showInterval" :autobuyer="autobuyer" />
       <div v-if="isShowingStateInfo">
         {{ extraInfo }}
       </div>
@@ -166,32 +158,18 @@ export default {
     <div class="c-autobuyer-box-row__optionSlot">
       <slot name="optionSlot" />
     </div>
-    <div
-      class="l-autobuyer-box__footer"
-      @click="toggle"
-    >
+    <div class="l-autobuyer-box__footer" @click="toggle">
       <label :class="autobuyerStateClass">
         <span :class="autobuyerToggleClass" />
       </label>
-      <input
-        :checked="isActive && globalToggle"
-        :disabled="!globalToggle"
-        :name="name"
-        type="checkbox"
-      >
+      <input :checked="isActive && globalToggle" :disabled="!globalToggle" :name="name" type="checkbox" />
     </div>
   </div>
-  <div
-    v-else-if="canBeBought"
-    :class="autobuyerBuyBoxClass"
-    @click="purchase"
-  >
+  <div v-else-if="canBeBought" :class="autobuyerBuyBoxClass" @click="purchase">
     {{ name }}
-    <br>
+    <br />
     Requirement: {{ format(antimatterCost) }} Total Antimatter {{ showEternity }}
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

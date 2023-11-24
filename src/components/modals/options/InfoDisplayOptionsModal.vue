@@ -25,13 +25,13 @@ export default {
       realityUpgrades: false,
       perks: false,
       alchemy: false,
-      atomUpgrades: false
+      atomUpgrades: false,
     };
   },
   computed: {
     fullCompletion() {
       return player.records.fullGameCompletions > 0;
-    }
+    },
   },
   watch: {
     showPercentage(newValue) {
@@ -63,7 +63,7 @@ export default {
     },
     atomUpgrades(newValue) {
       player.options.showHintText.atomUpgrades = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -85,64 +85,25 @@ export default {
       this.perks = options.perks;
       this.alchemy = options.alchemy;
       this.atomUpgrades = options.atomUpgrades;
-    }
+    },
   },
 };
 </script>
 
 <template>
   <ModalWrapperOptions class="c-modal-options__large">
-    <template #header>
-      Info Display Options
-    </template>
+    <template #header> Info Display Options </template>
     <div class="c-modal-options__button-container">
-      <ModalOptionsToggleButton
-        v-model="showPercentage"
-        text="Show % gain:"
-      />
-      <ModalOptionsToggleButton
-        v-model="achievements"
-        text="Achievement IDs:"
-      />
-      <ModalOptionsToggleButton
-        v-model="achievementUnlockStates"
-        text="Achievement unlock state indicators:"
-      />
-      <ModalOptionsToggleButton
-        v-if="infinityUnlocked"
-        v-model="challenges"
-        text="Challenge IDs:"
-      />
-      <ModalOptionsToggleButton
-        v-if="eternityUnlocked"
-        v-model="studies"
-        text="Time Study IDs:"
-      />
-      <ModalOptionsToggleButton
-        v-if="realityUnlocked"
-        v-model="glyphEffectDots"
-        text="Glyph effect dots:"
-      />
-      <ModalOptionsToggleButton
-        v-if="realityUnlocked"
-        v-model="realityUpgrades"
-        text="Reality Upgrade names:"
-      />
-      <ModalOptionsToggleButton
-        v-if="realityUnlocked"
-        v-model="perks"
-        text="Perk IDs:"
-      />
-      <ModalOptionsToggleButton
-        v-if="alchemyUnlocked"
-        v-model="alchemy"
-        text="Alchemy resource amounts:"
-      />
-      <ModalOptionsToggleButton
-        v-if="atomUnlocked"
-        v-model="atomUpgrades"
-        text="Atom Upgrade names:"
-      />
+      <ModalOptionsToggleButton v-model="showPercentage" text="Show % gain:" />
+      <ModalOptionsToggleButton v-model="achievements" text="Achievement IDs:" />
+      <ModalOptionsToggleButton v-model="achievementUnlockStates" text="Achievement unlock state indicators:" />
+      <ModalOptionsToggleButton v-if="infinityUnlocked" v-model="challenges" text="Challenge IDs:" />
+      <ModalOptionsToggleButton v-if="eternityUnlocked" v-model="studies" text="Time Study IDs:" />
+      <ModalOptionsToggleButton v-if="realityUnlocked" v-model="glyphEffectDots" text="Glyph effect dots:" />
+      <ModalOptionsToggleButton v-if="realityUnlocked" v-model="realityUpgrades" text="Reality Upgrade names:" />
+      <ModalOptionsToggleButton v-if="realityUnlocked" v-model="perks" text="Perk IDs:" />
+      <ModalOptionsToggleButton v-if="alchemyUnlocked" v-model="alchemy" text="Alchemy resource amounts:" />
+      <ModalOptionsToggleButton v-if="atomUnlocked" v-model="atomUpgrades" text="Atom Upgrade names:" />
     </div>
     Note: All types of additional info above will always display when holding shift.
   </ModalWrapperOptions>

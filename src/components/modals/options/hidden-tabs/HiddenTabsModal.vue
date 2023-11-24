@@ -28,24 +28,20 @@ export default {
 
 <template>
   <ModalWrapperOptions class="l-wrapper">
-    <template #header>
-      Modify Visible Tabs
-    </template>
+    <template #header> Modify Visible Tabs </template>
     <div class="c-modal--short">
       Click a button to toggle showing a tab on/off.
-      <br>
+      <br />
       Some tabs cannot be hidden, and you cannot hide your current tab.
-      <br>
-      Unhiding a tab in which all subtabs are hidden will also unhide all subtabs,
-      and hiding all subtabs will also hide the tab.
-      <br>
-      <div v-if="isAlmostEnd">
-        You cannot hide your tabs after unlocking the Galaxy Generator.
-      </div>
+      <br />
+      Unhiding a tab in which all subtabs are hidden will also unhide all subtabs, and hiding all subtabs will also hide
+      the tab.
+      <br />
+      <div v-if="isAlmostEnd">You cannot hide your tabs after unlocking the Galaxy Generator.</div>
       <div v-if="isEnslaved">
-        <br>
+        <br />
         <i>You must... see everywhere...</i>
-        <br>
+        <br />
         (You cannot hide your tabs within this Reality)
       </div>
       <HiddenTabGroup

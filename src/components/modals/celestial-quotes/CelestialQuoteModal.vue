@@ -4,23 +4,20 @@ import CelestialQuoteLineBasicInteractable from "./templates/CelestialQuoteLineB
 export default {
   name: "CelestialQuoteModal",
   components: {
-    CelestialQuoteLineBasicInteractable
+    CelestialQuoteLineBasicInteractable,
   },
   props: {
     quote: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
 };
 </script>
 
 <template>
   <div class="l-modal-overlay c-modal-overlay">
-    <CelestialQuoteLineBasicInteractable
-      class="c-quote-overlay"
-      :quote="quote"
-    />
+    <CelestialQuoteLineBasicInteractable class="c-quote-overlay" :quote="quote" />
   </div>
 </template>
 

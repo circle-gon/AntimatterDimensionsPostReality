@@ -6,7 +6,7 @@ export default {
   name: "S12Games",
   data() {
     return {
-      S12Games
+      S12Games,
     };
   },
   mounted() {
@@ -27,12 +27,12 @@ export default {
       if (S12Games.selected !== idx) {
         S12Games.selected = idx;
         isSelectingGame = true;
-        setTimeout(() => isSelectingGame = false, 0);
+        setTimeout(() => (isSelectingGame = false), 0);
       } else {
         window.open(S12Games.entries[idx].link);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -42,14 +42,11 @@ export default {
       v-for="(game, idx) in S12Games.entries"
       :key="game.name"
       class="c-s12-game"
-      :class="{ 'c-s12-game--selected': S12Games.selected === idx, }"
+      :class="{ 'c-s12-game--selected': S12Games.selected === idx }"
       @click="handleClick(idx)"
     >
       <div class="c-s12-game__inner">
-        <img
-          :src="`images/s12/${game.image}`"
-          class="c-s12-game__img"
-        >
+        <img :src="`images/s12/${game.image}`" class="c-s12-game__img" />
         <div class="c-s12-game__text">
           {{ game.name }}
         </div>
@@ -66,9 +63,8 @@ export default {
   --icon-margin: 0.4rem;
   --icon-inner-padding: 0.5rem;
   --total-icon-height: calc(
-    var(--icon-size) + var(--icon-margin) * 2 +
-    var(--icon-font-size) * var(--icon-line-height) * 2 +
-    var(--icon-inner-padding) * 2
+    var(--icon-size) + var(--icon-margin) * 2 + var(--icon-font-size) * var(--icon-line-height) * 2 +
+      var(--icon-inner-padding) * 2
   );
   --total-game-width: 10rem;
   --game-margin: 0.2rem;

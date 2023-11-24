@@ -6,7 +6,7 @@ export default {
   name: "ChallengeTabHeader",
   components: {
     PrimaryButton,
-    PrimaryToggleButton
+    PrimaryToggleButton,
   },
   data() {
     return {
@@ -51,7 +51,7 @@ export default {
         current.exit();
       }
     },
-  }
+  },
 };
 </script>
 
@@ -75,24 +75,14 @@ export default {
         class="o-primary-btn--subtab-option"
         label="Auto Eternity Challenges:"
       />
-      <PrimaryButton
-        v-if="isInChallenge"
-        class="o-primary-btn--subtab-option"
-        @click="restartChallenge"
-      >
+      <PrimaryButton v-if="isInChallenge" class="o-primary-btn--subtab-option" @click="restartChallenge">
         Restart Challenge
       </PrimaryButton>
-      <PrimaryButton
-        v-if="isInChallenge"
-        class="o-primary-btn--subtab-option"
-        @click="exitChallenge"
-      >
+      <PrimaryButton v-if="isInChallenge" class="o-primary-btn--subtab-option" @click="exitChallenge">
         Exit Challenge
       </PrimaryButton>
     </div>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

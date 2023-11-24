@@ -4,7 +4,7 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "ExitChallengeModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   props: {
     challengeName: {
@@ -22,7 +22,7 @@ export default {
     exitFn: {
       type: Function,
       required: true,
-    }
+    },
   },
   computed: {
     isCelestial() {
@@ -30,33 +30,26 @@ export default {
     },
     isRestarting() {
       return this.isCelestial ? player.options.retryCelestial : player.options.retryChallenge;
-    }
+    },
   },
   methods: {
     handleYesClick() {
       this.exitFn();
       EventHub.ui.offAll(this);
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <ModalWrapperChoice
-    option="exitChallenge"
-    @confirm="handleYesClick"
-  >
-    <template #header>
-      You are about to {{ isRestarting ? "restart" : "exit" }} {{ challengeName }}
-    </template>
+  <ModalWrapperChoice option="exitChallenge" @confirm="handleYesClick">
+    <template #header> You are about to {{ isRestarting ? "restart" : "exit" }} {{ challengeName }} </template>
 
     <div class="c-modal-message__text">
       <span v-if="isRestarting">
         You will immediately re-enter {{ challengeName }} again after confirming this modal.
       </span>
-      <span v-else>
-        This will place you back into a regular {{ normalName }} without any restrictions.
-      </span>
+      <span v-else> This will place you back into a regular {{ normalName }} without any restrictions. </span>
       <span v-if="hasHigherLayers">
         Other effects coming from higher-layer restrictions will still continue to apply.
       </span>

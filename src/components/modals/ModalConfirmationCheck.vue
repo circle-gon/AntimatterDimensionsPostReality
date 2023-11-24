@@ -4,12 +4,12 @@ export default {
   props: {
     option: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      setting: true
+      setting: true,
     };
   },
   computed: {
@@ -19,7 +19,7 @@ export default {
     confirmationClass() {
       return {
         "c-modal__confirmation-toggle__checkbox": true,
-        "c-modal__confirmation-toggle__checkbox--active": !this.setting
+        "c-modal__confirmation-toggle__checkbox--active": !this.setting,
       };
     },
     tooltipText() {
@@ -33,27 +33,19 @@ export default {
     toggle() {
       this.setting = !this.setting;
       this.confirmation.option = this.setting;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    class="c-modal__confirmation-toggle"
-    @click="toggle"
-  >
+  <div class="c-modal__confirmation-toggle" @click="toggle">
     <div :class="confirmationClass">
-      <span
-        v-if="!setting"
-        class="fas fa-check"
-      />
+      <span v-if="!setting" class="fas fa-check" />
       <div class="c-modal__confirmation-toggle__tooltip">
         {{ tooltipText }}
       </div>
     </div>
-    <span class="c-modal__confirmation-toggle__text">
-      Don't show this message again
-    </span>
+    <span class="c-modal__confirmation-toggle__text"> Don't show this message again </span>
   </div>
 </template>

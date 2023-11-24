@@ -6,12 +6,12 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "ExitDilationModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   data() {
     return {
       tachyonGain: new Decimal(0),
-      isDoomed: false
+      isDoomed: false,
     };
   },
   computed: {
@@ -24,7 +24,7 @@ export default {
     },
     confirmText() {
       return this.isDoomed ? "Okay" : "Exit";
-    }
+    },
   },
   methods: {
     update() {
@@ -48,29 +48,16 @@ export default {
 </script>
 
 <template>
-  <ModalWrapperChoice
-    option="dilation"
-    @confirm="handleYesClick"
-  >
+  <ModalWrapperChoice option="dilation" @confirm="handleYesClick">
     <template #header>
-      <span v-if="isDoomed">
-        You cannot exit Dilation while Doomed
-      </span>
-      <span v-else>
-        You are about to exit Dilation
-      </span>
+      <span v-if="isDoomed"> You cannot exit Dilation while Doomed </span>
+      <span v-else> You are about to exit Dilation </span>
     </template>
     <div class="c-modal-message__text">
-      <span v-if="isDoomed">
-        Dilation is permanent. You will {{ gainText }} and reset your current Eternity.
-      </span>
-      <span v-else>
-        If you exit Dilation now, you will {{ gainText }}.
-      </span>
-      <div v-if="isInEC">
-        You will also exit your current Eternity Challenge as well.
-      </div>
-      <br>
+      <span v-if="isDoomed"> Dilation is permanent. You will {{ gainText }} and reset your current Eternity. </span>
+      <span v-else> If you exit Dilation now, you will {{ gainText }}. </span>
+      <div v-if="isInEC">You will also exit your current Eternity Challenge as well.</div>
+      <br />
       Are you sure you want to proceed?
     </div>
     <template #confirm-text>

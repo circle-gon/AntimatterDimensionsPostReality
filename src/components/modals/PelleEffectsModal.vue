@@ -55,23 +55,18 @@ export default {
         "Infinity Upgrades cannot be charged",
         "Triad Studies and Space Theorems are disabled",
         "Imaginary Upgrades are disabled excluding those relating to DMD's and Celestial unlocks",
-        "Continuum and Singularity rewards are disabled"
+        "Continuum and Singularity rewards are disabled",
       ];
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <ModalWrapper>
-    <template #header>
-      List of disabled and nerfed effects in Doomed
-    </template>
+    <template #header> List of disabled and nerfed effects in Doomed </template>
     <div class="pelle-effects-container">
-      <p
-        v-for="(nerf, idx) in nerfs"
-        :key="idx"
-      >
+      <p v-for="(nerf, idx) in nerfs" :key="idx">
         {{ nerf }}
       </p>
     </div>

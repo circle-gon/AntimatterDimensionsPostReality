@@ -9,66 +9,60 @@ export default {
   props: {
     header: {
       type: String,
-      required: true
+      required: true,
     },
     message: {
       type: String,
-      required: true
+      required: true,
     },
     gainedResources: {
       type: String,
-      required: true
+      required: true,
     },
     startingResources: {
       type: String,
       required: false,
-      default: undefined
+      default: undefined,
     },
     confirmOption: {
       type: String,
       required: false,
-      default: undefined
+      default: undefined,
     },
     confirmFn: {
       type: Function,
-      required: true
+      required: true,
     },
     alternateText: {
       type: String,
       required: false,
-      default: undefined
+      default: undefined,
     },
     alternateCondition: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
 };
 </script>
 
 <template>
-  <ModalWrapperChoice
-    :option="confirmOption"
-    @confirm="confirmFn"
-  >
+  <ModalWrapperChoice :option="confirmOption" @confirm="confirmFn">
     <template #header>
       {{ header }}
     </template>
     <div v-if="!alternateCondition">
       <div class="c-modal-message__text">
         {{ message }}
-        <br>
+        <br />
       </div>
-      <br>
+      <br />
       <div class="c-modal-message__text">
         {{ gainedResources }}
       </div>
-      <br>
-      <div
-        v-if="startingResources"
-        class="c-modal-message__text"
-      >
+      <br />
+      <div v-if="startingResources" class="c-modal-message__text">
         {{ startingResources }}
       </div>
     </div>

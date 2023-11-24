@@ -6,7 +6,7 @@ export default {
   components: { PrimaryButton },
   data() {
     return {
-      showSpectate: Boolean
+      showSpectate: Boolean,
     };
   },
   methods: {
@@ -17,20 +17,14 @@ export default {
     swap() {
       GameEnd.creditsClosed = !GameEnd.creditsClosed;
       if (!GameEnd.creditsEverClosed) GameEnd.creditsEverClosed = true;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="showSpectate"
-    :key="endState"
-  >
-    <PrimaryButton
-      class="c-swap-button o-primary-btn--modal-close c-modal__close-btn tutorial--glow"
-      @click="swap"
-    >
+  <div v-if="showSpectate" :key="endState">
+    <PrimaryButton class="c-swap-button o-primary-btn--modal-close c-modal__close-btn tutorial--glow" @click="swap">
       <i class="fas fa-sync" />
     </PrimaryButton>
   </div>

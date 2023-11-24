@@ -12,7 +12,7 @@ export default {
   name: "ImportSaveModal",
   components: {
     ModalWrapperChoice,
-    PrimaryButton
+    PrimaryButton,
   },
   data() {
     return {
@@ -97,11 +97,11 @@ export default {
     willLoseCosmetics() {
       const currSets = player.reality.glyphs.cosmetics.unlockedFromNG;
       const importedSets = this.player.reality?.glyphs.cosmetics?.unlockedFromNG ?? [];
-      return currSets.filter(set => !importedSets.includes(set)).length > 0;
+      return currSets.filter((set) => !importedSets.includes(set)).length > 0;
     },
     willLoseSpeedrun() {
       return player.speedrun.isUnlocked && !this.player.speedrun?.isUnlocked;
-    }
+    },
   },
   mounted() {
     this.$refs.input.select();
@@ -142,13 +142,8 @@ export default {
 </script>
 
 <template>
-  <ModalWrapperChoice
-    :show-cancel="!inputIsValid"
-    :show-confirm="false"
-  >
-    <template #header>
-      Input your save
-    </template>
+  <ModalWrapperChoice :show-cancel="!inputIsValid" :show-confirm="false">
+    <template #header> Input your save </template>
     <input
       ref="input"
       v-model="input"
@@ -156,60 +151,40 @@ export default {
       class="c-modal-input c-modal-import__input"
       @keyup.enter="importSave"
       @keyup.esc="emitClose"
-    >
+    />
     <div class="c-modal-import__save-info">
-      <div v-if="inputIsSecret">
-        ???
-      </div>
+      <div v-if="inputIsSecret">???</div>
       <template v-else-if="inputIsValidSave">
-        <div v-if="fileName">
-          File name: {{ fileName }}
-        </div>
+        <div v-if="fileName">File name: {{ fileName }}</div>
         <div>Antimatter: {{ formatPostBreak(antimatter, 2, 1) }}</div>
-        <div v-if="progress.isInfinityUnlocked">
-          Infinities: {{ formatPostBreak(infinities, 2) }}
-        </div>
-        <div v-if="progress.isEternityUnlocked">
-          Eternities: {{ formatPostBreak(player.eternities, 2) }}
-        </div>
-        <div v-if="progress.isRealityUnlocked">
-          Realities: {{ formatPostBreak(player.realities, 2) }}
-        </div>
+        <div v-if="progress.isInfinityUnlocked">Infinities: {{ formatPostBreak(infinities, 2) }}</div>
+        <div v-if="progress.isEternityUnlocked">Eternities: {{ formatPostBreak(player.eternities, 2) }}</div>
+        <div v-if="progress.isRealityUnlocked">Realities: {{ formatPostBreak(player.realities, 2) }}</div>
         <div v-if="progress.hasFullCompletion">
           Full game completions: {{ formatInt(player.records.fullGameCompletions) }}
         </div>
-        <div class="c-modal-import__warning">
-          (Your current save file will be overwritten!)
-        </div>
-        <br>
+        <div class="c-modal-import__warning">(Your current save file will be overwritten!)</div>
+        <br />
         <div>
           {{ lastOpened }}
-          <div
-            class="o-primary-btn"
-            @click="changeOfflineSetting"
-          >
-            Offline Progress: {{ offlineType }}
-          </div>
+          <div class="o-primary-btn" @click="changeOfflineSetting">Offline Progress: {{ offlineType }}</div>
           <span v-html="offlineDetails" />
         </div>
       </template>
       <div v-else-if="hasInput">
         Not a valid save:
-        <br>
+        <br />
         {{ saveCheckString }}
       </div>
-      <div
-        v-if="player"
-        class="c-modal-hard-reset-danger"
-      >
+      <div v-if="player" class="c-modal-hard-reset-danger">
         <div v-if="willLoseCosmetics">
-          <br>
+          <br />
           Glyph cosmetic sets from completing the game are tied to your save.
-          <br>
+          <br />
           Importing this save will cause you to lose some sets.
         </div>
         <div v-if="willLoseSpeedrun">
-          <br>
+          <br />
           You will lose the ability to do a Speedrun, as this save does not have it unlocked.
         </div>
       </div>

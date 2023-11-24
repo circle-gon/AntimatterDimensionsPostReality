@@ -24,7 +24,7 @@ export default {
     },
     text() {
       return `${this.type.formatName}:`;
-    }
+    },
   },
   watch: {
     setting(newValue) {
@@ -36,15 +36,11 @@ export default {
       const type = this.type;
       this.setting = type.option;
       this.isVisible = type.isUnlocked();
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <ModalOptionsToggleButton
-    v-if="isVisible"
-    v-model="setting"
-    :text="text"
-  />
+  <ModalOptionsToggleButton v-if="isVisible" v-model="setting" :text="text" />
 </template>

@@ -55,14 +55,14 @@ export default {
       return this.anyUnlocked;
     },
     isContActive() {
-      return this.continuumStates.some(i => i === true);
+      return this.continuumStates.some((i) => i === true);
     },
     autobuyerText() {
       if (this.continuumStates[0]) return "Antimatter Dimension and Tickspeed";
       if (this.continuumStates[1]) return "Infinity Dimension";
       if (this.continuumStates[2]) return "Time Dimension";
       return "";
-    }
+    },
   },
   methods: {
     update() {
@@ -84,22 +84,12 @@ export default {
 </script>
 
 <template>
-  <span
-    v-if="showAutobuyers && !isContActive"
-    class="c-autobuyer-box-row"
-  >
-    <AutobuyerGroupToggleLabel
-      :is-active="parentActive"
-      :name="name"
-      @click="toggleGroup"
-    />
+  <span v-if="showAutobuyers && !isContActive" class="c-autobuyer-box-row">
+    <AutobuyerGroupToggleLabel :is-active="parentActive" :name="name" @click="toggleGroup" />
     <div class="l-autobuyer-box__title">
-      {{ name }}<br>Autobuyers
+      {{ name }}<br />Autobuyers
       <!-- If we're showing as a group, then all attributes are the same and we can arbitrarily take the first one -->
-      <AutobuyerIntervalLabel
-        v-if="displayLabelAsGroup"
-        :autobuyer="autobuyers[0]"
-      />
+      <AutobuyerIntervalLabel v-if="displayLabelAsGroup" :autobuyer="autobuyers[0]" />
     </div>
     <div class="l-autobuyer-box__autobuyers">
       <template v-for="(autobuyer, id) in autobuyers">
@@ -111,19 +101,13 @@ export default {
           :show-individual="!displayLabelAsGroup"
           :parent-disabled="!parentActive"
         />
-        <br
-          v-if="id % entryCountPerRow === entryCountPerRow"
-          :key="id"
-        >
+        <br v-if="id % entryCountPerRow === entryCountPerRow" :key="id" />
       </template>
     </div>
   </span>
-  <span
-    v-else-if="isContActive"
-    class="c-autobuyer-box-row"
-  >
+  <span v-else-if="isContActive" class="c-autobuyer-box-row">
     Continuum replaces your {{ autobuyerText }} Autobuyers, as your production multipliers
-    <br>
+    <br />
     now automatically and continuously scale based on how many purchases you would have had otherwise.
   </span>
 </template>

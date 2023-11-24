@@ -13,27 +13,27 @@ const rarityBorderStyles = {
       lineType: "linear",
       angles: [45],
       colorSplit: [14, 16, 84, 86],
-    }
+    },
   ],
   rare: [
     {
       lineType: "linear",
       angles: [45, 135],
       colorSplit: [14, 16, 84, 86],
-    }
+    },
   ],
   epic: [
     {
       lineType: "linear",
       angles: [45, 135],
       colorSplit: [12, 14, 16, 18, 82, 84, 86, 88],
-    }
+    },
   ],
   legendary: [
     {
       lineType: "bump",
       colorSplit: [15, 25],
-    }
+    },
   ],
   mythical: [
     {
@@ -44,7 +44,7 @@ const rarityBorderStyles = {
       lineType: "linear",
       angles: [45, 135],
       colorSplit: [10, 13, 87, 90],
-    }
+    },
   ],
   transcendent: [
     {
@@ -55,7 +55,7 @@ const rarityBorderStyles = {
       lineType: "linear",
       angles: [45, 135],
       colorSplit: [10, 12, 14, 16, 84, 86, 88, 90],
-    }
+    },
   ],
   celestial: [
     {
@@ -93,21 +93,26 @@ const rarityBorderStyles = {
     {
       lineType: "companion",
     },
-  ]
+  ],
 };
 
 // This function does all the parsing of the above gradient specifications
 // eslint-disable-next-line max-params
 function generateGradient(data, color, glyph, isCircular) {
   // The undefined declarations here are mostly to make ESLint happy, and aren't necessarily used in all cases
-  let borders, scaleFn, centers, specialData, isColor = false;
-  const entries = [], elements = [];
+  let borders,
+    scaleFn,
+    centers,
+    specialData,
+    isColor = false;
+  const entries = [],
+    elements = [];
   switch (data.lineType) {
     case "linear":
       // Produces stripes at the specified angle, where color sharply switches between the specified color and
       // transparent at each percentage in lines
       borders = [0, ...data.colorSplit, 100];
-      scaleFn = perc => (isCircular ? 50 + 0.7 * (perc - 50) : perc);
+      scaleFn = (perc) => (isCircular ? 50 + 0.7 * (perc - 50) : perc);
       for (const angle of data.angles) {
         for (let i = 0; i < borders.length - 1; i++) {
           entries.push(`${isColor ? color : "transparent"} ${scaleFn(borders[i])}% ${scaleFn(borders[i + 1])}%`);
@@ -120,11 +125,9 @@ function generateGradient(data, color, glyph, isCircular) {
       // Produces four bumps on the cardinal directions of the glyph border, with specified color fade distances.
       // These bumps overlap some dots on effarig glyphs, so we conditionally make them more transparent (effectively
       // shrinking them so they don't overlap)
-      specialData = glyph.type === "effarig"
-        ? `${color}60`
-        : color;
+      specialData = glyph.type === "effarig" ? `${color}60` : color;
       centers = ["50% -25%", "50% 125%", "-25% 50%", "125% 50%"];
-      scaleFn = perc => (isCircular ? perc : 0.9 * perc);
+      scaleFn = (perc) => (isCircular ? perc : 0.9 * perc);
       for (let i = 0; i < 4; i++) {
         entries.push(`radial-gradient(at ${centers[i]}, transparent, ${specialData} ${scaleFn(data.colorSplit[0])}%,
           transparent ${scaleFn(data.colorSplit[1])}%)`);
@@ -133,7 +136,7 @@ function generateGradient(data, color, glyph, isCircular) {
     case "radial":
       // Produces a centered circle that only shades within a certain radial distance
       borders = [50, ...data.colorSplit, 100];
-      scaleFn = perc => (isCircular ? 0.9 * perc : 100 - (100 - perc) / 2);
+      scaleFn = (perc) => (isCircular ? 0.9 * perc : 100 - (100 - perc) / 2);
       for (const border of borders) {
         entries.push(`${isColor ? color : "transparent"} ${scaleFn(border)}%`);
         isColor = !isColor;
@@ -156,7 +159,7 @@ function generateGradient(data, color, glyph, isCircular) {
       elements.push(`conic-gradient(${entries.join(",")})`);
 
       centers = ["125% 125%", "-25% 125%"];
-      scaleFn = perc => (isCircular ? 0.9 * (perc + 10) : perc);
+      scaleFn = (perc) => (isCircular ? 0.9 * (perc + 10) : perc);
       for (let i = 0; i < 2; i++) {
         elements.push(`radial-gradient(at ${centers[i]}, transparent, ${color} ${scaleFn(30)}%,
           transparent ${scaleFn(50)}%)`);
@@ -170,52 +173,52 @@ function generateGradient(data, color, glyph, isCircular) {
 export default {
   name: "GlyphComponent",
   components: {
-    GlyphTooltip
+    GlyphTooltip,
   },
   props: {
     glyph: {
       type: Object,
-      required: true
+      required: true,
     },
     isInModal: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     isNew: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     isUnequipped: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     showSacrifice: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     ignoreModifiedLevel: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     realityGlyphBoost: {
       type: Number,
       required: false,
-      default: 0
+      default: 0,
     },
     isInventoryGlyph: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     isActiveGlyph: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     size: {
       type: String,
@@ -225,22 +228,22 @@ export default {
     glowBlur: {
       type: String,
       required: false,
-      default: "1rem"
+      default: "1rem",
     },
     glowSpread: {
       type: String,
       required: false,
-      default: "0.2rem"
+      default: "0.2rem",
     },
     bottomPadding: {
       type: String,
       required: false,
-      default: "0.3rem"
+      default: "0.3rem",
     },
     textProportion: {
       type: Number,
       required: false,
-      default: 0.5
+      default: 0.5,
     },
     circular: {
       type: Boolean,
@@ -256,7 +259,7 @@ export default {
       type: Boolean,
       required: false,
       default: false,
-    }
+    },
   },
   data() {
     return {
@@ -294,7 +297,7 @@ export default {
       // \uE019 = :blobheart:
       if (this.isBlobHeart) return "\uE019";
       if (symbol) return symbol;
-      return (this.$viewModel.theme === "S4" && !this.glyph.cosmetic)
+      return this.$viewModel.theme === "S4" && !this.glyph.cosmetic
         ? CANCER_GLYPH_SYMBOLS[this.glyph.type]
         : this.cosmeticConfig.currentSymbol.symbol;
     },
@@ -311,9 +314,8 @@ export default {
       if (this.glyph.color) overrideColor = GlyphAppearanceHandler.getColorProps(this.glyph.color);
       if (this.glyph.cosmetic) {
         if (this.glyph.cosmetic === this.glyph.type) {
-          overrideColor = this.glyph.type === "cursed"
-            ? GlyphAppearanceHandler.getBaseColor(true)
-            : this.cosmeticConfig.currentColor;
+          overrideColor =
+            this.glyph.type === "cursed" ? GlyphAppearanceHandler.getBaseColor(true) : this.cosmeticConfig.currentColor;
         } else {
           overrideColor = this.cosmeticConfig.currentColor;
         }
@@ -330,7 +332,7 @@ export default {
       return {
         border: overrideColor?.border ?? GlyphAppearanceHandler.getBorderColor(this.glyph.type),
         symbol: overrideColor?.border ?? symbolColor,
-        bg: overrideColor?.bg ?? this.cosmeticConfig.currentColor.bg
+        bg: overrideColor?.bg ?? this.cosmeticConfig.currentColor.bg,
       };
     },
     symbolColor() {
@@ -359,7 +361,7 @@ export default {
         "background-color": this.borderColor,
         "box-shadow": `0 0 ${this.glowBlur} ${this.glowSpread} ${this.borderColor}`,
         "border-radius": this.circular ? "50%" : "0",
-        "-webkit-user-drag": this.draggable ? "" : "none"
+        "-webkit-user-drag": this.draggable ? "" : "none",
       };
     },
     innerStyle() {
@@ -372,18 +374,20 @@ export default {
         "text-shadow": this.symbolBlur ? `-0.04em 0.04em 0.08em ${color}` : undefined,
         "border-radius": this.circular ? "50%" : "0",
         "padding-bottom": this.bottomPadding,
-        background: this.bgColor
+        background: this.bgColor,
       };
     },
     mouseEventHandlers() {
-      const handlers = this.hasTooltip ? {
-        mouseenter: this.mouseEnter,
-        "&mousemove": this.mouseMove,
-        mouseleave: this.mouseLeave,
-        mousedown: this.mouseDown,
-        touchstart: this.touchStart,
-        touchend: this.touchEnd
-      } : {};
+      const handlers = this.hasTooltip
+        ? {
+            mouseenter: this.mouseEnter,
+            "&mousemove": this.mouseMove,
+            mouseleave: this.mouseLeave,
+            mousedown: this.mouseDown,
+            touchstart: this.touchStart,
+            touchend: this.touchEnd,
+          }
+        : {};
       if (this.hasTooltip || this.draggable) {
         handlers.touchmove = this.touchMove;
       }
@@ -462,8 +466,10 @@ export default {
       if (!this.isInventoryGlyph || blacklist.includes(this.glyph.type)) return null;
 
       const options = player.options.showHintText;
-      if (options.glyphInfoType === GlyphInfo.types.NONE ||
-        (!options.showGlyphInfoByDefault && !this.$viewModel.shiftDown)) {
+      if (
+        options.glyphInfoType === GlyphInfo.types.NONE ||
+        (!options.showGlyphInfoByDefault && !this.$viewModel.shiftDown)
+      ) {
         return null;
       }
 
@@ -488,13 +494,13 @@ export default {
     },
     showBorders() {
       return player.options.glyphBorders;
-    }
+    },
   },
   watch: {
     logTotalSacrifice() {
       this.tooltipLoaded = false;
       if (this.isCurrentTooltip) this.showTooltip();
-    }
+    },
   },
   created() {
     this.on$(GAME_EVENT.GLYPH_VISUAL_CHANGE, () => {
@@ -514,7 +520,7 @@ export default {
     // This is essentially a hack that force-suppresses tooltips from being shown in strange spots due to on-load
     // events firing, but has the side effect that the mouse must leave and enter an element which was created
     // underneath it in order to make the tooltip appear
-    setTimeout(() => this.tooltipEnabled = true, 10);
+    setTimeout(() => (this.tooltipEnabled = true), 10);
   },
   beforeDestroy() {
     if (this.isCurrentTooltip) this.hideTooltip();
@@ -525,9 +531,7 @@ export default {
       this.logTotalSacrifice = GameCache.logTotalGlyphSacrifice.value;
       // This needs to be reactive in order to animate while using our low-lag workaround, but we also need to make
       // sure it only animates when that color is actually active
-      this.realityColor = player.reality.glyphs.cosmetics.colorMap.reality
-        ? null
-        : GlyphAppearanceHandler.realityColor;
+      this.realityColor = player.reality.glyphs.cosmetics.colorMap.reality ? null : GlyphAppearanceHandler.realityColor;
       this.sacrificeReward = GlyphSacrificeHandler.glyphSacrificeGain(this.glyph);
       this.uncappedRefineReward = ALCHEMY_BASIC_GLYPH_TYPES.includes(this.glyph.type)
         ? GlyphSacrificeHandler.glyphRawRefinementGain(this.glyph)
@@ -556,8 +560,8 @@ export default {
       if (this.isActiveGlyph) this.displayLevel = getAdjustedGlyphLevel(this.glyph);
       else if (this.isInventoryGlyph) this.displayLevel = getAdjustedGlyphLevel(this.glyph, 0);
       else {
-        this.displayLevel = this.glyph.level +
-          (BASIC_GLYPH_TYPES.includes(this.glyph.type) ? this.realityGlyphBoost : 0);
+        this.displayLevel =
+          this.glyph.level + (BASIC_GLYPH_TYPES.includes(this.glyph.type) ? this.realityGlyphBoost : 0);
       }
     },
     hideTooltip() {
@@ -655,9 +659,9 @@ export default {
       }
       const boundary = 100;
       if (ev.clientY < boundary) {
-        this.$viewModel.scrollWindow = -1 + 0.9 * ev.clientY / boundary;
+        this.$viewModel.scrollWindow = -1 + (0.9 * ev.clientY) / boundary;
       } else if (ev.clientY > window.innerHeight - boundary) {
-        this.$viewModel.scrollWindow = 1 - 0.9 * (window.innerHeight - ev.clientY) / boundary;
+        this.$viewModel.scrollWindow = 1 - (0.9 * (window.innerHeight - ev.clientY)) / boundary;
       } else {
         this.$viewModel.scrollWindow = 0;
       }
@@ -691,9 +695,7 @@ export default {
     // Translates 0...3 into equally-spaced coordinates around a circle 90deg apart (0...6 and 45deg for effarig)
     effectIconPos(id) {
       // Place dots clockwise starting from the bottom left
-      const angle = this.glyph.type === "effarig"
-        ? (Math.PI / 4) * (id + 1)
-        : (Math.PI / 2) * (id + 0.5);
+      const angle = this.glyph.type === "effarig" ? (Math.PI / 4) * (id + 1) : (Math.PI / 2) * (id + 0.5);
       const scale = 0.28 * this.size.replace("rem", "");
       const dx = -scale * Math.sin(angle);
       const dy = scale * (Math.cos(angle) + 0.15);
@@ -710,7 +712,7 @@ export default {
         "border-radius": "50%",
         background: this.symbolColor,
         transform: `translate(${pos.dx - 0.15 * 0.3}rem, ${pos.dy - 0.15 * 0.3}rem)`,
-        opacity: Theme.current().name === "S9" ? 0 : 0.8
+        opacity: Theme.current().name === "S9" ? 0 : 0.8,
       };
     },
     glyphBorderStyle() {
@@ -719,7 +721,7 @@ export default {
       if (this.isCursedGlyph) borderAttrs = rarityBorderStyles.cursed;
       else if (this.isCompanionGlyph) borderAttrs = rarityBorderStyles.companion;
       else borderAttrs = rarityBorderStyles[getRarity(this.glyph.strength).name.toLowerCase()];
-      const lines = borderAttrs.map(attr => generateGradient(attr, this.borderColor, this.glyph, this.circular));
+      const lines = borderAttrs.map((attr) => generateGradient(attr, this.borderColor, this.glyph, this.circular));
 
       return {
         position: "absolute",
@@ -728,10 +730,10 @@ export default {
         height: "96%",
         "border-radius": this.circular ? "50%" : "0",
         // Some cases will have undefined lines which need to be removed to combine everything together properly
-        background: lines.filter(l => l).join(",")
+        background: lines.filter((l) => l).join(","),
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -742,22 +744,14 @@ export default {
   -->
   <div
     :style="outerStyle"
-    :class="['l-glyph-component', {'c-glyph-component--dragging': isDragging}]"
+    :class="['l-glyph-component', { 'c-glyph-component--dragging': isDragging }]"
     :draggable="draggable"
     v-on="draggable ? { dragstart: dragStart, dragend: dragEnd, drag: drag } : {}"
   >
-    <div
-      ref="glyph"
-      :style="innerStyle"
-      :class="['l-glyph-component', 'c-glyph-component']"
-    >
+    <div ref="glyph" :style="innerStyle" :class="['l-glyph-component', 'c-glyph-component']">
       {{ symbol }}
       <template v-if="$viewModel.shiftDown || showGlyphEffectDots">
-        <div
-          v-for="x in glyphEffects"
-          :key="x"
-          :style="glyphEffectDots(x)"
-        />
+        <div v-for="x in glyphEffects" :key="x" :style="glyphEffectDots(x)" />
       </template>
     </div>
     <div :style="glyphBorderStyle()" />
@@ -778,20 +772,9 @@ export default {
       :component="componentID"
       :change-watcher="logTotalSacrifice"
     />
-    <div
-      v-if="isNew"
-      class="l-corner-icon l-new-glyph"
-    >
-      New!
-    </div>
-    <div
-      v-else-if="isUnequipped"
-      class="l-corner-icon l-unequipped-glyph fas fa-arrow-up-from-bracket"
-    />
-    <div
-      v-if="displayedInfo"
-      class="l-glyph-info"
-    >
+    <div v-if="isNew" class="l-corner-icon l-new-glyph">New!</div>
+    <div v-else-if="isUnequipped" class="l-corner-icon l-unequipped-glyph fas fa-arrow-up-from-bracket" />
+    <div v-if="displayedInfo" class="l-glyph-info">
       {{ displayedInfo }}
     </div>
     <div

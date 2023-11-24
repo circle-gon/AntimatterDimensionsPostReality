@@ -4,28 +4,24 @@ export default {
   data() {
     return {
       atoms: new Decimal(),
-      isVisible: false
+      isVisible: false,
     };
   },
   methods: {
     update() {
       this.atoms.copyFrom(Currency.atoms);
       this.isVisible = PlayerProgress.atomUnlocked();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="isVisible"
-    class="c-atom-point-desc"
-  >
+  <div v-if="isVisible" class="c-atom-point-desc">
     You have
     <span class="c-atom-points">{{ formatInt(atoms) }}</span>
     {{ pluralize("Atom", atoms) }}.
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

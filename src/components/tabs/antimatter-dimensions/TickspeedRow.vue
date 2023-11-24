@@ -22,11 +22,12 @@ export default {
     classObject() {
       return {
         "l-tickspeed-container": true,
-        "l-tickspeed-container--hidden": !this.isVisible
+        "l-tickspeed-container--hidden": !this.isVisible,
       };
     },
     multiplierDisplay() {
-      if (InfinityChallenge(3).isRunning) return `Multiply all Antimatter Dimensions by
+      if (InfinityChallenge(3).isRunning)
+        return `Multiply all Antimatter Dimensions by
         ${formatX(1.05 + this.galaxyCount * 0.005, 3, 3)}`;
       const tickmult = this.mult;
       return `${formatX(tickmult.reciprocal(), 2, 3)} faster / upgrade.`;
@@ -42,7 +43,7 @@ export default {
       if (!this.freeTickspeed) return quantifyInt("Purchased Upgrade", purchased);
       if (purchased === 0 || this.isContinuumActive) return `${formatInt(this.freeTickspeed)} Free Upgrades`;
       return `${formatInt(purchased)} Purchased + ${formatInt(this.freeTickspeed)} Free`;
-    }
+    },
   },
   methods: {
     update() {
@@ -67,34 +68,21 @@ export default {
         "tickspeed-btn": true,
         "o-primary-btn--disabled": !this.isAffordable && !this.isContinuumActive,
         "o-non-clickable o-continuum": this.isContinuumActive,
-        "tutorial--glow": this.isAffordable && this.hasTutorial
+        "tutorial--glow": this.isAffordable && this.hasTutorial,
       };
     },
-  }
+  },
 };
 </script>
 
 <template>
   <div :class="classObject">
     <div class="tickspeed-buttons">
-      <button
-        v-tooltip="upgradeCount"
-        :class="buttonClass()"
-        onclick="buyTickSpeed()"
-      >
-        <span v-if="isContinuumActive">
-          Tickspeed Continuum: {{ continuumString }}
-        </span>
-        <span v-else-if="isEC9">
-          Tickspeed Unpurchasable (EC 9)
-        </span>
-        <span v-else>
-          Tickspeed Cost: {{ format(cost) }}
-        </span>
-        <div
-          v-if="hasTutorial"
-          class="fas fa-circle-exclamation l-notification-icon"
-        />
+      <button v-tooltip="upgradeCount" :class="buttonClass()" onclick="buyTickSpeed()">
+        <span v-if="isContinuumActive"> Tickspeed Continuum: {{ continuumString }} </span>
+        <span v-else-if="isEC9"> Tickspeed Unpurchasable (EC 9) </span>
+        <span v-else> Tickspeed Cost: {{ format(cost) }} </span>
+        <div v-if="hasTutorial" class="fas fa-circle-exclamation l-notification-icon" />
       </button>
       <button
         v-if="!isContinuumActive"
@@ -105,12 +93,7 @@ export default {
         Buy Max
       </button>
     </div>
-    <div
-      v-if="hasRealityButton"
-      class="tickspeed-labels"
-    >
-      {{ tickspeedDisplay }} | {{ multiplierDisplay }}
-    </div>
+    <div v-if="hasRealityButton" class="tickspeed-labels">{{ tickspeedDisplay }} | {{ multiplierDisplay }}</div>
   </div>
 </template>
 

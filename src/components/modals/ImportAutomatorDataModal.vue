@@ -35,9 +35,7 @@ export default {
       // slot, but we use this prop for information on importing rather than overwriting
       const hasNewConstants = this.willOverwriteConstant || this.constantCountAfterImport > this.currentConstants;
       const isImportingPresets = this.importedPresets ? !this.ignorePresets : false;
-      const isImportingConstants = this.importedConstants
-        ? !this.ignoreConstants && hasNewConstants
-        : false;
+      const isImportingConstants = this.importedConstants ? !this.ignoreConstants && hasNewConstants : false;
       return this.isValid && this.hasExtraData && (isImportingPresets || isImportingConstants);
     },
     currentPresets: () => player.timestudy.presets,
@@ -81,7 +79,7 @@ export default {
     },
     constantButtonText() {
       return this.ignoreConstants ? "Will Ignore Constants" : "Will Import Constants";
-    }
+    },
   },
   mounted() {
     this.$refs.input.select();
@@ -116,7 +114,7 @@ export default {
       if (this.hasExtraData) {
         AutomatorBackend.importFullScriptData(this.input, {
           presets: this.ignorePresets,
-          constants: this.ignoreConstants
+          constants: this.ignoreConstants,
         });
       } else {
         AutomatorBackend.importScriptContents(this.input);
@@ -128,14 +126,8 @@ export default {
 </script>
 
 <template>
-  <ModalWrapperChoice
-    :show-cancel="!isValid"
-    :show-confirm="isValid"
-    @confirm="importSave"
-  >
-    <template #header>
-      Import Automator Script Data
-    </template>
+  <ModalWrapperChoice :show-cancel="!isValid" :show-confirm="isValid" @confirm="importSave">
+    <template #header> Import Automator Script Data </template>
     This will create a new Automator script at the end of your list.
     <span v-if="isImportingExtraData">This will also import additional data related to the script.</span>
     <input
@@ -145,83 +137,55 @@ export default {
       class="c-modal-input c-modal-import__input"
       @keyup.enter="importSave"
       @keyup.esc="emitClose"
-    >
+    />
     <div v-if="isValid">
       Script name: {{ scriptName }}
-      <br>
+      <br />
       Line count: {{ lineCount }}
       <div v-if="hasPresets">
-        <br>
+        <br />
         Study Presets:
-        <span
-          v-for="(preset, id) in importedPresets"
-          :key="id"
-          class="c-import-data-name"
-        >
+        <span v-for="(preset, id) in importedPresets" :key="id" class="c-import-data-name">
           <span v-if="preset.name">"{{ preset.name }}" (slot {{ preset.id + 1 }})</span>
           <span v-else>Preset slot #{{ preset.id + 1 }}</span>
         </span>
-        <div
-          v-if="!ignorePresets && overwrittenPresetCount > 0"
-          class="l-has-errors"
-        >
-          {{ formatInt(overwrittenPresetCount) }} of your existing presets
-          will be overwritten by imported presets!
+        <div v-if="!ignorePresets && overwrittenPresetCount > 0" class="l-has-errors">
+          {{ formatInt(overwrittenPresetCount) }} of your existing presets will be overwritten by imported presets!
         </div>
-        <br>
-        <button
-          class="o-primary-btn"
-          @click="ignorePresets = !ignorePresets"
-        >
+        <br />
+        <button class="o-primary-btn" @click="ignorePresets = !ignorePresets">
           {{ presetButtonText }}
         </button>
       </div>
       <div v-if="hasConstants">
-        <br>
+        <br />
         Constants:
-        <span
-          v-for="(constant, id) in importedConstants"
-          :key="id + 10"
-          class="c-import-data-name"
-        >
+        <span v-for="(constant, id) in importedConstants" :key="id + 10" class="c-import-data-name">
           "{{ constant.key }}"
         </span>
-        <div
-          v-if="!ignoreConstants && (willOverwriteConstant || extraConstants > 0)"
-          class="l-has-errors"
-        >
+        <div v-if="!ignoreConstants && (willOverwriteConstant || extraConstants > 0)" class="l-has-errors">
           <span v-if="willOverwriteConstant">Some of your existing constants will be overwritten!</span>
-          <br v-if="willOverwriteConstant && extraConstants > 0">
+          <br v-if="willOverwriteConstant && extraConstants > 0" />
           <span v-if="extraConstants > 0">
             {{ quantifyInt("constant", extraConstants) }} will not be imported due to the
             {{ maxConstantCount }} constant limit.
           </span>
         </div>
-        <br>
-        <button
-          class="o-primary-btn"
-          @click="ignoreConstants = !ignoreConstants"
-        >
+        <br />
+        <button class="o-primary-btn" @click="ignoreConstants = !ignoreConstants">
           {{ constantButtonText }}
         </button>
       </div>
-      <br>
-      <div
-        v-if="hasErrors"
-        class="l-has-errors"
-      >
+      <br />
+      <div v-if="hasErrors" class="l-has-errors">
         This script has errors which need to be fixed before it can be run!
       </div>
       <div v-if="hasErrors && isImportingExtraData">
         <i>Some errors may be fixed with the additional data being imported.</i>
       </div>
     </div>
-    <div v-else-if="input.length !== 0">
-      Invalid Automator data string
-    </div>
-    <template #confirm-text>
-      Import
-    </template>
+    <div v-else-if="input.length !== 0">Invalid Automator data string</div>
+    <template #confirm-text> Import </template>
   </ModalWrapperChoice>
 </template>
 

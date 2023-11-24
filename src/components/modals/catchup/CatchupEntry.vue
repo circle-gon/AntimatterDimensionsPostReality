@@ -4,7 +4,7 @@ export default {
   props: {
     info: {
       type: Object,
-      required: true
+      required: true,
     },
   },
   data() {
@@ -27,11 +27,12 @@ export default {
       if (this.focusedResourceId === -1) return true;
       const focusedResourceName = GameDatabase.catchupResources[this.focusedResourceId].name;
       if (focusedResourceName !== info.name) return true;
-      return this.tabToOpen = focusedResourceName;
+      return (this.tabToOpen = focusedResourceName);
     },
     showHowTo() {
       ui.view.h2pForcedTab = GameDatabase.h2p.tabs.filter(
-        tab => tab.alias === (this.hasDedicatedH2p ? this.config.openH2pEntry : this.tabToOpen))[0];
+        (tab) => tab.alias === (this.hasDedicatedH2p ? this.config.openH2pEntry : this.tabToOpen)
+      )[0];
       Modal.h2p.show();
     },
   },
@@ -40,14 +41,11 @@ export default {
 
 <template>
   <div class="c-modal-catchup-entry">
-    <span
-      class="c-resource-name"
-      :info="info"
-      :is-focused="isFocusedResource(info)"
-      @click="showHowTo"
-    >
-      <span class="c-underline">{{ info.name }}</span>: <i class="fas fa-question-circle" />
-    </span> {{ info.description }}
+    <span class="c-resource-name" :info="info" :is-focused="isFocusedResource(info)" @click="showHowTo">
+      <span class="c-underline">{{ info.name }}</span
+      >: <i class="fas fa-question-circle" />
+    </span>
+    {{ info.description }}
   </div>
 </template>
 

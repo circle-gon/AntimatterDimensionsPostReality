@@ -18,7 +18,7 @@ export default {
       type: Number,
       required: false,
       default: -1,
-    }
+    },
   },
   data() {
     return {
@@ -44,9 +44,7 @@ export default {
       if (this.realityColor) return this.realityColor;
       const config = this.typeObject[this.type];
       const prop = `${this.isSingleGlyph ? "current" : "default"}${this.attrString.capitalize()}`;
-      return this.isSymbol
-        ? config[prop].symbol
-        : config[prop].border;
+      return this.isSymbol ? config[prop].symbol : config[prop].border;
     },
     canScroll() {
       return this.options.length > this.windowSize;
@@ -54,7 +52,7 @@ export default {
     // Maximum number of options visible at one time, used to determine scrolling bounds
     windowSize() {
       return 17;
-    }
+    },
   },
   created() {
     this.updateSelected();
@@ -95,7 +93,7 @@ export default {
     containerClassObject() {
       return {
         "c-all-options": true,
-        "o-option--inactive": !this.isActive
+        "o-option--inactive": !this.isActive,
       };
     },
     defaultOptionClassObject() {
@@ -148,21 +146,18 @@ export default {
     },
     optionChar(option) {
       if (this.isSymbol) return option;
-      return (option === this.selected || (!this.selected && option === this.defaultOption)) ? "✓" : "";
+      return option === this.selected || (!this.selected && option === this.defaultOption) ? "✓" : "";
     },
     invertBW(color) {
       return color === "black" ? "white" : "black";
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div>
-    <div
-      v-if="options.length > 0"
-      :class="containerClassObject()"
-    >
+    <div v-if="options.length > 0" :class="containerClassObject()">
       <div class="o-default-option">
         <div
           :key="'default' + darkKeySwap"
@@ -174,26 +169,10 @@ export default {
         </div>
       </div>
       <div class="c-extra-options">
-        <div
-          :class="leftClass()"
-          @click="slideWindow(-5)"
-        >
-          ⇐
-        </div>
-        <div
-          :class="rightClass()"
-          @click="slideWindow(5)"
-        >
-          ⇒
-        </div>
-        <div
-          class="c-sliding-window"
-          :style="windowStyle()"
-        >
-          <div
-            v-for="set in options"
-            :key="set[0] + set[1]"
-          >
+        <div :class="leftClass()" @click="slideWindow(-5)">⇐</div>
+        <div :class="rightClass()" @click="slideWindow(5)">⇒</div>
+        <div class="c-sliding-window" :style="windowStyle()">
+          <div v-for="set in options" :key="set[0] + set[1]">
             <div class="c-single-set">
               <div
                 v-for="singleOption in set"
@@ -209,12 +188,7 @@ export default {
         </div>
       </div>
     </div>
-    <div
-      v-else
-      class="c-no-options"
-    >
-      You have no custom options for changing Glyph {{ attrString }}s.
-    </div>
+    <div v-else class="c-no-options">You have no custom options for changing Glyph {{ attrString }}s.</div>
   </div>
 </template>
 

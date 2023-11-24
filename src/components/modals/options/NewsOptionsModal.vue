@@ -10,7 +10,7 @@ export default {
     ModalOptionsToggleButton,
     ModalWrapperOptions,
     PrimaryButton,
-    SliderComponent
+    SliderComponent,
   },
   data() {
     return {
@@ -31,7 +31,7 @@ export default {
         max: 80,
         interval: 1,
         width: "98%",
-        tooltip: false
+        tooltip: false,
       };
     },
     sliderPropsAIChance() {
@@ -40,7 +40,7 @@ export default {
         max: 1,
         interval: 0.01,
         width: "98%",
-        tooltip: false
+        tooltip: false,
       };
     },
     sliderPropsSpeed() {
@@ -49,7 +49,7 @@ export default {
         max: 2,
         interval: 0.01,
         width: "98%",
-        tooltip: false
+        tooltip: false,
       };
     },
   },
@@ -90,20 +90,15 @@ export default {
     adjustSliderValueSpeed(value) {
       this.speed = value;
       player.options.speed = this.speed;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <ModalWrapperOptions>
-    <template #header>
-      News Options
-    </template>
-    <PrimaryButton
-      class="o-primary-btn o-primary-btn--option-wide"
-      onclick="GameOptions.toggleNews()"
-    >
+    <template #header> News Options </template>
+    <PrimaryButton class="o-primary-btn o-primary-btn--option-wide" onclick="GameOptions.toggleNews()">
       {{ newsOnOffLabel }}
     </PrimaryButton>
     <div class="o-primary-btn o-primary-btn--option-wide o-primary-btn--slider">

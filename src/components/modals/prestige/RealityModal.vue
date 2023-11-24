@@ -52,9 +52,7 @@ export default {
       if (this.hasFilter && this.selectedGlyph === undefined) {
         return `If you do not choose a Glyph, one will be automatically selected using your Glyph filter.`;
       }
-      return this.selectedGlyph === undefined
-        ? `You must select a Glyph in order to continue.`
-        : null;
+      return this.selectedGlyph === undefined ? `You must select a Glyph in order to continue.` : null;
     },
     gained() {
       const gainedResources = [];
@@ -69,16 +67,20 @@ export default {
     levelStats() {
       // Bit annoying to read due to needing >, <, and =, with = needing a different format.
       return `You will get a level ${formatInt(this.level)} Glyph on Reality, which is
-        ${this.level === this.bestLevel ? "equal to" : `
+        ${
+          this.level === this.bestLevel
+            ? "equal to"
+            : `
         ${quantifyInt("level", this.levelDifference)}
-        ${this.level > this.bestLevel ? "higher" : "lower"} than`} your best.`;
+        ${this.level > this.bestLevel ? "higher" : "lower"} than`
+        } your best.`;
     },
     confirmationToDisable() {
       return ConfirmationTypes.glyphSelection.isUnlocked() ? "glyphSelection" : undefined;
     },
     canConfirm() {
       return this.firstReality || this.selectedGlyph !== undefined || this.hasFilter;
-    }
+    },
   },
   created() {
     this.getGlyphs();
@@ -101,9 +103,9 @@ export default {
       if (this.firstReality) return;
       for (let i = 0; i < this.glyphs.length; ++i) {
         const currentGlyph = this.glyphs[i];
-        const newGlyph = GlyphSelection.glyphList(
-          GlyphSelection.choiceCount, gainedGlyphLevel(), { isChoosingGlyph: false }
-        )[i];
+        const newGlyph = GlyphSelection.glyphList(GlyphSelection.choiceCount, gainedGlyphLevel(), {
+          isChoosingGlyph: false,
+        })[i];
         if (currentGlyph.level === newGlyph.level) continue;
         currentGlyph.level = newGlyph.level;
         currentGlyph.effects = newGlyph.effects;
@@ -131,34 +133,22 @@ export default {
         this.emitClose();
       }
       startManualReality(sacrifice, this.selectedGlyph);
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <ModalWrapperChoice
-    :option="confirmationToDisable"
-    :show-confirm="canConfirm"
-    @confirm="confirmModal(false)"
-  >
-    <template #header>
-      You are about to Reality
-    </template>
-    <div
-      v-if="firstReality"
-      class="c-modal-message__text"
-    >
+  <ModalWrapperChoice :option="confirmationToDisable" :show-confirm="canConfirm" @confirm="confirmModal(false)">
+    <template #header> You are about to Reality </template>
+    <div v-if="firstReality" class="c-modal-message__text">
       {{ firstRealityText }}
     </div>
 
     <div class="c-modal-message__text">
       {{ gained }}
     </div>
-    <div
-      v-if="!firstReality"
-      class="l-glyph-selection__row"
-    >
+    <div v-if="!firstReality" class="l-glyph-selection__row">
       <GlyphComponent
         v-for="(glyph, index) in glyphs"
         :key="index"
@@ -173,31 +163,28 @@ export default {
     </div>
     <div v-if="!firstReality">
       {{ levelStats }}
-      <br>
+      <br />
       <b class="o-warning">
         {{ warnText }}
       </b>
     </div>
     <div v-if="simRealities > 1">
-      <br>
+      <br />
       After choosing this Glyph the game will simulate the rest of your Realities,
-      <br>
+      <br />
       automatically choosing another {{ quantifyInt("Glyph", simRealities - 1) }}
       based on your Glyph filter settings.
     </div>
     <div v-if="willAutoPurge">
-      <br>
+      <br />
       Auto-purge is currently enabled; your selected Glyph
-      <br>
+      <br />
       may not appear in your inventory after it triggers.
     </div>
-    <div
-      v-if="!hasSpace"
-      class="o-warning"
-    >
+    <div v-if="!hasSpace" class="o-warning">
       <span v-if="simRealities > 1">
-        You will be simulating more Realities than you have open inventory space for;
-        this may result in some Glyphs being Sacrificed.
+        You will be simulating more Realities than you have open inventory space for; this may result in some Glyphs
+        being Sacrificed.
       </span>
       <span v-else>
         You do not have any free inventory space - your selected Glyph will be automatically
@@ -205,17 +192,11 @@ export default {
       </span>
     </div>
     <div v-if="confirmationToDisable">
-      <br>
+      <br />
       You can force this modal to appear (even if disabled) by Shift-clicking the Reality button.
     </div>
-    <template
-      v-if="canSacrifice && canConfirm"
-      #extra-buttons
-    >
-      <PrimaryButton
-        class="o-primary-btn--width-medium c-modal-message__okay-btn"
-        @click="confirmModal(true)"
-      >
+    <template v-if="canSacrifice && canConfirm" #extra-buttons>
+      <PrimaryButton class="o-primary-btn--width-medium c-modal-message__okay-btn" @click="confirmModal(true)">
         Sacrifice
       </PrimaryButton>
     </template>

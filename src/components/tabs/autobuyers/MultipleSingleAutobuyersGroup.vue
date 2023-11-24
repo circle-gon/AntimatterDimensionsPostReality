@@ -5,7 +5,7 @@ import SingleAutobuyerBox from "./SingleAutobuyerBox";
 export default {
   name: "MultipleSingleAutobuyersGroup",
   components: {
-    SingleAutobuyerBox
+    SingleAutobuyerBox,
   },
   computed: {
     singles() {
@@ -24,29 +24,18 @@ export default {
       // The 2% reduced flex-basis is used to prevent wrapping due to the margins.
       // It would be 1%, but apparently the margins are larger here.
       return `flex: 1 0 ${100 / this.entryCountPerRow - 2}%`;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <span class="l-autobuyer-singlet-group">
-    <template
-      v-for="(type, id) in singles"
-    >
-      <SingleAutobuyerBox
-        :key="id"
-        :autobuyer="type"
-        :style="boxSize"
-      />
-      <br
-        v-if="id % entryCountPerRow === entryCountPerRow"
-        :key="id"
-      >
+    <template v-for="(type, id) in singles">
+      <SingleAutobuyerBox :key="id" :autobuyer="type" :style="boxSize" />
+      <br v-if="id % entryCountPerRow === entryCountPerRow" :key="id" />
     </template>
   </span>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

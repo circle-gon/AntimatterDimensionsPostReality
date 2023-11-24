@@ -6,34 +6,29 @@ export default {
   name: "BackgroundAnimations",
   components: {
     BlobSnowflakes,
-    TachyonParticles
+    TachyonParticles,
   },
   data() {
     return {
       blob: false,
-      animateTachyons: false
+      animateTachyons: false,
     };
   },
   methods: {
     update() {
       this.blob = Theme.currentName() === "S11";
-      this.animateTachyons = player.options.animations.tachyonParticles &&
-        Tabs.current[this.$viewModel.subtab].name === "Time Dilation";
-    }
+      this.animateTachyons =
+        player.options.animations.tachyonParticles && Tabs.current[this.$viewModel.subtab].name === "Time Dilation";
+    },
   },
 };
 </script>
 
 <template>
-  <div
-    id="ui-background-animations"
-    class="l-background-animations"
-  >
+  <div id="ui-background-animations" class="l-background-animations">
     <BlobSnowflakes v-if="blob" />
     <TachyonParticles v-if="animateTachyons" />
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

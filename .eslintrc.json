@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:import/recommended",
-    "plugin:vue/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:import/recommended", "plugin:vue/recommended", "prettier"],
   "env": {
     "es2021": true,
     "node": true,
@@ -17,9 +13,7 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "map": [
-          ["@", "./src"]
-        ],
+        "map": [["@", "./src"]],
         "extensions": [".js", ".vue"]
       }
     }
@@ -59,10 +53,7 @@
     "array-callback-return": "error",
     "complexity": "warn",
     "consistent-return": "error",
-    "dot-location": [
-      "error",
-      "property"
-    ],
+    "dot-location": ["error", "property"],
     "dot-notation": "error",
     "eqeqeq": "error",
     "no-else-return": [
@@ -166,13 +157,7 @@
     "computed-property-spacing": "error",
     "consistent-this": "error",
     "func-call-spacing": "error",
-    "id-blacklist": [
-      "error",
-      "ret",
-      "helper",
-      "temp",
-      "tmp"
-    ],
+    "id-blacklist": ["error", "ret", "helper", "temp", "tmp"],
     "indent": ["warn", 2, { "SwitchCase": 1 }],
     "key-spacing": "error",
     "keyword-spacing": "error",
@@ -193,10 +178,7 @@
     ],
     "max-params": "warn",
     "max-statements-per-line": "error",
-    "multiline-comment-style": [
-      "error",
-      "separate-lines"
-    ],
+    "multiline-comment-style": ["error", "separate-lines"],
     "new-parens": "error",
     "no-array-constructor": "warn",
     "no-inline-comments": "error",
@@ -211,10 +193,7 @@
     "no-trailing-spaces": "warn",
     "no-unneeded-ternary": "error",
     "no-whitespace-before-property": "error",
-    "object-curly-spacing": [
-      "error",
-      "always"
-    ],
+    "object-curly-spacing": ["error", "always"],
     "operator-assignment": "error",
     "operator-linebreak": [
       "error",
@@ -237,24 +216,15 @@
     "semi": "warn",
     "semi-spacing": "error",
     "space-before-blocks": "error",
-    "space-before-function-paren": [
-      "error",
-      "never"
-    ],
+    "space-before-function-paren": ["error", "never"],
     "space-in-parens": "error",
     "space-infix-ops": "error",
     "spaced-comment": "error",
-    "strict": [
-      "error",
-      "global"
-    ],
+    "strict": ["error", "global"],
     "switch-colon-spacing": "error",
     "template-tag-spacing": "error",
     "arrow-body-style": "error",
-    "arrow-parens": [
-      "error",
-      "as-needed"
-    ],
+    "arrow-parens": ["error", "as-needed"],
     "arrow-spacing": "error",
     "no-confusing-arrow": [
       "error",

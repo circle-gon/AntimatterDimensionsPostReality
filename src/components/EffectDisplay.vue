@@ -8,21 +8,21 @@ export default {
     config: {
       type: Object,
       required: false,
-      default: undefined
+      default: undefined,
     },
     br: {
       type: Boolean,
-      required: false
+      required: false,
     },
     label: {
       type: String,
       default: "Currently",
-      required: false
+      required: false,
     },
     ignoreCapped: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
   },
   data() {
@@ -32,7 +32,7 @@ export default {
       // Number.MAX_VALUE doesn't really matter here, but we need it because
       // undefined values are not allowed for data properties
       cap: Number.MAX_VALUE,
-      hasCap: false
+      hasCap: false,
     };
   },
   computed: {
@@ -47,14 +47,14 @@ export default {
     },
     effectDisplay() {
       return this.formatEffect(this.reachedCap ? this.cap : this.effectValue);
-    }
+    },
   },
   watch: {
     config: {
       immediate: true,
       handler(config) {
-        this.updateEffect = () => { };
-        this.updateCap = () => { };
+        this.updateEffect = () => {};
+        this.updateCap = () => {};
         const effect = config?.effect;
         const formatEffect = config?.formatEffect;
         this.isVisible = effect !== undefined && formatEffect !== undefined;
@@ -72,21 +72,21 @@ export default {
         }
 
         if (!isFunction(effect)) {
-          throw new Error(`EffectDisplay config.effect has ` +
-            ` unsupported type "${typeof effect}"`);
+          throw new Error(`EffectDisplay config.effect has ` + ` unsupported type "${typeof effect}"`);
         }
 
         const value = effect();
 
         if (isNumber(value)) {
           this.effectValue = value;
-          this.updateEffect = () => this.effectValue = effect();
+          this.updateEffect = () => (this.effectValue = effect());
         } else if (isDecimal(value)) {
           this.effectValue = Decimal.fromDecimal(value);
           this.updateEffect = () => this.effectValue.copyFrom(effect());
         } else {
-          throw new Error(`EffectDisplay config.effect is a function which returns` +
-            ` unsupported type "${typeof effect}"`);
+          throw new Error(
+            `EffectDisplay config.effect is a function which returns` + ` unsupported type "${typeof effect}"`
+          );
         }
 
         let cap = config.cap;
@@ -125,28 +125,29 @@ export default {
             return;
           }
 
-          throw new Error(`EffectDisplay config.cap is a function which returns` +
-            ` unsupported type "${typeof effect}"`);
+          throw new Error(
+            `EffectDisplay config.cap is a function which returns` + ` unsupported type "${typeof effect}"`
+          );
         }
-      }
+      },
     },
   },
   beforeCreate() {
-    this.updateEffect = () => { };
-    this.updateCap = () => { };
+    this.updateEffect = () => {};
+    this.updateCap = () => {};
   },
   methods: {
     update() {
       this.updateEffect();
       this.updateCap();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <span v-if="isVisible && effectDisplay !== undefined">
-    <br v-if="br">
+    <br v-if="br" />
     {{ labelDisplay }}{{ effectDisplay }}
   </span>
 </template>

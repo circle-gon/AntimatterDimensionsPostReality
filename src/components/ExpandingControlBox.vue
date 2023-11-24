@@ -10,12 +10,12 @@ export default {
     containerClass: {
       type: String,
       required: false,
-      default: undefined
+      default: undefined,
     },
     label: {
       type: String,
       required: false,
-      default: undefined
+      default: undefined,
     },
     widthSource: {
       // Content sizes the width based on what's in the dropdown.
@@ -33,7 +33,7 @@ export default {
       type: Boolean,
       required: false,
       default: false,
-    }
+    },
   },
   data() {
     return {
@@ -60,7 +60,7 @@ export default {
     },
     rootClassObject() {
       return {
-        "l-expanding-control-box--controls-width": this.widthSource !== undefined
+        "l-expanding-control-box--controls-width": this.widthSource !== undefined,
       };
     },
     containerStyle() {
@@ -71,7 +71,7 @@ export default {
     },
     containerClassObject() {
       const classes = {
-        "l-expanding-control-box__container--transition": this.state?.transition
+        "l-expanding-control-box__container--transition": this.state?.transition,
       };
       classes[this.containerClass] = true;
       return classes;
@@ -81,7 +81,7 @@ export default {
         "c-indicator-arrow": true,
         "c-indicator-arrow--flipped": this.state === this.states.OPENING || this.state === this.states.OPEN,
       };
-    }
+    },
   },
   watch: {
     state(newState) {
@@ -91,7 +91,7 @@ export default {
         case this.states.CLOSED:
           break;
         case this.states.OPEN_REQUESTED:
-          this.$nextTick(() => this.state = this.states.OPENING);
+          this.$nextTick(() => (this.state = this.states.OPENING));
           break;
         case this.states.OPENING:
           break;
@@ -99,7 +99,7 @@ export default {
           break;
         case this.states.CLOSE_REQUESTED:
           // Need to have DOM update with CLOSE_REQUESTED state to re-enable transitions
-          this.$nextTick(() => this.state = this.states.CLOSING);
+          this.$nextTick(() => (this.state = this.states.CLOSING));
           break;
         case this.CLOSING:
           break;
@@ -111,7 +111,7 @@ export default {
   },
   created() {
     this.state = this.states.CLOSED;
-    this.on$("openrequest", () => this.openRequest = true);
+    this.on$("openrequest", () => (this.openRequest = true));
   },
   mounted() {
     // Set the root and container elements to match the height of the button
@@ -163,8 +163,8 @@ export default {
     mouseOff() {
       this.hasMouse = false;
       this.closeTime = Date.now();
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -175,11 +175,7 @@ export default {
     The container element hides the control via clipping (and visibility). The thing you
     click to show hide is at the top of the container element.
   -->
-  <div
-    ref="root"
-    class="l-expanding-control-box"
-    :class="rootClassObject"
-  >
+  <div ref="root" class="l-expanding-control-box" :class="rootClassObject">
     <div
       ref="container"
       class="l-expanding-control-box__container"
@@ -189,22 +185,11 @@ export default {
       @mouseenter="mouseOn"
       @mouseleave="mouseOff"
     >
-      <div
-        v-if="!$slots.header"
-        ref="expandButton"
-        :class="buttonClass"
-        @click="handleClick"
-      >
+      <div v-if="!$slots.header" ref="expandButton" :class="buttonClass" @click="handleClick">
         {{ label }}
-        <span :class="indicatorArrowClassObject">
-          ▼
-        </span>
+        <span :class="indicatorArrowClassObject"> ▼ </span>
       </div>
-      <div
-        v-else
-        ref="expandButton"
-        @click="handleClick"
-      >
+      <div v-else ref="expandButton" @click="handleClick">
         <slot name="header" />
       </div>
       <div ref="dropdown">

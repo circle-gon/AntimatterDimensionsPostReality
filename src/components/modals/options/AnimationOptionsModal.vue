@@ -8,7 +8,7 @@ export default {
   components: {
     ModalOptionsToggleButton,
     ModalWrapperOptions,
-    SliderComponent
+    SliderComponent,
   },
   data() {
     return {
@@ -25,7 +25,7 @@ export default {
       reality: false,
       background: false,
       blobSnowflakes: 16,
-      isS11Active: false
+      isS11Active: false,
     };
   },
   computed: {
@@ -35,12 +35,12 @@ export default {
         max: 500,
         interval: 1,
         width: "100%",
-        tooltip: false
+        tooltip: false,
       };
     },
     fullCompletion() {
       return player.records.fullGameCompletions > 0;
-    }
+    },
   },
   watch: {
     bigCrunch(newValue) {
@@ -63,7 +63,7 @@ export default {
     },
     blobSnowflakes(newValue) {
       player.options.animations.blobSnowflakes = parseInt(newValue, 10);
-    }
+    },
   },
   methods: {
     update() {
@@ -89,42 +89,20 @@ export default {
     adjustSliderValue(value) {
       this.blobSnowflakes = value;
       player.options.blobSnowflakes = this.blobSnowflakes;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <ModalWrapperOptions class="c-modal-options__large">
-    <template #header>
-      Animation Options
-    </template>
+    <template #header> Animation Options </template>
     <div class="c-modal-options__button-container">
-      <ModalOptionsToggleButton
-        v-if="infinityUnlocked"
-        v-model="bigCrunch"
-        text="Big Crunch:"
-      />
-      <ModalOptionsToggleButton
-        v-if="eternityUnlocked"
-        v-model="eternity"
-        text="Eternity:"
-      />
-      <ModalOptionsToggleButton
-        v-if="dilationUnlocked"
-        v-model="dilation"
-        text="Dilation:"
-      />
-      <ModalOptionsToggleButton
-        v-if="tachyonsUnlocked"
-        v-model="tachyonParticles"
-        text="Tachyon particles:"
-      />
-      <ModalOptionsToggleButton
-        v-if="realityUnlocked"
-        v-model="reality"
-        text="Reality:"
-      />
+      <ModalOptionsToggleButton v-if="infinityUnlocked" v-model="bigCrunch" text="Big Crunch:" />
+      <ModalOptionsToggleButton v-if="eternityUnlocked" v-model="eternity" text="Eternity:" />
+      <ModalOptionsToggleButton v-if="dilationUnlocked" v-model="dilation" text="Dilation:" />
+      <ModalOptionsToggleButton v-if="tachyonsUnlocked" v-model="tachyonParticles" text="Tachyon particles:" />
+      <ModalOptionsToggleButton v-if="realityUnlocked" v-model="reality" text="Reality:" />
       <div v-if="!isS11Active">
         <ModalOptionsToggleButton
           v-if="animatedThemeUnlocked"

@@ -4,17 +4,17 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "ReplaceGlyphModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   props: {
     targetSlot: {
       type: Number,
-      required: true
+      required: true,
     },
     inventoryIndex: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -24,7 +24,9 @@ export default {
     };
   },
   computed: {
-    resetTerm() { return this.isDoomed ? "Armageddon" : "Reality"; },
+    resetTerm() {
+      return this.isDoomed ? "Armageddon" : "Reality";
+    },
   },
   methods: {
     update() {
@@ -41,13 +43,8 @@ export default {
 </script>
 
 <template>
-  <ModalWrapperChoice
-    option="glyphReplace"
-    @confirm="handleYesClick"
-  >
-    <template #header>
-      You are about to replace a Glyph
-    </template>
+  <ModalWrapperChoice option="glyphReplace" @confirm="handleYesClick">
+    <template #header> You are about to replace a Glyph </template>
     Replacing a Glyph will restart this {{ resetTerm }}.
   </ModalWrapperChoice>
 </template>

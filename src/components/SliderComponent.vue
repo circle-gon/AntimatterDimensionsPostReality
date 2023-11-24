@@ -29,155 +29,155 @@ import PlusMinusButton from "@/components/PlusMinusButton";
 //
 
 // Unsharp text [#166](https://github.com/NightCatSama/vue-slider-component/issues/166)
-const roundToDPR = (function() {
+const roundToDPR = (function () {
   const r = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
-  return value => Math.round(value * r) / r;
-}());
+  return (value) => Math.round(value * r) / r;
+})();
 
 export default {
   name: "SliderComponent",
   components: {
-    PlusMinusButton
+    PlusMinusButton,
   },
   props: {
     width: {
       type: String,
-      default: "auto"
+      default: "auto",
     },
     height: {
       type: String,
-      default: "6px"
+      default: "6px",
     },
     data: {
       type: Array,
-      default: null
+      default: null,
     },
     dotSize: {
       type: [String, Number],
-      default: "16px"
+      default: "16px",
     },
     dotWidth: {
       type: String,
-      required: false
+      required: false,
     },
     dotHeight: {
       type: String,
-      required: false
+      required: false,
     },
     min: {
       type: Number,
-      default: 0
+      default: 0,
     },
     max: {
       type: Number,
-      default: 100
+      default: 100,
     },
     interval: {
       type: Number,
-      default: 1
+      default: 1,
     },
     show: {
       type: Boolean,
-      default: true
+      default: true,
     },
     disabled: {
       type: [Boolean, Array],
-      default: false
+      default: false,
     },
     piecewise: {
       type: Boolean,
-      default: false
+      default: false,
     },
     tooltip: {
       type: [String, Boolean],
-      default: "always"
+      default: "always",
     },
     eventType: {
       type: String,
-      default: "auto"
+      default: "auto",
     },
     direction: {
       type: String,
-      default: "horizontal"
+      default: "horizontal",
     },
     reverse: {
       type: Boolean,
-      default: false
+      default: false,
     },
     lazy: {
       type: Boolean,
-      default: false
+      default: false,
     },
     clickable: {
       type: Boolean,
-      default: true
+      default: true,
     },
     speed: {
       type: Number,
-      default: 0.5
+      default: 0.5,
     },
     realTime: {
       type: Boolean,
-      default: false
+      default: false,
     },
     stopPropagation: {
       type: Boolean,
-      default: false
+      default: false,
     },
     value: {
       type: [String, Number, Array, Object],
-      default: 0
+      default: 0,
     },
     piecewiseLabel: {
       type: Boolean,
-      default: false
+      default: false,
     },
     debug: {
       type: Boolean,
-      default: true
+      default: true,
     },
     fixed: {
       type: Boolean,
-      default: false
+      default: false,
     },
     minRange: {
-      type: Number
+      type: Number,
     },
     maxRange: {
-      type: Number
+      type: Number,
     },
     processDraggable: {
       type: Boolean,
-      default: false
+      default: false,
     },
     useKeyboard: {
       type: Boolean,
-      default: false
+      default: false,
     },
     actionsKeyboard: {
       type: Array,
       default() {
-        return [i => i - 1, i => i + 1];
-      }
+        return [(i) => i - 1, (i) => i + 1];
+      },
     },
     piecewiseFilter: {
-      type: Function
+      type: Function,
     },
     tooltipMerge: {
       type: Boolean,
-      default: true
+      default: true,
     },
     startAnimation: {
       type: Boolean,
-      default: false
+      default: false,
     },
     enableCross: {
       type: Boolean,
-      default: true
+      default: true,
     },
     valueInDot: {
       type: Boolean,
-      default: false
+      default: false,
     },
     plusMinusButtons: {
       type: Boolean,
@@ -199,7 +199,7 @@ export default {
     disabledDotStyle: [Array, Object, Function],
     labelStyle: Object,
     labelActiveStyle: Object,
-    dotClass: [String, Array]
+    dotClass: [String, Array],
   },
   data() {
     return {
@@ -246,7 +246,7 @@ export default {
       const tooltipDirection = this.tooltipDirection[0];
       if (this.$refs.dot0) {
         const style = {};
-        style[tooltipDirection] = `-${(this.dotAxialSizePx / 2) - (this.size / 2) + 9}px`;
+        style[tooltipDirection] = `-${this.dotAxialSizePx / 2 - this.size / 2 + 9}px`;
         style.left = `50%`;
         return style;
       }
@@ -257,10 +257,13 @@ export default {
         return this.isRange ? dir : dir[1];
       }
       return this.isRange ? [dir, dir] : dir;
-
     },
     tooltipStatus() {
-      return this.tooltip === "hover" && this.flag ? "ad-slider-always" : this.tooltip ? `ad-slider-${this.tooltip}` : "";
+      return this.tooltip === "hover" && this.flag
+        ? "ad-slider-always"
+        : this.tooltip
+        ? `ad-slider-${this.tooltip}`
+        : "";
     },
     tooltipClass() {
       return [`ad-slider-tooltip-${this.tooltipDirection}`, "ad-slider-tooltip"];
@@ -269,7 +272,7 @@ export default {
       return Array.isArray(this.disabled) ? this.disabled : [this.disabled, this.disabled];
     },
     boolDisabled() {
-      return this.disabledArray.every(b => b === true);
+      return this.disabledArray.every((b) => b === true);
     },
     isDisabled() {
       return this.eventType === "none" ? true : this.boolDisabled;
@@ -281,7 +284,7 @@ export default {
       return {
         "ad-slider-state-process-drag": this.processFlag,
         "ad-slider-state-drag": this.flag && !this.processFlag && !this.keydownFlag,
-        "ad-slider-state-focus": this.focusFlag
+        "ad-slider-state-focus": this.focusFlag,
       };
     },
     isRange() {
@@ -295,7 +298,11 @@ export default {
     },
     val: {
       get() {
-        return this.data ? (this.isRange ? [this.data[this.currentValue[0]], this.data[this.currentValue[1]]] : this.data[this.currentValue]) : this.currentValue;
+        return this.data
+          ? this.isRange
+            ? [this.data[this.currentValue[0]], this.data[this.currentValue[1]]]
+            : this.data[this.currentValue]
+          : this.currentValue;
       },
       set(val) {
         if (this.data) {
@@ -314,24 +321,24 @@ export default {
         } else {
           this.currentValue = val;
         }
-      }
+      },
     },
     currentIndex() {
       if (this.isRange) {
-        return this.data ? this.currentValue : [this.getIndexByValue(this.currentValue[0]), this.getIndexByValue(this.currentValue[1])];
+        return this.data
+          ? this.currentValue
+          : [this.getIndexByValue(this.currentValue[0]), this.getIndexByValue(this.currentValue[1])];
       }
       return this.getIndexByValue(this.currentValue);
-
     },
     indexRange() {
       if (this.isRange) {
         return this.currentIndex;
       }
       return [0, this.currentIndex];
-
     },
     maximum() {
-      return this.data ? (this.data.length - 1) : this.max;
+      return this.data ? this.data.length - 1 : this.max;
     },
     multiple() {
       const decimals = `${this.interval}`.split(".")[1];
@@ -343,7 +350,8 @@ export default {
     total() {
       if (this.data) {
         return this.data.length - 1;
-      } if (Math.floor((this.maximum - this.minimum) * this.multiple) % (this.interval * this.multiple) !== 0) {
+      }
+      if (Math.floor((this.maximum - this.minimum) * this.multiple) % (this.interval * this.multiple) !== 0) {
         this.printError("Prop[interval] is illegal, Please make sure that the interval can be divisible");
       }
       return (this.maximum - this.minimum) / this.interval;
@@ -356,10 +364,12 @@ export default {
     },
     position() {
       if (this.isRange) {
-        return [(this.currentValue[0] - this.minimum) / this.spacing * this.gap + this.dotAxialSizePx / 2, (this.currentValue[1] - this.minimum) / this.spacing * this.gap + this.dotAxialSizePx / 2];
+        return [
+          ((this.currentValue[0] - this.minimum) / this.spacing) * this.gap + this.dotAxialSizePx / 2,
+          ((this.currentValue[1] - this.minimum) / this.spacing) * this.gap + this.dotAxialSizePx / 2,
+        ];
       }
-      return ((this.currentValue - this.minimum) / this.spacing * this.gap + this.dotAxialSizePx / 2);
-
+      return ((this.currentValue - this.minimum) / this.spacing) * this.gap + this.dotAxialSizePx / 2;
     },
     isFixed() {
       return this.fixed || this.minRange;
@@ -367,26 +377,43 @@ export default {
     limit() {
       if (this.isRange) {
         if (this.isFixed) {
-          return [[this.dotAxialSizePx / 2, this.dotAxialSizePx / 2 + (this.total - this.fixedValue) * this.gap], [this.fixedValue * this.gap + this.dotAxialSizePx / 2, this.size - this.dotAxialSizePx / 2]];
+          return [
+            [this.dotAxialSizePx / 2, this.dotAxialSizePx / 2 + (this.total - this.fixedValue) * this.gap],
+            [this.fixedValue * this.gap + this.dotAxialSizePx / 2, this.size - this.dotAxialSizePx / 2],
+          ];
         }
-        return [[this.dotAxialSizePx / 2, this.position[1]], [this.position[0], this.size - this.dotAxialSizePx / 2]];
-
+        return [
+          [this.dotAxialSizePx / 2, this.position[1]],
+          [this.position[0], this.size - this.dotAxialSizePx / 2],
+        ];
       }
       return [this.dotAxialSizePx / 2, this.size - this.dotAxialSizePx / 2];
-
     },
     valueLimit() {
-      return this.isRange ? this.isFixed ? [[this.minimum, this.maximum - (this.fixedValue * (this.spacing * this.multiple)) / this.multiple], [this.minimum + (this.fixedValue * (this.spacing * this.multiple)) / this.multiple, this.maximum]] : [[this.minimum, this.currentValue[1]], [this.currentValue[0], this.maximum]] : [this.minimum, this.maximum];
+      return this.isRange
+        ? this.isFixed
+          ? [
+              [this.minimum, this.maximum - (this.fixedValue * (this.spacing * this.multiple)) / this.multiple],
+              [this.minimum + (this.fixedValue * (this.spacing * this.multiple)) / this.multiple, this.maximum],
+            ]
+          : [
+              [this.minimum, this.currentValue[1]],
+              [this.currentValue[0], this.maximum],
+            ]
+        : [this.minimum, this.maximum];
     },
     idleSlider() {
       return this.currentSlider === 0 ? 1 : 0;
     },
     wrapStyles() {
-      const ret = this.direction === "vertical" ? {
-        height: this.height,
-      } : {
-        width: this.width,
-      };
+      const ret =
+        this.direction === "vertical"
+          ? {
+              height: this.height,
+            }
+          : {
+              width: this.width,
+            };
       if (this.plusMinusButtons) {
         ret[this.direction === "vertical" ? "margin-top" : "margin-right"] = "0.5rem";
         ret[this.direction === "vertical" ? "margin-bottom" : "margin-left"] = "0.5rem";
@@ -396,60 +423,66 @@ export default {
     sliderStyles() {
       if (Array.isArray(this.sliderStyle)) {
         return this.isRange ? this.sliderStyle : this.sliderStyle[1];
-      } if (typeof this.sliderStyle === "function") {
+      }
+      if (typeof this.sliderStyle === "function") {
         return this.sliderStyle(this.val, this.currentIndex);
       }
       return this.isRange ? [this.sliderStyle, this.sliderStyle] : this.sliderStyle;
-
     },
     focusStyles() {
       if (Array.isArray(this.focusStyle)) {
         return this.isRange ? this.focusStyle : this.focusStyle[1];
-      } if (typeof this.focusStyle === "function") {
+      }
+      if (typeof this.focusStyle === "function") {
         return this.focusStyle(this.val, this.currentIndex);
       }
       return this.isRange ? [this.focusStyle, this.focusStyle] : this.focusStyle;
-
     },
     disabledDotStyles() {
       const disabledStyle = this.disabledDotStyle;
       if (Array.isArray(disabledStyle)) {
         return disabledStyle;
-      } if (typeof disabledStyle === "function") {
+      }
+      if (typeof disabledStyle === "function") {
         const style = disabledStyle(this.val, this.currentIndex);
         return Array.isArray(style) ? style : [style, style];
-      } if (disabledStyle) {
+      }
+      if (disabledStyle) {
         return [disabledStyle, disabledStyle];
       }
-      return [{
-        backgroundColor: "#ccc"
-      }, {
-        backgroundColor: "#ccc"
-      }];
-
+      return [
+        {
+          backgroundColor: "#ccc",
+        },
+        {
+          backgroundColor: "#ccc",
+        },
+      ];
     },
     tooltipStyles() {
       if (Array.isArray(this.tooltipStyle)) {
         return this.isRange ? this.tooltipStyle : this.tooltipStyle[1];
-      } if (typeof this.tooltipStyle === "function") {
+      }
+      if (typeof this.tooltipStyle === "function") {
         return this.tooltipStyle(this.val, this.currentIndex);
       }
       return this.isRange ? [this.tooltipStyle, this.tooltipStyle] : this.tooltipStyle;
-
     },
     elemStyles() {
-      return this.direction === "vertical" ? {
-        width: this.width,
-        height: "100%",
-        position: "relative"
-      } : {
-        height: this.height,
-        position: "relative"
-      };
+      return this.direction === "vertical"
+        ? {
+            width: this.width,
+            height: "100%",
+            position: "relative",
+          }
+        : {
+            height: this.height,
+            position: "relative",
+          };
     },
     draggableStyle() {
       return {
-        cursor: this.boolDisabled ? "default" : "pointer"
+        cursor: this.boolDisabled ? "default" : "pointer",
       };
     },
     dotStyles() {
@@ -487,22 +520,25 @@ export default {
       }
       const arr = [];
       for (let i = 0; i <= this.total; i++) {
-        const style = this.direction === "vertical" ? {
-          bottom: `${this.gap * i - this.usableSize / 2}px`,
-          left: 0
-        } : {
-          left: `${this.gap * i - this.usableSize / 2}px`,
-          top: 0
-        };
-        const index = this.reverse ? (this.total - i) : i;
-        const label = this.data ? this.data[index] : (this.spacing * index) + this.min;
+        const style =
+          this.direction === "vertical"
+            ? {
+                bottom: `${this.gap * i - this.usableSize / 2}px`,
+                left: 0,
+              }
+            : {
+                left: `${this.gap * i - this.usableSize / 2}px`,
+                top: 0,
+              };
+        const index = this.reverse ? this.total - i : i;
+        const label = this.data ? this.data[index] : this.spacing * index + this.min;
         if (this.piecewiseFilter && !this.piecewiseFilter({ index, label })) {
           continue;
         }
         arr.push({
           style,
           index,
-          label: this.xformatter ? this.formatting(label) : label
+          label: this.xformatter ? this.formatting(label) : label,
         });
       }
       return arr;
@@ -659,12 +695,20 @@ export default {
       return typeof this.xformatter === "string" ? this.xformatter.replace(/\{value\}/, value) : this.xformatter(value);
     },
     mergeFormatting(value1, value2) {
-      return typeof this.mergeFormatter === "string" ? this.mergeFormatter.replace(/\{(value1|value2)\}/g, (_, key) => (key === "value1" ? value1 : value2)) : this.mergeFormatter(value1, value2);
+      return typeof this.mergeFormatter === "string"
+        ? this.mergeFormatter.replace(/\{(value1|value2)\}/g, (_, key) => (key === "value1" ? value1 : value2))
+        : this.mergeFormatter(value1, value2);
     },
     getPos(e) {
       this.realTime && this.getStaticData();
       const rect = this.$refs.elem.getBoundingClientRect();
-      return this.direction === "vertical" ? (this.reverse ? (e.clientY - rect.top) : (this.size - (e.clientY - rect.top))) : (this.reverse ? (this.size - (e.clientX - rect.left)) : (e.clientX - rect.left));
+      return this.direction === "vertical"
+        ? this.reverse
+          ? e.clientY - rect.top
+          : this.size - (e.clientY - rect.top)
+        : this.reverse
+        ? this.size - (e.clientX - rect.left)
+        : e.clientX - rect.left;
     },
     processClick(e) {
       if (this.fixed) {
@@ -675,8 +719,8 @@ export default {
       if (this.isDisabled || !this.clickable || this.processFlag || this.dragFlag) return false;
       const pos = this.getPos(e);
       if (this.isRange) {
-        if (this.disabledArray.every(b => b === false)) {
-          this.currentSlider = pos > ((this.position[1] - this.position[0]) / 2 + this.position[0]) ? 1 : 0;
+        if (this.disabledArray.every((b) => b === false)) {
+          this.currentSlider = pos > (this.position[1] - this.position[0]) / 2 + this.position[0] ? 1 : 0;
         } else if (this.disabledArray[0]) {
           if (pos < this.position[0]) return false;
           this.currentSlider = 1;
@@ -710,7 +754,7 @@ export default {
           this.processFlag = true;
           this.processSign = {
             pos: this.position,
-            start: this.getPos((e.targetTouches && e.targetTouches[0]) ? e.targetTouches[0] : e)
+            start: this.getPos(e.targetTouches && e.targetTouches[0] ? e.targetTouches[0] : e),
           };
         }
         if (!this.enableCross && this.val[0] === this.val[1]) {
@@ -773,8 +817,13 @@ export default {
         this.setTransform(pos);
         this.setCurrentValue(v, isDrag);
         if (this.isRange && (this.fixed || this.isLessRange(pos, index))) {
-          this.setTransform(pos + ((this.fixedValue * this.gap) * (this.currentSlider === 0 ? 1 : -1)), true);
-          this.setCurrentValue((v * this.multiple + (this.fixedValue * this.spacing * this.multiple * (this.currentSlider === 0 ? 1 : -1))) / this.multiple, isDrag, true);
+          this.setTransform(pos + this.fixedValue * this.gap * (this.currentSlider === 0 ? 1 : -1), true);
+          this.setCurrentValue(
+            (v * this.multiple + this.fixedValue * this.spacing * this.multiple * (this.currentSlider === 0 ? 1 : -1)) /
+              this.multiple,
+            isDrag,
+            true
+          );
         }
       } else {
         const anotherSlider = pos < range[0] ? 0 : 1;
@@ -784,7 +833,13 @@ export default {
         if (this.isRange && (this.fixed || this.isLessRange(pos, index))) {
           this.setTransform(this.limit[this.idleSlider][anotherSlider], true);
           this.setCurrentValue(this.valueLimit[this.idleSlider][anotherSlider], isDrag, true);
-        } else if (this.isRange && (this.enableCross || this.crossFlag) && !this.isFixed && !this.disabledArray[anotherSlider] && this.currentSlider === currentSlider) {
+        } else if (
+          this.isRange &&
+          (this.enableCross || this.crossFlag) &&
+          !this.isFixed &&
+          !this.disabledArray[anotherSlider] &&
+          this.currentSlider === currentSlider
+        ) {
           this.focusSlider = anotherSlider;
           this.currentSlider = anotherSlider;
         }
@@ -810,7 +865,8 @@ export default {
     isDiff(a, b) {
       if (Object.prototype.toString.call(a) !== Object.prototype.toString.call(b)) {
         return true;
-      } if (Array.isArray(a) && a.length === b.length) {
+      }
+      if (Array.isArray(a) && a.length === b.length) {
         return a.some((v, i) => v !== b[i]);
       }
       return a !== b;
@@ -834,7 +890,7 @@ export default {
       isDrag || this.setPosition();
     },
     getValueByIndex(index) {
-      return ((this.spacing * this.multiple) * index + (this.minimum * this.multiple)) / this.multiple;
+      return (this.spacing * this.multiple * index + this.minimum * this.multiple) / this.multiple;
     },
     getIndexByValue(value) {
       return Math.round((value - this.minimum) * this.multiple) / (this.spacing * this.multiple);
@@ -851,7 +907,7 @@ export default {
       } else {
         val = this.getValueByIndex(val);
         if (this.isRange) {
-          this.currentSlider = val > ((this.currentValue[1] - this.currentValue[0]) / 2 + this.currentValue[0]) ? 1 : 0;
+          this.currentSlider = val > (this.currentValue[1] - this.currentValue[0]) / 2 + this.currentValue[0] ? 1 : 0;
         }
         this.setCurrentValue(val);
       }
@@ -890,10 +946,18 @@ export default {
     },
     setTransform(val, isIdleSlider) {
       const slider = isIdleSlider ? this.idleSlider : this.currentSlider;
-      const value = roundToDPR((this.direction === "vertical" ? ((this.dotAxialSizePx / 2) - val) : (val - (this.dotAxialSizePx / 2))) * (this.reverse ? -1 : 1));
-      const translateValue = this.direction === "vertical" ? `translate(-50%, ${value}px)` : `translate(${value}px, -50%)`;
-      const processSize = this.fixed ? `${this.fixedValue * this.gap}px` : `${slider === 0 ? this.position[1] - val : val - this.position[0]}px`;
-      const processPos = this.fixed ? `${slider === 0 ? val : (val - this.fixedValue * this.gap)}px` : `${slider === 0 ? val : this.position[0]}px`;
+      const value = roundToDPR(
+        (this.direction === "vertical" ? this.dotAxialSizePx / 2 - val : val - this.dotAxialSizePx / 2) *
+          (this.reverse ? -1 : 1)
+      );
+      const translateValue =
+        this.direction === "vertical" ? `translate(-50%, ${value}px)` : `translate(${value}px, -50%)`;
+      const processSize = this.fixed
+        ? `${this.fixedValue * this.gap}px`
+        : `${slider === 0 ? this.position[1] - val : val - this.position[0]}px`;
+      const processPos = this.fixed
+        ? `${slider === 0 ? val : val - this.fixedValue * this.gap}px`
+        : `${slider === 0 ? val : this.position[0]}px`;
       this.slider[slider].style.transform = translateValue;
       this.slider[slider].style.WebkitTransform = translateValue;
       this.slider[slider].style.msTransform = translateValue;
@@ -932,21 +996,25 @@ export default {
       if (this.data) {
         return val;
       }
-      const inRange = v => {
+      const inRange = (v) => {
         if (v < this.min) {
-          this.printError(`The value of the slider is ${val}, the minimum value is ${this.min}, the value of this slider can not be less than the minimum value`);
+          this.printError(
+            `The value of the slider is ${val}, the minimum value is ${this.min}, the value of this slider can not be less than the minimum value`
+          );
           return this.min;
-        } if (v > this.max) {
-          this.printError(`The value of the slider is ${val}, the maximum value is ${this.max}, the value of this slider can not be greater than the maximum value`);
+        }
+        if (v > this.max) {
+          this.printError(
+            `The value of the slider is ${val}, the maximum value is ${this.max}, the value of this slider can not be greater than the maximum value`
+          );
           return this.max;
         }
         return v;
       };
       if (this.isRange) {
-        return val.map(v => inRange(v));
+        return val.map((v) => inRange(v));
       }
       return inRange(val);
-
     },
     isActive(index) {
       return index >= this.indexRange[0] && index <= this.indexRange[1];
@@ -966,7 +1034,8 @@ export default {
     getStaticData() {
       if (this.$refs.elem) {
         this.size = this.direction === "vertical" ? this.$refs.elem.offsetHeight : this.$refs.elem.offsetWidth;
-        this.dotAxialSizePx = this.direction === "vertical" ? this.$refs.dot0.clientHeight : this.$refs.dot0.clientWidth;
+        this.dotAxialSizePx =
+          this.direction === "vertical" ? this.$refs.dot0.clientHeight : this.$refs.dot0.clientWidth;
       }
     },
     refresh() {
@@ -1021,7 +1090,7 @@ export default {
       // but I don't think we have any such sliders.
       return this.valueInDot ? Math.round(this.getValue()) : "";
     },
-  }
+  },
 };
 </script>
 
@@ -1030,11 +1099,7 @@ export default {
     v-show="show"
     :class="['l-ad-slider', flowDirection, disabledClass, { 'l-ad-slider--has-label': piecewiseLabel }]"
   >
-    <PlusMinusButton
-      v-if="plusMinusButtons"
-      type="minus"
-      @click="increment(-1)"
-    />
+    <PlusMinusButton v-if="plusMinusButtons" type="minus" @click="increment(-1)" />
     <div
       ref="wrap"
       :class="['l-ad-slider__wrap', stateClass]"
@@ -1053,12 +1118,15 @@ export default {
           <div
             ref="dot0"
             key="dot0"
-            :class="[tooltipStatus, 'l-ad-slider__dot', 'c-ad-slider__dot',
-                     {
-                       'l-ad-slider__dot--focus': focusFlag && focusSlider === 0,
-                       'l-ad-slider__dot--dragging': flag && currentSlider === 0,
-                       'l-ad-slider__dot--disabled': !boolDisabled && disabledArray[0]
-                     }
+            :class="[
+              tooltipStatus,
+              'l-ad-slider__dot',
+              'c-ad-slider__dot',
+              {
+                'l-ad-slider__dot--focus': focusFlag && focusSlider === 0,
+                'l-ad-slider__dot--dragging': flag && currentSlider === 0,
+                'l-ad-slider__dot--disabled': !boolDisabled && disabledArray[0],
+              },
             ]"
             :style="dotStyles"
             @mousedown="moveStart"
@@ -1067,32 +1135,29 @@ export default {
             <div
               :class="['l-ad-slider__dot-handle', 'c-ad-slider__dot-handle', dotClass]"
               :style="[
-                (!boolDisabled && disabledArray[0])
-                  ? disabledDotStyles[0]
-                  : null,
+                !boolDisabled && disabledArray[0] ? disabledDotStyles[0] : null,
                 sliderStyles[0],
-                focusFlag && focusSlider === 0 ? focusStyles[0]: null
+                focusFlag && focusSlider === 0 ? focusStyles[0] : null,
               ]"
             />
-            <div
-              ref="tooltip0"
-              :class="['ad-slider-tooltip-' + tooltipDirection[0], 'ad-slider-tooltip-wrap']"
-            >
-              <span
-                class="ad-slider-tooltip"
-                :style="tooltipStyles[0]"
-              >{{ xformatter ? formatting(val[0]) : val[0] }}</span>
+            <div ref="tooltip0" :class="['ad-slider-tooltip-' + tooltipDirection[0], 'ad-slider-tooltip-wrap']">
+              <span class="ad-slider-tooltip" :style="tooltipStyles[0]">{{
+                xformatter ? formatting(val[0]) : val[0]
+              }}</span>
             </div>
           </div>
           <div
             ref="dot1"
             key="dot1"
-            :class="[tooltipStatus, 'l-ad-slider__dot', 'c-ad-slider__dot',
-                     {
-                       'l-ad-slider__dot--focus': focusFlag && focusSlider === 1,
-                       'l-ad-slider__dot--dragging': flag && currentSlider === 1,
-                       'l-ad-slider__dot--disabled': !boolDisabled && disabledArray[1]
-                     }
+            :class="[
+              tooltipStatus,
+              'l-ad-slider__dot',
+              'c-ad-slider__dot',
+              {
+                'l-ad-slider__dot--focus': focusFlag && focusSlider === 1,
+                'l-ad-slider__dot--dragging': flag && currentSlider === 1,
+                'l-ad-slider__dot--disabled': !boolDisabled && disabledArray[1],
+              },
             ]"
             :style="dotStyles"
             @mousedown="moveStart($event, 1)"
@@ -1101,21 +1166,15 @@ export default {
             <div
               :class="['l-ad-slider__dot-handle', 'c-ad-slider__dot-handle', dotClass]"
               :style="[
-                (!boolDisabled && disabledArray[1])
-                  ? disabledDotStyles[1]
-                  : null,
+                !boolDisabled && disabledArray[1] ? disabledDotStyles[1] : null,
                 sliderStyles[1],
-                focusFlag && focusSlider === 1 ? focusStyles[1]: null
+                focusFlag && focusSlider === 1 ? focusStyles[1] : null,
               ]"
             />
-            <div
-              ref="tooltip1"
-              :class="['ad-slider-tooltip-' + tooltipDirection[1], 'ad-slider-tooltip-wrap']"
-            >
-              <span
-                class="ad-slider-tooltip"
-                :style="tooltipStyles[1]"
-              >{{ xformatter ? formatting(val[1]) : val[1] }}</span>
+            <div ref="tooltip1" :class="['ad-slider-tooltip-' + tooltipDirection[1], 'ad-slider-tooltip-wrap']">
+              <span class="ad-slider-tooltip" :style="tooltipStyles[1]">{{
+                xformatter ? formatting(val[1]) : val[1]
+              }}</span>
             </div>
           </div>
         </template>
@@ -1123,11 +1182,14 @@ export default {
           <div
             ref="dot0"
             key="dot0"
-            :class="[tooltipStatus, 'l-ad-slider__dot', 'c-ad-slider__dot',
-                     {
-                       'l-ad-slider__dot--focus': focusFlag && focusSlider === 0,
-                       'l-ad-slider__dot--dragging': flag && currentSlider === 0
-                     }
+            :class="[
+              tooltipStatus,
+              'l-ad-slider__dot',
+              'c-ad-slider__dot',
+              {
+                'l-ad-slider__dot--focus': focusFlag && focusSlider === 0,
+                'l-ad-slider__dot--dragging': flag && currentSlider === 0,
+              },
             ]"
             :style="dotStyles"
             @mousedown="moveStart"
@@ -1140,10 +1202,7 @@ export default {
               {{ dotContents(0) }}
             </div>
             <div :class="['ad-slider-tooltip-' + tooltipDirection, 'ad-slider-tooltip-wrap']">
-              <span
-                class="ad-slider-tooltip"
-                :style="tooltipStyles"
-              >{{ xformatter ? formatting(val) : val }}</span>
+              <span class="ad-slider-tooltip" :style="tooltipStyles">{{ xformatter ? formatting(val) : val }}</span>
             </div>
           </div>
         </template>
@@ -1157,13 +1216,13 @@ export default {
             <span
               v-if="piecewise"
               class="ad-slider-piecewise-dot"
-              :style="[ piecewiseStyle, isActive(piecewiseObj.index) ? piecewiseActiveStyle : null ]"
+              :style="[piecewiseStyle, isActive(piecewiseObj.index) ? piecewiseActiveStyle : null]"
             />
 
             <span
               v-if="piecewiseLabel"
               class="ad-slider-piecewise-label"
-              :style="[ labelStyle, isActive(piecewiseObj.index) ? labelActiveStyle : null ]"
+              :style="[labelStyle, isActive(piecewiseObj.index) ? labelActiveStyle : null]"
             >
               {{ piecewiseObj.label }}
             </span>
@@ -1171,7 +1230,12 @@ export default {
         </ul>
         <div
           ref="process"
-          :class="['l-ad-slider__process', 'c-ad-slider__process', { 'ad-slider-process-draggable': isRange && processDraggable }, processClass]"
+          :class="[
+            'l-ad-slider__process',
+            'c-ad-slider__process',
+            { 'ad-slider-process-draggable': isRange && processDraggable },
+            processClass,
+          ]"
           :style="[elemStyles, bgStyle, draggableStyle]"
           @click="processClick"
         >
@@ -1180,20 +1244,13 @@ export default {
             :class="['vue-merged-tooltip', 'ad-slider-tooltip-' + tooltipDirection[0], 'ad-slider-tooltip-wrap']"
             :style="tooltipMergedPosition"
           >
-            <span
-              class="ad-slider-tooltip"
-              :style="tooltipStyles"
-            >
+            <span class="ad-slider-tooltip" :style="tooltipStyles">
               {{ tooltipFormatHelper }}
             </span>
           </div>
         </div>
       </div>
     </div>
-    <PlusMinusButton
-      v-if="plusMinusButtons"
-      type="plus"
-      @click="increment(1)"
-    />
+    <PlusMinusButton v-if="plusMinusButtons" type="plus" @click="increment(1)" />
   </div>
 </template>

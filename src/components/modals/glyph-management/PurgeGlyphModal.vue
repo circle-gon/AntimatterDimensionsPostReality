@@ -4,13 +4,13 @@ import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 export default {
   name: "PurgeGlyphModal",
   components: {
-    ModalWrapperChoice
+    ModalWrapperChoice,
   },
   props: {
     harsh: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -29,7 +29,8 @@ export default {
       of your Glyphs.`;
     },
     explanation() {
-      if (this.harsh) return `Harsh Purging deletes Glyphs that are strictly worse than any other Glyph in your
+      if (this.harsh)
+        return `Harsh Purging deletes Glyphs that are strictly worse than any other Glyph in your
         inventory. For example, if a Glyph has all the same effects as another Glyph, but the values
         of ALL of the effects are worse, then it will be deleted.`;
       return `Purging deletes Glyphs that are strictly worse than other Glyphs, while keeping enough to equip a full
@@ -42,7 +43,7 @@ export default {
 
     // These two don't need to be reactive since the modal force-closes itself whenever glyphs change
     glyphsTotal() {
-      return Glyphs.inventory.filter(slot => slot !== null).length;
+      return Glyphs.inventory.filter((slot) => slot !== null).length;
     },
     glyphsDeleted() {
       return Glyphs.autoClean(this.threshold, false);
@@ -54,27 +55,24 @@ export default {
     },
     update() {
       this.glyphCount = Glyphs.activeGlyphCount;
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <ModalWrapperChoice
-    option="autoClean"
-    @confirm="handleYesClick"
-  >
+  <ModalWrapperChoice option="autoClean" @confirm="handleYesClick">
     <template #header>
       {{ topLabel }}
     </template>
     <div class="c-modal-message__text">
-      This could delete Glyphs in your inventory that are good enough that you might want to use them
-      later. Purging will Purge Glyphs based on your Purge mode. Are you sure you want to do this?
-      <br>
-      <br>
+      This could delete Glyphs in your inventory that are good enough that you might want to use them later. Purging
+      will Purge Glyphs based on your Purge mode. Are you sure you want to do this?
+      <br />
+      <br />
       {{ explanation }}
     </div>
-    <br>
+    <br />
     <div class="c-modal-hard-reset-danger">
       {{ extraMessage }}
     </div>

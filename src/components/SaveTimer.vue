@@ -15,9 +15,7 @@ export default {
     timeString() {
       const localStr = timeDisplayShort(this.currentTime - this.lastLocalSave);
       const cloudStr = timeDisplayShort(this.currentTime - this.lastCloudSave);
-      return this.cloudSaveEnabled
-        ? `${localStr} (local) | ${cloudStr} (cloud)`
-        : localStr;
+      return this.cloudSaveEnabled ? `${localStr} (local) | ${cloudStr} (cloud)` : localStr;
     },
   },
   methods: {
@@ -31,17 +29,13 @@ export default {
     },
     save() {
       GameStorage.save(false, true);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    v-if="showTimeSinceSave"
-    class="o-save-timer"
-    @click="save"
-  >
+  <div v-if="showTimeSinceSave" class="o-save-timer" @click="save">
     <b v-if="saveDisabled">There is nothing left to save.</b>
     <span v-else>Time since last save: {{ timeString }}</span>
   </div>

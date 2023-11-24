@@ -4,24 +4,24 @@ import GlyphTooltipEffect from "@/components/GlyphTooltipEffect";
 export default {
   name: "GlyphTooltip",
   components: {
-    GlyphTooltipEffect
+    GlyphTooltipEffect,
   },
   props: {
     type: {
       type: String,
-      required: true
+      required: true,
     },
     strength: {
       type: Number,
-      required: true
+      required: true,
     },
     level: {
       type: Number,
-      required: true
+      required: true,
     },
     effects: {
       type: Number,
-      required: true
+      required: true,
     },
     id: {
       type: Number,
@@ -45,11 +45,11 @@ export default {
     },
     currentAction: {
       type: String,
-      required: true
+      required: true,
     },
     scoreMode: {
       type: Number,
-      required: true
+      required: true,
     },
     showDeletionText: {
       type: Boolean,
@@ -63,13 +63,13 @@ export default {
     },
     changeWatcher: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       showChaosText: false,
-      chaosDescription: ""
+      chaosDescription: "",
     };
   },
   computed: {
@@ -80,9 +80,9 @@ export default {
       return this.displayLevel ? this.displayLevel : this.level;
     },
     sortedEffects() {
-      return getGlyphEffectValuesFromBitmask(this.effects, this.effectiveLevel, this.strength, this.type)
-        .filter(effect =>
-          GlyphEffects[effect.id].isGenerated === generatedTypes.includes(this.type));
+      return getGlyphEffectValuesFromBitmask(this.effects, this.effectiveLevel, this.strength, this.type).filter(
+        (effect) => GlyphEffects[effect.id].isGenerated === generatedTypes.includes(this.type)
+      );
     },
     rarityInfo() {
       return getRarity(this.strength);
@@ -102,7 +102,7 @@ export default {
       const cursedColor = GlyphAppearanceHandler.isLightBG ? "white" : "black";
       return {
         color: this.type === "cursed" ? cursedColor : color,
-        animation: this.type === "reality" ? "a-reality-glyph-name-cycle 10s infinite" : undefined
+        animation: this.type === "reality" ? "a-reality-glyph-name-cycle 10s infinite" : undefined,
       };
     },
     description() {
@@ -135,21 +135,23 @@ export default {
       // eslint-disable-next-line no-nested-ternary
       const arrow = this.isLevelCapped
         ? "<i class='fas fa-sort-down'></i>"
-        : (this.isLevelBoosted ? "<i class='fas fa-sort-up'></i>" : "");
+        : this.isLevelBoosted
+        ? "<i class='fas fa-sort-up'></i>"
+        : "";
       // eslint-disable-next-line no-nested-ternary
-      const color = this.isLevelCapped
-        ? "#ff4444"
-        : (this.isLevelBoosted ? "#44FF44" : undefined);
+      const color = this.isLevelCapped ? "#ff4444" : this.isLevelBoosted ? "#44FF44" : undefined;
       return `Level: <span style="color: ${color}">
               ${arrow}${formatInt(this.effectiveLevel)}${arrow}
               </span>`;
     },
     eventHandlers() {
-      return GameUI.touchDevice ? {
-        touchstart: this.touchStart,
-        dragstart: this.dragStart,
-        dragEnd: this.dragEnd,
-      } : {};
+      return GameUI.touchDevice
+        ? {
+            touchstart: this.touchStart,
+            dragstart: this.dragStart,
+            dragEnd: this.dragEnd,
+          }
+        : {};
     },
     glyphTooltipStyle() {
       // With computer mice, it's nice to just totally disable mouse events on the tooltip,
@@ -161,7 +163,7 @@ export default {
         "box-shadow": `0 0 0.5rem ${borderColor}, 0 0 0.5rem ${borderColor} inset`,
         animation: this.type === "reality" ? "a-reality-glyph-tooltip-cycle 10s infinite" : undefined,
         color: this.textColor,
-        background: this.baseColor
+        background: this.baseColor,
       };
     },
     glyphHeaderStyle() {
@@ -176,14 +178,14 @@ export default {
         "box-shadow": `0 0 0.5rem 0.1rem ${color}, 0 0 0.8rem ${color} inset`,
         animation: isReality ? "a-reality-glyph-tooltip-header-cycle 10s infinite" : undefined,
         color: this.textColor,
-        background: this.baseColor
+        background: this.baseColor,
       };
-    }
+    },
   },
   watch: {
     changeWatcher() {
       this.$recompute("sortedEffects");
-    }
+    },
   },
   mounted() {
     // By attaching the tooltip to the body element, we make sure it ends up on top of anything
@@ -251,35 +253,21 @@ export default {
       const showFilterScoreModes = [AUTO_GLYPH_SCORE.SPECIFIED_EFFECT, AUTO_GLYPH_SCORE.EFFECT_SCORE];
       if (!showFilterScoreModes.includes(this.scoreMode)) return "";
       return `Score: ${format(AutoGlyphProcessor.filterValue(this.$parent.glyph), 1, 1)}`;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    class="l-glyph-tooltip c-glyph-tooltip"
-    :style="glyphTooltipStyle"
-    v-on="eventHandlers"
-  >
-    <div
-      class="c-glyph-tooltip__header"
-      :style="glyphHeaderStyle"
-    >
-      <span
-        class="c-glyph-tooltip__description"
-        :style="descriptionStyle"
-        v-html="description"
-      />
+  <div class="l-glyph-tooltip c-glyph-tooltip" :style="glyphTooltipStyle" v-on="eventHandlers">
+    <div class="c-glyph-tooltip__header" :style="glyphHeaderStyle">
+      <span class="c-glyph-tooltip__description" :style="descriptionStyle" v-html="description" />
       <span class="l-glyph-tooltip__info">
         <span v-html="levelText" />
         <span v-html="rarityText" />
       </span>
       <span v-if="showDeletionText">
-        <span
-          class="c-glyph-tooltip__sacrifice"
-          v-on="onTouchDevice ? { click: removeGlyph } : {}"
-        >
+        <span class="c-glyph-tooltip__sacrifice" v-on="onTouchDevice ? { click: removeGlyph } : {}">
           <span v-html="sacrificeText()" />
           <span v-if="sacrificeText() && refineText()"> | </span>
           <span v-html="refineText()" />
@@ -288,16 +276,8 @@ export default {
       <span class="c-glyph-tooltip__sacrifice">{{ scoreText() }}</span>
     </div>
     <div class="l-glyph-tooltip__effects">
-      <GlyphTooltipEffect
-        v-for="e in sortedEffects"
-        :key="e.id + changeWatcher"
-        :effect="e.id"
-        :value="e.value"
-      />
-      <div
-        v-if="showChaosText"
-        class="pelle-current-glyph-effects c-glyph-tooltip__effect"
-      >
+      <GlyphTooltipEffect v-for="e in sortedEffects" :key="e.id + changeWatcher" :effect="e.id" :value="e.value" />
+      <div v-if="showChaosText" class="pelle-current-glyph-effects c-glyph-tooltip__effect">
         {{ chaosDescription }}
       </div>
     </div>

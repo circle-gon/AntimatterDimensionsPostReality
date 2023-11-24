@@ -4,7 +4,7 @@ import PrimaryButton from "@/components/PrimaryButton";
 export default {
   name: "ClassicAntimatterGalaxyRow",
   components: {
-    PrimaryButton
+    PrimaryButton,
   },
   data() {
     return {
@@ -12,11 +12,11 @@ export default {
       galaxies: {
         normal: 0,
         replicanti: 0,
-        dilation: 0
+        dilation: 0,
       },
       requirement: {
         tier: 1,
-        amount: 0
+        amount: 0,
       },
       canBeBought: false,
       distantStart: 0,
@@ -57,9 +57,12 @@ export default {
     },
     typeName() {
       switch (this.type) {
-        case GALAXY_TYPE.NORMAL: return "Antimatter Galaxies";
-        case GALAXY_TYPE.DISTANT: return "Distant Antimatter Galaxies";
-        case GALAXY_TYPE.REMOTE: return "Remote Antimatter Galaxies";
+        case GALAXY_TYPE.NORMAL:
+          return "Antimatter Galaxies";
+        case GALAXY_TYPE.DISTANT:
+          return "Distant Antimatter Galaxies";
+        case GALAXY_TYPE.REMOTE:
+          return "Remote Antimatter Galaxies";
       }
       return undefined;
     },
@@ -73,11 +76,15 @@ export default {
         case GALAXY_TYPE.REMOTE: {
           const scalings = [
             { type: "distant", function: "quadratic", amount: this.distantStart },
-            { type: "remote", function: "exponential", amount: this.remoteStart }
+            { type: "remote", function: "exponential", amount: this.remoteStart },
           ];
-          return `Increased Galaxy cost scaling: ${scalings.sort((a, b) => a.amount - b.amount)
-            .map(scaling => `${scaling.function} scaling past ${this.formatGalaxies(scaling.amount)} (${scaling.type})`)
-            .join(", ").capitalize()}`;
+          return `Increased Galaxy cost scaling: ${scalings
+            .sort((a, b) => a.amount - b.amount)
+            .map(
+              (scaling) => `${scaling.function} scaling past ${this.formatGalaxies(scaling.amount)} (${scaling.type})`
+            )
+            .join(", ")
+            .capitalize()}`;
         }
       }
       return undefined;
@@ -88,7 +95,7 @@ export default {
         "tutorial--glow": this.canBeBought && this.hasTutorial,
         "o-pelle-disabled-pointer": this.creditsClosed,
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -114,17 +121,14 @@ export default {
     formatGalaxies(num) {
       return num > 1e8 ? format(num, 2) : formatInt(num);
     },
-  }
+  },
 };
 </script>
 
 <template>
   <div class="c-dimension-row c-antimatter-dim-row c-antimatter-prestige-row">
-    <div
-      class="l-dim-row__prestige-text c-dim-row__label c-dim-row__label--amount l-text-wrapper"
-    >
-      {{ typeName }} ({{ sumText }}):
-      requires {{ formatInt(requirement.amount) }} {{ dimName }} Dimensions
+    <div class="l-dim-row__prestige-text c-dim-row__label c-dim-row__label--amount l-text-wrapper">
+      {{ typeName }} ({{ sumText }}): requires {{ formatInt(requirement.amount) }} {{ dimName }} Dimensions
       <div class="l-scaling-text-wrapper">
         {{ hasIncreasedScaling ? costScalingText : "" }}
       </div>
@@ -136,10 +140,7 @@ export default {
       @click.shift.exact="buyGalaxy(false)"
     >
       {{ buttonText }}
-      <div
-        v-if="hasTutorial"
-        class="fas fa-circle-exclamation l-notification-icon"
-      />
+      <div v-if="hasTutorial" class="fas fa-circle-exclamation l-notification-icon" />
     </PrimaryButton>
   </div>
 </template>
