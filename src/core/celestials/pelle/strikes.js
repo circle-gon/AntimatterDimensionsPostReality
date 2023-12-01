@@ -4,6 +4,7 @@ class PelleStrikeState extends BitUpgradeState {
   get bits() {
     return player.celestials.pelle.progressBits;
   }
+
   set bits(value) {
     player.celestials.pelle.progressBits = value;
   }

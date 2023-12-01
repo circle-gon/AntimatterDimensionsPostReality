@@ -123,6 +123,7 @@ class EffarigUnlockState extends BitUpgradeState {
   get bits() {
     return player.celestials.effarig.unlockBits;
   }
+
   set bits(value) {
     player.celestials.effarig.unlockBits = value;
   }

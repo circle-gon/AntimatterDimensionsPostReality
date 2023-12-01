@@ -298,6 +298,7 @@ class EnslavedProgressState extends BitUpgradeState {
   get bits() {
     return player.celestials.enslaved.hintBits;
   }
+
   set bits(value) {
     player.celestials.enslaved.hintBits = value;
   }

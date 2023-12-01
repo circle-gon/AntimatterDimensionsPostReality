@@ -119,6 +119,7 @@ class TeresaUnlockState extends BitUpgradeState {
   get bits() {
     return player.celestials.teresa.unlockBits;
   }
+
   set bits(value) {
     player.celestials.teresa.unlockBits = value;
   }

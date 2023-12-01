@@ -66,9 +66,11 @@ export class AutobuyerState {
   static get autobuyerGroupName() {
     throw new NotImplementedError();
   }
+
   static get isActive() {
     return true;
   }
+
   /** @abstract */
   static set isActive(value) {
     throw new NotImplementedError();

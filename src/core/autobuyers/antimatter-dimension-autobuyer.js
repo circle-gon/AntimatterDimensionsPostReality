@@ -149,6 +149,7 @@ export class AntimatterDimensionAutobuyerState extends UpgradeableAutobuyerState
   static get entryCount() {
     return 8;
   }
+
   static get autobuyerGroupName() {
     return "Antimatter Dimension";
   }
@@ -157,6 +158,7 @@ export class AntimatterDimensionAutobuyerState extends UpgradeableAutobuyerState
   static get isActive() {
     return player.auto.antimatterDims.isActive;
   }
+
   static set isActive(value) {
     player.auto.antimatterDims.isActive = value;
   }

@@ -49,6 +49,11 @@ CodeMirror.registerHelper("hint", "anyword", (editor) => {
 
 const commentRule = { regex: /(\/\/|#).*/u, token: "comment", next: "start" };
 
+function withNumber(regex) {
+  const number = / -?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?/;
+  return new RegExp(regex.source + number.source, "ui");
+}
+
 // This is a state machine which determines the syntax highlighting for the automator. Top-level props define
 // the states, the array entries define the transition rules which are checked in order of appearance, and next
 // specifies which state to transition to after consuming the given regex. Without an entry for "next" the state
@@ -76,9 +81,14 @@ CodeMirror.defineSimpleMode("automato", {
       next: "commandDone",
     },
     {
-      regex: /start\s|unlock\s/iu,
+      regex: /start\s/iu,
       token: "keyword",
-      next: "startUnlock",
+      next: "startCommand",
+    },
+    {
+      regex: /unlock\s/iu,
+      token: "keyword",
+      next: "unlock",
     },
     { regex: /infinity\S+|eternity\S+|reality\S+|pause\S+|restart\S+/iu, token: "error", next: "commandDone" },
     { regex: /infinity|eternity|reality/iu, token: "keyword", next: "prestige" },
@@ -126,14 +136,60 @@ CodeMirror.defineSimpleMode("automato", {
     commentRule,
     { sol: true, next: "start" },
     { regex: /equip/iu, token: "variable-2", next: "equipGlyphArgs" },
+    { regex: /sacrifice/iu, token: "variable-2", next: "sacrificeGlyphArgs" },
   ],
   equipGlyphArgs: [
     commentRule,
     { sol: true, next: "start" },
     {
-      regex: /(power|infinity|replication|time|dilation|effarig|reality|cursed|companion)glyph/iu,
+      regex: withNumber(/slot/),
       token: "variable",
-      next: "commandDone",
+    },
+    {
+      regex: /type (power|infinity|replication|time|dilation|effarig|reality|cursed|companion)glyph/iu,
+      token: "variable-3",
+    },
+    {
+      regex: withNumber(/effects/),
+      token: "variable-2",
+    },
+    {
+      regex: withNumber(/level/),
+      token: "variable",
+    },
+    {
+      regex: withNumber(/rarity/),
+      token: "variable-2",
+    },
+    {
+      regex: /\S+/iu,
+      token: "error",
+      next: "start",
+    },
+  ],
+  sacrificeGlyphArgs: [
+    commentRule,
+    { sol: true, next: "start" },
+    {
+      regex: /type (power|infinity|replication|time|dilation|effarig|reality|cursed|companion)glyph/iu,
+      token: "variable-3",
+    },
+    {
+      regex: withNumber(/effects/),
+      token: "variable-2",
+    },
+    {
+      regex: withNumber(/level/),
+      token: "variable",
+    },
+    {
+      regex: withNumber(/rarity/),
+      token: "variable-2",
+    },
+    {
+      regex: /\S+/iu,
+      token: "error",
+      next: "start",
     },
   ],
   prestige: [
@@ -149,7 +205,17 @@ CodeMirror.defineSimpleMode("automato", {
     { regex: /\}/iu, dedent: true },
     { regex: /\S+/iu, token: "error" },
   ],
-  startUnlock: [
+  startCommand: [
+    commentRule,
+    { sol: true, next: "start" },
+    {
+      regex: /ec\s?(1[0-2]|[1-9])|dilation|teresa|effarigcel|nameless|vcel|racel|laitela|pelle/iu,
+      token: "variable-2",
+      next: "commandDone",
+    },
+    { regex: /nowait(\s|$)/iu, token: "property" },
+  ],
+  unlock: [
     commentRule,
     { sol: true, next: "start" },
     {

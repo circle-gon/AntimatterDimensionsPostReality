@@ -42,7 +42,7 @@
       "command": "npm run deploy"
     },
     "npm run format": {
-      "name": "Format",
+      "name": "format",
       "command": "npm run format"
     }
   }

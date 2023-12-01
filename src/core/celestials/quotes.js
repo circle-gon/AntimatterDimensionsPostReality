@@ -127,6 +127,7 @@ class CelQuotes extends BitUpgradeState {
   get bits() {
     return player.celestials[this._celestial].quoteBits;
   }
+
   set bits(value) {
     player.celestials[this._celestial].quoteBits = value;
   }
@@ -151,6 +152,7 @@ class CelQuotes extends BitUpgradeState {
   show() {
     this.unlock();
   }
+
   onUnlock() {
     this.present();
   }

@@ -106,6 +106,7 @@ class VUnlockState extends BitUpgradeState {
   get bits() {
     return player.celestials.v.unlockBits;
   }
+
   set bits(value) {
     player.celestials.v.unlockBits = value;
   }

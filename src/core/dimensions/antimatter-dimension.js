@@ -366,6 +366,7 @@ class AntimatterDimensionState extends DimensionState {
   get costBumps() {
     return this.data.costBumps;
   }
+
   /** @param {number} value */
   set costBumps(value) {
     this.data.costBumps = value;

@@ -1,3 +1,5 @@
+import { beginProcessReality, getRealityProps } from "../reality";
+
 import { AUTOMATOR_COMMAND_STATUS } from "./automator-backend";
 import { standardizeAutomatorValues, tokenMap as T } from "./lexer";
 
@@ -77,6 +79,51 @@ function findLastPrestigeRecord(layer) {
       throw Error(`Unrecognized prestige ${layer} in Automator event log`);
   }
 }
+
+// Used by the start command to start celestials
+const CELESTIAL_DATA = {
+  teresa: {
+    reality: true,
+    name: "Teresa",
+    run: () => Teresa.initializeRun(),
+    unlocked: () => Teresa.isUnlocked,
+  },
+  effarigcel: {
+    reality: true,
+    run: () => Effarig.initializeRun(),
+    unlocked: () => TeresaUnlocks.effarig.isUnlocked,
+  },
+  nameless: {
+    reality: true,
+    name: "Nameless",
+    run: () => Enslaved.initializeRun(),
+    unlocked: () => EffarigUnlock.eternity.isUnlocked,
+  },
+  vcel: {
+    reality: true,
+    name: "V",
+    run: () => V.initializeRun(),
+    unlocked: () => Achievement(151).isUnlocked,
+  },
+  racel: {
+    reality: true,
+    name: "Ra",
+    run: () => Ra.initializeRun(),
+    unlocked: () => VUnlocks.raUnlock.isUnlocked,
+  },
+  laitela: {
+    reality: true,
+    name: "Laitela",
+    run: () => Laitela.initializeRun(),
+    unlocked: () => Laitela.isUnlocked,
+  },
+  pelle: {
+    reality: false,
+    name: "Pelle",
+    run: () => Pelle.initializeRun(),
+    unlocked: () => Pelle.isUnlocked,
+  },
+};
 
 export const AutomatorCommands = [
   {
@@ -892,149 +939,6 @@ export const AutomatorCommands = [
     }),
   },
   {
-    id: "equipGlyph",
-    rule: ($) => () => {
-      $.CONSUME(T.Glyphs);
-      $.CONSUME(T.Equip);
-      // Syntax is slot [slot] type [type] effects [effects]
-      // level [level] rarity [rarity]
-      $.OPTION(() => {
-        $.CONSUME(T.Slot);
-        $.CONSUME(T.NumberLiteral);
-      });
-      $.OPTION1(() => {
-        $.CONSUME(T.Type);
-        $.CONSUME(T.GlyphType);
-      });
-      $.OPTION2(() => {
-        $.CONSUME(T.Effects);
-        // TODO: implement specfic effects
-        $.CONSUME1(T.NumberLiteral);
-      });
-      $.OPTION3(() => {
-        $.CONSUME(T.Level);
-        $.CONSUME2(T.NumberLiteral);
-      });
-      $.OPTION4(() => {
-        $.CONSUME(T.Rarity);
-        $.CONSUME3(T.NumberLiteral);
-      });
-    },
-    validate: (ctx, V) => {
-      ctx.startLine = ctx.Glyphs[0].startLine;
-      if (!PlayerProgress.realityUnlocked()) {
-        V.addError(ctx.Glyphs[0], "You do not have Glyphs unlocked.", "Reality once to unlock.");
-        return false;
-      }
-      if (!AtomMilestone.am3.isReached) {
-        V.addError(ctx.Glyphs[0], "You do not have Reality automation unlocked.", "Unlock it from Atom first.");
-        return false;
-      }
-
-      ctx.$payload = {};
-
-      // This is used to determine the correct NumberLiteral to match
-      let idx = 0;
-
-      if (ctx.Slot) {
-        const value = Number(ctx.NumberLiteral[idx++].image);
-        if (!Number.isInteger(value)) {
-          V.addError(ctx.Glyphs[0], "Slot must be an integer.", "Change slot to be an integer.");
-          return false;
-        }
-        ctx.$payload.slot = value;
-      } else {
-        ctx.$payload.slot = 1;
-      }
-
-      if (ctx.GlyphType) {
-        ctx.$payload.type = ctx.GlyphType[0].image.slice(-5);
-      } else {
-        ctx.$payload.type = "*";
-      }
-
-      if (ctx.Effects) {
-        const value = Number(ctx.NumberLiteral[idx++].image);
-        if (!Number.isInteger(value)) {
-          V.addError(ctx.Glyphs[0], "Effect count must be an integer.", "Change effect count to be an integer.");
-          return false;
-        }
-        ctx.$payload.effects = value;
-      } else {
-        ctx.$payload.effects = 0;
-      }
-
-      if (ctx.Level) {
-        const value = Number(ctx.NumberLiteral[idx++].image);
-        if (!Number.isInteger(value)) {
-          V.addError(ctx.Glyphs[0], "Glyph level must be an integer.", "Change glyph level to be an integer.");
-          return false;
-        }
-        ctx.$payload.level = value;
-      } else {
-        ctx.$payload.level = 0;
-      }
-
-      if (ctx.Rarity) {
-        const value = Number(ctx.NumberLiteral[idx++].image);
-        if (value > 1 || value < 0) {
-          V.addError(
-            ctx.Glyphs[0],
-            "Rarity must be a number from 0 to 1.",
-            "Change ra;rity to be a number from 0 to 1."
-          );
-          return false;
-        }
-        ctx.$payload.rarity = value;
-      } else {
-        ctx.$payload.rarity = 0;
-      }
-      return true;
-    },
-    compile: (ctx) => () => {
-      if (!PlayerProgress.realityUnlocked() || !AtomMilestone.am3.isReached) {
-        AutomatorData.logCommandEvent("Attempted to equip a Glyph, but failed (not unlocked yet).", ctx.startLine);
-        return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
-      }
-      const filter = ctx.$payload;
-      const glyph = Glyphs.inventory.find(
-        (i) =>
-          i !== null &&
-          (filter.type === "*" || i.type === filter.type) &&
-          getGlyphEffectValuesFromBitmask(i.effects) >= filter.effects &&
-          i.level >= filter.level &&
-          strengthToRarity(i.strength) >= filter.rarity
-      );
-      if (!glyph) {
-        AutomatorData.logCommandEvent("Attempted to equip a Glyph, but one could not be found.", ctx.startLine);
-        return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
-      }
-
-      // TODO: add more slots
-      Glyphs.equip(glyph, filter.slot);
-
-      AutomatorData.logCommandEvent(`A Glyph was equipped.`, ctx.startLine);
-
-      return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
-    },
-    blockify: (ctx) => ({
-      singleTextInput: ctx.GlyphType[0].image,
-      ...automatorBlocksMap["GLYPHS EQUIP"],
-    }),
-  },
-  //
-  // d: "sacrificeGlyph",
-  // rule $ => ) => {
-  //
-  // },
-  // validate: (ctx, V) => {
-  //
-  // },
-  // compile: ctx => {
-  //
-  // }
-  // },
-  {
     id: "unlockEC",
     rule: ($) => () => {
       $.CONSUME(T.Unlock);
@@ -1047,7 +951,7 @@ export const AutomatorCommands = [
     },
     compile: (ctx) => {
       const nowait = ctx.Nowait !== undefined;
-      const ecNumber = ctx.eternithallenge[0].children.$ecNumber;
+      const ecNumber = ctx.eternityChallenge[0].children.$ecNumber;
       return () => {
         if (EternityChallenge(ecNumber).isUnloced) {
           AutomatorData.logCommandEventSkipped(`EC ${ecNumber} unlock due to being alreadunlocked`, ctx.startLine);
@@ -1319,6 +1223,337 @@ export const AutomatorCommands = [
     },
     blockify: () => ({
       ...automatorBlocksMap.STOP,
+    }),
+  },
+
+  // New Automator Commands
+  {
+    id: "equipGlyph",
+    rule: ($) => () => {
+      $.CONSUME(T.Glyphs);
+      $.CONSUME(T.Equip);
+
+      $.OPTION(() => {
+        $.CONSUME(T.Slot);
+        $.CONSUME(T.NumberLiteral);
+      });
+      $.OPTION1(() => {
+        $.CONSUME(T.Type);
+        $.CONSUME(T.GlyphType);
+      });
+      $.OPTION2(() => {
+        $.CONSUME(T.Effects);
+        // TODO: implement specfic effects
+        $.CONSUME1(T.NumberLiteral);
+      });
+      $.OPTION3(() => {
+        $.CONSUME(T.Level);
+        $.CONSUME2(T.NumberLiteral);
+      });
+      $.OPTION4(() => {
+        $.CONSUME(T.Rarity);
+        $.CONSUME3(T.NumberLiteral);
+      });
+    },
+    validate: (ctx, V) => {
+      ctx.startLine = ctx.Glyphs[0].startLine;
+      if (!PlayerProgress.realityUnlocked()) {
+        V.addError(ctx.Glyphs[0], "You do not have Glyphs unlocked.", "Reality once to unlock.");
+        return false;
+      }
+      if (!AtomMilestone.am3.isReached) {
+        V.addError(ctx.Glyphs[0], "You do not have Reality automation unlocked.", "Unlock it from Atom first.");
+        return false;
+      }
+
+      ctx.$payload = {};
+
+      // This is used to determine the correct NumberLiteral to match
+      let idx = 0;
+
+      if (ctx.Slot) {
+        const value = Number(ctx.NumberLiteral[idx++].image);
+        if (!Number.isInteger(value)) {
+          V.addError(ctx.NumberLiteral[idx - 1], "Slot must be an integer.", "Change slot to be an integer.");
+          return false;
+        }
+        ctx.$payload.slot = value;
+      } else {
+        ctx.$payload.slot = 1;
+      }
+
+      if (ctx.GlyphType) {
+        ctx.$payload.type = ctx.GlyphType[0].image.slice(0, -5).toLowerCase();
+      } else {
+        ctx.$payload.type = "*";
+      }
+
+      if (ctx.Effects) {
+        const value = Number(ctx.NumberLiteral[idx++].image);
+        if (!Number.isInteger(value)) {
+          V.addError(
+            ctx.NumberLiteral[idx - 1],
+            "Effect count must be an integer.",
+            "Change effect count to be an integer."
+          );
+          return false;
+        }
+        ctx.$payload.effects = value;
+      } else {
+        ctx.$payload.effects = 0;
+      }
+
+      if (ctx.Level) {
+        const value = Number(ctx.NumberLiteral[idx++].image);
+        if (!Number.isInteger(value)) {
+          V.addError(
+            ctx.NumberLiteral[idx - 1],
+            "Glyph level must be an integer.",
+            "Change glyph level to be an integer."
+          );
+          return false;
+        }
+        ctx.$payload.level = value;
+      } else {
+        ctx.$payload.level = 0;
+      }
+
+      if (ctx.Rarity) {
+        const value = Number(ctx.NumberLiteral[idx++].image);
+        if (value > 1 || value < 0) {
+          V.addError(
+            ctx.NumberLiteral[idx - 1],
+            "Rarity must be a number from 0 to 1.",
+            "Change rarity to be a number from 0 to 1."
+          );
+          return false;
+        }
+        ctx.$payload.rarity = value;
+      } else {
+        ctx.$payload.rarity = 0;
+      }
+      return true;
+    },
+    compile: (ctx) => {
+      const filter = ctx.$payload;
+      return () => {
+        if (!PlayerProgress.realityUnlocked() || !AtomMilestone.am3.isReached) {
+          AutomatorData.logCommandEvent("Attempted to equip a Glyph, but failed (not unlocked yet).", ctx.startLine);
+          return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
+        }
+        const glyph = Glyphs.inventory.find(
+          (i) =>
+            i !== null &&
+            (filter.type === "*" || i.type === filter.type) &&
+            getGlyphEffectValuesFromBitmask(i.effects).length >= filter.effects &&
+            i.level >= filter.level &&
+            strengthToRarity(i.strength) >= filter.rarity
+        );
+        if (!glyph) {
+          AutomatorData.logCommandEvent("Attempted to equip a Glyph, but one could not be found.", ctx.startLine);
+          return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
+        }
+
+        // TODO: add more slots
+        Glyphs.equip(glyph, filter.slot);
+
+        AutomatorData.logCommandEvent(`A Glyph was equipped.`, ctx.startLine);
+
+        return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
+      };
+    },
+    blockify: (ctx) => {
+      // Same reason as the validate function
+      let idx = 0;
+      const slot = ctx.Slot ? `slot ${ctx.NumberLiteral[idx++].image}` : null;
+      const type = ctx.Type ? `type ${ctx.GlyphType[0].image}` : null;
+      const effects = ctx.Effects ? `effects ${ctx.NumberLiteral[idx++].image}` : null;
+      const level = ctx.Level ? `level ${ctx.NumberLiteral[idx++].image}` : null;
+      const rarity = ctx.Rarity ? `rarity ${ctx.NumberLiteral[idx++].image}` : null;
+      const text = [slot, type, effects, level, rarity].filter((i) => i !== null).join(" ");
+      return {
+        singleTextInput: text,
+        ...automatorBlocksMap["GLYPHS EQUIP"],
+      };
+    },
+  },
+  {
+    id: "sacrificeGlyph",
+    rule: ($) => () => {
+      $.CONSUME(T.Glyphs);
+      $.CONSUME(T.Sacrifice);
+
+      $.OPTION(() => {
+        $.CONSUME(T.Type);
+        $.CONSUME(T.GlyphType);
+      });
+      $.OPTION1(() => {
+        $.CONSUME(T.Effects);
+        // TODO: implement specfic effects
+        $.CONSUME(T.NumberLiteral);
+      });
+      $.OPTION2(() => {
+        $.CONSUME(T.Level);
+        $.CONSUME1(T.NumberLiteral);
+      });
+      $.OPTION3(() => {
+        $.CONSUME(T.Rarity);
+        $.CONSUME2(T.NumberLiteral);
+      });
+    },
+    validate: (ctx, V) => {
+      ctx.startLine = ctx.Glyphs[0].startLine;
+      // Don't error if glyph sacrifice is not unlocked
+      // This makes scripts portable across Collapses
+      if (!AtomMilestone.am3.isReached) {
+        V.addError(ctx.Glyphs[0], "You do not have Reality automation unlocked.", "Unlock it from Atom first.");
+        return false;
+      }
+
+      ctx.$payload = {};
+
+      // This is used to determine the correct NumberLiteral to match
+      let idx = 0;
+
+      if (ctx.GlyphType) {
+        const type = ctx.GlyphType[0].image.slice(0, -5).toLowerCase();
+        if (type === "companion") {
+          V.addError(
+            ctx.GlyphType[0],
+            "The Companion glyph may not be sacrificed from the Automator.",
+            "Change or delete this command."
+          );
+          return false;
+        }
+        ctx.$payload.type = type;
+      } else {
+        ctx.$payload.type = "*";
+      }
+
+      if (ctx.Effects) {
+        const value = Number(ctx.NumberLiteral[idx++].image);
+        if (!Number.isInteger(value)) {
+          V.addError(
+            ctx.NumberLiteral[idx - 1],
+            "Effect count must be an integer.",
+            "Change effect count to be an integer."
+          );
+          return false;
+        }
+        ctx.$payload.effects = value;
+      } else {
+        ctx.$payload.effects = 0;
+      }
+
+      if (ctx.Level) {
+        const value = Number(ctx.NumberLiteral[idx++].image);
+        if (!Number.isInteger(value)) {
+          V.addError(
+            ctx.NumberLiteral[idx - 1],
+            "Glyph level must be an integer.",
+            "Change glyph level to be an integer."
+          );
+          return false;
+        }
+        ctx.$payload.level = value;
+      } else {
+        ctx.$payload.level = 0;
+      }
+
+      if (ctx.Rarity) {
+        const value = Number(ctx.NumberLiteral[idx++].image);
+        if (value > 1 || value < 0) {
+          V.addError(
+            ctx.NumberLiteral[idx - 1],
+            "Rarity must be a number from 0 to 1.",
+            "Change rarity to be a number from 0 to 1."
+          );
+          return false;
+        }
+        ctx.$payload.rarity = value;
+      } else {
+        ctx.$payload.rarity = 0;
+      }
+      return true;
+    },
+    compile: (ctx) => {
+      const filter = ctx.$payload;
+      return () => {
+        if (!GlyphSacrificeHandler.canSacrifice || !AtomMilestone.am3.isReached) {
+          AutomatorData.logCommandEvent(
+            "Attempted to sacrifice a Glyph, but failed (not unlocked yet).",
+            ctx.startLine
+          );
+          return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
+        }
+        const glyph = Glyphs.inventory.find(
+          (i) =>
+            i !== null &&
+            (filter.type === "*" || i.type === filter.type) &&
+            getGlyphEffectValuesFromBitmask(i.effects).length >= filter.effects &&
+            i.level >= filter.level &&
+            strengthToRarity(i.strength) >= filter.rarity
+        );
+        if (!glyph) {
+          AutomatorData.logCommandEvent("Attempted to sacrifice a Glyph, but one could not be found.", ctx.startLine);
+          return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
+        }
+
+        // We use true so that the modal is never shown
+        GlyphSacrificeHandler.sacrificeGlyph(glyph, true);
+
+        AutomatorData.logCommandEvent(`A Glyph was sacrificed.`, ctx.startLine);
+
+        return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
+      };
+    },
+    blockify: (ctx) => {
+      // Same reason as the validate function
+      let idx = 0;
+      const type = ctx.Type ? `type ${ctx.GlyphType[0].image}` : null;
+      const effects = ctx.Effects ? `effects ${ctx.NumberLiteral[idx++].image}` : null;
+      const level = ctx.Level ? `level ${ctx.NumberLiteral[idx++].image}` : null;
+      const rarity = ctx.Rarity ? `rarity ${ctx.NumberLiteral[idx++].image}` : null;
+      const text = [type, effects, level, rarity].filter((i) => i !== null).join(" ");
+      return {
+        singleTextInput: text,
+        ...automatorBlocksMap["GLYPHS SACRIFICE"],
+      };
+    },
+  },
+  {
+    id: "startCelestial",
+    rule: ($) => () => {
+      $.CONSUME(T.Start);
+      $.CONSUME(T.CelestialName);
+    },
+    validate: (ctx) => {
+      ctx.startLine = ctx.Start[0].startLine;
+      // Do nothing other than return true
+      return true;
+    },
+    compile: (ctx) => () => {
+      const celName = ctx.CelestialName[0].image.toLowerCase();
+      const data = CELESTIAL_DATA[celName];
+
+      if (Pelle.isDoomed) {
+        AutomatorData.logCommandEvent(`Tried to enter ${data.name}, but failed (is Doomed).`, ctx.startLine);
+        return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
+      }
+
+      if (data.unlocked()) {
+        if (data.reality) beginProcessReality(getRealityProps(true));
+        data.run();
+        AutomatorData.logCommandEvent(`Celestial ${data.name} was started.`, ctx.startLine);
+      } else {
+        AutomatorData.logCommandEvent(`Tried to enter ${data.name}, but failed (not unlocked).`, ctx.startLine);
+      }
+
+      return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
+    },
+    blockify: (ctx) => ({
+      singleSelectionInput: ctx.CelestialName[0].image.toUpperCase(),
+      ...automatorBlocksMap.START,
     }),
   },
 ];

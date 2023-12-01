@@ -132,10 +132,11 @@ export const automatorBlocks = [
   },
   {
     cmd: "START",
-    allowedPatterns: ["AB", "C"],
+    allowedPatterns: ["AB", "C", "D"],
     A: ["EC"],
     B: ["*"],
     C: ["DILATION"],
+    D: ["TERESA", "EFFARIG", "NAMELESS", "VCEL", "RACEL", "LAITELA", "PELLE"],
     targets: ["singleSelectionInput", "singleTextInput"],
   },
   {
@@ -225,6 +226,15 @@ export const automatorBlocks = [
   {
     cmd: "GLYPHS EQUIP",
     alias: "EQUIP GLYPH",
+    // I wish this could be better but idk how to make it WORK
+    allowedPatterns: ["A"],
+    A: ["*"],
+    targets: ["singleTextInput"],
+  },
+  {
+    cmd: "GLYPHS SACRIFICE",
+    alias: "SACRIFICE GLYPH",
+    // I wish this could be better but idk how to make it WORK
     allowedPatterns: ["A"],
     A: ["*"],
     targets: ["singleTextInput"],

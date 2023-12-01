@@ -94,6 +94,7 @@ TimeTheoremPurchaseType.am = new (class extends TimeTheoremPurchaseType {
   get amount() {
     return player.timestudy.amBought;
   }
+
   set amount(value) {
     player.timestudy.amBought = value;
   }
@@ -101,9 +102,11 @@ TimeTheoremPurchaseType.am = new (class extends TimeTheoremPurchaseType {
   get currency() {
     return Currency.antimatter;
   }
+
   get costBase() {
     return DC.E20000;
   }
+
   get costIncrement() {
     return DC.E20000;
   }
@@ -113,6 +116,7 @@ TimeTheoremPurchaseType.ip = new (class extends TimeTheoremPurchaseType {
   get amount() {
     return player.timestudy.ipBought;
   }
+
   set amount(value) {
     player.timestudy.ipBought = value;
   }
@@ -120,9 +124,11 @@ TimeTheoremPurchaseType.ip = new (class extends TimeTheoremPurchaseType {
   get currency() {
     return Currency.infinityPoints;
   }
+
   get costBase() {
     return DC.D1;
   }
+
   get costIncrement() {
     return DC.E100;
   }
@@ -132,6 +138,7 @@ TimeTheoremPurchaseType.ep = new (class extends TimeTheoremPurchaseType {
   get amount() {
     return player.timestudy.epBought;
   }
+
   set amount(value) {
     player.timestudy.epBought = value;
   }
@@ -139,9 +146,11 @@ TimeTheoremPurchaseType.ep = new (class extends TimeTheoremPurchaseType {
   get currency() {
     return Currency.eternityPoints;
   }
+
   get costBase() {
     return DC.D1;
   }
+
   get costIncrement() {
     return DC.D2;
   }

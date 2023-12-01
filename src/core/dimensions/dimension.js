@@ -15,6 +15,7 @@ export class DimensionState {
   get displayName() {
     return this._displayName;
   }
+
   get shortDisplayName() {
     return this._shortDisplayName;
   }
@@ -27,6 +28,7 @@ export class DimensionState {
   get amount() {
     return this.data.amount;
   }
+
   /** @param {Decimal} value */
   set amount(value) {
     this.data.amount = value;
@@ -36,6 +38,7 @@ export class DimensionState {
   get bought() {
     return this.data.bought;
   }
+
   /** @param {number} value */
   set bought(value) {
     this.data.bought = value;

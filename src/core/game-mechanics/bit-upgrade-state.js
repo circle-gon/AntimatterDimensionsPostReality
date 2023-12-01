@@ -15,6 +15,7 @@ export class BitUpgradeState extends GameMechanicState {
   get bits() {
     throw new NotImplementedError();
   }
+
   set bits(value) {
     throw new NotImplementedError();
   }

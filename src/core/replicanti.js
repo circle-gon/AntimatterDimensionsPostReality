@@ -278,6 +278,7 @@ class ReplicantiUpgradeState {
   get id() {
     throw new NotImplementedError();
   }
+
   /** @abstract */
   get value() {
     throw new NotImplementedError();
@@ -297,6 +298,7 @@ class ReplicantiUpgradeState {
   get cost() {
     throw new NotImplementedError();
   }
+
   /** @abstract */
   set cost(value) {
     throw new Error("Use baseCost to set cost");
@@ -310,6 +312,7 @@ class ReplicantiUpgradeState {
   get baseCost() {
     return this.cost;
   }
+
   /** @abstract */
   set baseCost(value) {
     throw new NotImplementedError();
@@ -318,6 +321,7 @@ class ReplicantiUpgradeState {
   get cap() {
     return undefined;
   }
+
   get isCapped() {
     return false;
   }
@@ -356,6 +360,7 @@ export const ReplicantiUpgrade = {
     get value() {
       return player.replicanti.chance;
     }
+
     set value(value) {
       player.replicanti.chance = value;
     }
@@ -371,6 +376,7 @@ export const ReplicantiUpgrade = {
     get baseCost() {
       return player.replicanti.chanceCost;
     }
+
     set baseCost(value) {
       player.replicanti.chanceCost = value;
     }
@@ -426,6 +432,7 @@ export const ReplicantiUpgrade = {
     get value() {
       return player.replicanti.interval;
     }
+
     set value(value) {
       player.replicanti.interval = value;
     }
@@ -441,6 +448,7 @@ export const ReplicantiUpgrade = {
     get baseCost() {
       return player.replicanti.intervalCost;
     }
+
     set baseCost(value) {
       player.replicanti.intervalCost = value;
     }
@@ -473,6 +481,7 @@ export const ReplicantiUpgrade = {
     get value() {
       return player.replicanti.boughtGalaxyCap;
     }
+
     set value(value) {
       player.replicanti.boughtGalaxyCap = value;
     }
@@ -488,6 +497,7 @@ export const ReplicantiUpgrade = {
     get baseCost() {
       return player.replicanti.galCost;
     }
+
     set baseCost(value) {
       player.replicanti.galCost = value;
     }

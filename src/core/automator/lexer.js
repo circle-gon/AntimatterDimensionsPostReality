@@ -81,6 +81,7 @@ const PrestigeEvent = createCategory("PrestigeEvent");
 const StudyPath = createCategory("StudyPath");
 const TimeUnit = createCategory("TimeUnit");
 const GlyphType = createCategory("GlyphType");
+const CelestialName = createCategory("CelestialName");
 
 createInCategory(ComparisonOperator, "OpGTE", />=/, {
   $autocomplete: ">=",
@@ -120,6 +121,15 @@ createInCategory(GlyphType, "EffarigGlyph", /effarigglyph/i);
 createInCategory(GlyphType, "RealityGlyph", /realityglyph/i);
 createInCategory(GlyphType, "CursedGlyph", /cursedglyph/i);
 createInCategory(GlyphType, "CompanionGlyph", /companionglyph/i);
+
+createInCategory(CelestialName, "Teresa", /teresa/i);
+createInCategory(CelestialName, "Effarig", /effarigcel/i);
+// To keep in line with the internals
+createInCategory(CelestialName, "Enslaved", /nameless/i);
+createInCategory(CelestialName, "V", /vcel/i);
+createInCategory(CelestialName, "Ra", /racel/i);
+createInCategory(CelestialName, "Laitela", /laitela/i);
+createInCategory(CelestialName, "Pelle", /pelle/i);
 
 createInCategory(AutomatorCurrency, "EP", /ep/i, { $getter: () => Currency.eternityPoints.value });
 createInCategory(AutomatorCurrency, "IP", /ip/i, { $getter: () => Currency.infinityPoints.value });
@@ -399,6 +409,8 @@ export const automatorTokens = [
   AutomatorCurrency,
   ...tokenLists.AutomatorCurrency,
   ECLiteral,
+  CelestialName,
+  ...tokenLists.CelestialName,
   GlyphType,
   ...tokenLists.GlyphType,
   Keyword,

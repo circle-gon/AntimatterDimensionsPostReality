@@ -105,9 +105,7 @@ export default {
     </div>
     <div class="o-laitela-matter-amount">Dark Matter Dimensions are unaffected by storing real time.</div>
     <h2 v-if="!singularitiesUnlocked" class="c-laitela-singularity-container">
-      Unlock Singularities in {{ singularityWaitTime }}. ({{ format(darkEnergy, 2, 2) }}/{{
-        format(singularityCap, 2)
-      }}
+      Unlock Singularities in {{ singularityWaitTime }}. ({{ format(darkEnergy, 2, 2) }}/{{ format(singularityCap, 2) }}
       Dark Energy)
     </h2>
     <SingularityPane v-if="singularitiesUnlocked" />

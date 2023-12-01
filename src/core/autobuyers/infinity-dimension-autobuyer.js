@@ -49,12 +49,15 @@ export class InfinityDimensionAutobuyerState extends IntervaledAutobuyerState {
   static get entryCount() {
     return 8;
   }
+
   static get autobuyerGroupName() {
     return "Infinity Dimension";
   }
+
   static get isActive() {
     return player.auto.infinityDims.isActive;
   }
+
   static set isActive(value) {
     player.auto.infinityDims.isActive = value;
   }
