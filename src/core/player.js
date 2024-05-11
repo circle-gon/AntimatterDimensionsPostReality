@@ -203,6 +203,33 @@ window.player = {
     singularity: { isActive: false },
     ipMultBuyer: { isActive: false },
     epMultBuyer: { isActive: false },
+    pets: {
+      teresa: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: true,
+        })),
+        isActive: false,
+      },
+      effarig: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: true,
+        })),
+        isActive: false,
+      },
+      enslaved: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: true,
+        })),
+        isActive: false,
+      },
+      v: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: true,
+        })),
+        isActive: false,
+      },
+    },
+    glyphSacrifice: { isActive: false },
   },
   infinityPoints: DC.D0,
   infinities: DC.D0,

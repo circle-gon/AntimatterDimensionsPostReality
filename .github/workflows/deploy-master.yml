@@ -4,9 +4,6 @@ env:
   FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
 
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:
     branches:
       - master

@@ -42,7 +42,7 @@ export const atomUpgrades = [
     name: "Starter Pack",
     cost: 1,
     description: () => `${formatX(1000)} gamespeed (doesn't apply when black holes are 
-    inverted), ${formatX(10)} Reality Machine gain, ${formatX(5)} Perk Point gain, 
+    paused), ${formatX(10)} Reality Machine gain, ${formatX(5)} Perk Point gain, 
     ${formatX(10)} Relic Shard gain, ${formatX(10)} Memory gain, 
     ${formatX(10)} Dark Matter and Dark Energy gain, 
     ${formatX(5)} Singularity gain, and ${formatX(100)} Reality Shard gain.`,

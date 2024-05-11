@@ -1538,7 +1538,7 @@ export const normalAchievements = [
     name: "One more time",
     description: "Permanently gain back all Antimatter Dimension autobuyers.",
     checkRequirement: () =>
-      PelleUpgrade.antimatterDimAutobuyers1.canBeApplied && PelleUpgrade.antimatterDimAutobuyers2.canBeApplied,
+      Pelle.isDoomed && PelleUpgrade.antimatterDimAutobuyers1.canBeApplied && PelleUpgrade.antimatterDimAutobuyers2.canBeApplied,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
   {

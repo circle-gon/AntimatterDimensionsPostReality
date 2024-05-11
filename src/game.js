@@ -407,7 +407,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.mul(SingularityMilestone.gamespeedFromSingularities.effectOrDefault(1));
   }
 
-  if (AtomUpgrade(2).isBought && !BlackHoles.areNegative) factor = factor.mul(1000);
+  if (AtomUpgrade(2).isBought && !BlackHoles.arePaused) factor = factor.mul(1000);
 
   if (effects.includes(GAME_SPEED_EFFECT.TIME_GLYPH)) {
     factor = factor.mul(getAdjustedGlyphEffect("timespeed"));

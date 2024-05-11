@@ -1,5 +1,4 @@
 import { DC } from "./constants";
-import { BitPurchasableMechanicState, GameMechanicState, RebuyableMechanicState } from "./game-mechanics";
 
 export function migrateSaves(player) {
   // Change effarig shards to decimal
@@ -155,26 +154,6 @@ export function collapse() {
   GameEnd.creditsEverClosed = false;
   player.isGameEnd = false;
 
-  if (!AtomMilestone.am1.isReached) {
-    player.challenge = {
-      normal: {
-        current: 0,
-        bestTimes: Array.repeat(Decimal.MAX_LIMIT, 11),
-        completedBits: 0,
-      },
-      infinity: {
-        current: 0,
-        bestTimes: Array.repeat(Decimal.MAX_LIMIT, 8),
-        completedBits: 0,
-      },
-      eternity: {
-        current: 0,
-        unlocked: 0,
-        requirementBits: 0,
-      },
-    };
-  }
-
   lockAchievementsOnCollapse();
 
   // Celestials
@@ -186,7 +165,7 @@ export function collapse() {
     bestAMSet: [],
     perkShop: Array.repeat(0, 5),
     lastRepeatedMachines: DC.D0,
-    quoteBits: AtomMilestone.am1.isReached ? player.celestials.teresa.quoteBits : 0,
+    quoteBits: 0,
   };
 
   player.celestials.effarig = {
@@ -200,7 +179,7 @@ export function collapse() {
       eternities: 25,
     },
     autoAdjustGlyphWeights: false,
-    quoteBits: AtomMilestone.am1.isReached ? player.celestials.effarig.quoteBits : 0,
+    quoteBits: 0,
   };
 
   Object.assign(player.celestials.enslaved, {
@@ -221,13 +200,13 @@ export function collapse() {
     hintUnlockProgress: 0,
     glyphHintsGiven: 0,
     zeroHintTime: 0,
-    quoteBits: AtomMilestone.am1.isReached ? player.celestials.enslaved.quoteBits : 0,
+    quoteBits: 0,
     isDischargingReal: false,
   });
   Enslaved.autoReleaseTick = 0;
 
   V.reset();
-  player.celestials.v.quoteBits = AtomMilestone.am1.isReached ? player.celestials.teresa.quoteBits : 0;
+  player.celestials.v.quoteBits = 0;
 
   Ra.reset();
   player.celestials.ra.petWithRemembrance = "";
@@ -244,7 +223,7 @@ export function collapse() {
     dilation: 0,
     effarig: 0,
   };
-  player.celestials.ra.quoteBits = AtomMilestone.am1.isReached ? player.celestials.ra.quoteBits : 0;
+  player.celestials.ra.quoteBits = 0;
 
   Laitela.reset();
   Object.assign(player.celestials.laitela, {
@@ -254,7 +233,7 @@ export function collapse() {
     upgrades: {},
     darkEnergy: DC.D0,
     lastCheckedMilestones: DC.D0,
-    quoteBits: AtomMilestone.am1.isReached ? player.celestials.laitela.quoteBits : 0,
+    quoteBits: 0,
   });
 
   Object.assign(player.celestials.pelle, {
@@ -320,7 +299,7 @@ export function collapse() {
       rifts: false,
       galaxies: false,
     },
-    quoteBits: AtomMilestone.am1.isReached ? player.celestials.pelle.quoteBits : 0,
+    quoteBits: 0,
   });
 
   // Reality
@@ -360,7 +339,7 @@ export function collapse() {
     powerUpgrades: 0,
     durationUpgrades: 0,
     phase: 0,
-    active: false,
+    active: AtomMilestone.am2.isReached,
     unlocked: false,
     activations: 0,
   }));
@@ -396,7 +375,7 @@ export function collapse() {
 
   // Remove all glyphs in inventory that aren't companion
   for (const glyph of Glyphs.inventory) {
-    if (glyph !== null && (!AtomMilestone.am1.isReached || glyph.type !== "companion"))
+    if (glyph !== null && glyph.type !== "companion")
       Glyphs.removeFromInventory(glyph, false);
   }
 
@@ -406,7 +385,7 @@ export function collapse() {
 
   for (const activeGlyph of player.reality.glyphs.active) {
     Glyphs.active[activeGlyph.idx] = null;
-    if (activeGlyph.type === "companion" && AtomMilestone.am1.isReached) {
+    if (activeGlyph.type === "companion") {
       const index = Glyphs.findFreeIndex(false);
       // This will always have an index because we set it to no protection
       Glyphs.addToInventory(activeGlyph, index, true);
@@ -538,12 +517,21 @@ export function collapse() {
     giveRealityUpgrade(25, true);
 
     // No need for onPurchased call since none of the upgrades have ite none of the upgrades have it
-    for (const upg of PelleUpgrades.singles) upg.isBought = true;
+    for (const upg of PelleUpgrade.singles) upg.isBought = true;
   }
   if (AtomMilestone.am2.isReached) {
     for (const blackHole of player.blackHole) blackHole.unlocked = true;
     giveRealityUpgrade(20, false);
     for (let i = 1; i <= 12; i++) EternityChallenge(i).completions = 5;
+  }
+  if (AtomMilestone.am3.isReached) {
+    player.celestials.teresa.pouredAmount = Teresa.pouredAmountCap
+    player.celestials.teresa.perkShop = [11, 11, 4, 2, 0, 0]
+  }
+  if (AtomMilestone.am4.isReached) {
+    player.celestials.effarig.unlockBits = 127;
+    player.celestials.enslaved.unlocks = [1, 1];
+    player.celestials.enslaved.completed = true;
   }
   if (AtomUpgrade(8).isBought) giveAU8();
 
