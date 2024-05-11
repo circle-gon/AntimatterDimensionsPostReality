@@ -1,11 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "serve": "node build/check-npm.js && vite dev",
-    "build:master": "node build/pre-build.js && vite build --mode master && node build/post-build.js",
-    "build:release": "node build/pre-build.js && vite build && node build/post-build.js",
-    "build:steam-development": "node build/pre-build.js && vite build --mode steam-development",
-    "build:steam-release": "node build/pre-build.js && vite build --mode steam-release",
+    "serve": "vite dev",
+    "build": "node build/pre-build.js && vite build && node build/post-build.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier . --write"
   },
