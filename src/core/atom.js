@@ -1,4 +1,5 @@
 import { DC } from "./constants";
+import { BitPurchasableMechanicState, GameMechanicState, RebuyableMechanicState } from "./game-mechanics";
 
 export function migrateSaves(player) {
   // Change effarig shards to decimal
@@ -530,8 +531,9 @@ export function collapse() {
   }
   if (AtomMilestone.am4.isReached) {
     player.celestials.effarig.unlockBits = 127;
-    player.celestials.enslaved.unlocks = [1, 1];
+    player.celestials.enslaved.unlocks = [0, 1];
     player.celestials.enslaved.completed = true;
+    player.celestials.v.runUnlocks = [2, 2, 2, 2, 2, 2, 0, 0, 0]
   }
   if (AtomUpgrade(8).isBought) giveAU8();
 

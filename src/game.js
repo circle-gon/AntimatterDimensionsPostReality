@@ -757,7 +757,7 @@ function updatePrestigeRates() {
 }
 
 function passivePrestigeGen() {
-  let eternitiedGain = 0;
+  let eternitiedGain = DC.D0;
   if (RealityUpgrade(14).isBought) {
     eternitiedGain = DC.D1.timesEffectsOf(Achievement(113), RealityUpgrade(3), RealityUpgrade(14));
     eternitiedGain = Decimal.times(eternitiedGain, getAdjustedGlyphEffect("timeetermult"));

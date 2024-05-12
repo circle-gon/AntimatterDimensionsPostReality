@@ -18,7 +18,7 @@ export class GlyphSacrificeAutobuyerState extends AutobuyerState {
   }
 
   tick() {
-    if (Currency.perkPoints.gt(0)) {
+    if (Currency.perkPoints.gt(0) && GlyphSacrificeHandler.canSacrifice) {
       GlyphSacrificeHandler.removeGlyph(GlyphGenerator.musicGlyph(), true)
       Currency.perkPoints.subtract(1)
     }

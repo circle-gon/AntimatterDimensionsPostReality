@@ -29,7 +29,7 @@ export const atomMilestones = {
   },
   am4: {
     time: TimeSpan.fromDays(1).totalMilliseconds,
-    reward: `[TBD] Start with Effarig and The Nameless Ones' upgrades and Reality completed
+    reward: `Start with Effarig and The Nameless Ones' upgrades and Reality completed
     and V's normal achievements at tier 2. Unlock an Autobuyer which produces Glyph Sacrifice 
     passively through buying and selling Music Glyphs, and more Automator commands.`,
   },

@@ -21,7 +21,7 @@ import { TickspeedAutobuyerState } from "./tickspeed-autobuyer";
 import { TimeDimensionAutobuyerState } from "./time-dimension-autobuyer";
 import { TimeTheoremAutobuyerState } from "./time-theorem-autobuyer";
 import { TeresaMemoryAutobuyerState, EffarigMemoryAutobuyerState, EnslavedMemoryAutobuyerState, VMemoryAutobuyerState } from "./ra-pets-autobuyer";
-//import { GlyphSacrificeAutobuyerState } from "./glyph-sacrifice-autobuyer";
+import { GlyphSacrificeAutobuyerState } from "./glyph-sacrifice-autobuyer";
 
 export const Autobuyer = {
   annihilation: new AnnihilationAutobuyerState(),
@@ -51,7 +51,7 @@ export const Autobuyer = {
   effarigMem: EffarigMemoryAutobuyerState.createAccessor(),
   enslavedMem: EnslavedMemoryAutobuyerState.createAccessor(),
   vMem: VMemoryAutobuyerState.createAccessor(),
-  //glyphSacrifice: new GlyphSacrificeAutobuyerState(),
+  glyphSacrifice: new GlyphSacrificeAutobuyerState(),
 };
 
 export const Autobuyers = (function () {
@@ -73,7 +73,7 @@ export const Autobuyers = (function () {
     Autobuyer.darkMatterDimsAscension,
     Autobuyer.singularity,
     Autobuyer.annihilation,
-    //Autobuyer.glyphSacrifice,
+    Autobuyer.glyphSacrifice,
   ];
 
   const singleComplex = [Autobuyer.tickspeed, Autobuyer.galaxy, Autobuyer.dimboost].concat(single);
