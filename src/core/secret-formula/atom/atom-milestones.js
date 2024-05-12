@@ -1,7 +1,7 @@
 export const atomMilestones = {
   am1: {
     time: Number.MAX_VALUE,
-    reward: () => `The Companion glyph, Automator data, 
+    reward: () => `The Companion glyph, celestial quotes, Automator data, 
     glyph presets and filters, and Normal and Infinity challenge times never reset on
     Collapse. Start with all perks, the Nameless Ones' storing
     time mechanic unlocked, Automator speed maxed, all one-time Doomed upgrades,
@@ -35,14 +35,14 @@ export const atomMilestones = {
   },
   am5: {
     time: TimeSpan.fromHours(8).totalMilliseconds,
-    reward: `[TBD] Ra's pets now start at Level 5, V's normal achievements at tier 4 and hard
+    reward: `Ra's pets now start at Level 5, V's normal achievements at tier 4 and hard
     achievements at tier 2, and Laitela's Reality is destabilized once.`,
   },
   am6: {
     time: TimeSpan.fromHours(3).totalMilliseconds,
-    reward: `[TBD] Ra's pets now start at Level 10, Laitela's Reality is destabilized three times,
-    all Glyph Alchemy resources start at 5000, start with Annihilation unlocked, and unlock an
-    Autobuyer for rebuyable Pelle Upgrades. Start with two more post-Reality achievements 
+    reward: `Ra's pets now start at Level 10, Laitela's Reality is destabilized three times,
+    all Glyph Alchemy resources start at 5000, and unlock an Autobuyer for rebuyable Pelle Upgrades. 
+    Start with Imaginary Upgrade 'Deterministic Radiation' and two more post-Reality achievements
     (excluding Doomed Reality achievements) for every Collapse done.`
   },
   am7: {

@@ -38,6 +38,10 @@ class AchievementState extends GameMechanicState {
     return this.row < 19;
   }
 
+  get isAM6() {
+    return this.row >= 14 && this.row < 18
+  }
+
   get isUnlocked() {
     return (player.achievementBits[this.row - 1] & this._bitmask) !== 0;
   }
@@ -127,6 +131,13 @@ export const Achievements = {
     return Achievements.all.filter((ach) => ach.isPreAtom);
   },
 
+  /**
+   * @type {AchievementState[]}
+   */
+  get AM6() {
+    return Achievements.all.filter((ach) => ach.isAM6);
+  },
+
   get allRows() {
     const count = Achievements.all.map((a) => a.row).max();
     return Achievements.rows(1, count);
@@ -140,6 +151,10 @@ export const Achievements = {
   get prePelleRows() {
     const count = Achievements.prePelle.map((a) => a.row).max();
     return Achievements.rows(1, count);
+  },
+
+  get AM6Rows() {
+    return Achievements.rows(14, 17)
   },
 
   get preAtomRows() {

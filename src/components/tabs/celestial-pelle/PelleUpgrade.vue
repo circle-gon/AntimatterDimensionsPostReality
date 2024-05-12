@@ -2,6 +2,7 @@
 import CostDisplay from "@/components/CostDisplay";
 import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import DescriptionDisplay from "@/components/DescriptionDisplay";
+import PrimaryToggleButton from "@/components/PrimaryToggleButton.vue";
 
 export default {
   name: "PelleUpgrade",
@@ -9,6 +10,7 @@ export default {
     DescriptionDisplay,
     CostDisplay,
     CustomizeableTooltip,
+    PrimaryToggleButton,
   },
   props: {
     upgrade: {
@@ -40,9 +42,17 @@ export default {
       hasRemnants: false,
       galaxyCap: 0,
       notAffordable: false,
+      isRebuyable: false,
+      isAutobuyerOn: false,
+      isAutoUnlocked: false,
     };
   },
   computed: {
+    // stupid but it works
+    id() {
+      if (this.galaxyGenerator) return GalaxyGeneratorUpgrades.all.indexOf(this.upgrade) + 6;
+      return PelleUpgrade.rebuyables.indexOf(this.upgrade) + 1;
+    },
     config() {
       return this.upgrade.config;
     },
@@ -78,6 +88,11 @@ export default {
       return `${this.currentTimeEstimate} ➜ ${this.projectedTimeEstimate}`;
     },
   },
+  watch: {
+    isAutobuyerOn(newValue) {
+      Autobuyer.pelleUpgrade(this.id).isActive = newValue;
+    },
+  },
   methods: {
     update() {
       this.canBuy = this.upgrade.canBeBought && !this.faded;
@@ -98,6 +113,9 @@ export default {
       this.notAffordable =
         (this.config === genDB.additive || this.config === genDB.multiplicative) &&
         Decimal.gt(this.upgrade.cost, this.galaxyCap - GalaxyGenerator.generatedGalaxies + player.galaxies);
+      this.isRebuyable = this.upgrade.isRebuyable;
+      this.isAutoUnlocked = AtomMilestone.am6.isReached;
+      if (this.isRebuyable) this.isAutobuyerOn = Autobuyer.pelleUpgrade(this.id).isActive;
     },
     secondsUntilCost(rate) {
       const value = this.galaxyGenerator ? player.galaxies + GalaxyGenerator.galaxies : Currency.realityShards.value;
@@ -108,6 +126,7 @@ export default {
 </script>
 
 <template>
+  <div class="l-spoon-btn-group">
   <button
     class="c-pelle-upgrade"
     :class="{
@@ -149,6 +168,13 @@ export default {
     </div>
     <CostDisplay v-if="!isCapped" :config="config" :name="galaxyGenerator ? config.currencyLabel : 'Reality Shard'" />
   </button>
+  <PrimaryToggleButton
+    v-if="isRebuyable && isAutoUnlocked"
+    v-model="isAutobuyerOn"
+    label="Auto:"
+    class="l--spoon-btn-group__little-spoon-reality-btn o-primary-btn--reality-upgrade-toggle"
+    />
+  </div>
 </template>
 
 <style scoped>

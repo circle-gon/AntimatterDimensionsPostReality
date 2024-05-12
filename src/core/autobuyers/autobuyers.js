@@ -22,6 +22,7 @@ import { TimeDimensionAutobuyerState } from "./time-dimension-autobuyer";
 import { TimeTheoremAutobuyerState } from "./time-theorem-autobuyer";
 import { TeresaMemoryAutobuyerState, EffarigMemoryAutobuyerState, EnslavedMemoryAutobuyerState, VMemoryAutobuyerState } from "./ra-pets-autobuyer";
 import { GlyphSacrificeAutobuyerState } from "./glyph-sacrifice-autobuyer";
+import { PelleUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
 
 export const Autobuyer = {
   annihilation: new AnnihilationAutobuyerState(),
@@ -52,6 +53,7 @@ export const Autobuyer = {
   enslavedMem: EnslavedMemoryAutobuyerState.createAccessor(),
   vMem: VMemoryAutobuyerState.createAccessor(),
   glyphSacrifice: new GlyphSacrificeAutobuyerState(),
+  pelleUpgrade: PelleUpgradeAutobuyerState.createAccessor()
 };
 
 export const Autobuyers = (function () {
@@ -88,6 +90,7 @@ export const Autobuyers = (function () {
     Autobuyer.effarigMem.zeroIndexed,
     Autobuyer.enslavedMem.zeroIndexed,
     Autobuyer.vMem.zeroIndexed,
+    Autobuyer.pelleUpgrade.zeroIndexed,
   ];
   const all = dimensions.concat(prestige, singleComplex, arrays);
   const multiple = [
@@ -103,6 +106,7 @@ export const Autobuyers = (function () {
     Autobuyer.effarigMem,
     Autobuyer.enslavedMem,
     Autobuyer.vMem,
+    Autobuyer.pelleUpgrade,
   ];
 
   return {

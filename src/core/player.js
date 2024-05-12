@@ -230,6 +230,12 @@ window.player = {
       },
     },
     glyphSacrifice: { isActive: false },
+    pelleUpgrades: {
+      all: Array.range(0, 10).map(() => ({
+        isActive: false,
+      })),
+      isActive: true,
+    }
   },
   infinityPoints: DC.D0,
   infinities: DC.D0,

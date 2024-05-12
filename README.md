@@ -15,7 +15,7 @@ npm ci
 After all the packages are installed, start up the game:
 
 ```
-npm run serve
+npm run dev
 ```
 
 This will make the game served via your localhost, and the playable link will

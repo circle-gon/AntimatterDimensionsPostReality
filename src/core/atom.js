@@ -158,7 +158,7 @@ export function collapse() {
   lockAchievementsOnCollapse();
 
   // Celestials
-  player.celestials.teresa = {
+  Object.assign(player.celestials.teresa, {
     pouredAmount: 0,
     unlockBits: 0,
     run: false,
@@ -166,10 +166,9 @@ export function collapse() {
     bestAMSet: [],
     perkShop: Array.repeat(0, 5),
     lastRepeatedMachines: DC.D0,
-    quoteBits: 0,
-  };
+  });
 
-  player.celestials.effarig = {
+  Object.assign(player.celestials.effarig, {
     relicShards: DC.D0,
     unlockBits: 0,
     run: false,
@@ -180,8 +179,7 @@ export function collapse() {
       eternities: 25,
     },
     autoAdjustGlyphWeights: false,
-    quoteBits: 0,
-  };
+  });
 
   Object.assign(player.celestials.enslaved, {
     isStoring: false,
@@ -201,13 +199,11 @@ export function collapse() {
     hintUnlockProgress: 0,
     glyphHintsGiven: 0,
     zeroHintTime: 0,
-    quoteBits: 0,
     isDischargingReal: false,
   });
   Enslaved.autoReleaseTick = 0;
 
   V.reset();
-  player.celestials.v.quoteBits = 0;
 
   Ra.reset();
   player.celestials.ra.petWithRemembrance = "";
@@ -224,7 +220,6 @@ export function collapse() {
     dilation: 0,
     effarig: 0,
   };
-  player.celestials.ra.quoteBits = 0;
 
   Laitela.reset();
   Object.assign(player.celestials.laitela, {
@@ -234,7 +229,6 @@ export function collapse() {
     upgrades: {},
     darkEnergy: DC.D0,
     lastCheckedMilestones: DC.D0,
-    quoteBits: 0,
   });
 
   Object.assign(player.celestials.pelle, {
@@ -300,7 +294,6 @@ export function collapse() {
       rifts: false,
       galaxies: false,
     },
-    quoteBits: 0,
   });
 
   // Reality
@@ -502,15 +495,9 @@ export function collapse() {
   // Post-Reset
 
   if (AtomMilestone.am1.isReached) {
-    // This needs to be done this way because some perks rely on others
-    const visited = [];
-    const toVisit = [Perk.firstPerk];
-    while (toVisit.length > 0) {
-      Currency.perkPoints.add(1);
-      const perk = toVisit.shift();
-      visited.push(perk);
-      toVisit.push(...perk.connectedPerks.filter((p) => !visited.includes(p)));
-      perk.purchase();
+    for (const perk of Perks.all) {
+      perk.isBought = true
+      perk.onPurchased()
     }
 
     giveRealityUpgrade(10, true);
@@ -535,7 +522,26 @@ export function collapse() {
     player.celestials.enslaved.completed = true;
     player.celestials.v.runUnlocks = [2, 2, 2, 2, 2, 2, 0, 0, 0]
   }
+  if (AtomMilestone.am5.isReached) {
+    for (const pet of Ra.pets.all) pet.level = 5
+    player.celestials.v.runUnlocks = [4, 4, 4, 4, 4, 4, 2, 2, 2]
+    player.celestials.laitela.difficultyTier = 1;
+    player.celestials.laitela.fastestCompletion = 300;
+  }
+  if (AtomMilestone.am6.isReached) {
+    for (const pet of Ra.pets.all) pet.level = 10
+    player.celestials.laitela.difficultyTier = 3;
+    for (const resource of AlchemyResources.all) resource.amount = 5000
+    giveRealityUpgrade(19, false)
+    const toGive = Math.min(Currency.collapses.value * 2, Achievements.AM6.length)
+    for (let i = 0; i < toGive; i++) Achievements.AM6[i].unlock()
+  }
   if (AtomUpgrade(8).isBought) giveAU8();
+
+  Teresa.checkForUnlocks()
+  Ra.checkForUnlocks()
+  V.updateTotalRunUnlocks()
+  V.checkForUnlocks()
 
   EventHub.dispatch(GAME_EVENT.COLLAPSE_RESET_AFTER);
 }
