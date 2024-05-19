@@ -47,23 +47,23 @@ export const atomMilestones = {
   },
   am7: {
     time: TimeSpan.fromHours(1).totalMilliseconds,
-    reward: `[TBD] Laitela's Reality is destabilized five times, all Glyph Alchemy resources start
+    reward: `Laitela's Reality is destabilized five times, all Glyph Alchemy resources start
     at 10000, unlock the Tesseract autobuyer, and passively gain Remnants while Doomed.`
   },
   am8: {
     time: TimeSpan.fromMinutes(20).totalMilliseconds,
-    reward: `[TBD] Laitela's Reality is now fully destabilized, all Glyph Alchemy resources start
+    reward: `Laitela's Reality is now fully destabilized, all Glyph Alchemy resources start
     at 15000, all V achievements start at tier 4 (including Hard), Ra's pets now start at Level 15,
     and unlock an autobuyer for non-rebuyable Reality and Imaginary upgrades.`
   },
   am9: {
     time: TimeSpan.fromMinutes(10).totalMilliseconds,
-    reward: `[TBD] All Glyph Alchemy resources start 20000, Ra's pets start at Level 20, 
+    reward: `All Glyph Alchemy resources start at 20000, Ra's pets start at Level 20, 
     and all V achievements start at tier 5 (including Hard).`
   },
   am10: {
     time: TimeSpan.fromMinutes(5).totalMilliseconds,
-    reward: `[TBD] All Glyph Alchemy resources start at 25000, Ra's pets start at Level 25, 
-    all V achievements start at tier 6 (including Hard), and [insert some atom gain multiplier here]`
+    reward: `All Glyph Alchemy resources start at 25000, Ra's pets start at Level 25, 
+    all V normal achievements start at tier 6, and [insert some atom gain multiplier here]`
   }
 };

@@ -927,6 +927,9 @@ function applyAutoprestige(diff) {
         .times(diff / 1000)
     );
   }
+
+  if (Pelle.isDoomed && AtomMilestone.am7.isReached)
+    player.celestials.pelle.remnants += Pelle.remnantsGain
 }
 
 function updateImaginaryMachines(diff) {

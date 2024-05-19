@@ -29,6 +29,8 @@ export default {
       extraTesseracts: 0,
       creditsClosed: false,
       showLockedDimCostNote: true,
+      isAutoTesseractUnlocked: false,
+      isAutoTesseractOn: false,
     };
   },
   computed: {
@@ -36,6 +38,11 @@ export default {
       const extra = this.extraTesseracts > 0 ? ` + ${format(this.extraTesseracts, 2, 2)}` : "";
       return `${formatInt(this.boughtTesseracts)}${extra}`;
     },
+  },
+  watch: {
+    isAutoTesseractOn(newValue){
+      Autobuyer.tesseract.isActive = newValue;
+    }
   },
   methods: {
     update() {
@@ -60,6 +67,8 @@ export default {
       this.tesseractCost.copyFrom(Tesseracts.nextCost);
       this.totalDimCap = InfinityDimensions.totalDimCap;
       this.canBuyTesseract = Tesseracts.canBuyTesseract;
+      this.isAutoTesseractUnlocked = Autobuyer.tesseract.isUnlocked;
+      this.isAutoTesseractOn = Autobuyer.tesseract.isActive;
       this.enslavedCompleted = Enslaved.isCompleted;
       this.boughtTesseracts = Tesseracts.bought;
       this.extraTesseracts = Tesseracts.extra;
@@ -108,7 +117,7 @@ export default {
         <span v-else>Time Dimensions due to Eternity Challenge 9.</span>
       </p>
     </div>
-    <div v-if="enslavedCompleted" class="l-infinity-dim-tab__enslaved-reward-container">
+    <div v-if="enslavedCompleted" class="l-infinity-dim-tab__enslaved-reward-container l-spoon-btn-group">
       <button
         class="c-infinity-dim-tab__tesseract-button"
         :class="{
@@ -123,6 +132,12 @@ export default {
           <b>Costs: {{ format(tesseractCost) }} IP</b>
         </p>
       </button>
+      <PrimaryToggleButton
+        v-if="isAutoTesseractUnlocked"
+        v-model="isAutoTesseractOn"
+        label="Auto:"
+        style="margin-top: -1rem;"
+      />
     </div>
     <div v-if="isEnslavedRunning">All Infinity Dimensions are limited to a single purchase.</div>
     <div v-else>

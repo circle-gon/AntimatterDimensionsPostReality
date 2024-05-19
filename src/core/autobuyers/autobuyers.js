@@ -23,6 +23,9 @@ import { TimeTheoremAutobuyerState } from "./time-theorem-autobuyer";
 import { TeresaMemoryAutobuyerState, EffarigMemoryAutobuyerState, EnslavedMemoryAutobuyerState, VMemoryAutobuyerState } from "./ra-pets-autobuyer";
 import { GlyphSacrificeAutobuyerState } from "./glyph-sacrifice-autobuyer";
 import { PelleUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
+import { TesseractAutobuyerState } from "./tesseract-autobuyer";
+import { NonRepeatableRealityUpgradeAutobuyerState } from "./reality-upgrade-single-autobuyer";
+import { NonRepeatableImaginaryUpgradeAutobuyerState } from "./imaginary-upgrade-single-autobuyer";
 
 export const Autobuyer = {
   annihilation: new AnnihilationAutobuyerState(),
@@ -53,7 +56,10 @@ export const Autobuyer = {
   enslavedMem: EnslavedMemoryAutobuyerState.createAccessor(),
   vMem: VMemoryAutobuyerState.createAccessor(),
   glyphSacrifice: new GlyphSacrificeAutobuyerState(),
-  pelleUpgrade: PelleUpgradeAutobuyerState.createAccessor()
+  pelleUpgrade: PelleUpgradeAutobuyerState.createAccessor(),
+  tesseract: new TesseractAutobuyerState(),
+  realityUpgradeSingle: new NonRepeatableRealityUpgradeAutobuyerState(),
+  imaginaryUpgradeSingle: new NonRepeatableImaginaryUpgradeAutobuyerState()
 };
 
 export const Autobuyers = (function () {
@@ -76,6 +82,9 @@ export const Autobuyers = (function () {
     Autobuyer.singularity,
     Autobuyer.annihilation,
     Autobuyer.glyphSacrifice,
+    Autobuyer.tesseract,
+    Autobuyer.realityUpgradeSingle,
+    Autobuyer.imaginaryUpgradeSingle
   ];
 
   const singleComplex = [Autobuyer.tickspeed, Autobuyer.galaxy, Autobuyer.dimboost].concat(single);

@@ -110,6 +110,10 @@ export const Pelle = {
     for (const res of AlchemyResources.all) res.amount = 0;
     AutomatorBackend.stop();
 
+    // We don't give the singles on reset because it causes a lot of funny things when you Doom
+    if (AtomMilestone.am1.isReached)
+      for (const upg of PelleUpgrade.singles) upg.isBought = true;
+
     // Force-unhide all tabs except for the shop tab, for which we retain the hide state instead
     const shopTab = ~1 & (1 << GameDatabase.tabs.find((t) => t.key === "shop").id);
     player.options.hiddenTabBits &= shopTab;

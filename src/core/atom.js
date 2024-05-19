@@ -503,9 +503,6 @@ export function collapse() {
     giveRealityUpgrade(10, true);
     giveRealityUpgrade(13, true);
     giveRealityUpgrade(25, true);
-
-    // No need for onPurchased call since none of the upgrades have ite none of the upgrades have it
-    for (const upg of PelleUpgrade.singles) upg.isBought = true;
   }
   if (AtomMilestone.am2.isReached) {
     for (const blackHole of player.blackHole) blackHole.unlocked = true;
@@ -536,12 +533,32 @@ export function collapse() {
     const toGive = Math.min(Currency.collapses.value * 2, Achievements.AM6.length)
     for (let i = 0; i < toGive; i++) Achievements.AM6[i].unlock()
   }
+  if (AtomMilestone.am7.isReached) {
+    for (const resource of AlchemyResources.all) resource.amount = 10000
+    player.celestials.laitela.difficultyTier = 5;
+  }
+  if (AtomMilestone.am8.isReached) {
+    for (const pet of Ra.pets.all) pet.level = 15
+    for (const resource of AlchemyResources.all) resource.amount = 15000
+    player.celestials.laitela.difficultyTier = 8;
+    player.celestials.v.runUnlocks = Array.repeat(4, 9)
+  }
+  if (AtomMilestone.am9.isReached) {
+    for (const pet of Ra.pets.all) pet.level = 20
+    for (const resource of AlchemyResources.all) resource.amount = 20000
+    player.celestials.v.runUnlocks = Array.repeat(5, 9)
+  }
+  if (AtomMilestone.am10.isReached) {
+    for (const pet of Ra.pets.all) pet.level = 25
+    for (const resource of AlchemyResources.all) resource.amount = 25000
+    player.celestials.v.runUnlocks = [6, 6, 6, 6, 6, 6, 5, 5, 5]
+  }
   if (AtomUpgrade(8).isBought) giveAU8();
 
   Teresa.checkForUnlocks()
-  Ra.checkForUnlocks()
   V.updateTotalRunUnlocks()
   V.checkForUnlocks()
+  Ra.checkForUnlocks()
 
   EventHub.dispatch(GAME_EVENT.COLLAPSE_RESET_AFTER);
 }

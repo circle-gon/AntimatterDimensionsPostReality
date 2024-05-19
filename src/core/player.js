@@ -235,7 +235,10 @@ window.player = {
         isActive: false,
       })),
       isActive: true,
-    }
+    },
+    tesseract: { isActive: false },
+    realityUpgradesSingles: { isActive: false },
+    imaginaryUpgradesSingles: { isActive: false }
   },
   infinityPoints: DC.D0,
   infinities: DC.D0,
