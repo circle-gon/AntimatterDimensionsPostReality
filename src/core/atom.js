@@ -563,6 +563,21 @@ export function collapse() {
     player.celestials.v.runUnlocks = Array.repeat(5, 9)
   }
   if (AtomMilestone.am10.isReached) {
+    const upgrades = [
+      InfinityUpgrade.totalTimeMult,
+      InfinityUpgrade.dim18mult,
+      InfinityUpgrade.dim36mult,
+      InfinityUpgrade.resetBoost,
+      InfinityUpgrade.buy10Mult,
+      InfinityUpgrade.dim27mult,
+      InfinityUpgrade.dim45mult,
+      InfinityUpgrade.galaxyBoost,
+      InfinityUpgrade.thisInfinityTimeMult,
+      InfinityUpgrade.unspentIPMult,
+      InfinityUpgrade.dimboostMult,
+      InfinityUpgrade.ipGen,
+    ];
+    for (const upgrade of upgrades) upgrade.charge()
     for (const pet of Ra.pets.all) pet.level = 25
     for (const resource of AlchemyResources.all) resource.amount = 25000
     player.celestials.v.runUnlocks = [6, 6, 6, 6, 6, 6, 5, 5, 5]

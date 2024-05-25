@@ -72,6 +72,7 @@ export const atomMilestones = {
   am10: {
     time: TimeSpan.fromMinutes(5).totalMilliseconds,
     reward: `All Glyph Alchemy resources start at 25000, Ra's pets start at Level 25, 
-    all V normal achievements start at tier 6, and [insert some atom gain multiplier here]`
+    V normal achievements start at tier 6, all Infinity upgrades are charged,
+    and [insert some atom gain multiplier here]`
   }
 };
