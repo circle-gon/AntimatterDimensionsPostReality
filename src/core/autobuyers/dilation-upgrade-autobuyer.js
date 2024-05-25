@@ -29,7 +29,7 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   get isUnlocked() {
     return (
       Perk.autobuyerDilation.isEffectActive &&
-      !Pelle.isDoomed &&
+      (AtomMilestone.am5.isReached || !Pelle.isDoomed) &&
       // If this is not the doomed ones, we're fine, but if it is, we need the Atom Upgrade
       (!["dtGainPelle", "galaxyMultiplier", "tickspeedPower"].includes(this._upgradeName) || AtomUpgrade(7).isBought)
     );

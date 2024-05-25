@@ -1465,7 +1465,7 @@ export const celestialNavigation = {
     complete: () => {
       const upgrade = DarkMatterDimension(2).unlockUpgrade;
       if (upgrade.canBeBought || upgrade.isBought) return 1;
-      if (upgrade.isAvailableForPurchase) return upgrade.currency.value / upgrade.cost;
+      if (upgrade.isAvailableForPurchase) return upgrade.currency.value.div(upgrade.cost).toNumber();
       return Laitela.difficultyTier < 1 ? 0 : 30 / player.celestials.laitela.fastestCompletion;
     },
     node: {
@@ -1494,7 +1494,7 @@ export const celestialNavigation = {
             return [
               dmdText,
               `Imaginary Machines
-            ${format(Math.min(upgrade.currency.value, upgrade.cost), upgrade.canBeBought ? 1 : 2)}
+            ${format(upgrade.currency.value.min(upgrade.cost), upgrade.canBeBought ? 1 : 2)}
             / ${format(upgrade.cost, 1)}`,
             ];
 
@@ -1558,7 +1558,7 @@ export const celestialNavigation = {
     complete: () => {
       const upgrade = DarkMatterDimension(3).unlockUpgrade;
       if (upgrade.canBeBought || upgrade.isBought) return 1;
-      if (upgrade.isAvailableForPurchase) return upgrade.currency.value / upgrade.cost;
+      if (upgrade.isAvailableForPurchase) return upgrade.currency.value.div(upgrade.cost).toNumber();
       if (!player.auto.singularity.isActive) return 0.5;
       return Singularity.singularitiesGained.div(20).min(0.999).toNumber();
     },
@@ -1588,7 +1588,7 @@ export const celestialNavigation = {
             return [
               dmdText,
               `Imaginary Machines
-            ${format(Math.min(upgrade.currency.value, upgrade.cost), upgrade.canBeBought ? 0 : 2)}
+            ${format(upgrade.currency.value.min(upgrade.cost), upgrade.canBeBought ? 0 : 2)}
             / ${format(upgrade.cost)}`,
             ];
 
@@ -1634,7 +1634,7 @@ export const celestialNavigation = {
     complete: () => {
       const upgrade = DarkMatterDimension(4).unlockUpgrade;
       if (upgrade.canBeBought || upgrade.isBought) return 1;
-      if (upgrade.isAvailableForPurchase) return upgrade.currency.value / upgrade.cost;
+      if (upgrade.isAvailableForPurchase) return upgrade.currency.value.div(upgrade.cost).toNumber();
       return (Replicanti.galaxies.total + player.galaxies + player.dilation.totalTachyonGalaxies) / 80000;
     },
     node: {
@@ -1663,7 +1663,7 @@ export const celestialNavigation = {
             return [
               dmdText,
               `Imaginary Machines
-            ${format(Math.min(upgrade.currency.value, upgrade.cost), upgrade.canBeBought ? 1 : 2)}
+            ${format(upgrade.currency.value.min(upgrade.cost), upgrade.canBeBought ? 1 : 2)}
             / ${format(upgrade.cost, 1)}`,
             ];
 

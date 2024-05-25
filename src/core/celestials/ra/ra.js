@@ -374,7 +374,9 @@ export const Ra = {
     return 25000;
   },
   get momentumValue() {
-    const hoursFromUnlock = TimeSpan.fromMilliseconds(player.celestials.ra.momentumTime).totalHours;
+    const hoursFromUnlock = AtomMilestone.am4.isReached
+      ? Infinity
+      : TimeSpan.fromMilliseconds(player.celestials.ra.momentumTime).totalHours;
     return Math.clampMax(1 + 0.005 * hoursFromUnlock, AlchemyResource.momentum.effectValue);
   },
   quotes: Quotes.ra,

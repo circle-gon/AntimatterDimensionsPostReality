@@ -64,9 +64,13 @@ class AchievementState extends GameMechanicState {
     player.achievementBits[this.row - 1] &= this._inverseBitmask;
   }
 
+  give() {
+    player.achievementBits[this.row - 1] |= this._bitmask;
+  }
+
   unlock(auto) {
     if (this.isUnlocked) return;
-    player.achievementBits[this.row - 1] |= this._bitmask;
+    this.give()
     if (this.id === 85 || this.id === 93) {
       Autobuyer.bigCrunch.bumpAmount(4);
     }

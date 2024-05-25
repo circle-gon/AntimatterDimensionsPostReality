@@ -902,7 +902,12 @@ function laitelaBeatText(disabledDim) {
 
 // This gives IP/EP/RM from the respective upgrades that reward the prestige currencies continuously
 function applyAutoprestige(diff) {
-  Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));
+  if (AtomMilestone.am1.isReached || TimeStudy(181).isBought)
+    Currency.infinityPoints.add(
+      gainedInfinityPoints()
+        .times(Time.deltaTime.div(100))
+        .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige)
+    );
 
   if (TeresaUnlocks.epGen.canBeApplied || (AtomMilestone.am1.isReached && !Pelle.isDoomed)) {
     Currency.eternityPoints.add(

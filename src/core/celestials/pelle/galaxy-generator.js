@@ -27,7 +27,7 @@ export const GalaxyGenerator = {
 
   get gainPerSecond() {
     if (!Pelle.hasGalaxyGenerator) return 0;
-    return new Decimal(GalaxyGeneratorUpgrades.additive.effectValue)
+    let gain = new Decimal(GalaxyGeneratorUpgrades.additive.effectValue)
       .timesEffectsOf(
         GalaxyGeneratorUpgrades.multiplicative,
         GalaxyGeneratorUpgrades.antimatterMult,
@@ -35,6 +35,21 @@ export const GalaxyGenerator = {
         GalaxyGeneratorUpgrades.EPMult
       )
       .toNumber();
+
+    if (AtomMilestone.am1.isReached) gain *= 2
+    if (AtomMilestone.am2.isReached) gain *= 2
+    if (AtomMilestone.am3.isReached) gain *= 2
+
+    return gain;
+  },
+
+  get drainSpeed() {
+    let drain = 0.03
+    if (AtomMilestone.am1.isReached) drain *= 2
+    if (AtomMilestone.am2.isReached) drain *= 2
+    if (AtomMilestone.am3.isReached) drain *= 2
+    if (AtomMilestone.am4.isReached) drain = Infinity
+    return drain
   },
 
   get capObj() {
@@ -65,9 +80,10 @@ export const GalaxyGenerator = {
   loop(diff) {
     if (this.isCapped) {
       Pelle.quotes.galaxyGeneratorRifts.show();
+      if (AtomMilestone.am7.isReached) this.startSacrifice()
     }
     if (this.sacrificeActive) {
-      this.capRift.reducedTo = Math.max(this.capRift.reducedTo - (0.03 * diff) / 1000, 0);
+      this.capRift.reducedTo = Math.max(this.capRift.reducedTo - (this.drainSpeed * diff) / 1000, 0);
       if (this.capRift.reducedTo === 0) {
         player.celestials.pelle.galaxyGenerator.sacrificeActive = false;
         player.celestials.pelle.galaxyGenerator.phase++;

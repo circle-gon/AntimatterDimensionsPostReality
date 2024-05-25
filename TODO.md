@@ -1,0 +1,2 @@
+- auto-teresa
+- balance atom upgrade costs and atom milestones

@@ -232,9 +232,9 @@ window.player = {
     glyphSacrifice: { isActive: false },
     pelleUpgrades: {
       all: Array.range(0, 10).map(() => ({
-        isActive: false,
+        isActive: true,
       })),
-      isActive: true,
+      isActive: false,
     },
     tesseract: { isActive: false },
     realityUpgradesSingles: { isActive: false },
@@ -1025,7 +1025,7 @@ export const Player = {
   },
 
   get canCollapse() {
-    return Pelle.isDoomed && player.records.thisInfinity.maxAM.gte(Decimal.pow10(400e6));
+    return Pelle.isDoomed && player.records.thisInfinity.maxAM.gte(Decimal.MAX_VALUE);
   },
 
   get bestRunIPPM() {

@@ -137,6 +137,11 @@ class VUnlockState extends BitUpgradeState {
     return this.config.format(this.effectValue);
   }
 
+  give() {
+    if (!this.canBeUnlocked) return;
+    this.bits |= 1 << this.id;
+  }
+
   onUnlock() {
     GameUI.notify.success(this.description);
   }
@@ -161,10 +166,11 @@ export const V = {
   displayName: "V",
   possessiveName: "V's",
   spaceTheorems: 0,
-  checkForUnlocks() {
+  checkForUnlocks(silent) {
     for (const unl of VUnlocks.all) {
       if (unl === VUnlocks.vAchievementUnlock) continue;
-      unl.unlock();
+      if (silent) unl.give()
+      else unl.unlock();
     }
 
     if (this.isRunning) {

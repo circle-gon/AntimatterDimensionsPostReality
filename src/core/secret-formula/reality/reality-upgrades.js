@@ -354,7 +354,10 @@ export const realityUpgrades = [
     checkRequirement: () => Time.thisReality.totalMinutes.lt(15),
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     description: "Replicanti speed is boosted based on your fastest game-time Reality",
-    effect: () => Decimal.div(15, Time.bestReality.totalMinutes.clamp(1 / 12, 15)),
+    effect: () => {
+      let time = AtomMilestone.am4.isReached ? DC.D0 : Time.bestReality.totalMinutes
+      return Decimal.div(15, time.clamp(1 / 12, 15))
+    },
     cap: 180,
     formatEffect: (value) => formatX(value, 2, 2),
   },

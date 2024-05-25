@@ -108,7 +108,7 @@ export const Enslaved = {
     return player.celestials.enslaved.isDischargingReal;
   },
   get isAutoReleasing() {
-    return player.celestials.enslaved.isAutoReleasing && !BlackHoles.areNegative && !Pelle.isDisabled("blackhole");
+    return Ra.unlocks.autoPulseTime.canBeApplied && player.celestials.enslaved.isAutoReleasing && !BlackHoles.areNegative && !Pelle.isDisabled("blackhole");
   },
   storeRealTime() {
     if (!this.canStoreRealTime) return;

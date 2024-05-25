@@ -25,7 +25,8 @@ export const GameEnd = {
 
   _additionalEnd: 0,
   get additionalEnd() {
-    return player.isGameEnd || this.removeAdditionalEnd ? this._additionalEnd : 0;
+    // don't hide the tabs
+    return Math.min(player.isGameEnd || this.removeAdditionalEnd ? this._additionalEnd : 0, 0.499);
   },
   set additionalEnd(x) {
     this._additionalEnd = player.isGameEnd || this.removeAdditionalEnd ? x : 0;

@@ -319,7 +319,11 @@ export const Pelle = {
 
   // Calculations assume this is in units of proportion per second (eg. 0.03 is 3% drain per second)
   get riftDrainPercent() {
-    return 0.03;
+    let drain = 0.03;
+     if (AtomMilestone.am1.isReached) drain *= 2
+     if (AtomMilestone.am2.isReached) drain *= 2
+     if (AtomMilestone.am3.isReached) drain *= 2
+    return drain;
   },
 
   get glyphMaxLevel() {

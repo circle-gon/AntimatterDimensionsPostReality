@@ -124,11 +124,17 @@ function lockAchievementsOnCollapse() {
   player.reality.achTimer = DC.D0;
 }
 
-function giveRealityUpgrade(num, isReality) {
+function unlockRealityUpgrade(num, isReality) {
   const upg = isReality ? RealityUpgrade(num) : ImaginaryUpgrade(num);
   if (isReality) player.reality.upgReqs |= 1 << upg.id;
   else player.reality.imaginaryUpgReqs |= 1 << upg.id;
   upg.hasPlayerLock = false;
+}
+
+function giveRealityUpgrade(num, isReality) {
+  unlockRealityUpgrade(num, isReality)
+
+  const upg = isReality ? RealityUpgrade(num) : ImaginaryUpgrade(num);
   upg.isBought = true;
   upg.onPurchased();
 }
@@ -157,6 +163,8 @@ export function collapse() {
 
   lockAchievementsOnCollapse();
 
+  const toGive = Math.min(Currency.collapses.value * 2, Achievements.AM6.length)
+
   // Celestials
   Object.assign(player.celestials.teresa, {
     pouredAmount: 0,
@@ -178,7 +186,6 @@ export function collapse() {
       dt: 25,
       eternities: 25,
     },
-    autoAdjustGlyphWeights: false,
   });
 
   Object.assign(player.celestials.enslaved, {
@@ -187,7 +194,6 @@ export function collapse() {
     isStoringReal: false,
     storedReal: 0,
     autoStoreReal: false,
-    isAutoReleasing: false,
     unlocks: [],
     run: false,
     completed: false,
@@ -495,6 +501,10 @@ export function collapse() {
   // Post-Reset
 
   if (AtomMilestone.am1.isReached) {
+    // When ACHNR is obtained, it sends a lot of notifications that achievements
+    // have been obtained, which isn't very useful, so we give the achievements here
+    for (const achievement of Achievements.preReality) achievement.give()
+  
     for (const perk of Perks.all) {
       perk.isBought = true
       perk.onPurchased()
@@ -518,6 +528,7 @@ export function collapse() {
     player.celestials.enslaved.unlocks = [0, 1];
     player.celestials.enslaved.completed = true;
     player.celestials.v.runUnlocks = [2, 2, 2, 2, 2, 2, 0, 0, 0]
+    player.celestials.v.unlockBits |= 1 << VUnlocks.vAchievementUnlock.id;
   }
   if (AtomMilestone.am5.isReached) {
     for (const pet of Ra.pets.all) pet.level = 5
@@ -530,8 +541,8 @@ export function collapse() {
     player.celestials.laitela.difficultyTier = 3;
     for (const resource of AlchemyResources.all) resource.amount = 5000
     giveRealityUpgrade(19, false)
-    const toGive = Math.min(Currency.collapses.value * 2, Achievements.AM6.length)
-    for (let i = 0; i < toGive; i++) Achievements.AM6[i].unlock()
+    for (let i = 0; i < toGive; i++) Achievements.AM6[i].give()
+    player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0]
   }
   if (AtomMilestone.am7.isReached) {
     for (const resource of AlchemyResources.all) resource.amount = 10000
@@ -542,6 +553,9 @@ export function collapse() {
     for (const resource of AlchemyResources.all) resource.amount = 15000
     player.celestials.laitela.difficultyTier = 8;
     player.celestials.v.runUnlocks = Array.repeat(4, 9)
+
+    for (let i = 6; i <= 25; i++) unlockRealityUpgrade(i, true)
+    for (let i = 11; i <= 25; i++) unlockRealityUpgrade(i, false)
   }
   if (AtomMilestone.am9.isReached) {
     for (const pet of Ra.pets.all) pet.level = 20
@@ -557,7 +571,7 @@ export function collapse() {
 
   Teresa.checkForUnlocks()
   V.updateTotalRunUnlocks()
-  V.checkForUnlocks()
+  V.checkForUnlocks(true)
   Ra.checkForUnlocks()
 
   EventHub.dispatch(GAME_EVENT.COLLAPSE_RESET_AFTER);
@@ -663,10 +677,10 @@ class AtomUpgradeState extends BitPurchasableMechanicState {
 
   onPurchased() {
     switch (this.id) {
-      case 5:
+      case 4:
         V.updateTotalRunUnlocks();
         break;
-      case 7:
+      case 8:
         giveAU8();
         break;
       case 9:

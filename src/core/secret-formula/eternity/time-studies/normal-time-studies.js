@@ -437,10 +437,6 @@ export const normalTimeStudies = [
     ],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     description: () => `You gain ${formatPercents(0.01)} of your Infinity Points gained on crunch each second`,
-    effect: () =>
-      gainedInfinityPoints()
-        .times(Time.deltaTime.div(100))
-        .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige),
   },
   {
     id: 191,
