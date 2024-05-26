@@ -6,18 +6,28 @@ export default {
   components: {
     ResetModal,
   },
+  data() {
+    return {
+      gainedAtoms: new Decimal(),
+      gainedCollapses: 0
+    }
+  },
   computed: {
     message() {
       return `Upon Collapse, everything pre-Collapse will be reset.`;
     },
     gainedResources() {
-      return `You will gain absolutely nothing.`;
+      return `You will gain ${quantify("Collapse", this.gainedCollapses, 2, 0)} and ${quantify("Atom", this.gainedAtoms, 2, 0)}.`;
     },
     startingResources() {
-      return `You will start your next Collapse with absolutely nothing.`;
+      return `You will start your next Collapse based on your Atom Milestones.`;
     },
   },
   methods: {
+    update() {
+      this.gainedAtoms = gainedAtoms()
+      this.gainedCollapses = getCollapseGain()
+    },
     handleYesClick() {
       collapse();
       EventHub.ui.offAll(this);

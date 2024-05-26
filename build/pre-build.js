@@ -1,7 +1,10 @@
-const fs = require("fs");
-const path = require("path");
-const browserslist = require("browserslist-useragent-regexp");
+import { writeFileSync } from "node:fs"
+import { dirname, resolve } from "path"
+import { fileURLToPath } from 'node:url';
+import { getUserAgentRegex } from "browserslist-useragent-regexp";
 
-const userAgentRegExp = browserslist.getUserAgentRegExp({ allowHigherVersions: true });
+const userAgentRegExp = getUserAgentRegex({ allowHigherVersions: true });
 const checkFunction = `export const supportedBrowsers = ${userAgentRegExp};`;
-fs.writeFileSync(path.resolve(__dirname, "../src/supported-browsers.js"), checkFunction);
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+writeFileSync(resolve(__dirname, "../src/supported-browsers.js"), checkFunction);

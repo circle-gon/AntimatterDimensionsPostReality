@@ -53,9 +53,11 @@ body.t-s1 {
   0% {
     background-position: 0 0, 0 0, 0 0;
   }
+
   50% {
     background-position: 500px 500px, 100px 200px, -100px 150px;
   }
+
   100% {
     background-position: 1000px 1000px, 200px 400px, -200px 300px;
   }
@@ -65,9 +67,11 @@ body.t-s1 {
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }

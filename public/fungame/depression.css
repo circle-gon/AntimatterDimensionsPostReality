@@ -1,7 +1,7 @@
 html {
-  font-size: 62.5%;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  font-size: 62.5%;
 }
 
 body {
@@ -10,8 +10,8 @@ body {
 
 .depression {
   text-align: center;
-  padding: 4%;
   font-size: 2.5rem;
+  padding: 4%;
 }
 
 .depression-amount {
@@ -20,24 +20,24 @@ body {
 }
 
 .stuff-container {
-  margin: auto;
   text-align: center;
+  margin: auto;
 }
 
 .button {
-  margin: 1rem auto;
   width: 13rem;
   height: 5rem;
+  vertical-align: top;
   border: 0.2rem solid green;
   border-radius: 1rem;
-  vertical-align: top;
-  cursor: pointer;
+  margin: 1rem auto;
   transition-duration: 0.3s;
+  cursor: pointer;
 }
 
 .button--stuff {
-  background-color: grey;
   color: white;
+  background-color: grey;
 }
 
 .button--stuff:hover {
@@ -45,8 +45,8 @@ body {
 }
 
 .button--prestige {
-  background-color: #dddddd;
   color: black;
+  background-color: #dddddd;
 }
 
 .button--prestige:hover {

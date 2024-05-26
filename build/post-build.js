@@ -1,9 +1,10 @@
-const fs = require("fs");
-const path = require("path");
-const proc = require("child_process");
+import { writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { execSync } from "node:child_process";
+import { fileURLToPath } from 'node:url';
 
 function executeCommand(command) {
-  return proc.execSync(command).toString().trim();
+  return execSync(command).toString().trim();
 }
 
 const commit = {
@@ -13,5 +14,6 @@ const commit = {
 };
 
 const json = JSON.stringify(commit);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-fs.writeFileSync(path.resolve(__dirname, "../dist/commit.json"), json);
+writeFileSync(resolve(__dirname, "../dist/commit.json"), json);

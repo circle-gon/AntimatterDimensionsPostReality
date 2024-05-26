@@ -82,7 +82,7 @@ export function gainedAtoms() {
   return gain.floor();
 }
 
-function getCollapseGain() {
+export function getCollapseGain() {
   return 1;
 }
 
@@ -141,7 +141,7 @@ function giveRealityUpgrade(num, isReality) {
 
 function giveAU8() {
   // This must be done this way because ach 188 should not be obtained
-  for (let ach = 181; ach <= 187; ach++) Achievement(ach).unlock();
+  for (let ach = 181; ach <= 187; ach++) Achievement(ach).give();
 }
 
 export function collapse() {
@@ -162,8 +162,6 @@ export function collapse() {
   player.isGameEnd = false;
 
   lockAchievementsOnCollapse();
-
-  const toGive = Math.min(Currency.collapses.value * 2, Achievements.AM6.length)
 
   // Celestials
   Object.assign(player.celestials.teresa, {
@@ -500,6 +498,13 @@ export function collapse() {
 
   // Post-Reset
 
+  // Why here? Some achievements like "Perks of Living" will be obtained through post-reset grants
+  // This will cause notifications, which is kind of annoying, so we give them here to avoid that
+  if (AtomMilestone.am6.isReached) {
+    const toGive = Math.min(Currency.collapses.value * 2, Achievements.AM6.length)
+    for (let i = 0; i < toGive; i++) Achievements.AM6[i].give()
+  }
+
   if (AtomMilestone.am1.isReached) {
     // When ACHNR is obtained, it sends a lot of notifications that achievements
     // have been obtained, which isn't very useful, so we give the achievements here
@@ -541,7 +546,6 @@ export function collapse() {
     player.celestials.laitela.difficultyTier = 3;
     for (const resource of AlchemyResources.all) resource.amount = 5000
     giveRealityUpgrade(19, false)
-    for (let i = 0; i < toGive; i++) Achievements.AM6[i].give()
     player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0]
   }
   if (AtomMilestone.am7.isReached) {
