@@ -15,7 +15,7 @@ const primaryBackground = (cel) => [
   [cel, 1.5],
 ];
 
-/* eslint-disable no-multi-spaces */
+ 
 const destroyer = ["False", "Deity", "Destroyer"];
 const eternal = ["Eternal", "Deity", "Monarch"];
 const lesser = ["Lesser", "Deity", "Monarch"];
@@ -44,7 +44,7 @@ const usurper = ["Usurper", "Deity", "Monarch"];
 const pride = ["Pride", "Deity", "Monarch"];
 const forgotten = ["Forgotten", "Deity", "Monarch"];
 const paramount = ["Paramount", "Deity", "Monarch"];
-/* eslint-enable no-multi-spaces */
+ 
 
 export const pelleQuotes = {
   initial: {

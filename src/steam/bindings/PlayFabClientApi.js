@@ -218,7 +218,7 @@ if (!PlayFab._internalSettings) {
         authValue,
         callback,
         customData,
-        extraHeaders
+        extraHeaders,
       );
     },
   };
@@ -251,7 +251,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -262,7 +262,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -273,7 +273,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -284,7 +284,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -295,7 +295,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -306,7 +306,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -317,7 +317,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -328,7 +328,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -339,7 +339,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -350,7 +350,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -361,7 +361,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -372,7 +372,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -383,7 +383,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -394,7 +394,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -405,7 +405,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -416,7 +416,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -427,7 +427,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -438,7 +438,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -449,7 +449,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -460,7 +460,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -471,7 +471,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -482,7 +482,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -493,7 +493,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -504,7 +504,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -515,7 +515,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -526,7 +526,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -537,7 +537,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -548,7 +548,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -559,7 +559,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -570,7 +570,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -581,7 +581,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -592,7 +592,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -603,7 +603,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -614,7 +614,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -625,7 +625,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -636,7 +636,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -647,7 +647,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -658,7 +658,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -669,7 +669,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -680,7 +680,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -691,7 +691,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -702,7 +702,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -713,7 +713,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -724,7 +724,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -735,7 +735,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -746,7 +746,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -757,7 +757,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -768,7 +768,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -779,7 +779,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -790,7 +790,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -801,7 +801,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -812,7 +812,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -823,7 +823,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -834,7 +834,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -845,7 +845,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -856,7 +856,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -867,7 +867,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -878,7 +878,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -889,7 +889,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -900,7 +900,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -911,7 +911,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -922,7 +922,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -933,7 +933,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -944,7 +944,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -955,7 +955,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -966,7 +966,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -977,7 +977,7 @@ PlayFab.ClientApi = {
       null,
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -988,7 +988,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -999,7 +999,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1010,7 +1010,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1021,7 +1021,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1032,7 +1032,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1043,7 +1043,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1054,7 +1054,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1065,7 +1065,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1076,7 +1076,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1087,7 +1087,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1098,7 +1098,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1109,7 +1109,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1120,7 +1120,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1131,7 +1131,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1142,7 +1142,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1153,7 +1153,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1164,7 +1164,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1175,7 +1175,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1186,7 +1186,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1197,7 +1197,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1208,7 +1208,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1219,7 +1219,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1230,7 +1230,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1241,7 +1241,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1270,7 +1270,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1303,7 +1303,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1336,7 +1336,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1369,7 +1369,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1402,7 +1402,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1435,7 +1435,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1468,7 +1468,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1501,7 +1501,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1534,7 +1534,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1567,7 +1567,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1600,7 +1600,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1633,7 +1633,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1666,7 +1666,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1699,7 +1699,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1732,7 +1732,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1765,7 +1765,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1798,7 +1798,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1831,7 +1831,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1864,7 +1864,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
     // Return a Promise so that multiple asynchronous calls to this method can be handled simultaneously with Promise.all()
     return new Promise(function (resolve) {
@@ -1879,7 +1879,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1890,7 +1890,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1901,7 +1901,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1912,7 +1912,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1923,7 +1923,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1934,7 +1934,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1945,7 +1945,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1967,7 +1967,7 @@ PlayFab.ClientApi = {
       null,
       overloadCallback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1978,7 +1978,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -1989,7 +1989,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2000,7 +2000,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2011,7 +2011,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2022,7 +2022,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2033,7 +2033,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2044,7 +2044,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2055,7 +2055,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2066,7 +2066,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2077,7 +2077,7 @@ PlayFab.ClientApi = {
       null,
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2088,7 +2088,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2099,7 +2099,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2110,7 +2110,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2121,7 +2121,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2132,7 +2132,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2143,7 +2143,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2154,7 +2154,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2165,7 +2165,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2176,7 +2176,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2187,7 +2187,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2198,7 +2198,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2209,7 +2209,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2220,7 +2220,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2231,7 +2231,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2242,7 +2242,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2253,7 +2253,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2264,7 +2264,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2275,7 +2275,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2286,7 +2286,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2297,7 +2297,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2308,7 +2308,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2319,7 +2319,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2330,7 +2330,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2341,7 +2341,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2352,7 +2352,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2363,7 +2363,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2374,7 +2374,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2385,7 +2385,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2396,7 +2396,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2407,7 +2407,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2418,7 +2418,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2429,7 +2429,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2440,7 +2440,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2451,7 +2451,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2462,7 +2462,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2473,7 +2473,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2484,7 +2484,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 
@@ -2495,7 +2495,7 @@ PlayFab.ClientApi = {
       "X-Authorization",
       callback,
       customData,
-      extraHeaders
+      extraHeaders,
     );
   },
 };

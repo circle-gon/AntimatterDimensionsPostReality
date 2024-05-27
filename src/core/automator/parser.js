@@ -21,7 +21,7 @@ class AutomatorParser extends Parser {
       $.MANY_SEP({
         SEP: T.EOL,
         DEF: () => $.OPTION(() => $.SUBRULE($.command)),
-      })
+      }),
     );
 
     // This is a bit ugly looking. Chevrotain uses Function.toString() to do crazy
@@ -48,7 +48,7 @@ class AutomatorParser extends Parser {
       `
       return () => $.OR($.c1 || ($.c1 = [
         ${commandAlts.map((e) => `{ ALT: () => ${e} },`).join("\n")}]));
-    `
+    `,
     );
 
     $.RULE("command", commandOr($, EOF));
@@ -63,7 +63,7 @@ class AutomatorParser extends Parser {
           { ALT: () => $.CONSUME(T.NumberLiteral) },
           { ALT: () => $.CONSUME(T.ComparisonOperator) },
         ]),
-      { resyncEnabled: false }
+      { resyncEnabled: false },
     );
 
     $.RULE("comparison", () => {
@@ -77,7 +77,7 @@ class AutomatorParser extends Parser {
         { ALT: () => $.CONSUME(T.NumberLiteral) },
         { ALT: () => $.CONSUME(T.Identifier) },
         { ALT: () => $.CONSUME(T.AutomatorCurrency) },
-      ])
+      ]),
     );
 
     $.RULE("duration", () => {
@@ -94,7 +94,7 @@ class AutomatorParser extends Parser {
           },
         },
         { ALT: () => $.CONSUME(T.ECLiteral) },
-      ])
+      ]),
     );
 
     $.RULE(
@@ -108,7 +108,7 @@ class AutomatorParser extends Parser {
           $.OPTION1(() => $.CONSUME(T.Exclamation));
         });
       },
-      { resyncEnabled: false }
+      { resyncEnabled: false },
     );
 
     $.RULE("studyListEntry", () => {

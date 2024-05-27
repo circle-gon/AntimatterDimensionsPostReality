@@ -102,7 +102,10 @@ export default {
   overflow: visible;
   fill: #fbc21b;
   opacity: 0.9;
-  text-shadow: 0 0 5px #000000, 0 0 5px #000000, 0 0 5px #000000;
+  text-shadow:
+    0 0 5px #000000,
+    0 0 5px #000000,
+    0 0 5px #000000;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;

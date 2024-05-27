@@ -117,7 +117,10 @@ export default {
 }
 
 .c-s12-window__outer {
-  transition: opacity 0.3s, transform 0.4s, visibility 0.3s;
+  transition:
+    opacity 0.3s,
+    transform 0.4s,
+    visibility 0.3s;
 
   transform-style: preserve-3d;
 }

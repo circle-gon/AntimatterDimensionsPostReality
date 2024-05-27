@@ -19,7 +19,7 @@ export class NonRepeatableRealityUpgradeAutobuyerState extends AutobuyerState {
 
   tick() {
     for (let i = 6; i <= 25; i++) {
-      RealityUpgrade(i).purchase()
+      RealityUpgrade(i).purchase();
     }
   }
 }

@@ -45,7 +45,7 @@ export default {
       player.blackHoleNegative = Math.pow(10, -this.negativeSlider);
       player.requirementChecks.reality.slowestBH = Math.max(
         player.requirementChecks.reality.slowestBH,
-        player.blackHoleNegative
+        player.blackHoleNegative,
       );
     },
     sliderProps(negative) {

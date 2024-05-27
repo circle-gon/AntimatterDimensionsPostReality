@@ -56,7 +56,7 @@ export const Laitela = {
   get realityReward() {
     return Math.clampMin(
       Math.pow(100, this.difficultyTier) * Math.pow(360 / player.celestials.laitela.fastestCompletion, 2),
-      1
+      1,
     );
   },
   // Note that entropy goes from 0 to 1, with 1 being completion
@@ -65,7 +65,7 @@ export const Laitela = {
   },
   get darkMatterMultGain() {
     return Decimal.pow(Currency.darkMatter.value.dividedBy(this.annihilationDMRequirement).plus(1).log10(), 1.5).mul(
-      ImaginaryUpgrade(21).effectOrDefault(1)
+      ImaginaryUpgrade(21).effectOrDefault(1),
     );
   },
   get darkMatterMult() {

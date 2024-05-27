@@ -102,7 +102,7 @@ export default {
     incompleteSolidPath() {
       return this.generateIncompletePath(
         this.incompleteFadeEnd - 1e-3 * (this.pathEnd - this.incompleteFadeEnd),
-        this.pathEnd
+        this.pathEnd,
       );
     },
     completePath() {

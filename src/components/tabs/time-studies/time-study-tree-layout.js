@@ -54,7 +54,7 @@ export class TimeStudyTreeLayout {
     /**
      * @type {TimeStudyRow[]}
      */
-    /* eslint-disable no-multi-spaces, space-in-parens, func-call-spacing */
+     
     this.rows = [normalRow(null, TS(11), null), normalRow(TS(21), TS(22)), normalRow(null, TS(31), TS(32), TS(33))];
 
     if (
@@ -78,7 +78,7 @@ export class TimeStudyTreeLayout {
       normalRow(EC(6), TS(131), TS(132), TS(133), EC(8)),
       normalRow(TS(141), TS(142), TS(143)),
       normalRow(null, EC(9), TS(151), null, EC(4)),
-      normalRow(TS(161), TS(162))
+      normalRow(TS(161), TS(162)),
     );
 
     if (
@@ -96,7 +96,7 @@ export class TimeStudyTreeLayout {
       normalRow(TS(191), TS(192), TS(193)),
       normalRow(TS(201)),
       normalRow(TS(211), TS(212), TS(213), TS(214)),
-      wideRow(TS(221), TS(222), TS(223), TS(224), TS(225), TS(226), TS(227), TS(228))
+      wideRow(TS(221), TS(222), TS(223), TS(224), TS(225), TS(226), TS(227), TS(228)),
     );
 
     if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_TRIAD_STUDIES && !Pelle.isDoomed) {
@@ -109,9 +109,9 @@ export class TimeStudyTreeLayout {
       normalRow(TimeStudy.dilation),
       normalRow(TimeStudy.timeDimension(5), TimeStudy.timeDimension(6)),
       normalRow(TimeStudy.timeDimension(7), TimeStudy.timeDimension(8)),
-      normalRow(TimeStudy.reality)
+      normalRow(TimeStudy.reality),
     );
-    /* eslint-enable no-multi-spaces, space-in-parens, func-call-spacing */
+     
 
     /**
      * @type {TimeStudySetup[]}

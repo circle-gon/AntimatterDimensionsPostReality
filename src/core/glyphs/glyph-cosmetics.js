@@ -59,12 +59,12 @@ class CosmeticGlyphType {
 
 const functionalGlyphs = mapGameDataToObject(
   GameDatabase.reality.glyphTypes,
-  (config) => new CosmeticGlyphType(config, false)
+  (config) => new CosmeticGlyphType(config, false),
 );
 
 const cosmeticGlyphs = mapGameDataToObject(
   GameDatabase.reality.cosmeticGlyphs,
-  (config) => new CosmeticGlyphType(config, true)
+  (config) => new CosmeticGlyphType(config, true),
 );
 
 export const CosmeticGlyphTypes = {
@@ -72,7 +72,7 @@ export const CosmeticGlyphTypes = {
   ...cosmeticGlyphs,
   get list() {
     return Object.keys({ ...GameDatabase.reality.glyphTypes, ...GameDatabase.reality.cosmeticGlyphs }).map(
-      (e) => CosmeticGlyphTypes[e]
+      (e) => CosmeticGlyphTypes[e],
     );
   },
 };

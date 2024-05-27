@@ -55,7 +55,7 @@ export default {
   },
   created() {
     this.on$(GAME_EVENT.DIMBOOST_AFTER, () =>
-      BreakInfinityUpgrade.autobuyMaxDimboosts.isBought ? undefined : this.emitClose()
+      BreakInfinityUpgrade.autobuyMaxDimboosts.isBought ? undefined : this.emitClose(),
     );
   },
   methods: {
@@ -69,7 +69,7 @@ export default {
             costFunction: (x) => Galaxy.requirementAt(x).amount,
             cumulative: false,
           },
-          player.galaxies
+          player.galaxies,
         );
         if (bulk) {
           this.newGalaxies = Galaxy.buyableGalaxies(Math.round(dim.totalAmount.toNumber())) - player.galaxies;

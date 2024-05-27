@@ -48,7 +48,7 @@ export default {
     };
   },
   computed: {
-    // stupid but it works
+    // Stupid but it works
     id() {
       if (this.galaxyGenerator) return GalaxyGeneratorUpgrades.all.indexOf(this.upgrade) + 6;
       return PelleUpgrade.rebuyables.indexOf(this.upgrade) + 1;
@@ -101,11 +101,11 @@ export default {
       this.purchases = player.celestials.pelle.rebuyables[this.upgrade.config.id];
       this.currentTimeEstimate = TimeSpan.fromSeconds(
         this.secondsUntilCost(
-          this.galaxyGenerator ? GalaxyGenerator.gainPerSecond : Pelle.realityShardGainPerSecond
-        ).toNumber()
+          this.galaxyGenerator ? GalaxyGenerator.gainPerSecond : Pelle.realityShardGainPerSecond,
+        ).toNumber(),
       ).toTimeEstimate();
       this.projectedTimeEstimate = TimeSpan.fromSeconds(
-        this.secondsUntilCost(Pelle.nextRealityShardGain).toNumber()
+        this.secondsUntilCost(Pelle.nextRealityShardGain).toNumber(),
       ).toTimeEstimate();
       this.hasRemnants = Pelle.cel.remnants > 0;
       this.galaxyCap = GalaxyGenerator.generationCap;
@@ -127,52 +127,52 @@ export default {
 
 <template>
   <div class="l-spoon-btn-group">
-  <button
-    class="c-pelle-upgrade"
-    :class="{
-      'c-pelle-upgrade--unavailable': !canBuy && !(isBought || isCapped),
-      'c-pelle-upgrade--bought': isBought || isCapped,
-      'c-pelle-upgrade--faded': faded,
-      'c-pelle-upgrade--galaxyGenerator': galaxyGenerator,
-    }"
-    @click="!faded && upgrade.purchase()"
-    @mouseover="hovering = true"
-    @mouseleave="hovering = false"
-  >
-    <CustomizeableTooltip :show="shouldEstimateImprovement" left="50%" top="0">
-      <template #tooltipContent>
-        {{ estimateImprovement }}
-      </template>
-    </CustomizeableTooltip>
-    <CustomizeableTooltip v-if="timeEstimate" left="50%" top="0" content-class="l-fill-container">
-      <template #tooltipContent>
-        {{ timeEstimate }}
-      </template>
-    </CustomizeableTooltip>
-    <DescriptionDisplay :config="config" />
-    <div class="l-pelle-upgrade-gap" />
-    <div v-if="effectText">
-      {{ effectText.prefix }} {{ effectText.value }}
-      <template v-if="effectText.next">
-        ➜
-        <span
-          :class="{
-            'c-improved-effect': canBuy,
-            'c-improved-effect--unavailable': !canBuy,
-          }"
-        >
-          {{ effectText.next }}
-        </span>
-      </template>
+    <button
+      class="c-pelle-upgrade"
+      :class="{
+        'c-pelle-upgrade--unavailable': !canBuy && !(isBought || isCapped),
+        'c-pelle-upgrade--bought': isBought || isCapped,
+        'c-pelle-upgrade--faded': faded,
+        'c-pelle-upgrade--galaxyGenerator': galaxyGenerator,
+      }"
+      @click="!faded && upgrade.purchase()"
+      @mouseover="hovering = true"
+      @mouseleave="hovering = false"
+    >
+      <CustomizeableTooltip :show="shouldEstimateImprovement" left="50%" top="0">
+        <template #tooltipContent>
+          {{ estimateImprovement }}
+        </template>
+      </CustomizeableTooltip>
+      <CustomizeableTooltip v-if="timeEstimate" left="50%" top="0" content-class="l-fill-container">
+        <template #tooltipContent>
+          {{ timeEstimate }}
+        </template>
+      </CustomizeableTooltip>
+      <DescriptionDisplay :config="config" />
       <div class="l-pelle-upgrade-gap" />
-    </div>
-    <CostDisplay v-if="!isCapped" :config="config" :name="galaxyGenerator ? config.currencyLabel : 'Reality Shard'" />
-  </button>
-  <PrimaryToggleButton
-    v-if="isRebuyable && isAutoUnlocked"
-    v-model="isAutobuyerOn"
-    label="Auto:"
-    class="l--spoon-btn-group__little-spoon-reality-btn o-primary-btn--reality-upgrade-toggle"
+      <div v-if="effectText">
+        {{ effectText.prefix }} {{ effectText.value }}
+        <template v-if="effectText.next">
+          ➜
+          <span
+            :class="{
+              'c-improved-effect': canBuy,
+              'c-improved-effect--unavailable': !canBuy,
+            }"
+          >
+            {{ effectText.next }}
+          </span>
+        </template>
+        <div class="l-pelle-upgrade-gap" />
+      </div>
+      <CostDisplay v-if="!isCapped" :config="config" :name="galaxyGenerator ? config.currencyLabel : 'Reality Shard'" />
+    </button>
+    <PrimaryToggleButton
+      v-if="isRebuyable && isAutoUnlocked"
+      v-model="isAutobuyerOn"
+      label="Auto:"
+      class="l--spoon-btn-group__little-spoon-reality-btn o-primary-btn--reality-upgrade-toggle"
     />
   </div>
 </template>

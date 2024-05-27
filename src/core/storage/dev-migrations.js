@@ -207,7 +207,7 @@ export const devMigrations = {
           } else if (merge) {
             player.celestials[celestial2][prop] = merge(
               player.celestials[celestial1][prop],
-              player.celestials[celestial2][prop]
+              player.celestials[celestial2][prop],
             );
           }
           delete player.celestials[celestial1][prop];
@@ -234,9 +234,9 @@ export const devMigrations = {
             scoreThreshold: 0,
             effectScores: t.effects.mapToObject(
               (e) => e.id,
-              () => 0
+              () => 0,
             ),
-          })
+          }),
         ),
       });
       movePropIfPossible("teresa", "effarig", "autoGlyphPick", {
@@ -264,13 +264,13 @@ export const devMigrations = {
             effectCount: 0,
             effectChoices: t.effects.mapToObject(
               (e) => e.id,
-              () => false
+              () => false,
             ),
             effectScores: t.effects.mapToObject(
               (e) => e.id,
-              () => 0
+              () => 0,
             ),
-          })
+          }),
         ),
       });
       movePropIfPossible("effarig", "teresa", "bestAMSet", []);
@@ -285,13 +285,13 @@ export const devMigrations = {
       for (let i = 0; i < player.blackHole.length; i++) {
         player.blackHole[i].id = i;
         player.blackHole[i].intervalUpgrades = Math.round(
-          Math.log(player.blackHole[i].speed / (3600 / Math.pow(10, i))) / Math.log(0.8)
+          Math.log(player.blackHole[i].speed / (3600 / Math.pow(10, i))) / Math.log(0.8),
         );
         player.blackHole[i].powerUpgrades = Math.round(
-          Math.log(player.blackHole[i].power / (180 / Math.pow(2, i))) / Math.log(1.35)
+          Math.log(player.blackHole[i].power / (180 / Math.pow(2, i))) / Math.log(1.35),
         );
         player.blackHole[i].durationUpgrades = Math.round(
-          Math.log(player.blackHole[i].duration / (10 - i * 3)) / Math.log(1.3)
+          Math.log(player.blackHole[i].duration / (10 - i * 3)) / Math.log(1.3),
         );
         delete player.blackHole[i].speed;
         delete player.blackHole[i].power;
@@ -308,7 +308,7 @@ export const devMigrations = {
       // Leftover stuff from dev.updateTestSave
       if (player.celestials.teresa.rmStore > Teresa.rmStoreMax) {
         player.reality.realityMachines = player.reality.realityMachines.plus(
-          player.celestials.teresa.rmStore - Teresa.rmStoreMax
+          player.celestials.teresa.rmStore - Teresa.rmStoreMax,
         );
         player.celestials.teresa.rmStore = Teresa.rmStoreMax;
       }
@@ -553,13 +553,13 @@ export const devMigrations = {
             effectCount: 0,
             effectChoices: t.effects.mapToObject(
               (e) => e.id,
-              () => false
+              () => false,
             ),
             effectScores: t.effects.mapToObject(
               (e) => e.id,
-              () => 0
+              () => 0,
             ),
-          })
+          }),
         );
       for (const type of generatedTypes) {
         newSettings[type].rarityThreshold = oldSettings[type].rarityThreshold;
@@ -647,7 +647,7 @@ export const devMigrations = {
       for (let i = 0; i < player.celestials.ra.alchemy.length; i++) {
         player.celestials.ra.alchemy[i].amount = Math.clampMax(
           player.celestials.ra.alchemy[i].amount,
-          Ra.alchemyResourceCap
+          Ra.alchemyResourceCap,
         );
       }
     },
@@ -722,7 +722,7 @@ export const devMigrations = {
       player.reality.perks = newPerks;
       if (gainedPerkPoints > 0) {
         Modal.message.show(
-          "Some of your perks (glyph perks) were removed. The perk points you spent on them have been refunded."
+          "Some of your perks (glyph perks) were removed. The perk points you spent on them have been refunded.",
         );
       }
     },
@@ -792,7 +792,7 @@ export const devMigrations = {
       for (const script of Object.values(player.reality.automator.scripts)) {
         script.content = script.content.replace(
           /^([ \t]*)(wait|if|while|until)([\t ]+)(completions)/gimu,
-          "$1$2$3pending $4"
+          "$1$2$3pending $4",
         );
       }
     },
@@ -1241,7 +1241,7 @@ export const devMigrations = {
 
       if (player.celestials.v.triadStudies !== undefined) {
         player.timestudy.studies = player.timestudy.studies.concat(
-          player.celestials.v.triadStudies.map((id) => id + 300)
+          player.celestials.v.triadStudies.map((id) => id + 300),
         );
         delete player.celestials.v.triadStudies;
       }
@@ -1498,7 +1498,7 @@ export const devMigrations = {
           // replace function so this is the best I've got for now
           rawLine = rawLine.replace(
             /studies( nowait)? (?!respec|load|nowait respec|nowait load)(\S.+)$/iu,
-            "studies$1 purchase $2"
+            "studies$1 purchase $2",
           );
           rawLine = rawLine.replace(/studies( nowait)? load preset ([1-6])/iu, "studies$1 load id $2");
           rawLine = rawLine.replace(/studies( nowait)? load preset (\S+)/iu, "studies$1 load name $2");

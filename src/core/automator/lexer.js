@@ -228,7 +228,7 @@ for (let i = 1; i <= 12; ++i) {
   const id = i;
   createInCategory(AutomatorCurrency, `EC${i}`, new RegExp(`ec${i} completions`, "i"), {
     $autocomplete: `ec${i} completions`,
-    // eslint-disable-next-line no-loop-func
+     
     $getter: () => EternityChallenge(id).completions,
   });
 }
@@ -444,7 +444,7 @@ for (const token of lexer.lexerDefinition) {
 // We use this while building up the grammar
 export const tokenMap = automatorTokens.mapToObject(
   (e) => e.name,
-  (e) => e
+  (e) => e,
 );
 
 const automatorCurrencyNames = tokenLists.AutomatorCurrency.map((i) => i.$autocomplete.toUpperCase());

@@ -22,7 +22,7 @@ export default {
       // Note: there are two units at play: strength is from 1..3.5+; rarity is 0..100
       rarityThresholds: GLYPH_TYPES.mapToObject(
         (e) => e,
-        () => 0
+        () => 0,
       ),
       autoRealityForFilter: player.options.autoRealityForFilter,
     };

@@ -41,7 +41,7 @@ function pelleStarConnector(index, fillColor, isOverfill) {
       pathStart,
       pelleSize,
       pathEnd,
-      (4 / 3) * pelleSize
+      (4 / 3) * pelleSize,
     );
     // The +0.01 prevents curve decomposition errors from happening
     const pathPadStart = path.angleFromRadius(pelleSize + 0.01) - pathStart;
@@ -95,11 +95,11 @@ const Positions = Object.freeze({
   enslavedReality: new Vector(650, 250),
   enslavedGlyphLevel: new Vector(
     650 + 75 * Math.cos((Math.PI / 180) * -60),
-    250 + 75 * Math.sin((Math.PI / 180) * -60)
+    250 + 75 * Math.sin((Math.PI / 180) * -60),
   ),
   enslavedGlyphRarity: new Vector(
     650 + 75 * Math.cos((Math.PI / 180) * 120),
-    250 + 75 * Math.sin((Math.PI / 180) * 120)
+    250 + 75 * Math.sin((Math.PI / 180) * 120),
   ),
 
   vUnlockAchievement: new Vector(400, 350 + 50 * Math.sqrt(3)),
@@ -211,7 +211,7 @@ for (const fill of fillStates) {
       name,
       index,
       angles[index],
-      FILL_STATE[fill.toUpperCase()]
+      FILL_STATE[fill.toUpperCase()],
     );
   }
 }
@@ -606,7 +606,7 @@ export const celestialNavigation = {
       pathEnd: 1,
       path: new LinearPath(
         new Vector(650 - 74 * Math.sqrt(0.75), 250 - 74 * 0.5),
-        Positions.enslavedGlyphLevel
+        Positions.enslavedGlyphLevel,
       ).trimEnd(23),
       fill: "#ffa337",
       completeWidth: 6,
@@ -696,7 +696,7 @@ export const celestialNavigation = {
       pathEnd: 1,
       path: new LinearPath(
         Positions.enslavedGlyphRarity,
-        new Vector(650 + 74 * Math.sqrt(0.75), 250 + 74 * 0.5)
+        new Vector(650 + 74 * Math.sqrt(0.75), 250 + 74 * 0.5),
       ).trimStart(23),
       fill: "#ffa337",
     },

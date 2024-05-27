@@ -93,7 +93,7 @@ export const shopPurchases = {
       // The actual unlocks are handled in the ShopPurchaseData object, so we just show notifications here
       GameUI.notify.info(
         `You have purchased the "${GlyphAppearanceHandler.chosenFromModal.name}" Set for Glyph cosmetics!`,
-        10000
+        10000,
       );
       GlyphAppearanceHandler.chosenFromModal = null;
       GlyphAppearanceHandler.applyNotification();

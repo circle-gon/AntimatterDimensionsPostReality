@@ -94,9 +94,14 @@ export default {
   background-image: var(--s12-background-gradient);
   border: 0.15rem solid var(--s12-border-color);
   border-radius: 0.5rem;
-  box-shadow: 0 0 1rem 0.2rem var(--s12-border-color), inset 0 0 0.4rem 0.1rem rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 0 1rem 0.2rem var(--s12-border-color),
+    inset 0 0 0.4rem 0.1rem rgba(255, 255, 255, 0.7);
   transform: translate(-50%, 20%);
-  transition: transform 0.2s, opacity 0.2s, visibility 0.2s;
+  transition:
+    transform 0.2s,
+    opacity 0.2s,
+    visibility 0.2s;
   pointer-events: none;
 
   /* If anyone can figure out why these two aren't working that would be great */
@@ -127,7 +132,9 @@ export default {
   border-radius: 0.5rem;
   margin: 0.5rem;
   padding: 0.3rem;
-  transition: background-color 0.5s, border 0.5s;
+  transition:
+    background-color 0.5s,
+    border 0.5s;
   user-select: none;
   cursor: pointer;
 }

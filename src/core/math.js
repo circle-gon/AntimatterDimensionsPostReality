@@ -2,7 +2,7 @@ import { log as lngamma } from "gamma";
 
 import { DC } from "./constants";
 
-/* eslint-disable no-use-before-define */
+ 
 /* eslint-disable max-params */
 
 window.LOG10_MAX_VALUE = Math.log10(Number.MAX_VALUE);
@@ -228,13 +228,13 @@ window.getCostWithLinearCostScaling = function getCostWithLinearCostScaling(
   costScalingStart,
   initialCost,
   costMult,
-  costMultGrowth
+  costMultGrowth,
 ) {
   const preScalingPurchases = Math.max(0, Math.floor(Math.log(costScalingStart / initialCost) / Math.log(costMult)));
   const preScalingCost = Math.ceil(Math.pow(costMult, Math.min(preScalingPurchases, amountOfPurchases)) * initialCost);
   const scaling = new LinearMultiplierScaling(costMult, costMultGrowth);
   const postScalingCost = Math.exp(
-    scaling.logTotalMultiplierAfterPurchases(Math.max(0, amountOfPurchases - preScalingPurchases))
+    scaling.logTotalMultiplierAfterPurchases(Math.max(0, amountOfPurchases - preScalingPurchases)),
   );
   return preScalingCost * postScalingCost;
 };
@@ -245,7 +245,7 @@ window.findFirstInfiniteCostPurchase = function findFirstInfiniteCostPurchase(
   costScalingStart,
   initialCost,
   costMult,
-  costMultGrowth
+  costMultGrowth,
 ) {
   let upper = 1;
   while (
@@ -292,7 +292,7 @@ window.LinearCostScaling = class LinearCostScaling {
     if (free) {
       this._purchases = Math.clampMax(
         Math.floor(resourcesAvailable.div(initialCost).log10() / Math.log10(costMultiplier) + 1),
-        maxPurchases
+        maxPurchases,
       );
     } else {
       this._purchases = Math.clampMax(
@@ -301,9 +301,9 @@ window.LinearCostScaling = class LinearCostScaling {
             .mul(costMultiplier - 1)
             .div(initialCost)
             .add(1)
-            .log10() / Math.log10(costMultiplier)
+            .log10() / Math.log10(costMultiplier),
         ),
-        maxPurchases
+        maxPurchases,
       );
     }
     this._totalCostMultiplier = Decimal.pow(costMultiplier, this._purchases);
@@ -369,7 +369,7 @@ window.ExponentialCostScaling = class ExponentialCostScaling {
       // eslint-disable-next-line no-negated-condition
     } else if (param.scalingCostThreshold !== undefined) {
       this._purchasesBeforeScaling = Math.ceil(
-        (ExponentialCostScaling.log10(param.scalingCostThreshold) - this._logBaseCost) / this._logBaseIncrease
+        (ExponentialCostScaling.log10(param.scalingCostThreshold) - this._logBaseCost) / this._logBaseIncrease,
       );
     } else throw new Error("Must specify either scalingCostThreshold or purchasesBeforeScaling");
     this.updateCostScale();
@@ -548,14 +548,14 @@ window.getHybridCostScaling = function getHybridCostScaling(
   linCostMultGrowth,
   expInitialCost,
   expCostMult,
-  expCostMultGrowth
+  expCostMultGrowth,
 ) {
   const normalCost = getCostWithLinearCostScaling(
     amountOfPurchases,
     linCostScalingStart,
     linInitialCost,
     linCostMult,
-    linCostMultGrowth
+    linCostMultGrowth,
   );
   if (Number.isFinite(normalCost)) {
     return new Decimal(normalCost);
@@ -776,7 +776,7 @@ window.binomialDistributionBTRD = function binomialDistributionBTRD(numSamples, 
   const alpha = (2.83 + 5.1 / b) * approxStdev;
   const kU = 0.43;
   const kV = 0.92 - 4.2 / b;
-  // eslint-disable-next-line no-constant-condition
+   
   while (true) {
     let v = fastRandom();
     if (v <= 2 * kU * kV) {
@@ -837,7 +837,7 @@ window.poissonDistributionPTRD = function poissonDistributionPTRD(mu) {
   const a = -0.059 + 0.02483 * b;
   const iAlpha = 1.1239 + 1.328 / (b - 3.4);
   const vR = 0.9277 - 3.6224 / (b - 2);
-  // eslint-disable-next-line no-constant-condition
+   
   while (true) {
     let v = Math.random();
     if (v < 0.86 * vR) {
@@ -1051,7 +1051,7 @@ window.AffineTransform = class AffineTransform {
         this.a10 * ot.a00 + this.a11 * ot.a10,
         this.a10 * ot.a01 + this.a11 * ot.a11,
         this.a00 * ot.o0 + this.a01 * ot.o1 + this.o0,
-        this.a10 * ot.o0 + this.a11 * ot.o1 + this.o1
+        this.a10 * ot.o0 + this.a11 * ot.o1 + this.o1,
       );
     }
     if (ot instanceof Vector) return ot.transformedBy(this);
@@ -1157,7 +1157,7 @@ window.Vector = class Vector {
   transformedBy(tform) {
     return new Vector(
       tform.a00 * this.x + tform.a01 * this.y + tform.o0,
-      tform.a10 * this.x + tform.a11 * this.y + tform.o1
+      tform.a10 * this.x + tform.a11 * this.y + tform.o1,
     );
   }
 
@@ -1356,7 +1356,7 @@ class CubicBezier extends Curve {
         this.p3
           .minus(this.p2.times(2))
           .plus(this.p1)
-          .times(6 * t)
+          .times(6 * t),
       );
   }
 
@@ -1365,7 +1365,7 @@ class CubicBezier extends Curve {
       this.p0.transformedBy(tform),
       this.p1.transformedBy(tform),
       this.p2.transformedBy(tform),
-      this.p3.transformedBy(tform)
+      this.p3.transformedBy(tform),
     );
   }
 
@@ -1390,7 +1390,7 @@ class CubicBezier extends Curve {
       -shape0.direction.cross(dP),
       1.5 * shape1.curvature,
       pathRotation,
-      shape1.direction.cross(dP)
+      shape1.direction.cross(dP),
     );
     magSol = reversed ? magSol.filter((o) => o.x <= 0 && o.y <= 0) : magSol.filter((o) => o.x >= 0 && o.y >= 0);
     if (magSol.length === 0) return null;
@@ -1398,7 +1398,7 @@ class CubicBezier extends Curve {
       shape0.position,
       shape0.position.plus(shape0.direction.times(magSol[0].x)),
       shape1.position.minus(shape1.direction.times(magSol[0].y)),
-      shape1.position
+      shape1.position,
     );
   }
 }

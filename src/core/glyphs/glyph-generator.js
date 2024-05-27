@@ -212,7 +212,7 @@ export const GlyphGenerator = {
     const rng = new GlyphGenerator.MusicGlyphRNG();
     const glyph = this.randomGlyph(
       { actualLevel: Math.floor(player.records.bestReality.glyphLevel * 0.8), rawLevel: 1 },
-      rng
+      rng,
     );
     rng.finalize();
     glyph.cosmetic = "music";
@@ -281,7 +281,7 @@ export const GlyphGenerator = {
   generateEffects(type, count, rng) {
     const effectValues = GlyphTypes[type].effects.mapToObject(
       (x) => x.bitmaskIndex,
-      () => rng.uniform()
+      () => rng.uniform(),
     );
     // Get a bunch of random numbers so that we always use 7 here.
     Array.range(0, 7 - GlyphTypes[type].effects.length).forEach(() => rng.uniform());

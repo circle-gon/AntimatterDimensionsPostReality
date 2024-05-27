@@ -178,7 +178,9 @@ body.t-s12 {
   background: linear-gradient(-45deg, #ffffffff, #aeb2b5);
   border: 0.2rem solid white;
   border-radius: 0;
-  box-shadow: 0 0 0.1rem 0.1rem var(--s12-border-color), inset 0 0 0.1rem 0.1rem #a0a0a0;
+  box-shadow:
+    0 0 0.1rem 0.1rem var(--s12-border-color),
+    inset 0 0 0.1rem 0.1rem #a0a0a0;
 }
 
 .t-s12 .c-modal__confirmation-toggle:hover .c-modal__confirmation-toggle__checkbox {

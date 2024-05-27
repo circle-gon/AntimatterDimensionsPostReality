@@ -85,7 +85,7 @@ export default class Decimal {
     resourcesAvailable: DecimalSource,
     priceStart: DecimalSource,
     priceRatio: DecimalSource,
-    currentOwned: number | Decimal
+    currentOwned: number | Decimal,
   ): Decimal;
   /**
    * How much resource would it cost to buy (numItems) items if you already have currentOwned,
@@ -95,7 +95,7 @@ export default class Decimal {
     numItems: number | Decimal,
     priceStart: DecimalSource,
     priceRatio: DecimalSource,
-    currentOwned: number | Decimal
+    currentOwned: number | Decimal,
   ): Decimal;
   /**
    * If you're willing to spend 'resourcesAvailable' and want to buy something with additively
@@ -106,7 +106,7 @@ export default class Decimal {
     resourcesAvailable: DecimalSource,
     priceStart: DecimalSource,
     priceAdd: DecimalSource,
-    currentOwned: DecimalSource
+    currentOwned: DecimalSource,
   ): Decimal;
   /**
    * How much resource would it cost to buy (numItems) items if you already have currentOwned,
@@ -117,7 +117,7 @@ export default class Decimal {
     numItems: DecimalSource,
     priceStart: DecimalSource,
     priceAdd: DecimalSource,
-    currentOwned: DecimalSource
+    currentOwned: DecimalSource,
   ): Decimal;
   /**
    * When comparing two purchases that cost (resource) and increase your resource/sec by (deltaRpS),

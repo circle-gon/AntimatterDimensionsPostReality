@@ -7,7 +7,7 @@ export const GameSaveSerializer = {
     const json = JSON.stringify(save, this.jsonConverter);
     return this.encodeText(json, "savefile");
   },
-  // eslint-disable-next-line no-unused-vars
+   
   jsonConverter(key, value) {
     if (value === Infinity) {
       return "Infinity";
@@ -21,7 +21,7 @@ export const GameSaveSerializer = {
     if (typeof data !== "string") return undefined;
     try {
       const json = this.decodeText(data, "savefile");
-      // eslint-disable-next-line no-unused-vars
+       
       return JSON.parse(json, (k, v) => (v === Infinity ? "Infinity" : v));
     } catch (e) {
       return undefined;

@@ -135,7 +135,9 @@
 .general-tooltip[aria-hidden="true"] {
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s, visibility 0.3s;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s;
 }
 
 .general-tooltip[aria-hidden="false"] {

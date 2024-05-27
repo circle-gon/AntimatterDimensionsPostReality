@@ -17,7 +17,7 @@ export const TP = {
     // therefore we need to return 1 "by default"
     multValue: () => {
       const baseTP = new Decimal(Currency.tachyonParticles.value).pow(
-        PelleRifts.paradox.milestones[1].effectOrDefault(1)
+        PelleRifts.paradox.milestones[1].effectOrDefault(1),
       );
       return TimeStudy.dilation.isBought ? baseTP : 1;
     },

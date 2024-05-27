@@ -131,7 +131,9 @@ export default {
 
   50% {
     opacity: 1;
-    text-shadow: 0 0 4rem, 0 0 4rem;
+    text-shadow:
+      0 0 4rem,
+      0 0 4rem;
   }
 
   100% {

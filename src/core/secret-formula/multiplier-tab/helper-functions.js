@@ -10,7 +10,7 @@ export const MultiplierTabHelper = {
         return Math.clamp(
           AntimatterDimensions.all.filter((ad) => ad.isProducing).length,
           1,
-          EternityChallenge(7).isRunning ? 7 : 8
+          EternityChallenge(7).isRunning ? 7 : 8,
         );
       case "ID":
         return InfinityDimensions.all.filter((id) => id.isProducing).length;
@@ -34,7 +34,7 @@ export const MultiplierTabHelper = {
         Achievement(178),
         InfinityChallenge(5).reward,
         PelleUpgrade.galaxyPower,
-        PelleRifts.decay.milestones[1]
+        PelleRifts.decay.milestones[1],
       ) * Pelle.specialGlyphEffect.power
     );
   },

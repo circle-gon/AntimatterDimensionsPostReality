@@ -74,7 +74,7 @@ export function buyMaxTimeDimension(tier, portionToSpend = 1, isMaxAll = false) 
       cumulative: true,
       firstCost: dim.cost,
     },
-    dim.bought
+    dim.bought,
   );
   if (!bulk) return false;
   Currency.eternityPoints.subtract(bulk.purchasePrice);
@@ -123,7 +123,7 @@ export function timeDimensionCommonMultiplier() {
       Replicanti.areUnlocked && Replicanti.amount.gt(1) ? DilationUpgrade.tdMultReplicanti : null,
       Pelle.isDoomed ? null : RealityUpgrade(22),
       AlchemyResource.dimensionality,
-      PelleRifts.chaos
+      PelleRifts.chaos,
     );
 
   if (EternityChallenge(9).isRunning) {
@@ -254,7 +254,7 @@ class TimeDimensionState extends DimensionState {
       Effects.log10Sum(
         tier === 1 ? TimeStudy(11) : null,
         tier === 3 ? TimeStudy(73) : null,
-        tier === 4 ? TimeStudy(227) : null
+        tier === 4 ? TimeStudy(227) : null,
       );
 
     const dim = TimeDimension(tier);
@@ -336,7 +336,7 @@ class TimeDimensionState extends DimensionState {
 
   get powerMultiplier() {
     return DC.D4.timesEffectsOf(this._tier === 8 ? GlyphSacrifice.time : null).pow(
-      ImaginaryUpgrade(14).effectOrDefault(1)
+      ImaginaryUpgrade(14).effectOrDefault(1),
     );
   }
 

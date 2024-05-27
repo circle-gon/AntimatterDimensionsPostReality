@@ -5,8 +5,15 @@
 .o-hint-text {
   font-size: 1.5rem;
   color: white;
-  text-shadow: -0.1rem -0.1rem 0 black, -0.1rem -0.1rem 0 black, 0.1rem -0.1rem 0 black, 0.1rem -0.1rem 0 black,
-    -0.1rem 0.1rem 0 black, -0.1rem 0.1rem 0 black, 0.1rem 0.1rem 0 black, 0.1rem 0.1rem 0 black;
+  text-shadow:
+    -0.1rem -0.1rem 0 black,
+    -0.1rem -0.1rem 0 black,
+    0.1rem -0.1rem 0 black,
+    0.1rem -0.1rem 0 black,
+    -0.1rem 0.1rem 0 black,
+    -0.1rem 0.1rem 0 black,
+    0.1rem 0.1rem 0 black,
+    0.1rem 0.1rem 0 black;
   pointer-events: none;
 }
 

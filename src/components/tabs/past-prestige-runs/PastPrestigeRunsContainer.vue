@@ -156,7 +156,7 @@ export default {
       for (let index = 0; index < this.layer.extra?.length && cells.length <= this.longestRow; index++) {
         if (!this.layer.showExtra[index]()) continue;
         cells.push(
-          this.layer.allowRate[index] && this.showRate ? this.layer.rateString[index] : this.layer.extra[index]
+          this.layer.allowRate[index] && this.showRate ? this.layer.rateString[index] : this.layer.extra[index],
         );
       }
       return cells;

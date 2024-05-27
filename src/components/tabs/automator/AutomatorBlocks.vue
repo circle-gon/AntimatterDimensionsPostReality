@@ -251,7 +251,7 @@ const AUTOMATOR_BLOCKS_BLACKLIST = ["BLOB"];
 
 export const automatorBlocksMap = automatorBlocks.mapToObject(
   (b) => b.cmd,
-  (b) => b
+  (b) => b,
 );
 </script>
 

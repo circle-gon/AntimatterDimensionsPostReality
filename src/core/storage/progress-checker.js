@@ -35,7 +35,7 @@ class CatchupResource extends GameMechanicState {
 
 export const CatchupResources = mapGameDataToObject(
   GameDatabase.catchupResources,
-  (config) => new CatchupResource(config)
+  (config) => new CatchupResource(config),
 );
 
 export const ProgressChecker = {

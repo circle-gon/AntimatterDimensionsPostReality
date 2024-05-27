@@ -312,7 +312,7 @@ function giveRealityRewards(realityProps) {
     realityProps.gainedGlyphLevel.actualLevel,
     realityAndPPMultiplier,
     multiplier,
-    MachineHandler.projectedIMCap
+    MachineHandler.projectedIMCap,
   );
   Currency.realities.add(realityAndPPMultiplier);
   Currency.perkPoints.add(realityAndPPMultiplier * MachineHandler.perkPointMultiplier);
@@ -676,7 +676,7 @@ export function finishProcessReality(realityProps) {
   if (realityProps.glyphUndo) {
     player.requirementChecks.reality.maxGlyphs = Math.max(
       Glyphs.bestUndoGlyphCount,
-      player.requirementChecks.reality.maxGlyphs
+      player.requirementChecks.reality.maxGlyphs,
     );
   } else {
     Player.resetRequirements("reality");

@@ -40,5 +40,5 @@ class TabNotificationState {
 
 export const TabNotification = mapGameDataToObject(
   GameDatabase.tabNotifications,
-  (config) => new TabNotificationState(config)
+  (config) => new TabNotificationState(config),
 );

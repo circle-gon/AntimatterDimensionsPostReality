@@ -66,7 +66,9 @@ export default {
   left: 0;
   background-image: url("../../../../public/images/snow1.png"), url("../../../../public/images/snow2.png"),
     url("../../../../public/images/snow3.png");
-  animation: a-snow 10s linear infinite, a-snow-fade 10s cubic-bezier(0, 0.3, 1, 0.7) infinite;
+  animation:
+    a-snow 10s linear infinite,
+    a-snow-fade 10s cubic-bezier(0, 0.3, 1, 0.7) infinite;
 }
 
 .t-s2 .c-background-overlay {

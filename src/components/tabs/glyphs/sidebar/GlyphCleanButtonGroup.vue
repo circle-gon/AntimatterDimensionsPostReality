@@ -44,7 +44,7 @@ export default {
         AutoGlyphProcessor.sacMode === AUTO_GLYPH_REJECT.REFINE ||
         AutoGlyphProcessor.sacMode === AUTO_GLYPH_REJECT.REFINE_TO_CAP;
       this.removeCount = this.inventory.filter(
-        (g) => g !== null && g.idx >= Glyphs.protectedSlots && !AutoGlyphProcessor.wouldKeep(g)
+        (g) => g !== null && g.idx >= Glyphs.protectedSlots && !AutoGlyphProcessor.wouldKeep(g),
       ).length;
     },
     autoClean() {

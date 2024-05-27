@@ -81,7 +81,7 @@ export default {
           return `Increased Galaxy cost scaling: ${scalings
             .sort((a, b) => a.amount - b.amount)
             .map(
-              (scaling) => `${scaling.function} scaling past ${this.formatGalaxies(scaling.amount)} (${scaling.type})`
+              (scaling) => `${scaling.function} scaling past ${this.formatGalaxies(scaling.amount)} (${scaling.type})`,
             )
             .join(", ")
             .capitalize()}`;

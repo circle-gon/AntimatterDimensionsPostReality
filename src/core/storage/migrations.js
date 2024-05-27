@@ -53,7 +53,7 @@ export const migrations = {
         for (let i = 4; i < 8; i++) {
           player[`infinityDimension${i}`].amount = Decimal.div(
             player[`infinityDimension${i}`].amount,
-            Sacrifice.totalBoost.pow(0.02)
+            Sacrifice.totalBoost.pow(0.02),
           );
         }
       }
@@ -67,7 +67,7 @@ export const migrations = {
           if (new Decimal("1e300").lt(player[`timeDimension${i}`].cost)) {
             player[`timeDimension${i}`].cost = Decimal.pow(
               timeDimCostMults[i] * 2.2,
-              player[`timeDimension${i}`].bought
+              player[`timeDimension${i}`].bought,
             ).times(timeDimStartCosts[i]);
           }
         }
@@ -562,7 +562,7 @@ export const migrations = {
       for (let i = 0; i < player.challengeTimes.length; ++i) {
         player.challenge.normal.bestTimes[i] = Decimal.min(
           player.challenge.normal.bestTimes[i],
-          player.challengeTimes[i]
+          player.challengeTimes[i],
         );
       }
       delete player.challengeTimes;
@@ -571,7 +571,7 @@ export const migrations = {
       for (let i = 0; i < player.infchallengeTimes.length; ++i) {
         player.challenge.infinity.bestTimes[i] = Decimal.min(
           player.challenge.infinity.bestTimes[i],
-          player.infchallengeTimes[i]
+          player.infchallengeTimes[i],
         );
       }
       delete player.infchallengeTimes;
@@ -1245,7 +1245,7 @@ export const migrations = {
       saveData,
       Object.keys(migrations.patches)
         .map((k) => Number(k))
-        .max() + 1
+        .max() + 1,
     );
   },
 };

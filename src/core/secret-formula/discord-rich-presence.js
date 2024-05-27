@@ -169,7 +169,7 @@ export const discordRichPresence = {
             Object.values(player.eternityChalls).reduce((sum, c) => sum + c, 0),
             0,
             0,
-            formatInt
+            formatInt,
           ),
       ],
     },

@@ -48,7 +48,7 @@ export function bigCrunchResetRequest(disableAnimation = false) {
 
 export function bigCrunchReset(
   forced = false,
-  enteringAntimatterChallenge = Player.isInAntimatterChallenge && player.options.retryChallenge
+  enteringAntimatterChallenge = Player.isInAntimatterChallenge && player.options.retryChallenge,
 ) {
   if (!forced && !Player.canCrunch) return;
 
@@ -75,12 +75,12 @@ function bigCrunchGiveRewards() {
 
 function bigCrunchUpdateStatistics() {
   player.records.bestInfinity.bestIPminEternity = player.records.bestInfinity.bestIPminEternity.clampMin(
-    player.records.thisInfinity.bestIPmin
+    player.records.thisInfinity.bestIPmin,
   );
   player.records.thisInfinity.bestIPmin = DC.D0;
 
   player.records.thisEternity.bestInfinitiesPerMs = player.records.thisEternity.bestInfinitiesPerMs.clampMin(
-    gainedInfinities().round().dividedBy(Math.clampMin(33, player.records.thisInfinity.realTime))
+    gainedInfinities().round().dividedBy(Math.clampMin(33, player.records.thisInfinity.realTime)),
   );
 
   const infinityPoints = gainedInfinityPoints();
@@ -89,13 +89,13 @@ function bigCrunchUpdateStatistics() {
     player.records.thisInfinity.time,
     player.records.thisInfinity.realTime,
     infinityPoints,
-    gainedInfinities().round()
+    gainedInfinities().round(),
   );
 
   player.records.bestInfinity.time = player.records.bestInfinity.time.min(player.records.thisInfinity.time);
   player.records.bestInfinity.realTime = Math.min(
     player.records.bestInfinity.realTime,
-    player.records.thisInfinity.realTime
+    player.records.thisInfinity.realTime,
   );
 
   player.requirementChecks.reality.noInfinities = false;
@@ -104,7 +104,7 @@ function bigCrunchUpdateStatistics() {
     const bestIpPerMsWithoutMaxAll = infinityPoints.dividedBy(Math.clampMin(33, player.records.thisInfinity.realTime));
     player.records.thisEternity.bestIPMsWithoutMaxAll = Decimal.max(
       bestIpPerMsWithoutMaxAll,
-      player.records.thisEternity.bestIPMsWithoutMaxAll
+      player.records.thisEternity.bestIPMsWithoutMaxAll,
     );
   }
 }

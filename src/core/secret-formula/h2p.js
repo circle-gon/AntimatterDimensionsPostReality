@@ -2122,7 +2122,7 @@ based on the fastest Collapse. Atom Milestones give QoL, while Atom Upgrades giv
     map2dToObject(
       keybrd.split(",").map((str) => str.split("")),
       (key) => key,
-      (_key, x, y) => ({ x, y })
+      (_key, x, y) => ({ x, y }),
     );
 
   const qwerty = keyboardify(`1234567890,qwertyuiop,asdfghjkl,zxcvbnm`);

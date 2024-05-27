@@ -217,7 +217,7 @@ export const PerkNetwork = {
             }`,
         x: selectPos(perk.config).x,
         y: selectPos(perk.config).y,
-      }))
+      })),
     );
 
     const edges = [];

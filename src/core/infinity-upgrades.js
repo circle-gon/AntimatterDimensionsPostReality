@@ -99,7 +99,7 @@ export function totalIPMult() {
     Achievement(141).effects.ipGain,
     InfinityUpgrade.ipMult,
     DilationUpgrade.ipMultDT,
-    GlyphEffect.ipMult
+    GlyphEffect.ipMult,
   );
   ipMult = ipMult.times(Replicanti.amount.powEffectOf(AlchemyResource.exponential));
   return ipMult;
@@ -137,7 +137,7 @@ class InfinityIPMultUpgrade extends GameMechanicState {
   get cost() {
     if (this.purchaseCount >= this.purchasesAtIncrease) {
       return this.config.costIncreaseThreshold.times(
-        Decimal.pow(this.costIncrease, this.purchaseCount - this.purchasesAtIncrease)
+        Decimal.pow(this.costIncrease, this.purchaseCount - this.purchasesAtIncrease),
       );
     }
     return Decimal.pow(this.costIncrease, this.purchaseCount + 1);
@@ -209,5 +209,5 @@ class InfinityIPMultUpgrade extends GameMechanicState {
 }
 
 export const InfinityUpgrade = mapGameDataToObject(GameDatabase.infinity.upgrades, (config) =>
-  config.id === "ipMult" ? new InfinityIPMultUpgrade(config) : new InfinityUpgradeState(config)
+  config.id === "ipMult" ? new InfinityIPMultUpgrade(config) : new InfinityUpgradeState(config),
 );

@@ -1,7 +1,8 @@
 <template>
   <div class="tab shop">
     <div class="c-shop-disclaimer">
-      Disclaimer: There is no shop. Stop looking for it. It doesn't exist, and never has. Seriously though, there isn't a use for a shop, I'm sure you'll manage without one...right?
+      Disclaimer: There is no shop. Stop looking for it. It doesn't exist, and never has. Seriously though, there isn't
+      a use for a shop, I'm sure you'll manage without one...right?
     </div>
   </div>
 </template>

@@ -174,7 +174,7 @@ function load() {
   game = saveData;
 }
 
-// eslint-disable-next-line prefer-const
+ 
 let cheat = false;
 
 function gameLoop() {
@@ -200,10 +200,6 @@ function formatX(value, places, placesUnder1000) {
 }
 
 Vue.mixin({
-  methods: {
-    format,
-    formatX,
-  },
   created() {
     if (this.update) {
       uiUpdateHooks.push(this);
@@ -212,6 +208,10 @@ Vue.mixin({
   },
   destroyed() {
     uiUpdateHooks = uiUpdateHooks.filter((h) => h !== this);
+  },
+  methods: {
+    format,
+    formatX,
   },
 });
 

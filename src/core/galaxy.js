@@ -37,7 +37,7 @@ export class Galaxy {
         costFunction: (x) => this.requirementAt(x).amount,
         cumulative: false,
       },
-      player.galaxies
+      player.galaxies,
     );
     if (!bulk) throw new Error("Unexpected failure to calculate galaxy purchase");
     return player.galaxies + bulk.quantity;

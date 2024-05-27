@@ -104,7 +104,7 @@ class SingularityMilestoneState extends GameMechanicState {
 
 export const SingularityMilestone = mapGameDataToObject(
   GameDatabase.celestials.singularityMilestones,
-  (config) => new SingularityMilestoneState(config)
+  (config) => new SingularityMilestoneState(config),
 );
 
 export const SingularityMilestones = {
@@ -199,7 +199,7 @@ export const SingularityMilestones = {
   get unseenMilestones() {
     const laitela = player.celestials.laitela;
     return SingularityMilestoneThresholds.filter(
-      (s) => laitela.lastCheckedMilestones.lte(s) && Currency.singularities.gte(s)
+      (s) => laitela.lastCheckedMilestones.lte(s) && Currency.singularities.gte(s),
     );
   },
 
@@ -217,9 +217,9 @@ const SingularityMilestoneThresholds = (function () {
           (r) =>
             !m.increaseThreshold ||
             r <= m.increaseThreshold ||
-            (r > m.increaseThreshold && (r - m.increaseThreshold) % 3 === 2)
+            (r > m.increaseThreshold && (r - m.increaseThreshold) % 3 === 2),
         )
-        .map((r) => m.start * Math.pow(m.repeat, r))
+        .map((r) => m.start * Math.pow(m.repeat, r)),
     )
     .flat(Infinity)
     .filter((n) => n < 1e100)

@@ -141,7 +141,7 @@ class RebuyableImaginaryUpgradeState extends RebuyableMechanicState {
 }
 
 ImaginaryUpgradeState.index = mapGameData(GameDatabase.reality.imaginaryUpgrades, (config) =>
-  config.id <= 10 ? new RebuyableImaginaryUpgradeState(config) : new ImaginaryUpgradeState(config)
+  config.id <= 10 ? new RebuyableImaginaryUpgradeState(config) : new ImaginaryUpgradeState(config),
 );
 
 export const ImaginaryUpgrade = (id) => ImaginaryUpgradeState.index[id];

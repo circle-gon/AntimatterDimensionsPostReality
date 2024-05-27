@@ -169,7 +169,7 @@ export const V = {
   checkForUnlocks(silent) {
     for (const unl of VUnlocks.all) {
       if (unl === VUnlocks.vAchievementUnlock) continue;
-      if (silent) unl.give()
+      if (silent) unl.give();
       else unl.unlock();
     }
 

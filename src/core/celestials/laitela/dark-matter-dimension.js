@@ -71,7 +71,7 @@ export class DarkMatterDimensionState extends DimensionState {
       SingularityMilestone.darkFromTheorems,
       SingularityMilestone.darkFromDM4,
       SingularityMilestone.darkFromGamespeed,
-      SingularityMilestone.darkFromDilatedTime
+      SingularityMilestone.darkFromDilatedTime,
     ).mul(au2);
   }
 
@@ -104,7 +104,7 @@ export class DarkMatterDimensionState extends DimensionState {
       .timesEffectsOf(
         SingularityMilestone.darkEnergyMult,
         SingularityMilestone.realityDEMultiplier,
-        SingularityMilestone.multFromInfinitied
+        SingularityMilestone.multFromInfinitied,
       )
       .mul(destabilizeBoost);
   }
@@ -114,13 +114,13 @@ export class DarkMatterDimensionState extends DimensionState {
       Currency.darkMatter.value,
       this.rawIntervalCost,
       this.intervalCostIncrease,
-      0
+      0,
     ).toNumber();
     return Math.clampMin(
       this.intervalPurchaseCap,
       SingularityMilestone.ascensionIntervalScaling.effectOrDefault(1200) *
         this.rawInterval.toNumber() *
-        Math.pow(INTERVAL_PER_UPGRADE, purchases)
+        Math.pow(INTERVAL_PER_UPGRADE, purchases),
     );
   }
 
@@ -258,12 +258,12 @@ export class DarkMatterDimensionState extends DimensionState {
       Currency.darkMatter.value,
       this.rawIntervalCost,
       this.intervalCostIncrease,
-      0
+      0,
     ).toNumber();
     const realInterval = Decimal.pow(INTERVAL_PER_UPGRADE, possiblePurchases).mul(this.rawInterval);
     const ascensionsToBuy = Math.max(
       Math.floor(Decimal.div(this.intervalPurchaseCap, realInterval).log10() / Math.log10(singMult)) + 1,
-      0
+      0,
     );
 
     this.data.ascensionCount += ascensionsToBuy;
@@ -319,7 +319,7 @@ export const DarkMatterDimensions = {
     }
     if (SingularityMilestone.dim4Generation.canBeApplied && Laitela.annihilationUnlocked) {
       DarkMatterDimension(4).amount = DarkMatterDimension(4).amount.plus(
-        SingularityMilestone.dim4Generation.effectValue.mul(realDiff / 1000)
+        SingularityMilestone.dim4Generation.effectValue.mul(realDiff / 1000),
       );
     }
   },

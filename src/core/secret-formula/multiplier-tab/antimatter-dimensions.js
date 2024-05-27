@@ -30,7 +30,7 @@ export const AD = {
           .map((ad) => ad.multiplier)
           .reduce((x, y) => x.times(y), DC.D1)
           .times(AntimatterDimension(maxTier).totalAmount),
-        2
+        2,
       )}/sec`;
     },
     multValue: (dim) => {
@@ -48,7 +48,7 @@ export const AD = {
             .map((ad) => ad.multiplier)
             .reduce((x, y) => x.times(y), DC.D1);
       const highestDim = AntimatterDimension(
-        EternityChallenge(7).isRunning ? 7 : MultiplierTabHelper.activeDimCount("AD")
+        EternityChallenge(7).isRunning ? 7 : MultiplierTabHelper.activeDimCount("AD"),
       ).totalAmount;
       return mult.times(highestDim).clampMin(1);
     },
@@ -129,7 +129,7 @@ export const AD = {
         Achievement(76),
         Achievement(84),
         Achievement(91),
-        Achievement(92)
+        Achievement(92),
       );
 
       const dimMults = Array.repeat(DC.D1, 9);
@@ -139,13 +139,13 @@ export const AD = {
             Achievement(28),
             Achievement(31),
             Achievement(68),
-            Achievement(71)
+            Achievement(71),
           );
         }
         dimMults[tier] = dimMults[tier].timesEffectsOf(
           tier === 8 ? Achievement(23) : null,
           tier < 8 ? Achievement(34) : null,
-          tier <= 4 ? Achievement(64) : null
+          tier <= 4 ? Achievement(64) : null,
         );
         if (Achievement(43).isUnlocked) {
           dimMults[tier] = dimMults[tier].times(1 + tier / 100);
@@ -173,7 +173,7 @@ export const AD = {
         if (tier === 1) {
           dimMults[tier] = dimMults[tier].timesEffectsOf(
             InfinityUpgrade.unspentIPMult,
-            InfinityUpgrade.unspentIPMult.chargedEffect
+            InfinityUpgrade.unspentIPMult.chargedEffect,
           );
         }
         dimMults[tier] = dimMults[tier].timesEffectsOf(AntimatterDimension(tier).infinityUpgrade);
@@ -206,7 +206,7 @@ export const AD = {
           dimPow
             .slice(1)
             .map((n) => Math.log(n))
-            .sum() / MultiplierTabHelper.activeDimCount("AD")
+            .sum() / MultiplierTabHelper.activeDimCount("AD"),
         )
       );
     },
@@ -221,7 +221,7 @@ export const AD = {
         BreakInfinityUpgrade.currentAMMult,
         BreakInfinityUpgrade.achievementMult,
         BreakInfinityUpgrade.slowestChallengeMult,
-        BreakInfinityUpgrade.infinitiedMult
+        BreakInfinityUpgrade.infinitiedMult,
       );
       return Decimal.pow(mult, dim ? 1 : MultiplierTabHelper.activeDimCount("AD"));
     },
@@ -269,14 +269,14 @@ export const AD = {
         // We don't want to double-count the base effect that TS31 boosts
         const infinitiedMult = DC.D1.timesEffectsOf(
           AntimatterDimension(tier).infinityUpgrade,
-          BreakInfinityUpgrade.infinitiedMult
+          BreakInfinityUpgrade.infinitiedMult,
         );
         dimMults[tier] = dimMults[tier].times(infinitiedMult.pow(TimeStudy(31).effectOrDefault(1) - 1));
 
         dimMults[tier] = dimMults[tier].timesEffectsOf(
           tier < 8 ? TimeStudy(71) : null,
           tier === 8 ? TimeStudy(214) : null,
-          tier === 1 ? TimeStudy(234) : null
+          tier === 1 ? TimeStudy(234) : null,
         );
       }
 
@@ -335,7 +335,7 @@ export const AD = {
           inflationPow = AntimatterDimension(dim).multiplier.gte(AlchemyResource.inflation.effectValue) ? 1.05 : 1;
         } else {
           const inflated = AntimatterDimensions.all.countWhere(
-            (ad) => ad.isProducing && ad.multiplier.gte(AlchemyResource.inflation.effectValue)
+            (ad) => ad.isProducing && ad.multiplier.gte(AlchemyResource.inflation.effectValue),
           );
           inflationPow = Math.pow(1.05, inflated / AntimatterDimensions.all.countWhere((ad) => ad.isProducing));
         }
@@ -350,7 +350,7 @@ export const AD = {
     multValue: (dim) =>
       Decimal.pow(
         PelleUpgrade.antimatterDimensionMult.effectOrDefault(1),
-        dim ? 1 : MultiplierTabHelper.activeDimCount("AD")
+        dim ? 1 : MultiplierTabHelper.activeDimCount("AD"),
       ),
     powValue: () => PelleRifts.paradox.effectOrDefault(DC.D1).toNumber(),
     isActive: () => Pelle.isDoomed && !EternityChallenge(11).isRunning,

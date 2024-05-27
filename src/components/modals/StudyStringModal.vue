@@ -117,13 +117,13 @@ export default {
           case "EC":
             coloredString = coloredString.replaceAll(
               new RegExp(`\\|(${num})`, "gu"),
-              `|<span style="color: var(--color-bad);">$1</span>`
+              `|<span style="color: var(--color-bad);">$1</span>`,
             );
             break;
           default:
             coloredString = coloredString.replaceAll(
               new RegExp(`(\\D)(${num})(\\D)`, "gu"),
-              `$1<span style="color: var(--color-bad);">$2</span>$3`
+              `$1<span style="color: var(--color-bad);">$2</span>$3`,
             );
             break;
         }

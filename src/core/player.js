@@ -7,7 +7,7 @@ import { deepmergeAll } from "@/utility/deepmerge";
 import { GlyphTypes } from "./glyph-effects";
 
 // This is actually reassigned when importing saves
-// eslint-disable-next-line prefer-const
+ 
 window.player = {
   antimatter: DC.E1,
   dimensions: {
@@ -238,7 +238,7 @@ window.player = {
     },
     tesseract: { isActive: false },
     realityUpgradesSingles: { isActive: false },
-    imaginaryUpgradesSingles: { isActive: false }
+    imaginaryUpgradesSingles: { isActive: false },
   },
   infinityPoints: DC.D0,
   infinities: DC.D0,
@@ -510,7 +510,7 @@ window.player = {
               effectCount: 0,
               specifiedMask: 0,
               effectScores: Array.repeat(0, t.effects.length),
-            })
+            }),
           ),
       },
       createdRealityGlyph: false,

@@ -12,7 +12,7 @@ function walkSuggestion(suggestion, prefix, output) {
   }
 }
 
-// eslint-disable-next-line no-unused-vars
+ 
 CodeMirror.registerHelper("lint", "automato", (contents, _, editor) => {
   const doc = editor.getDoc();
   const errors = compile(contents, true).errors;
@@ -69,7 +69,7 @@ CodeMirror.defineSimpleMode("automato", {
     { regex: /glyphs\s+/iu, token: "keyword", next: "glyphArgs" },
     { regex: /blob\s\s/iu, token: "blob" },
     {
-      // eslint-disable-next-line max-len
+       
       regex:
         /(auto|if|pause|studies|time[ \t]+theorems?|space[ \t]+theorems?|until|wait|while|black[ \t]+hole|stored?[ \t]+game[ \t]+time|notify)\s/iu,
       token: "keyword",

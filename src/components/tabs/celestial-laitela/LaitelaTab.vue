@@ -61,7 +61,7 @@ export default {
       this.singularitiesUnlocked = Singularity.capIsReached || this.singularityPanelVisible;
       this.singularityCap = Singularity.cap;
       this.singularityWaitTime = TimeSpan.fromSeconds(
-        this.singularityCap.sub(this.darkEnergy).div(Currency.darkEnergy.productionPerSecond).toNumber()
+        this.singularityCap.sub(this.darkEnergy).div(Currency.darkEnergy.productionPerSecond).toNumber(),
       ).toStringShort();
       this.showAnnihilation = Laitela.annihilationUnlocked;
 

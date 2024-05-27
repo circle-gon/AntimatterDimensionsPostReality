@@ -83,7 +83,7 @@ export const ID = {
         const purchases = MultiplierTabHelper.getIDValue(id);
         return Decimal.pow(
           InfinityDimension(id)._powerMultiplier,
-          Math.clampMin(purchases - InfinityDimensions.HARDCAP_PURCHASES, 0)
+          Math.clampMin(purchases - InfinityDimensions.HARDCAP_PURCHASES, 0),
         );
       };
       if (dim) return getMult(dim);
@@ -147,7 +147,7 @@ export const ID = {
       const allMult = DC.D1.timesEffectsOf(
         EternityUpgrade.idMultEP,
         EternityUpgrade.idMultEternities,
-        EternityUpgrade.idMultICRecords
+        EternityUpgrade.idMultICRecords,
       );
       return Decimal.pow(allMult, dim ? 1 : MultiplierTabHelper.activeDimCount("ID"));
     },
@@ -167,7 +167,7 @@ export const ID = {
     multValue: (dim) =>
       Decimal.pow(
         EternityUpgrade.idMultEternities.effectOrDefault(1),
-        dim ? 1 : MultiplierTabHelper.activeDimCount("ID")
+        dim ? 1 : MultiplierTabHelper.activeDimCount("ID"),
       ),
     isActive: () => EternityUpgrade.idMultEternities.canBeApplied,
     icon: MultiplierTabIcons.UPGRADE("eternity"),
@@ -177,7 +177,7 @@ export const ID = {
     multValue: (dim) =>
       Decimal.pow(
         EternityUpgrade.idMultICRecords.effectOrDefault(1),
-        dim ? 1 : MultiplierTabHelper.activeDimCount("ID")
+        dim ? 1 : MultiplierTabHelper.activeDimCount("ID"),
       ),
     isActive: () => EternityUpgrade.idMultICRecords.canBeApplied,
     icon: MultiplierTabIcons.UPGRADE("eternity"),
@@ -196,7 +196,7 @@ export const ID = {
     name: (dim) => (dim ? `Eternity Challenges (ID ${dim})` : " Eternity Challenges"),
     multValue: (dim) => {
       const allMult = DC.D1.timesEffectsOf(EternityChallenge(4).reward, EternityChallenge(9).reward).times(
-        EternityChallenge(7).isRunning ? Tickspeed.perSecond : DC.D1
+        EternityChallenge(7).isRunning ? Tickspeed.perSecond : DC.D1,
       );
       if (dim) {
         if (dim === 1) return allMult.times(EternityChallenge(2).reward.effectOrDefault(1));
@@ -204,7 +204,7 @@ export const ID = {
       }
       const maxActiveDim = MultiplierTabHelper.activeDimCount("ID");
       return Decimal.pow(allMult, maxActiveDim).times(
-        maxActiveDim >= 1 ? EternityChallenge(2).reward.effectOrDefault(1) : DC.D1
+        maxActiveDim >= 1 ? EternityChallenge(2).reward.effectOrDefault(1) : DC.D1,
       );
     },
     isActive: () => EternityChallenge(2).completions > 0,
@@ -235,7 +235,7 @@ export const ID = {
     multValue: (dim) =>
       Decimal.pow(
         AlchemyResource.dimensionality.effectOrDefault(1),
-        dim ? 1 : MultiplierTabHelper.activeDimCount("ID")
+        dim ? 1 : MultiplierTabHelper.activeDimCount("ID"),
       ),
     powValue: () => AlchemyResource.infinity.effectOrDefault(1) * Ra.momentumValue,
     isActive: () => Ra.unlocks.unlockGlyphAlchemy.canBeApplied,

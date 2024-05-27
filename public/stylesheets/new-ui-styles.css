@@ -232,7 +232,9 @@ body.t-s12 {
   opacity: 0;
   padding: 0.5rem;
   padding-left: 0;
-  transition: pointer-events 0s linear 0s, all 0.15s linear 0.2s;
+  transition:
+    pointer-events 0s linear 0s,
+    all 0.15s linear 0.2s;
   pointer-events: none;
 }
 

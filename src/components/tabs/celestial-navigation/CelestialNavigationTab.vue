@@ -79,11 +79,11 @@ export default {
       () => ({
         visible: false,
         complete: 0,
-      })
+      }),
     );
   },
   mounted() {
-    // eslint-disable-next-line no-unused-vars
+     
     const panLimiter = function (oldPan, newPan) {
       // In the callback context, "this" is the svgPanZoom object.
       // eslint-disable-next-line no-invalid-this

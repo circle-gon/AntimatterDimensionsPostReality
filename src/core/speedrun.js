@@ -11,7 +11,7 @@ export const Speedrun = {
       start a Speedrun Save is now available in the Options tab, under Saving. Choosing to start a Speedrun Save
       will provide you with another modal with more in-depth information.`,
       {},
-      3
+      3,
     );
     player.speedrun.isUnlocked = true;
   },

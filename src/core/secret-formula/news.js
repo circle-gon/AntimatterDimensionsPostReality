@@ -1006,7 +1006,7 @@ export const news = [
     id: "a192",
     // This ticker needs to be an unbroken string; using backtick strings and linebreaking will add spaces in the
     // ticker itself where the linebreaks are
-    // eslint-disable-next-line max-len
+     
     text: "179769313486231590772930519078902473361797697894230657273430081157732675805500963132708477322407536021120113879871393357658789768814416622492847430639474124377767893424865485276302219601246094119453082952085005768838150682342462881473913110540827237163350510684586298239947245938479716304835356329624224137216",
   },
   {
@@ -3264,7 +3264,7 @@ export const news = [
     id: "p1",
     text: "Is this a jojo reference?",
   },
-  /* eslint-disable max-len */
+   
   {
     id: "ai1",
     text: "If you are the game, then you can use the cheat to unlock a secret achievement...but it costs e1100 antimatter!?!",
@@ -3741,7 +3741,7 @@ export const news = [
     get text() {
       return `This is the last time, to buy items, you must pay a small fee of ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} real money.`;
     },
   },
@@ -4290,7 +4290,7 @@ export const news = [
     get text() {
       return `The Big Crunch. What could that be?  About 4*1024 Big Crunch points?  About ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} antimatter points?  About the same as a galaxy?  About the same as a galaxy, you say? Just look at that.  An antimatter galaxy.  Only this game can provide such a vast amount of antimatter, and it's FUN!  I said "fun"!  What's not to love?`;
     },
   },
@@ -4829,7 +4829,7 @@ export const news = [
     get text() {
       return `The year is 1 BILLIONAIRE, the antimatter is 41%, and the dimension is 1e1e8. The standard deviation of a measurement is how small your problems are. This makes people think that the values they are using are general and normal, which leads to many nerfs and even breakdowns. In the year ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} the temperature has risen and the moon is the same color as the Earth. There are no signs of life except for the occasional plankton blooming in the sea. There are theories that the antimatter has a magnetic moment, but the experiments so far don't seem to suggest that it does. There are over a million species of antimatter, but none have been seen to blink or produce light. Scientists suggest that many types of matter may be "behind" the antimatter, but "they" don't "talk" to each other.`;
     },
   },
@@ -5062,7 +5062,7 @@ export const news = [
     get text() {
       return `You have no power, but you do control a large quantity of time, which you will use to your advantage. You have no power, but you do own a large amount of data, which will be of great help in your quest for "the truth". You have no power, but you do own a large amount of time, which will be of great help in your quest to "knock on as many doors as possible". You have no power, but you do own a large amount of IP, which will be a valuable asset in your quest to make your "citizen footage" (which you can view, for a small fee of $${format(
         Number.MAX_VALUE,
-        2
+        2,
       )})".`;
     },
   },
@@ -5289,7 +5289,7 @@ export const news = [
     get text() {
       return `Welcome and welcome back to another episode of Anti-Fashion Pants, where we watch people's wares as they are sold at stupid clothing stores. This week's subject is... antilasers. People are able to manufacture and use antimatter lasers to shoot antimatter bullets at will, making them able to completely wipe out cities in their sights. This is a dangerous skill to have, as people are not only untrustworthy but also physically incapable of using it. The skill, however, is able to... Produce ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} antimatter bullets a minute, over a period of 10 years. People are also able to use anti-matter to fire anti-matter bullets at will, making them able to exterminate entire cities in their sights.`;
     },
   },
@@ -5811,10 +5811,10 @@ export const news = [
     get text() {
       return `In a recent talk, Yann LeCun said that "A new currency is born." The first incarnation of Antimeta: the currency of the new currency. It's called BTC and it's the difference between 1 and ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )}. It's easy to lose your money, since a single bitcoin can't be exchanged for more than ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} BTC.`;
     },
   },
@@ -5866,7 +5866,7 @@ export const news = [
     get text() {
       return `This mod adds a message that when clicked it disables all your current achievements. This mod also adds a new achievement: you have reached ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} antimatter, you have not been clicked once.`;
     },
   },
@@ -5917,7 +5917,7 @@ export const news = [
     get text() {
       return `If you are reading this in the AD Server, it's probably best not to bother with the "Matter" achievement. Seriously, what did you think you were doing, anyway, the achievement is fake and wouldn't exist if it weren't for the "you are a worm" achievement. That's a worm achievement, you get one every ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} news tickers you read.`;
     },
   },
@@ -5942,7 +5942,7 @@ export const news = [
     get text() {
       return `I'm confused why the game doesn't just give you a [REDACTED] when you get ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} antimatter.`;
     },
   },
@@ -6229,7 +6229,7 @@ export const news = [
     get text() {
       return `Tired of the ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} AD update? Don't worry, there are a variety of ways to get rid of that annoying ad!`;
     },
   },
@@ -6332,7 +6332,7 @@ export const news = [
     get text() {
       return `Antimatter is absolutely and totally rare. Of the ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} known cases of antimatter creation, 99.9999% of them have negative e's, which means that 99.9999% of the cases will produce negative e's.`;
     },
   },
@@ -6341,7 +6341,7 @@ export const news = [
     get text() {
       return `It's the year ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )}, Hevi has just unlocked the 9th dimension, and the world has fallen into chaos and discord due to the Anti-Hevi revolution.`;
     },
   },
@@ -6394,7 +6394,7 @@ export const news = [
     get text() {
       return `Somebody: "What do you mean, 4 is more than 2?" Me: "Well, I mean, 4 is ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )}, 2 is 2, etc..."`;
     },
   },
@@ -6836,7 +6836,7 @@ export const news = [
     get text() {
       return `Is the Big Crunch the end of the world? No, it's the beginning of a new era. The era will last for ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} days.`;
     },
   },
@@ -7127,10 +7127,10 @@ export const news = [
     get text() {
       return `The time has come to reveal the next expansion for Antimatter Dimensions: the ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )}th Dimension. It will be released in -5 hours, it costs ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} human souls as of now, and it has nothing to do with matter or antimatter.`;
     },
   },
@@ -7293,7 +7293,7 @@ export const news = [
     get text() {
       return `Although the majority of players would say that the 9th dimension is not a thing, a handful of people would go and level it up in the most epic way imaginable. These people would use the power of the 9th dimension and achieve, like, ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} EP with it. No? Well, they are the exceptions to the rule.`;
     },
     get unlocked() {
@@ -7433,7 +7433,7 @@ export const news = [
     get text() {
       return `The intergalactic antimatter trade has been severely disrupted, trading entire galaxies for the occasional paperclip. Cargo stands are no longer used. Oddly enough, the entire dimension has become a dumping ground for discarded plastic and other useless garbage. It's almost as if the rest of the multiverse isn't producing enough good  antiparticles to feed the growing population. Unfortunately, the situation is forcing the entire multiverse to scramble to find ways to meet the growing needs of the antimatter-eating  dev, who claims to have over ${format(
         Number.MAX_VALUE,
-        2
+        2,
       )} specimens left to collect.`;
     },
   },

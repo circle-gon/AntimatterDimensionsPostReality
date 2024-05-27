@@ -29,7 +29,7 @@ export function getTickSpeedMultiplier() {
     Achievement(178),
     InfinityChallenge(5).reward,
     PelleUpgrade.galaxyPower,
-    PelleRifts.decay.milestones[1]
+    PelleRifts.decay.milestones[1],
   );
   if (galaxies < 3) {
     // Magic numbers are to retain balancing from before while displaying
@@ -243,7 +243,7 @@ export const FreeTickspeed = {
       desiredCost
         .div(costFormulaCoefficient)
         .pow(1 / FreeTickspeed.GROWTH_EXP)
-        .toNumber()
+        .toNumber(),
     );
     let counter = 0;
     // The bought formula is concave upwards. We start with an over-estimate; when using newton's method,
@@ -261,7 +261,7 @@ export const FreeTickspeed = {
       boughtToCost(purchases + 1)
         .mul(logTickmult)
         .add(priceToCap)
-        .min(Number.MAX_VALUE)
+        .min(Number.MAX_VALUE),
     );
 
     const toIncrement = Math.max(purchases * MAX_TOL, 1);
@@ -271,7 +271,7 @@ export const FreeTickspeed = {
         .sub(boughtToCost(purchases))
         .mul(logTickmult)
         .div(toIncrement)
-        .min(Number.MAX_VALUE)
+        .min(Number.MAX_VALUE),
     );
     return {
       newAmount: purchases + FreeTickspeed.softcap,

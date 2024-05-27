@@ -28,11 +28,11 @@ export const eternityMilestones = {
       const EPmin = getOfflineEPGain(TimeSpan.fromMinutes(1).totalMilliseconds);
       const em200 = getEternitiedMilestoneReward(
         TimeSpan.fromHours(1).totalMilliseconds,
-        EternityMilestone.autoEternities.isReached
+        EternityMilestone.autoEternities.isReached,
       ).gt(0);
       const em1000 = getInfinitiedMilestoneReward(
         TimeSpan.fromHours(1).totalMilliseconds,
-        EternityMilestone.autoInfinities.isReached
+        EternityMilestone.autoInfinities.isReached,
       ).gt(0);
       if (!player.options.offlineProgress)
         return `This milestone would give offline EP generation, but offline progress
@@ -161,12 +161,12 @@ export const eternityMilestones = {
         progress is currently disabled`;
       const eternities = getEternitiedMilestoneReward(
         TimeSpan.fromHours(1).totalMilliseconds,
-        player.eternities.gte(200)
+        player.eternities.gte(200),
       );
       // As far as I can tell, using templates here as Codefactor wants would lead to nested templates,
       // which seems messy to say the least.
       const realTime = PlayerProgress.seenAlteredSpeed() ? " real-time" : "";
-      // eslint-disable-next-line prefer-template
+       
       return `While offline, gain Eternities at ${formatPercents(0.5)} the rate of your fastest${realTime} Eternity ${
         eternities.gt(0) ? `(Currently ${format(eternities, 2, 2)}/hour)` : "(Inactive)"
       }`;
@@ -186,9 +186,9 @@ export const eternityMilestones = {
         progress is currently disabled`;
       const infinities = getInfinitiedMilestoneReward(
         TimeSpan.fromHours(1).totalMilliseconds,
-        player.eternities.gte(1000)
+        player.eternities.gte(1000),
       );
-      // eslint-disable-next-line prefer-template
+       
       return `While offline, gain Infinities equal to ${formatPercents(0.5)}
         your best Infinities/hour this Eternity ${
           infinities.gt(0) ? `(Currently ${format(infinities, 2, 2)}/hour)` : "(Inactive)"

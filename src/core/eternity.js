@@ -34,14 +34,14 @@ function giveEternityRewards(auto) {
     player.records.thisEternity.time,
     player.records.thisEternity.realTime,
     gainedEternityPoints(),
-    newEternities
+    newEternities,
   );
 
   player.records.thisReality.bestEternitiesPerMs = player.records.thisReality.bestEternitiesPerMs.clampMin(
-    newEternities.div(Math.clampMin(33, player.records.thisEternity.realTime))
+    newEternities.div(Math.clampMin(33, player.records.thisEternity.realTime)),
   );
   player.records.bestEternity.bestEPminReality = player.records.bestEternity.bestEPminReality.max(
-    player.records.thisEternity.bestEPmin
+    player.records.thisEternity.bestEPmin,
   );
 
   Currency.infinitiesBanked.value = Currency.infinitiesBanked.value.plusEffectsOf(Achievement(131), TimeStudy(191));
@@ -143,7 +143,7 @@ export function eternity(force, auto, specialConditions = {}) {
   return true;
 }
 
-// eslint-disable-next-line no-empty-function
+ 
 export function animateAndEternity(callback) {
   if (!Player.canEternity) return false;
   const hasAnimation =
@@ -252,7 +252,7 @@ export class EternityMilestoneState {
   }
 }
 export const EternityMilestone = mapGameDataToObject(GameDatabase.eternity.milestones, (config) =>
-  config.isBaseResource ? new EternityMilestoneState(config) : new EternityMilestoneState(config)
+  config.isBaseResource ? new EternityMilestoneState(config) : new EternityMilestoneState(config),
 );
 
 class EternityUpgradeState extends SetPurchasableMechanicState {
@@ -323,7 +323,7 @@ class EPMultiplierState extends GameMechanicState {
         cumulative: true,
         firstCost: this.cost,
       },
-      this.boughtAmount
+      this.boughtAmount,
     );
     if (!bulk) return false;
     Currency.eternityPoints.subtract(bulk.purchasePrice);
@@ -352,7 +352,7 @@ class EPMultiplierState extends GameMechanicState {
 
 export const EternityUpgrade = mapGameDataToObject(
   GameDatabase.eternity.upgrades,
-  (config) => new EternityUpgradeState(config)
+  (config) => new EternityUpgradeState(config),
 );
 
 EternityUpgrade.epMult = new EPMultiplierState();

@@ -224,7 +224,9 @@ export default {
   border: 0.1rem solid black;
   border-radius: var(--var-border-width, 0.5rem);
   transform: translateX(0.5rem);
-  transition: visibility 0.2s, opacity 0.2s;
+  transition:
+    visibility 0.2s,
+    opacity 0.2s;
   transition-delay: 0.5s;
   cursor: pointer;
 }

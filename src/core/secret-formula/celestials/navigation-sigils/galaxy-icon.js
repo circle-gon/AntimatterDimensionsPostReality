@@ -33,7 +33,7 @@ function sigilShape(type, att, draw, colorOverride) {
         0,
         att.radius * SigilAttributes.size,
         1,
-        att.radius * SigilAttributes.size
+        att.radius * SigilAttributes.size,
       );
       pathStart = att.initAngle;
       pathEnd = att.finalAngle;
@@ -47,7 +47,7 @@ function sigilShape(type, att, draw, colorOverride) {
         pathStart,
         att.initRadius * SigilAttributes.size,
         pathEnd,
-        att.finalRadius * SigilAttributes.size
+        att.finalRadius * SigilAttributes.size,
       );
       break;
     default:
@@ -83,13 +83,13 @@ const Shapes = {
     "circle",
     { center: SigilAttributes.center, radius: 0.2, initAngle: 0, finalAngle: 6.28 },
     { thickness: 0.15, layer: 1 },
-    "#88ffff"
+    "#88ffff",
   ),
   glow: sigilShape(
     "circle",
     { center: SigilAttributes.center, radius: 0.125, initAngle: 0, finalAngle: 6.28 },
     { thickness: 0.05, layer: 2 },
-    "white"
+    "white",
   ),
 };
 
@@ -102,11 +102,11 @@ for (let arcIndex = 0; arcIndex < arcSegments; arcIndex++) {
     "arc",
     { center: SigilAttributes.center, initRadius: 0.2, finalRadius: 0.9, initAngle: init, finalAngle: init + Math.PI },
     { thickness: 0.1, layer: 0 },
-    "cyan"
+    "cyan",
   );
 }
 
 export const galaxyIcon = Object.values(Shapes).mapToObject(
   (key, idx) => `galaxy-icon-${idx}`,
-  (val) => val
+  (val) => val,
 );

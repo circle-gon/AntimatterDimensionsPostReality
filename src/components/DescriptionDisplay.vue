@@ -78,7 +78,7 @@ export default {
             this.updateFunction = () =>
               (this.description = capitalize(description()).replace(
                 "*",
-                wordShift.wordCycle(this.config.scrambleText, true)
+                wordShift.wordCycle(this.config.scrambleText, true),
               ));
             return;
           }
@@ -88,7 +88,7 @@ export default {
         }
 
         throw new Error(
-          `DescriptionDisplay config.description is a function ` + `which returns unsupported type "${typeof value}"`
+          `DescriptionDisplay config.description is a function ` + `which returns unsupported type "${typeof value}"`,
         );
       },
     },

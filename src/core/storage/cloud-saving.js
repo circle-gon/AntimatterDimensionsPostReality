@@ -202,7 +202,7 @@ export const Cloud = {
       const localSave = GameStorage.saves[saveId];
       const saveComparison = this.compareSaves(cloudSave, localSave);
 
-      // eslint-disable-next-line no-loop-func
+       
       const overwriteLocalSave = () => {
         GameStorage.overwriteSlot(saveId, cloudSave);
 

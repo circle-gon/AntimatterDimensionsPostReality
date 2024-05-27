@@ -57,7 +57,7 @@ function sigilShape(type, att, fill, colorOverride) {
         0,
         att.radius * SigilAttributes.size,
         1,
-        att.radius * SigilAttributes.size
+        att.radius * SigilAttributes.size,
       );
       pathStart = att.initAngle;
       pathEnd = att.finalAngle;
@@ -120,19 +120,19 @@ const Shapes = {
   botCircR: sigilShape(
     "circle",
     { center: Positions.circBot, radius: 0.12, initAngle: 0.5 * Math.PI, finalAngle: -0.5 * Math.PI },
-    { init: 0, weight: 0.2 }
+    { init: 0, weight: 0.2 },
   ),
   botH: sigilShape("edge", { start: Positions.bot1, end: Positions.bot2 }, { init: 0.1, weight: 0.1 }),
   lowH: sigilShape("edge", { start: Positions.lowC, end: Positions.low1 }, { init: 0.3, weight: 0.3 }),
   circUp: sigilShape(
     "circle",
     { center: Positions.circMid, radius: 0.08, initAngle: Math.PI, finalAngle: 0 },
-    { init: 0.6, weight: 0.1 }
+    { init: 0.6, weight: 0.1 },
   ),
   circDown: sigilShape(
     "circle",
     { center: Positions.circMid, radius: 0.08, initAngle: Math.PI, finalAngle: 2 * Math.PI },
-    { init: 0.6, weight: 0.1 }
+    { init: 0.6, weight: 0.1 },
   ),
   vert2: sigilShape("edge", { start: Positions.bot2, end: Positions.top3 }, { init: 0.2, weight: 0.7 }),
   vertC: sigilShape("edge", { start: Positions.botC, end: Positions.lowC }, { init: 0.2, weight: 0.1 }),
@@ -147,12 +147,12 @@ const Shapes = {
   circTopUp: sigilShape(
     "circle",
     { center: Positions.circTop, radius: 0.08, initAngle: 0.75 * Math.PI, finalAngle: 1.75 * Math.PI },
-    { init: 0.9, weight: 0.1 }
+    { init: 0.9, weight: 0.1 },
   ),
   circTopDown: sigilShape(
     "circle",
     { center: Positions.circTop, radius: 0.08, initAngle: 0.75 * Math.PI, finalAngle: -0.25 * Math.PI },
-    { init: 0.9, weight: 0.1 }
+    { init: 0.9, weight: 0.1 },
   ),
 };
 
@@ -164,7 +164,7 @@ for (const key of Object.keys(Shapes)) {
     Shapes[`${key}Ref`] = sigilShape(
       "edge",
       { start: reflectAcrossVertical(toReflect.att.start), end: reflectAcrossVertical(toReflect.att.end) },
-      toReflect.fill
+      toReflect.fill,
     );
   } else if (toReflect.connector.path instanceof LogarithmicSpiral) {
     Shapes[`${key}Ref`] = sigilShape(
@@ -175,7 +175,7 @@ for (const key of Object.keys(Shapes)) {
         initAngle: Math.PI - toReflect.att.initAngle,
         finalAngle: Math.PI - toReflect.att.finalAngle,
       },
-      toReflect.fill
+      toReflect.fill,
     );
   }
 }
@@ -189,17 +189,17 @@ for (let arcIndex = 0; arcIndex < arcSegments; arcIndex++) {
     "circle",
     { center: SigilAttributes.center, radius: 0.75, initAngle: init, finalAngle: init + len },
     { init: 0.1, weight: 0.4 },
-    "crimson"
+    "crimson",
   );
   Shapes[`arcOuter${arcIndex}`] = sigilShape(
     "circle",
     { center: SigilAttributes.center, radius: 0.95, initAngle: init, finalAngle: init - len },
     { init: 0.5, weight: 0.4 },
-    "crimson"
+    "crimson",
   );
 }
 
 export const finalSigil = Object.values(Shapes).mapToObject(
   (key, idx) => `final-sigil-${idx}`,
-  (val) => val
+  (val) => val,
 );

@@ -141,7 +141,7 @@ export class ScriptTemplate {
     // this can be a significant time save that we want to actually give the player if they have the e130 perk
     const gapToEternity = (Number.MAX_VALUE / Currency.infinityPoints.startingValue.toNumber()) * 5;
     this.lines.push(
-      `auto infinity ${this.format(Decimal.pow(gapToEternity, 1 / params.crunchesPerEternity))} x highest`
+      `auto infinity ${this.format(Decimal.pow(gapToEternity, 1 / params.crunchesPerEternity))} x highest`,
     );
     this.lines.push(`wait eternities > ${this.format(params.eternities)}`);
     this.lines.push("auto eternity off");

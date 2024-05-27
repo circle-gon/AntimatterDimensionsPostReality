@@ -32,7 +32,7 @@ export const dilationUpgrades = {
         ? `${formatX(
             2 * Effects.product(SingularityMilestone.dilatedTimeFromSingularities, Achievement(187)),
             2,
-            2
+            2,
           )} Dilated Time gain`
         : "Double Dilated Time gain",
     effect: (bought) => {

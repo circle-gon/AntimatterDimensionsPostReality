@@ -116,7 +116,7 @@ export const TD = {
         TimeStudy(103),
         TimeStudy(151),
         TimeStudy(221),
-        TimeStudy(301)
+        TimeStudy(301),
       );
 
       const dimMults = Array.repeat(DC.D1, 9);
@@ -124,7 +124,7 @@ export const TD = {
         dimMults[tier] = dimMults[tier].timesEffectsOf(
           tier === 1 ? TimeStudy(11) : null,
           tier === 3 ? TimeStudy(73) : null,
-          tier === 4 ? TimeStudy(227) : null
+          tier === 4 ? TimeStudy(227) : null,
         );
       }
 
@@ -153,7 +153,7 @@ export const TD = {
     multValue: (dim) =>
       Decimal.pow(
         EternityUpgrade.tdMultTheorems.effectOrDefault(1),
-        dim ? 1 : MultiplierTabHelper.activeDimCount("TD")
+        dim ? 1 : MultiplierTabHelper.activeDimCount("TD"),
       ),
     isActive: () => EternityUpgrade.tdMultTheorems.canBeApplied,
     icon: MultiplierTabIcons.UPGRADE("eternity"),
@@ -163,7 +163,7 @@ export const TD = {
     multValue: (dim) =>
       Decimal.pow(
         EternityUpgrade.tdMultRealTime.effectOrDefault(1),
-        dim ? 1 : MultiplierTabHelper.activeDimCount("TD")
+        dim ? 1 : MultiplierTabHelper.activeDimCount("TD"),
       ),
     isActive: () => EternityUpgrade.tdMultRealTime.canBeApplied,
     icon: MultiplierTabIcons.UPGRADE("eternity"),
@@ -173,7 +173,7 @@ export const TD = {
     name: (dim) => (dim ? `Eternity Challenges (TD ${dim})` : "Eternity Challenges"),
     multValue: (dim) => {
       let allMult = DC.D1.timesEffectsOf(EternityChallenge(1).reward, EternityChallenge(10).reward).times(
-        EternityChallenge(7).isRunning ? Tickspeed.perSecond : DC.D1
+        EternityChallenge(7).isRunning ? Tickspeed.perSecond : DC.D1,
       );
       if (EternityChallenge(9).isRunning) {
         allMult = allMult.times(Decimal.pow(Math.clampMin(InfinityDimensions.ADMultiplier.log2(), 1), 4).clampMin(1));
@@ -224,7 +224,7 @@ export const TD = {
     multValue: (dim) =>
       Decimal.pow(
         AlchemyResource.dimensionality.effectOrDefault(1),
-        dim ? 1 : MultiplierTabHelper.activeDimCount("TD")
+        dim ? 1 : MultiplierTabHelper.activeDimCount("TD"),
       ),
     powValue: () => AlchemyResource.time.effectOrDefault(1) * Ra.momentumValue,
     isActive: () => Ra.unlocks.unlockGlyphAlchemy.canBeApplied,

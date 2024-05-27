@@ -130,7 +130,7 @@ export default {
       if (Date.now() - this.lastProgress < 150) return;
       this.focusedQuote.currentLine = Math.min(
         this.focusedQuote.quote.totalLines - 1,
-        this.focusedQuote.currentLine + 1
+        this.focusedQuote.currentLine + 1,
       );
       this.lastProgress = Date.now();
     },
@@ -174,7 +174,11 @@ function easeOut(x) {
 .c-quote-overlay {
   font-size: 1.4rem;
   padding: 1rem;
-  transition: all 0.2s, top 0.3s ease, transform 0.3s ease, z-index 0.3s;
+  transition:
+    all 0.2s,
+    top 0.3s ease,
+    transform 0.3s ease,
+    z-index 0.3s;
 }
 
 .c-quote-overlay--background {

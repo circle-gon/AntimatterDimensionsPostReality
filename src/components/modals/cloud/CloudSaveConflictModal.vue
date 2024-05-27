@@ -35,7 +35,7 @@ export default {
       suggestions.push(
         warnOverwrite
           ? `<b ${badStyle}>would overwrite a save with significantly more progress</b>`
-          : `<b ${goodStyle}>is probably safe</b>`
+          : `<b ${goodStyle}>is probably safe</b>`,
       );
       if (this.hasDifferentName || this.wrongHash) {
         suggestions.push(` ${warnOverwrite ? "Additionally" : "However"}, you may be overwriting a 

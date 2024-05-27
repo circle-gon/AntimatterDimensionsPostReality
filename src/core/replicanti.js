@@ -81,7 +81,7 @@ function fastReplicantiBelow308(log10GainFactor, isAutobuyerActive) {
   const gainNeededPerRG = Decimal.NUMBER_MAX_VALUE.log10();
   const replicantiExponent = log10GainFactor.toNumber() + Replicanti.amount.log10();
   const toBuy = Math.floor(
-    Math.min(replicantiExponent / gainNeededPerRG, Replicanti.galaxies.max - player.replicanti.galaxies)
+    Math.min(replicantiExponent / gainNeededPerRG, Replicanti.galaxies.max - player.replicanti.galaxies),
   );
   const maxUsedGain = gainNeededPerRG * toBuy + replicantiCap().log10() - Replicanti.amount.log10();
   const remainingGain = log10GainFactor.minus(maxUsedGain).clampMin(0);
@@ -142,7 +142,7 @@ export function totalReplicantiSpeedMult(overCap) {
     TimeStudy(213),
     RealityUpgrade(2),
     RealityUpgrade(6),
-    RealityUpgrade(23)
+    RealityUpgrade(23),
   );
   totalMult = totalMult.times(preCelestialEffects);
   if (TimeStudy(132).isBought && Perk.studyPassive.isBought) {
@@ -155,7 +155,7 @@ export function totalReplicantiSpeedMult(overCap) {
   totalMult = totalMult.times(getAdjustedGlyphEffect("replicationspeed"));
   if (GlyphAlteration.isAdded("replication")) {
     totalMult = totalMult.times(
-      Math.clampMin(Decimal.log10(Replicanti.amount) * getSecondaryGlyphEffect("replicationdtgain"), 1)
+      Math.clampMin(Decimal.log10(Replicanti.amount) * getSecondaryGlyphEffect("replicationdtgain"), 1),
     );
   }
   totalMult = totalMult.timesEffectsOf(AlchemyResource.replication, Ra.unlocks.continuousTTBoost.effects.replicanti);
@@ -221,7 +221,7 @@ export function replicantiLoop(diff) {
       const intervalRatio = getReplicantiInterval(true).div(interval);
       remainingGain = remainingGain.div(intervalRatio);
       Replicanti.amount = Decimal.exp(
-        remainingGain.div(LOG10_E).times(postScale).plus(1).ln() / postScale + Replicanti.amount.clampMin(1).ln()
+        remainingGain.div(LOG10_E).times(postScale).plus(1).ln() / postScale + Replicanti.amount.clampMin(1).ln(),
       );
     }
   } else if (tickCount.gt(1)) {
@@ -412,7 +412,7 @@ export const ReplicantiUpgrade = {
       const totalCost = this.cost.times(
         Decimal.pow(this.costIncrease, N)
           .minus(1)
-          .dividedBy(this.costIncrease - 1)
+          .dividedBy(this.costIncrease - 1),
       );
       Currency.infinityPoints.subtract(totalCost);
       this.baseCost = this.baseCost.times(Decimal.pow(this.costIncrease, N));
@@ -541,7 +541,7 @@ export const ReplicantiUpgrade = {
           firstCost: this.cost,
           cumulative: true,
         },
-        this.value
+        this.value,
       );
       if (!bulk) return;
       Currency.infinityPoints.subtract(bulk.purchasePrice);
@@ -620,7 +620,7 @@ export const Replicanti = {
     },
     get extra() {
       return Math.floor(
-        (Effects.sum(TimeStudy(225), TimeStudy(226)) + Effarig.bonusRG) * TimeStudy(303).effectOrDefault(1)
+        (Effects.sum(TimeStudy(225), TimeStudy(226)) + Effarig.bonusRG) * TimeStudy(303).effectOrDefault(1),
       );
     },
     get total() {

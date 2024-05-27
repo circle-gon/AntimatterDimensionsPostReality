@@ -56,7 +56,7 @@ export default {
     TTgenRateText() {
       if (this.theoremGeneration.lt(1 / 3600)) {
         return `one TT every ${TimeSpan.fromSeconds(this.theoremGeneration.reciprocal().toNumber()).toStringShort(
-          false
+          false,
         )}`;
       }
       if (this.theoremGeneration.lt(0.1)) {

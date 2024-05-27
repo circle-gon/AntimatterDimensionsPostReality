@@ -25,7 +25,7 @@ export function watchLatestCommit() {
             callback: updateRefresh,
             closeButton: true,
           },
-          3
+          3,
         );
       });
   }

@@ -21,7 +21,7 @@ export const DC = deepFreeze({
   // E[0-9]: Decimal exponent variable
   // C: Calculation. D - .div, P - .pow
 
-  /* eslint-disable key-spacing */
+   
   DM1: new Decimal("-1"),
   D0: new Decimal("0"),
 

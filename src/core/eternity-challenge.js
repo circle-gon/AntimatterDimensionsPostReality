@@ -271,7 +271,7 @@ export class EternityChallengeState extends GameMechanicState {
     Modal.message.show(
       `${reason(this.config.restriction(this.completions))}, ` + `which has caused you to exit it.`,
       { closeEvent: GAME_EVENT.REALITY_RESET_AFTER },
-      1
+      1,
     );
     EventHub.dispatch(GAME_EVENT.CHALLENGE_FAILED);
   }

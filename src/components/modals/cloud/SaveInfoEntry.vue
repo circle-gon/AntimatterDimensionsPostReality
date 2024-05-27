@@ -37,7 +37,7 @@ export default {
         ["pelleAM", "totalAntimatter"],
         ["Total Doomed Antimatter:", "Total Antimatter:"],
         [format, format],
-        ""
+        "",
       );
     },
     prestigeCount() {
@@ -45,7 +45,7 @@ export default {
         ["remnants", "realities", "eternities", "infinities"],
         ["Remnants:", "Realities:", "Eternities:", "Infinities:"],
         [format, this.formatSmall, this.formatSmall, this.formatSmall],
-        "(No prestige layers reached yet.)"
+        "(No prestige layers reached yet.)",
       );
     },
     prestigeResource() {
@@ -53,7 +53,7 @@ export default {
         ["realityShards", "imaginaryMachines", "realityMachines", "eternityPoints", "infinityPoints"],
         ["Reality Shards:", "Reality Machines:", "Reality Machines:", "Eternity Points:", "Infinity Points:"],
         [format, (x) => formatMachines(this.saveData.realityMachines, x), format, format, format],
-        ""
+        "",
       );
     },
     // This is a slight workaround to hide DT/level once Doomed
@@ -62,7 +62,7 @@ export default {
         ["pelleLore", "bestLevel", "dilatedTime"],
         ["Your Reality is Doomed.", "Best Glyph Level:", "Dilated Time:"],
         [() => "", formatInt, format],
-        ""
+        "",
       );
     },
     name() {

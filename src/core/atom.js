@@ -46,7 +46,7 @@ export function migrateSaves(player) {
   l.darkMatterMult = new Decimal(l.darkMatterMult);
   player.auto.annihilation.multiplier = new Decimal(player.auto.annihilation.multiplier);
   player.reality.glyphs.sac = Object.fromEntries(
-    Object.entries(player.reality.glyphs.sac).map((i) => [i[0], new Decimal(i[1])])
+    Object.entries(player.reality.glyphs.sac).map((i) => [i[0], new Decimal(i[1])]),
   );
   player.records.achTimer = new Decimal(player.records.achTimer);
 
@@ -90,11 +90,11 @@ function updateCollapseStats() {
   player.records.bestCollapse.time = player.records.bestCollapse.time.min(player.records.thisCollapse.time);
   player.records.bestCollapse.realTime = Math.min(
     player.records.bestCollapse.realTime,
-    player.records.thisCollapse.realTime
+    player.records.thisCollapse.realTime,
   );
   player.records.bestCollapse.realTimeNoStore = Math.min(
     player.records.bestCollapse.realTimeNoStore,
-    player.records.thisCollapse.realTimeNoStore
+    player.records.thisCollapse.realTimeNoStore,
   );
 }
 
@@ -132,7 +132,7 @@ function unlockRealityUpgrade(num, isReality) {
 }
 
 function giveRealityUpgrade(num, isReality) {
-  unlockRealityUpgrade(num, isReality)
+  unlockRealityUpgrade(num, isReality);
 
   const upg = isReality ? RealityUpgrade(num) : ImaginaryUpgrade(num);
   upg.isBought = true;
@@ -373,8 +373,7 @@ export function collapse() {
 
   // Remove all glyphs in inventory that aren't companion
   for (const glyph of Glyphs.inventory) {
-    if (glyph !== null && glyph.type !== "companion")
-      Glyphs.removeFromInventory(glyph, false);
+    if (glyph !== null && glyph.type !== "companion") Glyphs.removeFromInventory(glyph, false);
   }
 
   // Remove all active glyphs that aren't companion
@@ -501,18 +500,18 @@ export function collapse() {
   // Why here? Some achievements like "Perks of Living" will be obtained through post-reset grants
   // This will cause notifications, which is kind of annoying, so we give them here to avoid that
   if (AtomMilestone.am6.isReached) {
-    const toGive = Math.min(Currency.collapses.value * 2, Achievements.AM6.length)
-    for (let i = 0; i < toGive; i++) Achievements.AM6[i].give()
+    const toGive = Math.min(Currency.collapses.value * 2, Achievements.AM6.length);
+    for (let i = 0; i < toGive; i++) Achievements.AM6[i].give();
   }
 
   if (AtomMilestone.am1.isReached) {
     // When ACHNR is obtained, it sends a lot of notifications that achievements
     // have been obtained, which isn't very useful, so we give the achievements here
-    for (const achievement of Achievements.preReality) achievement.give()
-  
+    for (const achievement of Achievements.preReality) achievement.give();
+
     for (const perk of Perks.all) {
-      perk.isBought = true
-      perk.onPurchased()
+      perk.isBought = true;
+      perk.onPurchased();
     }
 
     giveRealityUpgrade(10, true);
@@ -525,46 +524,46 @@ export function collapse() {
     for (let i = 1; i <= 12; i++) EternityChallenge(i).completions = 5;
   }
   if (AtomMilestone.am3.isReached) {
-    player.celestials.teresa.pouredAmount = Teresa.pouredAmountCap
-    player.celestials.teresa.perkShop = [11, 11, 4, 2, 0, 0]
+    player.celestials.teresa.pouredAmount = Teresa.pouredAmountCap;
+    player.celestials.teresa.perkShop = [11, 11, 4, 2, 0, 0];
   }
   if (AtomMilestone.am4.isReached) {
     player.celestials.effarig.unlockBits = 127;
     player.celestials.enslaved.unlocks = [0, 1];
     player.celestials.enslaved.completed = true;
-    player.celestials.v.runUnlocks = [2, 2, 2, 2, 2, 2, 0, 0, 0]
+    player.celestials.v.runUnlocks = [2, 2, 2, 2, 2, 2, 0, 0, 0];
     player.celestials.v.unlockBits |= 1 << VUnlocks.vAchievementUnlock.id;
   }
   if (AtomMilestone.am5.isReached) {
-    for (const pet of Ra.pets.all) pet.level = 5
-    player.celestials.v.runUnlocks = [4, 4, 4, 4, 4, 4, 2, 2, 2]
+    for (const pet of Ra.pets.all) pet.level = 5;
+    player.celestials.v.runUnlocks = [4, 4, 4, 4, 4, 4, 2, 2, 2];
     player.celestials.laitela.difficultyTier = 1;
     player.celestials.laitela.fastestCompletion = 300;
   }
   if (AtomMilestone.am6.isReached) {
-    for (const pet of Ra.pets.all) pet.level = 10
+    for (const pet of Ra.pets.all) pet.level = 10;
     player.celestials.laitela.difficultyTier = 3;
-    for (const resource of AlchemyResources.all) resource.amount = 5000
-    giveRealityUpgrade(19, false)
-    player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0]
+    for (const resource of AlchemyResources.all) resource.amount = 5000;
+    giveRealityUpgrade(19, false);
+    player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0];
   }
   if (AtomMilestone.am7.isReached) {
-    for (const resource of AlchemyResources.all) resource.amount = 10000
+    for (const resource of AlchemyResources.all) resource.amount = 10000;
     player.celestials.laitela.difficultyTier = 5;
   }
   if (AtomMilestone.am8.isReached) {
-    for (const pet of Ra.pets.all) pet.level = 15
-    for (const resource of AlchemyResources.all) resource.amount = 15000
+    for (const pet of Ra.pets.all) pet.level = 15;
+    for (const resource of AlchemyResources.all) resource.amount = 15000;
     player.celestials.laitela.difficultyTier = 8;
-    player.celestials.v.runUnlocks = Array.repeat(4, 9)
+    player.celestials.v.runUnlocks = Array.repeat(4, 9);
 
-    for (let i = 6; i <= 25; i++) unlockRealityUpgrade(i, true)
-    for (let i = 11; i <= 25; i++) unlockRealityUpgrade(i, false)
+    for (let i = 6; i <= 25; i++) unlockRealityUpgrade(i, true);
+    for (let i = 11; i <= 25; i++) unlockRealityUpgrade(i, false);
   }
   if (AtomMilestone.am9.isReached) {
-    for (const pet of Ra.pets.all) pet.level = 20
-    for (const resource of AlchemyResources.all) resource.amount = 20000
-    player.celestials.v.runUnlocks = Array.repeat(5, 9)
+    for (const pet of Ra.pets.all) pet.level = 20;
+    for (const resource of AlchemyResources.all) resource.amount = 20000;
+    player.celestials.v.runUnlocks = Array.repeat(5, 9);
   }
   if (AtomMilestone.am10.isReached) {
     const upgrades = [
@@ -581,17 +580,17 @@ export function collapse() {
       InfinityUpgrade.dimboostMult,
       InfinityUpgrade.ipGen,
     ];
-    for (const upgrade of upgrades) upgrade.charge()
-    for (const pet of Ra.pets.all) pet.level = 25
-    for (const resource of AlchemyResources.all) resource.amount = 25000
-    player.celestials.v.runUnlocks = [6, 6, 6, 6, 6, 6, 5, 5, 5]
+    for (const upgrade of upgrades) upgrade.charge();
+    for (const pet of Ra.pets.all) pet.level = 25;
+    for (const resource of AlchemyResources.all) resource.amount = 25000;
+    player.celestials.v.runUnlocks = [6, 6, 6, 6, 6, 6, 5, 5, 5];
   }
   if (AtomUpgrade(8).isBought) giveAU8();
 
-  Teresa.checkForUnlocks()
-  V.updateTotalRunUnlocks()
-  V.checkForUnlocks(true)
-  Ra.checkForUnlocks()
+  Teresa.checkForUnlocks();
+  V.updateTotalRunUnlocks();
+  V.checkForUnlocks(true);
+  Ra.checkForUnlocks();
 
   EventHub.dispatch(GAME_EVENT.COLLAPSE_RESET_AFTER);
 }
@@ -628,7 +627,7 @@ export class AtomMilestoneState {
 
 export const AtomMilestone = mapGameDataToObject(
   GameDatabase.atom.milestones,
-  (config) => new AtomMilestoneState(config)
+  (config) => new AtomMilestoneState(config),
 );
 
 class AtomUpgradeState extends BitPurchasableMechanicState {
@@ -724,7 +723,7 @@ class RebuyableAtomUpgradeState extends RebuyableMechanicState {
 }
 
 const AUIndex = mapGameData(GameDatabase.atom.upgrades, (config) =>
-  config.id % 5 === 1 ? new RebuyableAtomUpgradeState(config) : new AtomUpgradeState(config)
+  config.id % 5 === 1 ? new RebuyableAtomUpgradeState(config) : new AtomUpgradeState(config),
 );
 
 export const AtomUpgrade = (id) => AUIndex[id];
@@ -767,7 +766,7 @@ class AtomicParticleState extends GameMechanicState {
       gameData.map((i, id) => ({
         ...i,
         id,
-      }))
+      })),
     );
   }
 }

@@ -43,10 +43,10 @@ export const orderedEffectList = [
 
 export const generatedTypes = ["power", "infinity", "replication", "time", "dilation", "effarig"];
 
-// eslint-disable-next-line no-unused-vars
+ 
 export const GlyphEffectOrder = orderedEffectList.mapToObject(
   (e) => e,
-  (e, idx) => idx
+  (e, idx) => idx,
 );
 
 export function rarityToStrength(x) {
@@ -165,7 +165,7 @@ export const Glyphs = {
     if (this.glyphIndexArray.some((idx) => Math.floor(idx / 10) === dest)) {
       // Destination row has some glyphs, attempt to merge the rows
       const hasOverlap = [...Array(10).keys()].some(
-        (col) => this.inventory[10 * orig + col] !== null && this.inventory[10 * dest + col] !== null
+        (col) => this.inventory[10 * orig + col] !== null && this.inventory[10 * dest + col] !== null,
       );
       if (hasOverlap) return false;
       for (let col = 0; col < 10; col++) {
@@ -394,9 +394,9 @@ export const Glyphs = {
             `${quantifyInt("Glyph", stillEquipped)} could not be unequipped due to lack
         of space. Free up some space in your ${target}${hasOther ? " or switch where you are unequipping to" : ""}
         in order to unequip ${stillEquipped === 1 ? "it" : "them"}.`,
-            { closeEvent: GAME_EVENT.GLYPHS_CHANGED }
+            { closeEvent: GAME_EVENT.GLYPHS_CHANGED },
           ),
-        50
+        50,
       );
     }
 
@@ -535,7 +535,7 @@ export const Glyphs = {
     ];
     const byType = sortOrder.mapToObject(
       (g) => g,
-      () => ({ glyphs: [], padding: 0 })
+      () => ({ glyphs: [], padding: 0 }),
     );
     for (const g of glyphsToSort) byType[g.type].glyphs.push(g);
     let totalDesiredPadding = 0;
@@ -591,7 +591,7 @@ export const Glyphs = {
       for (const effect of comparedEffects) {
         const c = effect.compareValues(
           effect.effect(glyphA.level, glyphA.strength),
-          effect.effect(glyphB.level, glyphB.strength)
+          effect.effect(glyphB.level, glyphB.strength),
         );
         // If the glyph in question is better in even one effect, it passes this comparison
         if (c > 0) return true;
@@ -606,7 +606,7 @@ export const Glyphs = {
           g.type === glyph.type &&
           g.id !== glyph.id &&
           (g.level >= glyph.level || g.strength >= glyph.strength) &&
-          (g.effects & glyph.effects) === glyph.effects
+          (g.effects & glyph.effects) === glyph.effects,
       );
     let compareThreshold = glyph.type === "effarig" || glyph.type === "reality" ? 1 : this.activeSlotCount;
     compareThreshold = Math.clampMax(compareThreshold, threshold);
@@ -658,7 +658,7 @@ export const Glyphs = {
             effects: g.effects,
             color: g.color,
             symbol: g.symbol,
-          }
+          },
     );
   },
   harshAutoClean() {
@@ -738,7 +738,7 @@ export const Glyphs = {
       dilationUpgrades: player.dilation.upgrades.toBitmask(),
       dilationRebuyables: DilationUpgrades.rebuyable.mapToObject(
         (d) => d.id,
-        (d) => d.boughtAmount
+        (d) => d.boughtAmount,
       ),
       tp: new Decimal(Currency.tachyonParticles.value),
       dt: new Decimal(Currency.dilatedTime.value),
@@ -865,7 +865,7 @@ class GlyphSacrificeState extends GameMechanicState {}
 
 export const GlyphSacrifice = mapGameDataToObject(
   GameDatabase.reality.glyphSacrifice,
-  (config) => new GlyphSacrificeState(config)
+  (config) => new GlyphSacrificeState(config),
 );
 
 export function recalculateAllGlyphs() {

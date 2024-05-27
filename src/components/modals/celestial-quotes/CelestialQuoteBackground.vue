@@ -106,11 +106,15 @@ export default {
 }
 
 .c-modal-celestial-quote__shadow {
-  box-shadow: 0 0 1.5rem 0.1rem, 0 0 1rem 0.1rem inset;
+  box-shadow:
+    0 0 1.5rem 0.1rem,
+    0 0 1rem 0.1rem inset;
 }
 
 .s-base--metro .c-modal-celestial-quote__shadow {
-  box-shadow: 0 0 1rem 0.2rem, 0 0 1rem 0.1rem inset;
+  box-shadow:
+    0 0 1rem 0.2rem,
+    0 0 1rem 0.1rem inset;
 }
 
 .c-modal-celestial-quote__text {

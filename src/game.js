@@ -154,7 +154,7 @@ function totalEPMult() {
           TimeStudy(121),
           TimeStudy(123),
           RealityUpgrade(12),
-          GlyphEffect.epMult
+          GlyphEffect.epMult,
         );
 }
 
@@ -162,7 +162,7 @@ export function gainedEternityPoints() {
   let ep = DC.D5.pow(
     player.records.thisEternity.maxIP.plus(gainedInfinityPoints()).log10() /
       (308 - PelleRifts.recursion.effectValue.toNumber()) -
-      0.7
+      0.7,
   ).times(totalEPMult());
 
   if (Teresa.isRunning) {
@@ -181,7 +181,7 @@ export function gainedEternityPoints() {
 
 export function requiredIPForEP(epAmount) {
   return Decimal.pow10(308 * (Decimal.log(Decimal.divide(epAmount, totalEPMult()), 5) + 0.7)).clampMin(
-    Number.MAX_VALUE
+    Number.MAX_VALUE,
   );
 }
 
@@ -339,7 +339,7 @@ export function gainedInfinities() {
     RealityUpgrade(5),
     RealityUpgrade(7),
     Achievement(164),
-    Ra.unlocks.continuousTTBoost.effects.infinity
+    Ra.unlocks.continuousTTBoost.effects.infinity,
   );
   infGain = infGain.times(getAdjustedGlyphEffect("infinityinfmult"));
   infGain = infGain.powEffectOf(SingularityMilestone.infinitiedPow);
@@ -583,7 +583,7 @@ export function gameLoop(passDiff, options = {}) {
       const amplification = Ra.unlocks.improvedStoredTime.effects.gameTimeAmplification.effectOrDefault(1);
       const beforeStore = player.celestials.enslaved.stored;
       player.celestials.enslaved.stored = player.celestials.enslaved.stored.add(
-        diff.mul(totalTimeFactor.sub(reducedTimeFactor)).mul(amplification)
+        diff.mul(totalTimeFactor.sub(reducedTimeFactor)).mul(amplification),
       );
       Enslaved.currentBlackHoleStoreAmountPerMs = player.celestials.enslaved.stored.sub(beforeStore).div(diff);
       speedFactor = reducedTimeFactor;
@@ -608,7 +608,7 @@ export function gameLoop(passDiff, options = {}) {
     player.records.thisEternity.realTime += realDiff;
     if (Enslaved.isRunning && Enslaved.feltEternity && !EternityChallenge(12).isRunning) {
       player.records.thisEternity.time = player.records.thisEternity.time.add(
-        diff.mul(Currency.eternities.value.clampMax(1e66).add(1))
+        diff.mul(Currency.eternities.value.clampMax(1e66).add(1)),
       );
     } else {
       player.records.thisEternity.time = player.records.thisEternity.time.add(diff);
@@ -775,7 +775,7 @@ function passivePrestigeGen() {
       infGen = infGen.timesEffectsOf(
         RealityUpgrade(5),
         RealityUpgrade(7),
-        Ra.unlocks.continuousTTBoost.effects.infinity
+        Ra.unlocks.continuousTTBoost.effects.infinity,
       );
       infGen = infGen.times(getAdjustedGlyphEffect("infinityinfmult"));
     }
@@ -791,7 +791,7 @@ function passivePrestigeGen() {
       infGen = infGen.plus(
         gainedInfinities()
           .times(Currency.eternities.value.minus(eternitiedGain.div(2).floor()).max(0))
-          .times(Time.deltaTime)
+          .times(Time.deltaTime),
       );
     }
     infGen = infGen.plus(player.partInfinitied);
@@ -906,7 +906,7 @@ function applyAutoprestige(diff) {
     Currency.infinityPoints.add(
       gainedInfinityPoints()
         .times(Time.deltaTime.div(100))
-        .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige)
+        .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige),
     );
 
   if (TeresaUnlocks.epGen.canBeApplied || (AtomMilestone.am1.isReached && !Pelle.isDoomed)) {
@@ -914,7 +914,7 @@ function applyAutoprestige(diff) {
       player.records.thisEternity.bestEPmin
         .times(DC.D0_01)
         .times(getGameSpeedupFactor().mul(diff / 1000))
-        .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige)
+        .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige),
     );
   }
 
@@ -929,12 +929,11 @@ function applyAutoprestige(diff) {
     Currency.eternityPoints.add(
       gainedEternityPoints()
         .times(DC.D0_1)
-        .times(diff / 1000)
+        .times(diff / 1000),
     );
   }
 
-  if (Pelle.isDoomed && AtomMilestone.am7.isReached)
-    player.celestials.pelle.remnants += Pelle.remnantsGain
+  if (Pelle.isDoomed && AtomMilestone.am7.isReached) player.celestials.pelle.remnants += Pelle.remnantsGain;
 }
 
 function updateImaginaryMachines(diff) {
@@ -948,7 +947,7 @@ function updateTachyonGalaxies() {
   const thresholdMult = getTachyonGalaxyMult();
   player.dilation.baseTachyonGalaxies = Math.max(
     player.dilation.baseTachyonGalaxies,
-    1 + Math.floor(Decimal.log(Currency.dilatedTime.value.dividedBy(1000), thresholdMult))
+    1 + Math.floor(Decimal.log(Currency.dilatedTime.value.dividedBy(1000), thresholdMult)),
   );
   player.dilation.nextThreshold = DC.E3.times(new Decimal(thresholdMult).pow(player.dilation.baseTachyonGalaxies));
   player.dilation.totalTachyonGalaxies =
@@ -964,7 +963,7 @@ export function getTTPerSecond() {
     Ra.unlocks.continuousTTBoost.effects.ttGen,
     Ra.unlocks.achievementTTMult,
     Achievement(137),
-    Achievement(156)
+    Achievement(156),
   );
   if (GlyphAlteration.isAdded("dilation")) ttMult = ttMult.mul(getSecondaryGlyphEffect("dilationTTgen"));
 

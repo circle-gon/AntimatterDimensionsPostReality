@@ -9,8 +9,8 @@ export default {
   data() {
     return {
       gainedAtoms: new Decimal(),
-      gainedCollapses: 0
-    }
+      gainedCollapses: 0,
+    };
   },
   computed: {
     message() {
@@ -25,8 +25,8 @@ export default {
   },
   methods: {
     update() {
-      this.gainedAtoms = gainedAtoms()
-      this.gainedCollapses = getCollapseGain()
+      this.gainedAtoms = gainedAtoms();
+      this.gainedCollapses = getCollapseGain();
     },
     handleYesClick() {
       collapse();

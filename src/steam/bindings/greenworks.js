@@ -54,6 +54,6 @@ export function setDiscordActivity(state, details) {
       largeImage: "icon",
       state,
       details,
-    })
+    }),
   );
 }

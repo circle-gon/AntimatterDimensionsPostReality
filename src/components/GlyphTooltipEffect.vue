@@ -79,7 +79,7 @@ export default {
         .replace(
           "[",
           `<span style="${GlyphAppearanceHandler.isLightBG ? "" : "text-shadow: white 0 0 0.6rem;"}
-            font-weight: bold;">`
+            font-weight: bold;">`,
         );
     },
   },

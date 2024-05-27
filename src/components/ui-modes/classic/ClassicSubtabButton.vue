@@ -40,7 +40,7 @@ export default {
       this.tabName = Pelle.transitionText(
         this.subtab.name,
         this.subtab.name,
-        Math.max(Math.min(GameEnd.endState - (this.subtab.id % 4) / 10, 1), 0)
+        Math.max(Math.min(GameEnd.endState - (this.subtab.id % 4) / 10, 1), 0),
       );
     },
   },

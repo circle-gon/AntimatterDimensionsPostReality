@@ -33,7 +33,7 @@ function compileConditionLoop(evalComparison, commands, ctx, isUntil) {
           `Checked ${parseConditionalIntoText(ctx)} (${isUntil}),
           exiting loop at line ${AutomatorBackend.translateLineNumber(ctx.RCurly[0].startLine + 1) - 1}
           (end of ${loopStr} loop)`,
-          ctx.startLine
+          ctx.startLine,
         );
         return AUTOMATOR_COMMAND_STATUS.NEXT_TICK_NEXT_INSTRUCTION;
       }
@@ -42,7 +42,7 @@ function compileConditionLoop(evalComparison, commands, ctx, isUntil) {
         `Checked ${parseConditionalIntoText(ctx)} (${!isUntil}),
         moving to line ${AutomatorBackend.translateLineNumber(ctx.LCurly[0].startLine + 1) - 1}
         (start of ${loopStr} loop)`,
-        ctx.startLine
+        ctx.startLine,
       );
       return AUTOMATOR_COMMAND_STATUS.SAME_INSTRUCTION;
     },
@@ -144,7 +144,7 @@ export const AutomatorCommands = [
         },
       ]);
     },
-    // eslint-disable-next-line complexity
+     
     validate: (ctx, V) => {
       ctx.startLine = ctx.Auto[0].startLine;
       if (ctx.PrestigeEvent && ctx.currencyAmount) {
@@ -154,7 +154,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.currencyAmount,
             `AutomatorCurrency doesn't match prestige (${desired$} vs ${specified$})`,
-            `Use ${desired$} for the specified prestige resource`
+            `Use ${desired$} for the specified prestige resource`,
           );
           return false;
         }
@@ -168,7 +168,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.PrestigeEvent,
             "Infinity autobuyer is not unlocked",
-            "Complete the Big Crunch Autobuyer challenge to use this command"
+            "Complete the Big Crunch Autobuyer challenge to use this command",
           );
           return false;
         }
@@ -177,7 +177,7 @@ export const AutomatorCommands = [
             (ctx.duration || ctx.xHighest)[0],
             "Advanced Infinity autobuyer settings are not unlocked",
             `Reach ${quantifyInt("Eternity", EternityMilestone.bigCrunchModes.config.eternities)}
-            to use this command`
+            to use this command`,
           );
           return false;
         }
@@ -188,7 +188,7 @@ export const AutomatorCommands = [
             ctx.PrestigeEvent,
             "Eternity autobuyer is not unlocked",
             `Reach ${quantifyInt("Eternity", EternityMilestone.autobuyerEternity.config.eternities)}
-            to use this command`
+            to use this command`,
           );
           return false;
         }
@@ -196,7 +196,7 @@ export const AutomatorCommands = [
           V.addError(
             (ctx.duration || ctx.xHighest)[0],
             "Advanced Eternity autobuyer settings are not unlocked",
-            "Purchase the Reality Upgrade which unlocks advanced Eternity autobuyer settings"
+            "Purchase the Reality Upgrade which unlocks advanced Eternity autobuyer settings",
           );
           return false;
         }
@@ -206,7 +206,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.PrestigeEvent,
             "Reality autobuyer is not unlocked",
-            "Purchase the Reality Upgrade which unlocks the Reality autobuyer"
+            "Purchase the Reality Upgrade which unlocks the Reality autobuyer",
           );
           return false;
         }
@@ -214,7 +214,7 @@ export const AutomatorCommands = [
           V.addError(
             (ctx.duration || ctx.xHighest)[0],
             "Auto Reality cannot be set to a duration or x highest",
-            "Use RM for Auto Reality"
+            "Use RM for Auto Reality",
           );
           return false;
         }
@@ -260,7 +260,7 @@ export const AutomatorCommands = [
         AutomatorData.logCommandEvent(
           `Automatic ${ctx.PrestigeEvent[0].image}
           turned ${autobuyer.isActive ? "ON" : "OFF"} ${settingString}`,
-          ctx.startLine
+          ctx.startLine,
         );
         return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
       };
@@ -302,13 +302,13 @@ export const AutomatorCommands = [
           V.addError(
             ctx.BlackHole[0],
             "Black Hole is disabled in your current Reality",
-            "Return to normal Reality conditions to use this command again"
+            "Return to normal Reality conditions to use this command again",
           );
         } else {
           V.addError(
             ctx.BlackHole[0],
             "Black Hole is not unlocked",
-            "Unlock the Black Hole in order to pause or unpause it"
+            "Unlock the Black Hole in order to pause or unpause it",
           );
         }
         return false;
@@ -389,7 +389,7 @@ export const AutomatorCommands = [
             AutomatorData.logCommandEvent(
               `Checked ${parseConditionalIntoText(ctx)} (false),
               skipping to line ${AutomatorBackend.translateLineNumber(ctx.RCurly[0].startLine + 1)}`,
-              ctx.startLine
+              ctx.startLine,
             );
             return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
           }
@@ -397,7 +397,7 @@ export const AutomatorCommands = [
           AutomatorData.logCommandEvent(
             `Checked ${parseConditionalIntoText(ctx)} (true),
             entering IF block`,
-            ctx.startLine
+            ctx.startLine,
           );
           return AUTOMATOR_COMMAND_STATUS.SAME_INSTRUCTION;
         },
@@ -456,7 +456,7 @@ export const AutomatorCommands = [
             ctx,
             `Constant ${ctx.Identifier[0].image} is not a valid time duration constant`,
             `Ensure that ${ctx.Identifier[0].image} is a number of seconds less than
-            ${format(Number.MAX_VALUE / 1000)}`
+            ${format(Number.MAX_VALUE / 1000)}`,
           );
           return false;
         }
@@ -526,7 +526,7 @@ export const AutomatorCommands = [
           ctx.PrestigeEvent,
           "Eternity autobuyer is not unlocked",
           `Reach ${quantifyInt("Eternity", EternityMilestone.autobuyerEternity.config.eternities)}
-          to use this command`
+          to use this command`,
         );
         return false;
       }
@@ -535,7 +535,7 @@ export const AutomatorCommands = [
         V.addError(
           ctx.PrestigeEvent,
           "Reality autobuyer is not unlocked",
-          "Purchase the Reality Upgrade which unlocks the Reality autobuyer"
+          "Purchase the Reality Upgrade which unlocks the Reality autobuyer",
         );
         return false;
       }
@@ -555,7 +555,7 @@ export const AutomatorCommands = [
           if (!nowait) return AUTOMATOR_COMMAND_STATUS.NEXT_TICK_SAME_INSTRUCTION;
           AutomatorData.logCommandEvent(
             `${ctx.PrestigeEvent.image} attempted, but skipped due to NOWAIT`,
-            ctx.startLine
+            ctx.startLine,
           );
           return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
         }
@@ -564,7 +564,7 @@ export const AutomatorCommands = [
         const prestigeName = ctx.PrestigeEvent[0].image.toUpperCase();
         AutomatorData.logCommandEvent(
           `${prestigeName} triggered (${findLastPrestigeRecord(prestigeName)})`,
-          ctx.startLine
+          ctx.startLine,
         );
         // In the prestigeToken.$prestige() line above, performing a reality reset has code internal to the call
         // which makes the automator restart. However, in that case we also need to update the execution state here,
@@ -594,7 +594,7 @@ export const AutomatorCommands = [
       if (player.dilation.active) {
         AutomatorData.logCommandEvent(
           `Start Dilation encountered but ignored due to already being dilated`,
-          ctx.startLine
+          ctx.startLine,
         );
         return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
       }
@@ -623,7 +623,7 @@ export const AutomatorCommands = [
         if (ec.isRunning) {
           AutomatorData.logCommandEvent(
             `Start EC encountered but ignored due to already being in the specified EC`,
-            ctx.startLine
+            ctx.startLine,
           );
           return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
         }
@@ -657,7 +657,7 @@ export const AutomatorCommands = [
         V.addError(
           ctx.StoreGameTime[0],
           "You do not yet know how to store game time",
-          "Unlock the ability to store game time"
+          "Unlock the ability to store game time",
         );
         return false;
       }
@@ -672,7 +672,7 @@ export const AutomatorCommands = [
           } else {
             AutomatorData.logCommandEvent(
               `Attempted to use stored game time, but failed (not unlocked yet)`,
-              ctx.startLine
+              ctx.startLine,
             );
           }
           return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
@@ -705,7 +705,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx,
             `Constant ${ctx.Identifier[0].image} is not a valid Time Study constant`,
-            `Ensure that ${ctx.Identifier[0].image} is a properly-formatted Time Study string`
+            `Ensure that ${ctx.Identifier[0].image} is a properly-formatted Time Study string`,
           );
           return false;
         }
@@ -737,7 +737,7 @@ export const AutomatorCommands = [
               AutomatorData.logCommandEvent(
                 `Purchased ${quantifyInt("Time Study", purchasedStudies)} and stopped at
             Time Study ${finalPurchasedTS}, waiting to attempt to purchase more Time Studies`,
-                ctx.startLine
+                ctx.startLine,
               );
             }
             return AUTOMATOR_COMMAND_STATUS.NEXT_TICK_SAME_INSTRUCTION;
@@ -755,20 +755,20 @@ export const AutomatorCommands = [
                 AutomatorData.logCommandEvent(
                   `Purchased all specified Time Studies, then unlocked and started running
                 Eternity Challenge ${studies.ec}`,
-                  ctx.startLine
+                  ctx.startLine,
                 );
               } else {
                 AutomatorData.logCommandEvent(
                   `Purchased all specified Time Studies and unlocked Eternity Challenge
                 ${studies.ec}, but failed to start it`,
-                  ctx.startLine
+                  ctx.startLine,
                 );
               }
             } else {
               AutomatorData.logCommandEvent(
                 `Purchased all specified Time Studies and unlocked Eternity Challenge
               ${studies.ec}`,
-                ctx.startLine
+                ctx.startLine,
               );
             }
             return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
@@ -808,7 +808,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx,
             "Missing preset id",
-            "Provide the id of a saved study preset slot from the Time Studies page"
+            "Provide the id of a saved study preset slot from the Time Studies page",
           );
           return false;
         }
@@ -818,7 +818,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.Id[0],
             `Could not find a preset with an id of ${id}`,
-            "Type in a valid id (1 - 6) for your study preset"
+            "Type in a valid id (1 - 6) for your study preset",
           );
           return false;
         }
@@ -840,7 +840,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.Name[0],
             `Could not find preset named ${split[1]} (Note: Names are case-sensitive)`,
-            "Check to make sure you typed in the correct name for your study preset"
+            "Check to make sure you typed in the correct name for your study preset",
           );
           return false;
         }
@@ -859,7 +859,7 @@ export const AutomatorCommands = [
         // Check if there are still any unbought studies from the preset after attempting to commit it all;
         // if there are then we keep trying on this line until there aren't, unless we are given nowait
         const missingStudyCount = imported.purchasedStudies.filter(
-          (s) => !GameCache.currentStudyTree.value.purchasedStudies.includes(s)
+          (s) => !GameCache.currentStudyTree.value.purchasedStudies.includes(s),
         ).length;
 
         const presetRepresentation = ctx.Name ? ctx.Name[0].image : ctx.Id[0].image;
@@ -870,7 +870,7 @@ export const AutomatorCommands = [
           AutomatorData.logCommandEvent(
             `Partially loaded study preset ${presetRepresentation}
             (missing ${quantifyInt("study", missingStudyCount)})`,
-            ctx.startLine
+            ctx.startLine,
           );
         }
         return ctx.Nowait !== undefined || missingStudyCount === 0
@@ -1024,7 +1024,7 @@ export const AutomatorCommands = [
           AutomatorData.logCommandEvent(
             `${prestigeName} prestige has not occurred yet, moving to line
             ${AutomatorBackend.translateLineNumber(ctx.LCurly[0].startLine + 1)} (start of until loop)`,
-            ctx.startLine
+            ctx.startLine,
           );
           return AUTOMATOR_COMMAND_STATUS.SAME_INSTRUCTION;
         },
@@ -1070,12 +1070,12 @@ export const AutomatorCommands = [
           AutomatorData.logCommandEvent(
             `Continuing after WAIT
             (${parseConditionalIntoText(ctx)} is true, after ${timeWaited})`,
-            ctx.startLine
+            ctx.startLine,
           );
         } else {
           AutomatorData.logCommandEvent(
             `WAIT skipped (${parseConditionalIntoText(ctx)} is already true)`,
-            ctx.startLine
+            ctx.startLine,
           );
         }
         AutomatorData.isWaiting = false;
@@ -1124,7 +1124,7 @@ export const AutomatorCommands = [
           AutomatorData.logCommandEvent(
             `Continuing after WAIT (${prestigeName} occurred for
             ${findLastPrestigeRecord(prestigeName)}, after ${timeWaited})`,
-            ctx.startLine
+            ctx.startLine,
           );
           AutomatorData.isWaiting = false;
           return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
@@ -1294,7 +1294,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.NumberLiteral[idx - 1],
             "Effect count must be an integer.",
-            "Change effect count to be an integer."
+            "Change effect count to be an integer.",
           );
           return false;
         }
@@ -1309,7 +1309,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.NumberLiteral[idx - 1],
             "Glyph level must be an integer.",
-            "Change glyph level to be an integer."
+            "Change glyph level to be an integer.",
           );
           return false;
         }
@@ -1324,7 +1324,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.NumberLiteral[idx - 1],
             "Rarity must be a number from 0 to 1.",
-            "Change rarity to be a number from 0 to 1."
+            "Change rarity to be a number from 0 to 1.",
           );
           return false;
         }
@@ -1347,7 +1347,7 @@ export const AutomatorCommands = [
             (filter.type === "*" || i.type === filter.type) &&
             getGlyphEffectValuesFromBitmask(i.effects).length >= filter.effects &&
             i.level >= filter.level &&
-            strengthToRarity(i.strength) >= filter.rarity
+            strengthToRarity(i.strength) >= filter.rarity,
         );
         if (!glyph) {
           AutomatorData.logCommandEvent("Attempted to equip a Glyph, but one could not be found.", ctx.startLine);
@@ -1421,7 +1421,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.GlyphType[0],
             "The Companion glyph may not be sacrificed from the Automator.",
-            "Change or delete this command."
+            "Change or delete this command.",
           );
           return false;
         }
@@ -1436,7 +1436,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.NumberLiteral[idx - 1],
             "Effect count must be an integer.",
-            "Change effect count to be an integer."
+            "Change effect count to be an integer.",
           );
           return false;
         }
@@ -1451,7 +1451,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.NumberLiteral[idx - 1],
             "Glyph level must be an integer.",
-            "Change glyph level to be an integer."
+            "Change glyph level to be an integer.",
           );
           return false;
         }
@@ -1466,7 +1466,7 @@ export const AutomatorCommands = [
           V.addError(
             ctx.NumberLiteral[idx - 1],
             "Rarity must be a number from 0 to 1.",
-            "Change rarity to be a number from 0 to 1."
+            "Change rarity to be a number from 0 to 1.",
           );
           return false;
         }
@@ -1482,7 +1482,7 @@ export const AutomatorCommands = [
         if (!GlyphSacrificeHandler.canSacrifice || !AtomMilestone.am4.isReached) {
           AutomatorData.logCommandEvent(
             "Attempted to sacrifice a Glyph, but failed (not unlocked yet).",
-            ctx.startLine
+            ctx.startLine,
           );
           return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
         }
@@ -1492,7 +1492,7 @@ export const AutomatorCommands = [
             (filter.type === "*" || i.type === filter.type) &&
             getGlyphEffectValuesFromBitmask(i.effects).length >= filter.effects &&
             i.level >= filter.level &&
-            strengthToRarity(i.strength) >= filter.rarity
+            strengthToRarity(i.strength) >= filter.rarity,
         );
         if (!glyph) {
           AutomatorData.logCommandEvent("Attempted to sacrifice a Glyph, but one could not be found.", ctx.startLine);

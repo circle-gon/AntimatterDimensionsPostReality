@@ -59,9 +59,9 @@ export default {
           you would like to disable it, there is a setting to do so in the Options tab. This can be done for any
           visual animation effect in the game after seeing it for the first time.`,
               {},
-              3
+              3,
             ),
-          2000
+          2000,
         );
       }
     },

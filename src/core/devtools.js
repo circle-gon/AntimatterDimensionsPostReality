@@ -448,7 +448,7 @@ dev.testGlyphs = function (config) {
   const makeAllEffectGlyph = (type) =>
     makeGlyph(
       type,
-      GlyphTypes[type].effects.map((e) => e.id)
+      GlyphTypes[type].effects.map((e) => e.id),
     );
   const effarigGlyphs = [
     makeGlyph("effarig", ["effarigantimatter", "effarigdimensions", "effarigforgotten", "effarigblackhole"]),
@@ -496,7 +496,7 @@ dev.testGlyphs = function (config) {
     const glyphData = glyphSets[index].map(glyphToShortString).sum();
     console.log(
       `${done} ${glyphData} rm=${rm} gl=${gl} ep=${ep} ip=${ip} am=${am} ` +
-        `dimboosts=${dimboosts} galaxies=${galaxies}`
+        `dimboosts=${dimboosts} galaxies=${galaxies}`,
     );
     GameStorage.offlineEnabled = false;
     GameStorage.import(save);

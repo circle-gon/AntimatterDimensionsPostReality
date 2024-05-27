@@ -62,8 +62,8 @@ export default {
       const arrow = this.isLevelCapped
         ? "<i class='fas fa-sort-down'></i>"
         : this.isLevelBoosted
-        ? "<i class='fas fa-sort-up'></i>"
-        : "";
+          ? "<i class='fas fa-sort-up'></i>"
+          : "";
       // eslint-disable-next-line no-nested-ternary
       const color = this.isLevelCapped ? "#ff4444" : this.isLevelBoosted ? "#44FF44" : "var(--color-text);";
       return `<span style="color: ${color}">
@@ -101,7 +101,7 @@ export default {
         this.glyph.effects,
         this.effectiveLevel,
         this.glyph.strength,
-        this.type
+        this.type,
       ).filter((e) => db[e.id].isGenerated === generatedTypes.includes(this.type));
       const effectStrings = effects.map((e) => this.formatEffectString(db[e.id], e.value));
       // Filter out undefined results since shortDesc only exists for generated effects

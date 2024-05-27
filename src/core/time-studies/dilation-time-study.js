@@ -55,7 +55,7 @@ export class DilationTimeStudyState extends TimeStudyState {
           update which affect the difficulty of reaching those amounts, such as the increased Time Dimension cost
           scaling above ${format("1e6000")}.`,
           {},
-          3
+          3,
         );
         EventHub.dispatch(GAME_EVENT.REALITY_FIRST_UNLOCKED);
       }
@@ -70,7 +70,7 @@ export class DilationTimeStudyState extends TimeStudyState {
 
 DilationTimeStudyState.studies = mapGameData(
   GameDatabase.eternity.timeStudies.dilation,
-  (config) => new DilationTimeStudyState(config)
+  (config) => new DilationTimeStudyState(config),
 );
 
 /**

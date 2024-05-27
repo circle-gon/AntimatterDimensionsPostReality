@@ -30,7 +30,7 @@ export const GameIntervals = (function () {
     // Not a getter because getter will cause stack overflow
     all() {
       return Object.values(GameIntervals).filter(
-        (i) => Object.prototype.hasOwnProperty.call(i, "start") && Object.prototype.hasOwnProperty.call(i, "stop")
+        (i) => Object.prototype.hasOwnProperty.call(i, "start") && Object.prototype.hasOwnProperty.call(i, "stop"),
       );
     },
     start() {
@@ -53,11 +53,11 @@ export const GameIntervals = (function () {
     },
     gameLoop: interval(
       () => gameLoop(),
-      () => player.options.updateRate
+      () => player.options.updateRate,
     ),
     save: interval(
       () => GameStorage.save(),
-      () => player.options.autosaveInterval - Math.clampMin(0, Date.now() - GameStorage.lastSaveTime)
+      () => player.options.autosaveInterval - Math.clampMin(0, Date.now() - GameStorage.lastSaveTime),
     ),
     checkCloudSave: interval(() => {
       if (player.options.cloudEnabled && Cloud.loggedIn) Cloud.saveCheck();

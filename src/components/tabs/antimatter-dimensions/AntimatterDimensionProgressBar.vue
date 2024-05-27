@@ -73,7 +73,7 @@ export default {
               Math.min(EternityChallenges.completions / 60, 1)) /
               2,
             1,
-            "Percentage to fifth Strike"
+            "Percentage to fifth Strike",
           );
         } else if (PelleStrikes.eternity.hasStrike) {
           setLinearProgress(Currency.timeTheorems.max.toNumber(), 115, "Percentage to fourth Strike");

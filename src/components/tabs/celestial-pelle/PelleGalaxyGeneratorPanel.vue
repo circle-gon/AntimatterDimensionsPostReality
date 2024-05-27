@@ -187,7 +187,9 @@ export default {
 }
 
 .c-increase-cap:hover {
-  box-shadow: inset 0 0 0.1rem 0.1rem var(--color-pelle--base), 0.1rem 0.1rem 0.5rem var(--color-pelle--base);
+  box-shadow:
+    inset 0 0 0.1rem 0.1rem var(--color-pelle--base),
+    0.1rem 0.1rem 0.5rem var(--color-pelle--base);
   transition-duration: 0.12s;
 }
 

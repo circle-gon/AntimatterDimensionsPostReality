@@ -40,9 +40,9 @@ export default {
     },
   },
   watch: {
-    isAutoTesseractOn(newValue){
+    isAutoTesseractOn(newValue) {
       Autobuyer.tesseract.isActive = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -136,7 +136,7 @@ export default {
         v-if="isAutoTesseractUnlocked"
         v-model="isAutoTesseractOn"
         label="Auto:"
-        style="margin-top: -1rem;"
+        style="margin-top: -1rem"
       />
     </div>
     <div v-if="isEnslavedRunning">All Infinity Dimensions are limited to a single purchase.</div>

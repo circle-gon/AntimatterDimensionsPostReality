@@ -29,7 +29,7 @@ class AwayProgress {
     // Format the camelCase name to kebab-case
     return `c-modal-away-progress__${this.classObjectReference.replace(
       /[A-Z]/gu,
-      (match) => `-${match.toLowerCase()}`
+      (match) => `-${match.toLowerCase()}`,
     )}`;
   }
 

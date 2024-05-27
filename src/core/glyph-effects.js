@@ -175,7 +175,7 @@ class GlyphEffectConfig {
       if (setup.softcap) {
         throw new Error(
           `The combine function for Glyph effect "${setup.id}" gives capped information, ` +
-            `but there's also a softcap method`
+            `but there's also a softcap method`,
         );
       }
     }
@@ -212,7 +212,7 @@ export const realityGlyphEffectLevelThresholds = [0, 9000, 15000, 25000];
 
 export const GlyphEffects = mapGameDataToObject(
   GameDatabase.reality.glyphEffects,
-  (config) => new GlyphEffectConfig(config)
+  (config) => new GlyphEffectConfig(config),
 );
 
 export function findGlyphTypeEffects(glyphType) {
@@ -269,7 +269,7 @@ class FunctionalGlyphType {
 
 const functionalGlyphTypes = mapGameDataToObject(
   GameDatabase.reality.glyphTypes,
-  (config) => new FunctionalGlyphType(config)
+  (config) => new FunctionalGlyphType(config),
 );
 
 export const GlyphTypes = {
@@ -281,7 +281,7 @@ export const GlyphTypes = {
    */
   random(rng, blacklisted = []) {
     const types = generatedTypes.filter(
-      (x) => (EffarigUnlock.reality.isUnlocked || x !== "effarig") && !blacklisted.includes(x)
+      (x) => (EffarigUnlock.reality.isUnlocked || x !== "effarig") && !blacklisted.includes(x),
     );
     return types[Math.floor(rng.uniform() * types.length)];
   },

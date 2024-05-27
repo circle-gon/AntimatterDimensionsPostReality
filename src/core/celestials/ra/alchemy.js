@@ -223,7 +223,7 @@ class AlchemyReaction {
 }
 
 export const AlchemyResource = mapGameDataToObject(GameDatabase.celestials.alchemy.resources, (config) =>
-  config.isBaseResource ? new BasicAlchemyResourceState(config) : new AdvancedAlchemyResourceState(config)
+  config.isBaseResource ? new BasicAlchemyResourceState(config) : new AdvancedAlchemyResourceState(config),
 );
 
 export const AlchemyResources = {

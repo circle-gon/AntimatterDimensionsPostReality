@@ -54,7 +54,7 @@ class Validator extends BaseVisitor {
     for (const parseError of errors) {
       let err = Validator.combinePositionRanges(
         Validator.getPositionRange(parseError.previousToken),
-        Validator.getPositionRange(parseError.token)
+        Validator.getPositionRange(parseError.token),
       );
       // In some cases, at the end of the script we don't get any useful tokens out of the parse error
       if (parseError.token.tokenType.name === "EOF" && parseError.previousToken.tokenType.name === "EOF") {
@@ -185,7 +185,7 @@ class Validator extends BaseVisitor {
       this.addError(
         token,
         `Invalid Time Study identifier ${tsNumber}`,
-        `Make sure you copied or typed in your time study IDs correctly`
+        `Make sure you copied or typed in your time study IDs correctly`,
       );
       return 0;
     }
@@ -200,7 +200,7 @@ class Validator extends BaseVisitor {
       this.addError(
         identifier,
         `Variable ${varName} has not been defined`,
-        `Use the definition panel to define ${varName} in order to reference it, or check for typos`
+        `Use the definition panel to define ${varName} in order to reference it, or check for typos`,
       );
       return undefined;
     }
@@ -295,7 +295,7 @@ class Validator extends BaseVisitor {
       this.addError(
         ctx,
         "Missing Time Study number in range",
-        "Provide starting and ending IDs for Time Study number ranges"
+        "Provide starting and ending IDs for Time Study number ranges",
       );
       return;
     }
@@ -344,7 +344,7 @@ class Validator extends BaseVisitor {
         this.addError(
           ctx.Pipe[0],
           "Missing Eternity Challenge number",
-          "Specify which Eternity Challenge is being referred to"
+          "Specify which Eternity Challenge is being referred to",
         );
       }
       const ecNumber = parseFloat(ctx.ECNumber[0].image);
@@ -352,7 +352,7 @@ class Validator extends BaseVisitor {
         this.addError(
           ctx.ECNumber,
           `Invalid Eternity Challenge ID ${ecNumber}`,
-          `Eternity Challenge ${ecNumber} does not exist, use an integer between ${format(1)} and ${format(12)}`
+          `Eternity Challenge ${ecNumber} does not exist, use an integer between ${format(1)} and ${format(12)}`,
         );
       }
       ctx.$cached.ec = ecNumber;
@@ -369,7 +369,7 @@ class Validator extends BaseVisitor {
         this.addError(
           ctx,
           `Constant ${ctx.Identifier[0].image} cannot be used for comparison`,
-          `Ensure that ${ctx.Identifier[0].image} contains a properly-formatted number and not a Time Study string`
+          `Ensure that ${ctx.Identifier[0].image} contains a properly-formatted number and not a Time Study string`,
         );
       }
       const varLookup = this.lookupVar(ctx.Identifier[0], AUTOMATOR_VAR_TYPES.NUMBER);
@@ -395,7 +395,7 @@ class Validator extends BaseVisitor {
       this.addError(
         ctx,
         "Please use an inequality comparison (>, <, >=, <=)",
-        "Comparisons cannot be done with equality, only with inequality operators"
+        "Comparisons cannot be done with equality, only with inequality operators",
       );
     }
   }
@@ -406,7 +406,7 @@ class Validator extends BaseVisitor {
     this.addError(
       firstToken[firstTokenType][0],
       `Unrecognized command "${firstToken[firstTokenType][0].image}"`,
-      "Check to make sure you have typed in the command name correctly"
+      "Check to make sure you have typed in the command name correctly",
     );
   }
 
@@ -426,7 +426,7 @@ class Validator extends BaseVisitor {
       this.addError(
         errToken,
         `Invalid Eternity Challenge ID ${ecNumber}`,
-        `Eternity Challenge ${ecNumber} does not exist, use an integer between ${format(1)} and ${format(12)}`
+        `Eternity Challenge ${ecNumber} does not exist, use an integer between ${format(1)} and ${format(12)}`,
       );
     }
     ctx.$ecNumber = ecNumber;
@@ -438,7 +438,7 @@ class Validator extends BaseVisitor {
       this.addError(
         commandToken[0],
         "Missing closing }",
-        "This loop has mismatched brackets, add a corresponding } on another line to close the loop"
+        "This loop has mismatched brackets, add a corresponding } on another line to close the loop",
       );
       hadError = true;
     }
@@ -446,7 +446,7 @@ class Validator extends BaseVisitor {
       this.addError(
         commandToken[0],
         "Missing opening {",
-        "This line has an extra } closing a loop which does not exist, remove the }"
+        "This line has an extra } closing a loop which does not exist, remove the }",
       );
       hadError = true;
     }
@@ -466,7 +466,7 @@ class Compiler extends BaseVisitor {
     for (const cmd of AutomatorCommands) {
       if (!cmd.compile) continue;
       const ownMethod = this[cmd.id];
-      // eslint-disable-next-line no-loop-func
+       
       this[cmd.id] = (ctx, output) => {
         // For the compiler, we don't bother doing the default recursive visitation behavior
         if (ownMethod && ownMethod !== super[cmd.id]) ownMethod.call(this, ctx, output);
@@ -522,7 +522,7 @@ class Blockifier extends BaseVisitor {
       const blockify = cmd.blockify;
       if (!blockify) continue;
       const ownMethod = this[cmd.id];
-      // eslint-disable-next-line no-loop-func
+       
       this[cmd.id] = (ctx, output) => {
         if (ownMethod && ownMethod !== super[cmd.id]) ownMethod.call(this, ctx, output);
         try {

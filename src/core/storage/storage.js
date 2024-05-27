@@ -290,7 +290,7 @@ export const GameStorage = {
     const currentTime = Date.now();
     const offlineTimeMs = currentTime - this.lastUpdateOnLoad;
     const offlineSlots = AutoBackupSlots.filter((slot) => slot.type === BACKUP_SLOT_TYPE.OFFLINE).sort(
-      (a, b) => b.interval - a.interval
+      (a, b) => b.interval - a.interval,
     );
     for (const backupInfo of offlineSlots) {
       if (offlineTimeMs > 1000 * backupInfo.interval) {
@@ -370,7 +370,7 @@ export const GameStorage = {
     download(
       `AD Save, Slot ${GameStorage.currentSlot + 1}${saveFileName} #${player.options.exportedFileCount} \
 (${this.exportDateString}).txt`,
-      save
+      save,
     );
     GameUI.notify.info("Successfully downloaded current save file to your computer");
   },
@@ -386,7 +386,7 @@ export const GameStorage = {
     download(
       `AD Save Backups, Slot ${GameStorage.currentSlot + 1} #${player.options.exportedFileCount} \
 (${this.exportDateString}).txt`,
-      GameSaveSerializer.serialize(backupData)
+      GameSaveSerializer.serialize(backupData),
     );
     GameUI.notify.info("Successfully downloaded save file backups to your computer");
   },

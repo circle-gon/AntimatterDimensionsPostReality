@@ -15,7 +15,7 @@ NormalTimeStudies.pathList = [
 
 NormalTimeStudies.paths = NormalTimeStudies.pathList.mapToObject(
   (e) => e.path,
-  (e) => e.studies
+  (e) => e.studies,
 );
 
 export class NormalTimeStudyState extends TimeStudyState {
@@ -90,7 +90,7 @@ export class NormalTimeStudyState extends TimeStudyState {
     player.timestudy.studies.push(this.id);
     player.requirementChecks.reality.maxStudies = Math.clampMin(
       player.requirementChecks.reality.maxStudies,
-      player.timestudy.studies.length
+      player.timestudy.studies.length,
     );
     if (this.id > 300) player.requirementChecks.reality.noTriads = false;
     Currency.timeTheorems.subtract(this.cost);
@@ -111,7 +111,7 @@ export class NormalTimeStudyState extends TimeStudyState {
 
 NormalTimeStudyState.studies = mapGameData(
   GameDatabase.eternity.timeStudies.normal,
-  (config) => new NormalTimeStudyState(config)
+  (config) => new NormalTimeStudyState(config),
 );
 
 NormalTimeStudyState.all = NormalTimeStudyState.studies.filter((e) => e !== undefined);

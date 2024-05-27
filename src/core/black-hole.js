@@ -7,7 +7,7 @@ class BlackHoleUpgradeState {
     this.incrementAmount = () => setAmount(getAmount() + 1);
     this._lazyValue = new Lazy(() => calculateValue(getAmount()));
     this._lazyCost = new Lazy(() =>
-      getHybridCostScaling(getAmount(), 1e30, initialCost, costMult, 0.2, DC.E310, 1e5, 10)
+      getHybridCostScaling(getAmount(), 1e30, initialCost, costMult, 0.2, DC.E310, 1e5, 10),
     );
     this.id = config.id;
     this.hasAutobuyer = config.hasAutobuyer;
@@ -369,7 +369,7 @@ export const BlackHoles = {
     return Math.clamp(
       (player.records.realTimePlayed - player.blackHolePauseTime) / (1000 * this.ACCELERATION_TIME),
       0,
-      1
+      1,
     );
   },
 
@@ -448,7 +448,7 @@ export const BlackHoles = {
       totalRealTime,
       (x) => this.calculateGameTimeFromRealTime(x, speedups).mul(numberOfTicks).div(totalGameTime),
       1,
-      tolerance
+      tolerance,
     );
     const blackHoleSpeedup = this.calculateGameTimeFromRealTime(realTickTime, speedups).div(realTickTime);
     return [realTickTime, blackHoleSpeedup];

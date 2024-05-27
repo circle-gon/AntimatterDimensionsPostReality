@@ -31,7 +31,7 @@ const Payments = {
     Payments.windowReference = window.open(
       data.url,
       "antimatterDimensionsPurchase",
-      "popup,width=500,height=500,left=100,top=100"
+      "popup,width=500,height=500,left=100,top=100",
     );
     player.IAP.checkoutSession = { id: data.id, amount: STD };
     GameStorage.save();

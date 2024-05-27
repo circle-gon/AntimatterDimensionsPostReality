@@ -17,7 +17,7 @@ export function updateNormalAndInfinityChallenges(diff) {
         `Your ${format(values[0], 2, 2)} antimatter was annihilated
         by ${format(values[1], 2, 2)} matter.`,
         { closeEvent: GAME_EVENT.BIG_CRUNCH_AFTER },
-        1
+        1,
       );
     }
   }

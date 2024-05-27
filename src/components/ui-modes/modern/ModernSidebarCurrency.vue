@@ -97,7 +97,9 @@ export default {
 
 .t-dark .c-sidebar-resource h2,
 .t-dark-metro .c-sidebar-resource h2 {
-  text-shadow: 0 0 0.1rem rgba(0, 0, 0, 50%), -0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 80%);
+  text-shadow:
+    0 0 0.1rem rgba(0, 0, 0, 50%),
+    -0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 80%);
 }
 
 .c-sidebar-resource__information {

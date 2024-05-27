@@ -1021,7 +1021,7 @@ export const normalAchievements = [
     checkRequirement: () =>
       AchievementTimers.marathon2.check(
         !EternityChallenge(7).isRunning && InfinityDimension(1).productionPerSecond.gt(Currency.infinityPower.value),
-        60
+        60,
       ),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
@@ -1403,7 +1403,7 @@ export const normalAchievements = [
     checkRequirement: () =>
       gainedGlyphLevel().actualLevel >= 5000 &&
       ["repl", "dt", "eternities"].every(
-        (i) => player.celestials.effarig.glyphWeights[i] === player.celestials.effarig.glyphWeights.ep
+        (i) => player.celestials.effarig.glyphWeights[i] === player.celestials.effarig.glyphWeights.ep,
       ),
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     reward: "Unlock optimal automatic Glyph level factor adjustment.",
@@ -1538,7 +1538,9 @@ export const normalAchievements = [
     name: "One more time",
     description: "Permanently gain back all Antimatter Dimension autobuyers.",
     checkRequirement: () =>
-      Pelle.isDoomed && PelleUpgrade.antimatterDimAutobuyers1.canBeApplied && PelleUpgrade.antimatterDimAutobuyers2.canBeApplied,
+      Pelle.isDoomed &&
+      PelleUpgrade.antimatterDimAutobuyers1.canBeApplied &&
+      PelleUpgrade.antimatterDimAutobuyers2.canBeApplied,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
   {

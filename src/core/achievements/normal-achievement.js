@@ -39,7 +39,7 @@ class AchievementState extends GameMechanicState {
   }
 
   get isAM6() {
-    return this.row >= 14 && this.row < 18
+    return this.row >= 14 && this.row < 18;
   }
 
   get isUnlocked() {
@@ -70,7 +70,7 @@ class AchievementState extends GameMechanicState {
 
   unlock(auto) {
     if (this.isUnlocked) return;
-    this.give()
+    this.give();
     if (this.id === 85 || this.id === 93) {
       Autobuyer.bigCrunch.bumpAmount(4);
     }
@@ -80,7 +80,7 @@ class AchievementState extends GameMechanicState {
         Instead of the Dimensions disappearing, they stay and the Big Crunch button appears on top of them.
         This is purely visual, and is there to prevent flickering.`,
         {},
-        3
+        3,
       );
     }
     if (this.id === 148 || this.id === 166) {
@@ -158,7 +158,7 @@ export const Achievements = {
   },
 
   get AM6Rows() {
-    return Achievements.rows(14, 17)
+    return Achievements.rows(14, 17);
   },
 
   get preAtomRows() {

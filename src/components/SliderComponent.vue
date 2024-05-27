@@ -262,8 +262,8 @@ export default {
       return this.tooltip === "hover" && this.flag
         ? "ad-slider-always"
         : this.tooltip
-        ? `ad-slider-${this.tooltip}`
-        : "";
+          ? `ad-slider-${this.tooltip}`
+          : "";
     },
     tooltipClass() {
       return [`ad-slider-tooltip-${this.tooltipDirection}`, "ad-slider-tooltip"];
@@ -707,8 +707,8 @@ export default {
           ? e.clientY - rect.top
           : this.size - (e.clientY - rect.top)
         : this.reverse
-        ? this.size - (e.clientX - rect.left)
-        : e.clientX - rect.left;
+          ? this.size - (e.clientX - rect.left)
+          : e.clientX - rect.left;
     },
     processClick(e) {
       if (this.fixed) {
@@ -822,7 +822,7 @@ export default {
             (v * this.multiple + this.fixedValue * this.spacing * this.multiple * (this.currentSlider === 0 ? 1 : -1)) /
               this.multiple,
             isDrag,
-            true
+            true,
           );
         }
       } else {
@@ -948,7 +948,7 @@ export default {
       const slider = isIdleSlider ? this.idleSlider : this.currentSlider;
       const value = roundToDPR(
         (this.direction === "vertical" ? this.dotAxialSizePx / 2 - val : val - this.dotAxialSizePx / 2) *
-          (this.reverse ? -1 : 1)
+          (this.reverse ? -1 : 1),
       );
       const translateValue =
         this.direction === "vertical" ? `translate(-50%, ${value}px)` : `translate(${value}px, -50%)`;
@@ -999,13 +999,13 @@ export default {
       const inRange = (v) => {
         if (v < this.min) {
           this.printError(
-            `The value of the slider is ${val}, the minimum value is ${this.min}, the value of this slider can not be less than the minimum value`
+            `The value of the slider is ${val}, the minimum value is ${this.min}, the value of this slider can not be less than the minimum value`,
           );
           return this.min;
         }
         if (v > this.max) {
           this.printError(
-            `The value of the slider is ${val}, the maximum value is ${this.max}, the value of this slider can not be greater than the maximum value`
+            `The value of the slider is ${val}, the maximum value is ${this.max}, the value of this slider can not be greater than the maximum value`,
           );
           return this.max;
         }

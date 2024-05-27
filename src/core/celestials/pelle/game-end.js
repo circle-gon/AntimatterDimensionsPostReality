@@ -19,13 +19,13 @@ export const GameEnd = {
       (Math.log10(player.celestials.pelle.records.totalAntimatter.plus(1).log10() + 1) - 8.7) /
         (Math.log10(9e15) - 8.7) +
         this.additionalEnd,
-      0
+      0,
     );
   },
 
   _additionalEnd: 0,
   get additionalEnd() {
-    // don't hide the tabs
+    // Don't hide the tabs
     return Math.min(player.isGameEnd || this.removeAdditionalEnd ? this._additionalEnd : 0, 0.499);
   },
   set additionalEnd(x) {

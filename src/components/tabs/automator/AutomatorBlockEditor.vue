@@ -168,7 +168,7 @@ export const BlockAutomator = {
     return block.nested
       ? Math.max(
           block.nest.reduce((v, b) => v + this.numberOfLinesInBlock(b), 1),
-          2
+          2,
         )
       : 1;
   },

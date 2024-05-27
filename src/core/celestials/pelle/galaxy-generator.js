@@ -32,24 +32,24 @@ export const GalaxyGenerator = {
         GalaxyGeneratorUpgrades.multiplicative,
         GalaxyGeneratorUpgrades.antimatterMult,
         GalaxyGeneratorUpgrades.IPMult,
-        GalaxyGeneratorUpgrades.EPMult
+        GalaxyGeneratorUpgrades.EPMult,
       )
       .toNumber();
 
-    if (AtomMilestone.am1.isReached) gain *= 2
-    if (AtomMilestone.am2.isReached) gain *= 2
-    if (AtomMilestone.am3.isReached) gain *= 2
+    if (AtomMilestone.am1.isReached) gain *= 2;
+    if (AtomMilestone.am2.isReached) gain *= 2;
+    if (AtomMilestone.am3.isReached) gain *= 2;
 
     return gain;
   },
 
   get drainSpeed() {
-    let drain = 0.03
-    if (AtomMilestone.am1.isReached) drain *= 2
-    if (AtomMilestone.am2.isReached) drain *= 2
-    if (AtomMilestone.am3.isReached) drain *= 2
-    if (AtomMilestone.am4.isReached) drain = Infinity
-    return drain
+    let drain = 0.03;
+    if (AtomMilestone.am1.isReached) drain *= 2;
+    if (AtomMilestone.am2.isReached) drain *= 2;
+    if (AtomMilestone.am3.isReached) drain *= 2;
+    if (AtomMilestone.am4.isReached) drain = Infinity;
+    return drain;
   },
 
   get capObj() {
@@ -80,7 +80,7 @@ export const GalaxyGenerator = {
   loop(diff) {
     if (this.isCapped) {
       Pelle.quotes.galaxyGeneratorRifts.show();
-      if (AtomMilestone.am7.isReached) this.startSacrifice()
+      if (AtomMilestone.am7.isReached) this.startSacrifice();
     }
     if (this.sacrificeActive) {
       this.capRift.reducedTo = Math.max(this.capRift.reducedTo - (this.drainSpeed * diff) / 1000, 0);
@@ -112,7 +112,7 @@ export const GalaxyGenerator = {
     player.celestials.pelle.galaxyGenerator.generatedGalaxies += (this.gainPerSecond * diff) / 1000;
     player.celestials.pelle.galaxyGenerator.generatedGalaxies = Math.min(
       player.celestials.pelle.galaxyGenerator.generatedGalaxies,
-      this.generationCap
+      this.generationCap,
     );
 
     if (!this.capRift) {
@@ -150,5 +150,5 @@ export class GalaxyGeneratorUpgrade extends RebuyableMechanicState {
 
 export const GalaxyGeneratorUpgrades = mapGameDataToObject(
   GameDatabase.celestials.pelle.galaxyGeneratorUpgrades,
-  (config) => new GalaxyGeneratorUpgrade(config)
+  (config) => new GalaxyGeneratorUpgrade(config),
 );

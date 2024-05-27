@@ -19,7 +19,7 @@ export class NonRepeatableImaginaryUpgradeAutobuyerState extends AutobuyerState 
 
   tick() {
     for (let i = 11; i <= 25; i++) {
-      ImaginaryUpgrade(i).purchase()
+      ImaginaryUpgrade(i).purchase();
     }
   }
 }

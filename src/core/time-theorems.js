@@ -168,7 +168,7 @@ export const TimeTheorems = {
       Modal.message.show(
         `You need to buy at least ${formatInt(1)} Time Dimension before you can purchase
       Time Theorems.`,
-        { closeEvent: GAME_EVENT.REALITY_RESET_AFTER }
+        { closeEvent: GAME_EVENT.REALITY_RESET_AFTER },
       );
     return false;
   },

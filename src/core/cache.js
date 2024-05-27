@@ -48,21 +48,21 @@ export const GameCache = {
   worstChallengeTime: new Lazy(() => player.challenge.normal.bestTimes.maxDecimal()),
 
   bestRunIPPM: new Lazy(() =>
-    player.records.recentInfinities.map((run) => ratePerMinute(run[2], run[0])).reduce(Decimal.maxReducer)
+    player.records.recentInfinities.map((run) => ratePerMinute(run[2], run[0])).reduce(Decimal.maxReducer),
   ),
 
   averageRealTimePerEternity: new Lazy(
     () =>
       player.records.recentEternities.map((run) => run[1]).reduce(Number.sumReducer) /
-      (1000 * player.records.recentEternities.length)
+      (1000 * player.records.recentEternities.length),
   ),
 
   tickSpeedMultDecrease: new Lazy(
-    () => 10 - Effects.sum(BreakInfinityUpgrade.tickspeedCostMult, EternityChallenge(11).reward)
+    () => 10 - Effects.sum(BreakInfinityUpgrade.tickspeedCostMult, EternityChallenge(11).reward),
   ),
 
   dimensionMultDecrease: new Lazy(
-    () => 10 - Effects.sum(BreakInfinityUpgrade.dimCostMult, EternityChallenge(6).reward)
+    () => 10 - Effects.sum(BreakInfinityUpgrade.dimCostMult, EternityChallenge(6).reward),
   ),
 
   timeStudies: new Lazy(() => NormalTimeStudyState.studies.map((s) => player.timestudy.studies.includes(s.id))),
@@ -72,8 +72,9 @@ export const GameCache = {
   achievementPeriod: new Lazy(
     () =>
       TimeSpan.fromMinutes(
-        30 - Effects.sum(Perk.achievementGroup1, Perk.achievementGroup2, Perk.achievementGroup3, Perk.achievementGroup4)
-      ).totalMilliseconds
+        30 -
+          Effects.sum(Perk.achievementGroup1, Perk.achievementGroup2, Perk.achievementGroup3, Perk.achievementGroup4),
+      ).totalMilliseconds,
   ),
 
   buyablePerks: new Lazy(() => Perks.all.filter((p) => p.canBeBought)),
@@ -85,7 +86,7 @@ export const GameCache = {
       .concat(Autobuyer.tickspeed)
       .filter((ab) => !(ab.isBought || ab.isUnlocked))
       .map((ab) => ab.antimatterCost.toNumber())
-      .min()
+      .min(),
   ),
 
   // The effect is defined in antimatter_dimensions.js because that's where the non-cached
@@ -94,7 +95,7 @@ export const GameCache = {
 
   // 0 will cause a crash if invoked; this way the tier can be used as an index
   antimatterDimensionFinalMultipliers: Array.range(0, 9).map(
-    (tier) => new Lazy(() => getDimensionFinalMultiplierUncached(tier))
+    (tier) => new Lazy(() => getDimensionFinalMultiplierUncached(tier)),
   ),
 
   infinityDimensionCommonMultiplier: new Lazy(() => infinityDimensionCommonMultiplier()),
@@ -106,8 +107,8 @@ export const GameCache = {
   glyphEffects: new Lazy(() =>
     orderedEffectList.mapToObject(
       (k) => k,
-      (k) => getAdjustedGlyphEffectUncached(k)
-    )
+      (k) => getAdjustedGlyphEffectUncached(k),
+    ),
   ),
 
   staticGlyphWeights: new Lazy(() => staticGlyphWeights()),
@@ -128,7 +129,7 @@ EventHub.logic.on(
     GameCache.glyphEffects.invalidate();
     GameCache.staticGlyphWeights.invalidate();
   },
-  GameCache.glyphEffects
+  GameCache.glyphEffects,
 );
 
 GameCache.antimatterDimensionFinalMultipliers.invalidate = function () {

@@ -106,12 +106,12 @@ export default {
       const teresaReward = this.formatScalingMultiplierText(
         "Glyph Sacrifice",
         Teresa.runRewardMultiplier,
-        Teresa.runRewardMultiplier.max(Teresa.rewardMultiplier(Currency.antimatter.value))
+        Teresa.runRewardMultiplier.max(Teresa.rewardMultiplier(Currency.antimatter.value)),
       );
       const teresaThreshold = this.formatThresholdText(
         Teresa.rewardMultiplier(Currency.antimatter.value).gt(Teresa.runRewardMultiplier),
         player.celestials.teresa.bestRunAM,
-        "antimatter"
+        "antimatter",
       );
       this.celestialRunText = [[Teresa.isRunning, teresaReward, teresaThreshold]];
     },

@@ -7,9 +7,16 @@ export class PelleUpgradeAutobuyerState extends AutobuyerState {
   }
 
   get name() {
-    if (this.id <= 5) return ["Antimatter Dimension Mult", "Game Speed Mult", "Glyph Level Max", "Infinity Power Conversion Rate", "Galaxy Power Mult"][this.id - 1];
-    const name = ["Additive", "Multiplicative", "AM", "IP", "EP"][this.id - 6]
-    return `Galaxy Generator ${name} Boost`
+    if (this.id <= 5)
+      return [
+        "Antimatter Dimension Mult",
+        "Game Speed Mult",
+        "Glyph Level Max",
+        "Infinity Power Conversion Rate",
+        "Galaxy Power Mult",
+      ][this.id - 1];
+    const name = ["Additive", "Multiplicative", "AM", "IP", "EP"][this.id - 6];
+    return `Galaxy Generator ${name} Boost`;
   }
 
   get isUnlocked() {
@@ -21,8 +28,8 @@ export class PelleUpgradeAutobuyerState extends AutobuyerState {
   }
 
   tick() {
-    if (this.id <= 5) PelleUpgrade.rebuyables[this.id - 1].purchase()
-    else if (player.celestials.pelle.galaxyGenerator.unlocked) GalaxyGeneratorUpgrades.all[this.id - 6].purchase()
+    if (this.id <= 5) PelleUpgrade.rebuyables[this.id - 1].purchase();
+    else if (player.celestials.pelle.galaxyGenerator.unlocked) GalaxyGeneratorUpgrades.all[this.id - 6].purchase();
   }
 
   static get entryCount() {

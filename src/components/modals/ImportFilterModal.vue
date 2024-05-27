@@ -55,7 +55,7 @@ export default {
     },
     selectStr() {
       return this.changedValue(this.parsedSettings.select, this.currentSettings.select, (x) =>
-        AutoGlyphProcessor.filterModeName(x)
+        AutoGlyphProcessor.filterModeName(x),
       );
     },
     basicCountStr() {
@@ -63,7 +63,7 @@ export default {
     },
     trashStr() {
       return this.changedValue(this.parsedSettings.trash, this.currentSettings.trash, (x) =>
-        AutoGlyphProcessor.trashModeDesc(x)
+        AutoGlyphProcessor.trashModeDesc(x),
       );
     },
     // Hide effarig if it hasn't been unlocked yet

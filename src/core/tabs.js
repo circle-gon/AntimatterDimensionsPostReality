@@ -185,7 +185,7 @@ class TabState {
 
 export const Tab = GameDatabase.tabs.mapToObject(
   (config) => config.key,
-  (config) => new TabState(config)
+  (config) => new TabState(config),
 );
 
 export const Tabs = (function () {

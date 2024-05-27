@@ -145,7 +145,7 @@ class EffarigUnlockState extends BitUpgradeState {
 
 export const EffarigUnlock = mapGameDataToObject(
   GameDatabase.celestials.effarig.unlocks,
-  (config) => new EffarigUnlockState(config)
+  (config) => new EffarigUnlockState(config),
 );
 
 EventHub.logic.on(GAME_EVENT.TAB_CHANGED, () => {

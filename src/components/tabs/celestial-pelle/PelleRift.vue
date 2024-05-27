@@ -127,7 +127,9 @@ export default {
   border-radius: var(--var-border-radius, 0.5rem);
 
   /* transparent crimson */
-  box-shadow: inset 0 0 1rem 0.1rem rgba(237, 20, 61, 45%), 0 0 1rem 0.1rem rgba(237, 20, 61, 45%);
+  box-shadow:
+    inset 0 0 1rem 0.1rem rgba(237, 20, 61, 45%),
+    0 0 1rem 0.1rem rgba(237, 20, 61, 45%);
   margin-top: 1.2rem;
   padding: 0.5rem;
 }

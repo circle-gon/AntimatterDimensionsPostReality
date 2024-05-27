@@ -32,7 +32,7 @@ export default {
       suggestions.push(
         warnOverwrite
           ? `<b ${badStyle}>would cause your local save to lose significant progress</b>`
-          : `<b ${goodStyle}>is probably safe</b>`
+          : `<b ${goodStyle}>is probably safe</b>`,
       );
       if (this.hasDifferentName) {
         suggestions.push(`<br>${warnOverwrite ? "Additionally" : "However"}, the Cloud save

@@ -42,7 +42,7 @@ export function antimatterDimensionCommonMultiplier() {
     InfinityChallenge(8),
     EternityChallenge(10),
     AlchemyResource.dimensionality,
-    PelleUpgrade.antimatterDimensionMult
+    PelleUpgrade.antimatterDimensionMult,
   );
 
   multiplier -= Effects.log10Sum(InfinityChallenge(6));
@@ -115,7 +115,7 @@ export function applyNDMultipliers(mult, tier) {
       Achievement(31),
       Achievement(68),
       Achievement(71),
-      TimeStudy(234)
+      TimeStudy(234),
     );
   }
   if (tier === 8) {
@@ -128,7 +128,7 @@ export function applyNDMultipliers(mult, tier) {
     tier <= 4 ? Achievement(64) : null,
     tier < 8 ? TimeStudy(71) : null,
     tier === 8 ? TimeStudy(214) : null,
-    tier > 1 && tier < 8 ? InfinityChallenge(8).reward : null
+    tier > 1 && tier < 8 ? InfinityChallenge(8).reward : null,
   );
   if (Achievement(43).isUnlocked) {
     multiplier += Math.log10(1 + tier / 100);
@@ -158,7 +158,7 @@ function applyNDPowers(mult, tier) {
     InfinityUpgrade.totalTimeMult.chargedEffect,
     InfinityUpgrade.thisInfinityTimeMult.chargedEffect,
     AlchemyResource.power,
-    Achievement(183)
+    Achievement(183),
   );
 
   multiplier *= PelleRifts.paradox.effectValue.toNumber();
@@ -318,7 +318,7 @@ export function buyMaxDimension(tier, bulk = Infinity) {
   const maxBought = dimension.costScale.getMaxBought(
     Math.floor(dimension.bought / 10) + dimension.costBumps,
     dimension.currencyAmount,
-    10
+    10,
   );
   if (maxBought === null) {
     return;

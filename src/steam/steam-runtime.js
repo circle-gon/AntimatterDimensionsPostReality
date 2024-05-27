@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+ 
 import { RichPresenceInfo } from "@/core/discord-parser";
 
 import {

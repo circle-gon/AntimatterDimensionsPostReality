@@ -151,12 +151,12 @@ class TeresaUnlockState extends BitUpgradeState {
 
 export const TeresaUnlocks = mapGameDataToObject(
   GameDatabase.celestials.teresa.unlocks,
-  (config) => new TeresaUnlockState(config)
+  (config) => new TeresaUnlockState(config),
 );
 
 export const PerkShopUpgrade = mapGameDataToObject(
   GameDatabase.celestials.perkShop,
-  (config) => new PerkShopUpgradeState(config)
+  (config) => new PerkShopUpgradeState(config),
 );
 
 EventHub.logic.on(GAME_EVENT.TAB_CHANGED, () => {

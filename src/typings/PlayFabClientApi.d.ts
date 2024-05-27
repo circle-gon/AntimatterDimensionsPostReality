@@ -16,7 +16,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.AcceptTradeRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.AcceptTradeResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.AcceptTradeResponse>>;
     /**
      * Adds the PlayFab user, based upon a match against a supplied unique identifier, to the friend list of the local user. At
@@ -27,7 +27,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.AddFriendRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.AddFriendResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.AddFriendResult>>;
     /**
      * Adds the specified generic service identifier to the player's PlayFab account. This is designed to allow for a PlayFab
@@ -39,7 +39,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.AddGenericIDRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.AddGenericIDResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.AddGenericIDResult>>;
     /**
      * Adds or updates a contact email to the player's profile.
@@ -49,7 +49,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.AddOrUpdateContactEmailRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.AddOrUpdateContactEmailResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.AddOrUpdateContactEmailResult>>;
     /**
      * Adds users to the set of those able to update both the shared data, as well as the set of users in the group. Only users
@@ -61,7 +61,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.AddSharedGroupMembersRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.AddSharedGroupMembersResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.AddSharedGroupMembersResult>>;
     /**
      * Adds playfab username/password auth to an existing account created via an anonymous auth method, e.g. automatic device
@@ -72,7 +72,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.AddUsernamePasswordRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.AddUsernamePasswordResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.AddUsernamePasswordResult>>;
     /**
      * Increments the user's balance of the specified virtual currency by the stated amount
@@ -82,7 +82,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.AddUserVirtualCurrencyRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ModifyUserVirtualCurrencyResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ModifyUserVirtualCurrencyResult>>;
     /**
      * Registers the Android device to receive push notifications
@@ -92,7 +92,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.AndroidDevicePushNotificationRegistrationRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.AndroidDevicePushNotificationRegistrationResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.AndroidDevicePushNotificationRegistrationResult>>;
     /**
      * Attributes an install for advertisment.
@@ -102,7 +102,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.AttributeInstallRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.AttributeInstallResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.AttributeInstallResult>>;
     /**
      * Cancels an open trade (one that has not yet been accepted or cancelled). Note that only the player who created the trade
@@ -114,7 +114,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.CancelTradeRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.CancelTradeResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.CancelTradeResponse>>;
     /**
      * Confirms with the payment provider that the purchase was approved (if applicable) and adjusts inventory and virtual
@@ -125,7 +125,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ConfirmPurchaseRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ConfirmPurchaseResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ConfirmPurchaseResult>>;
     /**
      * Consume uses of a consumable item. When all uses are consumed, it will be removed from the player's inventory.
@@ -135,7 +135,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ConsumeItemRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ConsumeItemResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ConsumeItemResult>>;
     /**
      * Grants the player's current entitlements from Microsoft Store's Collection API
@@ -145,7 +145,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ConsumeMicrosoftStoreEntitlementsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ConsumeMicrosoftStoreEntitlementsResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ConsumeMicrosoftStoreEntitlementsResponse>>;
     /**
      * Checks for any new consumable entitlements. If any are found, they are consumed (if they're consumables) and added as
@@ -156,7 +156,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ConsumePS5EntitlementsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ConsumePS5EntitlementsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ConsumePS5EntitlementsResult>>;
     /**
      * Checks for any new consumable entitlements. If any are found, they are consumed and added as PlayFab items
@@ -166,7 +166,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ConsumePSNEntitlementsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ConsumePSNEntitlementsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ConsumePSNEntitlementsResult>>;
     /**
      * Grants the player's current entitlements from Xbox Live, consuming all availble items in Xbox and granting them to the
@@ -177,7 +177,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ConsumeXboxEntitlementsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ConsumeXboxEntitlementsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ConsumeXboxEntitlementsResult>>;
     /**
      * Requests the creation of a shared group object, containing key/value pairs which may be updated by all members of the
@@ -190,7 +190,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.CreateSharedGroupRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.CreateSharedGroupResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.CreateSharedGroupResult>>;
     /**
      * Executes a CloudScript function, with the 'currentPlayerId' set to the PlayFab ID of the authenticated player. The
@@ -201,7 +201,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ExecuteCloudScriptRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ExecuteCloudScriptResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ExecuteCloudScriptResult>>;
     /**
      * Retrieves the user's PlayFab account details
@@ -211,7 +211,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetAccountInfoRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetAccountInfoResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetAccountInfoResult>>;
     /**
      * Returns a list of ad placements and a reward for each
@@ -221,7 +221,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetAdPlacementsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetAdPlacementsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetAdPlacementsResult>>;
     /**
      * Lists all of the characters that belong to a specific user. CharacterIds are not globally unique; characterId must be
@@ -232,7 +232,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ListUsersCharactersRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ListUsersCharactersResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ListUsersCharactersResult>>;
     /**
      * Retrieves the specified version of the title's catalog of virtual goods, including all defined properties
@@ -242,7 +242,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetCatalogItemsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetCatalogItemsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetCatalogItemsResult>>;
     /**
      * Retrieves the title-specific custom data for the character which is readable and writable by the client
@@ -252,7 +252,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetCharacterDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetCharacterDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetCharacterDataResult>>;
     /**
      * Retrieves the specified character's current inventory of virtual goods
@@ -262,7 +262,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetCharacterInventoryRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetCharacterInventoryResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetCharacterInventoryResult>>;
     /**
      * Retrieves a list of ranked characters for the given statistic, starting from the indicated point in the leaderboard
@@ -272,7 +272,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetCharacterLeaderboardRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetCharacterLeaderboardResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetCharacterLeaderboardResult>>;
     /**
      * Retrieves the title-specific custom data for the character which can only be read by the client
@@ -282,7 +282,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetCharacterDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetCharacterDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetCharacterDataResult>>;
     /**
      * Retrieves the details of all title-specific statistics for the user
@@ -292,7 +292,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetCharacterStatisticsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetCharacterStatisticsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetCharacterStatisticsResult>>;
     /**
      * This API retrieves a pre-signed URL for accessing a content file for the title. A subsequent HTTP GET to the returned
@@ -307,7 +307,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetContentDownloadUrlRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetContentDownloadUrlResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetContentDownloadUrlResult>>;
     /**
      * Get details about all current running game servers matching the given parameters.
@@ -317,7 +317,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.CurrentGamesRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.CurrentGamesResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.CurrentGamesResult>>;
     /**
      * Retrieves a list of ranked friends of the current player for the given statistic, starting from the indicated point in
@@ -328,7 +328,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetFriendLeaderboardRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetLeaderboardResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetLeaderboardResult>>;
     /**
      * Retrieves a list of ranked friends of the current player for the given statistic, centered on the requested PlayFab
@@ -339,7 +339,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetFriendLeaderboardAroundPlayerRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetFriendLeaderboardAroundPlayerResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetFriendLeaderboardAroundPlayerResult>>;
     /**
      * Retrieves the current friend list for the local user, constrained to users who have PlayFab accounts. Friends from
@@ -350,7 +350,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetFriendsListRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetFriendsListResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetFriendsListResult>>;
     /**
      * Get details about the regions hosting game servers matching the given parameters.
@@ -360,7 +360,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GameServerRegionsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GameServerRegionsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GameServerRegionsResult>>;
     /**
      * Retrieves a list of ranked users for the given statistic, starting from the indicated point in the leaderboard
@@ -370,7 +370,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetLeaderboardRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetLeaderboardResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetLeaderboardResult>>;
     /**
      * Retrieves a list of ranked characters for the given statistic, centered on the requested Character ID
@@ -380,7 +380,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetLeaderboardAroundCharacterRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetLeaderboardAroundCharacterResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetLeaderboardAroundCharacterResult>>;
     /**
      * Retrieves a list of ranked users for the given statistic, centered on the requested player. If PlayFabId is empty or
@@ -391,7 +391,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetLeaderboardAroundPlayerRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetLeaderboardAroundPlayerResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetLeaderboardAroundPlayerResult>>;
     /**
      * Retrieves a list of all of the user's characters for the given statistic.
@@ -401,7 +401,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetLeaderboardForUsersCharactersRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetLeaderboardForUsersCharactersResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetLeaderboardForUsersCharactersResult>>;
     /**
      * For payments flows where the provider requires playfab (the fulfiller) to initiate the transaction, but the client
@@ -413,7 +413,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPaymentTokenRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPaymentTokenResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPaymentTokenResult>>;
     /**
      * Gets a Photon custom authentication token that can be used to securely join the player into a Photon room. See
@@ -424,7 +424,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPhotonAuthenticationTokenRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPhotonAuthenticationTokenResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPhotonAuthenticationTokenResult>>;
     /**
      * Retrieves all of the user's different kinds of info.
@@ -434,7 +434,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayerCombinedInfoRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerCombinedInfoResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerCombinedInfoResult>>;
     /**
      * Retrieves the player's profile
@@ -444,7 +444,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayerProfileRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerProfileResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerProfileResult>>;
     /**
      * List all segments that a player currently belongs to at this moment in time.
@@ -454,7 +454,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayerSegmentsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerSegmentsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerSegmentsResult>>;
     /**
      * Retrieves the indicated statistics (current version and values for all statistics, if none are specified), for the local
@@ -465,7 +465,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayerStatisticsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerStatisticsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerStatisticsResult>>;
     /**
      * Retrieves the information on the available versions of the specified statistic.
@@ -475,7 +475,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayerStatisticVersionsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerStatisticVersionsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerStatisticVersionsResult>>;
     /**
      * Get all tags with a given Namespace (optional) from a player profile.
@@ -485,7 +485,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayerTagsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerTagsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerTagsResult>>;
     /**
      * Gets all trades the player has either opened or accepted, optionally filtered by trade status.
@@ -495,7 +495,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayerTradesRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerTradesResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayerTradesResponse>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of Facebook identifiers.
@@ -505,7 +505,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromFacebookIDsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromFacebookIDsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromFacebookIDsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of Facebook Instant Game identifiers.
@@ -515,7 +515,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromFacebookInstantGamesIdsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromFacebookInstantGamesIdsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromFacebookInstantGamesIdsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of Game Center identifiers (referenced in the Game Center
@@ -526,7 +526,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromGameCenterIDsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromGameCenterIDsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromGameCenterIDsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of generic service identifiers. A generic identifier is the
@@ -538,7 +538,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromGenericIDsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromGenericIDsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromGenericIDsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of Google identifiers. The Google identifiers are the IDs for
@@ -549,7 +549,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromGoogleIDsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromGoogleIDsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromGoogleIDsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of Google Play Games identifiers. The Google Play Games
@@ -561,7 +561,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromGooglePlayGamesPlayerIDsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromGooglePlayGamesPlayerIDsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromGooglePlayGamesPlayerIDsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of Kongregate identifiers. The Kongregate identifiers are the
@@ -573,7 +573,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromKongregateIDsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromKongregateIDsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromKongregateIDsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of Nintendo Service Account identifiers.
@@ -583,7 +583,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromNintendoServiceAccountIdsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromNintendoServiceAccountIdsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromNintendoServiceAccountIdsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of Nintendo Switch Device identifiers.
@@ -593,7 +593,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromNintendoSwitchDeviceIdsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromNintendoSwitchDeviceIdsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of PlayStation :tm: Network identifiers.
@@ -603,7 +603,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromPSNAccountIDsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromPSNAccountIDsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromPSNAccountIDsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of Steam identifiers. The Steam identifiers are the profile
@@ -614,7 +614,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromSteamIDsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromSteamIDsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromSteamIDsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of Twitch identifiers. The Twitch identifiers are the IDs for
@@ -626,7 +626,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromTwitchIDsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromTwitchIDsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromTwitchIDsResult>>;
     /**
      * Retrieves the unique PlayFab identifiers for the given set of XboxLive identifiers.
@@ -636,7 +636,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPlayFabIDsFromXboxLiveIDsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromXboxLiveIDsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPlayFabIDsFromXboxLiveIDsResult>>;
     /**
      * Retrieves the key-value store of custom publisher settings
@@ -646,7 +646,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPublisherDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPublisherDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPublisherDataResult>>;
     /**
      * Retrieves a purchase along with its current PlayFab status. Returns inventory items from the purchase that are still
@@ -657,7 +657,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetPurchaseRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetPurchaseResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetPurchaseResult>>;
     /**
      * Retrieves data stored in a shared group object, as well as the list of members in the group. Non-members of the group
@@ -670,7 +670,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetSharedGroupDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetSharedGroupDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetSharedGroupDataResult>>;
     /**
      * Retrieves the set of items defined for the specified store, including all prices defined
@@ -680,7 +680,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetStoreItemsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetStoreItemsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetStoreItemsResult>>;
     /**
      * Retrieves the current server time
@@ -690,7 +690,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetTimeRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetTimeResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetTimeResult>>;
     /**
      * Retrieves the key-value store of custom title settings
@@ -700,7 +700,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetTitleDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetTitleDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetTitleDataResult>>;
     /**
      * Retrieves the title news feed, as configured in the developer portal
@@ -710,7 +710,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetTitleNewsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetTitleNewsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetTitleNewsResult>>;
     /**
      * Returns the title's base 64 encoded RSA CSP blob.
@@ -720,7 +720,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetTitlePublicKeyRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetTitlePublicKeyResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetTitlePublicKeyResult>>;
     /**
      * Gets the current status of an existing trade.
@@ -730,7 +730,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetTradeStatusRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetTradeStatusResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetTradeStatusResponse>>;
     /**
      * Retrieves the title-specific custom data for the user which is readable and writable by the client
@@ -740,7 +740,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetUserDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetUserDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetUserDataResult>>;
     /**
      * Retrieves the user's current inventory of virtual goods
@@ -750,7 +750,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetUserInventoryRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetUserInventoryResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetUserInventoryResult>>;
     /**
      * Retrieves the publisher-specific custom data for the user which is readable and writable by the client
@@ -760,7 +760,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetUserDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetUserDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetUserDataResult>>;
     /**
      * Retrieves the publisher-specific custom data for the user which can only be read by the client
@@ -770,7 +770,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetUserDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetUserDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetUserDataResult>>;
     /**
      * Retrieves the title-specific custom data for the user which can only be read by the client
@@ -780,7 +780,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GetUserDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GetUserDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GetUserDataResult>>;
     /**
      * Grants the specified character type to the user. CharacterIds are not globally unique; characterId must be evaluated
@@ -791,7 +791,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.GrantCharacterToUserRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.GrantCharacterToUserResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.GrantCharacterToUserResult>>;
     /**
      * Links the Android device identifier to the user's PlayFab account
@@ -801,7 +801,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkAndroidDeviceIDRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkAndroidDeviceIDResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkAndroidDeviceIDResult>>;
     /**
      * Links the Apple account associated with the token to the user's PlayFab account.
@@ -811,7 +811,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkAppleRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResult>>;
     /**
      * Links the custom identifier, generated by the title, to the user's PlayFab account
@@ -821,7 +821,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkCustomIDRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkCustomIDResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkCustomIDResult>>;
     /**
      * Links the Facebook account associated with the provided Facebook access token to the user's PlayFab account
@@ -831,7 +831,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkFacebookAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkFacebookAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkFacebookAccountResult>>;
     /**
      * Links the Facebook Instant Games Id to the user's PlayFab account
@@ -841,7 +841,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkFacebookInstantGamesIdRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkFacebookInstantGamesIdResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkFacebookInstantGamesIdResult>>;
     /**
      * Links the Game Center account associated with the provided Game Center ID to the user's PlayFab account. Logging in with
@@ -854,7 +854,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkGameCenterAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkGameCenterAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkGameCenterAccountResult>>;
     /**
      * Links the currently signed-in user account to their Google account, using their Google account credentials
@@ -864,7 +864,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkGoogleAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkGoogleAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkGoogleAccountResult>>;
     /**
      * Links the currently signed-in user account to their Google Play Games account, using their Google Play Games account
@@ -875,7 +875,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkGooglePlayGamesServicesAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkGooglePlayGamesServicesAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkGooglePlayGamesServicesAccountResult>>;
     /**
      * Links the vendor-specific iOS device identifier to the user's PlayFab account
@@ -885,7 +885,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkIOSDeviceIDRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkIOSDeviceIDResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkIOSDeviceIDResult>>;
     /**
      * Links the Kongregate identifier to the user's PlayFab account
@@ -895,7 +895,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkKongregateAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkKongregateAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkKongregateAccountResult>>;
     /**
      * Links the Nintendo account associated with the token to the user's PlayFab account.
@@ -905,7 +905,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkNintendoServiceAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResult>>;
     /**
      * Links the NintendoSwitchDeviceId to the user's PlayFab account
@@ -915,7 +915,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkNintendoSwitchDeviceIdRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkNintendoSwitchDeviceIdResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkNintendoSwitchDeviceIdResult>>;
     /**
      * Links an OpenID Connect account to a user's PlayFab account, based on an existing relationship between a title and an
@@ -926,7 +926,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkOpenIdConnectRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResult>>;
     /**
      * Links the PlayStation :tm: Network account associated with the provided access code to the user's PlayFab account
@@ -936,7 +936,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkPSNAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkPSNAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkPSNAccountResult>>;
     /**
      * Links the Steam account associated with the provided Steam authentication ticket to the user's PlayFab account
@@ -946,7 +946,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkSteamAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkSteamAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkSteamAccountResult>>;
     /**
      * Links the Twitch account associated with the token to the user's PlayFab account.
@@ -956,7 +956,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkTwitchAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkTwitchAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkTwitchAccountResult>>;
     /**
      * Links the Xbox Live account associated with the provided access code to the user's PlayFab account
@@ -966,7 +966,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LinkXboxAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LinkXboxAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LinkXboxAccountResult>>;
     /**
      * Signs the user in using the Android device identifier, returning a session identifier that can subsequently be used for
@@ -977,7 +977,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithAndroidDeviceIDRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs in the user with a Sign in with Apple identity token.
@@ -987,7 +987,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithAppleRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using a custom unique identifier generated by the title, returning a session identifier that can
@@ -998,7 +998,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithCustomIDRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls
@@ -1011,7 +1011,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithEmailAddressRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using a Facebook access token, returning a session identifier that can subsequently be used for API
@@ -1022,7 +1022,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithFacebookRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using a Facebook Instant Games ID, returning a session identifier that can subsequently be used for
@@ -1033,7 +1033,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithFacebookInstantGamesIdRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using an iOS Game Center player identifier, returning a session identifier that can subsequently be
@@ -1047,7 +1047,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithGameCenterRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using their Google account credentials
@@ -1057,7 +1057,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithGoogleAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using their Google Play Games account credentials
@@ -1067,7 +1067,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithGooglePlayGamesServicesRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using the vendor-specific iOS device identifier, returning a session identifier that can subsequently
@@ -1078,7 +1078,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithIOSDeviceIDRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using a Kongregate player account.
@@ -1088,7 +1088,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithKongregateRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs in the user with a Nintendo service account token.
@@ -1098,7 +1098,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithNintendoServiceAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using a Nintendo Switch Device ID, returning a session identifier that can subsequently be used for
@@ -1109,7 +1109,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithNintendoSwitchDeviceIdRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Logs in a user with an Open ID Connect JWT created by an existing relationship between a title and an Open ID Connect
@@ -1120,7 +1120,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithOpenIdConnectRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls
@@ -1133,7 +1133,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithPlayFabRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using a PlayStation :tm: Network authentication code, returning a session identifier that can
@@ -1144,7 +1144,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithPSNRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using a Steam authentication ticket, returning a session identifier that can subsequently be used for
@@ -1155,7 +1155,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithSteamRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using a Twitch access token.
@@ -1165,7 +1165,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithTwitchRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Signs the user in using a Xbox Live Token, returning a session identifier that can subsequently be used for API calls
@@ -1176,7 +1176,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.LoginWithXboxRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.LoginResult>>;
     /**
      * Attempts to locate a game session matching the given parameters. If the goal is to match the player into a specific
@@ -1191,7 +1191,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.MatchmakeRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.MatchmakeResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.MatchmakeResult>>;
     /**
      * Opens a new outstanding trade. Note that a given item instance may only be in one open trade at a time.
@@ -1201,7 +1201,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.OpenTradeRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.OpenTradeResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.OpenTradeResponse>>;
     /**
      * Selects a payment option for purchase order created via StartPurchase
@@ -1211,7 +1211,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.PayForPurchaseRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.PayForPurchaseResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.PayForPurchaseResult>>;
     /**
      * Buys a single item with virtual currency. You must specify both the virtual currency to use to purchase, as well as what
@@ -1222,7 +1222,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.PurchaseItemRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.PurchaseItemResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.PurchaseItemResult>>;
     /**
      * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated via the
@@ -1233,7 +1233,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.RedeemCouponRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.RedeemCouponResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.RedeemCouponResult>>;
     /**
      * Uses the supplied OAuth code to refresh the internally cached player PlayStation :tm: Network auth token
@@ -1243,7 +1243,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.RefreshPSNAuthTokenRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>>;
     /**
      * Registers the iOS device to receive push notifications
@@ -1253,7 +1253,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.RegisterForIOSPushNotificationRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.RegisterForIOSPushNotificationResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.RegisterForIOSPushNotificationResult>>;
     /**
      * Registers a new Playfab user account, returning a session identifier that can subsequently be used for API calls which
@@ -1264,7 +1264,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.RegisterPlayFabUserRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.RegisterPlayFabUserResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.RegisterPlayFabUserResult>>;
     /**
      * Removes a contact email from the player's profile.
@@ -1274,7 +1274,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.RemoveContactEmailRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.RemoveContactEmailResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.RemoveContactEmailResult>>;
     /**
      * Removes a specified user from the friend list of the local user
@@ -1284,7 +1284,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.RemoveFriendRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.RemoveFriendResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.RemoveFriendResult>>;
     /**
      * Removes the specified generic service identifier from the player's PlayFab account.
@@ -1294,7 +1294,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.RemoveGenericIDRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.RemoveGenericIDResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.RemoveGenericIDResult>>;
     /**
      * Removes users from the set of those able to update the shared data and the set of users in the group. Only users in the
@@ -1307,7 +1307,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.RemoveSharedGroupMembersRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.RemoveSharedGroupMembersResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.RemoveSharedGroupMembersResult>>;
     /**
      * Report player's ad activity
@@ -1317,7 +1317,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ReportAdActivityRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ReportAdActivityResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ReportAdActivityResult>>;
     /**
      * Write a PlayStream event to describe the provided player device information. This API method is not designed to be
@@ -1328,7 +1328,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.DeviceInfoRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>>;
     /**
      * Submit a report for another player (due to bad bahavior, etc.), so that customer service representatives for the title
@@ -1339,7 +1339,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ReportPlayerClientRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ReportPlayerClientResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ReportPlayerClientResult>>;
     /**
      * Restores all in-app purchases based on the given restore receipt
@@ -1349,7 +1349,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.RestoreIOSPurchasesRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.RestoreIOSPurchasesResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.RestoreIOSPurchasesResult>>;
     /**
      * Reward player's ad activity
@@ -1359,7 +1359,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.RewardAdActivityRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.RewardAdActivityResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.RewardAdActivityResult>>;
     /**
      * Forces an email to be sent to the registered email address for the user's account, with a link allowing the user to
@@ -1371,7 +1371,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.SendAccountRecoveryEmailRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.SendAccountRecoveryEmailResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.SendAccountRecoveryEmailResult>>;
     /**
      * Updates the tag list for a specified user in the friend list of the local user
@@ -1381,7 +1381,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.SetFriendTagsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.SetFriendTagsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.SetFriendTagsResult>>;
     /**
      * Sets the player's secret if it is not already set. Player secrets are used to sign API requests. To reset a player's
@@ -1392,7 +1392,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.SetPlayerSecretRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.SetPlayerSecretResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.SetPlayerSecretResult>>;
     /**
      * Creates an order for a list of items from the title catalog
@@ -1402,7 +1402,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.StartPurchaseRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.StartPurchaseResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.StartPurchaseResult>>;
     /**
      * Decrements the user's balance of the specified virtual currency by the stated amount. It is possible to make a VC
@@ -1413,7 +1413,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.SubtractUserVirtualCurrencyRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ModifyUserVirtualCurrencyResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ModifyUserVirtualCurrencyResult>>;
     /**
      * Unlinks the related Android device identifier from the user's PlayFab account
@@ -1423,7 +1423,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkAndroidDeviceIDRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkAndroidDeviceIDResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkAndroidDeviceIDResult>>;
     /**
      * Unlinks the related Apple account from the user's PlayFab account.
@@ -1433,7 +1433,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkAppleRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>>;
     /**
      * Unlinks the related custom identifier from the user's PlayFab account
@@ -1443,7 +1443,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkCustomIDRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkCustomIDResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkCustomIDResult>>;
     /**
      * Unlinks the related Facebook account from the user's PlayFab account
@@ -1453,7 +1453,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkFacebookAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkFacebookAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkFacebookAccountResult>>;
     /**
      * Unlinks the related Facebook Instant Game Ids from the user's PlayFab account
@@ -1463,7 +1463,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkFacebookInstantGamesIdRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkFacebookInstantGamesIdResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkFacebookInstantGamesIdResult>>;
     /**
      * Unlinks the related Game Center account from the user's PlayFab account
@@ -1473,7 +1473,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkGameCenterAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkGameCenterAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkGameCenterAccountResult>>;
     /**
      * Unlinks the related Google account from the user's PlayFab account
@@ -1484,7 +1484,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkGoogleAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkGoogleAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkGoogleAccountResult>>;
     /**
      * Unlinks the related Google Play Games account from the user's PlayFab account.
@@ -1494,7 +1494,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkGooglePlayGamesServicesAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkGooglePlayGamesServicesAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkGooglePlayGamesServicesAccountResult>>;
     /**
      * Unlinks the related iOS device identifier from the user's PlayFab account
@@ -1504,7 +1504,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkIOSDeviceIDRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkIOSDeviceIDResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkIOSDeviceIDResult>>;
     /**
      * Unlinks the related Kongregate identifier from the user's PlayFab account
@@ -1514,7 +1514,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkKongregateAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkKongregateAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkKongregateAccountResult>>;
     /**
      * Unlinks the related Nintendo account from the user's PlayFab account.
@@ -1524,7 +1524,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkNintendoServiceAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>>;
     /**
      * Unlinks the related NintendoSwitchDeviceId from the user's PlayFab account
@@ -1534,7 +1534,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkNintendoSwitchDeviceIdRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkNintendoSwitchDeviceIdResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkNintendoSwitchDeviceIdResult>>;
     /**
      * Unlinks an OpenID Connect account from a user's PlayFab account, based on the connection ID of an existing relationship
@@ -1545,7 +1545,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkOpenIdConnectRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>>;
     /**
      * Unlinks the related PlayStation :tm: Network account from the user's PlayFab account
@@ -1555,7 +1555,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkPSNAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkPSNAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkPSNAccountResult>>;
     /**
      * Unlinks the related Steam account from the user's PlayFab account
@@ -1565,7 +1565,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkSteamAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkSteamAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkSteamAccountResult>>;
     /**
      * Unlinks the related Twitch account from the user's PlayFab account.
@@ -1575,7 +1575,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkTwitchAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkTwitchAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkTwitchAccountResult>>;
     /**
      * Unlinks the related Xbox Live account from the user's PlayFab account
@@ -1585,7 +1585,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlinkXboxAccountRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkXboxAccountResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlinkXboxAccountResult>>;
     /**
      * Opens the specified container, with the specified key (when required), and returns the contents of the opened container.
@@ -1597,7 +1597,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlockContainerInstanceRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlockContainerItemResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlockContainerItemResult>>;
     /**
      * Searches target inventory for an ItemInstance matching the given CatalogItemId, if necessary unlocks it using an
@@ -1609,7 +1609,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UnlockContainerItemRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UnlockContainerItemResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UnlockContainerItemResult>>;
     /**
      * Update the avatar URL of the player
@@ -1619,7 +1619,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UpdateAvatarUrlRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.EmptyResponse>>;
     /**
      * Creates and updates the title-specific custom data for the user's character which is readable and writable by the client
@@ -1629,7 +1629,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UpdateCharacterDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UpdateCharacterDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UpdateCharacterDataResult>>;
     /**
      * Updates the values of the specified title-specific statistics for the specific character. By default, clients are not
@@ -1640,7 +1640,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UpdateCharacterStatisticsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UpdateCharacterStatisticsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UpdateCharacterStatisticsResult>>;
     /**
      * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to
@@ -1651,7 +1651,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UpdatePlayerStatisticsRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UpdatePlayerStatisticsResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UpdatePlayerStatisticsResult>>;
     /**
      * Adds, updates, and removes data keys for a shared group object. If the permission is set to Public, all fields updated
@@ -1665,7 +1665,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UpdateSharedGroupDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UpdateSharedGroupDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UpdateSharedGroupDataResult>>;
     /**
      * Creates and updates the title-specific custom data for the user which is readable and writable by the client
@@ -1675,7 +1675,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UpdateUserDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UpdateUserDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UpdateUserDataResult>>;
     /**
      * Creates and updates the publisher-specific custom data for the user which is readable and writable by the client
@@ -1685,7 +1685,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UpdateUserDataRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UpdateUserDataResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UpdateUserDataResult>>;
     /**
      * Updates the title specific display name for the user
@@ -1695,7 +1695,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.UpdateUserTitleDisplayNameRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.UpdateUserTitleDisplayNameResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.UpdateUserTitleDisplayNameResult>>;
     /**
      * Validates with Amazon that the receipt for an Amazon App Store in-app purchase is valid and that it matches the
@@ -1706,7 +1706,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ValidateAmazonReceiptRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ValidateAmazonReceiptResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ValidateAmazonReceiptResult>>;
     /**
      * Validates a Google Play purchase and gives the corresponding item to the player.
@@ -1716,7 +1716,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ValidateGooglePlayPurchaseRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ValidateGooglePlayPurchaseResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ValidateGooglePlayPurchaseResult>>;
     /**
      * Validates with the Apple store that the receipt for an iOS in-app purchase is valid and that it matches the purchased
@@ -1727,7 +1727,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ValidateIOSReceiptRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ValidateIOSReceiptResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ValidateIOSReceiptResult>>;
     /**
      * Validates with Windows that the receipt for an Windows App Store in-app purchase is valid and that it matches the
@@ -1738,7 +1738,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.ValidateWindowsReceiptRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.ValidateWindowsReceiptResult>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.ValidateWindowsReceiptResult>>;
     /**
      * Writes a character-based event into PlayStream.
@@ -1748,7 +1748,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.WriteClientCharacterEventRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.WriteEventResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.WriteEventResponse>>;
     /**
      * Writes a player-based event into PlayStream.
@@ -1758,7 +1758,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.WriteClientPlayerEventRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.WriteEventResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.WriteEventResponse>>;
     /**
      * Writes a title-based event into PlayStream.
@@ -1768,7 +1768,7 @@ declare module PlayFabClientModule {
       request: PlayFabClientModels.WriteTitleEventRequest,
       callback: PlayFabModule.ApiCallback<PlayFabClientModels.WriteEventResponse>,
       customData?: any,
-      extraHeaders?: { [key: string]: string }
+      extraHeaders?: { [key: string]: string },
     ): Promise<PlayFabModule.ApiCallback<PlayFabClientModels.WriteEventResponse>>;
   }
 }

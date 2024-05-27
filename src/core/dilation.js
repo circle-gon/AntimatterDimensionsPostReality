@@ -11,7 +11,7 @@ export function animateAndDilate() {
   }, 1000);
 }
 
-// eslint-disable-next-line no-empty-function
+ 
 export function animateAndUndilate(callback) {
   FullScreenAnimationHandler.display("a-undilate", 2);
   setTimeout(() => {
@@ -91,13 +91,13 @@ export function buyDilationUpgrade(id, bulk = 1) {
       expo !== 1
         ? Math.floor(
             Currency.dilatedTime.value.div(upgrade.config.initialCost).log(upgrade.config.increment) ** (1 / expo) -
-              upgAmount
+              upgAmount,
           ) + 1
         : Decimal.affordGeometricSeries(
             Currency.dilatedTime.value,
             upgrade.config.initialCost,
             upgrade.config.increment,
-            upgAmount
+            upgAmount,
           ).toNumber();
     buying = Math.clampMax(buying, bulk);
     buying = Math.clampMax(buying, upgrade.config.purchaseCap - upgAmount);
@@ -120,7 +120,7 @@ export function buyDilationUpgrade(id, bulk = 1) {
         Perk.retroactiveTP1,
         Perk.retroactiveTP2,
         Perk.retroactiveTP3,
-        Perk.retroactiveTP4
+        Perk.retroactiveTP4,
       );
       if (Enslaved.isRunning) {
         retroactiveTPFactor = Math.pow(retroactiveTPFactor, Enslaved.tachyonNerf);
@@ -161,12 +161,12 @@ export function getDilationGainPerSecond() {
     Ra.unlocks.continuousTTBoost.effects.dilatedTime,
     Ra.unlocks.peakGamespeedDT,
     DilationUpgrade.dtGainPelle,
-    DilationUpgrade.flatDilationMult
+    DilationUpgrade.flatDilationMult,
   );
   dtRate = dtRate.times(getAdjustedGlyphEffect("dilationDT"));
   dtRate = dtRate.times(ShopPurchase.dilatedTimePurchases.currentMult);
   dtRate = dtRate.times(
-    Math.clampMin(Decimal.log10(Replicanti.amount) * getAdjustedGlyphEffect("replicationdtgain"), 1)
+    Math.clampMin(Decimal.log10(Replicanti.amount) * getAdjustedGlyphEffect("replicationdtgain"), 1),
   );
   if (Enslaved.isRunning && !dtRate.eq(0)) dtRate = Decimal.pow10(Math.pow(dtRate.plus(1).log10(), 0.85) - 1);
   if (V.isRunning) dtRate = dtRate.pow(0.5);
@@ -182,7 +182,7 @@ export function tachyonGainMultiplier() {
     Achievement(132),
     RealityUpgrade(4),
     RealityUpgrade(8),
-    RealityUpgrade(15)
+    RealityUpgrade(15),
   ).pow(pow);
 }
 
@@ -225,7 +225,7 @@ export function getTachyonReq() {
     effectiveTP
       .times(Math.pow(400, 1.5))
       .pow(2 / 3)
-      .toNumber()
+      .toNumber(),
   );
 }
 
@@ -288,7 +288,7 @@ class RebuyableDilationUpgradeState extends RebuyableMechanicState {
 }
 
 export const DilationUpgrade = mapGameDataToObject(GameDatabase.eternity.dilation, (config) =>
-  config.rebuyable ? new RebuyableDilationUpgradeState(config) : new DilationUpgradeState(config)
+  config.rebuyable ? new RebuyableDilationUpgradeState(config) : new DilationUpgradeState(config),
 );
 
 export const DilationUpgrades = {

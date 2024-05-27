@@ -14,7 +14,7 @@ export class TesseractAutobuyerState extends AutobuyerState {
   }
 
   get isEnabled() {
-    return true
+    return true;
   }
 
   get bulk() {
@@ -22,6 +22,6 @@ export class TesseractAutobuyerState extends AutobuyerState {
   }
 
   tick() {
-    Tesseracts.buyTesseract()
+    Tesseracts.buyTesseract();
   }
 }

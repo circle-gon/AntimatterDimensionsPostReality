@@ -115,7 +115,7 @@ Theme.tryUnlock = function (name) {
       setTimeout(
         Modal.message.show(`This secret theme has animations. If they are giving you performance issues,
         you can turn them off in the Options/Visual tab to reduce lag.`),
-        100
+        100,
       );
     }
   }
@@ -134,7 +134,7 @@ Theme.create = function (name, settings) {
 
 export const Themes = {
   all: [
-    /* eslint-disable no-multi-spaces */
+     
     // Note that "Normal" is a special case where dark is overridden elsewhere with whether or not the UI is Modern
     Theme.create("Normal", {}),
     Theme.create("Metro", { metro: true }),
@@ -156,7 +156,7 @@ export const Themes = {
     Theme.create("S10", { dark: true, metro: true, animated: true, secret: true }),
     Theme.create("S11", { dark: true, animated: true, secret: true }),
     Theme.create("S12", { secret: true }),
-    /* eslint-enable no-multi-spaces */
+     
   ],
 
   available() {

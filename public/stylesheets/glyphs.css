@@ -892,7 +892,10 @@
   background-color: var(--color-background);
   border: 0.2rem solid var(--color-reality-dark);
   border-radius: 0.5rem 0.5rem 0 0;
-  transition: all 0.2s, border-bottom 0ms, padding-bottom 0ms;
+  transition:
+    all 0.2s,
+    border-bottom 0ms,
+    padding-bottom 0ms;
   cursor: pointer;
 }
 
@@ -951,7 +954,9 @@
   justify-content: space-evenly;
   align-items: center;
   font-size: 1.2rem;
-  text-shadow: 0.1rem 0.1rem 0.1rem var(--color-background), 0.1rem 0.1rem 0 var(--color-background);
+  text-shadow:
+    0.1rem 0.1rem 0.1rem var(--color-background),
+    0.1rem 0.1rem 0 var(--color-background);
   background-color: rgba(0, 0, 0, 10%);
   border: var(--var-border-width, 0.2rem) solid rgba(0, 0, 0, 15%);
   border-radius: var(--var-border-radius, 0.5rem);
@@ -1225,7 +1230,10 @@
   background-color: var(--color-background);
   border: var(--var-border-width, 0.2rem) solid var(--color-reality-dark);
   border-radius: var(--var-border-radius, 0.5rem) var(--var-border-radius, 0.5rem) 0 0;
-  transition: all 0.2s, border-bottom 0ms, padding-bottom 0ms;
+  transition:
+    all 0.2s,
+    border-bottom 0ms,
+    padding-bottom 0ms;
   cursor: pointer;
 }
 
@@ -1363,101 +1371,149 @@
 @keyframes a-reality-glyph-description-cycle {
   0% {
     color: #b67f33;
-    text-shadow: var(--color-text-base) -1px 1px 1px, var(--color-text-base) 1px 1px 1px,
-      var(--color-text-base) -1px -1px 1px, var(--color-text-base) 1px -1px 1px, #b67f33 0 0 3px;
+    text-shadow:
+      var(--color-text-base) -1px 1px 1px,
+      var(--color-text-base) 1px 1px 1px,
+      var(--color-text-base) -1px -1px 1px,
+      var(--color-text-base) 1px -1px 1px,
+      #b67f33 0 0 3px;
   }
 
   20% {
     color: #64dd17;
-    text-shadow: var(--color-text-base) -1px 1px 1px, var(--color-text-base) 1px 1px 1px,
-      var(--color-text-base) -1px -1px 1px, var(--color-text-base) 1px -1px 1px, #64dd17 0 0 3px;
+    text-shadow:
+      var(--color-text-base) -1px 1px 1px,
+      var(--color-text-base) 1px 1px 1px,
+      var(--color-text-base) -1px -1px 1px,
+      var(--color-text-base) 1px -1px 1px,
+      #64dd17 0 0 3px;
   }
 
   40% {
     color: #22aa48;
-    text-shadow: var(--color-text-base) -1px 1px 1px, var(--color-text-base) 1px 1px 1px,
-      var(--color-text-base) -1px -1px 1px, var(--color-text-base) 1px -1px 1px, #22aa48 0 0 3px;
+    text-shadow:
+      var(--color-text-base) -1px 1px 1px,
+      var(--color-text-base) 1px 1px 1px,
+      var(--color-text-base) -1px -1px 1px,
+      var(--color-text-base) 1px -1px 1px,
+      #22aa48 0 0 3px;
   }
 
   60% {
     color: #03a9f4;
-    text-shadow: var(--color-text-base) -1px 1px 1px, var(--color-text-base) 1px 1px 1px,
-      var(--color-text-base) -1px -1px 1px, var(--color-text-base) 1px -1px 1px, #03a9f4 0 0 3px;
+    text-shadow:
+      var(--color-text-base) -1px 1px 1px,
+      var(--color-text-base) 1px 1px 1px,
+      var(--color-text-base) -1px -1px 1px,
+      var(--color-text-base) 1px -1px 1px,
+      #03a9f4 0 0 3px;
   }
 
   80% {
     color: #b241e3;
-    text-shadow: var(--color-text-base) -1px 1px 1px, var(--color-text-base) 1px 1px 1px,
-      var(--color-text-base) -1px -1px 1px, var(--color-text-base) 1px -1px 1px, #b241e3 0 0 3px;
+    text-shadow:
+      var(--color-text-base) -1px 1px 1px,
+      var(--color-text-base) 1px 1px 1px,
+      var(--color-text-base) -1px -1px 1px,
+      var(--color-text-base) 1px -1px 1px,
+      #b241e3 0 0 3px;
   }
 
   100% {
     color: #b67f33;
-    text-shadow: var(--color-text-base) -1px 1px 1px, var(--color-text-base) 1px 1px 1px,
-      var(--color-text-base) -1px -1px 1px, var(--color-text-base) 1px -1px 1px, #b67f33 0 0 3px;
+    text-shadow:
+      var(--color-text-base) -1px 1px 1px,
+      var(--color-text-base) 1px 1px 1px,
+      var(--color-text-base) -1px -1px 1px,
+      var(--color-text-base) 1px -1px 1px,
+      #b67f33 0 0 3px;
   }
 }
 
 @keyframes a-reality-glyph-tooltip-cycle {
   0% {
     border-color: #b67f33;
-    box-shadow: 0 0 0.5rem #b67f33, 0 0 0.5rem #b67f33 inset;
+    box-shadow:
+      0 0 0.5rem #b67f33,
+      0 0 0.5rem #b67f33 inset;
   }
 
   20% {
     border-color: #64dd17;
-    box-shadow: 0 0 0.5rem #64dd17, 0 0 0.5rem #64dd17 inset;
+    box-shadow:
+      0 0 0.5rem #64dd17,
+      0 0 0.5rem #64dd17 inset;
   }
 
   40% {
     border-color: #22aa48;
-    box-shadow: 0 0 0.5rem #22aa48, 0 0 0.5rem #22aa48 inset;
+    box-shadow:
+      0 0 0.5rem #22aa48,
+      0 0 0.5rem #22aa48 inset;
   }
 
   60% {
     border-color: #03a9f4;
-    box-shadow: 0 0 0.5rem #03a9f4, 0 0 0.5rem #03a9f4 inset;
+    box-shadow:
+      0 0 0.5rem #03a9f4,
+      0 0 0.5rem #03a9f4 inset;
   }
 
   80% {
     border-color: #b241e3;
-    box-shadow: 0 0 0.5rem #b241e3, 0 0 0.5rem #b241e3 inset;
+    box-shadow:
+      0 0 0.5rem #b241e3,
+      0 0 0.5rem #b241e3 inset;
   }
 
   100% {
     border-color: #b67f33;
-    box-shadow: 0 0 0.5rem #b67f33, 0 0 0.5rem #b67f33 inset;
+    box-shadow:
+      0 0 0.5rem #b67f33,
+      0 0 0.5rem #b67f33 inset;
   }
 }
 
 @keyframes a-reality-glyph-tooltip-header-cycle {
   0% {
     border-color: #b67f33;
-    box-shadow: 0 0 0.5rem 0.1rem #b67f33, 0 0 0.8rem #b67f33 inset;
+    box-shadow:
+      0 0 0.5rem 0.1rem #b67f33,
+      0 0 0.8rem #b67f33 inset;
   }
 
   20% {
     border-color: #64dd17;
-    box-shadow: 0 0 0.5rem 0.1rem #64dd17, 0 0 0.8rem #64dd17 inset;
+    box-shadow:
+      0 0 0.5rem 0.1rem #64dd17,
+      0 0 0.8rem #64dd17 inset;
   }
 
   40% {
     border-color: #22aa48;
-    box-shadow: 0 0 0.5rem 0.1rem #22aa48, 0 0 0.8rem #22aa48 inset;
+    box-shadow:
+      0 0 0.5rem 0.1rem #22aa48,
+      0 0 0.8rem #22aa48 inset;
   }
 
   60% {
     border-color: #03a9f4;
-    box-shadow: 0 0 0.5rem 0.1rem #03a9f4, 0 0 0.8rem #03a9f4 inset;
+    box-shadow:
+      0 0 0.5rem 0.1rem #03a9f4,
+      0 0 0.8rem #03a9f4 inset;
   }
 
   80% {
     border-color: #b241e3;
-    box-shadow: 0 0 0.5rem 0.1rem #b241e3, 0 0 0.8rem #b241e3 inset;
+    box-shadow:
+      0 0 0.5rem 0.1rem #b241e3,
+      0 0 0.8rem #b241e3 inset;
   }
 
   100% {
     border-color: #b67f33;
-    box-shadow: 0 0 0.5rem 0.1rem #b67f33, 0 0 0.8rem #b67f33 inset;
+    box-shadow:
+      0 0 0.5rem 0.1rem #b67f33,
+      0 0 0.8rem #b67f33 inset;
   }
 }

@@ -72,7 +72,7 @@ export default {
       this.$set(
         this.b.nest,
         this.b.nest.findIndex((x) => x.id === id),
-        block
+        block,
       );
       this.parseRequest();
     },

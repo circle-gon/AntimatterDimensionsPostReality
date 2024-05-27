@@ -82,7 +82,7 @@ export const breakInfinityUpgrades = {
       infinities = infinities.timesEffectsOf(
         RealityUpgrade(5),
         RealityUpgrade(7),
-        Ra.unlocks.continuousTTBoost.effects.infinity
+        Ra.unlocks.continuousTTBoost.effects.infinity,
       );
       infinities = infinities.times(getAdjustedGlyphEffect("infinityinfmult"));
       const timeStr = Time.bestInfinity.totalMilliseconds.lte(50)

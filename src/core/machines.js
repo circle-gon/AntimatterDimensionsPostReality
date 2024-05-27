@@ -49,7 +49,7 @@ export const MachineHandler = {
 
   get baseIMCap() {
     return Decimal.pow(Math.clampMin(this.uncappedRM.log10() - 1000, 0), 2).mul(
-      Math.pow(Math.clampMin(this.uncappedRM.log10() - 100000, 1), 0.2)
+      Math.pow(Math.clampMin(this.uncappedRM.log10() - 100000, 1), 0.2),
     );
   },
 

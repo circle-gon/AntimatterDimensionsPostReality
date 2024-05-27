@@ -19,7 +19,7 @@ export function infinityDimensionCommonMultiplier() {
       EternityUpgrade.idMultICRecords,
       AlchemyResource.dimensionality,
       ImaginaryUpgrade(8),
-      PelleRifts.recursion.milestones[1]
+      PelleRifts.recursion.milestones[1],
     );
 
   if (Replicanti.areUnlocked && Replicanti.amount.gt(1)) {
@@ -180,7 +180,7 @@ class InfinityDimensionState extends DimensionState {
       Effects.log10Sum(
         tier === 1 ? Achievement(94) : null,
         tier === 4 ? TimeStudy(72) : null,
-        tier === 1 ? EternityChallenge(2).reward : null
+        tier === 1 ? EternityChallenge(2).reward : null,
       );
 
     const dimAmount = InfinityDimensions.continuumActive ? this.continuumValue : Math.floor(this.baseAmount / 10);
@@ -332,7 +332,7 @@ class InfinityDimensionState extends DimensionState {
       Currency.infinityPoints.value,
       this.cost,
       this.costMultiplier,
-      purchasesUntilHardcap
+      purchasesUntilHardcap,
     );
 
     if (costScaling.purchases <= 0) return false;
@@ -421,7 +421,7 @@ export const InfinityDimensions = {
     }
 
     player.requirementChecks.reality.maxID1 = player.requirementChecks.reality.maxID1.clampMin(
-      InfinityDimension(1).totalAmount
+      InfinityDimension(1).totalAmount,
     );
   },
 

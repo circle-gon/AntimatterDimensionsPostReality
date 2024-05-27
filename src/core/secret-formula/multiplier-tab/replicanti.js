@@ -30,11 +30,11 @@ export const replicanti = {
     name: "Glyph Effects",
     multValue: () => {
       const baseEffect = (Pelle.isDoomed ? DC.D1 : getAdjustedGlyphEffect("replicationspeed")).times(
-        Pelle.specialGlyphEffect.replication
+        Pelle.specialGlyphEffect.replication,
       );
       const alteredEffect = Math.clampMin(
         Decimal.log10(Replicanti.amount) * getSecondaryGlyphEffect("replicationdtgain"),
-        1
+        1,
       );
       return GlyphAlteration.isAdded("replication") ? baseEffect.times(alteredEffect) : baseEffect;
     },

@@ -108,7 +108,7 @@ export default {
       // match more glyphs than we have room for
       const selectedFromInventory = this.findSelectedGlyphs(
         remainingOptions,
-        Glyphs.active.countWhere((g) => g === null)
+        Glyphs.active.countWhere((g) => g === null),
       );
       for (const glyph of selectedFromInventory) glyphsToLoad = glyphsToLoad.filter((g) => g !== glyph);
 

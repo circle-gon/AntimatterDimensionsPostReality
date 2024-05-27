@@ -108,7 +108,12 @@ export const Enslaved = {
     return player.celestials.enslaved.isDischargingReal;
   },
   get isAutoReleasing() {
-    return Ra.unlocks.autoPulseTime.canBeApplied && player.celestials.enslaved.isAutoReleasing && !BlackHoles.areNegative && !Pelle.isDisabled("blackhole");
+    return (
+      Ra.unlocks.autoPulseTime.canBeApplied &&
+      player.celestials.enslaved.isAutoReleasing &&
+      !BlackHoles.areNegative &&
+      !Pelle.isDisabled("blackhole")
+    );
   },
   storeRealTime() {
     if (!this.canStoreRealTime) return;
@@ -178,7 +183,7 @@ export const Enslaved = {
           // so cap it there so that not all real stored time gets used in 1 tick
           realStored * Math.min(1 - Math.pow(1 - player.celestials.enslaved.realDischargePercent / 100, realDiff), 0.99)
         : player.celestials.enslaved.realDischargeConstant * 1000 * realDiff,
-      realStored
+      realStored,
     );
     player.celestials.enslaved.storedReal -= timeSpent;
     // 1 millisecond should be good enough
@@ -237,7 +242,7 @@ export const Enslaved = {
   get realityBoostRatio() {
     return Math.max(
       1,
-      Math.floor(player.celestials.enslaved.storedReal / Math.max(1000, Time.thisRealityRealTime.totalMilliseconds))
+      Math.floor(player.celestials.enslaved.storedReal / Math.max(1000, Time.thisRealityRealTime.totalMilliseconds)),
     );
   },
   get canAmplify() {
@@ -253,7 +258,7 @@ export const Enslaved = {
         `You have already exposed this crack in the Reality. Time in this Eternity is being multiplied
         by your Eternity count, up to a maximum of ${formatX(1e66)}.`,
         { closeEvent: GAME_EVENT.REALITY_RESET_AFTER },
-        1
+        1,
       );
     } else {
       EnslavedProgress.feelEternity.giveProgress();
@@ -262,7 +267,7 @@ export const Enslaved = {
         `Time in this Eternity will be multiplied by your Eternity count,
         up to a maximum of ${formatX(1e66)}.`,
         { closeEvent: GAME_EVENT.REALITY_RESET_AFTER },
-        1
+        1,
       );
     }
   },
@@ -331,7 +336,7 @@ class EnslavedProgressState extends BitUpgradeState {
 
 export const EnslavedProgress = mapGameDataToObject(
   GameDatabase.celestials.enslaved.progress,
-  (config) => new EnslavedProgressState(config)
+  (config) => new EnslavedProgressState(config),
 );
 
 export const Tesseracts = {

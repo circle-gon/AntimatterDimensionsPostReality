@@ -70,7 +70,7 @@ export const Pelle = {
       Modal.message.show(
         `Dooming your Reality will unequip your Glyphs. Some of your
         Glyphs could not be unequipped due to lack of inventory space.`,
-        1
+        1,
       );
       return;
     }
@@ -80,7 +80,7 @@ export const Pelle = {
       Modal.message.show(
         `You must have enough empty unprotected Glyph slots for
         ${formatInt(5)} additional Glyphs in order to Doom your Reality.`,
-        1
+        1,
       );
       return;
     }
@@ -111,8 +111,7 @@ export const Pelle = {
     AutomatorBackend.stop();
 
     // We don't give the singles on reset because it causes a lot of funny things when you Doom
-    if (AtomMilestone.am1.isReached)
-      for (const upg of PelleUpgrade.singles) upg.isBought = true;
+    if (AtomMilestone.am1.isReached) for (const upg of PelleUpgrade.singles) upg.isBought = true;
 
     // Force-unhide all tabs except for the shop tab, for which we retain the hide state instead
     const shopTab = ~1 & (1 << GameDatabase.tabs.find((t) => t.key === "shop").id);
@@ -320,9 +319,9 @@ export const Pelle = {
   // Calculations assume this is in units of proportion per second (eg. 0.03 is 3% drain per second)
   get riftDrainPercent() {
     let drain = 0.03;
-     if (AtomMilestone.am1.isReached) drain *= 2
-     if (AtomMilestone.am2.isReached) drain *= 2
-     if (AtomMilestone.am3.isReached) drain *= 2
+    if (AtomMilestone.am1.isReached) drain *= 2;
+    if (AtomMilestone.am2.isReached) drain *= 2;
+    if (AtomMilestone.am3.isReached) drain *= 2;
     return drain;
   },
 
@@ -447,7 +446,7 @@ export class PelleUpgradeState extends SetPurchasableMechanicState {
 }
 
 export const PelleUpgrade = mapGameDataToObject(GameDatabase.celestials.pelle.upgrades, (config) =>
-  config.rebuyable ? new RebuyablePelleUpgradeState(config) : new PelleUpgradeState(config)
+  config.rebuyable ? new RebuyablePelleUpgradeState(config) : new PelleUpgradeState(config),
 );
 
 PelleUpgrade.rebuyables = PelleUpgrade.all.filter((u) => u.isRebuyable);

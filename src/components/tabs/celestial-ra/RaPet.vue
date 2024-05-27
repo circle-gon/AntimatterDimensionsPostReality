@@ -82,7 +82,7 @@ export default {
       this.memoryChunksPerSecond = pet.memoryChunksPerSecond;
       this.memoriesPerSecond = Math.pow(
         pet.memoryChunks * Ra.productionPerMemoryChunk * this.currentMemoryMult,
-        Ra.productionExponent
+        Ra.productionExponent,
       );
       this.canGetMemoryChunks = pet.canGetMemoryChunks;
       this.memoryMultiplier = pet.memoryProductionMultiplier;

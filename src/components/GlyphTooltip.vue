@@ -81,7 +81,7 @@ export default {
     },
     sortedEffects() {
       return getGlyphEffectValuesFromBitmask(this.effects, this.effectiveLevel, this.strength, this.type).filter(
-        (effect) => GlyphEffects[effect.id].isGenerated === generatedTypes.includes(this.type)
+        (effect) => GlyphEffects[effect.id].isGenerated === generatedTypes.includes(this.type),
       );
     },
     rarityInfo() {
@@ -136,8 +136,8 @@ export default {
       const arrow = this.isLevelCapped
         ? "<i class='fas fa-sort-down'></i>"
         : this.isLevelBoosted
-        ? "<i class='fas fa-sort-up'></i>"
-        : "";
+          ? "<i class='fas fa-sort-up'></i>"
+          : "";
       // eslint-disable-next-line no-nested-ternary
       const color = this.isLevelCapped ? "#ff4444" : this.isLevelBoosted ? "#44FF44" : undefined;
       return `Level: <span style="color: ${color}">

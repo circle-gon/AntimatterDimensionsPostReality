@@ -204,7 +204,7 @@ class RaPetState extends GameMechanicState {
     // for very long simulated ticks
     const gain = Math.pow(
       (this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk * this.memoryUpgradeCurrentMult,
-      Ra.productionExponent
+      Ra.productionExponent,
     );
     this.memoryChunks += newMemoryChunks;
     this.memories += gain * seconds;

@@ -58,7 +58,7 @@ export const general = {
           totalEffect = totalEffect.times(
             MultiplierTabHelper.timeStudyDimCheck(ts, `${dim}${tier}`) && TimeStudy(ts).isBought
               ? TimeStudy(ts).effectOrDefault(1)
-              : 1
+              : 1,
           );
         }
         return totalEffect;
@@ -97,7 +97,7 @@ export const general = {
           totalEffect = totalEffect.times(
             MultiplierTabHelper.ICDimCheck(ic, `${dim}${tier}`) && InfinityChallenge(ic).isCompleted
               ? InfinityChallenge(ic).reward.effectOrDefault(1)
-              : 1
+              : 1,
           );
         }
         return totalEffect;
@@ -124,7 +124,7 @@ export const general = {
           totalEffect = totalEffect.times(
             MultiplierTabHelper.ECDimCheck(ec, `${dim}${tier}`) && EternityChallenge(ec).reward.canBeApplied
               ? EternityChallenge(ec).reward.effectOrDefault(1).clampMin(1)
-              : 1
+              : 1,
           );
         }
         return totalEffect;

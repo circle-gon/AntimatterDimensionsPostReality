@@ -20,7 +20,12 @@ import { SingularityAutobuyerState } from "./singularity-autobuyer";
 import { TickspeedAutobuyerState } from "./tickspeed-autobuyer";
 import { TimeDimensionAutobuyerState } from "./time-dimension-autobuyer";
 import { TimeTheoremAutobuyerState } from "./time-theorem-autobuyer";
-import { TeresaMemoryAutobuyerState, EffarigMemoryAutobuyerState, EnslavedMemoryAutobuyerState, VMemoryAutobuyerState } from "./ra-pets-autobuyer";
+import {
+  EffarigMemoryAutobuyerState,
+  EnslavedMemoryAutobuyerState,
+  TeresaMemoryAutobuyerState,
+  VMemoryAutobuyerState,
+} from "./ra-pets-autobuyer";
 import { GlyphSacrificeAutobuyerState } from "./glyph-sacrifice-autobuyer";
 import { PelleUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
 import { TesseractAutobuyerState } from "./tesseract-autobuyer";
@@ -59,7 +64,7 @@ export const Autobuyer = {
   pelleUpgrade: PelleUpgradeAutobuyerState.createAccessor(),
   tesseract: new TesseractAutobuyerState(),
   realityUpgradeSingle: new NonRepeatableRealityUpgradeAutobuyerState(),
-  imaginaryUpgradeSingle: new NonRepeatableImaginaryUpgradeAutobuyerState()
+  imaginaryUpgradeSingle: new NonRepeatableImaginaryUpgradeAutobuyerState(),
 };
 
 export const Autobuyers = (function () {
@@ -84,7 +89,7 @@ export const Autobuyers = (function () {
     Autobuyer.glyphSacrifice,
     Autobuyer.tesseract,
     Autobuyer.realityUpgradeSingle,
-    Autobuyer.imaginaryUpgradeSingle
+    Autobuyer.imaginaryUpgradeSingle,
   ];
 
   const singleComplex = [Autobuyer.tickspeed, Autobuyer.galaxy, Autobuyer.dimboost].concat(single);
@@ -125,7 +130,7 @@ export const Autobuyers = (function () {
       Autobuyer.tickspeed,
       Autobuyer.dimboost,
       Autobuyer.galaxy,
-      Autobuyer.bigCrunch
+      Autobuyer.bigCrunch,
     ),
 
     get unlocked() {
@@ -134,7 +139,7 @@ export const Autobuyers = (function () {
 
     get hasAutobuyersForEditModal() {
       return [Autobuyer.dimboost, Autobuyer.galaxy, Autobuyer.bigCrunch, Autobuyer.eternity, Autobuyer.reality].some(
-        (autobuyer) => autobuyer.isUnlocked
+        (autobuyer) => autobuyer.isUnlocked,
       );
     },
 

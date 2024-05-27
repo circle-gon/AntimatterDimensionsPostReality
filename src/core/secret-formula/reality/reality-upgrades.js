@@ -10,20 +10,20 @@ const rebuyable = (props) => {
       props.costMult / 10,
       DC.E309,
       1e3,
-      props.initialCost * props.costMult
+      props.initialCost * props.costMult,
     );
   const { effect } = props;
   props.effect = () =>
     Decimal.pow(
       effect + ImaginaryUpgrade(props.id).effectOrDefault(0),
-      player.reality.rebuyables[props.id] * getAdjustedGlyphEffect("realityrow1pow")
+      player.reality.rebuyables[props.id] * getAdjustedGlyphEffect("realityrow1pow"),
     );
   props.description = () =>
     props.textTemplate.replace(
       "{value}",
       ImaginaryUpgrade(props.id).effectValue === 0
         ? formatInt(effect)
-        : format(effect + ImaginaryUpgrade(props.id).effectValue, 2, 2)
+        : format(effect + ImaginaryUpgrade(props.id).effectValue, 2, 2),
     );
   props.formatEffect = (value) => formatX(value, 2, 0);
   props.formatCost = (value) => format(value, 2, 0);
@@ -325,7 +325,7 @@ export const realityUpgrades = [
     cost: 100000,
     requirement: () =>
       `${formatInt(Replicanti.galaxies.total + player.galaxies + player.dilation.totalTachyonGalaxies)}/${formatInt(
-        2800
+        2800,
       )} total Galaxies from all types`,
     checkRequirement: () => Replicanti.galaxies.total + player.galaxies + player.dilation.totalTachyonGalaxies >= 2800,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
@@ -355,8 +355,8 @@ export const realityUpgrades = [
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     description: "Replicanti speed is boosted based on your fastest game-time Reality",
     effect: () => {
-      let time = AtomMilestone.am4.isReached ? DC.D0 : Time.bestReality.totalMinutes
-      return Decimal.div(15, time.clamp(1 / 12, 15))
+      const time = AtomMilestone.am4.isReached ? DC.D0 : Time.bestReality.totalMinutes;
+      return Decimal.div(15, time.clamp(1 / 12, 15));
     },
     cap: 180,
     formatEffect: (value) => formatX(value, 2, 2),

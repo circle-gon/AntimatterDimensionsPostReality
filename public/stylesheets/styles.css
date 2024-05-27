@@ -323,7 +323,9 @@ body {
   font-family: "Open Sans Condensed";
   font-style: normal;
   font-weight: 300;
-  src: local("Open Sans Cond Light"), local("OpenSans-CondensedLight"),
+  src:
+    local("Open Sans Cond Light"),
+    local("OpenSans-CondensedLight"),
     url("https://fonts.gstatic.com/s/opensanscondensed/v10/gk5FxslNkTTHtojXrkp-xBEur64QvLD-0IbiAdTUNXE.woff2")
       format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215,
@@ -862,7 +864,7 @@ button:focus {
   width: 50rem;
   height: 100%;
   font-family: Typewriter;
-  font-size: 1f2rem;
+  font-size: 12rem;
   font-weight: bold;
   background: var(--color-background);
   border-style: solid;
@@ -2297,8 +2299,15 @@ br {
 .o-dim-path-priority {
   font-size: 1.5rem;
   color: white;
-  text-shadow: -0.1rem -0.1rem 0 black, -0.1rem -0.1rem 0 black, 0.1rem -0.1rem 0 black, 0.1rem -0.1rem 0 black,
-    -0.1rem 0.1rem 0 black, -0.1rem 0.1rem 0 black, 0.1rem 0.1rem 0 black, 0.1rem 0.1rem 0 black;
+  text-shadow:
+    -0.1rem -0.1rem 0 black,
+    -0.1rem -0.1rem 0 black,
+    0.1rem -0.1rem 0 black,
+    0.1rem -0.1rem 0 black,
+    -0.1rem 0.1rem 0 black,
+    -0.1rem 0.1rem 0 black,
+    0.1rem 0.1rem 0 black,
+    0.1rem 0.1rem 0 black;
   pointer-events: none;
 }
 
@@ -2345,7 +2354,11 @@ br {
 }
 
 .s-base--dark .o-hint-text--alchemy-node {
-  text-shadow: 0.1rem 0.1rem black, 0.1rem -0.1rem black, -0.1rem -0.1rem black, -0.1rem 0.1rem black;
+  text-shadow:
+    0.1rem 0.1rem black,
+    0.1rem -0.1rem black,
+    -0.1rem -0.1rem black,
+    -0.1rem 0.1rem black;
 }
 
 .o-hint-text--alchemy-node--unfocused {
@@ -2525,7 +2538,9 @@ br {
 
 .t-s2 .c-dim-tab {
   color: black;
-  text-shadow: 0.05rem 0.05rem 0 white, -0.05rem -0.05rem 0 white;
+  text-shadow:
+    0.05rem 0.05rem 0 white,
+    -0.05rem -0.05rem 0 white;
 }
 
 /* #region Dimensions */
@@ -2797,29 +2812,41 @@ br {
 
 @keyframes a-tesseract-shift {
   0% {
-    box-shadow: 1.5rem 1.5rem 0.5rem black, -1.5rem -1.5rem 0.5rem black;
+    box-shadow:
+      1.5rem 1.5rem 0.5rem black,
+      -1.5rem -1.5rem 0.5rem black;
   }
 
   50% {
-    box-shadow: 1.5rem -1.5rem 0.5rem black, -1.5rem 1.5rem 0.5rem black;
+    box-shadow:
+      1.5rem -1.5rem 0.5rem black,
+      -1.5rem 1.5rem 0.5rem black;
   }
 
   100% {
-    box-shadow: -1.5rem -1.5rem 0.5rem black, 1.5rem 1.5rem 0.5rem black;
+    box-shadow:
+      -1.5rem -1.5rem 0.5rem black,
+      1.5rem 1.5rem 0.5rem black;
   }
 }
 
 @keyframes a-tesseract-shift-dark {
   0% {
-    box-shadow: 1.5rem 1.5rem 0.5rem white, -1.5rem -1.5rem 0.5rem white;
+    box-shadow:
+      1.5rem 1.5rem 0.5rem white,
+      -1.5rem -1.5rem 0.5rem white;
   }
 
   50% {
-    box-shadow: 1.5rem -1.5rem 0.5rem white, -1.5rem 1.5rem 0.5rem white;
+    box-shadow:
+      1.5rem -1.5rem 0.5rem white,
+      -1.5rem 1.5rem 0.5rem white;
   }
 
   100% {
-    box-shadow: -1.5rem -1.5rem 0.5rem white, 1.5rem 1.5rem 0.5rem white;
+    box-shadow:
+      -1.5rem -1.5rem 0.5rem white,
+      1.5rem 1.5rem 0.5rem white;
   }
 }
 
@@ -2834,7 +2861,9 @@ br {
 
 .t-metro .c-infinity-dim-description__accent,
 .t-s8 .c-infinity-dim-description__accent {
-  text-shadow: 0 0 0.1rem rgba(0, 0, 0, 50%), -0.1rem 0.1rem 0.1rem black;
+  text-shadow:
+    0 0 0.1rem rgba(0, 0, 0, 50%),
+    -0.1rem 0.1rem 0.1rem black;
 }
 
 .t-dark .c-infinity-dim-description__accent,
@@ -2879,7 +2908,9 @@ br {
 
 .t-metro .c-time-dim-description__accent,
 .t-s8 .c-time-dim-description__accent {
-  text-shadow: 0 0 0.1rem rgba(0, 0, 0, 50%), -0.1rem 0.1rem 0.1rem black;
+  text-shadow:
+    0 0 0.1rem rgba(0, 0, 0, 50%),
+    -0.1rem 0.1rem 0.1rem black;
 }
 
 .t-dark .c-time-dim-description__accent,
@@ -3595,7 +3626,9 @@ br {
   border-radius: var(--var-border-radius, 0.5rem);
   box-sizing: border-box;
   padding: 0.5rem 0.4rem;
-  transition: all 0.2s, visibility 0s;
+  transition:
+    all 0.2s,
+    visibility 0s;
 }
 
 .c-challenge-box--normal {
@@ -3681,7 +3714,9 @@ br {
   border: var(--var-border-width, 0.3rem) solid #127a20;
   border-radius: var(--var-border-radius, 1rem);
   margin-bottom: 0.5rem;
-  transition: all 0.2s, visibility 0s;
+  transition:
+    all 0.2s,
+    visibility 0s;
   cursor: pointer;
 }
 
@@ -4808,7 +4843,9 @@ properly on certain themes. */
 
 .t-metro .c-replicanti-description__accent,
 .t-s8 .c-replicanti-description__accent {
-  text-shadow: 0 0 0.1rem rgba(0, 0, 0, 50%), -0.1rem 0.1rem 0.1rem black;
+  text-shadow:
+    0 0 0.1rem rgba(0, 0, 0, 50%),
+    -0.1rem 0.1rem 0.1rem black;
 }
 
 .t-dark .c-replicanti-description__accent,
@@ -5174,7 +5211,9 @@ properly on certain themes. */
 .t-s8 .c-dilation-tab__dilated-time-income,
 .t-s8 .c-dilation-tab__galaxy-threshold,
 .t-s8 .c-dilation-tab__galaxies {
-  text-shadow: 0 0 0.1rem rgba(0, 0, 0, 50%), -0.1rem 0.1rem 0.1rem black;
+  text-shadow:
+    0 0 0.1rem rgba(0, 0, 0, 50%),
+    -0.1rem 0.1rem 0.1rem black;
 }
 
 .t-metro .c-dilation-tab__dilated-time,
@@ -5473,7 +5512,11 @@ properly on certain themes. */
   border: var(--var-border-width, 0.3rem) solid black;
   border-radius: var(--var-border-radius, 0.6rem);
   padding: 1rem;
-  transition: all 0.2s, left 0s, top 0s, transform 0s;
+  transition:
+    all 0.2s,
+    left 0s,
+    top 0s,
+    transform 0s;
 }
 
 .t-amoled .c-modal,
@@ -5727,7 +5770,11 @@ properly on certain themes. */
 }
 
 .t-dark .c-modal-away-progress {
-  text-shadow: 0 0 0.2rem black, 0 0 0.2rem black, 0 0 0.2rem black, 0 0 0.2rem black;
+  text-shadow:
+    0 0 0.2rem black,
+    0 0 0.2rem black,
+    0 0 0.2rem black,
+    0 0 0.2rem black;
 }
 
 .c-modal-away-progress__header {
@@ -5739,7 +5786,11 @@ properly on certain themes. */
 
 .c-modal-away-progress b {
   font-weight: bold;
-  text-shadow: 0 0 0.3rem black, 0 0 0.3rem black, 0 0 0.3rem black, 0 0 0.3rem black;
+  text-shadow:
+    0 0 0.3rem black,
+    0 0 0.3rem black,
+    0 0 0.3rem black,
+    0 0 0.3rem black;
 }
 
 /* #endregion c-modal-away-progress */
@@ -5900,7 +5951,13 @@ properly on certain themes. */
 kbd {
   display: inline-block;
   vertical-align: middle;
-  font: 1.1rem SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font:
+    1.1rem SFMono-Regular,
+    Consolas,
+    "Liberation Mono",
+    Menlo,
+    Courier,
+    monospace;
   line-height: 1rem;
   color: #444d56;
   background-color: #fafbfc;
@@ -6253,7 +6310,9 @@ kbd {
   color: var(--color-teresa--accent);
   background-color: var(--color-teresa--base);
   border-color: var(--color-teresa--accent);
-  animation: a-teresa-run-button__icon--super-glow 1.2s infinite, a-teresa-run-button__icon--spin 5s infinite;
+  animation:
+    a-teresa-run-button__icon--super-glow 1.2s infinite,
+    a-teresa-run-button__icon--spin 5s infinite;
 }
 
 .c-celestial-run-button--clickable {
@@ -6441,7 +6500,9 @@ kbd {
 .c-effarig-shop-button--available {
   color: white;
   background-color: var(--color-effarig--base);
-  box-shadow: 0 0 0.5rem var(--color-effarig--base), 0 0 0.5rem var(--color-effarig--base) inset;
+  box-shadow:
+    0 0 0.5rem var(--color-effarig--base),
+    0 0 0.5rem var(--color-effarig--base) inset;
   cursor: pointer;
 }
 
@@ -6485,15 +6546,34 @@ kbd {
 
 @keyframes a-effarig-run-button--not-running-glow {
   from {
-    text-shadow: 0 0 1rem black, 0 0 2rem black, 0 0 3rem #cb1a1a, 0 0 4rem #cb1a1a, 0 0 5rem #cb1a1a, 0 0 6rem #cb1a1a,
+    text-shadow:
+      0 0 1rem black,
+      0 0 2rem black,
+      0 0 3rem #cb1a1a,
+      0 0 4rem #cb1a1a,
+      0 0 5rem #cb1a1a,
+      0 0 6rem #cb1a1a,
       0 0 7rem #cb1a1a;
-    box-shadow: 0 0 0.5rem #cb1a1a, 0 0 1rem #cb1a1a, 0 0 1.5rem #cb1a1a;
+    box-shadow:
+      0 0 0.5rem #cb1a1a,
+      0 0 1rem #cb1a1a,
+      0 0 1.5rem #cb1a1a;
   }
 
   to {
-    text-shadow: 0 0 2rem black, 0 0 3rem #bf0404, 0 0 4rem #bf0404, 0 0 5rem #bf0404, 0 0 6rem #bf0404,
-      0 0 7rem #bf0404, 0 0 8rem #bf0404;
-    box-shadow: 0 0 0.5rem #bf0404, 0 0 1rem #bf0404, 0 0 1.5rem #bf0404, 0 0 2rem #bf0404;
+    text-shadow:
+      0 0 2rem black,
+      0 0 3rem #bf0404,
+      0 0 4rem #bf0404,
+      0 0 5rem #bf0404,
+      0 0 6rem #bf0404,
+      0 0 7rem #bf0404,
+      0 0 8rem #bf0404;
+    box-shadow:
+      0 0 0.5rem #bf0404,
+      0 0 1rem #bf0404,
+      0 0 1.5rem #bf0404,
+      0 0 2rem #bf0404;
   }
 }
 
@@ -6616,23 +6696,42 @@ kbd {
 
 @keyframes a-effarig-run-button--running-glow {
   from {
-    box-shadow: 0 0 0.5rem #c20707 inset, 0 0 1rem #c20707 inset, 0 0 1.5rem #c20707 inset, 0 0 1.5rem #c20707,
-      0 0 1.5rem #c20707, 0 0 1.5rem #c20707;
+    box-shadow:
+      0 0 0.5rem #c20707 inset,
+      0 0 1rem #c20707 inset,
+      0 0 1.5rem #c20707 inset,
+      0 0 1.5rem #c20707,
+      0 0 1.5rem #c20707,
+      0 0 1.5rem #c20707;
   }
 
   to {
-    box-shadow: 0 0 0.5rem #e21717 inset, 0 0 1rem #e21717 inset, 0 0 1.5rem #e21717 inset, 0 0 1.5rem #e21717,
-      0 0 1.5rem #e21717, 0 0 1.5rem #e21717, 0 0 2rem #e21717 inset, 0 0 2rem #e21717;
+    box-shadow:
+      0 0 0.5rem #e21717 inset,
+      0 0 1rem #e21717 inset,
+      0 0 1.5rem #e21717 inset,
+      0 0 1.5rem #e21717,
+      0 0 1.5rem #e21717,
+      0 0 1.5rem #e21717,
+      0 0 2rem #e21717 inset,
+      0 0 2rem #e21717;
   }
 }
 
 @keyframes a-effarig-run-button__inner--running-glow {
   from {
-    text-shadow: 0 0 0.5rem #a20707, 0 0 1rem #a20707, 0 0 1.5rem #a20707;
+    text-shadow:
+      0 0 0.5rem #a20707,
+      0 0 1rem #a20707,
+      0 0 1.5rem #a20707;
   }
 
   to {
-    text-shadow: 0 0 0.5rem #c21717, 0 0 1rem #c21717, 0 0 1.5rem #c21717, 0 0 2rem #c21717;
+    text-shadow:
+      0 0 0.5rem #c21717,
+      0 0 1rem #c21717,
+      0 0 1.5rem #c21717,
+      0 0 2rem #c21717;
   }
 }
 
@@ -7140,17 +7239,20 @@ kbd {
 }
 
 .c-v-run-button--running .c-v-run-button__line--1 {
-  animation: a-c-v-run-button__line--1--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
+  animation:
+    a-c-v-run-button__line--1--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
     a-c-v-run-button__line--burst 3s infinite cubic-bezier(0.9, 0, 0, 0.9);
 }
 
 .c-v-run-button--running .c-v-run-button__line--2 {
-  animation: a-c-v-run-button__line--2--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
+  animation:
+    a-c-v-run-button__line--2--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
     a-c-v-run-button__line--burst 3s infinite cubic-bezier(0.9, 0, 0, 0.9);
 }
 
 .c-v-run-button--running .c-v-run-button__line--3 {
-  animation: a-c-v-run-button__line--3--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
+  animation:
+    a-c-v-run-button__line--3--move 3s infinite cubic-bezier(0.9, 0, 0, 0.9),
     a-c-v-run-button__line--burst 3s infinite cubic-bezier(0.9, 0, 0, 0.9);
 }
 
@@ -7286,8 +7388,12 @@ kbd {
   z-index: 3;
   font-size: 1.5rem;
   font-weight: bold;
-  text-shadow: 0.1rem 0.1rem 0.1rem black, -0.1rem 0.1rem 0.1rem black, 0.1rem -0.1rem 0.1rem black,
-    -0.1rem -0.1rem 0.1rem black, 0.1rem -0.1rem 0 black;
+  text-shadow:
+    0.1rem 0.1rem 0.1rem black,
+    -0.1rem 0.1rem 0.1rem black,
+    0.1rem -0.1rem 0.1rem black,
+    -0.1rem -0.1rem 0.1rem black,
+    0.1rem -0.1rem 0 black;
   border-left-width: var(--var-border-width, 0.2rem);
 }
 
@@ -7414,7 +7520,9 @@ kbd {
   background-color: black;
   border: var(--var-border-width, 0.4rem) solid #9575cd;
   border-radius: 50%;
-  box-shadow: 0 0 0.7rem #9575cd, 0 0 0.7rem #9575cd inset;
+  box-shadow:
+    0 0 0.7rem #9575cd,
+    0 0 0.7rem #9575cd inset;
   margin: 1.5rem 0;
   transition-duration: 0.2s;
 }
@@ -7431,11 +7539,14 @@ kbd {
   color: black;
   background-color: #9575cd;
   border-color: black;
-  box-shadow: 0 0 1.5rem #9575cd, 0 0 1.5rem #9575cd inset;
+  box-shadow:
+    0 0 1.5rem #9575cd,
+    0 0 1.5rem #9575cd inset;
 }
 
 .c-ra-run-button__icon--running .c-ra-run-button__icon__sigil {
-  animation: a-c-ra-run-button__icon__sigil--undulate 0.6s infinite ease-in-out,
+  animation:
+    a-c-ra-run-button__icon__sigil--undulate 0.6s infinite ease-in-out,
     a-c-ra-run-button__icon__sigil--glow 3s infinite ease-in-out;
 }
 
@@ -8008,7 +8119,9 @@ kbd {
   border-radius: 50%;
   margin-top: -1.5rem;
   margin-left: -1.5rem;
-  transition: all 0.2s, z-index 0s;
+  transition:
+    all 0.2s,
+    z-index 0s;
   -webkit-user-select: none;
   user-select: none;
 }
@@ -8200,7 +8313,9 @@ kbd {
   color: var(--color-laitela--base);
   background: var(--color-laitela--accent);
   border-color: var(--color-laitela--accent);
-  box-shadow: 0 0 0.5rem 0.1rem inset, 0 0 0.3rem 0;
+  box-shadow:
+    0 0 0.5rem 0.1rem inset,
+    0 0 0.3rem 0;
   cursor: pointer;
 }
 
@@ -8215,13 +8330,17 @@ kbd {
   color: var(--color-laitela--base);
   background: var(--color-laitela--accent);
   border-color: var(--color-laitela--accent);
-  box-shadow: 0 0 0.5rem 0.1rem inset, 0 0 0.3rem 0;
+  box-shadow:
+    0 0 0.5rem 0.1rem inset,
+    0 0 0.3rem 0;
   animation: 3s a-laitela-flash infinite;
   cursor: pointer;
 }
 
 .o-dark-matter-dimension-button--accent {
-  box-shadow: 0 0 0.5rem 0.5rem inset, 0 0 0.3rem 0;
+  box-shadow:
+    0 0 0.5rem 0.5rem inset,
+    0 0 0.3rem 0;
 }
 
 @keyframes a-laitela-flash {
@@ -8965,7 +9084,11 @@ kbd {
   background-image: linear-gradient(45deg, #802222 25%, transparent 25%),
     linear-gradient(135deg, #802222 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #802222 75%),
     linear-gradient(135deg, transparent 75%, #802222 75%);
-  background-position: 0 0, 2rem 0, 2rem -2rem, 0 2rem;
+  background-position:
+    0 0,
+    2rem 0,
+    2rem -2rem,
+    0 2rem;
   background-size: 4rem 4rem;
   cursor: default;
 }
@@ -9419,7 +9542,9 @@ input.o-automator-block-input {
   height: 3.4rem;
   justify-content: center;
   align-items: center;
-  font: 1rem Typewriter, serif;
+  font:
+    1rem Typewriter,
+    serif;
   font-weight: bold;
   color: var(--color-text);
   background-color: var(--color-text-inverted);
@@ -9602,7 +9727,10 @@ input.o-automator-block-input {
 .o-celestial-nav__legend-text {
   fill: rgb(238, 135, 17);
   font-weight: bold;
-  text-shadow: 0 0 0.1rem black, 0 0 0.1rem black, 0 0 0.1rem black;
+  text-shadow:
+    0 0 0.1rem black,
+    0 0 0.1rem black,
+    0 0 0.1rem black;
 }
 
 .o-celestial-nav__hoverable:hover .o-celestial-nav__legend-text {
@@ -9823,7 +9951,11 @@ input.o-automator-block-input {
   background-image: linear-gradient(45deg, #802222 25%, transparent 25%),
     linear-gradient(135deg, #802222 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #802222 75%),
     linear-gradient(135deg, transparent 75%, #802222 75%);
-  background-position: 0 0, 2rem 0, 2rem -2rem, 0 2rem;
+  background-position:
+    0 0,
+    2rem 0,
+    2rem -2rem,
+    0 2rem;
   background-size: 4rem 4rem;
   cursor: default;
 }
@@ -9952,7 +10084,11 @@ input.o-automator-block-input {
   background-image: linear-gradient(45deg, #802222 25%, transparent 25%),
     linear-gradient(135deg, #802222 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #802222 75%),
     linear-gradient(135deg, transparent 75%, #802222 75%);
-  background-position: 0 0, 2rem 0, 2rem -2rem, 0 2rem;
+  background-position:
+    0 0,
+    2rem 0,
+    2rem -2rem,
+    0 2rem;
   background-size: 4rem 4rem;
   cursor: default;
 }

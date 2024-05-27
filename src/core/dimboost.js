@@ -23,7 +23,7 @@ export class DimBoost {
       InfinityUpgrade.dimboostMult,
       InfinityChallenge(7).reward,
       InfinityChallenge(7),
-      TimeStudy(81)
+      TimeStudy(81),
     )
       .toDecimal()
       .timesEffectsOf(
@@ -32,7 +32,7 @@ export class DimBoost {
         Achievement(117),
         Achievement(142),
         GlyphEffect.dimBoostPower,
-        PelleRifts.recursion.milestones[0]
+        PelleRifts.recursion.milestones[0],
       )
       .powEffectsOf(InfinityUpgrade.dimboostMult.chargedEffect);
     if (GlyphAlteration.isAdded("effarig")) boost = boost.pow(getSecondaryGlyphEffect("effarigforgotten"));
@@ -253,7 +253,7 @@ function maxBuyDimBoosts() {
   const dim = AntimatterDimension(req1.tier);
   const maxBoosts = Math.min(
     Number.MAX_VALUE,
-    toIncrement + Math.floor((dim.totalAmount.toNumber() - req1.amount) / increase)
+    toIncrement + Math.floor((dim.totalAmount.toNumber() - req1.amount) / increase),
   );
   if (DimBoost.bulkRequirement(maxBoosts).isSatisfied) {
     softReset(maxBoosts);
@@ -266,7 +266,7 @@ function maxBuyDimBoosts() {
       costFunction: (boosts) => DimBoost.bulkRequirement(boosts, true).amount,
       cumulative: false,
     },
-    player.dimensionBoosts
+    player.dimensionBoosts,
   );
   if (toBuyBoosts !== null) softReset(toBuyBoosts.quantity);
 }
