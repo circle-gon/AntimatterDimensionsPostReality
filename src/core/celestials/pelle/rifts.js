@@ -138,7 +138,7 @@ class RiftState extends GameMechanicState {
 
   toggle() {
     const active = PelleRifts.all.filter((r) => r.isActive).length;
-    if (!this.isActive && active === 2) GameUI.notify.error(`You can only have 2 rifts active at the same time!`);
+    if (!this.isActive && active === Pelle.maxRiftsActive) GameUI.notify.error(`You can only have ${Pelle.maxRiftsActive} rifts active at the same time!`);
     else this.rift.active = !this.rift.active;
   }
 
@@ -152,7 +152,9 @@ class RiftState extends GameMechanicState {
       this.rift.active = false;
       return;
     }
-    if (!this.isActive || this.isMaxed) return;
+
+    // Later on Rifts will start out active, so we don't want to drain it if it isn't unlocked
+    if (!this.isActive || this.isMaxed || !this.canBeApplied) return;
 
     if (this.fillCurrency.value instanceof Decimal) {
       // Don't drain resources if you only have 1 of it.

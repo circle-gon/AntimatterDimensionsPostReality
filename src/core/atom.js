@@ -532,7 +532,7 @@ export function collapse() {
     player.celestials.enslaved.unlocks = [0, 1];
     player.celestials.enslaved.completed = true;
     player.celestials.v.runUnlocks = [2, 2, 2, 2, 2, 2, 0, 0, 0];
-    player.celestials.v.unlockBits |= 1 << VUnlocks.vAchievementUnlock.id;
+    player.celestials.v.unlockBits = 1 << VUnlocks.vAchievementUnlock.id;
   }
   if (AtomMilestone.am5.isReached) {
     for (const pet of Ra.pets.all) pet.level = 5;

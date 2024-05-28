@@ -33,10 +33,10 @@ export class DilationTimeStudyState extends TimeStudyState {
       if (!quiet) {
         Tab.eternity.dilation.show();
       }
-      if (Perk.autounlockDilation1.canBeApplied) {
+      if ((AtomMilestone.am6.isReached && Pelle.isDoomed) || Perk.autounlockDilation1.canBeApplied) {
         for (const id of [4, 5, 6]) player.dilation.upgrades.add(id);
       }
-      if (Perk.autounlockDilation2.canBeApplied) {
+      if ((AtomMilestone.am6.isReached && Pelle.isDoomed) || Perk.autounlockDilation2.canBeApplied) {
         for (const id of [7, 8, 9]) player.dilation.upgrades.add(id);
         if (AtomUpgrade(7).isBought) for (const id of [14, 15]) player.dilation.upgrades.add(id);
       }

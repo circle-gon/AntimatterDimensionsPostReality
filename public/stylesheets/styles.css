@@ -864,7 +864,7 @@ button:focus {
   width: 50rem;
   height: 100%;
   font-family: Typewriter;
-  font-size: 12rem;
+  font-size: 1.2rem;
   font-weight: bold;
   background: var(--color-background);
   border-style: solid;

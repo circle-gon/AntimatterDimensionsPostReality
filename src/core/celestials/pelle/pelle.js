@@ -52,6 +52,55 @@ const disabledMechanicUnlocks = {
   timeTheorems: () => ({}),
 };
 
+const infinityUpgrades = [
+  "timeMult",
+  "dimMult",
+  "timeMult2",
+  "skipReset1",
+  "skipReset2",
+  "unspentBonus",
+  "27Mult",
+  "18Mult",
+  "36Mult",
+  "resetMult",
+  "skipReset3",
+  "passiveGen",
+  "45Mult",
+  "resetBoost",
+  "galaxyBoost",
+  "skipResetGalaxy",
+  "ipOffline",
+];
+
+const breakInfinityUpgrades = [
+  "timeMult",
+  "dimMult",
+  "timeMult2",
+  "skipReset1",
+  "skipReset2",
+  "unspentBonus",
+  "27Mult",
+  "18Mult",
+  "36Mult",
+  "resetMult",
+  "skipReset3",
+  "passiveGen",
+  "45Mult",
+  "resetBoost",
+  "galaxyBoost",
+  "skipResetGalaxy",
+  "totalMult",
+  "currentMult",
+  "postGalaxy",
+  "challengeMult",
+  "achievementMult",
+  "infinitiedMult",
+  "infinitiedGeneration",
+  "autoBuyerUpgrade",
+  "autobuyMaxDimboosts",
+  "ipOffline",
+];
+
 export const Pelle = {
   symbol: "♅",
   // Suppress the randomness for this form
@@ -112,6 +161,21 @@ export const Pelle = {
 
     // We don't give the singles on reset because it causes a lot of funny things when you Doom
     if (AtomMilestone.am1.isReached) for (const upg of PelleUpgrade.singles) upg.isBought = true;
+    if (AtomMilestone.am5.isReached) {
+      Autobuyer.bigCrunch.maxIntervalForFree()
+      player.infinityUpgrades = new Set(infinityUpgrades)
+      breakInfinity()
+
+      for (const upg of [1, 2, 3, 4, 5, 6]) player.eternityUpgrades.add(upg)
+    }
+    // This isn't quite accurate but I'm lazy so
+    if (AtomMilestone.am7.isReached) for (const rift of PelleRifts.all) rift.toggle()
+    if (AtomMilestone.am8.isReached) {
+      player.infinityUpgrades = new Set(breakInfinityUpgrades)
+      player.infinityRebuyables = [8, 7, 10];
+      player.replicanti.unl = true
+    }
+    if (AtomMilestone.am9.isReached) Currency.eternities.bumpTo(100);
 
     // Force-unhide all tabs except for the shop tab, for which we retain the hide state instead
     const shopTab = ~1 & (1 << GameDatabase.tabs.find((t) => t.key === "shop").id);
@@ -323,6 +387,14 @@ export const Pelle = {
     if (AtomMilestone.am2.isReached) drain *= 2;
     if (AtomMilestone.am3.isReached) drain *= 2;
     return drain;
+  },
+
+  get maxRiftsActive() {
+    let active = 2
+    if (AtomMilestone.am3.isReached) active++
+    if (AtomMilestone.am4.isReached) active++
+    if (AtomMilestone.am5.isReached) active++
+    return active
   },
 
   get glyphMaxLevel() {

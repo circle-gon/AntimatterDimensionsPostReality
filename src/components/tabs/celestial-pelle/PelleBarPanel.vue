@@ -10,6 +10,7 @@ export default {
     return {
       decayRate: 0,
       isCollapsed: false,
+      maxText: "two"
     };
   },
   computed: {
@@ -24,6 +25,10 @@ export default {
     update() {
       this.decayRate = Pelle.riftDrainPercent;
       this.isCollapsed = player.celestials.pelle.collapsed.rifts;
+
+      const max = Pelle.maxRiftsActive
+      // Special-case "two" because I want to retain the same behavior
+      this.maxText = max === 2 ? "two" : max
     },
     toggleCollapse() {
       player.celestials.pelle.collapsed.rifts = !this.isCollapsed;
@@ -40,7 +45,7 @@ export default {
     </div>
     <div v-if="!isCollapsed" class="l-pelle-content-container">
       Rifts can be activated by clicking on their bars.
-      <span v-if="strikes.length > 1">You cannot activate more than two Rifts at once.</span>
+      <span v-if="strikes.length > 1">You cannot activate more than {{ maxText }} Rifts at once.</span>
       <br v-else />
       When active, Rifts consume {{ formatPercents(decayRate) }} of another resource per second.
       <br />

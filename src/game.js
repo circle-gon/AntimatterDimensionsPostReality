@@ -672,10 +672,10 @@ export function gameLoop(passDiff, options = {}) {
   // sure that TT count doesn't go negative and that we can actually buy it. This technically bumps the max theorem
   // amount up as well, but at this point of the game 5k TT is insignificant to basically all other sources of TT.
   if (
-    Ra.unlocks.autoUnlockDilation.canBeApplied &&
-    Currency.timeTheorems.max.gte(TimeStudy.dilation.totalTimeTheoremRequirement) &&
+    ((Ra.unlocks.autoUnlockDilation.canBeApplied &&
     !isInCelestialReality() &&
-    !Pelle.isDoomed
+    !Pelle.isDoomed) || (Pelle.isDoomed && AtomMilestone.am4.isReached)) &&
+    Currency.timeTheorems.max.gte(TimeStudy.dilation.totalTimeTheoremRequirement)
   ) {
     Currency.timeTheorems.add(TimeStudy.dilation.cost);
     TimeStudy.dilation.purchase(true);
@@ -688,7 +688,8 @@ export function gameLoop(passDiff, options = {}) {
   // dilation, but the TP gain function is also coded to behave differently if it's active
   const teresa1 = player.dilation.active && Ra.unlocks.autoTP.canBeApplied;
   const teresa25 = !isInCelestialReality() && Ra.unlocks.unlockDilationStartingTP.canBeApplied;
-  if ((teresa1 || teresa25) && !Pelle.isDoomed) rewardTP();
+  const doomed = player.dilation.active && AtomMilestone.am7.isReached && Pelle.isDoomed
+  if (((teresa1 || teresa25) && !Pelle.isDoomed) || doomed) rewardTP();
 
   if (Enslaved.canTickHintTimer) {
     player.celestials.enslaved.hintUnlockProgress += Enslaved.isRunning ? realDiff : realDiff * 0.4;
@@ -697,6 +698,11 @@ export function gameLoop(passDiff, options = {}) {
       Enslaved.quotes.hintUnlock.show();
     }
   }
+
+  // When AM8 is reached, the 50% stronger galaxies update can no longer be bought
+  // This means that one of the Rifts can no longer be unlocked normally, so we give it here
+  if (AtomMilestone.am8.isReached && Pelle.isDoomed && Currency.infinityPoints.gte(5e11))
+    PelleStrikes.powerGalaxies.trigger();
 
   laitelaRealityTick(realDiff);
   Achievements.autoAchieveUpdate(diff);
@@ -802,7 +808,7 @@ function passivePrestigeGen() {
 
 // Applies all perks which automatically unlock things when passing certain thresholds, needs to be checked every tick
 function applyAutoUnlockPerks() {
-  if (!TimeDimension(8).isUnlocked && Perk.autounlockTD.canBeApplied) {
+  if (!TimeDimension(8).isUnlocked && (Perk.autounlockTD.canBeApplied || (Pelle.isDoomed && AtomMilestone.am4.isReached))) {
     for (let dim = 5; dim <= 8; ++dim) TimeStudy.timeDimension(dim).purchase();
   }
   if (Perk.autounlockDilation3.canBeApplied) buyDilationUpgrade(DilationUpgrade.ttGenerator.id);

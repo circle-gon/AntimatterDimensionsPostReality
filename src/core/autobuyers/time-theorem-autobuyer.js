@@ -10,11 +10,11 @@ export class TimeTheoremAutobuyerState extends AutobuyerState {
   }
 
   get isUnlocked() {
-    return Perk.ttBuySingle.isBought && !Pelle.isDisabled("timeTheoremAutobuyer");
+    return (Pelle.isDoomed && AtomMilestone.am7.isReached) || (Perk.ttBuySingle.isBought && !Pelle.isDisabled("timeTheoremAutobuyer"));
   }
 
   get hasUnlimitedBulk() {
-    return Perk.ttBuyMax.canBeApplied;
+    return (Pelle.isDoomed && AtomMilestone.am7.isReached) || Perk.ttBuyMax.canBeApplied;
   }
 
   tick() {

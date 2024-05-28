@@ -1548,7 +1548,8 @@ export const normalAchievements = [
     name: "Déjà vOoM",
     description: "Complete Infinity Challenge 5 while Doomed.",
     checkRequirement: () => Pelle.isDoomed && InfinityChallenge(5).isCompleted,
-    checkEvent: GAME_EVENT.INFINITY_CHALLENGE_COMPLETED,
+    // Because we give the Infinity Challenge completion
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     // Weirdly specific reward? Yes, its V's ST bonus because we forgot to disable it
     // when balancing Pelle and only realised too late.
     get reward() {
