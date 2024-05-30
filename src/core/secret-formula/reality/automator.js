@@ -1,7 +1,7 @@
 import { automatorTemplates } from "../script-templates";
 
 export const automator = {
-  categoryNames: ["Time Studies", "Event Triggers", "Alter Settings", "Information", "Script Flow"],
+  categoryNames: ["Time Studies", "Glyph Management", "Event Triggers", "Alter Settings", "Information", "Script Flow"],
   commands: [
     {
       id: 0,
@@ -88,10 +88,56 @@ export const automator = {
       ],
     },
     {
+      id: 19,
+      isUnlocked: () => AtomMilestone.am4.isReached,
+      keyword: "GLYPHS EQUIP",
+      category: 1,
+      syntax: `
+      <b>glyphs equip</b> [slot <u>number</u>] [type <u>glyph_type</u>] [effects <u>effect_count</u>] [level <u>number</u>] [rarity <u>rarity</u>]
+      `,
+      description: `Equips a Glyph at a certain slot using a specific filter, if possible. The Glyph chosen is the first 
+      possible Glyph in the inventory that matches the filter. If no Glyph is found, or the slot number chosen does not exist,
+      the automator will skip to the next instruction.`,
+      sections: [
+        {
+          name: "MODIFIERS",
+          items: [
+            {
+              header: "<i>slot</i>",
+              description: `The slot to equip the Glyph to, one-indexed. This must be a positive integer. If no value is
+              specified, the first slot is used.`
+            },
+            {
+              header: "<i>type</i>",
+              description: `The Glyph type to match. The possible values for this are each Glyph's name, lowercased and 
+              appending "glyph" (eg. the "Time" glyph will have its name be "timeglyph") to the end. If no value is specified, 
+              any Glyph type will be chosen.`
+            },
+            {
+              header: "<i>effects</i>",
+              description: `The minimum number of effects for the Glyph to have. This must be a positive integer.If no value is 
+              specified, a Glyph with any number of effects will be chosen.`
+            },
+            {
+              header: "<i>level</i>",
+              description: `The minimum level for the Glyph to have. This must be a positive integer. If no value is specified,
+              a Glyph with any level will be chosen.`
+            },
+            {
+              header: "<i>rarity</i>",
+              description: `The minimum rarity for the Glyph to have. This must be a number between 0 (exclusive) and 1 (inclusive).
+              If no value is specified, a Glyph with any rarity will be chosen.`
+            }
+          ]
+        }
+      ],
+      examples: ["glyphs equip", "glyphs equip slot 0 level 4000", "glyphs equip slot 1 type companionglyph"]
+    },
+    {
       id: 3,
       isUnlocked: () => true,
       keyword: "PRESTIGE",
-      category: 1,
+      category: 2,
       syntax: `
         <b>infinity</b> [nowait]<br>
         <b>eternity</b> [nowait] [respec]<br>
@@ -128,7 +174,7 @@ export const automator = {
       id: 4,
       isUnlocked: () => true,
       keyword: "UNLOCK",
-      category: 1,
+      category: 2,
       syntax: "<b>unlock</b> [nowait] <u>feature</u>",
       description: "Unlocks the specified Eternity Challenge or Time Dilation.",
       sections: [
@@ -151,7 +197,7 @@ export const automator = {
       id: 5,
       isUnlocked: () => true,
       keyword: "START",
-      category: 1,
+      category: 2,
       syntax: `
         <b>start</b> ec<u>N</u><br>
         <b>start</b> dilation`,
@@ -211,7 +257,7 @@ export const automator = {
       id: 7,
       isUnlocked: () => BlackHole(1).isUnlocked,
       keyword: "BLACK HOLE",
-      category: 2,
+      category: 3,
       syntax: "<b>black hole</b> <u>state</u>",
       description: `Toggles the speedup effect from the Black Hole on or off. Turning the Black Hole on via the
         Automator does not bypass the gradual acceleration from off to max speed which occurs before they are
@@ -222,7 +268,7 @@ export const automator = {
       id: 8,
       isUnlocked: () => Enslaved.isUnlocked,
       keyword: "STORE GAME TIME",
-      category: 2,
+      category: 3,
       syntax: "<b>store game time</b> <u>action</u>",
       description: `Changes whether or not the Black Hole is storing time. Also allows usage of stored time.`,
       sections: [
@@ -250,7 +296,7 @@ export const automator = {
       id: 9,
       isUnlocked: () => true,
       keyword: "NOTIFY",
-      category: 3,
+      category: 4,
       syntax: '<b>notify</b> "<u>text</u>"',
       description: `Takes the specified text and posts it in the top-right corner as
         a text notification, in the same spot and style as other notifications such as auto-save
@@ -262,7 +308,7 @@ export const automator = {
       id: 10,
       isUnlocked: () => true,
       keyword: "Adding Comments",
-      category: 3,
+      category: 4,
       syntax: "<b>#</b> text<br><b>//</b> text",
       description: `Allows you to leave a note to yourself within your script. This may be
         useful for organizing or keeping track of which parts of your script do various things,
@@ -299,7 +345,7 @@ export const automator = {
       id: 11,
       isUnlocked: () => true,
       keyword: "WAIT",
-      category: 4,
+      category: 5,
       syntax: "<b>wait</b> <u>condition</u>",
       description: `Forces Automator to wait for some condition or event. To wait for a certain duration of time,
         use the PAUSE command instead.`,
@@ -345,7 +391,7 @@ export const automator = {
       id: 12,
       isUnlocked: () => true,
       keyword: "PAUSE",
-      category: 4,
+      category: 5,
       syntax: "<b>pause</b> <u>interval</u>",
       description: `Tells the automator to stop moving forward and executing commands for a certain amount of time.
         Note that if the pause duration is shorter than the automator's execution speed, the automator will wait until
@@ -397,7 +443,7 @@ export const automator = {
       id: 13,
       isUnlocked: () => true,
       keyword: "IF",
-      category: 4,
+      category: 5,
       syntax: `<b>if</b> <u>condition</u> {<br>
         <blockquote>commands</blockquote>
         }`,
@@ -410,7 +456,7 @@ export const automator = {
       id: 14,
       isUnlocked: () => true,
       keyword: "UNTIL",
-      category: 4,
+      category: 5,
       syntax: `<b>until</b> <u>comparison</u> {<br>
         <blockquote>commands</blockquote>
         }<br><b>until</b> <u>prestige_event</u> {<br>
@@ -430,7 +476,7 @@ export const automator = {
       id: 15,
       isUnlocked: () => true,
       keyword: "WHILE",
-      category: 4,
+      category: 5,
       syntax: `<b>while</b> <u>comparison</u> {<br>
         <blockquote>commands</blockquote>
       }`,
@@ -443,7 +489,7 @@ export const automator = {
       id: 16,
       isUnlocked: () => true,
       keyword: "STOP",
-      category: 4,
+      category: 5,
       syntax: `<b>stop</b>`,
       description: `When the Automator runs this line, it will stop execution as if you clicked the
         <i class="fas fa-stop"></i> button on the control panel in the top-left of the Automator. This
@@ -457,7 +503,7 @@ export const automator = {
       id: 17,
       isUnlocked: () => true,
       keyword: "Currency List",
-      category: 4,
+      category: 5,
       syntax: "<i>You can use these in any IF, WHILE, UNTIL, or WAIT command</i>",
       description: () => {
         const filterText = EffarigUnlock.glyphFilter.isUnlocked
@@ -501,7 +547,7 @@ export const automator = {
       id: 18,
       isUnlocked: () => true,
       keyword: "Formatting Comparisons",
-      category: 4,
+      category: 5,
       syntax: "<u>resource1</u> <u>condition</u> <u>resource2</u>",
       description: `
         Comparisons are used within certain commands, which allow you to control the behavior of the automator based
@@ -537,7 +583,7 @@ export const automator = {
       id: 19,
       isUnlocked: () => true,
       keyword: "Commands with inner blocks",
-      category: 4,
+      category: 5,
       syntax: `<b>header_command</b> {<br>
         <blockquote>inner_commands</blockquote>
         }`,

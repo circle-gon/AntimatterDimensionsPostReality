@@ -45,8 +45,8 @@ export const atomMilestones = {
     reward: `Ra's pets now start at Level 5, V's normal achievements at tier 4 and hard
     achievements at tier 2, Laitela's Reality is destabilized once, keep the Dilation Upgrade
     autobuyers while Doomed, one more Rift can be filled simultaneously, and Infinity is broken,
-    all pre-break Infinity upgrades are bought, and the Big Crunch autobuyer is maxed 
-    while Doomed.`,
+    all pre-break Infinity upgrades are bought, the Big Crunch autobuyer is maxed 
+    while Doomed, and unlock more Automator commands.`,
   },
   am6: {
     time: TimeSpan.fromHours(3).totalMilliseconds,
@@ -60,8 +60,8 @@ export const atomMilestones = {
     time: TimeSpan.fromHours(1).totalMilliseconds,
     reward: `Laitela's Reality is destabilized five times, all Glyph Alchemy resources start
     at 10000, unlock the Tesseract autobuyer, passively gain Remnants while Doomed, skip the
-    Galaxy Generator animations, one more Rift can be filled simultaneously, and auto-gain 
-    Tachyon Particles and auto-buy Time Theorems while Doomed.`,
+    Galaxy Generator animations, one more Rift can be filled simultaneously and all Rifts start
+    out active, and auto-gain Tachyon Particles and auto-buy Time Theorems while Doomed.`,
   },
   am8: {
     time: TimeSpan.fromMinutes(20).totalMilliseconds,

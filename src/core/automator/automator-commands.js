@@ -1,6 +1,6 @@
 import { beginProcessReality, getRealityProps } from "../reality";
 
-import { AUTOMATOR_COMMAND_STATUS } from "./automator-backend";
+import { AUTOMATOR_COMMAND_STATUS, AutomatorData } from "./automator-backend";
 import { standardizeAutomatorValues, tokenMap as T } from "./lexer";
 
 /**
@@ -1257,10 +1257,6 @@ export const AutomatorCommands = [
     },
     validate: (ctx, V) => {
       ctx.startLine = ctx.Glyphs[0].startLine;
-      if (!PlayerProgress.realityUnlocked()) {
-        V.addError(ctx.Glyphs[0], "You do not have Glyphs unlocked.", "Reality once to unlock.");
-        return false;
-      }
       if (!AtomMilestone.am4.isReached) {
         V.addError(ctx.Glyphs[0], "You do not have Reality automation unlocked.", "Unlock it from Atom first.");
         return false;
@@ -1273,8 +1269,8 @@ export const AutomatorCommands = [
 
       if (ctx.Slot) {
         const value = Number(ctx.NumberLiteral[idx++].image);
-        if (!Number.isInteger(value)) {
-          V.addError(ctx.NumberLiteral[idx - 1], "Slot must be an integer.", "Change slot to be an integer.");
+        if (!Number.isInteger(value) || slot < 1) {
+          V.addError(ctx.NumberLiteral[idx - 1], "Slot must be a valid integer.", "Change slot to be a valid integer.");
           return false;
         }
         ctx.$payload.slot = value;
@@ -1290,11 +1286,11 @@ export const AutomatorCommands = [
 
       if (ctx.Effects) {
         const value = Number(ctx.NumberLiteral[idx++].image);
-        if (!Number.isInteger(value)) {
+        if (!Number.isInteger(value) || value < 1) {
           V.addError(
             ctx.NumberLiteral[idx - 1],
-            "Effect count must be an integer.",
-            "Change effect count to be an integer.",
+            "Effect count must be a valid integer.",
+            "Change effect count to be a valid integer.",
           );
           return false;
         }
@@ -1305,11 +1301,11 @@ export const AutomatorCommands = [
 
       if (ctx.Level) {
         const value = Number(ctx.NumberLiteral[idx++].image);
-        if (!Number.isInteger(value)) {
+        if (!Number.isInteger(value) || value < 1) {
           V.addError(
             ctx.NumberLiteral[idx - 1],
-            "Glyph level must be an integer.",
-            "Change glyph level to be an integer.",
+            "Glyph level must be a valid integer.",
+            "Change glyph level to be a valid integer.",
           );
           return false;
         }
@@ -1320,7 +1316,7 @@ export const AutomatorCommands = [
 
       if (ctx.Rarity) {
         const value = Number(ctx.NumberLiteral[idx++].image);
-        if (value > 1 || value < 0) {
+        if (value > 1 || value <= 0) {
           V.addError(
             ctx.NumberLiteral[idx - 1],
             "Rarity must be a number from 0 to 1.",
@@ -1351,14 +1347,13 @@ export const AutomatorCommands = [
         );
         if (!glyph) {
           AutomatorData.logCommandEvent("Attempted to equip a Glyph, but one could not be found.", ctx.startLine);
-          return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
+        } else if (filter.slot > Glyphs.activeSlotCount) {
+          AutomatorData.logCommandEvent("Attempted to equip a Glyph, but the slot was not valid.", ctx.startLine);
+        } else {
+          // it's zero-indexed!!!
+          Glyphs.equip(glyph, filter.slot - 1);
+          AutomatorData.logCommandEvent(`A Glyph was equipped.`, ctx.startLine);
         }
-
-        // TODO: add more slots
-        Glyphs.equip(glyph, filter.slot);
-
-        AutomatorData.logCommandEvent(`A Glyph was equipped.`, ctx.startLine);
-
         return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
       };
     },
@@ -1384,19 +1379,23 @@ export const AutomatorCommands = [
       $.CONSUME(T.Sacrifice);
 
       $.OPTION(() => {
+        $.CONSUME(T.SacrificeMode)
+      })
+
+      $.OPTION1(() => {
         $.CONSUME(T.Type);
         $.CONSUME(T.GlyphType);
       });
-      $.OPTION1(() => {
+      $.OPTION2(() => {
         $.CONSUME(T.Effects);
         // TODO: implement specfic effects
         $.CONSUME(T.NumberLiteral);
       });
-      $.OPTION2(() => {
+      $.OPTION3(() => {
         $.CONSUME(T.Level);
         $.CONSUME1(T.NumberLiteral);
       });
-      $.OPTION3(() => {
+      $.OPTION4(() => {
         $.CONSUME(T.Rarity);
         $.CONSUME2(T.NumberLiteral);
       });
@@ -1414,6 +1413,10 @@ export const AutomatorCommands = [
 
       // This is used to determine the correct NumberLiteral to match
       let idx = 0;
+
+      if (ctx.SacrificeMode) {
+        ctx.$payload.sacMode = ctx.SacrificeMode[0].image
+      }
 
       if (ctx.GlyphType) {
         const type = ctx.GlyphType[0].image.slice(0, -5).toLowerCase();
@@ -1496,13 +1499,13 @@ export const AutomatorCommands = [
         );
         if (!glyph) {
           AutomatorData.logCommandEvent("Attempted to sacrifice a Glyph, but one could not be found.", ctx.startLine);
-          return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
+        } else if (!GlyphSacrificeHandler.canSacrifice) {
+          // TODO: fill in
+        } else {
+          // We use true so that the modal is never shown
+          GlyphSacrificeHandler.sacrificeGlyph(glyph, true);
+          AutomatorData.logCommandEvent(`A Glyph was sacrificed.`, ctx.startLine);
         }
-
-        // We use true so that the modal is never shown
-        GlyphSacrificeHandler.sacrificeGlyph(glyph, true);
-
-        AutomatorData.logCommandEvent(`A Glyph was sacrificed.`, ctx.startLine);
 
         return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
       };
@@ -1529,7 +1532,12 @@ export const AutomatorCommands = [
     },
     validate: (ctx) => {
       ctx.startLine = ctx.Start[0].startLine;
-      // Do nothing other than return true
+
+      if (!AtomMilestone.am5.isReached) {
+        V.addError(ctx.Start[0], "You do not have Celestial automation unlocked.", "Unlock it from Atom first.");
+        return false;
+      }
+
       return true;
     },
     compile: (ctx) => () => {
@@ -1545,11 +1553,11 @@ export const AutomatorCommands = [
         if (data.reality) beginProcessReality(getRealityProps(true));
         data.run();
         AutomatorData.logCommandEvent(`Celestial ${data.name} was started.`, ctx.startLine);
+        return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
       } else {
         AutomatorData.logCommandEvent(`Tried to enter ${data.name}, but failed (not unlocked).`, ctx.startLine);
+        return AUTOMATOR_COMMAND_STATUS.NEXT_TICK_SAME_INSTRUCTION;
       }
-
-      return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
     },
     blockify: (ctx) => ({
       singleSelectionInput: ctx.CelestialName[0].image.toUpperCase(),

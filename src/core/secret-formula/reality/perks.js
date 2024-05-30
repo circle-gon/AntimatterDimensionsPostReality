@@ -165,7 +165,7 @@ export const perks = {
     family: PERK_FAMILY.DILATION,
     get description() {
       return `After unlocking Dilation, automatically unlock the ${
-        AtomUpgrade(7).isBought ? "third" : "second"
+        AtomUpgrade(5).isBought ? "third" : "second"
       } row of Dilation Upgrades for free.`;
     },
     layoutPosList: [125433, 81801, 79803, 79398, 80200, 97510],
@@ -176,7 +176,7 @@ export const perks = {
     family: PERK_FAMILY.DILATION,
     get description() {
       return `After unlocking Dilation, automatically unlock the ${
-        AtomUpgrade(7).isBought ? "fourth and fifth rows" : "third row"
+        AtomUpgrade(5).isBought ? "fourth and fifth rows" : "third row"
       } of Dilation Upgrades for free.`;
     },
     layoutPosList: [128662, 82201, 79403, 79397, 80203, 85513],

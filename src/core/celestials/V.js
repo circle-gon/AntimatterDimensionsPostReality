@@ -198,7 +198,9 @@ export const V = {
     this.quotes.realityEnter.show();
   },
   get spaceTheoremMultiplier() {
-    return Effects.product(AtomUpgrade(4));
+    let multi = 1
+    if (AtomUpgrade(3).isBought) multi *= 2
+    return multi
   },
   updateTotalRunUnlocks() {
     let sum = 0;

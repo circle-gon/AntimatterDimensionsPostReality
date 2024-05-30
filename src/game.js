@@ -599,7 +599,7 @@ export function gameLoop(passDiff, options = {}) {
   // These need to all be done consecutively in order to minimize the chance of a reset occurring between real time
   // updating and game time updating. This is only particularly noticeable when game speed is 1 and the player
   // expects to see identical numbers. We also don't increment the timers if the game has been beaten (Achievement 188)
-  if (!Achievement(188).isUnlocked) {
+  if (!GameEnd.beaten) {
     player.records.realTimeDoomed += realDiff;
     player.records.realTimePlayed += realDiff;
     player.records.totalTimePlayed = player.records.totalTimePlayed.add(diff);
@@ -667,6 +667,18 @@ export function gameLoop(passDiff, options = {}) {
   InfinityDimensions.tryAutoUnlock();
 
   BlackHoles.updatePhases(blackHoleDiff);
+
+  // Teresa auto
+  const am = Currency.antimatter.value.sqrt()
+  if (AtomUpgrade(8).isBought && Pelle.isDoomed && am.gt(player.celestials.teresa.bestRunAM)) {
+    player.celestials.teresa.bestRunAM = am
+``
+    let machineRecord;
+      if (Currency.imaginaryMachines.value.eq(0)) machineRecord = player.reality.maxRM;
+      else machineRecord = DC.E10000.times(Currency.imaginaryMachines.value);
+      player.celestials.teresa.lastRepeatedMachines =
+        player.celestials.teresa.lastRepeatedMachines.clampMin(machineRecord);
+  }
 
   // Unlocks dilation at a certain total TT count for free, but we add the cost first in order to make
   // sure that TT count doesn't go negative and that we can actually buy it. This technically bumps the max theorem
@@ -811,16 +823,25 @@ function applyAutoUnlockPerks() {
   if (!TimeDimension(8).isUnlocked && (Perk.autounlockTD.canBeApplied || (Pelle.isDoomed && AtomMilestone.am4.isReached))) {
     for (let dim = 5; dim <= 8; ++dim) TimeStudy.timeDimension(dim).purchase();
   }
-  if (Perk.autounlockDilation3.canBeApplied) buyDilationUpgrade(DilationUpgrade.ttGenerator.id);
+  if (AtomMilestone.am6.isReached || Perk.autounlockDilation3.canBeApplied) buyDilationUpgrade(DilationUpgrade.ttGenerator.id);
   if (Perk.autounlockReality.canBeApplied) TimeStudy.reality.purchase(true);
   applyEU2();
 }
 
 function laitelaRealityTick(realDiff) {
   const laitelaInfo = player.celestials.laitela;
+
+  const trueDiff = realDiff / 1000
+
+  if (AtomUpgrade(8).isBought && !Pelle.isDoomed) {
+    laitelaInfo.darkMatterMult = Laitela.darkMatterMultGain.mul(trueDiff).add(laitelaInfo.darkMatterMult)
+
+    Currency.singularities.add(Singularity.passiveSingularityGain.mul(trueDiff))
+  }
+
   if (!Laitela.isRunning) return;
   if (laitelaInfo.entropy >= 0) {
-    laitelaInfo.entropy += (realDiff / 1000) * Laitela.entropyGainPerSecond;
+    laitelaInfo.entropy += trueDiff * Laitela.entropyGainPerSecond;
   }
 
   // Setting entropy to -1 on completion prevents the modal from showing up repeatedly

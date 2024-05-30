@@ -243,6 +243,7 @@ CodeMirror.defineSimpleMode("automato", {
     { regex: /filter[ \t]+score/iu, token: "variable-2" },
     { regex: /ec(1[0-2]|[1-9])[\t ]+completions(\s|$)/iu, token: "variable-2" },
     { regex: /(am|ip|ep|all)(\s|$)/iu, token: "variable-2" },
+    { regex: /(total[\t ]+)?glyph[\t ]+slots|celestial[\t ]+status/iu, token: "variable-2" },
     {
       regex: /(rm|rg|dt|tp|tt|space theorems|(banked )?infinities|eternities|realities|rep(licanti)?)(\s|$)/iu,
       token: "variable-2",

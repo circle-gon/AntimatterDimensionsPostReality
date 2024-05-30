@@ -140,8 +140,7 @@ function giveRealityUpgrade(num, isReality) {
 }
 
 function giveAU8() {
-  // This must be done this way because ach 188 should not be obtained
-  for (let ach = 181; ach <= 187; ach++) Achievement(ach).give();
+  Achievements.row(18).forEach(i => i.give())
 }
 
 export function collapse() {
@@ -585,7 +584,7 @@ export function collapse() {
     for (const resource of AlchemyResources.all) resource.amount = 25000;
     player.celestials.v.runUnlocks = [6, 6, 6, 6, 6, 6, 5, 5, 5];
   }
-  if (AtomUpgrade(8).isBought) giveAU8();
+  if (AtomUpgrade(7).isBought) giveAU8();
 
   Teresa.checkForUnlocks();
   V.updateTotalRunUnlocks();
@@ -695,10 +694,10 @@ class AtomUpgradeState extends BitPurchasableMechanicState {
 
   onPurchased() {
     switch (this.id) {
-      case 4:
+      case 3:
         V.updateTotalRunUnlocks();
         break;
-      case 8:
+      case 7:
         giveAU8();
         break;
       case 9:

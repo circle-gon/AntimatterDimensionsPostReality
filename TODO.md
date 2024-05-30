@@ -1,3 +1,3 @@
-- auto-teresa
+- auto-teresa & auto-annihilation multiplier
 - balance atom upgrade costs and atom milestones
 - install `eslint-import-resolver-alias` and `eslint-plugin-import` once they support eslint v9

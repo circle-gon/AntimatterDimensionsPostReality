@@ -88,7 +88,7 @@ export default {
       this.baseGalaxies = player.dilation.baseTachyonGalaxies;
       this.totalGalaxies = player.dilation.totalTachyonGalaxies;
       this.hasPelleDilationUpgrades =
-        PelleRifts.paradox.milestones[0].canBeApplied || (AtomUpgrade(7).isBought && !Pelle.isDoomed);
+        PelleRifts.paradox.milestones[0].canBeApplied || (AtomUpgrade(5).isBought && !Pelle.isDoomed);
       if (this.baseGalaxies < 500 && DilationUpgrade.doubleGalaxies.isBought) {
         this.tachyonGalaxyGain = DilationUpgrade.doubleGalaxies.effectValue;
       } else {

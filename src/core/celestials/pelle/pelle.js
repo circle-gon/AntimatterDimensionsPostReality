@@ -160,7 +160,12 @@ export const Pelle = {
     AutomatorBackend.stop();
 
     // We don't give the singles on reset because it causes a lot of funny things when you Doom
-    if (AtomMilestone.am1.isReached) for (const upg of PelleUpgrade.singles) upg.isBought = true;
+    if (AtomMilestone.am1.isReached) {
+      for (const upg of PelleUpgrade.singles) upg.isBought = true;
+      // Normally, the Tickspeed autobuyer mode is set to singles on Doom. This is very annoying
+      // and also doesn't make too much sense because we have the Pelle Upgrade that keeps it
+      Autobuyer.tickspeed.mode = AUTOBUYER_MODE.BUY_MAX
+    }
     if (AtomMilestone.am5.isReached) {
       Autobuyer.bigCrunch.maxIntervalForFree()
       player.infinityUpgrades = new Set(infinityUpgrades)
@@ -392,8 +397,8 @@ export const Pelle = {
   get maxRiftsActive() {
     let active = 2
     if (AtomMilestone.am3.isReached) active++
-    if (AtomMilestone.am4.isReached) active++
     if (AtomMilestone.am5.isReached) active++
+    if (AtomMilestone.am7.isReached) active++
     return active
   },
 

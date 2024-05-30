@@ -32,7 +32,7 @@ export const Laitela = {
     return Laitela.maxAllowedDimension === 0;
   },
   get continuumUnlocked() {
-    return (ImaginaryUpgrade(15).isBought || AtomUpgrade(5).isBought) && !Pelle.isDisabled("continuum");
+    return (ImaginaryUpgrade(15).isBought || AtomUpgrade(4).isBought) && !Pelle.isDisabled("continuum");
   },
   get continuumActive() {
     return this.continuumUnlocked && !player.auto.continuumDisabled.AD && !Pelle.isDisabled("continuum");

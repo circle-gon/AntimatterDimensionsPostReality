@@ -1598,7 +1598,7 @@ export const normalAchievements = [
       if (PlayerProgress.atomUnlocked()) return "Finish Dooming your Reality";
       return "Beat the game.";
     },
-    checkRequirement: () => GameEnd.endState > END_STATE_MARKERS.GAME_END && !GameEnd.removeAdditionalEnd,
+    checkRequirement: () => GameEnd.beaten,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
   {

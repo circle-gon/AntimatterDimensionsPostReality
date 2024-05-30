@@ -82,6 +82,7 @@ const StudyPath = createCategory("StudyPath");
 const TimeUnit = createCategory("TimeUnit");
 const GlyphType = createCategory("GlyphType");
 const CelestialName = createCategory("CelestialName");
+const SacrificeMode = createCategory("SacrificeMode")
 
 createInCategory(ComparisonOperator, "OpGTE", />=/, {
   $autocomplete: ">=",
@@ -130,6 +131,12 @@ createInCategory(CelestialName, "V", /vcel/i);
 createInCategory(CelestialName, "Ra", /racel/i);
 createInCategory(CelestialName, "Laitela", /laitela/i);
 createInCategory(CelestialName, "Pelle", /pelle/i);
+
+createInCategory(SacrificeMode, "Sacrifice", /sac(rifice)?/i, {
+  $autocomplete: "sac"
+})
+
+createInCategory(SacrificeMode, "Refine", /refine/i)
 
 createInCategory(AutomatorCurrency, "EP", /ep/i, { $getter: () => Currency.eternityPoints.value });
 createInCategory(AutomatorCurrency, "IP", /ip/i, { $getter: () => Currency.infinityPoints.value });
@@ -232,6 +239,31 @@ for (let i = 1; i <= 12; ++i) {
     $getter: () => EternityChallenge(id).completions,
   });
 }
+
+createInCategory(AutomatorCurrency, "GlyphSlots", /total[ \t]+glyph[ \t]+slots/i, {
+  $autocomplete: "total glyph slots",
+  $getter: () => Glyphs.activeSlotCount
+})
+
+createInCategory(AutomatorCurrency, "EmptyGlyphSlots", /glyph[ \t]+slots/i, {
+  $autocomplete: "glyph slots",
+  $getter: () => Glyphs.activeSlotCount - Glyphs.activeList.length
+})
+
+// TODO: make comparison support equality and strings
+/*createInCategory(AutomatorCurrency, "CelestialStatus", /celestial[ \t]+status/i, {
+  $autocomplete: "celestial status",
+  $getter: () => {
+    if (Teresa.isRunning) return "teresa"
+    if (Enslaved.isRunning) return "nameless"
+    if (Effarig.isRunning) return "effarig"
+    if (V.isRunning) return "v"
+    if (Ra.isRunning) return "ra"
+    if (Laitela.isRunning) return "laitela"
+    if (Pelle.isDoomed) return "pelle"
+    return "none"
+  }
+})*/
 
 // $prestigeLevel is used by things that wait for a prestige event. Something waiting for
 // eternity will be triggered by something waiting for reality, for example.
@@ -413,6 +445,8 @@ export const automatorTokens = [
   ...tokenLists.CelestialName,
   GlyphType,
   ...tokenLists.GlyphType,
+  SacrificeMode,
+  ...tokenLists.SacrificeMode,
   Keyword,
   ...keywordTokens,
   PrestigeEvent,

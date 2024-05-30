@@ -37,6 +37,10 @@ class PelleStrikeState extends BitUpgradeState {
 
   trigger() {
     this.unlock();
+    if (AtomMilestone.am7.isReached) {
+      // When the third Rift is unlocked, the second Rift won't start out draining
+      PelleRifts.decay.rift.active = true;
+    }
   }
 
   onUnlock() {

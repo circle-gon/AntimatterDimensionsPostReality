@@ -49,24 +49,24 @@ export const atomUpgrades = [
   },
   {
     id: 3,
-    name: "Knowledge Empowerment",
+    name: "Celestial Power",
     cost: 5,
-    description: "Memory gain is raised ^1.5.",
-    effect: 1.5,
+    description: "Memory gain is raised ^1.5 and each V-Achievement awards 2 Space Theorems instead of 1.",
   },
   {
     id: 4,
-    name: "Overachiever",
+    name: "Death to Continuum",
     cost: 5,
-    description: "Each V-Achievement awards 2 Space Theorems instead of 1.",
-    effect: 2,
+    description: "Unlock Infinity and Time Dimension Continuum, which is unlocked when Antimatter Dimension Continuum is unlocked. Start Collapses with AD Continuum unlocked.",
   },
   {
     id: 5,
-    name: "Death to Continuum",
+    name: "Doomed Transcendence",
     cost: 20,
-    description: `Unlock Infinity and Time Dimension Continuum, which is unlocked when
-    Antimatter Dimension Continuum is unlocked. Start Collapses with AD Continuum unlocked.`,
+    description: `Dilation upgrades previously only available in a Doomed Reality
+    are now purchasable outside of it, but they scale faster
+    and some upgrades are weakened. The DU2 and DAU Perks now adjust to account for the
+    new Dilation upgrades.`,
   },
   rebuyable({
     id: 6,
@@ -80,19 +80,16 @@ export const atomUpgrades = [
   }),
   {
     id: 7,
-    name: "Doomed Transcendence",
+    name: "Keeper of Achievements",
     cost: 100,
-    description: `Dilation upgrades previously only available in a Doomed Reality
-    are now purchasable outside of it, but they scale faster
-    and some upgrades are weakened. The DU2 and DAU Perks now adjust to account for the
-    new Dilation upgrades.`,
+    description: "Upon purchasing this upgrade or Collapsing, start with all Doom achievements unlocked.",
   },
   {
     id: 8,
-    name: "Keeper of Achievements",
+    name: "Celestial Automation",
     cost: 200,
-    description:
-      "Upon purchasing this upgrade or Collapsing, start with all Doom achievements (except for 188) unlocked.",
+    description: `Teresa's best AM gets set as if you reached the square root of your total antimatter in Teresa's Reality.
+    Gain 100% of your gained Annihilation multiplier and Singularities (based on your Dark Energy) per real-time second.`,
   },
   {
     id: 9,

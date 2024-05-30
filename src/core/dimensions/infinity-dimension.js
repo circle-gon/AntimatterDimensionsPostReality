@@ -462,7 +462,7 @@ export const InfinityDimensions = {
   },
 
   get continuumUnlocked() {
-    return !EternityChallenge(8).isRunning && AtomUpgrade(5).isBought && Laitela.continuumUnlocked;
+    return !EternityChallenge(8).isRunning && AtomUpgrade(4).isBought && Laitela.continuumUnlocked;
   },
 
   get continuumActive() {

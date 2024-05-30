@@ -23,6 +23,10 @@ export const GameEnd = {
     );
   },
 
+  get beaten() {
+    return GameEnd.endState > END_STATE_MARKERS.GAME_END && !GameEnd.removeAdditionalEnd
+  },
+
   _additionalEnd: 0,
   get additionalEnd() {
     // Don't hide the tabs

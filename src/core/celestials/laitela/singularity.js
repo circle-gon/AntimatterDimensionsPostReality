@@ -235,12 +235,21 @@ export const Singularity = {
     return SingularityMilestone.improvedSingularityCap.effectOrDefault(11);
   },
 
+  singularitiesGainedForCap(cap) {
+    return Decimal.pow(this.gainPerCapIncrease, cap)
+    .mul(SingularityMilestone.singularityMult.effectOrDefault(1))
+    .mul(1 + ImaginaryUpgrade(10).effectOrDefault(0))
+    .mul(AtomUpgrade(2).isBought ? 5 : 1)
+    .floor();
+  },
+
+  get passiveSingularityGain() {
+    const singCap = Math.min(Currency.darkEnergy.value.div(200).max(1).log10(), 50)
+    return this.singularitiesGainedForCap(singCap)
+  },
+
   get singularitiesGained() {
-    return Decimal.pow(this.gainPerCapIncrease, player.celestials.laitela.singularityCapIncreases)
-      .mul(SingularityMilestone.singularityMult.effectOrDefault(1))
-      .mul(1 + ImaginaryUpgrade(10).effectOrDefault(0))
-      .mul(AtomUpgrade(2).isBought ? 5 : 1)
-      .floor();
+    return this.singularitiesGainedForCap(player.celestials.laitela.singularityCapIncreases)
   },
 
   // Time (in seconds) to go from 0 DE to the condensing requirement
@@ -263,6 +272,8 @@ export const Singularity = {
   },
 
   increaseCap() {
+    // Uh whoops
+    if (player.celestials.laitela.singularityCapIncreases >= 50) return;
     player.celestials.laitela.singularityCapIncreases++;
   },
 
