@@ -174,7 +174,6 @@ function load() {
   game = saveData;
 }
 
- 
 let cheat = false;
 
 function gameLoop() {

@@ -7,7 +7,7 @@ export const GameSaveSerializer = {
     const json = JSON.stringify(save, this.jsonConverter);
     return this.encodeText(json, "savefile");
   },
-   
+
   jsonConverter(key, value) {
     if (value === Infinity) {
       return "Infinity";
@@ -21,7 +21,7 @@ export const GameSaveSerializer = {
     if (typeof data !== "string") return undefined;
     try {
       const json = this.decodeText(data, "savefile");
-       
+
       return JSON.parse(json, (k, v) => (v === Infinity ? "Infinity" : v));
     } catch (e) {
       return undefined;

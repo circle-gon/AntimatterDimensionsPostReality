@@ -391,12 +391,8 @@ class Validator extends BaseVisitor {
       this.addError(ctx, "Missing comparison operator (<, >, <=, >=)", "Insert the appropriate comparison operator");
       return;
     }
-    if (ctx.ComparisonOperator[0].tokenType === T.OpEQ || ctx.ComparisonOperator[0].tokenType === T.EqualSign) {
-      this.addError(
-        ctx,
-        "Please use an inequality comparison (>, <, >=, <=)",
-        "Comparisons cannot be done with equality, only with inequality operators",
-      );
+    if (ctx.ComparisonOperator[0].tokenType === T.EqualSign) {
+      this.addError(ctx, "Please use == instead", "= is deprecated, use == instead");
     }
   }
 
@@ -466,7 +462,7 @@ class Compiler extends BaseVisitor {
     for (const cmd of AutomatorCommands) {
       if (!cmd.compile) continue;
       const ownMethod = this[cmd.id];
-       
+
       this[cmd.id] = (ctx, output) => {
         // For the compiler, we don't bother doing the default recursive visitation behavior
         if (ownMethod && ownMethod !== super[cmd.id]) ownMethod.call(this, ctx, output);
@@ -522,7 +518,7 @@ class Blockifier extends BaseVisitor {
       const blockify = cmd.blockify;
       if (!blockify) continue;
       const ownMethod = this[cmd.id];
-       
+
       this[cmd.id] = (ctx, output) => {
         if (ownMethod && ownMethod !== super[cmd.id]) ownMethod.call(this, ctx, output);
         try {

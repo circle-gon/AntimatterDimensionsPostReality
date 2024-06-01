@@ -134,7 +134,6 @@ Theme.create = function (name, settings) {
 
 export const Themes = {
   all: [
-     
     // Note that "Normal" is a special case where dark is overridden elsewhere with whether or not the UI is Modern
     Theme.create("Normal", {}),
     Theme.create("Metro", { metro: true }),
@@ -156,7 +155,6 @@ export const Themes = {
     Theme.create("S10", { dark: true, metro: true, animated: true, secret: true }),
     Theme.create("S11", { dark: true, animated: true, secret: true }),
     Theme.create("S12", { secret: true }),
-     
   ],
 
   available() {

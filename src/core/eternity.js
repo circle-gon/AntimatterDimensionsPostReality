@@ -143,7 +143,6 @@ export function eternity(force, auto, specialConditions = {}) {
   return true;
 }
 
- 
 export function animateAndEternity(callback) {
   if (!Player.canEternity) return false;
   const hasAnimation =

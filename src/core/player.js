@@ -7,7 +7,7 @@ import { deepmergeAll } from "@/utility/deepmerge";
 import { GlyphTypes } from "./glyph-effects";
 
 // This is actually reassigned when importing saves
- 
+
 window.player = {
   antimatter: DC.E1,
   dimensions: {
@@ -578,7 +578,8 @@ window.player = {
         topLevelScript: 0,
         editorScript: 0,
         repeat: true,
-        forceRestart: true,
+        forceRealityRestart: true,
+        forceCollapseRestart: true,
         followExecution: true,
         stack: [],
       },

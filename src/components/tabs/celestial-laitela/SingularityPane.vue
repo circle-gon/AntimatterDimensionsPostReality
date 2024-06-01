@@ -70,10 +70,8 @@ export default {
         : null;
     },
     increaseTooltip() {
-      return this.singularityCapIncreases >= 50
-        ? "You cannot increase the cap any further!"
-        : null;
-    }
+      return this.singularityCapIncreases >= 50 ? "You cannot increase the cap any further!" : null;
+    },
   },
   methods: {
     update() {
@@ -95,8 +93,8 @@ export default {
       this.hasAutoSingularity = Number.isFinite(this.autoSingularityFactor);
       this.nextLowerStep = this.singularityCap.mul(this.autoSingularityFactor).div(10);
       this.willCondenseOnDecrease = this.isAutoEnabled && this.darkEnergy.gt(this.nextLowerStep);
-      this.passiveSingularityGain = Singularity.passiveSingularityGain
-      this.passiveSingularityUnlocked = AtomUpgrade(8).isBought
+      this.passiveSingularityGain = Singularity.passiveSingularityGain;
+      this.passiveSingularityUnlocked = AtomUpgrade(8).isBought;
     },
     doSingularity() {
       Singularity.perform();
@@ -127,7 +125,10 @@ export default {
 <template>
   <div class="c-laitela-singularity-container">
     <div>
-      <h2>You have {{ quantify("Singularity", singularities, 2) }}{{ passiveSingularityUnlocked ? ` (+${format(passiveSingularityGain, 2, 0)}/sec)` : ""}}</h2>
+      <h2>
+        You have {{ quantify("Singularity", singularities, 2)
+        }}{{ passiveSingularityUnlocked ? ` (+${format(passiveSingularityGain, 2, 0)}/sec)` : "" }}
+      </h2>
       <button :class="condenseClassObject()" @click="doSingularity">
         <h2>
           {{ singularityFormText }}
@@ -153,7 +154,7 @@ export default {
         </button>
         <button
           class="c-laitela-singularity__cap-control c-laitela-singularity__cap-control--available"
-          :class="{ 'c-laitela-singularity__cap-control--available' : singularityCapIncreases < 50 }"
+          :class="{ 'c-laitela-singularity__cap-control--available': singularityCapIncreases < 50 }"
           :ach-tooltip="increaseTooltip"
           @click="increaseCap"
         >

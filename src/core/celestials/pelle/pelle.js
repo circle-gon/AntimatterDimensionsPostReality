@@ -164,21 +164,21 @@ export const Pelle = {
       for (const upg of PelleUpgrade.singles) upg.isBought = true;
       // Normally, the Tickspeed autobuyer mode is set to singles on Doom. This is very annoying
       // and also doesn't make too much sense because we have the Pelle Upgrade that keeps it
-      Autobuyer.tickspeed.mode = AUTOBUYER_MODE.BUY_MAX
+      Autobuyer.tickspeed.mode = AUTOBUYER_MODE.BUY_MAX;
     }
     if (AtomMilestone.am5.isReached) {
-      Autobuyer.bigCrunch.maxIntervalForFree()
-      player.infinityUpgrades = new Set(infinityUpgrades)
-      breakInfinity()
+      Autobuyer.bigCrunch.maxIntervalForFree();
+      player.infinityUpgrades = new Set(infinityUpgrades);
+      breakInfinity();
 
-      for (const upg of [1, 2, 3, 4, 5, 6]) player.eternityUpgrades.add(upg)
+      for (const upg of [1, 2, 3, 4, 5, 6]) player.eternityUpgrades.add(upg);
     }
     // This isn't quite accurate but I'm lazy so
-    if (AtomMilestone.am7.isReached) for (const rift of PelleRifts.all) rift.toggle()
+    if (AtomMilestone.am7.isReached) for (const rift of PelleRifts.all) rift.toggle();
     if (AtomMilestone.am8.isReached) {
-      player.infinityUpgrades = new Set(breakInfinityUpgrades)
+      player.infinityUpgrades = new Set(breakInfinityUpgrades);
       player.infinityRebuyables = [8, 7, 10];
-      player.replicanti.unl = true
+      player.replicanti.unl = true;
     }
     if (AtomMilestone.am9.isReached) Currency.eternities.bumpTo(100);
 
@@ -395,11 +395,11 @@ export const Pelle = {
   },
 
   get maxRiftsActive() {
-    let active = 2
-    if (AtomMilestone.am3.isReached) active++
-    if (AtomMilestone.am5.isReached) active++
-    if (AtomMilestone.am7.isReached) active++
-    return active
+    let active = 2;
+    if (AtomMilestone.am3.isReached) active++;
+    if (AtomMilestone.am5.isReached) active++;
+    if (AtomMilestone.am7.isReached) active++;
+    return active;
   },
 
   get glyphMaxLevel() {

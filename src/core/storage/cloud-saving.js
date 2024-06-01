@@ -202,7 +202,6 @@ export const Cloud = {
       const localSave = GameStorage.saves[saveId];
       const saveComparison = this.compareSaves(cloudSave, localSave);
 
-       
       const overwriteLocalSave = () => {
         GameStorage.overwriteSlot(saveId, cloudSave);
 

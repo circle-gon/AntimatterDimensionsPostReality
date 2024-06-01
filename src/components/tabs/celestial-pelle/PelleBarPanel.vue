@@ -10,7 +10,7 @@ export default {
     return {
       decayRate: 0,
       isCollapsed: false,
-      maxText: "two"
+      maxText: "two",
     };
   },
   computed: {
@@ -26,9 +26,9 @@ export default {
       this.decayRate = Pelle.riftDrainPercent;
       this.isCollapsed = player.celestials.pelle.collapsed.rifts;
 
-      const max = Pelle.maxRiftsActive
+      const max = Pelle.maxRiftsActive;
       // Special-case "two" because I want to retain the same behavior
-      this.maxText = max === 2 ? "two" : max
+      this.maxText = max === 2 ? "two" : max;
     },
     toggleCollapse() {
       player.celestials.pelle.collapsed.rifts = !this.isCollapsed;

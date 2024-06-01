@@ -54,7 +54,7 @@ export class TimeStudyTreeLayout {
     /**
      * @type {TimeStudyRow[]}
      */
-     
+
     this.rows = [normalRow(null, TS(11), null), normalRow(TS(21), TS(22)), normalRow(null, TS(31), TS(32), TS(33))];
 
     if (
@@ -111,7 +111,6 @@ export class TimeStudyTreeLayout {
       normalRow(TimeStudy.timeDimension(7), TimeStudy.timeDimension(8)),
       normalRow(TimeStudy.reality),
     );
-     
 
     /**
      * @type {TimeStudySetup[]}

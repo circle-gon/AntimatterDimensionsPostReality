@@ -1006,7 +1006,7 @@ export const news = [
     id: "a192",
     // This ticker needs to be an unbroken string; using backtick strings and linebreaking will add spaces in the
     // ticker itself where the linebreaks are
-     
+
     text: "179769313486231590772930519078902473361797697894230657273430081157732675805500963132708477322407536021120113879871393357658789768814416622492847430639474124377767893424865485276302219601246094119453082952085005768838150682342462881473913110540827237163350510684586298239947245938479716304835356329624224137216",
   },
   {
@@ -3264,7 +3264,7 @@ export const news = [
     id: "p1",
     text: "Is this a jojo reference?",
   },
-   
+
   {
     id: "ai1",
     text: "If you are the game, then you can use the cheat to unlock a secret achievement...but it costs e1100 antimatter!?!",

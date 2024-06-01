@@ -166,7 +166,7 @@ export const eternityMilestones = {
       // As far as I can tell, using templates here as Codefactor wants would lead to nested templates,
       // which seems messy to say the least.
       const realTime = PlayerProgress.seenAlteredSpeed() ? " real-time" : "";
-       
+
       return `While offline, gain Eternities at ${formatPercents(0.5)} the rate of your fastest${realTime} Eternity ${
         eternities.gt(0) ? `(Currently ${format(eternities, 2, 2)}/hour)` : "(Inactive)"
       }`;
@@ -188,7 +188,7 @@ export const eternityMilestones = {
         TimeSpan.fromHours(1).totalMilliseconds,
         player.eternities.gte(1000),
       );
-       
+
       return `While offline, gain Infinities equal to ${formatPercents(0.5)}
         your best Infinities/hour this Eternity ${
           infinities.gt(0) ? `(Currently ${format(infinities, 2, 2)}/hour)` : "(Inactive)"

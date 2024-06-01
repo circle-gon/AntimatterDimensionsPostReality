@@ -257,9 +257,9 @@ export const Ra = {
     return res;
   },
   get productionExponent() {
-    let exp = 1
-    if (AtomUpgrade(3).isBought) exp *= 1.5
-    return exp
+    let exp = 1;
+    if (AtomUpgrade(3).isBought) exp *= 1.5;
+    return exp;
   },
   get memoryBoostResources() {
     const boostList = [];

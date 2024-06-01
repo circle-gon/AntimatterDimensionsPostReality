@@ -88,7 +88,7 @@ const CELESTIAL_DATA = {
     run: () => Teresa.initializeRun(),
     unlocked: () => Teresa.isUnlocked,
   },
-  effarigcel: {
+  effarig: {
     reality: true,
     run: () => Effarig.initializeRun(),
     unlocked: () => TeresaUnlocks.effarig.isUnlocked,
@@ -99,13 +99,13 @@ const CELESTIAL_DATA = {
     run: () => Enslaved.initializeRun(),
     unlocked: () => EffarigUnlock.eternity.isUnlocked,
   },
-  vcel: {
+  v: {
     reality: true,
     name: "V",
     run: () => V.initializeRun(),
     unlocked: () => Achievement(151).isUnlocked,
   },
-  racel: {
+  ra: {
     reality: true,
     name: "Ra",
     run: () => Ra.initializeRun(),
@@ -144,7 +144,7 @@ export const AutomatorCommands = [
         },
       ]);
     },
-     
+
     validate: (ctx, V) => {
       ctx.startLine = ctx.Auto[0].startLine;
       if (ctx.PrestigeEvent && ctx.currencyAmount) {
@@ -569,7 +569,7 @@ export const AutomatorCommands = [
         // In the prestigeToken.$prestige() line above, performing a reality reset has code internal to the call
         // which makes the automator restart. However, in that case we also need to update the execution state here,
         // or else the restarted automator will immediately advance lines and always skip the first command
-        return prestigeName === "REALITY" && AutomatorBackend.state.forceRestart
+        return prestigeName === "REALITY" && AutomatorBackend.state.forceRealityRestart
           ? AUTOMATOR_COMMAND_STATUS.RESTART
           : AUTOMATOR_COMMAND_STATUS.NEXT_TICK_NEXT_INSTRUCTION;
       };
@@ -1233,24 +1233,23 @@ export const AutomatorCommands = [
       $.CONSUME(T.Glyphs);
       $.CONSUME(T.Equip);
 
+      $.CONSUME(T.Slot);
+      $.CONSUME(T.NumberLiteral);
+
       $.OPTION(() => {
-        $.CONSUME(T.Slot);
-        $.CONSUME(T.NumberLiteral);
-      });
-      $.OPTION1(() => {
         $.CONSUME(T.Type);
         $.CONSUME(T.GlyphType);
       });
-      $.OPTION2(() => {
+      $.OPTION1(() => {
         $.CONSUME(T.Effects);
         // TODO: implement specfic effects
         $.CONSUME1(T.NumberLiteral);
       });
-      $.OPTION3(() => {
+      $.OPTION2(() => {
         $.CONSUME(T.Level);
         $.CONSUME2(T.NumberLiteral);
       });
-      $.OPTION4(() => {
+      $.OPTION3(() => {
         $.CONSUME(T.Rarity);
         $.CONSUME3(T.NumberLiteral);
       });
@@ -1265,17 +1264,19 @@ export const AutomatorCommands = [
       ctx.$payload = {};
 
       // This is used to determine the correct NumberLiteral to match
-      let idx = 0;
+      let idx = 1;
 
-      if (ctx.Slot) {
-        const value = Number(ctx.NumberLiteral[idx++].image);
-        if (!Number.isInteger(value) || slot < 1) {
-          V.addError(ctx.NumberLiteral[idx - 1], "Slot must be a valid integer.", "Change slot to be a valid integer.");
+      {
+        const literal = ctx.NumberLiteral;
+        // Chevrotain is strange: it runs validate even if it isn't valid, so we need to fix it ourselves
+        if (literal === undefined) return true;
+
+        const value = Number(literal[0].image);
+        if (!Number.isInteger(value) || value < 1) {
+          V.addError(literal[0], "Slot must be a valid integer.", "Change slot to be a valid integer.");
           return false;
         }
         ctx.$payload.slot = value;
-      } else {
-        ctx.$payload.slot = 1;
       }
 
       if (ctx.GlyphType) {
@@ -1350,7 +1351,7 @@ export const AutomatorCommands = [
         } else if (filter.slot > Glyphs.activeSlotCount) {
           AutomatorData.logCommandEvent("Attempted to equip a Glyph, but the slot was not valid.", ctx.startLine);
         } else {
-          // it's zero-indexed!!!
+          // It's zero-indexed!!!
           Glyphs.equip(glyph, filter.slot - 1);
           AutomatorData.logCommandEvent(`A Glyph was equipped.`, ctx.startLine);
         }
@@ -1359,8 +1360,8 @@ export const AutomatorCommands = [
     },
     blockify: (ctx) => {
       // Same reason as the validate function
-      let idx = 0;
-      const slot = ctx.Slot ? `slot ${ctx.NumberLiteral[idx++].image}` : null;
+      let idx = 1;
+      const slot = `slot ${ctx.NumberLiteral[0].image}`;
       const type = ctx.Type ? `type ${ctx.GlyphType[0].image}` : null;
       const effects = ctx.Effects ? `effects ${ctx.NumberLiteral[idx++].image}` : null;
       const level = ctx.Level ? `level ${ctx.NumberLiteral[idx++].image}` : null;
@@ -1373,29 +1374,25 @@ export const AutomatorCommands = [
     },
   },
   {
-    id: "sacrificeGlyph",
+    id: "deleteGlyph",
     rule: ($) => () => {
       $.CONSUME(T.Glyphs);
-      $.CONSUME(T.Sacrifice);
+      $.CONSUME(T.DeleteMode);
 
       $.OPTION(() => {
-        $.CONSUME(T.SacrificeMode)
-      })
-
-      $.OPTION1(() => {
         $.CONSUME(T.Type);
         $.CONSUME(T.GlyphType);
       });
-      $.OPTION2(() => {
+      $.OPTION1(() => {
         $.CONSUME(T.Effects);
         // TODO: implement specfic effects
         $.CONSUME(T.NumberLiteral);
       });
-      $.OPTION3(() => {
+      $.OPTION2(() => {
         $.CONSUME(T.Level);
         $.CONSUME1(T.NumberLiteral);
       });
-      $.OPTION4(() => {
+      $.OPTION3(() => {
         $.CONSUME(T.Rarity);
         $.CONSUME2(T.NumberLiteral);
       });
@@ -1414,17 +1411,16 @@ export const AutomatorCommands = [
       // This is used to determine the correct NumberLiteral to match
       let idx = 0;
 
-      if (ctx.SacrificeMode) {
-        ctx.$payload.sacMode = ctx.SacrificeMode[0].image
-      }
+      ctx.$payload.deleteMode = ctx.DeleteMode[0].image.toLowerCase();
 
       if (ctx.GlyphType) {
         const type = ctx.GlyphType[0].image.slice(0, -5).toLowerCase();
-        if (type === "companion") {
+        if (type === "companion" || type === "cursed") {
+          const name = type[0].toUpperCase() + type.slice(1);
           V.addError(
             ctx.GlyphType[0],
-            "The Companion glyph may not be sacrificed from the Automator.",
-            "Change or delete this command.",
+            `The ${name} glyph may not be deleted from the Automator.`,
+            "Change the Glyph type or delete this command.",
           );
           return false;
         }
@@ -1492,19 +1488,25 @@ export const AutomatorCommands = [
         const glyph = Glyphs.inventory.find(
           (i) =>
             i !== null &&
-            (filter.type === "*" || i.type === filter.type) &&
+            ((filter.type === "*" && !["cursed", "companion"].includes(i.type)) || i.type === filter.type) &&
             getGlyphEffectValuesFromBitmask(i.effects).length >= filter.effects &&
             i.level >= filter.level &&
             strengthToRarity(i.strength) >= filter.rarity,
         );
+
+        const mode = filter.deleteMode;
+
         if (!glyph) {
-          AutomatorData.logCommandEvent("Attempted to sacrifice a Glyph, but one could not be found.", ctx.startLine);
-        } else if (!GlyphSacrificeHandler.canSacrifice) {
-          // TODO: fill in
-        } else {
+          AutomatorData.logCommandEvent(`Attempted to ${mode} a Glyph, but one could not be found.`, ctx.startLine);
+        } else if (mode === "sac" && GlyphSacrificeHandler.canSacrifice) {
           // We use true so that the modal is never shown
           GlyphSacrificeHandler.sacrificeGlyph(glyph, true);
           AutomatorData.logCommandEvent(`A Glyph was sacrificed.`, ctx.startLine);
+        } else if (mode === "refine" && Ra.unlocks.unlockGlyphAlchemy.canBeApplied) {
+          GlyphSacrificeHandler.refineGlyph(glyph);
+          AutomatorData.logCommandEvent(`A Glyph was refined.`, ctx.startLine);
+        } else {
+          AutomatorData.logCommandEvent(`Attempted to ${mode} a Glyph, but it wasn't unlocked..`, ctx.startLine);
         }
 
         return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
@@ -1518,9 +1520,10 @@ export const AutomatorCommands = [
       const level = ctx.Level ? `level ${ctx.NumberLiteral[idx++].image}` : null;
       const rarity = ctx.Rarity ? `rarity ${ctx.NumberLiteral[idx++].image}` : null;
       const text = [type, effects, level, rarity].filter((i) => i !== null).join(" ");
+      const mode = `GLYPHS ${ctx.DeleteMode[0].image.toUpperCase()}`;
       return {
         singleTextInput: text,
-        ...automatorBlocksMap["GLYPHS SACRIFICE"],
+        ...automatorBlocksMap[mode],
       };
     },
   },
@@ -1541,7 +1544,7 @@ export const AutomatorCommands = [
       return true;
     },
     compile: (ctx) => () => {
-      const celName = ctx.CelestialName[0].image.toLowerCase();
+      const celName = ctx.CelestialName[0].image.slice(0, -3).toLowerCase();
       const data = CELESTIAL_DATA[celName];
 
       if (Pelle.isDoomed) {
@@ -1554,10 +1557,9 @@ export const AutomatorCommands = [
         data.run();
         AutomatorData.logCommandEvent(`Celestial ${data.name} was started.`, ctx.startLine);
         return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
-      } else {
-        AutomatorData.logCommandEvent(`Tried to enter ${data.name}, but failed (not unlocked).`, ctx.startLine);
-        return AUTOMATOR_COMMAND_STATUS.NEXT_TICK_SAME_INSTRUCTION;
       }
+      AutomatorData.logCommandEvent(`Tried to enter ${data.name}, but failed (not unlocked).`, ctx.startLine);
+      return AUTOMATOR_COMMAND_STATUS.NEXT_TICK_SAME_INSTRUCTION;
     },
     blockify: (ctx) => ({
       singleSelectionInput: ctx.CelestialName[0].image.toUpperCase(),

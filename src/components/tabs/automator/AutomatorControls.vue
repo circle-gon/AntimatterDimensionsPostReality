@@ -14,7 +14,9 @@ export default {
       isPaused: false,
       repeatOn: false,
       justCompleted: false,
-      forceRestartOn: false,
+      forceRealityRestartOn: false,
+      forceCollapseRestartOn: false,
+      atomUnlocked: false,
       followExecution: false,
       hasErrors: false,
       currentLine: 0,
@@ -68,7 +70,9 @@ export default {
       this.isPaused = AutomatorBackend.isOn && !this.isRunning;
       this.repeatOn = AutomatorBackend.state.repeat;
       this.justCompleted = AutomatorBackend.hasJustCompleted;
-      this.forceRestartOn = AutomatorBackend.state.forceRestart;
+      this.forceRealityRestartOn = AutomatorBackend.state.forceRealityRestart;
+      this.forceCollapseRestartOn = AutomatorBackend.state.forceCollapseRestart;
+      this.atomUnlocked = PlayerProgress.atomUnlocked();
       this.followExecution = AutomatorBackend.state.followExecution;
       this.hasErrors = AutomatorData.currentErrors().length !== 0;
       this.currentLine = AutomatorBackend.currentLineNumber;
@@ -108,7 +112,8 @@ export default {
       else AutomatorBackend.start(this.currentScriptID, AUTOMATOR_MODE.SINGLE_STEP);
     },
     repeat: () => AutomatorBackend.toggleRepeat(),
-    restart: () => AutomatorBackend.toggleForceRestart(),
+    realityRestart: () => AutomatorBackend.toggleForceRealityRestart(),
+    collapseRestart: () => AutomatorBackend.toggleForceCollapseRestart(),
     follow: () => AutomatorBackend.toggleFollowExecution(),
     undo: () => AutomatorData.undoScriptEdit(),
     redo: () => AutomatorData.redoScriptEdit(),
@@ -140,8 +145,15 @@ export default {
         <AutomatorButton
           v-tooltip="'Automatically restart the active script when finishing or restarting a Reality'"
           class="fa-reply"
-          :class="{ 'c-automator__button--active': forceRestartOn }"
-          @click="restart"
+          :class="{ 'c-automator__button--active': forceRealityRestartOn }"
+          @click="realityRestart"
+        />
+        <AutomatorButton
+          v-if="atomUnlocked"
+          v-tooltip="'Automatically restart the active script when Collapsing'"
+          class="fa-reply"
+          :class="{ 'c-automator__button--active': forceCollapseRestartOn }"
+          @click="collapseRestart"
         />
         <AutomatorButton
           v-tooltip="'Scroll Automator to follow current line'"

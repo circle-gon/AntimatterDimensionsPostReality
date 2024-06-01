@@ -2,7 +2,6 @@ import { log as lngamma } from "gamma";
 
 import { DC } from "./constants";
 
- 
 /* eslint-disable max-params */
 
 window.LOG10_MAX_VALUE = Math.log10(Number.MAX_VALUE);
@@ -776,7 +775,7 @@ window.binomialDistributionBTRD = function binomialDistributionBTRD(numSamples, 
   const alpha = (2.83 + 5.1 / b) * approxStdev;
   const kU = 0.43;
   const kV = 0.92 - 4.2 / b;
-   
+
   while (true) {
     let v = fastRandom();
     if (v <= 2 * kU * kV) {
@@ -837,7 +836,7 @@ window.poissonDistributionPTRD = function poissonDistributionPTRD(mu) {
   const a = -0.059 + 0.02483 * b;
   const iAlpha = 1.1239 + 1.328 / (b - 3.4);
   const vR = 0.9277 - 3.6224 / (b - 2);
-   
+
   while (true) {
     let v = Math.random();
     if (v < 0.86 * vR) {

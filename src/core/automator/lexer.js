@@ -82,7 +82,7 @@ const StudyPath = createCategory("StudyPath");
 const TimeUnit = createCategory("TimeUnit");
 const GlyphType = createCategory("GlyphType");
 const CelestialName = createCategory("CelestialName");
-const SacrificeMode = createCategory("SacrificeMode")
+const DeleteMode = createCategory("DeleteMode");
 
 createInCategory(ComparisonOperator, "OpGTE", />=/, {
   $autocomplete: ">=",
@@ -100,8 +100,13 @@ createInCategory(ComparisonOperator, "OpLT", /</, {
   $autocomplete: "<",
   $compare: (a, b) => Decimal.lt(a, b),
 });
-const OpEQ = createInCategory(ComparisonOperator, "OpEQ", /==/, {
+createInCategory(ComparisonOperator, "OpEQ", /==/, {
+  $autocomplete: "==",
   $compare: (a, b) => Decimal.eq(a, b),
+});
+createInCategory(ComparisonOperator, "OpNEQ", /!=/, {
+  $autocomplete: "!=",
+  $compare: (a, b) => Decimal.neq(a, b),
 });
 // EqualSign is a single = which is defined for both comparisons and define
 const EqualSign = createToken({
@@ -109,7 +114,6 @@ const EqualSign = createToken({
   pattern: /=/,
   categories: ComparisonOperator,
   label: "=",
-  longer_alt: OpEQ,
 });
 EqualSign.$compare = (a, b) => Decimal.eq(a, b);
 
@@ -123,20 +127,18 @@ createInCategory(GlyphType, "RealityGlyph", /realityglyph/i);
 createInCategory(GlyphType, "CursedGlyph", /cursedglyph/i);
 createInCategory(GlyphType, "CompanionGlyph", /companionglyph/i);
 
-createInCategory(CelestialName, "Teresa", /teresa/i);
+createInCategory(CelestialName, "Teresa", /teresacel/i);
 createInCategory(CelestialName, "Effarig", /effarigcel/i);
 // To keep in line with the internals
-createInCategory(CelestialName, "Enslaved", /nameless/i);
+createInCategory(CelestialName, "Enslaved", /namelesscel/i);
 createInCategory(CelestialName, "V", /vcel/i);
 createInCategory(CelestialName, "Ra", /racel/i);
-createInCategory(CelestialName, "Laitela", /laitela/i);
-createInCategory(CelestialName, "Pelle", /pelle/i);
+createInCategory(CelestialName, "Laitela", /laitelacel/i);
+createInCategory(CelestialName, "Pelle", /pellecel/i);
 
-createInCategory(SacrificeMode, "Sacrifice", /sac(rifice)?/i, {
-  $autocomplete: "sac"
-})
-
-createInCategory(SacrificeMode, "Refine", /refine/i)
+// Not "sacrifice" because that's already a token and I'm too lazy to fix it
+createInCategory(DeleteMode, "Sacrifice", /sac/i);
+createInCategory(DeleteMode, "Refine", /refine/i);
 
 createInCategory(AutomatorCurrency, "EP", /ep/i, { $getter: () => Currency.eternityPoints.value });
 createInCategory(AutomatorCurrency, "IP", /ip/i, { $getter: () => Currency.infinityPoints.value });
@@ -235,35 +237,43 @@ for (let i = 1; i <= 12; ++i) {
   const id = i;
   createInCategory(AutomatorCurrency, `EC${i}`, new RegExp(`ec${i} completions`, "i"), {
     $autocomplete: `ec${i} completions`,
-     
+
     $getter: () => EternityChallenge(id).completions,
   });
 }
 
 createInCategory(AutomatorCurrency, "GlyphSlots", /total[ \t]+glyph[ \t]+slots/i, {
   $autocomplete: "total glyph slots",
-  $getter: () => Glyphs.activeSlotCount
-})
+  $getter: () => Glyphs.activeSlotCount,
+  $unlocked: () => AtomMilestone.am4.isReached,
+});
 
 createInCategory(AutomatorCurrency, "EmptyGlyphSlots", /glyph[ \t]+slots/i, {
   $autocomplete: "glyph slots",
-  $getter: () => Glyphs.activeSlotCount - Glyphs.activeList.length
-})
+  $getter: () => Glyphs.activeSlotCount - Glyphs.activeList.length,
+  $unlocked: () => AtomMilestone.am4.isReached,
+});
 
-// TODO: make comparison support equality and strings
-/*createInCategory(AutomatorCurrency, "CelestialStatus", /celestial[ \t]+status/i, {
-  $autocomplete: "celestial status",
+createInCategory(AutomatorCurrency, "InventorySpace", /inventory[ \t]+space/i, {
+  $autocomplete: "inventory space",
+  $getter: () => GameCache.gameInventorySpace.value,
+  $unlocked: () => AtomMilestone.am4.isReached,
+});
+
+// Numbers for laziness
+createInCategory(AutomatorCurrency, "CelestialStatus", /cel[ \t]+status/i, {
+  $autocomplete: "cel status",
   $getter: () => {
-    if (Teresa.isRunning) return "teresa"
-    if (Enslaved.isRunning) return "nameless"
-    if (Effarig.isRunning) return "effarig"
-    if (V.isRunning) return "v"
-    if (Ra.isRunning) return "ra"
-    if (Laitela.isRunning) return "laitela"
-    if (Pelle.isDoomed) return "pelle"
-    return "none"
-  }
-})*/
+    if (Teresa.isRunning) return 1;
+    if (Enslaved.isRunning) return 2;
+    if (Effarig.isRunning) return 3;
+    if (V.isRunning) return 4;
+    if (Ra.isRunning) return 5;
+    if (Laitela.isRunning) return 6;
+    if (Pelle.isDoomed) return 7;
+    return 0;
+  },
+});
 
 // $prestigeLevel is used by things that wait for a prestige event. Something waiting for
 // eternity will be triggered by something waiting for reality, for example.
@@ -397,12 +407,13 @@ createKeyword("XHighest", /x[ \t]+highest/i, {
 
 createKeyword("Glyphs", /glyphs/i);
 createKeyword("Equip", /equip/i);
-createKeyword("Sacrifice", /sacrifice/i);
+createKeyword("Delete", /delete/i);
 createKeyword("Slot", /slot/i);
 createKeyword("Type", /type/i);
 createKeyword("Effects", /effects/i);
 createKeyword("Level", /level/i);
 createKeyword("Rarity", /rarity/i);
+createKeyword("Mode", /mode/i);
 
 // We allow ECLiteral to consume lots of digits because that makes error reporting more
 // clear (it's nice to say ec123 is an invalid ec)
@@ -445,8 +456,8 @@ export const automatorTokens = [
   ...tokenLists.CelestialName,
   GlyphType,
   ...tokenLists.GlyphType,
-  SacrificeMode,
-  ...tokenLists.SacrificeMode,
+  DeleteMode,
+  ...tokenLists.DeleteMode,
   Keyword,
   ...keywordTokens,
   PrestigeEvent,

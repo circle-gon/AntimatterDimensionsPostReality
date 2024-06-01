@@ -88,12 +88,12 @@ export const automator = {
       ],
     },
     {
-      id: 19,
+      id: 3,
       isUnlocked: () => AtomMilestone.am4.isReached,
       keyword: "GLYPHS EQUIP",
       category: 1,
       syntax: `
-      <b>glyphs equip</b> [slot <u>number</u>] [type <u>glyph_type</u>] [effects <u>effect_count</u>] [level <u>number</u>] [rarity <u>rarity</u>]
+      <b>glyphs equip</b> slot <u>number</u> [type <u>glyph_type</u>] [effects <u>effect_count</u>] [level <u>number</u>] [rarity <u>rarity</u>]
       `,
       description: `Equips a Glyph at a certain slot using a specific filter, if possible. The Glyph chosen is the first 
       possible Glyph in the inventory that matches the filter. If no Glyph is found, or the slot number chosen does not exist,
@@ -104,37 +104,82 @@ export const automator = {
           items: [
             {
               header: "<i>slot</i>",
-              description: `The slot to equip the Glyph to, one-indexed. This must be a positive integer. If no value is
-              specified, the first slot is used.`
+              description: `The slot to equip the Glyph to, one-indexed. This must be a positive integer.`,
             },
             {
               header: "<i>type</i>",
               description: `The Glyph type to match. The possible values for this are each Glyph's name, lowercased and 
               appending "glyph" (eg. the "Time" glyph will have its name be "timeglyph") to the end. If no value is specified, 
-              any Glyph type will be chosen.`
+              any Glyph type will be chosen.`,
             },
             {
               header: "<i>effects</i>",
               description: `The minimum number of effects for the Glyph to have. This must be a positive integer.If no value is 
-              specified, a Glyph with any number of effects will be chosen.`
+              specified, a Glyph with any number of effects will be chosen.`,
             },
             {
               header: "<i>level</i>",
               description: `The minimum level for the Glyph to have. This must be a positive integer. If no value is specified,
-              a Glyph with any level will be chosen.`
+              a Glyph with any level will be chosen.`,
             },
             {
               header: "<i>rarity</i>",
               description: `The minimum rarity for the Glyph to have. This must be a number between 0 (exclusive) and 1 (inclusive).
-              If no value is specified, a Glyph with any rarity will be chosen.`
-            }
-          ]
-        }
+              If no value is specified, a Glyph with any rarity will be chosen.`,
+            },
+          ],
+        },
       ],
-      examples: ["glyphs equip", "glyphs equip slot 0 level 4000", "glyphs equip slot 1 type companionglyph"]
+      examples: ["glyphs equip", "glyphs equip slot 0 level 4000", "glyphs equip slot 1 type companionglyph"],
     },
     {
-      id: 3,
+      id: 4,
+      isUnlocked: () => AtomMilestone.am4.isReached,
+      keyword: "GLYPHS DELETE",
+      category: 1,
+      syntax: `
+      <b>glyphs sac</b> [type <u>glyph_type</u>] [effects <u>effect_count</u>] [level <u>number</u>] [rarity <u>rarity</u>]<br>
+      <b>glyphs refine</b> [type <u>glyph_type</u>] [effects <u>effect_count</u>] [level <u>number</u>] [rarity <u>rarity</u>]
+      `,
+      description: `Deletes a Glyph using a specific filter, if possible, which either sacrifices or refines it. 
+      The Glyph chosen is the first possible Glyph in the inventory that matches the filter. If no Glyph is found, 
+      or the mode is not unlocked, the automator will skip to the next instruction.`,
+      sections: [
+        {
+          name: "MODIFIERS",
+          items: [
+            {
+              header: "<i>type</i>",
+              description: `The Glyph type to match. The possible values for this are each Glyph's name, lowercased and 
+              appending "glyph" (eg. the "Time" glyph will have its name be "timeglyph") to the end. If no value is specified, 
+              any Glyph type will be chosen. Howerver, a Companion or Cursed Glyph may not be chosen to be removed.`,
+            },
+            {
+              header: "<i>effects</i>",
+              description: `The minimum number of effects for the Glyph to have. This must be a positive integer.If no value is 
+              specified, a Glyph with any number of effects will be chosen.`,
+            },
+            {
+              header: "<i>level</i>",
+              description: `The minimum level for the Glyph to have. This must be a positive integer. If no value is specified,
+              a Glyph with any level will be chosen.`,
+            },
+            {
+              header: "<i>rarity</i>",
+              description: `The minimum rarity for the Glyph to have. This must be a number between 0 (exclusive) and 1 (inclusive).
+              If no value is specified, a Glyph with any rarity will be chosen.`,
+            },
+          ],
+        },
+      ],
+      examples: [
+        "glyphs delete mode sac",
+        "glyphs delete mode refine level 4000",
+        "glyphs delete mode sac type timeglyph",
+      ],
+    },
+    {
+      id: 5,
       isUnlocked: () => true,
       keyword: "PRESTIGE",
       category: 2,
@@ -171,7 +216,7 @@ export const automator = {
       examples: ["infinity", "eternity respec", "reality nowait"],
     },
     {
-      id: 4,
+      id: 6,
       isUnlocked: () => true,
       keyword: "UNLOCK",
       category: 2,
@@ -194,21 +239,39 @@ export const automator = {
       examples: ["unlock dilation", "unlock ec7"],
     },
     {
-      id: 5,
+      id: 7,
       isUnlocked: () => true,
       keyword: "START",
       category: 2,
-      syntax: `
+      syntax: () => {
+        const celText = AtomMilestone.am4.isReached
+          ? `However, the Automator will not wait for a Celestial Reality to become unlocked,
+        and will simply skip to the next instruction. It is possible to restart your current Celestial Reality with this commmand,
+        but you cannot start a Celestial Reality while Doomed. Any Celestial can be entered by taking the lowercase of its name, and adding
+        "cel" to the end of it (eg. Teresa's name would be "teresacel").`
+          : "";
+        return `
         <b>start</b> ec<u>N</u><br>
-        <b>start</b> dilation`,
-      description: `Start a specified Eternity Challenge or a Dilated Eternity. This command will also attempt
-        to unlock the EC if not unlocked, but will not do the same for Dilation (use UNLOCK command to do that).
-        If you are already in the specified EC or Dilated Eternity, running this command again will do nothing;
-        otherwise, the Automator will keep attempting to start the Eternity until it succeeds.`,
-      examples: ["start ec12", "start dilation"],
+        <b>start</b> dilation
+        ${celText}`;
+      },
+      description: () => {
+        const r = AtomMilestone.am4.isReached;
+        const celText = AtomMilestone.am4.isReached ? "" : "";
+        return `Start a specified Eternity Challenge${r ? "," : " or a"} Dilated Eternity${r ? ", or a Celestial Reality" : ""}. 
+        This command will also attempt to unlock the EC if not unlocked, but will not do the same for Dilation (use UNLOCK command 
+        to do that). If you are already in the specified EC or Dilated Eternity, running this command again will do nothing;
+        otherwise, the Automator will keep attempting to start the Eternity until it succeeds.
+        ${celText}`;
+      },
+      examples: () => {
+        const examples = ["start ec12", "start dilation"];
+        if (AtomMilestone.am4.isReached) examples.push("start racel");
+        return examples;
+      },
     },
     {
-      id: 6,
+      id: 8,
       isUnlocked: () => true,
       keyword: "AUTO",
       category: 2,
@@ -254,7 +317,7 @@ export const automator = {
       ],
     },
     {
-      id: 7,
+      id: 9,
       isUnlocked: () => BlackHole(1).isUnlocked,
       keyword: "BLACK HOLE",
       category: 3,
@@ -265,7 +328,7 @@ export const automator = {
       examples: ["black hole on", "black hole off"],
     },
     {
-      id: 8,
+      id: 10,
       isUnlocked: () => Enslaved.isUnlocked,
       keyword: "STORE GAME TIME",
       category: 3,
@@ -293,7 +356,7 @@ export const automator = {
       examples: ["store game time on", "store game time off", "store game time use"],
     },
     {
-      id: 9,
+      id: 11,
       isUnlocked: () => true,
       keyword: "NOTIFY",
       category: 4,
@@ -305,7 +368,7 @@ export const automator = {
       examples: ['notify "Dilation reached"', 'notify "ECs completed"'],
     },
     {
-      id: 10,
+      id: 12,
       isUnlocked: () => true,
       keyword: "Adding Comments",
       category: 4,
@@ -342,7 +405,7 @@ export const automator = {
       examples: ["# get 1e20 before starting ec1", "// this loop alternates dilation and pushing"],
     },
     {
-      id: 11,
+      id: 13,
       isUnlocked: () => true,
       keyword: "WAIT",
       category: 5,
@@ -388,7 +451,7 @@ export const automator = {
       ],
     },
     {
-      id: 12,
+      id: 14,
       isUnlocked: () => true,
       keyword: "PAUSE",
       category: 5,
@@ -440,7 +503,7 @@ export const automator = {
       ],
     },
     {
-      id: 13,
+      id: 15,
       isUnlocked: () => true,
       keyword: "IF",
       category: 5,
@@ -453,7 +516,7 @@ export const automator = {
       examples: ["if ec10 completions < 5", "if ep > 1e6000"],
     },
     {
-      id: 14,
+      id: 16,
       isUnlocked: () => true,
       keyword: "UNTIL",
       category: 5,
@@ -473,7 +536,7 @@ export const automator = {
       examples: ["until ep > 1e500", "until reality"],
     },
     {
-      id: 15,
+      id: 17,
       isUnlocked: () => true,
       keyword: "WHILE",
       category: 5,
@@ -486,7 +549,7 @@ export const automator = {
       examples: [`while ep < 1e500`, `while myThreshold > am`],
     },
     {
-      id: 16,
+      id: 18,
       isUnlocked: () => true,
       keyword: "STOP",
       category: 5,
@@ -500,7 +563,7 @@ export const automator = {
       examples: [`stop`],
     },
     {
-      id: 17,
+      id: 19,
       isUnlocked: () => true,
       keyword: "Currency List",
       category: 5,
@@ -514,6 +577,14 @@ export const automator = {
             ? `<b>space theorems</b> - Current unspent Space Theorem amount<br>
             <b>total space theorems</b> - TOTAL Space Theorems, including ones spent on current Studies<br>`
             : "";
+        const am4Text = AtomMilestone.am4.isReached
+          ? `<b>glyph slots</b> - Unused Glyph Slots<br>
+            <b>total glyph slots</b> - TOTAL Glyph Slots, including any slots that have been used<br>
+            <b>inventory space</b> - Remaning inventory space available to store Glyphs<br>`
+          : "";
+        const am5Text = AtomMilestone.am5.isReached
+          ? "<b>cel status</b> - Current Celestial's index by unlock order (Teresa -> 1, Effarig -> 2, etc.), and 0 if not in any"
+          : "";
         return `This is a list of "currencies" or numbers that you can use within the Automator.<br>
           Note that when used, most currencies will need to be in scientific notation.<br>
           <b>am</b> - Current Antimatter amount  <br>
@@ -540,11 +611,13 @@ export const automator = {
           <b>ec<u>X</u> completions</b> - Amount of EC completions for a certain EC (eg. "ec6 completions")<br>
           ${filterText}
           ${stText}
+          ${am4Text}
+          ${am5Text}
         `;
       },
     },
     {
-      id: 18,
+      id: 20,
       isUnlocked: () => true,
       keyword: "Formatting Comparisons",
       category: 5,
@@ -567,12 +640,8 @@ export const automator = {
             },
             {
               header: "<i>condition</i>",
-              description: `
-                This must be an inequality operator (<, <=, >, >=), which takes on its typical mathematical meaning.
-                Equality operators (==, !=) are not allowed, as the nature of the game means that numbers will often
-                never be exactly equal and thus checking based on direct equality may lead to unexpected script
-                behavior.
-              `,
+              description:
+                "This must be an inequality operator (<, <=, >, >=, ==, !=), which takes on its typical mathematical meaning.",
             },
           ],
         },
@@ -580,7 +649,7 @@ export const automator = {
       examples: ["ep < 1e20", "total tt > 14000"],
     },
     {
-      id: 19,
+      id: 21,
       isUnlocked: () => true,
       keyword: "Commands with inner blocks",
       category: 5,

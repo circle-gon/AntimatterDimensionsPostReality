@@ -12,7 +12,6 @@ function walkSuggestion(suggestion, prefix, output) {
   }
 }
 
- 
 CodeMirror.registerHelper("lint", "automato", (contents, _, editor) => {
   const doc = editor.getDoc();
   const errors = compile(contents, true).errors;
@@ -50,7 +49,7 @@ CodeMirror.registerHelper("hint", "anyword", (editor) => {
 const commentRule = { regex: /(\/\/|#).*/u, token: "comment", next: "start" };
 
 function withNumber(regex) {
-  const number = / -?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?/;
+  const number = /[\t ]+-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?/;
   return new RegExp(regex.source + number.source, "ui");
 }
 
@@ -69,7 +68,6 @@ CodeMirror.defineSimpleMode("automato", {
     { regex: /glyphs\s+/iu, token: "keyword", next: "glyphArgs" },
     { regex: /blob\s\s/iu, token: "blob" },
     {
-       
       regex:
         /(auto|if|pause|studies|time[ \t]+theorems?|space[ \t]+theorems?|until|wait|while|black[ \t]+hole|stored?[ \t]+game[ \t]+time|notify)\s/iu,
       token: "keyword",
@@ -136,7 +134,7 @@ CodeMirror.defineSimpleMode("automato", {
     commentRule,
     { sol: true, next: "start" },
     { regex: /equip/iu, token: "variable-2", next: "equipGlyphArgs" },
-    { regex: /sacrifice/iu, token: "variable-2", next: "sacrificeGlyphArgs" },
+    { regex: /sac|refine/iu, token: "variable-2", next: "deleteGlyphArgs" },
   ],
   equipGlyphArgs: [
     commentRule,
@@ -146,7 +144,7 @@ CodeMirror.defineSimpleMode("automato", {
       token: "variable",
     },
     {
-      regex: /type (power|infinity|replication|time|dilation|effarig|reality|cursed|companion)glyph/iu,
+      regex: /type[\t ]+(power|infinity|replication|time|dilation|effarig|reality|cursed|companion)glyph/iu,
       token: "variable-3",
     },
     {
@@ -155,7 +153,7 @@ CodeMirror.defineSimpleMode("automato", {
     },
     {
       regex: withNumber(/level/),
-      token: "variable",
+      token: "variable-3",
     },
     {
       regex: withNumber(/rarity/),
@@ -167,11 +165,11 @@ CodeMirror.defineSimpleMode("automato", {
       next: "start",
     },
   ],
-  sacrificeGlyphArgs: [
+  deleteGlyphArgs: [
     commentRule,
     { sol: true, next: "start" },
     {
-      regex: /type (power|infinity|replication|time|dilation|effarig|reality|cursed|companion)glyph/iu,
+      regex: /type[\t ]+(power|infinity|replication|time|dilation|effarig|reality|cursed|companion)glyph/iu,
       token: "variable-3",
     },
     {
@@ -180,7 +178,7 @@ CodeMirror.defineSimpleMode("automato", {
     },
     {
       regex: withNumber(/level/),
-      token: "variable",
+      token: "variable-3",
     },
     {
       regex: withNumber(/rarity/),
@@ -243,7 +241,7 @@ CodeMirror.defineSimpleMode("automato", {
     { regex: /filter[ \t]+score/iu, token: "variable-2" },
     { regex: /ec(1[0-2]|[1-9])[\t ]+completions(\s|$)/iu, token: "variable-2" },
     { regex: /(am|ip|ep|all)(\s|$)/iu, token: "variable-2" },
-    { regex: /(total[\t ]+)?glyph[\t ]+slots|celestial[\t ]+status/iu, token: "variable-2" },
+    { regex: /(total[\t ]+)?glyph[\t ]+slots|cel[\t ]+status/iu, token: "variable-2" },
     {
       regex: /(rm|rg|dt|tp|tt|space theorems|(banked )?infinities|eternities|realities|rep(licanti)?)(\s|$)/iu,
       token: "variable-2",

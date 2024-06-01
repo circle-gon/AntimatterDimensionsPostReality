@@ -12,6 +12,14 @@ export default {
       const desc = this.command.description;
       return typeof desc === "function" ? desc() : desc;
     },
+    syntax() {
+      const syntax = this.command.syntax;
+      return typeof syntax === "function" ? syntax() : syntax;
+    },
+    examples() {
+      const examples = this.command.examples;
+      return typeof examples === "function" ? examples() : examples;
+    },
   },
 };
 </script>
@@ -21,7 +29,7 @@ export default {
     <b>NAME</b>
     <div class="c-automator-docs-page__indented" v-html="command.keyword" />
     <b>SYNTAX</b>
-    <div class="c-automator-docs-page__indented" v-html="command.syntax" />
+    <div class="c-automator-docs-page__indented" v-html="syntax" />
     <template v-if="command.description">
       <b>DESCRIPTION</b>
       <div class="c-automator-docs-page__indented" v-html="description" />
@@ -35,14 +43,9 @@ export default {
         </div>
       </template>
     </template>
-    <template v-if="command.examples">
+    <template v-if="examples">
       <b>USAGE EXAMPLES</b>
-      <div
-        v-for="example in command.examples"
-        :key="example"
-        class="c-automator-docs-page__indented"
-        v-html="example"
-      />
+      <div v-for="example in examples" :key="example" class="c-automator-docs-page__indented" v-html="example" />
     </template>
   </div>
 </template>

@@ -934,8 +934,8 @@ export const AutomatorBackend = {
     this.state.repeat = !this.state.repeat;
   },
 
-  toggleForceRestart() {
-    this.state.forceRestart = !this.state.forceRestart;
+  toggleForceRealityRestart() {
+    this.state.forceRealityRestart = !this.state.forceRealityRestart;
   },
 
   toggleFollowExecution() {

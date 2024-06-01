@@ -43,7 +43,6 @@ export const orderedEffectList = [
 
 export const generatedTypes = ["power", "infinity", "replication", "time", "dilation", "effarig"];
 
- 
 export const GlyphEffectOrder = orderedEffectList.mapToObject(
   (e) => e,
   (e, idx) => idx,
@@ -779,7 +778,7 @@ export const Glyphs = {
       Currency.tachyonParticles.value = new Decimal(undoData.tp);
       Currency.dilatedTime.value = new Decimal(undoData.dt);
     }
-    if (Player.automatorUnlocked && AutomatorBackend.state.forceRestart) {
+    if (Player.automatorUnlocked && AutomatorBackend.state.forceRealityRestart) {
       AutomatorBackend.start(player.reality.automator.state.editorScript);
     }
   },

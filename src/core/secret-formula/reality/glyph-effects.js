@@ -691,7 +691,7 @@ export const glyphEffects = {
     totalDesc: () => (Enslaved.isRunning || Glyphs.active.countWhere((g) => g?.type === "cursed") ? "Help me" : "Yay!"),
     // The EP value for this is entirely encoded in rarity, but level needs to be present to
     // make sure the proper parameter is being used. The actual glyph level shouldn't do anything.
-     
+
     effect: (level, strength) => Decimal.pow10(1e6 * strengthToRarity(strength)),
     formatEffect: (x) => formatPostBreak(x, 2),
     combine: GlyphCombiner.multiplyDecimal,

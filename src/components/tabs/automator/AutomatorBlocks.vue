@@ -232,8 +232,16 @@ export const automatorBlocks = [
     targets: ["singleTextInput"],
   },
   {
-    cmd: "GLYPHS SACRIFICE",
-    alias: "SACRIFICE GLYPH",
+    cmd: "GLYPHS SAC",
+    alias: "SAC GLYPH",
+    // I wish this could be better but idk how to make it WORK
+    allowedPatterns: ["A"],
+    A: ["*"],
+    targets: ["singleTextInput"],
+  },
+  {
+    cmd: "GLYPHS REFINE",
+    alias: "REFINE GLYPH",
     // I wish this could be better but idk how to make it WORK
     allowedPatterns: ["A"],
     A: ["*"],

@@ -14,7 +14,6 @@ export default {
   },
   computed: {
     events() {
-       
       const sorted = this.unsortedEvents.sort((a, b) =>
         a.timestamp === b.timestamp
           ? a.thisReality === b.thisReality

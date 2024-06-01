@@ -83,7 +83,6 @@ export default {
     );
   },
   mounted() {
-     
     const panLimiter = function (oldPan, newPan) {
       // In the callback context, "this" is the svgPanZoom object.
       // eslint-disable-next-line no-invalid-this

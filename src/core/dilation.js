@@ -11,7 +11,6 @@ export function animateAndDilate() {
   }, 1000);
 }
 
- 
 export function animateAndUndilate(callback) {
   FullScreenAnimationHandler.display("a-undilate", 2);
   setTimeout(() => {

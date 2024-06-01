@@ -669,24 +669,22 @@ export function gameLoop(passDiff, options = {}) {
   BlackHoles.updatePhases(blackHoleDiff);
 
   // Teresa auto
-  const am = Currency.antimatter.value.sqrt()
+  const am = Currency.antimatter.value.sqrt();
   if (AtomUpgrade(8).isBought && Pelle.isDoomed && am.gt(player.celestials.teresa.bestRunAM)) {
-    player.celestials.teresa.bestRunAM = am
-``
+    player.celestials.teresa.bestRunAM = am``;
     let machineRecord;
-      if (Currency.imaginaryMachines.value.eq(0)) machineRecord = player.reality.maxRM;
-      else machineRecord = DC.E10000.times(Currency.imaginaryMachines.value);
-      player.celestials.teresa.lastRepeatedMachines =
-        player.celestials.teresa.lastRepeatedMachines.clampMin(machineRecord);
+    if (Currency.imaginaryMachines.value.eq(0)) machineRecord = player.reality.maxRM;
+    else machineRecord = DC.E10000.times(Currency.imaginaryMachines.value);
+    player.celestials.teresa.lastRepeatedMachines =
+      player.celestials.teresa.lastRepeatedMachines.clampMin(machineRecord);
   }
 
   // Unlocks dilation at a certain total TT count for free, but we add the cost first in order to make
   // sure that TT count doesn't go negative and that we can actually buy it. This technically bumps the max theorem
   // amount up as well, but at this point of the game 5k TT is insignificant to basically all other sources of TT.
   if (
-    ((Ra.unlocks.autoUnlockDilation.canBeApplied &&
-    !isInCelestialReality() &&
-    !Pelle.isDoomed) || (Pelle.isDoomed && AtomMilestone.am4.isReached)) &&
+    ((Ra.unlocks.autoUnlockDilation.canBeApplied && !isInCelestialReality() && !Pelle.isDoomed) ||
+      (Pelle.isDoomed && AtomMilestone.am4.isReached)) &&
     Currency.timeTheorems.max.gte(TimeStudy.dilation.totalTimeTheoremRequirement)
   ) {
     Currency.timeTheorems.add(TimeStudy.dilation.cost);
@@ -700,7 +698,7 @@ export function gameLoop(passDiff, options = {}) {
   // dilation, but the TP gain function is also coded to behave differently if it's active
   const teresa1 = player.dilation.active && Ra.unlocks.autoTP.canBeApplied;
   const teresa25 = !isInCelestialReality() && Ra.unlocks.unlockDilationStartingTP.canBeApplied;
-  const doomed = player.dilation.active && AtomMilestone.am7.isReached && Pelle.isDoomed
+  const doomed = player.dilation.active && AtomMilestone.am7.isReached && Pelle.isDoomed;
   if (((teresa1 || teresa25) && !Pelle.isDoomed) || doomed) rewardTP();
 
   if (Enslaved.canTickHintTimer) {
@@ -820,10 +818,14 @@ function passivePrestigeGen() {
 
 // Applies all perks which automatically unlock things when passing certain thresholds, needs to be checked every tick
 function applyAutoUnlockPerks() {
-  if (!TimeDimension(8).isUnlocked && (Perk.autounlockTD.canBeApplied || (Pelle.isDoomed && AtomMilestone.am4.isReached))) {
+  if (
+    !TimeDimension(8).isUnlocked &&
+    (Perk.autounlockTD.canBeApplied || (Pelle.isDoomed && AtomMilestone.am4.isReached))
+  ) {
     for (let dim = 5; dim <= 8; ++dim) TimeStudy.timeDimension(dim).purchase();
   }
-  if (AtomMilestone.am6.isReached || Perk.autounlockDilation3.canBeApplied) buyDilationUpgrade(DilationUpgrade.ttGenerator.id);
+  if (AtomMilestone.am6.isReached || Perk.autounlockDilation3.canBeApplied)
+    buyDilationUpgrade(DilationUpgrade.ttGenerator.id);
   if (Perk.autounlockReality.canBeApplied) TimeStudy.reality.purchase(true);
   applyEU2();
 }
@@ -831,12 +833,12 @@ function applyAutoUnlockPerks() {
 function laitelaRealityTick(realDiff) {
   const laitelaInfo = player.celestials.laitela;
 
-  const trueDiff = realDiff / 1000
+  const trueDiff = realDiff / 1000;
 
   if (AtomUpgrade(8).isBought && !Pelle.isDoomed) {
-    laitelaInfo.darkMatterMult = Laitela.darkMatterMultGain.mul(trueDiff).add(laitelaInfo.darkMatterMult)
+    laitelaInfo.darkMatterMult = Laitela.darkMatterMultGain.mul(trueDiff).add(laitelaInfo.darkMatterMult);
 
-    Currency.singularities.add(Singularity.passiveSingularityGain.mul(trueDiff))
+    Currency.singularities.add(Singularity.passiveSingularityGain.mul(trueDiff));
   }
 
   if (!Laitela.isRunning) return;

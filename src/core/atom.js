@@ -66,8 +66,10 @@ export function migrateSaves(player) {
 
   // More continuum settings
   player.auto.continuumDisabled.AD = player.auto.disableContinuum;
-
   delete player.auto.disableContinuum;
+
+  player.reality.automator.state.forceRealityRestart = player.reality.automator.state.forceRestart;
+  delete player.reality.automator.state.forceRestart;
 }
 
 // Lazy way to hide the "in this Collapse" text until you know about it
@@ -140,7 +142,7 @@ function giveRealityUpgrade(num, isReality) {
 }
 
 function giveAU8() {
-  Achievements.row(18).forEach(i => i.give())
+  Achievements.row(18).forEach((i) => i.give());
 }
 
 export function collapse() {
@@ -482,7 +484,12 @@ export function collapse() {
   // Misc
   resetCollapseStats();
   if (player.options.automatorEvents.clearOnReality) AutomatorData.clearEventLog();
-  if (Player.automatorUnlocked && AutomatorBackend.state.forceRestart) {
+
+  // Technically a Collapse is a Reality but I'm actually not sure so
+  if (
+    Player.automatorUnlocked &&
+    (AutomatorBackend.state.forceRealityRestart || AutomatorBackend.state.forceCollapseRestart)
+  ) {
     // Make sure to restart the current script instead of using the editor script - the editor script might
     // not be a valid script to run; this at best stops it from running and at worst causes a crash
     AutomatorBackend.start(AutomatorBackend.state.topLevelScript);

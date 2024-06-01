@@ -57,7 +57,8 @@ export const atomUpgrades = [
     id: 4,
     name: "Death to Continuum",
     cost: 5,
-    description: "Unlock Infinity and Time Dimension Continuum, which is unlocked when Antimatter Dimension Continuum is unlocked. Start Collapses with AD Continuum unlocked.",
+    description:
+      "Unlock Infinity and Time Dimension Continuum, which is unlocked when Antimatter Dimension Continuum is unlocked. Start Collapses with AD Continuum unlocked.",
   },
   {
     id: 5,
