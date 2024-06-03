@@ -1,5 +1,3 @@
-import { DEV } from "@/env";
-
 window.NotImplementedError = class NotImplementedError extends Error {
   constructor() {
     super("The method is not implemented.");
@@ -24,7 +22,7 @@ window.GlobalErrorHandler = {
   stopGame() {
     GameKeyboard.disable();
     GameIntervals.stop();
-    // Function clearHandles(set, clear) {
+    // function clearHandles(set, clear) {
     // // eslint-disable-next-line no-empty-function
     // let id = set(() => {}, 9999);
     // while (id--) {
