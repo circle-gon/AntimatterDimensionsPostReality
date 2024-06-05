@@ -1,3 +1,4 @@
-export const DEV = import.meta.env.VITE_DEV === "true";
-export const STEAM = import.meta.env.VITE_STEAM === "true";
+export const DEV = import.meta.env.DEV;
+// Maybe later?
+export const STEAM = false;
 export const MAC = window.navigator.platform === "MacIntel";

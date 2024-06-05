@@ -68,15 +68,5 @@ export const GameIntervals = (function () {
       if (Math.random() < 0.00001) SecretAchievement(18).unlock();
       GameStorage.tryOnlineBackups();
     }, 1000),
-    checkForUpdates: interval(() => {
-      if (isLocalEnvironment()) return;
-      fetch("version.txt")
-        .then((response) => response.json())
-        .then((json) => {
-          if (json.version > player.version) {
-            Modal.message.show(json.message, { callback: updateRefresh }, 3);
-          }
-        });
-    }, 60000),
   };
 })();

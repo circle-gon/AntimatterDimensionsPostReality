@@ -202,7 +202,7 @@ export function isDevEnvironment() {
 
 export function isLocalEnvironment() {
   const href = window.location.href;
-  return href.includes(".csb.app") || href.includes("file") || href.includes("127.0.0.1") || href.includes("localhost");
+  return href.includes(".webcontainer.io") || href.includes("file") || href.includes("127.0.0.1") || href.includes("localhost");
 }
 
 dev.togglePerformanceStats = function () {
