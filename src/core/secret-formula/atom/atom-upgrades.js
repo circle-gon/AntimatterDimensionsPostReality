@@ -51,19 +51,19 @@ export const atomUpgrades = [
     id: 3,
     name: "Celestial Power",
     cost: 5,
-    description: "Memory gain is raised ^1.5 and each V-Achievement awards 2 Space Theorems instead of 1.",
+    description: "Memory gain is raised ^1.5 and each V-Achievement awards 1.5 Space Theorems instead of 1.",
   },
   {
     id: 4,
     name: "Death to Continuum",
-    cost: 5,
+    cost: Infinity,
     description:
       "Unlock Infinity and Time Dimension Continuum, which is unlocked when Antimatter Dimension Continuum is unlocked. Start Collapses with AD Continuum unlocked.",
   },
   {
     id: 5,
     name: "Doomed Transcendence",
-    cost: 20,
+    cost: Infinity,
     description: `Dilation upgrades previously only available in a Doomed Reality
     are now purchasable outside of it, but they scale faster
     and some upgrades are weakened. The DU2 and DAU Perks now adjust to account for the
@@ -82,27 +82,27 @@ export const atomUpgrades = [
   {
     id: 7,
     name: "Keeper of Achievements",
-    cost: 100,
+    cost: Infinity,
     description: "Upon purchasing this upgrade or Collapsing, start with all Doom achievements unlocked.",
   },
   {
     id: 8,
     name: "Celestial Automation",
-    cost: 200,
+    cost: Infinity,
     description: `Teresa's best AM gets set as if you reached the square root of your total antimatter in Teresa's Reality.
     Gain 100% of your gained Annihilation multiplier and Singularities (based on your Dark Energy) per real-time second.`,
   },
   {
     id: 9,
     name: "Hoarder of Glyphs",
-    cost: 500,
+    cost: Infinity,
     description: "Unlock one more glyph slot.",
     effect: 1,
   },
   {
     id: 10,
     name: "Antimatter Limitus",
-    cost: 2000,
+    cost: Infinity,
     description: "Unlock the ability to Break the Universe.",
   },
 ];

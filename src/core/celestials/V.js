@@ -199,7 +199,7 @@ export const V = {
   },
   get spaceTheoremMultiplier() {
     let multi = 1;
-    if (AtomUpgrade(3).isBought) multi *= 2;
+    if (AtomUpgrade(3).isBought) multi *= 1.5;
     return multi;
   },
   updateTotalRunUnlocks() {
@@ -211,7 +211,7 @@ export const V = {
 
     sum *= this.spaceTheoremMultiplier;
 
-    this.spaceTheorems = sum;
+    this.spaceTheorems = Math.floor(sum);
   },
   reset() {
     const v = player.celestials.v;

@@ -12,7 +12,7 @@ export const atomMilestones = {
     and Rift draining speed are ${formatX(2, 0)} faster, and skip the credits.`,
   },
   am2: {
-    time: TimeSpan.fromDays(7).totalMilliseconds,
+    time: TimeSpan.fromDays(4).totalMilliseconds,
     reward: () => `Start with the rebuyable Reality Upgrade and
     Black Hole autobuyers, Imaginary Upgrade 'Vacuum Acceleration'
     and both black holes start unlocked and pernamently active. 
@@ -22,7 +22,7 @@ export const atomMilestones = {
     and Rift draining speed are ${formatX(2, 0)} faster.`,
   },
   am3: {
-    time: TimeSpan.fromDays(3).totalMilliseconds,
+    time: TimeSpan.fromDays(2).totalMilliseconds,
     reward: () => `Start with Teresa's Reality Machine drainer completely filled, 
     the perk shop maxed before Ra's perk shop expansion upgrade,  
     and all Dark Matter Dimension automation 

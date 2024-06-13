@@ -1,3 +1,4 @@
+import { DEV } from "@/env";
 import { beginProcessReality, getRealityProps } from "../reality";
 
 import { AUTOMATOR_COMMAND_STATUS, AutomatorData } from "./automator-backend";
@@ -1228,6 +1229,7 @@ export const AutomatorCommands = [
 
   // New Automator Commands
   {
+    // TODO: Add equipping sets
     id: "equipGlyph",
     rule: ($) => () => {
       $.CONSUME(T.Glyphs);
@@ -1256,7 +1258,7 @@ export const AutomatorCommands = [
     },
     validate: (ctx, V) => {
       ctx.startLine = ctx.Glyphs[0].startLine;
-      if (!AtomMilestone.am4.isReached) {
+      if (!AtomMilestone.am4.isReached && !DEV) {
         V.addError(ctx.Glyphs[0], "You do not have Reality automation unlocked.", "Unlock it from Atom first.");
         return false;
       }
@@ -1401,7 +1403,7 @@ export const AutomatorCommands = [
       ctx.startLine = ctx.Glyphs[0].startLine;
       // Don't error if glyph sacrifice is not unlocked
       // This makes scripts portable across Collapses
-      if (!AtomMilestone.am4.isReached) {
+      if (!AtomMilestone.am4.isReached && !DEV) {
         V.addError(ctx.Glyphs[0], "You do not have Reality automation unlocked.", "Unlock it from Atom first.");
         return false;
       }

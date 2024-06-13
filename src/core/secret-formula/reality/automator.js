@@ -173,9 +173,9 @@ export const automator = {
         },
       ],
       examples: [
-        "glyphs delete mode sac",
-        "glyphs delete mode refine level 4000",
-        "glyphs delete mode sac type timeglyph",
+        "glyphs sac",
+        "glyphs refine level 4000",
+        "glyphs sac type timeglyph",
       ],
     },
     {
