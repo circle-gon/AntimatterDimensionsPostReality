@@ -71,18 +71,11 @@ export class BigCrunchAutobuyerState extends UpgradeableAutobuyerState {
   }
 
   autoInfinitiesAvailable(considerMilestoneReached) {
-    return (
-      (considerMilestoneReached || EternityMilestone.autoInfinities.isReached) &&
-      !EternityChallenge(4).isRunning &&
-      !EternityChallenge(12).isRunning &&
-      !Player.isInAntimatterChallenge &&
-      player.auto.autobuyersOn &&
-      this.data.isActive &&
-      !Autobuyer.eternity.isActive &&
-      this.mode === AUTO_CRUNCH_MODE.TIME &&
-      this.time < 60 &&
-      !Autobuyer.eternity.autoEternitiesAvailable()
-    );
+    return (considerMilestoneReached || EternityMilestone.autoInfinities.isReached) &&
+      !EternityChallenge(4).isRunning && !EternityChallenge(12).isRunning && !Player.isInAntimatterChallenge &&
+      player.auto.autobuyersOn && this.data.isActive &&
+      !Autobuyer.eternity.isActive && this.mode === AUTO_CRUNCH_MODE.TIME && this.time <= 5 &&
+      !Autobuyer.eternity.autoEternitiesAvailable();
   }
 
   upgradeInterval(free) {

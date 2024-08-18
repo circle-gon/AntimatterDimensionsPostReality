@@ -64,7 +64,7 @@ export default {
       return formatFloat(this.continuumValue, 2);
     },
     hasLongText() {
-      return this.costDisplay.length > 15;
+      return this.costDisplay.length > 20;
     },
     capTooltip() {
       if (this.enslavedRunning) return `Nameless prevents the purchase of more than ${format(10)} Infinity Dimensions`;
@@ -76,7 +76,7 @@ export default {
       return this.eternityReached || this.isUnlocked || this.canUnlock || this.amount.gt(0) || this.hasPrevTier;
     },
     showCostTitle() {
-      return this.cost.exponent < 1e6;
+      return this.cost.exponent < 1e5;
     },
     buttonClass() {
       return {

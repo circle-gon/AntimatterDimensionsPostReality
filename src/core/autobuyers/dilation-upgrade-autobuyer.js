@@ -40,9 +40,8 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   }
 
   get bulk() {
-    // TODO: increase bulk "naturally"
-    return 1e100;
-    return PerkShopUpgrade.bulkDilation.effectOrDefault(1);
+    // TODO: does bulk need to be higher?
+    return Effects.product(PerkShopUpgrade.bulkDilation, Perk.dilationAutobuyerBulk);
   }
 
   tick() {

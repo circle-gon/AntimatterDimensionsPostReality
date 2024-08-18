@@ -79,7 +79,7 @@ export default {
       return this.eternityReached || this.isUnlocked || this.canUnlock || this.amount.gt(0) || this.hasPrevTier;
     },
     showCostTitle() {
-      return this.cost.exponent < 1e6;
+      return this.cost.exponent < 1e5;
     },
     buttonClass() {
       return {

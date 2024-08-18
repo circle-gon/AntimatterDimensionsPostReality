@@ -224,12 +224,24 @@ export default {
           </CustomizeableTooltip>
         </div>
       </div>
-      <div v-if="pouredAmount < pouredAmountCap" class="l-rm-container-labels l-teresa-mechanic-container" />
-      <div v-if="hasPerkShop" class="c-teresa-shop">
-        <span class="o-teresa-pp"> You have {{ quantify("Perk Point", perkPoints, 2, 0) }}. </span>
-        <PerkShopUpgradeButton v-for="upgrade in upgrades" :key="upgrade.id" :upgrade="upgrade" />
+      <div
+        v-if="hasPerkShop"
+        class="c-teresa-shop"
+      >
+        <span class="o-teresa-pp">
+          You have {{ quantify("Perk Point", perkPoints, 2, 0) }}.
+        </span>
+        <PerkShopUpgradeButton
+          v-for="upgrade in upgrades"
+          :key="upgrade.id"
+          :upgrade="upgrade"
+        />
         You can now modify the appearance of your Glyphs to look like Music Glyphs.
       </div>
+      <div
+        v-else
+        class="l-rm-container-labels l-teresa-mechanic-container"
+      />
     </div>
   </div>
 </template>

@@ -108,7 +108,7 @@ export default {
       if (isInfinityUnlocked) {
         infinity.count.copyFrom(Currency.infinities);
         infinity.banked.copyFrom(Currency.infinitiesBanked);
-        infinity.projectedBanked = new Decimal(0).plusEffectsOf(Achievement(131), TimeStudy(191));
+        infinity.projectedBanked = new Decimal(0).plusEffectsOf(Achievement(131).effects.bankedInfinitiesGain, TimeStudy(191));
         infinity.bankRate = infinity.projectedBanked.div(records.thisEternity.time.max(33)).times(60000);
         infinity.hasBest = bestInfinity.time.lt(Decimal.MAX_LIMIT);
         infinity.best.setFrom(bestInfinity.time);

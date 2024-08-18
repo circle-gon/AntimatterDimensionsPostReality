@@ -17,14 +17,14 @@ export default {
   computed: {
     creditStyles() {
       return {
-        bottom: `${this.scroll}rem`,
-        display: this.rolling ? "block" : "none",
+        bottom: `${this.scroll}px`,
+        display: this.rolling ? "block" : "none"
       };
     },
     muteStyle() {
       return {
-        top: `calc(${this.scroll + 2}rem - 100vh)`,
-        display: this.rolling ? "block" : "none",
+        top: `calc(${this.scroll + 20}px - 100vh)`,
+        display: this.rolling ? "block" : "none"
       };
     },
     muteIconClass() {
@@ -62,11 +62,14 @@ export default {
   },
   methods: {
     update() {
+      const height = (this.$refs.creditsDisplay?.offsetHeight || 0) + innerHeight;
       this.rolling = GameEnd.endState > END_STATE_MARKERS.CREDITS_START;
-      this.scroll =
-        (Math.clampMax(GameEnd.endState, END_STATE_MARKERS.CREDITS_END) - END_STATE_MARKERS.CREDITS_START) * 60;
-      if (this.audio)
-        this.audio.volume = this.isMuted ? 0 : Math.clamp(GameEnd.endState - END_STATE_MARKERS.CREDITS_START, 0, 0.3);
+      this.scroll = (
+        Math.clampMax(GameEnd.endState, END_STATE_MARKERS.CREDITS_END) - END_STATE_MARKERS.CREDITS_START
+      ) / (END_STATE_MARKERS.SONG_END - END_STATE_MARKERS.CREDITS_START) * height;
+      if (this.audio) this.audio.volume = this.isMuted
+        ? 0
+        : Math.clamp((GameEnd.endState - END_STATE_MARKERS.CREDITS_START), 0, 0.3);
     },
   },
 };
@@ -82,7 +85,9 @@ export default {
       :class="`c-${celIndex}-credits`"
       v-html="celSymbol"
     />
-    <CreditsDisplay />
+    <span ref="creditsDisplay">
+      <CreditsDisplay />
+    </span>
   </div>
 </template>
 
@@ -297,8 +302,8 @@ perfectly the same. */
 }
 
 .c-enslaved-credits {
-  top: 235rem;
-  left: 52%;
+  top: 240rem;
+  left: 80%;
   color: var(--color-enslaved--base);
   animation: a-enslaved-credits 10s linear infinite;
 }
@@ -311,8 +316,8 @@ perfectly the same. */
 }
 
 .c-ra-credits {
-  top: 315rem;
-  left: 44%;
+  top: 480rem;
+  left: 60%;
   color: var(--color-ra--base);
   animation: a-ra-credits 10s ease-in-out infinite;
 }

@@ -38,13 +38,15 @@ function giveEternityRewards(auto) {
   );
 
   player.records.thisReality.bestEternitiesPerMs = player.records.thisReality.bestEternitiesPerMs.clampMin(
-    newEternities.div(Math.clampMin(33, player.records.thisEternity.realTime)),
+    newEternities.div(Math.clampMin(33, player.records.thisEternity.realTime))
   );
-  player.records.bestEternity.bestEPminReality = player.records.bestEternity.bestEPminReality.max(
-    player.records.thisEternity.bestEPmin,
-  );
+  player.records.bestEternity.bestEPminReality =
+    player.records.bestEternity.bestEPminReality.max(player.records.thisEternity.bestEPmin);
 
-  Currency.infinitiesBanked.value = Currency.infinitiesBanked.value.plusEffectsOf(Achievement(131), TimeStudy(191));
+  Currency.infinitiesBanked.value = Currency.infinitiesBanked.value.plusEffectsOf(
+    Achievement(131).effects.bankedInfinitiesGain,
+    TimeStudy(191)
+  );
 
   if (Effarig.isRunning && !EffarigUnlock.eternity.isUnlocked) {
     EffarigUnlock.eternity.unlock();
