@@ -400,7 +400,7 @@ export const Glyphs = {
   // preset match, and leniently when matching greedily may lead to an incomplete set being loaded
   equipGlyphSet(set) {
     if (!set.length || set.length > this.activeSlotCount) return -1;
-    let glyphsToLoad = [...set];
+    let glyphsToLoad = [...set].sort((a, b) => -a.level * a.strength + b.level * b.strength);
     const activeGlyphs = [...this.active.filter((g) => g)];
 
     const effects = player.options.ignoreGlyphEffects;
