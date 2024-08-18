@@ -408,7 +408,7 @@ export const TimeDimensions = {
   },
 
   get extraPurchases() {
-    return AtomicParticle(0).effects[0];
+    return AtomicParticle(0).effects[0] * Effects.product(AtomUpgrade(4));
   },
 };
 

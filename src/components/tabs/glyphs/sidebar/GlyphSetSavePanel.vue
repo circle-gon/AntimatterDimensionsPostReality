@@ -26,6 +26,18 @@ export default {
     noSet() {
       return `No Glyph Preset saved in this slot`;
     },
+    levelText() {
+      switch (this.level) {
+        case 0:
+          return "Exact"
+        case 1:
+          return "Increased"
+        case 2:
+          return "Any"
+        default:
+          return "???"
+      }
+    }
   },
   watch: {
     effects(newValue) {
@@ -66,95 +78,16 @@ export default {
       this.refreshGlyphSets();
       EventHub.dispatch(GAME_EVENT.GLYPH_SET_SAVE_CHANGE);
     },
-    // A proper full solution to this turns out to contain an NP-hard problem as a subproblem, so instead we do
-    // something which should work in most cases - we match greedily when it won't obviously lead to an incomplete
-    // preset match, and leniently when matching greedily may lead to an incomplete set being loaded
     loadGlyphSet(set, id) {
-      if (!this.setLengthValid(set)) return;
-      let glyphsToLoad = [...set];
-      const activeGlyphs = [...Glyphs.active.filter((g) => g)];
-
-      // Create an array where each entry contains a single active glyph and all its matches in the preset which it
-      // could fill in for, based on the preset loading settings
-      const activeOptions = [];
-      for (const glyph of activeGlyphs) {
-        const options = Glyphs.findByValues(glyph, glyphsToLoad, {
-          level: this.level ? -1 : 0,
-          strength: this.rarity ? -1 : 0,
-          effects: this.effects ? -1 : 0,
-        });
-        activeOptions.push({ glyph, options });
-      }
-
-      // Using the active glyphs one by one, select matching to-be-loaded preset glyphs to be removed from the list.
-      // This makes sure the inventory doesn't attempt to match a glyph which is already satisfied by an equipped one
-      const selectedFromActive = this.findSelectedGlyphs(activeOptions, 5);
-      for (const glyph of selectedFromActive) glyphsToLoad = glyphsToLoad.filter((g) => g !== glyph);
-
-      // For the remaining glyphs to load from the preset, find all their appropriate matches within the inventory.
-      // This is largely the same as earlier with the equipped glyphs
-      const remainingOptions = [];
-      for (let index = 0; index < glyphsToLoad.length; index++) {
-        const glyph = glyphsToLoad[index];
-        const options = Glyphs.findByValues(glyph, Glyphs.sortedInventoryList, {
-          level: this.level ? 1 : 0,
-          strength: this.rarity ? 1 : 0,
-          effects: this.effects ? 1 : 0,
-        });
-        remainingOptions[index] = { glyph, options };
-      }
-
-      // This is scanned through similarly to the active slot glyphs, except we need to make sure we don't try to
-      // match more glyphs than we have room for
-      const selectedFromInventory = this.findSelectedGlyphs(
-        remainingOptions,
-        Glyphs.active.countWhere((g) => g === null),
-      );
-      for (const glyph of selectedFromInventory) glyphsToLoad = glyphsToLoad.filter((g) => g !== glyph);
-
-      // Actually equip the glyphs and then notify how successful (or not) the loading was
-      let missingGlyphs = glyphsToLoad.length;
-      for (const glyph of selectedFromInventory) {
-        const idx = Glyphs.active.indexOf(null);
-        if (idx !== -1) {
-          Glyphs.equip(glyph, idx);
-          missingGlyphs--;
-        }
-      }
+      const name = this.setName(id)
+      const missingGlyphs = Glyphs.equipGlyphSet(set)
+      if (missingGlyphs === -1) return
       if (missingGlyphs > 0) {
-        GameUI.notify.error(`Could not find or equip ${missingGlyphs} ${pluralize("Glyph", missingGlyphs)} from
-          ${this.setName(id)}.`);
-      } else {
-        GameUI.notify.success(`Successfully loaded ${this.setName(id)}.`);
-      }
-    },
-    // Given a list of options for suitable matches to those glyphs and a maximum glyph count to match, returns the
-    // set of glyphs which should be loaded. This is a tricky matching process to do since on one hand we don't want
-    // early matches to prevent later ones, but on the other hand matching too leniently can cause any passed-on later
-    // requirements to be too strict (eg. preset 1234 and equipped 234 could match 123, leaving an unmatchable 4).
-    // The compromise solution here is to check how many choices the next-strictest option list has - if it only has
-    // one choice then we pick conservatively (the weakest glyph) - otherwise we pick greedily (the strongest glyph).
-    findSelectedGlyphs(optionList, maxGlyphs) {
-      // We do a weird composite function here in order to make sure that glyphs get treated by type individually; then
-      // within type they are generally ordered in strictest to most lenient in terms of matches. Note that the options
-      // are sorted internally starting with the strictest match first
-      const compFn = (o) => 1000 * (10 * o.glyph.type.length + o.glyph.type.codePointAt(0)) + o.options.length;
-      optionList.sort((a, b) => compFn(a) - compFn(b));
-
-      const toLoad = [];
-      let slotsLeft = maxGlyphs;
-      for (let index = 0; index < optionList.length; index++) {
-        if (slotsLeft === 0) break;
-        const entry = optionList[index];
-        const greedyPick = index === optionList.length - 1 || optionList[index + 1].options.length > 1;
-
-        const filteredOptions = entry.options.filter((g) => !toLoad.includes(g));
-        if (filteredOptions.length === 0) continue;
-        const selectedGlyph = filteredOptions[greedyPick ? 0 : filteredOptions.length - 1];
-        toLoad.push(selectedGlyph);
-        slotsLeft--;
-      }
-      return toLoad;
+      GameUI.notify.error(`Could not find or equip ${missingGlyphs} ${pluralize("Glyph", missingGlyphs)} from
+        ${name}.`);
+    } else {
+      GameUI.notify.success(`Successfully loaded ${name}.`);
+    }
     },
     deleteGlyphSet(id) {
       if (!player.reality.glyphs.sets[id].glyphs.length) return;
@@ -195,7 +128,8 @@ export default {
     </span>
     <div class="l-glyph-set-save__header">
       When loading a preset, try to match the following attributes. "Exact" will only equip Glyphs identical to the ones
-      in the preset. The other settings will, loosely speaking, allow "better" Glyphs to be equipped in their place.
+      in the preset. "Any" will essentially ignore that attribute, acting as if all Glyphs have matched it.
+      The other settings will, loosely speaking, allow "better" Glyphs to be equipped in their place.
     </div>
     <div class="c-glyph-set-save-container">
       <ToggleButton
@@ -205,7 +139,11 @@ export default {
         on="Including"
         off="Exact"
       />
-      <ToggleButton v-model="level" class="c-glyph-set-save-setting-button" label="Level:" on="Increased" off="Exact" />
+      <button 
+        class="c-glyph-set-save-setting-button"
+        @click="level = (level + 1) % 3">
+        Level: {{ levelText }}
+      </button>
       <ToggleButton
         v-model="rarity"
         class="c-glyph-set-save-setting-button"

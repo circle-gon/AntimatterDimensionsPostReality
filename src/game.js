@@ -138,6 +138,7 @@ export function gainedInfinityPoints() {
   if (GlyphAlteration.isAdded("infinity")) {
     ip = ip.pow(getSecondaryGlyphEffect("infinityIP"));
   }
+  ip = ip.pow(Effects.product(AtomUpgrade(6)))
 
   return ip.floor();
 }
@@ -175,6 +176,8 @@ export function gainedEternityPoints() {
   if (GlyphAlteration.isAdded("time")) {
     ep = ep.pow(getSecondaryGlyphEffect("timeEP"));
   }
+
+  ep = ep.pow(Effects.product(AtomUpgrade(6)))
 
   return ep.floor();
 }
@@ -1237,7 +1240,7 @@ function initEruda() {
 }
 
 export async function init() {
-  if (DEV) {
+  if (DEV && false) {
     await initEruda();
   }
   // eslint-disable-next-line no-console

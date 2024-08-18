@@ -76,6 +76,7 @@ export default {
       if (this.isRebuyable) return;
       upgrade.toggleMechanicLock();
     },
+    quantify
   },
 };
 </script>
@@ -104,6 +105,12 @@ export default {
         <template v-else>
           <EffectDisplay :config="config" br />
           <CostDisplay v-if="!isBought" :config="config" br name="Atom" />
+          <!-- This has to be a bad method but it works so -->
+          <template v-if="!isBought && config.cost.base !== undefined">
+            <br />
+            Base cost: {{ quantify("Atom", config.cost.base, 0, 0) }}
+            <br />
+          </template>
         </template>
       </span>
     </button>

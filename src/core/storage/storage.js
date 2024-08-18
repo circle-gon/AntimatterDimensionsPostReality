@@ -471,9 +471,8 @@ export const GameStorage = {
     this.saves[this.currentSlot] = player;
     this.lastUpdateOnLoad = player.lastUpdate;
 
-    if (DEV) {
-      guardFromNaNValues(player);
-    }
+    // Should always guard tbh
+    guardFromNaNValues(player);
 
     ui.view.news = player.options.news.enabled;
     ui.view.newUI = player.options.newUI;

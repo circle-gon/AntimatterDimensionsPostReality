@@ -238,7 +238,7 @@ export const GlyphGenerator = {
   randomStrength(rng) {
     // Technically getting this upgrade really changes glyph gen but at this point almost all
     // the RNG is gone anyway.
-    if (Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.canBeApplied) return rarityToStrength(100);
+    if (Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.canBeApplied || AtomMilestone.am5.isReached) return rarityToStrength(100);
     let result = GlyphGenerator.gaussianBellCurve(rng) * GlyphGenerator.strengthMultiplier;
     const relicShardFactor = Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.canBeApplied ? 1 : rng.uniform();
     const increasedRarity =
@@ -257,7 +257,8 @@ export const GlyphGenerator = {
     // as preventing all of the glyphs changing drastically when RU17 is purchased.
     const random1 = rng.uniform();
     const random2 = rng.uniform();
-    if (type !== "effarig" && Ra.unlocks.glyphEffectCount.canBeApplied) return 4;
+    if (type !== "effarig" && (AtomMilestone.am6.isReached || Ra.unlocks.glyphEffectCount.canBeApplied)) return 4;
+    if (type === "effarig" && AtomMilestone.am6.isReached) return 7;
     const maxEffects = Ra.unlocks.glyphEffectCount.canBeApplied ? 7 : 4;
     let num = Math.min(maxEffects, Math.floor(Math.pow(random1, 1 - Math.pow(level * strength, 0.5) / 100) * 1.5 + 1));
     // If we do decide to add anything else that boosts chance of an extra effect, keeping the code like this

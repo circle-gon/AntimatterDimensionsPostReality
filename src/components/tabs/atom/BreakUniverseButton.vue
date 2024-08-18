@@ -25,8 +25,10 @@ export default {
   },
   methods: {
     update() {
+      const auCount = AtomUpgrades.all.countWhere(i => i.isBought)
+      const amCount = AtomMilestone.all.countWhere(i => i.isReached)
       this.isBroken = player.atom.broken;
-      this.isUnlocked = true;
+      this.isUnlocked = auCount >= 8 && amCount >= 10;
     },
     clicked() {
       if (!this.isBroken && this.isUnlocked) Modal.breakUniverse.show();

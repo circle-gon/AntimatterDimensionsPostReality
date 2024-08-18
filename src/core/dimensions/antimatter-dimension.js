@@ -598,6 +598,7 @@ class AntimatterDimensionState extends DimensionState {
       if (NormalChallenge(3).isRunning) {
         production += Math.log10(player.chall3Pow);
       }
+      production *= Effects.product(AtomUpgrade(6))
       if (production > 1) {
         production **= getAdjustedGlyphEffect("effarigantimatter");
       }

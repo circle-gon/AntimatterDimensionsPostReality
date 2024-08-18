@@ -1229,12 +1229,13 @@ export const AutomatorCommands = [
 
   // New Automator Commands
   {
-    // TODO: Add equipping sets
     id: "equipGlyph",
     rule: ($) => () => {
       $.CONSUME(T.Glyphs);
       $.CONSUME(T.Equip);
 
+      $.OR([
+        { ALT: () => {
       $.CONSUME(T.Slot);
       $.CONSUME(T.NumberLiteral);
 
@@ -1255,7 +1256,18 @@ export const AutomatorCommands = [
         $.CONSUME(T.Rarity);
         $.CONSUME3(T.NumberLiteral);
       });
+    }},
+    {
+      ALT: () => {
+        $.OR1([
+          { ALT: () => $.CONSUME(T.Id) },
+          { ALT: () => $.CONSUME(T.Name) }
+        ])
+      }
+    }
+    ])
     },
+    // eslint-disable-next-line complexity
     validate: (ctx, V) => {
       ctx.startLine = ctx.Glyphs[0].startLine;
       if (!AtomMilestone.am4.isReached && !DEV) {
@@ -1267,6 +1279,53 @@ export const AutomatorCommands = [
 
       // This is used to determine the correct NumberLiteral to match
       let idx = 1;
+
+      if (ctx.Id) {
+        const split = idSplitter.exec(ctx.Id[0].image);
+
+        if (!split || ctx.Id[0].isInsertedInRecovery) {
+          V.addError(
+            ctx,
+            "Missing preset id",
+            "Provide the id of a saved glyph preset from the Glyph Presets page",
+          );
+          return false;
+        }
+
+        const id = parseInt(split[1], 10);
+        if (id < 1 || id > 7) {
+          V.addError(
+            ctx.Id[0],
+            `Could not find a preset with an id of ${id}`,
+            "Type in a valid id (1 - 7) for your glyph preset",
+          );
+          return false;
+        }
+        ctx.$payload.index = id;
+        return true;
+      }
+
+      if (ctx.Name) {
+        const split = presetSplitter.exec(ctx.Name[0].image);
+
+        if (!split || ctx.Name[0].isInsertedInRecovery) {
+          V.addError(ctx, "Missing preset name", "Provide the name of a glyph preset from the Glyph Presets page");
+          return false;
+        }
+
+        // If it's a name, we check to make sure it exists:
+        const presetIndex = player.reality.glyphs.sets.findIndex((e) => e.name === split[1]) + 1;
+        if (presetIndex === 0) {
+          V.addError(
+            ctx.Name[0],
+            `Could not find preset named ${split[1]} (Note: Names are case-sensitive)`,
+            "Check to make sure you typed in the correct name for your glyph preset",
+          );
+          return false;
+        }
+        ctx.$payload.index = presetIndex;
+        return true;
+      }
 
       {
         const literal = ctx.NumberLiteral;
@@ -1336,11 +1395,25 @@ export const AutomatorCommands = [
     compile: (ctx) => {
       const filter = ctx.$payload;
       return () => {
-        if (!PlayerProgress.realityUnlocked() || !AtomMilestone.am4.isReached) {
+        if (!DEV && (!PlayerProgress.realityUnlocked() || !AtomMilestone.am4.isReached)) {
           AutomatorData.logCommandEvent("Attempted to equip a Glyph, but failed (not unlocked yet).", ctx.startLine);
           return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
         }
-        const glyph = Glyphs.inventory.find(
+
+        if (filter.index) {
+          const { glyphs, name: _name } = player.reality.glyphs.sets[filter.index - 1]
+          const name = `Glyph Preset #${filter.index}${_name === "" ? "" : `: ${_name}`}`;
+          const missingGlyphs = Glyphs.equipGlyphSet(glyphs)
+          if (missingGlyphs === -1) {
+            AutomatorData.logCommandEvent(`Could not equip ${name} because there weren't enough glyph slots.`, ctx.startLine)
+          } else if (missingGlyphs === 0) {
+            AutomatorData.logCommandEvent(`Successfully loaded ${name}.`, ctx.startLine);
+          } else {
+            AutomatorData.logCommandEvent(`Could not find or equip ${missingGlyphs} ${pluralize("Glyph", missingGlyphs)} from
+              ${name}.`, ctx.startLine);
+          }
+        } else {
+                  const glyph = Glyphs.inventory.find(
           (i) =>
             i !== null &&
             (filter.type === "*" || i.type === filter.type) &&
@@ -1357,6 +1430,7 @@ export const AutomatorCommands = [
           Glyphs.equip(glyph, filter.slot - 1);
           AutomatorData.logCommandEvent(`A Glyph was equipped.`, ctx.startLine);
         }
+      }
         return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
       };
     },

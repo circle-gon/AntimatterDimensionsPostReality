@@ -74,6 +74,9 @@ class VRunUnlockState extends GameMechanicState {
   }
 
   tryComplete() {
+    // Some goofy bug in AD
+    if (!V.isFlipped && this.config.isHard) return;
+
     const playerData = player.celestials.v;
     const value = this.config.currentValue();
     if (this.config.condition() && Decimal.gte(value, playerData.runRecords[this.id])) {
@@ -85,7 +88,6 @@ class VRunUnlockState extends GameMechanicState {
       this.completions < this.config.values.length &&
       Decimal.gte(playerData.runRecords[this.id], this.conditionValue)
     ) {
-      if (!V.isFlipped && this.config.isHard) continue;
       this.completions++;
       GameUI.notify.success(`You have unlocked V-Achievement
         '${this.config.name}' tier ${formatInt(this.completions)}`);

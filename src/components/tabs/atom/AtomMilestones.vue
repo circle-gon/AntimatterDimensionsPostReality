@@ -15,7 +15,6 @@ export default {
   computed: {
     milestones() {
       return Object.values(GameDatabase.atom.milestones)
-        .sort((a, b) => b.time - a.time)
         .map((config) => new AtomMilestoneState(config));
     },
     rows() {
@@ -38,9 +37,9 @@ export default {
   <div class="l-atom-milestone-grid">
     <div>
       Your fastest Collapse is {{ fastestCollapse.toStringShort() }}, and you have currently spent
-      {{ timeSpent.toStringShort() }} in this Collapse. Note: these stats and milestones disregard time spent storing.
+      {{ timeSpent.toStringShort() }} in this Collapse. These stats and milestones don't include time spent storing.
     </div>
-    <div>Collapse faster than the times listed to unlock milestones!</div>
+    <div>Collapse more than the count listed, or collapse faster than the times listed to unlock milestones!</div>
     <div v-for="row in rows" :key="row" class="l-atom-milestone-grid__row">
       <AtomMilestoneButton :key="row" :get-milestone="getMilestone(row)" class="l-atom-milestone-grid__cell" />
     </div>

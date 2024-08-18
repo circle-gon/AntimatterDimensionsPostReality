@@ -20,15 +20,24 @@ const rebuyable = (props) => {
     return Math.pow(effect, player.atom.rebuyables[props.id]);
   };
   props.description = () => {
-    const val = props.id === 6 ? formatPercents(effect) : formatInt(effect);
+    const val = props.id === 6 ? format(effect, 2, 3) : formatInt(effect);
     return props.textTemplate.replace("{value}", val);
   };
   props.formatCost = (value) => format(value, 2, 0);
   return props;
 };
 
+function scale(base) {
+  const costFunc = () => {
+    const count = AtomUpgrades.all.filter((_, i) => ![2, 10].includes(i)).countWhere(i => i.isBought)
+    return Math.ceil(base * 6.5 ** count)
+  }
+  costFunc.base = base
+  return costFunc
+}
+
 export const atomUpgrades = [
-  rebuyable({
+  /*rebuyable({
     id: 1,
     name: "Atomic Charge",
     initialCost: 5,
@@ -36,6 +45,15 @@ export const atomUpgrades = [
     textTemplate: "Multiply Atomic Power gain by {value}.",
     effect: 3,
     formatEffect: (e) => formatX(e, 2, 0),
+  }),*/
+  rebuyable({
+    id: 1,
+    name: "Atom Power",
+    initialCost: 3,
+    costMult: 4,
+    textTemplate: "Multiply Atom gain by {value}.",
+    effect: 2,
+    formatEffect: e => formatX(e, 2, 0)
   }),
   {
     id: 2,
@@ -50,26 +68,26 @@ export const atomUpgrades = [
   {
     id: 3,
     name: "Celestial Power",
-    cost: 5,
-    description: "Memory gain is raised ^1.5 and each V-Achievement awards 1.5 Space Theorems instead of 1.",
+    cost: scale(5),
+    description: "Memory gain is raised ^1.5 and each V-Achievement gives 1.5 Space Theorems instead of 1.",
   },
   {
     id: 4,
-    name: "Death to Continuum",
-    cost: Infinity,
+    name: "Total Continuum",
+    cost: scale(10),
     description:
-      "Unlock Infinity and Time Dimension Continuum, which is unlocked when Antimatter Dimension Continuum is unlocked. Start Collapses with AD Continuum unlocked.",
+      "Unlock ID and TD Continuum, which are unlocked when AD Continuum is unlocked, and all Continuum types get 5% more purchases. Start Collapses with Continuum unlocked.",
+    effect: 1.05
   },
   {
     id: 5,
     name: "Doomed Transcendence",
-    cost: Infinity,
+    cost: scale(30),
     description: `Dilation upgrades previously only available in a Doomed Reality
     are now purchasable outside of it, but they scale faster
-    and some upgrades are weakened. The DU2 and DAU Perks now adjust to account for the
-    new Dilation upgrades.`,
+    and are weakened. The DU2 Perk now also gives the new Dilation upgrades.`,
   },
-  rebuyable({
+  /*rebuyable({
     id: 6,
     name: "Atomic Empowerment",
     initialCost: 10,
@@ -78,31 +96,41 @@ export const atomUpgrades = [
     effect: 0.05,
     formatEffect: (e) => `${formatPercents(e - 1)} stronger`,
     effectAdditive: true,
+  }),*/
+  rebuyable({
+    id: 6,
+    name: "Atom Exponent",
+    initialCost: 4,
+    costMult: 3,
+    textTemplate: "^+{value} to AM, IP, and EP (additive)",
+    effect: 0.005,
+    formatEffect: (e) => `${format(e, 2, 3)}`,
+    effectAdditive: true,
   }),
   {
     id: 7,
     name: "Keeper of Achievements",
-    cost: Infinity,
+    cost: scale(100),
     description: "Upon purchasing this upgrade or Collapsing, start with all Doom achievements unlocked.",
   },
   {
     id: 8,
     name: "Celestial Automation",
-    cost: Infinity,
-    description: `Teresa's best AM gets set as if you reached the square root of your total antimatter in Teresa's Reality.
+    cost: scale(300),
+    description: `Teresa's best AM is set to the square root of your total antimatter.
     Gain 100% of your gained Annihilation multiplier and Singularities (based on your Dark Energy) per real-time second.`,
   },
   {
     id: 9,
     name: "Hoarder of Glyphs",
-    cost: Infinity,
+    cost: scale(1000),
     description: "Unlock one more glyph slot.",
     effect: 1,
   },
   {
     id: 10,
     name: "Antimatter Limitus",
-    cost: Infinity,
+    cost: 50000,
     description: "Unlock the ability to Break the Universe.",
   },
 ];

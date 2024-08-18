@@ -70,6 +70,9 @@ export function migrateSaves(player) {
 
   player.reality.automator.state.forceRealityRestart = player.reality.automator.state.forceRestart;
   delete player.reality.automator.state.forceRestart;
+
+  // Glyph level setting
+  player.options.ignoreGlyphLevel = Number(player.options.ignoreGlyphLevel)
 }
 
 // Lazy way to hide the "in this Collapse" text until you know about it
@@ -79,8 +82,8 @@ export function atomTimeText() {
 
 export function gainedAtoms() {
   let gain = DC.D1;
-  gain = gain.mul(AtomicParticle(1).effects[1]);
   gain = gain.timesEffectOf(AtomUpgrade(1));
+  gain = gain.timesEffectOf(Achievement(192))
   return gain.floor();
 }
 
@@ -146,16 +149,17 @@ function giveAU8() {
 }
 
 export function collapse() {
+  // Put this before so that way ach192 updates correctly
+  updateCollapseStats();
+  EventHub.dispatch(GAME_EVENT.COLLAPSE_RESET_BEFORE);
+
   // STUFF TO GAIN
   const atomsGained = gainedAtoms();
   const collapsesMade = getCollapseGain();
   Currency.atoms.add(atomsGained);
   player.atom.totalAtoms = player.atom.totalAtoms.add(atomsGained);
   Currency.collapses.add(collapsesMade);
-  updateCollapseStats();
   addCollapseTime(player.records.thisCollapse.time, player.records.thisCollapse.realTime, atomsGained, collapsesMade);
-
-  EventHub.dispatch(GAME_EVENT.COLLAPSE_RESET_BEFORE);
 
   // RESET
   GameEnd.creditsClosed = false;
@@ -332,6 +336,7 @@ export function collapse() {
     player.reality.imaginaryRebuyables[i] = 0;
   }
 
+  player.blackHoleNegative = 1
   player.blackHole = Array.range(0, 2).map((id) => ({
     id,
     intervalUpgrades: 0,
@@ -528,6 +533,7 @@ export function collapse() {
     for (const blackHole of player.blackHole) blackHole.unlocked = true;
     giveRealityUpgrade(20, false);
     for (let i = 1; i <= 12; i++) EternityChallenge(i).completions = 5;
+    Achievement(144).give()
   }
   if (AtomMilestone.am3.isReached) {
     player.celestials.teresa.pouredAmount = Teresa.pouredAmountCap;
@@ -607,8 +613,8 @@ export function collapseResetRequest() {
 }
 
 export function breakUniverse() {
-  // TODO: expand this
   player.atom.broken = true;
+  // TODO: why is this here?
   collapse();
 }
 
@@ -618,8 +624,9 @@ export class AtomMilestoneState {
   }
 
   get isReached() {
-    // TODO: testing
-    return player.records.bestCollapse.realTimeNoStore < this.time;
+    const req = this.time
+    if (req < 1000) return player.atom.resetCount >= req
+    return player.records.bestCollapse.realTimeNoStore < req;
   }
 
   get time() {
@@ -644,6 +651,10 @@ class AtomUpgradeState extends BitPurchasableMechanicState {
 
   get name() {
     return this.config.name;
+  }
+
+  get cost() {
+    return typeof this.config.cost === "function" ? this.config.cost() : this.config.cost;
   }
 
   get shortDescription() {

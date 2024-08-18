@@ -1610,31 +1610,42 @@ export const normalAchievements = [
   },
   {
     id: 192,
-    name: "The Subatomic Universe",
-    description: "Have at least one of each type of Atomic Particle.",
-    checkRequirement: () => player.atom.particles.slice(0, 3).every((i) => i.gte(1)),
-    checkEvent: GAME_EVENT.ATOMIC_PARTICLE_CONVERSION,
+    name: "Speedrunning",
+    description: "Obtain the first three Atom Milestones.",
+    checkRequirement: () => AtomMilestone.all.slice(0, 3).every((i) => i.isReached),
+    checkEvent: GAME_EVENT.COLLAPSE_RESET_BEFORE,
+    get reward() {
+      return `${formatX(2, 0)} to Atom gain for every Atom Milestone completed, except the first.`
+    },
+    effect: () => Math.pow(2, Math.max(AtomMilestone.all.countWhere(i => i.isReached) - 1, 0)),
+    formatEffect: x => formatX(x, 0, 2)
   },
   {
     id: 193,
     name: "Speedrun Master",
     description: "Obtain all Atom Milestones.",
-    checkRequirement: () => Object.values(AtomMilestone).every((i) => i.isReached),
+    checkRequirement: () => AtomMilestone.all.every((i) => i.isReached),
     checkEvent: GAME_EVENT.COLLAPSE_RESET_BEFORE,
+    reward: "Multiplier to Atom gain based on your lowest Glyph count during the entire Collapse",
+    // TODO: do this
+    effect: () => 1,
+    formatEfffect: x => formatX(x, 0, 2)
   },
   {
     id: 194,
     name: "Antimatter Chaos",
     description: "Break the Universe.",
+    // ESLint shut up
+    // To future self: fix this or else
     checkRequirement: () => false,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
   {
     id: 195,
-    name: "???",
-    description: "Placeholder.",
-    checkRequirement: () => false,
-    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    name: "The Subatomic Universe",
+    description: "Have at least one of each type of Atomic Particle.",
+    checkRequirement: () => player.atom.particles.slice(0, 3).every((i) => i.gte(1)),
+    checkEvent: GAME_EVENT.ATOMIC_PARTICLE_CONVERSION,
   },
   {
     id: 196,

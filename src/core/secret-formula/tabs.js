@@ -433,7 +433,7 @@ export const tabs = [
         name: "V",
         symbol: "⌬",
         component: "VTab",
-        condition: () => Achievement(151).isUnlocked,
+        condition: () => Achievement(151).isUnlocked || AtomMilestone.am4.isReached,
         id: 4,
         hidable: true,
       },
@@ -482,6 +482,7 @@ export const tabs = [
         component: "AtomicPower",
         id: 15,
         hidable: true,
+        condition: () => false
       },
       {
         key: "atom",

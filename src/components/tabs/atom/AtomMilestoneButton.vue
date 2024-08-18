@@ -22,11 +22,10 @@ export default {
     time() {
       return this.config.time;
     },
-    timeFormatted() {
+    requirement() {
       const time = this.time;
-      // Format the max number specifically as Infinity because it looks better
-      if (time === Number.MAX_VALUE) return Infinity;
-      return time;
+      if (time < 1000) return format(time) + " " + pluralize("Collapse", time);
+      return timeDisplay(time);
     },
     canBeReached() {
       return player.records.thisCollapse.realTimeNoStore < this.time;
@@ -52,14 +51,13 @@ export default {
     update() {
       this.isReached = this.milestone.isReached;
     },
-    timeDisplay,
   },
 };
 </script>
 
 <template>
   <div class="l-atom-milestone">
-    <span class="o-atom-milestone__goal"> {{ timeDisplay(timeFormatted) }}: </span>
+    <span class="o-atom-milestone__goal"> {{ requirement }}: </span>
     <button v-tooltip="tooltip" :class="rewardClassObject">
       <span>
         {{ reward }}

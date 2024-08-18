@@ -49,7 +49,8 @@ CodeMirror.registerHelper("hint", "anyword", (editor) => {
 const commentRule = { regex: /(\/\/|#).*/u, token: "comment", next: "start" };
 
 function withNumber(regex) {
-  const number = /[\t ]+-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?/;
+  // Make ESLint shut up
+  const number = /[\t ]+-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?/u;
   return new RegExp(regex.source + number.source, "ui");
 }
 
@@ -140,29 +141,38 @@ CodeMirror.defineSimpleMode("automato", {
     commentRule,
     { sol: true, next: "start" },
     {
-      regex: withNumber(/slot/),
+      regex: withNumber(/slot/u),
       token: "variable",
+      next: "equipOneGlyphArgs"
     },
+    // Is this abuse? Yes.
+    // Do I care? No.
+    { regex: /id(\s+|$)/iu, token: "variable", next: "studiesLoadId" },
+    { regex: /name(\s+|$)/iu, token: "variable", next: "studiesLoadPreset" },
+    {
+      regex: /\S+/iu,
+      token: "error",
+      next: "start",
+    },
+  ],
+  equipOneGlyphArgs: [
+    commentRule,
+    { sol: true, next: "start" },
     {
       regex: /type[\t ]+(power|infinity|replication|time|dilation|effarig|reality|cursed|companion)glyph/iu,
       token: "variable-3",
     },
     {
-      regex: withNumber(/effects/),
+      regex: withNumber(/effects/u),
       token: "variable-2",
     },
     {
-      regex: withNumber(/level/),
+      regex: withNumber(/level/u),
       token: "variable-3",
     },
     {
-      regex: withNumber(/rarity/),
+      regex: withNumber(/rarity/u),
       token: "variable-2",
-    },
-    {
-      regex: /\S+/iu,
-      token: "error",
-      next: "start",
     },
   ],
   deleteGlyphArgs: [
@@ -173,15 +183,15 @@ CodeMirror.defineSimpleMode("automato", {
       token: "variable-3",
     },
     {
-      regex: withNumber(/effects/),
+      regex: withNumber(/effects/u),
       token: "variable-2",
     },
     {
-      regex: withNumber(/level/),
+      regex: withNumber(/level/u),
       token: "variable-3",
     },
     {
-      regex: withNumber(/rarity/),
+      regex: withNumber(/rarity/u),
       token: "variable-2",
     },
     {

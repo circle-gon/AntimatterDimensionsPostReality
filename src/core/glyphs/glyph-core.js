@@ -56,6 +56,35 @@ export function strengthToRarity(x) {
   return ((x - 1) * 100) / 2.5;
 }
 
+// Given a list of options for suitable matches to those glyphs and a maximum glyph count to match, returns the
+// set of glyphs which should be loaded. This is a tricky matching process to do since on one hand we don't want
+// early matches to prevent later ones, but on the other hand matching too leniently can cause any passed-on later
+// requirements to be too strict (eg. preset 1234 and equipped 234 could match 123, leaving an unmatchable 4).
+// The compromise solution here is to check how many choices the next-strictest option list has - if it only has
+// one choice then we pick conservatively (the weakest glyph) - otherwise we pick greedily (the strongest glyph).
+function findSelectedGlyphs(optionList, maxGlyphs) {
+  // We do a weird composite function here in order to make sure that glyphs get treated by type individually; then
+  // within type they are generally ordered in strictest to most lenient in terms of matches. Note that the options
+  // are sorted internally starting with the strictest match first
+  const compFn = (o) => 1000 * (10 * o.glyph.type.length + o.glyph.type.codePointAt(0)) + o.options.length;
+  optionList.sort((a, b) => compFn(a) - compFn(b));
+
+  const toLoad = [];
+  let slotsLeft = maxGlyphs;
+  for (let index = 0; index < optionList.length; index++) {
+    if (slotsLeft === 0) break;
+    const entry = optionList[index];
+    const greedyPick = index === optionList.length - 1 || optionList[index + 1].options.length > 1;
+
+    const filteredOptions = entry.options.filter((g) => !toLoad.includes(g));
+    if (filteredOptions.length === 0) continue;
+    const selectedGlyph = filteredOptions[greedyPick ? 0 : filteredOptions.length - 1];
+    toLoad.push(selectedGlyph);
+    slotsLeft--;
+  }
+  return toLoad;
+}
+
 export const Glyphs = {
   inventory: [],
   active: [],
@@ -229,6 +258,7 @@ export const Glyphs = {
   //  -1: Will find glyphs which are equal to or worse than targetGlyph
   //   0: Will only return glyphs which have identical values
   //  +1: Will find glyphs which are equal to or better than targetGlyph
+  //  +2: Will return all glyphs
   findByValues(targetGlyph, searchList, fuzzyMatch = { level, strength, effects }) {
     // We need comparison to go both ways for normal matching and subset matching for partially-equipped sets
     const compFn = (op, comp1, comp2) => {
@@ -239,6 +269,8 @@ export const Glyphs = {
           return comp1 === comp2 ? 0 : -1;
         case 1:
           return comp1 - comp2;
+        case 2:
+          return 0;
       }
       return false;
     };
@@ -362,6 +394,69 @@ export const Glyphs = {
     // Loading glyph sets might directly choose glyphs, bypassing the hover-over flag-clearing code
     this.removeVisualFlag("unseen", glyph);
     this.removeVisualFlag("unequipped", glyph);
+  },
+  // A proper full solution to this turns out to contain an NP-hard problem as a subproblem, so instead we do
+  // something which should work in most cases - we match greedily when it won't obviously lead to an incomplete
+  // preset match, and leniently when matching greedily may lead to an incomplete set being loaded
+  equipGlyphSet(set) {
+    if (!set.length || set.length > this.activeSlotCount) return -1;
+    let glyphsToLoad = [...set];
+    const activeGlyphs = [...this.active.filter((g) => g)];
+
+    const effects = player.options.ignoreGlyphEffects;
+    const rarity = player.options.ignoreGlyphRarity;
+    const level = player.options.ignoreGlyphLevel;
+
+    // Create an array where each entry contains a single active glyph and all its matches in the preset which it
+    // could fill in for, based on the preset loading settings
+    const activeOptions = [];
+    for (const glyph of activeGlyphs) {
+      const options = this.findByValues(glyph, glyphsToLoad, {
+        // This won't make much sense to people reading but who cares
+        level: level === 2 ? 2 : -level,
+        strength: rarity ? -1 : 0,
+        effects: effects ? -1 : 0,
+      });
+      activeOptions.push({ glyph, options });
+    }
+
+    // Using the active glyphs one by one, select matching to-be-loaded preset glyphs to be removed from the list.
+    // This makes sure the inventory doesn't attempt to match a glyph which is already satisfied by an equipped one
+    const selectedFromActive = findSelectedGlyphs(activeOptions, this.activeSlotCount);
+    for (const glyph of selectedFromActive) glyphsToLoad = glyphsToLoad.filter((g) => g !== glyph);
+
+    // For the remaining glyphs to load from the preset, find all their appropriate matches within the inventory.
+    // This is largely the same as earlier with the equipped glyphs
+    const remainingOptions = [];
+    for (let index = 0; index < glyphsToLoad.length; index++) {
+      const glyph = glyphsToLoad[index];
+      const options = this.findByValues(glyph, this.sortedInventoryList, {
+        level,
+        strength: rarity ? 1 : 0,
+        effects: effects ? 1 : 0,
+      });
+      remainingOptions[index] = { glyph, options };
+    }
+
+    // This is scanned through similarly to the active slot glyphs, except we need to make sure we don't try to
+    // match more glyphs than we have room for
+    const selectedFromInventory = findSelectedGlyphs(
+      remainingOptions,
+      this.active.countWhere((g) => g === null),
+    );
+    for (const glyph of selectedFromInventory) glyphsToLoad = glyphsToLoad.filter((g) => g !== glyph);
+
+    // Actually equip the glyphs and then notify how successful (or not) the loading was
+    let missingGlyphs = glyphsToLoad.length;
+    for (const glyph of selectedFromInventory) {
+      const idx = this.active.indexOf(null);
+      if (idx !== -1) {
+        this.equip(glyph, idx);
+        missingGlyphs--;
+      }
+    }
+
+    return missingGlyphs
   },
   // We only ever force when draining rifts causes the single slot to be lost (which will never show the modal)
   unequipAll(forceToUnprotected = false) {

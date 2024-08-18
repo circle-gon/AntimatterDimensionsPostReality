@@ -1,3 +1,4 @@
-- auto-teresa & auto-annihilation multiplier
-- balance atom upgrade costs and atom milestones
-- install `eslint-import-resolver-alias` and `eslint-plugin-import` once they support eslint v9
+- finalize balancing
+- add "skip to new content" button & modal
+- add atom upgrade respec
+- update code so that it is up-to-date with AD

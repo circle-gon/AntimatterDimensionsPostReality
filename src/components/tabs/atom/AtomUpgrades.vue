@@ -40,7 +40,12 @@ export default {
       {{ pluralize("Atom", atoms) }}.
     </div>
     <br />
-    <div class="c-atom-upgrade-infotext">This section works similarly to Reality Upgrades.</div>
+    <div class="c-atom-upgrade-infotext">
+      The two upgrades on the left may be purchased endlessly for increasing costs, and the rest are single-purchase.<br />
+      All single-purchase upgrades, when bought, will increase the cost of all other single-purchase upgrades.<br />
+      The first and last single-purchase upgrades do not increase costs and are unaffected by any cost increases.<br />
+      Upgrades may be respecced at any time, refunding all Atoms spent on them, but it will force an Atom reset.
+    </div>
     <div v-for="row in upgradeRows" :key="row" class="l-atom-upgrade-grid__row">
       <AtomUpgradeButton v-for="column in upgradesPerRow" :key="id(row, column)" :upgrade="upgrades[id(row, column)]" />
     </div>

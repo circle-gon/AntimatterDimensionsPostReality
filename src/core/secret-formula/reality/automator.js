@@ -93,7 +93,9 @@ export const automator = {
       keyword: "GLYPHS EQUIP",
       category: 1,
       syntax: `
-      <b>glyphs equip</b> slot <u>number</u> [type <u>glyph_type</u>] [effects <u>effect_count</u>] [level <u>number</u>] [rarity <u>rarity</u>]
+      <b>glyphs equip</b> slot <u>number</u> [type <u>glyph_type</u>] [effects <u>effect_count</u>] [level <u>number</u>] [rarity <u>rarity</u>]<br>
+      <b>glyphs equip id</b> <u>selector</u><br>
+      <b>glyphs equip name</b> <u>name</u>
       `,
       description: `Equips a Glyph at a certain slot using a specific filter, if possible. The Glyph chosen is the first 
       possible Glyph in the inventory that matches the filter. If no Glyph is found, or the slot number chosen does not exist,
@@ -126,6 +128,16 @@ export const automator = {
               header: "<i>rarity</i>",
               description: `The minimum rarity for the Glyph to have. This must be a number between 0 (exclusive) and 1 (inclusive).
               If no value is specified, a Glyph with any rarity will be chosen.`,
+            },
+            {
+              header: "<i>selector</i>",
+              description: `
+                Finds and loads the specified Glyph preset by its slot number. This is numbered one through seven,
+                ordered from top to bottom.`,
+            },
+            {
+              header: "<i>name</i>",
+              description: "Finds and loads the specified Glyph preset by its given name. This is case-sensitive.",
             },
           ],
         },
