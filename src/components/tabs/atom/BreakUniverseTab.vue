@@ -8,21 +8,22 @@ export default {
   },
   data() {
     return {
-      broken: false
-    }
+      broken: false,
+    };
   },
   methods: {
     update() {
-      this.broken = player.atom.broken
-    }
-  }
+      this.broken = player.atom.broken;
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-break-universe-tab">
     <div v-if="!broken">
-      Breaking the Universe requires all single-purchase Atom Upgrades to be bought, and all Atom Milestones to be completed.
+      Breaking the Universe requires all single-purchase Atom Upgrades to be bought, and all Atom Milestones to be
+      completed.
     </div>
     <BreakUniverseButton class="l-break-universe-tab__break-btn" />
   </div>

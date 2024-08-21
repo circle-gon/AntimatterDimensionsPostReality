@@ -527,7 +527,7 @@ export const perks = {
     automatorPoints: 10,
     shortDescription: () => "Keep Achievements on Reality",
     layoutPosList: [23353, 81402, 81403, 79404, 79803, 84639],
-  }
+  },
 };
 
 export const perkConnections = (function () {
@@ -562,8 +562,14 @@ export const perkConnections = (function () {
     [p.retroactiveTP1, p.bypassTGReset, p.startTP, p.retroactiveTP2],
     [p.retroactiveTP2, p.retroactiveTP3],
     [p.retroactiveTP3, p.retroactiveTP4],
-    [p.autobuyerDilation, p.autounlockEU2, p.autounlockDilation1,
-      p.bypassECDilation, p.bypassTGReset, p.dilationAutobuyerBulk],
+    [
+      p.autobuyerDilation,
+      p.autounlockEU2,
+      p.autounlockDilation1,
+      p.bypassECDilation,
+      p.bypassTGReset,
+      p.dilationAutobuyerBulk,
+    ],
     [p.autobuyerFasterID],
     [p.ttBuySingle, p.ttFree],
     [p.ttFree, p.ttBuyMax],

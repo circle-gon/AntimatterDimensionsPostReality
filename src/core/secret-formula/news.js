@@ -1933,10 +1933,9 @@ export const news = [
   },
   {
     id: "a325",
-    text:
-      `After the accident at the antimatter reactor in Pripyat last month, concerns are rising about the safety of
+    text: `After the accident at the antimatter reactor in Pripyat last month, concerns are rising about the safety of
       antimatter reactors, and many are starting to believe we should return to safer means of energy generation,
-      such as nuclear.`
+      such as nuclear.`,
   },
   {
     id: "a326",
@@ -2438,8 +2437,7 @@ export const news = [
   },
   {
     id: "a388",
-    text:
-      `In light of recent events, we'd like to issue an official statement. Antimatter Dimensions™ is in no way
+    text: `In light of recent events, we'd like to issue an official statement. Antimatter Dimensions™ is in no way
       affiliated with Jimmy's Causality Violating Brainworms™. We do not endorse, nor were we involved in their creation
       of the product which was involved in several catastrophic dimension-destabilising and reality-toppling incidents.
       We almost certainly did not sign a contract at 5:30:26 UTC on 08/12/1994 after discussing how we could benefit
@@ -2495,8 +2493,7 @@ export const news = [
   },
   {
     id: "l6",
-    text:
-      `Antimatter people seem to be even more afraid of 13 than we are. They destroyed
+    text: `Antimatter people seem to be even more afraid of 13 than we are. They destroyed
       entire galaxies just to remove 13 from their percents.`,
     get unlocked() {
       return player.galaxies > 0 || Currency.infinities.gt(0);

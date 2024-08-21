@@ -48,7 +48,7 @@ export const NG = {
   // Reset the game, but carry over some post-completion stats. We also call this when starting a speedrun, so make sure
   // any stats which are updated due to completion happen in startNewGame() instead of in here
   restartWithCarryover() {
-    this.carryover(() => GameStorage.hardReset())
+    this.carryover(() => GameStorage.hardReset());
   },
   carryover(reset) {
     const backUpOptions = JSON.stringify(player.options);
@@ -67,7 +67,7 @@ export const NG = {
     const speedrunRecords = JSON.stringify(player.speedrun.previousRuns);
     const hasSpeedrun = player.speedrun.isUnlocked;
     const presets = JSON.stringify(player.timestudy.presets);
-    const companions = JSON.stringify(Glyphs.allGlyphs.filter(g => g.type === "companion"));
+    const companions = JSON.stringify(Glyphs.allGlyphs.filter((g) => g.type === "companion"));
     Modal.hideAll();
     Quote.clearAll();
 
@@ -91,7 +91,7 @@ export const NG = {
     player.speedrun.previousRuns = JSON.parse(speedrunRecords);
     player.speedrun.isUnlocked = hasSpeedrun;
     player.timestudy.presets = JSON.parse(presets);
-    JSON.parse(companions).forEach(g => {
+    JSON.parse(companions).forEach((g) => {
       Glyphs.addToInventory(g);
     });
     Themes.find(Theme.currentName()).set();

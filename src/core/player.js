@@ -607,7 +607,7 @@ window.player = {
       1: 0,
       6: 0,
     },
-    upgradeSpent: DC.D0
+    upgradeSpent: DC.D0,
   },
   blackHole: Array.range(0, 2).map((id) => ({
     id,
@@ -917,7 +917,7 @@ window.player = {
       reality: true,
       background: true,
       blobSnowflakes: 16,
-      blobHole: false
+      blobHole: false,
     },
     confirmations: {
       armageddon: true,
@@ -942,7 +942,7 @@ window.player = {
       switchAutomatorMode: true,
       respecIAP: true,
       collapse: true,
-      respecAtomUpgrades: true
+      respecAtomUpgrades: true,
     },
     awayProgress: {
       antimatter: true,
@@ -1029,8 +1029,8 @@ export const Player = {
   },
 
   get canCollapse() {
-    const base = Pelle.isDoomed && player.records.thisInfinity.maxAM.gte(Decimal.MAX_VALUE)
-    const extra = player.atom.broken && player.records.thisCollapse.maxAM.gte(Decimal.MAX_VALUE)
+    const base = Pelle.isDoomed && player.records.thisInfinity.maxAM.gte(Decimal.MAX_VALUE);
+    const extra = player.atom.broken && player.records.thisCollapse.maxAM.gte(Decimal.MAX_VALUE);
     return base || extra;
   },
 

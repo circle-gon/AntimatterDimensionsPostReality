@@ -296,7 +296,7 @@ export const AutomatorCommands = [
       $.CONSUME(T.BlackHole);
       $.OR([{ ALT: () => $.CONSUME(T.On) }, { ALT: () => $.CONSUME(T.Off) }]);
     },
-    validate: ctx => {
+    validate: (ctx) => {
       ctx.startLine = ctx.BlackHole[0].startLine;
       return true;
     },
@@ -1227,37 +1227,36 @@ export const AutomatorCommands = [
       $.CONSUME(T.Equip);
 
       $.OR([
-        { ALT: () => {
-      $.CONSUME(T.Slot);
-      $.CONSUME(T.NumberLiteral);
+        {
+          ALT: () => {
+            $.CONSUME(T.Slot);
+            $.CONSUME(T.NumberLiteral);
 
-      $.OPTION(() => {
-        $.CONSUME(T.Type);
-        $.CONSUME(T.GlyphType);
-      });
-      $.OPTION1(() => {
-        $.CONSUME(T.Effects);
-        // TODO: implement specfic effects
-        $.CONSUME1(T.NumberLiteral);
-      });
-      $.OPTION2(() => {
-        $.CONSUME(T.Level);
-        $.CONSUME2(T.NumberLiteral);
-      });
-      $.OPTION3(() => {
-        $.CONSUME(T.Rarity);
-        $.CONSUME3(T.NumberLiteral);
-      });
-    }},
-    {
-      ALT: () => {
-        $.OR1([
-          { ALT: () => $.CONSUME(T.Id) },
-          { ALT: () => $.CONSUME(T.Name) }
-        ])
-      }
-    }
-    ])
+            $.OPTION(() => {
+              $.CONSUME(T.Type);
+              $.CONSUME(T.GlyphType);
+            });
+            $.OPTION1(() => {
+              $.CONSUME(T.Effects);
+              // TODO: implement specfic effects
+              $.CONSUME1(T.NumberLiteral);
+            });
+            $.OPTION2(() => {
+              $.CONSUME(T.Level);
+              $.CONSUME2(T.NumberLiteral);
+            });
+            $.OPTION3(() => {
+              $.CONSUME(T.Rarity);
+              $.CONSUME3(T.NumberLiteral);
+            });
+          },
+        },
+        {
+          ALT: () => {
+            $.OR1([{ ALT: () => $.CONSUME(T.Id) }, { ALT: () => $.CONSUME(T.Name) }]);
+          },
+        },
+      ]);
     },
     // eslint-disable-next-line complexity
     validate: (ctx, V) => {
@@ -1276,11 +1275,7 @@ export const AutomatorCommands = [
         const split = idSplitter.exec(ctx.Id[0].image);
 
         if (!split || ctx.Id[0].isInsertedInRecovery) {
-          V.addError(
-            ctx,
-            "Missing preset id",
-            "Provide the id of a saved glyph preset from the Glyph Presets page",
-          );
+          V.addError(ctx, "Missing preset id", "Provide the id of a saved glyph preset from the Glyph Presets page");
           return false;
         }
 
@@ -1393,36 +1388,42 @@ export const AutomatorCommands = [
         }
 
         if (filter.index) {
-          const { glyphs, name: _name } = player.reality.glyphs.sets[filter.index - 1]
+          const { glyphs, name: _name } = player.reality.glyphs.sets[filter.index - 1];
           const name = `Glyph Preset #${filter.index}${_name === "" ? "" : `: ${_name}`}`;
-          const missingGlyphs = Glyphs.equipGlyphSet(glyphs)
+          const missingGlyphs = Glyphs.equipGlyphSet(glyphs);
           if (missingGlyphs === -1) {
-            AutomatorData.logCommandEvent(`Could not equip ${name} because there weren't enough glyph slots.`, ctx.startLine)
+            AutomatorData.logCommandEvent(
+              `Could not equip ${name} because there weren't enough glyph slots.`,
+              ctx.startLine,
+            );
           } else if (missingGlyphs === 0) {
             AutomatorData.logCommandEvent(`Successfully loaded ${name}.`, ctx.startLine);
           } else {
-            AutomatorData.logCommandEvent(`Could not find or equip ${missingGlyphs} ${pluralize("Glyph", missingGlyphs)} from
-              ${name}.`, ctx.startLine);
+            AutomatorData.logCommandEvent(
+              `Could not find or equip ${missingGlyphs} ${pluralize("Glyph", missingGlyphs)} from
+              ${name}.`,
+              ctx.startLine,
+            );
           }
         } else {
-                  const glyph = Glyphs.inventory.find(
-          (i) =>
-            i !== null &&
-            (filter.type === "*" || i.type === filter.type) &&
-            getGlyphEffectValuesFromBitmask(i.effects).length >= filter.effects &&
-            i.level >= filter.level &&
-            strengthToRarity(i.strength) >= filter.rarity,
-        );
-        if (!glyph) {
-          AutomatorData.logCommandEvent("Attempted to equip a Glyph, but one could not be found.", ctx.startLine);
-        } else if (filter.slot > Glyphs.activeSlotCount) {
-          AutomatorData.logCommandEvent("Attempted to equip a Glyph, but the slot was not valid.", ctx.startLine);
-        } else {
-          // It's zero-indexed!!!
-          Glyphs.equip(glyph, filter.slot - 1);
-          AutomatorData.logCommandEvent(`A Glyph was equipped.`, ctx.startLine);
+          const glyph = Glyphs.inventory.find(
+            (i) =>
+              i !== null &&
+              (filter.type === "*" || i.type === filter.type) &&
+              getGlyphEffectValuesFromBitmask(i.effects).length >= filter.effects &&
+              i.level >= filter.level &&
+              strengthToRarity(i.strength) >= filter.rarity,
+          );
+          if (!glyph) {
+            AutomatorData.logCommandEvent("Attempted to equip a Glyph, but one could not be found.", ctx.startLine);
+          } else if (filter.slot > Glyphs.activeSlotCount) {
+            AutomatorData.logCommandEvent("Attempted to equip a Glyph, but the slot was not valid.", ctx.startLine);
+          } else {
+            // It's zero-indexed!!!
+            Glyphs.equip(glyph, filter.slot - 1);
+            AutomatorData.logCommandEvent(`A Glyph was equipped.`, ctx.startLine);
+          }
         }
-      }
         return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
       };
     },

@@ -95,7 +95,7 @@ export const PerkLayouts = [
   {
     // This is the perks laid out in the same way that they're laid out in the Android version
     buttonText: "Android Layout",
-    position: config => globalScale(positionNumToVector(config.layoutPosList[1]), 20, 1.5),
+    position: (config) => globalScale(positionNumToVector(config.layoutPosList[1]), 20, 1.5),
     centerOffset: new Vector(0, 120),
     forcePhysics: false,
     straightEdges: true,

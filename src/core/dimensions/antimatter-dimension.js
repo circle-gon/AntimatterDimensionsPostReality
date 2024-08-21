@@ -530,8 +530,12 @@ class AntimatterDimensionState extends DimensionState {
 
   get isAvailableForPurchase() {
     if (!EternityMilestone.unlockAllND.isReached && this.tier > DimBoost.totalBoosts + 4) return false;
-    const hasPrevTier = this.tier === 1 || AntimatterDimension(this.tier - 1).totalAmount.gt(0);
-    if (!EternityMilestone.unlockAllND.isReached && !hasPrevTier) return false;
+    // Not doing it this way results in very long chains when Continuum is active
+    const hasPrevTier =
+      EternityMilestone.unlockAllND.isReached ||
+      this.tier === 1 ||
+      AntimatterDimension(this.tier - 1).totalAmount.gt(0);
+    if (!hasPrevTier) return false;
     return this.tier < 7 || !NormalChallenge(10).isRunning;
   }
 
@@ -598,7 +602,7 @@ class AntimatterDimensionState extends DimensionState {
       if (NormalChallenge(3).isRunning) {
         production += Math.log10(player.chall3Pow);
       }
-      production *= Effects.product(AtomUpgrade(6))
+      production *= Effects.product(AtomUpgrade(6));
       if (production > 1) {
         production **= getAdjustedGlyphEffect("effarigantimatter");
       }

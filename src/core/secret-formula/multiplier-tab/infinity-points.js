@@ -98,7 +98,7 @@ export const IP = {
     name: "Atom Upgrade 6 - Power to IP gain",
     powValue: () => Effects.product(AtomUpgrade(6)),
     isActive: () => PlayerProgress.collapseUnlocked(),
-    icon: MultiplierTabIcons.ATOM
+    icon: MultiplierTabIcons.ATOM,
   },
   iap: {
     name: "Shop Tab Purchases",

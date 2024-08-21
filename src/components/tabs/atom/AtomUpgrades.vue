@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       atoms: new Decimal(0),
-      canRespec: false
+      canRespec: false,
     };
   },
   computed: {
@@ -30,11 +30,11 @@ export default {
     update() {
       this.atoms.copyFrom(Currency.atoms);
       // The first and last don't need to be checked because they don't increase the cost
-      this.canRespec = AtomUpgrades.all.filter(i => ![2, 10].includes(i.id)).countWhere(i => i.isBought) < 6
+      this.canRespec = AtomUpgrades.all.filter((i) => ![2, 10].includes(i.id)).countWhere((i) => i.isBought) < 6;
     },
     respec() {
-      respecAtomUpgradesRequest()
-    }
+      respecAtomUpgradesRequest();
+    },
   },
 };
 </script>
@@ -51,7 +51,7 @@ export default {
       All single-purchase upgrades, when bought, will increase the cost of all other single-purchase upgrades.<br />
       The first and last single-purchase upgrades do not increase costs and are unaffected by any cost increases.<br />
       Upgrades may be respecced at any time, refunding all Atoms spent on them, but it will force an Atom reset.
-        <button @click="respec" class="l-atom-upgrade-btn c-atom-upgrade-btn l-atom-upgrade-respec">
+      <button @click="respec" class="l-atom-upgrade-btn c-atom-upgrade-btn l-atom-upgrade-respec">
         Respec Atom Upgrades
       </button>
     </div>

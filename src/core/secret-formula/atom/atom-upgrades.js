@@ -29,12 +29,12 @@ const rebuyable = (props) => {
 
 function scale(base) {
   const costFunc = () => {
-    const count = AtomUpgrades.all.filter(i => ![2, 10].includes(i.id)).countWhere(i => i.isBought)
-    const costScale = 5 + 2 * count
-    return Math.ceil(base * costScale ** count)
-  }
-  costFunc.base = base
-  return costFunc
+    const count = AtomUpgrades.all.filter((i) => ![2, 10].includes(i.id)).countWhere((i) => i.isBought);
+    const costScale = 5 + 2 * count;
+    return Math.ceil(base * costScale ** count);
+  };
+  costFunc.base = base;
+  return costFunc;
 }
 
 export const atomUpgrades = [
@@ -54,7 +54,7 @@ export const atomUpgrades = [
     costMult: 4,
     textTemplate: "Multiply Atom gain by {value}.",
     effect: 2,
-    formatEffect: e => formatX(e, 2, 0)
+    formatEffect: (e) => formatX(e, 2, 0),
   }),
   {
     id: 2,
@@ -78,7 +78,7 @@ export const atomUpgrades = [
     cost: scale(30),
     description:
       "Unlock ID and TD Continuum, which are unlocked when AD Continuum is unlocked, and all Continuum types get 5% more purchases. Start Collapses with Continuum unlocked.",
-    effect: 1.05
+    effect: 1.05,
   },
   {
     id: 5,

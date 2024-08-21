@@ -27,10 +27,9 @@ export default {
     showAllTabs() {
       for (const tab of this.tabs) {
         tab.unhideTab();
-        for (const subtab of tab.subtabs)
-          subtab.unhideTab();
+        for (const subtab of tab.subtabs) subtab.unhideTab();
       }
-    }
+    },
   },
 };
 </script>
@@ -53,11 +52,7 @@ export default {
         <br />
         (You cannot hide your tabs within this Reality)
       </div>
-      <PrimaryButton
-        @click="showAllTabs"
-      >
-        Show all tabs
-      </PrimaryButton>
+      <PrimaryButton @click="showAllTabs"> Show all tabs </PrimaryButton>
       <HiddenTabGroup
         v-for="(tab, index) in tabs"
         :key="index"

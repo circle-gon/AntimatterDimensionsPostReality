@@ -25,8 +25,8 @@ export default {
   },
   methods: {
     update() {
-      const auCount = AtomUpgrades.all.countWhere(i => i.isBought)
-      const amCount = AtomMilestone.all.countWhere(i => i.isReached)
+      const auCount = AtomUpgrades.all.countWhere((i) => i.isBought);
+      const amCount = AtomMilestone.all.countWhere((i) => i.isReached);
       this.isBroken = player.atom.broken;
       this.isUnlocked = auCount >= 8 && amCount >= 10;
     },

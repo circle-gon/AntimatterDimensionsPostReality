@@ -14,8 +14,7 @@ export default {
   },
   computed: {
     milestones() {
-      return Object.values(GameDatabase.atom.milestones)
-        .map((config) => new AtomMilestoneState(config));
+      return Object.values(GameDatabase.atom.milestones).map((config) => new AtomMilestoneState(config));
     },
     rows() {
       return this.milestones.length;

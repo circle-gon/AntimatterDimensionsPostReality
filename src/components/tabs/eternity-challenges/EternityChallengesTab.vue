@@ -28,9 +28,7 @@ export default {
       return EternityChallenges.all;
     },
     upgradeLockNameText() {
-      return RealityUpgrade(12).isLockingMechanics
-        ? RealityUpgrade(12).name
-        : ImaginaryUpgrade(15).name;
+      return RealityUpgrade(12).isLockingMechanics ? RealityUpgrade(12).name : ImaginaryUpgrade(15).name;
     },
     nextECText() {
       return this.untilNextEC.totalMilliseconds === 0 && !this.autoEC
@@ -50,9 +48,11 @@ export default {
       this.isAutoECVisible = Perk.autocompleteEC1.canBeApplied;
       this.autoEC = player.reality.autoEC;
       const shouldPreventEC7 = TimeDimension(1).amount.gt(0);
-      this.hasUpgradeLock = RealityUpgrade(12).isLockingMechanics ||
-        (ImaginaryUpgrade(15).isLockingMechanics && shouldPreventEC7 &&
-          !Array.range(1, 6).some(ec => !EternityChallenge(ec).isFullyCompleted));
+      this.hasUpgradeLock =
+        RealityUpgrade(12).isLockingMechanics ||
+        (ImaginaryUpgrade(15).isLockingMechanics &&
+          shouldPreventEC7 &&
+          !Array.range(1, 6).some((ec) => !EternityChallenge(ec).isFullyCompleted));
       const remainingCompletions = EternityChallenges.remainingCompletions;
       this.remainingECTiers = remainingCompletions;
       if (remainingCompletions !== 0) {
@@ -87,19 +87,12 @@ export default {
       class="c-challenges-tab__auto-ec-info l-challenges-tab__auto-ec-info"
     >
       <div class="l-challenges-tab__auto-ec-timers">
-        <span
-          v-if="hasUpgradeLock"
-          class="l-emphasis"
-        >
+        <span v-if="hasUpgradeLock" class="l-emphasis">
           Auto EC is currently disabled because of the "{{ upgradeLockNameText }}" upgrade requirement lock.
         </span>
-        <span v-if="remainingECTiers > 0">
-          Next Auto Eternity Challenge completion: {{ nextECText }}
-        </span>
-        <span>
-          All Auto Eternity Challenge completions: {{ allECText }}
-        </span>
-        <br>
+        <span v-if="remainingECTiers > 0"> Next Auto Eternity Challenge completion: {{ nextECText }} </span>
+        <span> All Auto Eternity Challenge completions: {{ allECText }} </span>
+        <br />
       </div>
     </div>
     <div>

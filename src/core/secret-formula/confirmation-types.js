@@ -107,7 +107,7 @@ export const confirmationTypes = [
   {
     name: "Respec Atom Upgrade",
     option: "respecAtomUpgrades",
-    isUnlocked: () => PlayerProgress.atomUnlocked()
+    isUnlocked: () => PlayerProgress.atomUnlocked(),
   },
   {
     name: "Respec Shop Purchases",

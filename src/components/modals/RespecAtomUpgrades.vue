@@ -8,8 +8,8 @@ export default {
   },
   data() {
     return {
-        respec: new Decimal(0)
-    }
+      respec: new Decimal(0),
+    };
   },
   computed: {
     message() {
@@ -25,9 +25,9 @@ export default {
     handleYesClick() {
       respecAtomUpgrades();
     },
-    update() { 
-      this.respec.copyFrom(player.atom.upgradeSpent)
-    }
+    update() {
+      this.respec.copyFrom(player.atom.upgradeSpent);
+    },
   },
 };
 </script>
@@ -36,9 +36,8 @@ export default {
   <ModalWrapperChoice option="respecAtomUpgrades" @confirm="handleYesClick">
     <template #header>Atom Upgrade Respec</template>
     <div class="c-modal-message__text">
-      Respeccing your Atom Upgrades will refund {{ quantify("Atom", respec, 0, 0) }}. 
-      All single-purchase upgrades that scale in cost will become unbought,
-      and all other upgrades are unaffected. This will also force a Collapse.
+      Respeccing your Atom Upgrades will refund {{ quantify("Atom", respec, 0, 0) }}. All single-purchase upgrades that
+      scale in cost will become unbought, and all other upgrades are unaffected. This will also force a Collapse.
     </div>
     <template #confirm-text>Respec</template>
   </ModalWrapperChoice>

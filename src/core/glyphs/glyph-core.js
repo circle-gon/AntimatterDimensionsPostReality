@@ -456,7 +456,7 @@ export const Glyphs = {
       }
     }
 
-    return missingGlyphs
+    return missingGlyphs;
   },
   // We only ever force when draining rifts causes the single slot to be lost (which will never show the modal)
   unequipAll(forceToUnprotected = false) {

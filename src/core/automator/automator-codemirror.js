@@ -143,7 +143,7 @@ CodeMirror.defineSimpleMode("automato", {
     {
       regex: withNumber(/slot/u),
       token: "variable",
-      next: "equipOneGlyphArgs"
+      next: "equipOneGlyphArgs",
     },
     // Is this abuse? Yes.
     // Do I care? No.
@@ -248,7 +248,7 @@ CodeMirror.defineSimpleMode("automato", {
     { regex: /x[\t ]+highest(\s|$)/iu, token: "variable-2" },
     { regex: /pending[\t ]+(completions|ip|ep|tp|rm|glyph[\t ]+level)(\s|$)/iu, token: "variable-2" },
     { regex: /total[\t ]+(completions|tt|space theorems)(\s|$)/iu, token: "variable-2" },
-    { regex: /spent[\t ]+tt(\s|$)/ui, token: "variable-2" },
+    { regex: /spent[\t ]+tt(\s|$)/iu, token: "variable-2" },
     { regex: /filter[ \t]+score/iu, token: "variable-2" },
     { regex: /ec(1[0-2]|[1-9])[\t ]+completions(\s|$)/iu, token: "variable-2" },
     { regex: /(am|ip|ep|all)(\s|$)/iu, token: "variable-2" },

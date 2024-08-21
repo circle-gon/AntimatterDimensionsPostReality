@@ -30,7 +30,8 @@ export default {
     <div class="c-modal-message__text">
       <div style="color: var(--color-bad); font-size: 1.2em">
         WARNING: THIS FEATURE IS UNSTABLE. PROCEED AT YOUR OWN RISK.
-      </div><br />
+      </div>
+      <br />
       <span v-for="(line, index) in message" :key="index"> {{ line }} <br /> </span>
     </div>
     <template #confirm-text> Break </template>

@@ -482,7 +482,7 @@ export const tabs = [
         component: "AtomicPower",
         id: 15,
         hidable: true,
-        condition: () => false
+        condition: () => false,
       },
       {
         key: "atom",

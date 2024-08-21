@@ -198,10 +198,7 @@ export default {
           Active time percent: {{ formatPercents(blackHoleUptime[0], 3) }}
           <span v-if="hasBH2">and {{ formatPercents(blackHoleUptime[1], 3) }}</span>
         </div>
-        <BlackHoleChargingSliders
-          v-if="!isLaitela"
-          class="l-enslaved-shop-container"
-        />
+        <BlackHoleChargingSliders v-if="!isLaitela" class="l-enslaved-shop-container" />
       </div>
       <div :class="gridStyle()">
         <BlackHoleUpgradeRow v-for="(blackHole, i) in blackHoles" :key="'upgrades' + i" :black-hole="blackHole" />

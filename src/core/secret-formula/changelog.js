@@ -36,7 +36,7 @@ export const changelog = [
 <li>Fixed a BH inversion slider is visible while it is being disabled</li>
 </ul>
 <br>
-`
+`,
   },
   {
     date: [2024, 5, 2],
@@ -110,7 +110,7 @@ affected by this bug</li>
 <li>Fixed tpyo of the century</li>
 </ul>
 <br>
-`
+`,
   },
   {
     date: [2023, 7, 18],

@@ -29,15 +29,15 @@ export default {
     levelText() {
       switch (this.level) {
         case 0:
-          return "Exact"
+          return "Exact";
         case 1:
-          return "Increased"
+          return "Increased";
         case 2:
-          return "Any"
+          return "Any";
         default:
-          return "???"
+          return "???";
       }
-    }
+    },
   },
   watch: {
     effects(newValue) {
@@ -79,15 +79,15 @@ export default {
       EventHub.dispatch(GAME_EVENT.GLYPH_SET_SAVE_CHANGE);
     },
     loadGlyphSet(set, id) {
-      const name = this.setName(id)
-      const missingGlyphs = Glyphs.equipGlyphSet(set)
-      if (missingGlyphs === -1) return
+      const name = this.setName(id);
+      const missingGlyphs = Glyphs.equipGlyphSet(set);
+      if (missingGlyphs === -1) return;
       if (missingGlyphs > 0) {
-      GameUI.notify.error(`Could not find or equip ${missingGlyphs} ${pluralize("Glyph", missingGlyphs)} from
+        GameUI.notify.error(`Could not find or equip ${missingGlyphs} ${pluralize("Glyph", missingGlyphs)} from
         ${name}.`);
-    } else {
-      GameUI.notify.success(`Successfully loaded ${name}.`);
-    }
+      } else {
+        GameUI.notify.success(`Successfully loaded ${name}.`);
+      }
     },
     deleteGlyphSet(id) {
       if (!player.reality.glyphs.sets[id].glyphs.length) return;
@@ -128,8 +128,8 @@ export default {
     </span>
     <div class="l-glyph-set-save__header">
       When loading a preset, try to match the following attributes. "Exact" will only equip Glyphs identical to the ones
-      in the preset. "Any" will essentially ignore that attribute, acting as if all Glyphs have matched it.
-      The other settings will, loosely speaking, allow "better" Glyphs to be equipped in their place.
+      in the preset. "Any" will essentially ignore that attribute, acting as if all Glyphs have matched it. The other
+      settings will, loosely speaking, allow "better" Glyphs to be equipped in their place.
     </div>
     <div class="c-glyph-set-save-container">
       <ToggleButton
@@ -139,11 +139,7 @@ export default {
         on="Including"
         off="Exact"
       />
-      <button 
-        class="c-glyph-set-save-setting-button"
-        @click="level = (level + 1) % 3">
-        Level: {{ levelText }}
-      </button>
+      <button class="c-glyph-set-save-setting-button" @click="level = (level + 1) % 3">Level: {{ levelText }}</button>
       <ToggleButton
         v-model="rarity"
         class="c-glyph-set-save-setting-button"

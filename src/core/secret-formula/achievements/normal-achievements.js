@@ -1091,9 +1091,8 @@ export const normalAchievements = [
     },
     effects: {
       infinitiesGain: 2,
-      bankedInfinitiesGain: () => Currency.infinities.value.times(0.05).floor()
-    }
-
+      bankedInfinitiesGain: () => Currency.infinities.value.times(0.05).floor(),
+    },
   },
   {
     id: 132,
@@ -1613,10 +1612,10 @@ export const normalAchievements = [
     checkRequirement: () => true,
     checkEvent: GAME_EVENT.COLLAPSE_RESET_BEFORE,
     get reward() {
-      return `${formatX(2, 0)} to Atom gain for every Atom Milestone completed, except the first.`
+      return `${formatX(2, 0)} to Atom gain for every Atom Milestone completed, except the first.`;
     },
-    effect: () => Math.pow(2, Math.max(AtomMilestone.all.countWhere(i => i.isReached) - 1, 0)),
-    formatEffect: x => formatX(x, 0, 2)
+    effect: () => Math.pow(2, Math.max(AtomMilestone.all.countWhere((i) => i.isReached) - 1, 0)),
+    formatEffect: (x) => formatX(x, 0, 2),
   },
   {
     id: 192,
@@ -1630,7 +1629,7 @@ export const normalAchievements = [
     name: "Speedrun Master",
     description: "Obtain the last five Atom Milestones.",
     checkRequirement: () => AtomMilestone.all.slice(5).every((i) => i.isReached),
-    checkEvent: GAME_EVENT.COLLAPSE_RESET_BEFORE
+    checkEvent: GAME_EVENT.COLLAPSE_RESET_BEFORE,
   },
   {
     id: 194,

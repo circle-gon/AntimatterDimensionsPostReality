@@ -18,13 +18,13 @@ export default {
     creditStyles() {
       return {
         bottom: `${this.scroll}px`,
-        display: this.rolling ? "block" : "none"
+        display: this.rolling ? "block" : "none",
       };
     },
     muteStyle() {
       return {
         top: `calc(${this.scroll + 20}px - 100vh)`,
-        display: this.rolling ? "block" : "none"
+        display: this.rolling ? "block" : "none",
       };
     },
     muteIconClass() {
@@ -64,12 +64,12 @@ export default {
     update() {
       const height = (this.$refs.creditsDisplay?.offsetHeight || 0) + innerHeight;
       this.rolling = GameEnd.endState > END_STATE_MARKERS.CREDITS_START;
-      this.scroll = (
-        Math.clampMax(GameEnd.endState, END_STATE_MARKERS.CREDITS_END) - END_STATE_MARKERS.CREDITS_START
-      ) / (END_STATE_MARKERS.SONG_END - END_STATE_MARKERS.CREDITS_START) * height;
-      if (this.audio) this.audio.volume = this.isMuted
-        ? 0
-        : Math.clamp((GameEnd.endState - END_STATE_MARKERS.CREDITS_START), 0, 0.3);
+      this.scroll =
+        ((Math.clampMax(GameEnd.endState, END_STATE_MARKERS.CREDITS_END) - END_STATE_MARKERS.CREDITS_START) /
+          (END_STATE_MARKERS.SONG_END - END_STATE_MARKERS.CREDITS_START)) *
+        height;
+      if (this.audio)
+        this.audio.volume = this.isMuted ? 0 : Math.clamp(GameEnd.endState - END_STATE_MARKERS.CREDITS_START, 0, 0.3);
     },
   },
 };

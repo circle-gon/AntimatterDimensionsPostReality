@@ -28,7 +28,7 @@ export default {
       isS11Active: false,
       isBlackHoleUnlocked: false,
       blobHole: false,
-      isS11Unlocked: false
+      isS11Unlocked: false,
     };
   },
   computed: {
@@ -69,7 +69,7 @@ export default {
     },
     blobHole(newValue) {
       player.options.animations.blobHole = newValue;
-    }
+    },
   },
   methods: {
     update() {
@@ -82,7 +82,9 @@ export default {
       this.tachyonsUnlocked = this.realityUnlocked || Currency.tachyonParticles.gt(0);
       this.animatedThemeUnlocked = Theme.animatedThemeUnlocked;
       this.isS11Active = Theme.currentName() === "S11";
-      this.isS11Unlocked = Themes.available().map(t => t.name).includes("S11");
+      this.isS11Unlocked = Themes.available()
+        .map((t) => t.name)
+        .includes("S11");
       this.isBlackHoleUnlocked = BlackHoles.areUnlocked;
 
       const options = player.options.animations;
@@ -107,31 +109,11 @@ export default {
   <ModalWrapperOptions class="c-modal-options__large">
     <template #header> Animation Options </template>
     <div class="c-modal-options__button-container">
-      <ModalOptionsToggleButton
-        v-if="infinityUnlocked"
-        v-model="bigCrunch"
-        text="Big Crunch:"
-      />
-      <ModalOptionsToggleButton
-        v-if="eternityUnlocked"
-        v-model="eternity"
-        text="Eternity:"
-      />
-      <ModalOptionsToggleButton
-        v-if="dilationUnlocked"
-        v-model="dilation"
-        text="Dilation:"
-      />
-      <ModalOptionsToggleButton
-        v-if="tachyonsUnlocked"
-        v-model="tachyonParticles"
-        text="Tachyon particles:"
-      />
-      <ModalOptionsToggleButton
-        v-if="realityUnlocked"
-        v-model="reality"
-        text="Reality:"
-      />
+      <ModalOptionsToggleButton v-if="infinityUnlocked" v-model="bigCrunch" text="Big Crunch:" />
+      <ModalOptionsToggleButton v-if="eternityUnlocked" v-model="eternity" text="Eternity:" />
+      <ModalOptionsToggleButton v-if="dilationUnlocked" v-model="dilation" text="Dilation:" />
+      <ModalOptionsToggleButton v-if="tachyonsUnlocked" v-model="tachyonParticles" text="Tachyon particles:" />
+      <ModalOptionsToggleButton v-if="realityUnlocked" v-model="reality" text="Reality:" />
       <ModalOptionsToggleButton
         v-if="isS11Unlocked && isBlackHoleUnlocked"
         v-model="blobHole"

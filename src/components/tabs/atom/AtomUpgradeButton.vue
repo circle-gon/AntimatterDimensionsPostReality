@@ -76,7 +76,7 @@ export default {
       if (this.isRebuyable) return;
       upgrade.toggleMechanicLock();
     },
-    quantify
+    quantify,
   },
 };
 </script>

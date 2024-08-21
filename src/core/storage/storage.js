@@ -12,7 +12,7 @@ export const BACKUP_SLOT_TYPE = {
   RESERVE: 2,
 };
 
-const NEW_PLAYER = "newPlayer"
+const NEW_PLAYER = "newPlayer";
 
 // Note: interval is in seconds, and only the first RESERVE slot is ever used. Having intervalStr as a redundant
 // prop is necessary because using our TimeSpan formatting functions produces undesirable strings like "1.00 minutes"
@@ -552,8 +552,8 @@ export const GameStorage = {
     GameUI.update();
 
     if (localStorage.getItem(NEW_PLAYER) === null) {
-      localStorage.setItem(NEW_PLAYER, "1")
-      Modal.firstTime.show()
+      localStorage.setItem(NEW_PLAYER, "1");
+      Modal.firstTime.show();
     }
 
     for (const resource of AlchemyResources.all) {

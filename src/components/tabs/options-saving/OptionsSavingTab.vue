@@ -31,7 +31,7 @@ export default {
       inSpeedrun: false,
       creditsClosed: false,
       canModifySeed: false,
-      shouldSkip: false
+      shouldSkip: false,
     };
   },
   computed: {
@@ -115,7 +115,7 @@ export default {
     },
     openSkipModal() {
       Modal.skipContent.show();
-    }
+    },
   },
 };
 </script>

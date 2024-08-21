@@ -82,7 +82,7 @@ export const EP = {
     name: "Atom Upgrade 6 - Power to EP gain",
     powValue: () => Effects.product(AtomUpgrade(6)),
     isActive: () => PlayerProgress.collapseUnlocked(),
-    icon: MultiplierTabIcons.ATOM
+    icon: MultiplierTabIcons.ATOM,
   },
   iap: {
     name: "Shop Tab Purchases",

@@ -193,15 +193,8 @@ export class TimeStudySetup {
     @click.shift.exact="shiftClick"
   >
     <slot />
-    <CostDisplay
-      v-if="showDefaultCostDisplay"
-      br
-      :config="config"
-      name="Time Theorem"
-    />
-    <div v-else-if="!doomedRealityStudy && !isDisabledByEnslaved">
-      Cost: {{ customCostStr }}
-    </div>
+    <CostDisplay v-if="showDefaultCostDisplay" br :config="config" name="Time Theorem" />
+    <div v-else-if="!doomedRealityStudy && !isDisabledByEnslaved">Cost: {{ customCostStr }}</div>
   </button>
 </template>
 

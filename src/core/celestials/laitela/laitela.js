@@ -50,8 +50,7 @@ export const Laitela = {
       0.5 *
         Math.pow(Decimal.pLog10(Currency.darkMatter.max) / 50, 0.4) *
         (1 + SingularityMilestone.continuumMult.effectOrDefault(0));
-    let postAtom = 
-      preAtom * AtomicParticle(0).effects[0] * Effects.product(AtomUpgrade(4))
+    let postAtom = preAtom * AtomicParticle(0).effects[0] * Effects.product(AtomUpgrade(4));
     return postAtom;
   },
   get realityReward() {

@@ -32,9 +32,9 @@ export const GameEnd = {
   _additionalEnd: 0,
   get additionalEnd() {
     // Don't hide the tabs
-    let end = player.isGameEnd || this.removeAdditionalEnd ? this._additionalEnd : 0
-    if (AtomMilestone.am1.isReached) end = Math.min(end, 0.499)
-    return end
+    let end = player.isGameEnd || this.removeAdditionalEnd ? this._additionalEnd : 0;
+    if (AtomMilestone.am1.isReached) end = Math.min(end, 0.499);
+    return end;
   },
   set additionalEnd(x) {
     this._additionalEnd = player.isGameEnd || this.removeAdditionalEnd ? x : 0;

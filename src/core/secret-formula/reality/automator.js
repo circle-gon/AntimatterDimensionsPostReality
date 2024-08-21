@@ -184,11 +184,7 @@ export const automator = {
           ],
         },
       ],
-      examples: [
-        "glyphs sac",
-        "glyphs refine level 4000",
-        "glyphs sac type timeglyph",
-      ],
+      examples: ["glyphs sac", "glyphs refine level 4000", "glyphs sac type timeglyph"],
     },
     {
       id: 5,

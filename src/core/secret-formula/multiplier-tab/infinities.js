@@ -17,11 +17,7 @@ export const infinities = {
   },
   achievement: {
     name: "Achievements",
-    multValue: () => DC.D1.timesEffectsOf(
-      Achievement(87),
-      Achievement(131).effects.infinitiesGain,
-      Achievement(164)
-    ),
+    multValue: () => DC.D1.timesEffectsOf(Achievement(87), Achievement(131).effects.infinitiesGain, Achievement(164)),
     isActive: () => Achievement(87).isUnlocked,
     icon: MultiplierTabIcons.ACHIEVEMENT,
   },

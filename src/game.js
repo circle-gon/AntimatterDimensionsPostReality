@@ -138,7 +138,7 @@ export function gainedInfinityPoints() {
   if (GlyphAlteration.isAdded("infinity")) {
     ip = ip.pow(getSecondaryGlyphEffect("infinityIP"));
   }
-  ip = ip.pow(Effects.product(AtomUpgrade(6)))
+  ip = ip.pow(Effects.product(AtomUpgrade(6)));
 
   return ip.floor();
 }
@@ -177,7 +177,7 @@ export function gainedEternityPoints() {
     ep = ep.pow(getSecondaryGlyphEffect("timeEP"));
   }
 
-  ep = ep.pow(Effects.product(AtomUpgrade(6)))
+  ep = ep.pow(Effects.product(AtomUpgrade(6)));
 
   return ep.floor();
 }
