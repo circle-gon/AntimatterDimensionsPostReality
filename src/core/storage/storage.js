@@ -552,8 +552,10 @@ export const GameStorage = {
     GameUI.update();
 
     if (localStorage.getItem(NEW_PLAYER) === null) {
+      console.log("get")
       localStorage.setItem(NEW_PLAYER, "1");
       Modal.firstTime.show();
+      GameUI.update();
     }
 
     for (const resource of AlchemyResources.all) {
