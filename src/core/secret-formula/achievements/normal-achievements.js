@@ -1612,13 +1612,6 @@ export const normalAchievements = [
     description: "Collapse once.",
     checkRequirement: () => true,
     checkEvent: GAME_EVENT.COLLAPSE_RESET_BEFORE,
-  },
-  {
-    id: 192,
-    name: "Speedrunning",
-    description: "Obtain the first three Atom Milestones.",
-    checkRequirement: () => AtomMilestone.all.slice(0, 3).every((i) => i.isReached),
-    checkEvent: GAME_EVENT.COLLAPSE_RESET_BEFORE,
     get reward() {
       return `${formatX(2, 0)} to Atom gain for every Atom Milestone completed, except the first.`
     },
@@ -1626,24 +1619,25 @@ export const normalAchievements = [
     formatEffect: x => formatX(x, 0, 2)
   },
   {
+    id: 192,
+    name: "Milestone Master",
+    description: "Obtain the first five Atom Milestones.",
+    checkRequirement: () => AtomMilestone.all.slice(0, 5).every((i) => i.isReached),
+    checkEvent: GAME_EVENT.COLLAPSE_RESET_BEFORE,
+  },
+  {
     id: 193,
     name: "Speedrun Master",
-    description: "Obtain all Atom Milestones.",
-    checkRequirement: () => AtomMilestone.all.every((i) => i.isReached),
-    checkEvent: GAME_EVENT.COLLAPSE_RESET_BEFORE,
-    reward: "Multiplier to Atom gain based on your lowest Glyph count during the entire Collapse",
-    // TODO: do this
-    effect: () => 1,
-    formatEfffect: x => formatX(x, 0, 2)
+    description: "Obtain the last five Atom Milestones.",
+    checkRequirement: () => AtomMilestone.all.slice(5).every((i) => i.isReached),
+    checkEvent: GAME_EVENT.COLLAPSE_RESET_BEFORE
   },
   {
     id: 194,
     name: "Antimatter Chaos",
     description: "Break the Universe.",
-    // ESLint shut up
-    // To future self: fix this or else
-    checkRequirement: () => false,
-    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    checkRequirement: () => true,
+    checkEvent: GAME_EVENT.BREAK_UNIVERSE,
   },
   {
     id: 195,

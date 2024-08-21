@@ -1,4 +1,9 @@
-- finalize balancing
-- add "skip to new content" button & modal
-- add atom upgrade respec
-- update code so that it is up-to-date with AD
+# now
+
+# later
+- come up with a name
+- rename the repo
+
+# never
+- achievement images!
+- a custom loading background

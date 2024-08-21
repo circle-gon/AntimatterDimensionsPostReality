@@ -48,6 +48,9 @@ export const NG = {
   // Reset the game, but carry over some post-completion stats. We also call this when starting a speedrun, so make sure
   // any stats which are updated due to completion happen in startNewGame() instead of in here
   restartWithCarryover() {
+    this.carryover(() => GameStorage.hardReset())
+  },
+  carryover(reset) {
     const backUpOptions = JSON.stringify(player.options);
     // This can't be JSONed as it contains sets
     const secretUnlocks = player.secretUnlocks;
@@ -67,7 +70,10 @@ export const NG = {
     const companions = JSON.stringify(Glyphs.allGlyphs.filter(g => g.type === "companion"));
     Modal.hideAll();
     Quote.clearAll();
-    GameStorage.hardReset();
+
+    // Resets stuff
+    reset();
+
     player.options = JSON.parse(backUpOptions);
     // We need to force this one to be true because otherwise the player will be unable to select their glyphs
     // until they can auto-reality

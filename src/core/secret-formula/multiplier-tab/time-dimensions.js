@@ -36,7 +36,8 @@ export const TD = {
     multValue: (dim) => {
       const getMult = (td) => {
         const d = TimeDimension(td);
-        const bought = td === 8 ? Math.clampMax(d.bought, 1e8) : d.bought;
+        const effBought = MultiplierTabHelper.getTDValue(td);
+        const bought = td === 8 ? Math.clampMax(effBought, 1e8) : effBought;
         return Decimal.pow(d.powerMultiplier, bought);
       };
       if (dim) return getMult(dim);

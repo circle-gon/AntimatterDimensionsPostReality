@@ -10099,6 +10099,11 @@ input.o-automator-block-input {
 .c-atom-upgrade-btn--locked:hover {
   background-color: #802222;
 }
+
+.l-atom-upgrade-respec {
+  height: 3rem;
+  border-radius: var(--var-border-radius, 2rem);
+}
 /* #endregion Atom Upgrades */
 /* #region Break Universe */
 .l-break-universe-tab {

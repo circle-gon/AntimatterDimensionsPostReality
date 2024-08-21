@@ -175,7 +175,7 @@ export const Cloud = {
     const slot = GameStorage.currentSlot;
     this.writeToCloudDB(slot, serializedSave);
 
-    // TODO We should revisit this (and the below in loadCheck) at some point after the steam-web merge
+    // We should revisit this (and the below in loadCheck) at some point after the steam-web merge
     // since the hiding motivation was identifying info, and Steam usernames are generally more publicly
     // visible than Google info. Also affects the visibility of the button in the Options/Saving subtab
     if (STEAM) {

@@ -94,6 +94,12 @@ export const IP = {
     isActive: () => Pelle.isDoomed,
     icon: MultiplierTabIcons.PELLE,
   },
+  auPow: {
+    name: "Atom Upgrade 6 - Power to IP gain",
+    powValue: () => Effects.product(AtomUpgrade(6)),
+    isActive: () => PlayerProgress.collapseUnlocked(),
+    icon: MultiplierTabIcons.ATOM
+  },
   iap: {
     name: "Shop Tab Purchases",
     multValue: () => ShopPurchase.IPPurchases.currentMult,

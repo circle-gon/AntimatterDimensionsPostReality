@@ -31,6 +31,7 @@ export default {
       inSpeedrun: false,
       creditsClosed: false,
       canModifySeed: false,
+      shouldSkip: false
     };
   },
   computed: {
@@ -83,6 +84,7 @@ export default {
       this.inSpeedrun = player.speedrun.isActive;
       this.canModifySeed = Speedrun.canModifySeed();
       this.creditsClosed = GameEnd.creditsEverClosed;
+      this.shouldSkip = player.atom.resetCount < 1 && !Player.canCollapse;
       if (!this.loggedIn) return;
       this.userName = Cloud.user.displayName;
     },
@@ -111,6 +113,9 @@ export default {
           at least one Glyph on this run.`);
       }
     },
+    openSkipModal() {
+      Modal.skipContent.show();
+    }
   },
 };
 </script>
@@ -197,6 +202,15 @@ export default {
           @click="openSeedModal()"
         >
           Change Glyph RNG Seed
+        </OptionsButton>
+        <OptionsButton
+          v-if="shouldSkip"
+          :class="{
+            'o-pelle-disabled-pointer': creditsClosed,
+          }"
+          @click="openSkipModal()"
+        >
+          Skip to new content
         </OptionsButton>
       </div>
       <OpenModalHotkeysButton />

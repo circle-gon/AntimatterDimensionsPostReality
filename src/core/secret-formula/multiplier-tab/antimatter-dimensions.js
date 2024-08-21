@@ -356,6 +356,12 @@ export const AD = {
     isActive: () => Pelle.isDoomed && !EternityChallenge(11).isRunning,
     icon: MultiplierTabIcons.PELLE,
   },
+  auPow: {
+    name: "Atom Upgrade 6 - Power to AM production",
+    powValue: () => Effects.product(AtomUpgrade(6)),
+    isActive: () => PlayerProgress.collapseUnlocked(),
+    icon: MultiplierTabIcons.ATOM
+  },
   iap: {
     name: "Shop Tab Purchases",
     multValue: (dim) => {

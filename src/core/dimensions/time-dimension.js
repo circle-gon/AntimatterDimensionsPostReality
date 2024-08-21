@@ -399,7 +399,6 @@ export const TimeDimensions = {
   },
 
   get continuumActive() {
-    // TODO: add setting
     return this.continuumUnlocked && !player.auto.continuumDisabled.TD;
   },
 

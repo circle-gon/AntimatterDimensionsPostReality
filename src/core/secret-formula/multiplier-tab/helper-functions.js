@@ -246,4 +246,10 @@ export const MultiplierTabHelper = {
       ? InfinityDimension(id).continuumValue
       : Math.floor(InfinityDimension(id).baseAmount / 10);
   },
+
+  getTDValue(id) {
+    return TimeDimensions.continuumActive
+      ? TimeDimension(id).continuumValue
+      : Math.floor(TimeDimension(id).baseAmount / 10);
+  },
 };

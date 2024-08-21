@@ -78,6 +78,12 @@ export const EP = {
     isActive: () => PelleRifts.vacuum.milestones[2].canBeApplied,
     icon: MultiplierTabIcons.PELLE,
   },
+  auPow: {
+    name: "Atom Upgrade 6 - Power to EP gain",
+    powValue: () => Effects.product(AtomUpgrade(6)),
+    isActive: () => PlayerProgress.collapseUnlocked(),
+    icon: MultiplierTabIcons.ATOM
+  },
   iap: {
     name: "Shop Tab Purchases",
     multValue: () => ShopPurchase.EPPurchases.currentMult,

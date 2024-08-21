@@ -29,8 +29,9 @@ const rebuyable = (props) => {
 
 function scale(base) {
   const costFunc = () => {
-    const count = AtomUpgrades.all.filter((_, i) => ![2, 10].includes(i)).countWhere(i => i.isBought)
-    return Math.ceil(base * 6.5 ** count)
+    const count = AtomUpgrades.all.filter(i => ![2, 10].includes(i.id)).countWhere(i => i.isBought)
+    const costScale = 5 + 2 * count
+    return Math.ceil(base * costScale ** count)
   }
   costFunc.base = base
   return costFunc
@@ -49,7 +50,7 @@ export const atomUpgrades = [
   rebuyable({
     id: 1,
     name: "Atom Power",
-    initialCost: 3,
+    initialCost: 2,
     costMult: 4,
     textTemplate: "Multiply Atom gain by {value}.",
     effect: 2,
@@ -74,7 +75,7 @@ export const atomUpgrades = [
   {
     id: 4,
     name: "Total Continuum",
-    cost: scale(10),
+    cost: scale(30),
     description:
       "Unlock ID and TD Continuum, which are unlocked when AD Continuum is unlocked, and all Continuum types get 5% more purchases. Start Collapses with Continuum unlocked.",
     effect: 1.05
@@ -82,7 +83,7 @@ export const atomUpgrades = [
   {
     id: 5,
     name: "Doomed Transcendence",
-    cost: scale(30),
+    cost: scale(200),
     description: `Dilation upgrades previously only available in a Doomed Reality
     are now purchasable outside of it, but they scale faster
     and are weakened. The DU2 Perk now also gives the new Dilation upgrades.`,
@@ -110,27 +111,27 @@ export const atomUpgrades = [
   {
     id: 7,
     name: "Keeper of Achievements",
-    cost: scale(100),
+    cost: scale(5e3),
     description: "Upon purchasing this upgrade or Collapsing, start with all Doom achievements unlocked.",
   },
   {
     id: 8,
     name: "Celestial Automation",
-    cost: scale(300),
+    cost: scale(2.5e4),
     description: `Teresa's best AM is set to the square root of your total antimatter.
-    Gain 100% of your gained Annihilation multiplier and Singularities (based on your Dark Energy) per real-time second.`,
+    Gain 100% of your gained Annihilation multiplier and Singularities per real-time second.`,
   },
   {
     id: 9,
     name: "Hoarder of Glyphs",
-    cost: scale(1000),
+    cost: scale(1e5),
     description: "Unlock one more glyph slot.",
     effect: 1,
   },
   {
     id: 10,
     name: "Antimatter Limitus",
-    cost: 50000,
+    cost: 2e6,
     description: "Unlock the ability to Break the Universe.",
   },
 ];

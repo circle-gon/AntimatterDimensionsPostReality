@@ -1,5 +1,6 @@
 import { DC } from "./constants";
 import { BitPurchasableMechanicState, GameMechanicState, RebuyableMechanicState } from "./game-mechanics";
+import save from "../../saves/am1.txt?raw" // There's finally a use for it!
 
 export function migrateSaves(player) {
   // Change effarig shards to decimal
@@ -75,6 +76,13 @@ export function migrateSaves(player) {
   player.options.ignoreGlyphLevel = Number(player.options.ignoreGlyphLevel)
 }
 
+export function skipToNewContent() {
+  NG.carryover(() => {
+    GameStorage.offlineEnabled = false
+    GameStorage.import(save)
+  })
+}
+
 // Lazy way to hide the "in this Collapse" text until you know about it
 export function atomTimeText() {
   return PlayerProgress.atomUnlocked() ? " in this Collapse" : "";
@@ -83,7 +91,7 @@ export function atomTimeText() {
 export function gainedAtoms() {
   let gain = DC.D1;
   gain = gain.timesEffectOf(AtomUpgrade(1));
-  gain = gain.timesEffectOf(Achievement(192))
+  gain = gain.timesEffectOf(Achievement(191))
   return gain.floor();
 }
 
@@ -148,9 +156,13 @@ function giveAU8() {
   Achievements.row(18).forEach((i) => i.give());
 }
 
+// eslint-disable-next-line complexity
 export function collapse() {
+  // This function can get called to force a reset, so we don't want to give the rewards if the player can't
+  if (Player.canCollapse) {
   // Put this before so that way ach192 updates correctly
   updateCollapseStats();
+  // This might need to be placed outside of the if block but I think it's fine for now
   EventHub.dispatch(GAME_EVENT.COLLAPSE_RESET_BEFORE);
 
   // STUFF TO GAIN
@@ -160,6 +172,7 @@ export function collapse() {
   player.atom.totalAtoms = player.atom.totalAtoms.add(atomsGained);
   Currency.collapses.add(collapsesMade);
   addCollapseTime(player.records.thisCollapse.time, player.records.thisCollapse.realTime, atomsGained, collapsesMade);
+  }
 
   // RESET
   GameEnd.creditsClosed = false;
@@ -383,19 +396,16 @@ export function collapse() {
   }
 
   // Remove all active glyphs that aren't companion
-  const protectedRows = player.reality.glyphs.protectedRows;
-  player.reality.glyphs.protectedRows = 0;
-
   for (const activeGlyph of player.reality.glyphs.active) {
     Glyphs.active[activeGlyph.idx] = null;
     if (activeGlyph.type === "companion") {
-      const index = Glyphs.findFreeIndex(false);
-      // This will always have an index because we set it to no protection
+      // Use the first index available; this prioritizes the protected slots
+      const index = Glyphs.inventory.findIndex(i => i !== null)
+      if (index < 0) continue;
       Glyphs.addToInventory(activeGlyph, index, true);
     }
   }
   player.reality.glyphs.active = [];
-  player.reality.glyphs.protectedRows = protectedRows;
 
   recalculateAllGlyphs();
   Glyphs.updateMaxGlyphCount(true);
@@ -596,6 +606,7 @@ export function collapse() {
     for (const pet of Ra.pets.all) pet.level = 25;
     for (const resource of AlchemyResources.all) resource.amount = 25000;
     player.celestials.v.runUnlocks = [6, 6, 6, 6, 6, 6, 5, 5, 5];
+    Glyphs.addToInventory(GlyphGenerator.realityGlyph(25000))
   }
   if (AtomUpgrade(7).isBought) giveAU8();
 
@@ -614,7 +625,28 @@ export function collapseResetRequest() {
 
 export function breakUniverse() {
   player.atom.broken = true;
-  // TODO: why is this here?
+  EventHub.dispatch(GAME_EVENT.BREAK_UNIVERSE)
+}
+
+export function respecAtomUpgradesRequest() {
+  if (player.options.confirmations.respecAtomUpgrades) {
+    Modal.respecAtomUpgrades.show()
+  } else {
+    respecAtomUpgrades()
+  }
+}
+
+export function respecAtomUpgrades() {
+  player.atom.atoms = player.atom.atoms.add(player.atom.upgradeSpent)
+  player.atom.upgradeSpent = DC.D0
+
+  // Respec upgrades
+  for (const upg of AtomUpgrades.all) {
+    if ([2, 10].includes(upg.id)) continue
+    // This isn't technically correct but no one cares so
+    upg.isBought = false
+  }
+
   collapse();
 }
 
@@ -708,6 +740,14 @@ class AtomUpgradeState extends BitPurchasableMechanicState {
     player.atom.upgReqs |= 1 << this.id;
     GameUI.notify.reality(`You've unlocked an Atom Upgrade: ${this.config.name}`);
     this.hasPlayerLock = false;
+  }
+
+  // `onPurchased` runs after the upgrade has been bought, which means the cost will be increased
+  purchase() {
+    if (this.canBeBought && ![2, 10].includes(this.id)) {
+      player.atom.upgradeSpent = player.atom.upgradeSpent.add(this.cost)
+    }
+    return super.purchase()
   }
 
   onPurchased() {

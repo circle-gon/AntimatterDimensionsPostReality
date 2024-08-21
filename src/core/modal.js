@@ -36,6 +36,8 @@ import NewsOptionsModal from "@/components/modals/options/NewsOptionsModal";
 import NotationModal from "@/components/modals/options/NotationModal";
 import PreferredTreeModal from "@/components/modals/options/PreferredTreeModal";
 import SingleGlyphAppearanceModal from "@/components/modals/options/glyph-appearance/SingleGlyphAppearanceModal";
+import SkipContentModal from "@/components/modals/options/SkipContentModal";
+import FirstTimeModal from "@/components/modals/FirstTimeModal";
 
 import DeleteCompanionGlyphModal from "@/components/modals/glyph-management/DeleteCompanionGlyphModal";
 import DeleteGlyphModal from "@/components/modals/glyph-management/DeleteGlyphModal";
@@ -80,6 +82,7 @@ import SwitchAutomatorEditorModal from "@/components/modals/SwitchAutomatorEdito
 import UiChoiceModal from "@/components/modals/UiChoiceModal";
 import UndoGlyphModal from "@/components/modals/UndoGlyphModal";
 import UpgradeMechanicLockModal from "@/components/modals/UpgradeMechanicLockModal";
+import RespecAtomUpgrades from "@/components/modals/RespecAtomUpgrades";
 
 import S12GamesModal from "@/components/modals/secret-themes/S12GamesModal";
 
@@ -239,6 +242,9 @@ Modal.animationOptions = new Modal(AnimationOptionsModal);
 Modal.hiddenTabs = new Modal(HiddenTabsModal);
 Modal.preferredTree = new Modal(PreferredTreeModal);
 Modal.notation = new Modal(NotationModal);
+Modal.skipContent = new Modal(SkipContentModal);
+// I'm not sure of a case where a modal would cover it but let's just be safe here
+Modal.firstTime = new Modal(FirstTimeModal, 2);
 
 Modal.upgradeLock = new Modal(UpgradeMechanicLockModal, 1);
 Modal.deleteCompanion = new Modal(DeleteCompanionGlyphModal, 1);
@@ -279,6 +285,7 @@ Modal.sacrifice = new Modal(SacrificeModal, 1, GAME_EVENT.DIMBOOST_AFTER);
 Modal.breakInfinity = new Modal(BreakInfinityModal, 1, GAME_EVENT.ETERNITY_RESET_AFTER);
 Modal.breakUniverse = new Modal(BreakUniverseModal, 1, GAME_EVENT.COLLAPSE_AFTER);
 Modal.respecIAP = new Modal(RespecIAPModal);
+Modal.respecAtomUpgrades = new Modal(RespecAtomUpgrades);
 
 Modal.s12Games = new Modal(S12GamesModal);
 

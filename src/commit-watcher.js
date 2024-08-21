@@ -1,4 +1,3 @@
-// TODO: remove before release
 export function watchLatestCommit() {
   if (isLocalEnvironment()) {
     return;

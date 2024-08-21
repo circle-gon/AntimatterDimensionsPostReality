@@ -35,7 +35,6 @@ export default {
     collapse() {
       // Don't show the confirmation window because it doesn't matter
       collapse();
-      // NG.startNewGame();
     },
     openSelectionModal() {
       Modal.cosmeticSetChoice.show();
@@ -50,7 +49,7 @@ export default {
     <h2>In order to go further, you must Collapse this Universe.</h2>
     <h3>You can use the button in the top-right to view the game as it is right now.</h3>
     <div class="c-new-game-button-container">
-      <button class="c-new-game-button" @click="collapse">Collapse this Universe{{ collapseText }}</button>
+      <button class="c-new-game-button" @click="collapse">Collapse this Universe</button>
     </div>
     <br />
     <h3 v-if="hasMoreCosmetics">

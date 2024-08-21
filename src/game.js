@@ -674,8 +674,8 @@ export function gameLoop(passDiff, options = {}) {
 
   // Teresa auto
   const am = Currency.antimatter.value.sqrt();
-  if (AtomUpgrade(8).isBought && Pelle.isDoomed && am.gt(player.celestials.teresa.bestRunAM)) {
-    player.celestials.teresa.bestRunAM = am``;
+  if (AtomUpgrade(8).isBought && !Pelle.isDoomed && am.gt(player.celestials.teresa.bestRunAM)) {
+    player.celestials.teresa.bestRunAM = am;
     let machineRecord;
     if (Currency.imaginaryMachines.value.eq(0)) machineRecord = player.reality.maxRM;
     else machineRecord = DC.E10000.times(Currency.imaginaryMachines.value);
