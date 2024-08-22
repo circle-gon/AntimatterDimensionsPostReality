@@ -552,10 +552,11 @@ export const GameStorage = {
     GameUI.update();
 
     if (localStorage.getItem(NEW_PLAYER) === null) {
-      console.log("get")
-      localStorage.setItem(NEW_PLAYER, "1");
-      Modal.firstTime.show();
-      GameUI.update();
+      // For some reason it doesn't show if it is synchronous
+      setTimeout(() => {
+        localStorage.setItem(NEW_PLAYER, "1");
+        Modal.firstTime.show()
+      }, 5000);
     }
 
     for (const resource of AlchemyResources.all) {
