@@ -83,6 +83,11 @@ export const NG = {
     player.reality.automator.constants = JSON.parse(automatorConstants);
     player.reality.automator.constantSortOrder = JSON.parse(automatorConstantSort);
     player.reality.automator.scripts = JSON.parse(automatorScripts);
+    // The Automator's `topLevelScript` can be messed up when loading Automator scripts
+    // We call `initializeFromSave()` to make sure it is correct
+    // This is the lazy method, since `initializeFromSave()` does much more than set `topLevelScript`
+    // But who cares anyway?
+    AutomatorBackend.initializeFromSave();
     player.records.fullGameCompletions = fullCompletions;
     player.records.previousRunRealTime = fullTimePlayed;
     ui.view.newUI = player.options.newUI;
