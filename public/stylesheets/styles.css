@@ -82,9 +82,9 @@ html {
   --color-reality-light: #d5ffd7;
   --color-reality-dark: #0a790c;
   --color-celestials: #5151ec;
-  --color-atom: #0404b0;
-  --color-atom-light: #7f7ff8;
-  --color-atom-dark: #01018a;
+  --color-atom: #0000e5;
+  --color-atom-light: #0000ff;
+  --color-atom-dark: #0000cc;
   --color-prestige--accent: white;
 
   --color-teresa--base: #5151ec;
@@ -126,9 +126,6 @@ html {
   --color-reality: #3a823d;
   --color-reality-light: #d5ffd7;
   --color-celestials: #00bcd4;
-  --color-atom: #0404b0;
-  --color-atom-light: #7f7ff8;
-  --color-atom-dark: #01018a;
 }
 
 :root .t-dark {
@@ -167,9 +164,6 @@ html {
   --color-reality: #4caf50;
   --color-reality-dark: #0ba00e;
   --color-celestials: #00bcd4;
-  --color-atom: #0404b0;
-  --color-atom-light: #7f7ff8;
-  --color-atom-dark: #01018a;
   --color-prestige--accent: black;
 
   --color-teresa--accent: black;
@@ -210,9 +204,6 @@ html {
   --color-reality: #4caf50;
   --color-reality-dark: #0ba00e;
   --color-celestials: #00bcd4;
-  --color-atom: #0404b0;
-  --color-atom-light: #7f7ff8;
-  --color-atom-dark: #01018a;
   --color-prestige--accent: black;
 
   --color-teresa--accent: black;
@@ -237,9 +228,6 @@ html {
   --color-reality-light: #e8e3e4;
   --color-reality-dark: #7a7273;
   --color-celestials: #f2d6c1;
-  --color-atom: #0404b0;
-  --color-atom-light: #7f7ff8;
-  --color-atom-dark: #01018a;
   --color-prestige--accent: #dbd242;
 
   --color-pelle--base: #7cb727;
