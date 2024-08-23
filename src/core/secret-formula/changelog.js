@@ -9,6 +9,32 @@ export const changelog = [
    * }
    */
   {
+    date: [2024, 8, 23],
+    name: "Initial Release",
+    info: `
+  Initial Release!!!! Hopefully all goes well...
+  <br>
+  <br>
+  <b>Big Changes:</b>
+  <ul>
+  <li>Added a new layer: Collapse!</li>
+  <li>Added Atom Milestones and Atom Upgrades</li>
+  <li>Added "Break Universe"</li>
+  </ul>
+  <b>Small Changes:</b>
+  <ul>
+  <li>Decimalized the game enough - goes up to e1.79e308 AM now!</li>
+  <li>Added an Automator restart option</li>
+  <li>Added a Glyph Set "Level" option</li>
+  <li>Added a "Skip to new content" button & modal</li>
+  </ul>
+  <br>
+  <br>
+  <b>Current Endgame: </b> Unlock "Break Universe"
+  <br>
+    `
+  },
+  {
     date: [2024, 8, 12],
     name: "Hi Ra",
     info: `
