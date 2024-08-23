@@ -2,11 +2,13 @@
 import { DC } from "@/core/constants";
 
 import TypeSacrifice from "./TypeSacrifice";
+import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 
 export default {
   name: "SacrificedGlyphs",
   components: {
     TypeSacrifice,
+    PrimaryToggleButton
   },
   data() {
     return {
@@ -17,6 +19,8 @@ export default {
       maxSacrifice: 0,
       teresaMult: new Decimal(0),
       lastMachinesTeresa: new Decimal(0),
+      isAutoActive: false,
+      isAutoUnlocked: false
     };
   },
   computed: {
@@ -60,6 +64,11 @@ export default {
       this.$recompute("cosmeticTypes");
     });
   },
+  watch: {
+    isAutoActive(newVal) {
+      Autobuyer.glyphSacrifice.isActive = newVal;
+    }
+  },
   methods: {
     update() {
       this.anySacrifices = GameCache.logTotalGlyphSacrifice !== 0;
@@ -68,6 +77,8 @@ export default {
       this.maxSacrifice = GlyphSacrificeHandler.maxSacrificeForEffects;
       this.teresaMult = Teresa.runRewardMultiplier;
       this.lastMachinesTeresa.copyFrom(player.celestials.teresa.lastRepeatedMachines);
+      this.isAutoUnlocked = Autobuyer.glyphSacrifice.isUnlocked;
+      this.isAutoActive = Autobuyer.glyphSacrifice.isActive;
     },
     dragover(event) {
       if (Pelle.isDoomed) return;
@@ -157,6 +168,11 @@ export default {
           Reality Glyphs are unaffected by this multiplier and have no altered effects.
         </span>
       </div>
+      <PrimaryToggleButton
+        v-if="isAutoUnlocked"
+        v-model="isAutoActive"
+        label="Auto Sacrifice:"
+      />
       <template v-for="type in types">
         <TypeSacrifice :key="type + glyphSymbol(type)" :type="type" :has-dragover="hasDragover" />
       </template>

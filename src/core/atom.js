@@ -350,6 +350,7 @@ export function collapse() {
   }
 
   player.blackHoleNegative = 1;
+  player.records.totalTimePlayedAtBHUnlock = Decimal.MAX_LIMIT;
   player.blackHole = Array.range(0, 2).map((id) => ({
     id,
     intervalUpgrades: 0,
@@ -540,6 +541,7 @@ export function collapse() {
     giveRealityUpgrade(25, true);
   }
   if (AtomMilestone.am2.isReached) {
+    player.records.totalTimePlayedAtBHUnlock = DC.D0;
     for (const blackHole of player.blackHole) blackHole.unlocked = true;
     giveRealityUpgrade(20, false);
     for (let i = 1; i <= 12; i++) EternityChallenge(i).completions = 5;

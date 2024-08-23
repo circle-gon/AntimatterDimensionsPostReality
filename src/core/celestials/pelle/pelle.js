@@ -179,6 +179,8 @@ export const Pelle = {
       player.infinityUpgrades = new Set(breakInfinityUpgrades);
       player.infinityRebuyables = [8, 7, 10];
       player.replicanti.unl = true;
+      player.replicanti.timer = 0;
+      Replicanti.amount = DC.D1;
     }
     if (AtomMilestone.am9.isReached) Currency.eternities.bumpTo(100);
 

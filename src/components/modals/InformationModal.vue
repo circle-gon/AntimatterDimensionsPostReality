@@ -29,7 +29,7 @@ export default {
       <InformationModalButton
         name="GitHub repository"
         icon="fa-brands fa-github"
-        link="https://github.com/IvarK/AntimatterDimensionsSourceCode"
+        link="https://github.com/circle-gon/AntimatterDimensionsPostReality"
       />
       <InformationModalButton
         name="r/AntimatterDimensions"

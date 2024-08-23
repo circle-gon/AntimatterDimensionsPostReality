@@ -129,7 +129,7 @@ export default {
         You have {{ quantify("Singularity", singularities, 2)
         }}{{ passiveSingularityUnlocked ? ` (+${format(passiveSingularityGain, 2, 0)}/sec)` : "" }}
       </h2>
-      <button :class="condenseClassObject()" @click="doSingularity">
+      <button :class="condenseClassObject()" @click="doSingularity" v-if="!passiveSingularityUnlocked">
         <h2>
           {{ singularityFormText }}
         </h2>
@@ -144,6 +144,7 @@ export default {
         You have {{ format(darkEnergy, 2, 4) }} Dark Energy. (+{{ format(darkEnergyGainPerSecond, 2, 4) }}/s)
       </div>
       <div v-if="unlockedBulkSingularity">
+        <template v-if="!passiveSingularityUnlocked">
         <button
           class="c-laitela-singularity__cap-control"
           :class="{ 'c-laitela-singularity__cap-control--available': singularityCapIncreases > 0 }"
@@ -161,6 +162,7 @@ export default {
           Increase Singularity cap.
         </button>
         <br />
+        </template>
         Each step increases the required Dark Energy by {{ formatX(10) }},
         <br />
         but also increases gained Singularities by {{ formatX(perStepFactor) }}.
@@ -173,13 +175,17 @@ export default {
         <br />
       </div>
       <br />
-      Total time to <span v-if="hasAutoSingularity">(auto-)</span>condense:
-      {{ baseSingularityTime }}
+      <template v-if="!passiveSingularityUnlocked">
+        Total time to <span v-if="hasAutoSingularity">(auto-)</span>condense:
+        {{ baseSingularityTime }}
+      </template>
       <span v-if="hasAutoSingularity && autoSingularityFactor !== 1"> (+{{ additionalSingularityTime }}) </span>
       <br />
       <span v-if="hasAutoSingularity && autoSingularityFactor !== 1">Manual </span>
-      Singularity gain rate: {{ manualSingularityRate }}
-      <br />
+      <template v-if="!passiveSingularityUnlocked">
+        Singularity gain rate: {{ manualSingularityRate }}
+        <br />
+      </template>
       <span v-if="hasAutoSingularity && autoSingularityFactor !== 1">
         Automatic Singularity gain rate: {{ autoSingularityRate }}
       </span>

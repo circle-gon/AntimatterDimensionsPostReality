@@ -70,7 +70,7 @@ export const atomUpgrades = [
     id: 3,
     name: "Celestial Power",
     cost: scale(5),
-    description: "Memory gain is raised ^1.5 and each V-Achievement gives 1.5 Space Theorems instead of 1.",
+    description: "Memory gain is raised ^1.2.",
   },
   {
     id: 4,
@@ -104,7 +104,7 @@ export const atomUpgrades = [
     initialCost: 4,
     costMult: 3,
     textTemplate: "^+{value} to AM, IP, and EP (additive)",
-    effect: 0.005,
+    effect: 0.004,
     formatEffect: (e) => `${format(e, 2, 3)}`,
     effectAdditive: true,
   }),
@@ -112,7 +112,7 @@ export const atomUpgrades = [
     id: 7,
     name: "Keeper of Achievements",
     cost: scale(5e3),
-    description: "Upon purchasing this upgrade or Collapsing, start with all Doom achievements unlocked.",
+    description: "Start with all Doom achievements unlocked.",
   },
   {
     id: 8,

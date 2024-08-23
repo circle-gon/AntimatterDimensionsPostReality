@@ -76,16 +76,24 @@ export default {
     progressDisplay() {
       const condenseCount = this.remainingSingularities.div(this.singularitiesPerCondense);
       let thisSingularityTime, extraTime, timeText;
+
+      const autoUnlocked = AtomUpgrade(8).isBought
+      const autoTime = `In ${TimeSpan.fromSeconds(this.remainingSingularities.div(Singularity.passiveSingularityGain).toNumber()).toStringShort()}`
+
       switch (this.milestoneMode) {
         case SINGULARITY_MILESTONE_RESOURCE.SINGULARITIES:
           return `In ${quantify("Singularity", this.remainingSingularities, 2)}`;
         case SINGULARITY_MILESTONE_RESOURCE.CONDENSE_COUNT:
           return `Condense ${quantify("time", condenseCount, 2, 2)}`;
         case SINGULARITY_MILESTONE_RESOURCE.MANUAL_TIME:
+          if (autoUnlocked) return autoTime
+
           thisSingularityTime = Math.clampMin(0, this.currentCondenseTime);
           extraTime = condenseCount.sub(1).ceil().mul(this.baseCondenseTime).toNumber();
           return `In ${TimeSpan.fromSeconds(thisSingularityTime + extraTime).toStringShort()} (manual)`;
         case SINGULARITY_MILESTONE_RESOURCE.AUTO_TIME:
+          if (autoUnlocked) return autoTime
+
           thisSingularityTime = Math.clampMin(0, this.currentCondenseTime + this.autoCondenseDelay);
           extraTime = condenseCount
             .sub(1)

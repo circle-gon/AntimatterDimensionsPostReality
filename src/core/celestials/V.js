@@ -199,21 +199,13 @@ export const V = {
     player.celestials.v.run = true;
     this.quotes.realityEnter.show();
   },
-  get spaceTheoremMultiplier() {
-    let multi = 1;
-    if (AtomUpgrade(3).isBought) multi *= 1.5;
-    return multi;
-  },
   updateTotalRunUnlocks() {
     let sum = 0;
     for (let i = 0; i < player.celestials.v.runUnlocks.length; i++) {
       if (i < 6) sum += player.celestials.v.runUnlocks[i];
       else sum += player.celestials.v.runUnlocks[i] * 2;
     }
-
-    sum *= this.spaceTheoremMultiplier;
-
-    this.spaceTheorems = Math.floor(sum);
+    this.spaceTheorems = sum;
   },
   reset() {
     const v = player.celestials.v;

@@ -1,12 +1,14 @@
 <script>
 import RaPetLevelBar from "./RaPetLevelBar";
 import RaUpgradeIcon from "./RaUpgradeIcon";
+import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 
 export default {
   name: "RaPet",
   components: {
     RaUpgradeIcon,
     RaPetLevelBar,
+    PrimaryToggleButton
   },
   props: {
     petConfig: {
@@ -35,6 +37,8 @@ export default {
       currentChunkMult: 0,
       nextMemoryUpgradeEstimate: "",
       nextMemoryChunkUpgradeEstimate: "",
+      isAutoUnlocked: false,
+      isAutoActive: false
     };
   },
   computed: {
@@ -53,6 +57,9 @@ export default {
     name() {
       return this.pet.name;
     },
+    autobuyerID() {
+      return this.pet.id + "Mem"
+    },
     petStyle() {
       return {
         color: this.pet.color,
@@ -66,6 +73,11 @@ export default {
     },
     memoryGainTooltip() {
       return `Based on ${this.pet.memoryGain}`;
+    },
+  },
+  watch: {
+    isAutoActive(newValue) {
+      Autobuyer[this.autobuyerID].isActive = newValue;
     },
   },
   methods: {
@@ -95,6 +107,9 @@ export default {
 
       this.nextMemoryUpgradeEstimate = Ra.timeToGoalString(pet, this.memoryUpgradeCost - this.memories);
       this.nextMemoryChunkUpgradeEstimate = Ra.timeToGoalString(pet, this.chunkUpgradeCost - this.memories);
+
+      this.isAutoUnlocked = Autobuyer[this.autobuyerID].allUnlocked
+      this.isAutoActive = Autobuyer[this.autobuyerID].isActive
     },
     nextUnlockLevel() {
       const missingUpgrades = this.pet.unlocks.map((u) => u.level).filter((goal) => goal > this.level);
@@ -200,6 +215,12 @@ export default {
         <RaPetLevelBar v-if="!isCapped" :pet-config="petConfig" />
       </div>
       <div v-if="!isCapped">
+        <PrimaryToggleButton
+          v-if="isAutoUnlocked"
+          v-model="isAutoActive"
+          label="Auto:"
+          style="margin-top: -1rem"
+        />
         <div>
           {{ quantify("Memory Chunk", memoryChunks, 2, 2) }}, {{ quantify("Memory", memoriesPerSecond, 2, 2) }}/sec
         </div>

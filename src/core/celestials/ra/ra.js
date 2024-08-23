@@ -258,7 +258,7 @@ export const Ra = {
   },
   get productionExponent() {
     let exp = 1;
-    if (AtomUpgrade(3).isBought) exp *= 1.5;
+    if (AtomUpgrade(3).isBought) exp *= 1.2;
     return exp;
   },
   get memoryBoostResources() {
@@ -283,14 +283,17 @@ export const Ra = {
     return Math.floor(Math.pow(adjustedLevel, 5.52) * post15Scaling * 1e6);
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
+  // This is also terrible code quality but do you really care?
   timeToGoalString(pet, expToGain) {
-    // Quadratic formula for growth (uses constant growth for a = 0)
-    const a = Enslaved.isStoringRealTime
-      ? 0
-      : (Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond) / 2;
-    const b = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks;
-    const c = -expToGain;
-    const estimate = a === 0 ? -c / b : (Math.sqrt(Math.pow(b, 2) - 4 * a * c) - b) / (2 * a);
+    const K = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult;
+    const G = pet.memoryChunksPerSecond;
+    const C = pet.memoryChunks;
+    const P = Ra.productionExponent;
+
+    const estimate = Enslaved.isStoringRealTime || G === 0
+      ? expToGain / Math.pow(K * C, P)
+      : (Math.pow((expToGain * G * (P + 1)) / Math.pow(K, P) + Math.pow(C, P + 1), 1 / (P + 1)) - C) / G;
+
     if (Number.isFinite(estimate)) {
       return `in ${TimeSpan.fromSeconds(estimate).toStringShort()}`;
     }

@@ -891,7 +891,7 @@ window.player = {
     swapGlyphColors: false,
     hideAlterationEffects: false,
     ignoreGlyphEffects: true,
-    ignoreGlyphLevel: true,
+    ignoreGlyphLevel: 1,
     ignoreGlyphRarity: true,
     glyphBG: GLYPH_BG_SETTING.AUTO,
     glyphBorders: true,
