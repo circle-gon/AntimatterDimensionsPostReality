@@ -38,15 +38,15 @@ function scale(base) {
 }
 
 export const atomUpgrades = [
-  /*rebuyable({
-    id: 1,
-    name: "Atomic Charge",
-    initialCost: 5,
-    costMult: 5,
-    textTemplate: "Multiply Atomic Power gain by {value}.",
-    effect: 3,
-    formatEffect: (e) => formatX(e, 2, 0),
-  }),*/
+  // Rebuyable({
+  // id: 1,
+  // name: "Atomic Charge",
+  // initialCost: 5,
+  // costMult: 5,
+  // textTemplate: "Multiply Atomic Power gain by {value}.",
+  // effect: 3,
+  // formatEffect: (e) => formatX(e, 2, 0),
+  // }),
   rebuyable({
     id: 1,
     name: "Atom Power",
@@ -88,16 +88,16 @@ export const atomUpgrades = [
     are now purchasable outside of it, but they scale faster
     and are weakened. The DU2 Perk now also gives the new Dilation upgrades.`,
   },
-  /*rebuyable({
-    id: 6,
-    name: "Atomic Empowerment",
-    initialCost: 10,
-    costMult: 5,
-    textTemplate: "Make Atomic Particles' effects {value} stronger (additively).",
-    effect: 0.05,
-    formatEffect: (e) => `${formatPercents(e - 1)} stronger`,
-    effectAdditive: true,
-  }),*/
+  // Rebuyable({
+  // id: 6,
+  // name: "Atomic Empowerment",
+  // initialCost: 10,
+  // costMult: 5,
+  // textTemplate: "Make Atomic Particles' effects {value} stronger (additively).",
+  // effect: 0.05,
+  // formatEffect: (e) => `${formatPercents(e - 1)} stronger`,
+  // effectAdditive: true,
+  // }),
   rebuyable({
     id: 6,
     name: "Atom Exponent",

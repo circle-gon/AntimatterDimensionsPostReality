@@ -6,13 +6,13 @@ export default {
   name: "RealityUpgradesTab",
   components: {
     RealityUpgradeButton,
-    PrimaryToggleButton
+    PrimaryToggleButton,
   },
   data() {
     return {
       isAutoUnlocked: false,
-      isAutoActive: false
-    }
+      isAutoActive: false,
+    };
   },
   computed: {
     upgrades: () => RealityUpgrades.all,
@@ -26,16 +26,16 @@ export default {
   watch: {
     isAutoActive(newVal) {
       Autobuyer.realityUpgradeSingle.isActive = newVal;
-    }
+    },
   },
   methods: {
     id(row, column) {
       return (row - 1) * 5 + column - 1;
     },
     update() {
-      this.isAutoUnlocked = Autobuyer.realityUpgradeSingle.isUnlocked
-      this.isAutoActive = Autobuyer.realityUpgradeSingle.isActive
-    }
+      this.isAutoUnlocked = Autobuyer.realityUpgradeSingle.isUnlocked;
+      this.isAutoActive = Autobuyer.realityUpgradeSingle.isActive;
+    },
   },
 };
 </script>
@@ -67,11 +67,7 @@ export default {
       </span>
       <br />
       Every completed row of purchased upgrades increases your Glyph level by {{ formatInt(1) }}.<br />
-      <PrimaryToggleButton
-        v-if="isAutoUnlocked"
-        v-model="isAutoActive"
-        label="Single-purchase Auto:"
-      />
+      <PrimaryToggleButton v-if="isAutoUnlocked" v-model="isAutoActive" label="Single-purchase Auto:" />
     </div>
     <div v-for="row in 5" :key="row" class="l-reality-upgrade-grid__row">
       <RealityUpgradeButton v-for="column in 5" :key="id(row, column)" :upgrade="upgrades[id(row, column)]" />

@@ -51,7 +51,7 @@ export default {
       All single-purchase upgrades, when bought, will increase the cost of all other single-purchase upgrades.<br />
       The first and last single-purchase upgrades do not increase costs and are unaffected by any cost increases.<br />
       Upgrades may be respecced at any time, refunding all Atoms spent on them, but it will force an Atom reset.
-      <button @click="respec" class="l-atom-upgrade-btn c-atom-upgrade-btn l-atom-upgrade-respec">
+      <button class="l-atom-upgrade-btn c-atom-upgrade-btn l-atom-upgrade-respec" @click="respec">
         Respec Atom Upgrades
       </button>
     </div>

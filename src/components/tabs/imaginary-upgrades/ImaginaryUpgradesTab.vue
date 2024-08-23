@@ -6,7 +6,7 @@ export default {
   name: "ImaginaryUpgradesTab",
   components: {
     ImaginaryUpgradeButton,
-    PrimaryToggleButton
+    PrimaryToggleButton,
   },
   data() {
     return {
@@ -15,7 +15,7 @@ export default {
       scaleTime: 0,
       capStr: "",
       isAutoUnlocked: false,
-      isAutoActive: false
+      isAutoActive: false,
     };
   },
   computed: {
@@ -26,7 +26,7 @@ export default {
   watch: {
     isAutoActive(newVal) {
       Autobuyer.imaginaryUpgradeSingle.isActive = newVal;
-    }
+    },
   },
   methods: {
     update() {
@@ -34,8 +34,8 @@ export default {
       this.capRM.copyFrom(MachineHandler.hardcapRM);
       this.scaleTime = MachineHandler.scaleTimeForIM;
       this.capStr = formatMachines(MachineHandler.hardcapRM, MachineHandler.currentIMCap);
-      this.isAutoUnlocked = Autobuyer.imaginaryUpgradeSingle.isUnlocked
-      this.isAutoActive = Autobuyer.imaginaryUpgradeSingle.isActive
+      this.isAutoUnlocked = Autobuyer.imaginaryUpgradeSingle.isUnlocked;
+      this.isAutoActive = Autobuyer.imaginaryUpgradeSingle.isActive;
     },
     id(row, column) {
       return (row - 1) * 5 + column - 1;
@@ -68,13 +68,9 @@ export default {
       <br />
       Upgrades here have the same gameplay and visual behavior as Reality Upgrades, but cost Imaginary Machines instead.
       <span :ach-tooltip="lockTooltip">
-        <i class="fas fa-question-circle" />
-      </span><br />
-      <PrimaryToggleButton
-        v-if="isAutoUnlocked"
-        v-model="isAutoActive"
-        label="Single-purchase Auto:"
-      />
+        <i class="fas fa-question-circle" /> </span
+      ><br />
+      <PrimaryToggleButton v-if="isAutoUnlocked" v-model="isAutoActive" label="Single-purchase Auto:" />
     </div>
     <div v-for="row in 5" :key="row" class="l-reality-upgrade-grid__row">
       <ImaginaryUpgradeButton v-for="column in 5" :key="id(row, column)" :upgrade="upgrades[id(row, column)]" />

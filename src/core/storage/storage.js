@@ -555,7 +555,7 @@ export const GameStorage = {
       // For some reason it doesn't show if it is synchronous
       setTimeout(() => {
         localStorage.setItem(NEW_PLAYER, "1");
-        Modal.firstTime.show()
+        Modal.firstTime.show();
       }, 5000);
     }
 

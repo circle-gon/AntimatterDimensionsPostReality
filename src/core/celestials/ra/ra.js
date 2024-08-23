@@ -290,9 +290,10 @@ export const Ra = {
     const C = pet.memoryChunks;
     const P = Ra.productionExponent;
 
-    const estimate = Enslaved.isStoringRealTime || G === 0
-      ? expToGain / Math.pow(K * C, P)
-      : (Math.pow((expToGain * G * (P + 1)) / Math.pow(K, P) + Math.pow(C, P + 1), 1 / (P + 1)) - C) / G;
+    const estimate =
+      Enslaved.isStoringRealTime || G === 0
+        ? expToGain / Math.pow(K * C, P)
+        : (Math.pow((expToGain * G * (P + 1)) / Math.pow(K, P) + Math.pow(C, P + 1), 1 / (P + 1)) - C) / G;
 
     if (Number.isFinite(estimate)) {
       return `in ${TimeSpan.fromSeconds(estimate).toStringShort()}`;

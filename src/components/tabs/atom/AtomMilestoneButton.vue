@@ -24,7 +24,7 @@ export default {
     },
     requirement() {
       const time = this.time;
-      if (time < 1000) return format(time) + " " + pluralize("Collapse", time);
+      if (time < 1000) return `${format(time)} ${pluralize("Collapse", time)}`;
       return timeDisplay(time);
     },
     canBeReached() {

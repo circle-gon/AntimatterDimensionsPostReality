@@ -129,7 +129,7 @@ export default {
         You have {{ quantify("Singularity", singularities, 2)
         }}{{ passiveSingularityUnlocked ? ` (+${format(passiveSingularityGain, 2, 0)}/sec)` : "" }}
       </h2>
-      <button :class="condenseClassObject()" @click="doSingularity" v-if="!passiveSingularityUnlocked">
+      <button v-if="!passiveSingularityUnlocked" :class="condenseClassObject()" @click="doSingularity">
         <h2>
           {{ singularityFormText }}
         </h2>
@@ -145,23 +145,23 @@ export default {
       </div>
       <div v-if="unlockedBulkSingularity">
         <template v-if="!passiveSingularityUnlocked">
-        <button
-          class="c-laitela-singularity__cap-control"
-          :class="{ 'c-laitela-singularity__cap-control--available': singularityCapIncreases > 0 }"
-          :ach-tooltip="decreaseTooltip"
-          @click="decreaseCap"
-        >
-          Decrease Singularity cap.
-        </button>
-        <button
-          class="c-laitela-singularity__cap-control c-laitela-singularity__cap-control--available"
-          :class="{ 'c-laitela-singularity__cap-control--available': singularityCapIncreases < 50 }"
-          :ach-tooltip="increaseTooltip"
-          @click="increaseCap"
-        >
-          Increase Singularity cap.
-        </button>
-        <br />
+          <button
+            class="c-laitela-singularity__cap-control"
+            :class="{ 'c-laitela-singularity__cap-control--available': singularityCapIncreases > 0 }"
+            :ach-tooltip="decreaseTooltip"
+            @click="decreaseCap"
+          >
+            Decrease Singularity cap.
+          </button>
+          <button
+            class="c-laitela-singularity__cap-control c-laitela-singularity__cap-control--available"
+            :class="{ 'c-laitela-singularity__cap-control--available': singularityCapIncreases < 50 }"
+            :ach-tooltip="increaseTooltip"
+            @click="increaseCap"
+          >
+            Increase Singularity cap.
+          </button>
+          <br />
         </template>
         Each step increases the required Dark Energy by {{ formatX(10) }},
         <br />

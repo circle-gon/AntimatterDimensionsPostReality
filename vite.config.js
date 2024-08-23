@@ -13,6 +13,6 @@ export default defineConfig({
     extensions: [".js", ".vue", ".json"],
   },
   build: {
-    sourcemap: true
-  }
+    sourcemap: true,
+  },
 });
