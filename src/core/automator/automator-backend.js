@@ -938,6 +938,10 @@ export const AutomatorBackend = {
     this.state.forceRealityRestart = !this.state.forceRealityRestart;
   },
 
+  toggleForceCollapseRestart() {
+    this.state.forceCollapseRestart = !this.state.forceCollapseRestart;
+  },
+
   toggleFollowExecution() {
     this.state.followExecution = !this.state.followExecution;
     this.jumpToActiveLine();
