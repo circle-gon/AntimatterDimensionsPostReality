@@ -173,7 +173,7 @@ export const realityUpgrades = [
     cost: 50,
     requirement: () =>
       `Eternity for ${format(DC.E70)} Eternity Points${
-        AtomMilestone.am2.isReached ? "" : "without completing Eternity Challenge 1"
+        AtomMilestone.am2.isReached ? "" : " without completing Eternity Challenge 1"
       }`,
     hasFailed: () => !AtomMilestone.am2.isReached && EternityChallenge(1).completions !== 0,
     checkRequirement: () =>
