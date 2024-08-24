@@ -145,7 +145,7 @@ export default {
         this.resetSavedWeights();
       }
       this.showAutoAdjustWeights = Achievement(165).isUnlocked;
-      this.isAutoAdjustWeightsOn = player.celestials.effarig.autoAdjustGlyphWeights;
+      this.isAutoAdjustWeightsOn = Achievement(165).isUnlocked && player.celestials.effarig.autoAdjustGlyphWeights;
     },
     rowStyle(factor) {
       const row = this.visibleRows.findIndex((r) => r === factor) + 1;
