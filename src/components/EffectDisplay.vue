@@ -72,7 +72,7 @@ export default {
         }
 
         if (!isFunction(effect)) {
-          throw new Error(`EffectDisplay config.effect has  unsupported type "${typeof effect}"`);
+          throw new Error(`EffectDisplay config.effect has unsupported type "${typeof effect}"`);
         }
 
         const value = effect();
