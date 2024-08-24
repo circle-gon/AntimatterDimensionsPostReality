@@ -1,5 +1,7 @@
 <script>
+import AtomPointsHeader from "../../AtomPointsHeader.vue";
 import BigCrunchButton from "../BigCrunchButton";
+import CollapseButton from "../prestige-header/CollapseButton.vue";
 import GameHeader from "../GameHeader";
 import NewsTicker from "../NewsTicker";
 
@@ -18,6 +20,8 @@ export default {
     InfinityPointsHeader,
     EternityPointsHeader,
     BigCrunchButton,
+    AtomPointsHeader,
+    CollapseButton
   },
   data() {
     return {
@@ -50,6 +54,10 @@ export default {
     <BigCrunchButton />
     <template v-if="!bigCrunch">
       <NewsTicker v-if="news" class="l-old-ui__news-bar" />
+      <div>
+        <AtomPointsHeader />
+        <CollapseButton />
+      </div>
       <GameHeader class="l-old-ui__header" />
       <ClassicTabBar />
       <component :is="tab.config.before" v-if="tab.config.before" />
