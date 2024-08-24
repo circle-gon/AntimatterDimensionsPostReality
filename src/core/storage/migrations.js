@@ -274,6 +274,7 @@ export const migrations = {
       // this prop was left in the save file instead of being cleaned up
       delete player.options.confirmations.resetCelestial;
     },
+    // eslint-disable-next-line complexity
     20: (player) => {
       // GLYPH FILTER INTERNAL FORMAT REFACTOR
       // For the case of importing a save created before the reality update, many of these props are undefined due to

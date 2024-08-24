@@ -1,5 +1,5 @@
-import { DEV } from "@/env";
 import { beginProcessReality, getRealityProps } from "../reality";
+import { DEV } from "@/env";
 
 import { AUTOMATOR_COMMAND_STATUS, AutomatorData } from "./automator-backend";
 import { standardizeAutomatorValues, tokenMap as T } from "./lexer";

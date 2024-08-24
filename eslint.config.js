@@ -1,6 +1,6 @@
 import js from "@eslint/js";
-import vue from "eslint-plugin-vue";
 import prettier from "eslint-config-prettier";
+import vue from "eslint-plugin-vue";
 
 export default [
   js.configs.recommended,

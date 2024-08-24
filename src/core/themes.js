@@ -123,12 +123,14 @@ Theme.tryUnlock = function (name) {
 };
 
 Theme.create = function (name, settings) {
+  /* eslint-disable no-constant-binary-expression */
   const config = {
     isDark: false || settings.dark,
     isMetro: false || settings.metro,
     isAnimated: false || settings.animated,
     isSecret: false || settings.secret,
   };
+  /* eslint-enable no-constant-binary-expression */
   return new Theme(name, config);
 };
 

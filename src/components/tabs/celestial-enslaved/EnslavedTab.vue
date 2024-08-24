@@ -71,9 +71,8 @@ export default {
     storedRealTimeDesc() {
       switch (this.realDischargeMode) {
         case 0:
-          const seconds = this.realDischargeSetting;
-          return ` ${pluralize("second", seconds)} (${timeDisplayShort(seconds * 1000)})
-          of real time stored per second.`;
+          return ` ${pluralize("second", this.realDischargeSetting)}\
+          (${timeDisplayShort(this.realDischargeSetting * 1000)}) of real time stored per second.`;
         case 1:
           return `% (${formatPercents(this.realDischargeSetting / 100, 2)}) of remaining real time stored per second.`;
         default:

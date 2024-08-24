@@ -1,5 +1,5 @@
-import { GalaxyGeneratorUpgrades } from "../globals";
 import { AutobuyerState } from "./autobuyer";
+import { GalaxyGeneratorUpgrades } from "../globals";
 
 export class PelleUpgradeAutobuyerState extends AutobuyerState {
   get data() {

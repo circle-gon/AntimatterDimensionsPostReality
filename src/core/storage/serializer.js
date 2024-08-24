@@ -1,6 +1,4 @@
-/* eslint-disable import/extensions */
 import pako from "pako/dist/pako.esm.mjs";
-/* eslint-enable import/extensions */
 
 export const GameSaveSerializer = {
   serialize(save) {
@@ -23,7 +21,7 @@ export const GameSaveSerializer = {
       const json = this.decodeText(data, "savefile");
 
       return JSON.parse(json, (k, v) => (v === Infinity ? "Infinity" : v));
-    } catch (e) {
+    } catch {
       return undefined;
     }
   },

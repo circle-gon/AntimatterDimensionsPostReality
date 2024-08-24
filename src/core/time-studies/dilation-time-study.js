@@ -26,6 +26,7 @@ export class DilationTimeStudyState extends TimeStudyState {
     return this.id === 1 ? 12900 : 0;
   }
 
+  // eslint-disable-next-line complexity
   purchase(quiet = false) {
     if (this.isBought || !this.canBeBought) return false;
     if (this.id === 1) {

@@ -195,7 +195,7 @@ export default {
   destroyed() {
     try {
       document.body.removeChild(this.$el);
-    } catch (e) {
+    } catch {
       // If the tooltip isn't visible, then it can't be removed on account of not being there in the first place.
       // Trying to remove it anyway causes an exception to be thrown but otherwise nothing seems to actually affect
       // the game. Nevertheless, including this try/catch no-op suppresses console error spam.

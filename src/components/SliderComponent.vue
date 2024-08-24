@@ -1,5 +1,8 @@
+<!-- eslint-disable vue/require-default-prop -->
 <script>
 import PlusMinusButton from "@/components/PlusMinusButton";
+import { Notations } from "../core/notations";
+import { Theme } from "../core/themes";
 
 // This is based on vue-slider-component
 // downloaded from https://github.com/NightCatSama/vue-slider-component
@@ -241,6 +244,7 @@ export default {
     flowDirection() {
       return `l-ad-slider--${this.direction + (this.reverse ? "-reverse" : "")}`;
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     tooltipMergedPosition() {
       if (!this.isMounted) return {};
       const tooltipDirection = this.tooltipDirection[0];

@@ -66,7 +66,7 @@ export default {
         }
 
         if (!isFunction(description)) {
-          throw new Error(`DescriptionDisplay config.description has ` + ` unsupported type "${typeof description}"`);
+          throw new Error(`DescriptionDisplay config.description has unsupported type "${typeof description}"`);
         }
 
         const value = description();
@@ -88,7 +88,7 @@ export default {
         }
 
         throw new Error(
-          `DescriptionDisplay config.description is a function ` + `which returns unsupported type "${typeof value}"`,
+          `DescriptionDisplay config.description is a function which returns unsupported type "${typeof value}"`,
         );
       },
     },

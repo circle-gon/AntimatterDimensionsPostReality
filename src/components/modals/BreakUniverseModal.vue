@@ -28,6 +28,7 @@ export default {
   <ModalWrapperChoice :show-cancel="false" @confirm="handleYesClick">
     <template #header> You are Breaking the Universe </template>
     <div class="c-modal-message__text">
+      <!-- eslint-disable-next-line vue/no-static-inline-styles -->
       <div style="color: var(--color-bad); font-size: 1.2em">
         WARNING: THIS FEATURE IS UNSTABLE. PROCEED AT YOUR OWN RISK.
       </div>
@@ -37,3 +38,7 @@ export default {
     <template #confirm-text> Break </template>
   </ModalWrapperChoice>
 </template>
+
+<style>
+
+</style>

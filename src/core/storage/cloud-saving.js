@@ -1,6 +1,5 @@
-/* eslint-disable import/extensions */
+// eslint-disable-next-line no-unused-vars
 import pako from "pako/dist/pako.esm.mjs";
-/* eslint-enable import/extensions */
 
 import {
   createUserWithEmailAndPassword,
@@ -16,7 +15,6 @@ import { sha512_256 } from "js-sha512";
 
 import { STEAM } from "@/env";
 
-import { decodeBase64Binary } from "./base64-binary";
 import { firebaseConfig } from "./firebase-config";
 import { ProgressChecker } from "./progress-checker";
 import { SteamRuntime } from "@/steam";
@@ -58,7 +56,7 @@ export const Cloud = {
       if (player.options.hideGoogleName) GameUI.notify.success(`Successfully logged in to Google Account`);
       else GameUI.notify.success(`Successfully logged in as ${this.user.displayName}`);
       if (ShopPurchaseData.isIAPEnabled) Speedrun.setSTDUse(true);
-    } catch (e) {
+    } catch {
       GameUI.notify.error("Google Account login failed");
     }
   },
@@ -90,16 +88,6 @@ export const Cloud = {
     Cloud.user.displayName = screenName;
   },
 
-  // NOTE: This function is largely untested due to not being used at any place within web reality code
-  async loadMobile() {
-    if (!this.user) return;
-    const snapshot = await get(ref(this.db, `users/${this.user.id}/player`));
-    if (snapshot.exists) {
-      const encoded = snapshot.val();
-      const uintArray = decodeBase64Binary(encoded.replace(/-/gu, "+").replace(/_/gu, "/"));
-    }
-  },
-
   compareSaves(cloud, local, hash) {
     // This try/except will generally only throw an exception if the cloud save is somehow malformed.
     // In practice this should only happen for saves which are really old, or from very early development.
@@ -115,7 +103,7 @@ export const Cloud = {
         differentName: cloud?.options.saveFileName !== local?.options.saveFileName,
         hashMismatch: this.lastCloudHash && this.lastCloudHash !== hash,
       };
-    } catch (e) {
+    } catch {
       return null;
     }
   },

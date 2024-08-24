@@ -660,6 +660,7 @@ window.normalDistributionDecimal = (function () {
 
 // Helper function for BTRD
 window.binomialGeneratorFC = (function () {
+  // eslint-disable-next-line no-loss-of-precision
   const stirlingBase = (x) => -8.10614667953272582e-2 + (x + 0.5) * Math.log1p(x) - x;
   const TABLE = Array.range(0, 20).map((x) => logFactorial(x) - stirlingBase(x));
   return (x) => {

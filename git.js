@@ -9,9 +9,12 @@ import { simpleGit } from "simple-git";
     await git.addConfig("user.email", "97845741+circle-gon@users.noreply.github.com", false, "global");
     await git.addConfig("user.name", "circle-gon", false, "global");
 
+    // eslint-disable-next-line no-console
     console.log("Done setting config!");
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log("Uh oh, something went wrong...");
+    // eslint-disable-next-line no-console
     console.error(e);
   }
 })();

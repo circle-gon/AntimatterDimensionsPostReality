@@ -1,5 +1,6 @@
 import { DC } from "../../constants";
 
+// eslint-disable-next-line max-params
 function rebuyableCost(initialCost, increment, id, pow) {
   return Decimal.multiply(initialCost, Decimal.pow(increment, player.dilation.rebuyables[id] ** pow));
 }

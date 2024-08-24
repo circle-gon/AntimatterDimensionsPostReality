@@ -14,7 +14,8 @@ export default {
   },
   computed: {
     events() {
-      const sorted = this.unsortedEvents.sort((a, b) =>
+      const sorted = this.unsortedEvents.slice(0).sort((a, b) =>
+        // eslint-disable-next-line no-nested-ternary
         a.timestamp === b.timestamp
           ? a.thisReality === b.thisReality
             ? a.line - b.line

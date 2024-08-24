@@ -1,3 +1,10 @@
+import {
+  EffarigMemoryAutobuyerState,
+  EnslavedMemoryAutobuyerState,
+  TeresaMemoryAutobuyerState,
+  VMemoryAutobuyerState,
+} from "./ra-pets-autobuyer";
+import { EPMultAutobuyerState, IPMultAutobuyerState } from "./prestige-currency-multiplier-autobuyer";
 import { AnnihilationAutobuyerState } from "./annihilation-autobuyer";
 import { AntimatterDimensionAutobuyerState } from "./antimatter-dimension-autobuyer";
 import { BigCrunchAutobuyerState } from "./big-crunch-autobuyer";
@@ -8,29 +15,22 @@ import { DilationUpgradeAutobuyerState } from "./dilation-upgrade-autobuyer";
 import { DimBoostAutobuyerState } from "./dimboost-autobuyer";
 import { EternityAutobuyerState } from "./eternity-autobuyer";
 import { GalaxyAutobuyerState } from "./galaxy-autobuyer";
+import { GlyphSacrificeAutobuyerState } from "./glyph-sacrifice-autobuyer";
 import { ImaginaryUpgradeAutobuyerState } from "./imaginary-upgrade-autobuyer";
 import { InfinityDimensionAutobuyerState } from "./infinity-dimension-autobuyer";
-import { EPMultAutobuyerState, IPMultAutobuyerState } from "./prestige-currency-multiplier-autobuyer";
+import { NonRepeatableImaginaryUpgradeAutobuyerState } from "./imaginary-upgrade-single-autobuyer";
+import { NonRepeatableRealityUpgradeAutobuyerState } from "./reality-upgrade-single-autobuyer";
+import { PelleUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
 import { RealityAutobuyerState } from "./reality-autobuyer";
 import { RealityUpgradeAutobuyerState } from "./reality-upgrade-autobuyer";
 import { ReplicantiGalaxyAutobuyerState } from "./replicanti-galaxy-autobuyer";
 import { ReplicantiUpgradeAutobuyerState } from "./replicanti-upgrade-autobuyer";
 import { SacrificeAutobuyerState } from "./sacrifice-autobuyer";
 import { SingularityAutobuyerState } from "./singularity-autobuyer";
+import { TesseractAutobuyerState } from "./tesseract-autobuyer";
 import { TickspeedAutobuyerState } from "./tickspeed-autobuyer";
 import { TimeDimensionAutobuyerState } from "./time-dimension-autobuyer";
 import { TimeTheoremAutobuyerState } from "./time-theorem-autobuyer";
-import {
-  EffarigMemoryAutobuyerState,
-  EnslavedMemoryAutobuyerState,
-  TeresaMemoryAutobuyerState,
-  VMemoryAutobuyerState,
-} from "./ra-pets-autobuyer";
-import { GlyphSacrificeAutobuyerState } from "./glyph-sacrifice-autobuyer";
-import { PelleUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
-import { TesseractAutobuyerState } from "./tesseract-autobuyer";
-import { NonRepeatableRealityUpgradeAutobuyerState } from "./reality-upgrade-single-autobuyer";
-import { NonRepeatableImaginaryUpgradeAutobuyerState } from "./imaginary-upgrade-single-autobuyer";
 
 export const Autobuyer = {
   annihilation: new AnnihilationAutobuyerState(),

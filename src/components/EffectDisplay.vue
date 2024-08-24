@@ -72,7 +72,7 @@ export default {
         }
 
         if (!isFunction(effect)) {
-          throw new Error(`EffectDisplay config.effect has ` + ` unsupported type "${typeof effect}"`);
+          throw new Error(`EffectDisplay config.effect has  unsupported type "${typeof effect}"`);
         }
 
         const value = effect();
@@ -85,7 +85,7 @@ export default {
           this.updateEffect = () => this.effectValue.copyFrom(effect());
         } else {
           throw new Error(
-            `EffectDisplay config.effect is a function which returns` + ` unsupported type "${typeof effect}"`,
+            `EffectDisplay config.effect is a function which returns unsupported type "${typeof effect}"`,
           );
         }
 
@@ -126,7 +126,7 @@ export default {
           }
 
           throw new Error(
-            `EffectDisplay config.cap is a function which returns` + ` unsupported type "${typeof effect}"`,
+            `EffectDisplay config.cap is a function which returns unsupported type "${typeof effect}"`,
           );
         }
       },

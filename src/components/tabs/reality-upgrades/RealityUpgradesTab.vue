@@ -1,6 +1,6 @@
 <script>
-import RealityUpgradeButton from "./RealityUpgradeButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
+import RealityUpgradeButton from "./RealityUpgradeButton";
 
 export default {
   name: "RealityUpgradesTab",

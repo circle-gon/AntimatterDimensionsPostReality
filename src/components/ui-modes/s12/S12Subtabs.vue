@@ -41,6 +41,7 @@ export default {
       const minLeft = 5 + subtabsWidth / 2,
         maxLeft = this.windowWidth - minLeft;
       // Reference isAvailable and isHidden so this gets updated correctly
+      // eslint-disable-next-line no-sequences
       return this.isAvailable, this.isHidden, `${Math.clamp(centerPt, minLeft, maxLeft)}px`;
     },
   },

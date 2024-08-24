@@ -42,8 +42,10 @@ window.GlobalErrorHandler = {
   },
 };
 
+// eslint-disable-next-line max-params
 window.onerror = (event, source, _, __, error) => {
   if (!source.endsWith(".js")) return;
+  // eslint-disable-next-line no-console
   console.error(error);
   GlobalErrorHandler.onerror(event);
 };

@@ -72,11 +72,10 @@ export const Effarig = {
   },
   get shardsGained() {
     if (!TeresaUnlocks.effarig.canBeApplied) return DC.D0;
-    const au2 = AtomUpgrade(2).isBought ? 10 : 1;
     return Decimal.pow(Currency.eternityPoints.exponent / 7500, this.glyphEffectAmount)
       .floor()
       .mul(AlchemyResource.effarig.effectValue)
-      .mul(au2);
+      .timesEffectOf(AtomUpgrade(2).effects.relicShards);
   },
   get maxRarityBoost() {
     return 5 * Math.log10(Currency.relicShards.value.add(10).log10());

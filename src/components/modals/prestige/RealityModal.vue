@@ -89,6 +89,7 @@ export default {
   methods: {
     update() {
       this.firstReality = player.realities === 0;
+      this.atomUnlocked = player.atom.resetCount >= 1;
       this.hasChoice = Perk.firstPerk.isEffectActive;
       this.effarigUnlocked = TeresaUnlocks.effarig.canBeApplied;
       this.hasFilter = EffarigUnlock.glyphFilter.isUnlocked;
@@ -141,7 +142,7 @@ export default {
 <template>
   <ModalWrapperChoice :option="confirmationToDisable" :show-confirm="canConfirm" @confirm="confirmModal(false)">
     <template #header> You are about to Reality </template>
-    <div v-if="firstReality" class="c-modal-message__text">
+    <div v-if="firstReality && !atomUnlocked" class="c-modal-message__text">
       {{ firstRealityText }}
     </div>
 
@@ -175,7 +176,7 @@ export default {
       automatically choosing another {{ quantifyInt("Glyph", simRealities - 1) }}
       based on your Glyph filter settings.
     </div>
-    <div v-if="willAutoPurge">
+    <div v-if="willAutoPurge && !firstReality">
       <br />
       Auto-purge is currently enabled; your selected Glyph
       <br />
@@ -192,8 +193,10 @@ export default {
       </span>
     </div>
     <div v-if="confirmationToDisable">
-      <br />
-      You can force this modal to appear (even if disabled) by Shift-clicking the Reality button.
+      <br>
+      You can force this modal to appear (even if disabled) by
+      <br v-if="firstReality">
+      Shift-clicking the Reality button.
     </div>
     <template v-if="canSacrifice && canConfirm" #extra-buttons>
       <PrimaryButton class="o-primary-btn--width-medium c-modal-message__okay-btn" @click="confirmModal(true)">

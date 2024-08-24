@@ -22,10 +22,14 @@ export default {
     time() {
       return this.config.time;
     },
+    collapses() {
+      return this.config.collapses;
+    },
     requirement() {
-      const time = this.time;
-      if (time < 1000) return `${format(time)} ${pluralize("Collapse", time)}`;
-      return timeDisplay(time);
+      const reqs = [];
+      if (this.time) reqs.push(timeDisplay(this.time));
+      if (this.collapses) reqs.push(`${format(this.collapses)} ${pluralize("Collapse", this.collapses)}`)
+      return makeEnumeration(reqs);
     },
     canBeReached() {
       return player.records.thisCollapse.realTimeNoStore < this.time;

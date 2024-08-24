@@ -87,23 +87,23 @@ export function buyDilationUpgrade(id, bulk = 1) {
 
     const expo = upgrade.config.pelleOnly ? AtomUpgrades.dilExpo(id) : 1;
     let buying =
-      expo !== 1
-        ? Math.floor(
+      expo === 1
+        ? Decimal.affordGeometricSeries(
+          Currency.dilatedTime.value,
+          upgrade.config.initialCost,
+          upgrade.config.increment,
+          upgAmount,
+        ).toNumber()
+        : Math.floor(
             Currency.dilatedTime.value.div(upgrade.config.initialCost).log(upgrade.config.increment) ** (1 / expo) -
-              upgAmount,
-          ) + 1
-        : Decimal.affordGeometricSeries(
-            Currency.dilatedTime.value,
-            upgrade.config.initialCost,
-            upgrade.config.increment,
             upgAmount,
-          ).toNumber();
+        ) + 1;
     buying = Math.clampMax(buying, bulk);
     buying = Math.clampMax(buying, upgrade.config.purchaseCap - upgAmount);
     const cost =
-      expo !== 1
-        ? Decimal.pow(upgrade.config.increment, (buying + upgAmount - 1) ** expo).mul(upgrade.config.initialCost)
-        : Decimal.sumGeometricSeries(buying, upgrade.config.initialCost, upgrade.config.increment, upgAmount);
+      expo === 1
+        ? Decimal.sumGeometricSeries(buying, upgrade.config.initialCost, upgrade.config.increment, upgAmount)
+        : Decimal.pow(upgrade.config.increment, (buying + upgAmount - 1) ** expo).mul(upgrade.config.initialCost);
     Currency.dilatedTime.subtract(cost);
     player.dilation.rebuyables[id] += buying;
     if (id === 2) {

@@ -1,9 +1,7 @@
 export const atomMilestones = {
   am1: {
-    time: 1,
-    reward: () => `The Companion glyph, celestial quotes, Automator data, 
-    glyph presets and filters, and Normal and Infinity challenge times never reset on
-    Collapse. Start with all perks, the Nameless Ones' storing
+    collapses: 1,
+    reward: () => `Start with all perks, the Nameless Ones' storing
     time mechanic unlocked, Automator speed maxed, all one-time Doomed upgrades,
     passive IP & EP generation (works while Doomed), and Reality Upgrades 'Existentially Prolong', 
     'The Telemechanical Process', and 'Effortless Existence'.
@@ -12,17 +10,17 @@ export const atomMilestones = {
     and Rift draining speed are ${formatX(2, 0)} faster, and skip the credits.`,
   },
   am2: {
-    time: 2,
+    collapses: 2,
     reward: () => `Start with the rebuyable Reality Upgrade and
     Black Hole autobuyers, Imaginary Upgrade 'Vacuum Acceleration'
     and both black holes start unlocked and pernamently active. 
     Start every Armageddon, Reality, and Collapse with all Eternity 
     Challenges completed, and Reality Upgrade 'The Knowing Existance' no longer 
-    fails if you have EC1 completions. The Galaxy Generator production & animations 
+    fails if you have EC1 completions. The Galaxy Generator production, animations 
     and Rift draining speed are ${formatX(2, 0)} faster.`,
   },
   am3: {
-    time: 3,
+    collapses: 3,
     reward: () => `Start with Teresa's Reality Machine drainer completely filled, 
     the perk shop maxed before Ra's perk shop expansion upgrade,  
     and all Dark Matter Dimension automation 
@@ -32,7 +30,7 @@ export const atomMilestones = {
     production, animations, and Rift draining speed are ${formatX(2, 0)} faster.`,
   },
   am4: {
-    time: 4,
+    collapses: 4,
     reward: `Start with Effarig and The Nameless Ones' upgrades and Reality completed
     and V's normal achievements at tier 2, and V is always unlocked. Unlock an Autobuyer 
     which produces Glyph Sacrifice passively through buying and selling Music Glyphs, 
@@ -41,7 +39,7 @@ export const atomMilestones = {
     Auto-unlock Time Dilation and Time Dimensions 5 through 8 while Doomed.`,
   },
   am5: {
-    time: 5,
+    collapses: 5,
     reward: `Ra's pets now start at Level 5, V's normal achievements at tier 4 and hard
     achievements at tier 2, Laitela's Reality is destabilized once, keep the Dilation Upgrade
     autobuyers while Doomed, one more Rift can be filled simultaneously, and Infinity is broken,

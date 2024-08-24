@@ -263,14 +263,14 @@ export class EternityChallengeState extends GameMechanicState {
       }
     } else if (this.id === 4) {
       reason = (restriction) =>
-        `You failed Eternity Challenge ${this.id} due to ` + `having more than ${quantifyInt("Infinity", restriction)}`;
+        `You failed Eternity Challenge ${this.id} due to having more than ${quantifyInt("Infinity", restriction)}`;
     } else if (this.id === 12) {
       reason = (restriction) =>
         `You failed Eternity Challenge ${this.id} due to ` +
         `spending more than ${quantify("in-game second", restriction, 0, 1)} in it`;
     }
     Modal.message.show(
-      `${reason(this.config.restriction(this.completions))}, ` + `which has caused you to exit it.`,
+      `${reason(this.config.restriction(this.completions))}, which has caused you to exit it.`,
       { closeEvent: GAME_EVENT.REALITY_RESET_AFTER },
       1,
     );

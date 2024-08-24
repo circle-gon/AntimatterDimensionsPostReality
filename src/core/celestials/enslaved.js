@@ -179,9 +179,9 @@ export const Enslaved = {
     const realDiff = diff / 1000;
     const timeSpent = Math.min(
       this.realTimeDischargeMode
-        ? // There's not really much of a point to go above it
-          // so cap it there so that not all real stored time gets used in 1 tick
-          realStored * Math.min(1 - Math.pow(1 - player.celestials.enslaved.realDischargePercent / 100, realDiff), 0.99)
+        // There's not really much of a point to go above it
+        // so cap it there so that not all real stored time gets used in 1 tick
+        ? realStored * Math.min(1 - Math.pow(1 - player.celestials.enslaved.realDischargePercent / 100, realDiff), 0.99)
         : player.celestials.enslaved.realDischargeConstant * 1000 * realDiff,
       realStored,
     );

@@ -1,8 +1,8 @@
 <script>
 import { DC } from "@/core/constants";
 
-import TypeSacrifice from "./TypeSacrifice";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
+import TypeSacrifice from "./TypeSacrifice";
 
 export default {
   name: "SacrificedGlyphs",

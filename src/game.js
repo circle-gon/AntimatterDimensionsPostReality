@@ -2,11 +2,11 @@ import TWEEN from "tween.js";
 
 import { ElectronRuntime, SteamRuntime } from "@/steam";
 
+import { Cloud } from "./core/storage";
 import { DC } from "./core/constants";
 import { deepmergeAll } from "@/utility/deepmerge";
 import { DEV } from "@/env";
 import { SpeedrunMilestones } from "./core/speedrun";
-import { Cloud } from "./core/storage";
 import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
@@ -326,6 +326,7 @@ export function addRealityTime(time, realTime, rm, level, realities, ampFactor, 
   ]);
 }
 
+// eslint-disable-next-line max-params
 export function addCollapseTime(time, realTime, atoms, collapses) {
   player.records.recentCollapses.pop();
   player.records.recentCollapses.unshift([time, realTime, atoms, collapses]);
@@ -411,7 +412,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.mul(SingularityMilestone.gamespeedFromSingularities.effectOrDefault(1));
   }
 
-  if (AtomUpgrade(2).isBought && !BlackHoles.arePaused) factor = factor.mul(1000);
+  if (!BlackHoles.arePaused) factor = factor.mul(AtomUpgrade(2).effects.gamespeed.effectOrDefault(1));
 
   if (effects.includes(GAME_SPEED_EFFECT.TIME_GLYPH)) {
     factor = factor.mul(getAdjustedGlyphEffect("timespeed"));
@@ -1223,27 +1224,7 @@ export function browserCheck() {
   return supportedBrowsers.test(navigator.userAgent);
 }
 
-function initEruda() {
-  return new Promise((resolve) => {
-    const d = document.createElement("script");
-    d.src = "https://cdn.jsdelivr.net/npm/eruda";
-    d.onload = function () {
-      eruda.init();
-      resolve();
-    };
-    d.onerror = function () {
-      // Don't hang the game if eruda doesn't load
-      console.warn("Eruda failed to load");
-      resolve();
-    };
-    document.body.append(d);
-  });
-}
-
-export async function init() {
-  if (DEV && false) {
-    await initEruda();
-  }
+export function init() {
   // eslint-disable-next-line no-console
   console.log("🌌 Antimatter Dimensions: Reality Update 🌌");
   if (DEV) {

@@ -1,9 +1,9 @@
 // Temporarily aggregate tab components here until GameUI is migrated to SFC
 import AlchemyTab from "./alchemy/AlchemyTab";
 import AntimatterDimensionsTab from "./antimatter-dimensions/AntimatterDimensionsTab";
-import AtomMilestones from "./atom/AtomMilestones";
 import AtomicPower from "./atom/AtomicPower";
-import AtomUpgrades from "./atom/AtomUpgrades";
+import AtomMilestones from "./atom/AtomMilestones";
+import AtomUpgradesTab from "./atom/AtomUpgradesTab";
 import AutobuyersTab from "./autobuyers/AutobuyersTab";
 import AutomatorTab from "./automator/AutomatorTab";
 import BlackHoleTab from "./black-hole/BlackHoleTab";
@@ -68,7 +68,7 @@ const TabComponents = {
   RaTab,
   LaitelaTab,
   PelleTab,
-  AtomUpgrades,
+  AtomUpgradesTab,
   AtomMilestones,
   AtomicPower,
   BreakUniverseTab,

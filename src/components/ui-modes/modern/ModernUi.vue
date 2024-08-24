@@ -1,12 +1,12 @@
 <script>
+import AtomPointsHeader from "../../AtomPointsHeader";
 import BigCrunchButton from "../BigCrunchButton";
+import CollapseButton from "../prestige-header/CollapseButton";
 import HeaderBlackHole from "../HeaderBlackHole";
 import HeaderChallengeDisplay from "../HeaderChallengeDisplay";
 import HeaderChallengeEffects from "../HeaderChallengeEffects";
 import HeaderPrestigeGroup from "../HeaderPrestigeGroup";
 import NewsTicker from "../NewsTicker";
-import CollapseButton from "../prestige-header/CollapseButton";
-import AtomPointsHeader from "../../AtomPointsHeader";
 
 import GameSpeedDisplay from "@/components/GameSpeedDisplay";
 

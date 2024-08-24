@@ -139,6 +139,7 @@ export default {
       />
       <div class="o-automator-block-delete" @click="removeBlock(b.id)">X</div>
     </div>
+    <!-- eslint-disable-next-line vue/no-mutating-props -->
     <draggable v-if="block.nested" v-model="block.nest" class="l-automator-nested-block" group="code-blocks">
       <AutomatorBlockSingleRow
         v-for="subblock in block.nest"

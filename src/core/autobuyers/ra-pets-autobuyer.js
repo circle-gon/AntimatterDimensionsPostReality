@@ -1,15 +1,7 @@
 import { AutobuyerState } from "./autobuyer";
 
-/**
- * @abstract
- */
 class RaPetAutobuyerState extends AutobuyerState {
-  /**
-   * @abstract
-   */
-  get _petName() {
-    throw new NotImplementedError();
-  }
+  get _petName() { throw new NotImplementedError(); }
 
   get data() {
     return player.auto.pets[this._petName].upgrades[this.id - 1];

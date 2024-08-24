@@ -59,9 +59,15 @@ export default {
         Convert all Atomic Power into {{ particleData.name + "s" }}
       </button>
     </div>
-    <div v-for="description in emphText" class="c-atomic-tab__effect-enlarger">
-      {{ description[0] }}<span class="c-atomic-tab__big-numbers" :style="style">{{ description[1] }}</span
-      >{{ description[2] }}
+    <!-- eslint-disable-next-line vue/require-v-for-key -->
+    <div
+      v-for="description in emphText"
+      class="c-atomic-tab__effect-enlarger"
+    >
+      <span>
+        {{ description[0] }}<span class="c-atomic-tab__big-numbers" :style="style">{{ description[1] }}</span
+          >{{ description[2] }}
+      </span>
     </div>
   </div>
 </template>

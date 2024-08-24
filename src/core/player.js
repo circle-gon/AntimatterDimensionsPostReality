@@ -1074,6 +1074,7 @@ export const Player = {
     switch (key) {
       case "atom":
         player.requirementChecks.atom = {};
+      // eslint-disable-next-line no-fallthrough
       case "reality":
         player.requirementChecks.reality = {
           noAM: true,

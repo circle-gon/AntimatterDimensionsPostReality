@@ -1,6 +1,7 @@
 if (!String.prototype.includes) {
   String.prototype.includes = function (search, start) {
     if (typeof start !== "number") {
+      // eslint-disable-next-line no-param-reassign
       start = 0;
     }
 
@@ -15,7 +16,7 @@ if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, "includes", {
     value(searchElement, fromIndex) {
       // 1. Let O be ? ToObject(this value).
-      if (this == null) {
+      if (this === null) {
         throw new TypeError('"this" is null or not defined');
       }
 
@@ -79,6 +80,7 @@ if (!Math.log2) {
 
 if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = function (callback, thisArg) {
+    // eslint-disable-next-line no-param-reassign
     thisArg = thisArg || window;
     for (let i = 0; i < this.length; i++) {
       callback.call(thisArg, this[i], i, this);
@@ -90,7 +92,7 @@ if (!Array.prototype.find) {
   Object.defineProperty(Array.prototype, "find", {
     value(predicate) {
       // 1. Let O be ? ToObject(this value).
-      if (this == null) {
+      if (this === null) {
         throw new TypeError('"this" is null or not defined');
       }
 
@@ -105,6 +107,7 @@ if (!Array.prototype.find) {
       }
 
       // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
+      // eslint-disable-next-line prefer-rest-params
       const thisArg = arguments[1];
 
       // 5. Let k be 0.
@@ -131,11 +134,11 @@ if (!Array.prototype.find) {
 }
 
 Array.max = function (array) {
-  return Math.max.apply(Math, array);
+  return Math.max(...array);
 };
 
 Array.min = function (array) {
-  return Math.min.apply(Math, array);
+  return Math.min(...array);
 };
 
 Object.invert = function (obj) {
@@ -150,10 +153,11 @@ Object.invert = function (obj) {
 if (typeof Object.assign !== "function") {
   // Must be writable: true, enumerable: false, configurable: true
   Object.defineProperty(Object, "assign", {
+    // eslint-disable-next-line no-unused-vars
     value: function assign(target, varArgs) {
       // .length of function is 2
 
-      if (target == null) {
+      if (target === null) {
         // TypeError if undefined or null
         throw new TypeError("Cannot convert undefined or null to object");
       }
@@ -161,9 +165,10 @@ if (typeof Object.assign !== "function") {
       const to = Object(target);
 
       for (let index = 1; index < arguments.length; index++) {
+        // eslint-disable-next-line prefer-rest-params
         const nextSource = arguments[index];
 
-        if (nextSource != null) {
+        if (nextSource !== null) {
           // Skip over if undefined or null
           for (const nextKey in nextSource) {
             // Avoid bugs when hasOwnProperty is shadowed

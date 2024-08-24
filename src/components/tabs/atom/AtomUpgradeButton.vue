@@ -67,7 +67,8 @@ export default {
       this.isRebuyable = upgrade.isRebuyable;
       this.isBought = !upgrade.isRebuyable && upgrade.isBought;
       this.isPossible = upgrade.isPossible;
-      this.isAutoUnlocked = false; // Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied;
+      // Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied;
+      this.isAutoUnlocked = false;
       this.canBeLocked = upgrade.config.canLock && !this.isAvailableForPurchase;
       this.hasRequirementLock = upgrade.hasPlayerLock;
       // If (this.isRebuyable) this.isAutobuyerOn = Autobuyer.realityUpgrade(upgrade.id).isActive;

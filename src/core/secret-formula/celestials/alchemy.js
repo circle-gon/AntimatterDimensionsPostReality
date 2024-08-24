@@ -262,7 +262,7 @@ export const alchemyResources = {
     unlockedAt: 14,
     description: "gives all basic Alchemy Resources upon refinement",
     formatEffect: (value) =>
-      `Refined Glyphs also give ${formatPercents(value, 2)} of their value ` + "to all other base resources",
+      `Refined Glyphs also give ${formatPercents(value, 2)} of their value to all other base resources`,
     reagents: [
       {
         resource: ALCHEMY_RESOURCE.EFFARIG,

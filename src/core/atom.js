@@ -1,6 +1,6 @@
-import { DC } from "./constants";
 import { BitPurchasableMechanicState, GameMechanicState, RebuyableMechanicState } from "./game-mechanics";
-import save from "../../saves/am1.txt?raw"; // There's finally a use for it!
+import { DC } from "./constants";
+import save from "../../saves/am1.txt?raw";
 
 export function migrateSaves(player) {
   // Change effarig shards to decimal
@@ -660,13 +660,18 @@ export class AtomMilestoneState {
   }
 
   get isReached() {
-    const req = this.time;
-    if (req < 1000) return player.atom.resetCount >= req;
-    return player.records.bestCollapse.realTimeNoStore < req;
+    let req = true;
+    if (this.collapses) req &&= player.atom.resetCount >= this.collapses;
+    if (this.time) req &&= player.records.bestCollapse.realTimeNoStore < this.time;
+    return req;
   }
 
   get time() {
     return this.config.time;
+  }
+
+  get collapses() {
+    return this.config.collapses;
   }
 
   get reward() {

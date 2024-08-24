@@ -344,6 +344,7 @@ export const shortcuts = [
     name: "Fullscreen",
     keys: ["F10"],
     type: "bind",
+    // eslint-disable-next-line no-empty-function
     function: () => {},
     visible: () => false,
   },

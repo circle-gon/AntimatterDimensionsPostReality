@@ -65,12 +65,23 @@ export const atomUpgrades = [
     ${formatX(10)} Relic Shard gain, ${formatX(10)} Memory gain, 
     ${formatX(10)} Dark Matter and Dark Energy gain, 
     ${formatX(5)} Singularity gain, and ${formatX(100)} Reality Shard gain.`,
+    effects: {
+      gamespeed: 1e3,
+      realityMachines: 10,
+      perkPoints: 5,
+      relicShards: 10,
+      memories: 10,
+      darkFromAu2: 10,
+      singularities: 5,
+      realityShards: 100,
+    }
   },
   {
     id: 3,
     name: "Celestial Power",
     cost: scale(5),
     description: "Memory gain is raised ^1.2.",
+    effect: 1.2,
   },
   {
     id: 4,

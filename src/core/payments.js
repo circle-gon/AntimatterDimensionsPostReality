@@ -23,7 +23,7 @@ const Payments = {
         },
         body: JSON.stringify({ amount: STD, cloudID: Cloud.user.id }),
       });
-    } catch (e) {
+    } catch {
       GameUI.notify.error("Could not contact payment server!", 10000);
       return;
     }
@@ -55,7 +55,7 @@ const Payments = {
       let statusRes;
       try {
         statusRes = await fetch(`${STD_BACKEND_URL}/validate?sessionId=${id}`);
-      } catch (e) {
+      } catch {
         // Note: Not redundant with notification in buyMoreSTD above; will not be reached if exception is thrown there
         GameUI.notify.error("Could not contact payment server!", 10000);
         Payments.clearInterval();
@@ -108,7 +108,7 @@ const Payments = {
           },
         }),
       });
-    } catch (e) {
+    } catch {
       GameUI.notify.error("Unable to spend STD coins on upgrade!", 10000);
       return false;
     }
@@ -134,7 +134,7 @@ const Payments = {
         },
         body: JSON.stringify({ sessionId: player.IAP.checkoutSession.id }),
       });
-    } catch (e) {
+    } catch {
       GameUI.notify.error("Could not contact payment server!", 10000);
     }
     if (isTimeout) GameUI.notify.error("Purchase took too long to resolve!", 10000);

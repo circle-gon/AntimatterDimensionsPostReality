@@ -83,11 +83,12 @@ export default {
         SecretAchievement(28).unlock();
       }
       if (this.isValid) {
+        // eslint-disable-next-line vue/no-mutating-props
         this.autobuyer[this.property] = this.typeFunctions.copyValue(this.actualValue);
+        this.updateDisplayValue();
       } else {
         this.updateActualValue();
       }
-      this.updateDisplayValue();
       this.isValidInternal = true;
 
       this.isFocused = false;
@@ -123,7 +124,7 @@ export const AutobuyerInputFunctions = {
           return undefined;
         }
         return isNaN(decimal.mantissa) || isNaN(decimal.exponent) ? undefined : decimal;
-      } catch (e) {
+      } catch {
         return undefined;
       }
     },

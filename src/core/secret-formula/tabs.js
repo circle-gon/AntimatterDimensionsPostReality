@@ -488,7 +488,7 @@ export const tabs = [
         key: "atom",
         name: "Atom",
         symbol: '<i class="fa-solid fa-circle"></i>',
-        component: "AtomUpgrades",
+        component: "AtomUpgradesTab",
         id: 12,
         hidable: true,
       },

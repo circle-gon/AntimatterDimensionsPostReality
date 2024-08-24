@@ -60,7 +60,7 @@ export const ShopPurchaseData = {
       try {
         const statusRes = await fetch(`${STD_BACKEND_URL}/STDData?user=${Cloud.user.id}`);
         newSTDData = await statusRes.json();
-      } catch (e) {
+      } catch {
         GameUI.notify.error("Could not sync STD purchases!", 10000);
         return;
       }
@@ -93,7 +93,7 @@ export const ShopPurchaseData = {
         },
         body: JSON.stringify({ user: Cloud.user.id }),
       });
-    } catch (e) {
+    } catch {
       GameUI.notify.error("Unable to respec STD purchases!", 10000);
       return;
     }

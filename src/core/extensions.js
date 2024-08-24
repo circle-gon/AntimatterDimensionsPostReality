@@ -86,6 +86,7 @@ window.copyToClipboard = (function () {
       el.select();
       return document.execCommand("copy");
     } catch (ex) {
+      // eslint-disable-next-line no-console
       console.log(ex);
       return false;
     }

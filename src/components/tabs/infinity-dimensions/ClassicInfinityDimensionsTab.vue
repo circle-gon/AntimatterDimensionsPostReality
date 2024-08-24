@@ -136,7 +136,6 @@ export default {
         v-if="isAutoTesseractUnlocked"
         v-model="isAutoTesseractOn"
         label="Auto:"
-        style="margin-top: -1rem"
       />
     </div>
     <div v-if="isEnslavedRunning">All Infinity Dimensions are limited to a single purchase.</div>

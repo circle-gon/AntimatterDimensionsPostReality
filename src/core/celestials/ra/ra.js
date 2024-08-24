@@ -1,6 +1,6 @@
 import { BitUpgradeState, GameMechanicState } from "../../game-mechanics";
-import { Quotes } from "../quotes";
 import { DC } from "../../constants";
+import { Quotes } from "../quotes";
 
 class RaUnlockState extends BitUpgradeState {
   get bits() {
@@ -249,16 +249,18 @@ export const Ra = {
     for (const pet of Ra.pets.all) pet.tick(realDiff, generateChunks);
   },
   get productionPerMemoryChunk() {
-    let res = Effects.product(Ra.unlocks.continuousTTBoost.effects.memories, Achievement(168));
+    let res = Effects.product(
+      Ra.unlocks.continuousTTBoost.effects.memories,
+      Achievement(168),
+      AtomUpgrade(2).effects.memories,
+    );
     for (const pet of Ra.pets.all) {
       if (pet.isUnlocked) res *= pet.memoryProductionMultiplier;
     }
-    if (AtomUpgrade(2).isBought) res *= 10;
     return res;
   },
   get productionExponent() {
-    let exp = 1;
-    if (AtomUpgrade(3).isBought) exp *= 1.2;
+    const exp = Effects.product(AtomUpgrade(3));
     return exp;
   },
   get memoryBoostResources() {

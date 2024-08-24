@@ -88,6 +88,7 @@ export default {
       this.achMultToTP = RealityUpgrade(8).isBought;
       this.achMultToBH = VUnlocks.achievementBH.canBeApplied;
       this.achMultToTT = Ra.unlocks.achievementTTMult.canBeApplied;
+      this.atomUnlocked = player.atom.resetCount >= 1;
     },
     startRowRendering() {
       const unlockedRows = [];
@@ -122,7 +123,13 @@ export default {
       return this.renderedRowIndices.includes(row);
     },
     isObscured(row) {
-      return this.isDoomed ? false : row === 17;
+      switch (row) {
+        case 17:
+          return !this.isDoomed && !this.atomUnlocked;
+        case 18:
+          return !this.atomUnlocked;
+      }
+      return false;
     },
     timeDisplayNoDecimals,
   },

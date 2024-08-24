@@ -234,6 +234,7 @@ window.TimeSpan = class TimeSpan {
    * @param {boolean} useHMS If true, will display times as HH:MM:SS in between a minute and 100 hours.
    * @returns {String}
    */
+  // eslint-disable-next-line complexity
   toStringShort(useHMS = true, isSpeedrun = false) {
     // Probably not worth the trouble of importing the isEND function from formatting since this accomplishes the same
     // thing; we do however need this to prevent strings like "02:32" from showing up though
@@ -548,6 +549,7 @@ window.DecimalTimeSpan = class DecimalTimeSpan {
    * @param {boolean} useHMS If true, will display times as HH:MM:SS in between a minute and 100 hours.
    * @returns {String}
    */
+  // eslint-disable-next-line complexity
   toStringShort(useHMS = true, isSpeedrun = false) {
     // Probably not worth the trouble of importing the isEND function from formatting since this accomplishes the same
     // thing; we do however need this to prevent strings like "02:32" from showing up though

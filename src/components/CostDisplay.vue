@@ -68,7 +68,7 @@ export default {
           return;
         }
 
-        throw new Error(`CostDisplay config.cost is a function which returns` + ` unsupported type "${typeof value}"`);
+        throw new Error(`CostDisplay config.cost is a function which returns unsupported type "${typeof value}"`);
       },
     },
   },

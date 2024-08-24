@@ -28,6 +28,7 @@ import AwayProgressOptionsModal from "@/components/modals/options/AwayProgressOp
 import BackupWindowModal from "@/components/modals/options/BackupWindowModal";
 import ConfirmationOptionsModal from "@/components/modals/options/ConfirmationOptionsModal";
 import CosmeticSetChoiceModal from "@/components/modals/options/glyph-appearance/CosmeticSetChoiceModal";
+import FirstTimeModal from "@/components/modals/FirstTimeModal";
 import GlyphDisplayOptionsModal from "@/components/modals/options/glyph-appearance/GlyphDisplayOptionsModal";
 import HiddenTabsModal from "@/components/modals/options/hidden-tabs/HiddenTabsModal";
 import HotkeysModal from "@/components/modals/options/HotkeysModal";
@@ -37,7 +38,6 @@ import NotationModal from "@/components/modals/options/NotationModal";
 import PreferredTreeModal from "@/components/modals/options/PreferredTreeModal";
 import SingleGlyphAppearanceModal from "@/components/modals/options/glyph-appearance/SingleGlyphAppearanceModal";
 import SkipContentModal from "@/components/modals/options/SkipContentModal";
-import FirstTimeModal from "@/components/modals/FirstTimeModal";
 
 import DeleteCompanionGlyphModal from "@/components/modals/glyph-management/DeleteCompanionGlyphModal";
 import DeleteGlyphModal from "@/components/modals/glyph-management/DeleteGlyphModal";
@@ -72,6 +72,7 @@ import ModifySeedModal from "@/components/modals/ModifySeedModal";
 import PelleEffectsModal from "@/components/modals/PelleEffectsModal";
 import RealityGlyphCreationModal from "@/components/modals/RealityGlyphCreationModal";
 import ReplaceGlyphModal from "@/components/modals/ReplaceGlyphModal";
+import RespecAtomUpgrades from "@/components/modals/RespecAtomUpgrades";
 import RespecIAPModal from "@/components/modals/RespecIAPModal";
 import SacrificeModal from "@/components/modals/SacrificeModal";
 import SingularityMilestonesModal from "@/components/modals/SingularityMilestonesModal";
@@ -82,7 +83,6 @@ import SwitchAutomatorEditorModal from "@/components/modals/SwitchAutomatorEdito
 import UiChoiceModal from "@/components/modals/UiChoiceModal";
 import UndoGlyphModal from "@/components/modals/UndoGlyphModal";
 import UpgradeMechanicLockModal from "@/components/modals/UpgradeMechanicLockModal";
-import RespecAtomUpgrades from "@/components/modals/RespecAtomUpgrades";
 
 import S12GamesModal from "@/components/modals/secret-themes/S12GamesModal";
 
@@ -289,6 +289,7 @@ Modal.respecAtomUpgrades = new Modal(RespecAtomUpgrades);
 
 Modal.s12Games = new Modal(S12GamesModal);
 
+// eslint-disable-next-line complexity
 function getSaveInfo(save) {
   const resources = {
     realTimePlayed: 0,

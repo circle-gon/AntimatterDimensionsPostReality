@@ -1,7 +1,7 @@
 <script>
+import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 import RaPetLevelBar from "./RaPetLevelBar";
 import RaUpgradeIcon from "./RaUpgradeIcon";
-import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 
 export default {
   name: "RaPet",
@@ -215,7 +215,7 @@ export default {
         <RaPetLevelBar v-if="!isCapped" :pet-config="petConfig" />
       </div>
       <div v-if="!isCapped">
-        <PrimaryToggleButton v-if="isAutoUnlocked" v-model="isAutoActive" label="Auto:" style="margin-top: -1rem" />
+        <PrimaryToggleButton v-if="isAutoUnlocked" v-model="isAutoActive" label="Auto:" />
         <div>
           {{ quantify("Memory Chunk", memoryChunks, 2, 2) }}, {{ quantify("Memory", memoriesPerSecond, 2, 2) }}/sec
         </div>
