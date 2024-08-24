@@ -80,6 +80,8 @@ export function skipToNewContent() {
   NG.carryover(() => {
     GameStorage.offlineEnabled = false;
     GameStorage.import(save);
+    // This wasn't fixed properly for the save so use a band-aid fix for now
+    player.blackHoleNegative = 1;
   });
 }
 
