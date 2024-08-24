@@ -26,7 +26,6 @@ export default {
       wantsFlipped: true,
       isRunning: false,
       hasAlchemy: false,
-      theoremMultiplier: 1,
     };
   },
   computed: {
@@ -88,7 +87,6 @@ export default {
       this.wantsFlipped = player.celestials.v.wantsFlipped;
       this.isRunning = V.isRunning;
       this.hasAlchemy = Ra.unlocks.unlockGlyphAlchemy.canBeApplied;
-      this.theoremMultiplier = V.spaceTheoremMultiplier;
     },
     unlockCelestial() {
       if (V.canUnlockCelestial) V.unlockCelestial();
@@ -172,8 +170,8 @@ export default {
         <br />
         <span v-if="!isDoomed">The Black Hole can now be used to slow down time if they are both permanent.</span>
         <br /><br />
-        Each Hard V-Achievement counts as two V-Achievements and will award {{ formatInt(2 * theoremMultiplier) }} Space
-        Theorems instead of {{ formatInt(theoremMultiplier) }}.
+        Each Hard V-Achievement counts as two V-Achievements and will award {{ formatInt(2) }} Space
+        Theorems instead of {{ formatInt(1) }}.
         <br />
         Goal reduction is significantly more expensive for Hard V-Achievements.
       </div>
@@ -237,7 +235,7 @@ export default {
       <div class="c-v-info-text">
         You have {{ formatInt(totalUnlocks) }} {{ pluralize("V-Achievement", totalUnlocks) }} done.
         <span v-if="!isDoomed">
-          You gain {{ formatInt(theoremMultiplier) }} {{ pluralize("Space Theorem", theoremMultiplier) }} for each
+          You gain {{ formatInt(1) }} {{ pluralize("Space Theorem", 1) }} for each
           completion, allowing you to purchase Time Studies which are normally locked.
           <br />
           Space Theorems can also be used as a Currency in the Automator.
