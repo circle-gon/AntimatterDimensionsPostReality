@@ -1209,8 +1209,12 @@ export const normalAchievements = [
     id: 143,
     name: "Yo dawg, I heard you liked reskins...",
     get description() {
-      return `Have all your Eternities in your past ${formatInt(10)} Eternities be at least
+      let desc = `Have all your Eternities in your past ${formatInt(10)} Eternities be at least
       ${format(Decimal.NUMBER_MAX_VALUE, 1, 0)} times higher Eternity Points than the previous one.`;
+
+      // This seems to confuse people so hopefully this should make it clearer
+      if (AtomMilestone.am1.isReached) desc += " (Your Eternity records are unaffected by your current Eternity Points.)"
+      return desc
     },
     checkRequirement: () => {
       if (player.records.recentEternities.some((i) => i[0].eq(Decimal.MAX_LIMIT))) return false;
@@ -1599,7 +1603,7 @@ export const normalAchievements = [
     id: 188,
     name: "The End",
     get description() {
-      if (PlayerProgress.atomUnlocked()) return "Finish Dooming your Reality";
+      if (PlayerProgress.atomUnlocked()) return `Reach ${format(Decimal.MAX_VALUE)} Antimatter.`;
       return "Beat the game.";
     },
     checkRequirement: () => GameEnd.beaten,

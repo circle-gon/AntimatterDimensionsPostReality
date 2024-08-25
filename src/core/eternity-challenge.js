@@ -362,7 +362,7 @@ export const EternityChallenges = {
       if (!Perk.autocompleteEC1.canBeApplied) return Infinity;
       let minutes = Effects.min(Number.MAX_VALUE, Perk.autocompleteEC1, Perk.autocompleteEC2, Perk.autocompleteEC3);
       minutes /= VUnlocks.fastAutoEC.effectOrDefault(DC.D1).toNumber();
-      if (AtomMilestone.am1.isReached) minutes /= 120;
+      if (AtomMilestone.am1.isReached) minutes /= 40;
       return TimeSpan.fromMinutes(minutes).totalMilliseconds;
     },
   },

@@ -9,6 +9,27 @@ export const changelog = [
    * }
    */
   {
+    date: [2024, 8, 25],
+    name: "Release Part 2",
+    info: `
+    The game became too fast, so I had to move milestone rewards around. :( Sorry!
+    <br>
+    <br>
+    <b>Changes:</b>
+    <ul>
+    <li>AM (Atom Milestone) 1's Auto Eternity Challenge speedup has been reduced: 120 ➜ 40</li>
+    <li>"Start with all perks": AM1 ➜ AM3</li>
+    <li>"Start with all one-time Doom upgrades": AM1 ➜ AM2</li>
+    <li>
+      "Start with all Eternity Challenges completed" from AM1 is now a two-part reward:<br>
+      AM5 gives EC completions outside of Doom, while AM8 gives EC completions while Doomed.
+    </li>
+    <li>Achievement 143 now clarifies that current Eternity Points doesn't affect Eternity records.<li>
+    <li>AM4 and AM5 also mention that they unlock new Automator constants.</li>
+    </ul>
+    `
+  },
+  {
     date: [2024, 8, 23],
     name: "Initial Release",
     info: `

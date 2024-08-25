@@ -663,7 +663,7 @@ export function finishProcessReality(realityProps) {
   player.records.bestEternity.realTime = Number.MAX_VALUE;
   if (!PelleUpgrade.keepEternityUpgrades.canBeApplied) player.eternityUpgrades.clear();
   player.totalTickGained = 0;
-  if (AtomMilestone.am2.isReached) for (let i = 1; i <= 12; i++) EternityChallenge(i).completions = 5;
+  if ((!Pelle.isDoomed && AtomMilestone.am5.isReached) || (Pelle.isDoomed && AtomMilestone.am8.isReached)) for (let i = 1; i <= 12; i++) EternityChallenge(i).completions = 5;
   else if (!PelleUpgrade.keepEternityChallenges.canBeApplied) player.eternityChalls = {};
   player.reality.unlockedEC = 0;
   player.reality.lastAutoEC = 0;

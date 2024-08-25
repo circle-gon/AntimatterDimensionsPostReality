@@ -1,27 +1,25 @@
 export const atomMilestones = {
   am1: {
     collapses: 1,
-    reward: () => `Start with all perks, the Nameless Ones' storing
-    time mechanic unlocked, Automator speed maxed, all one-time Doomed upgrades,
+    reward: () => `Start with the Nameless Ones' storing
+    time mechanic unlocked, Automator speed maxed,
     passive IP & EP generation (works while Doomed), and Reality Upgrades 'Existentially Prolong', 
     'The Telemechanical Process', and 'Effortless Existence'.
     Storing real time is now 100% efficent, unlock real time discharge, Eternity Challenges are 
-    auto-completed ${formatX(120, 0)} faster, the Galaxy Generator production & animations 
+    auto-completed ${formatX(40, 0)} faster, the Galaxy Generator production & animations 
     and Rift draining speed are ${formatX(2, 0)} faster, and skip the credits.`,
   },
   am2: {
     collapses: 2,
-    reward: () => `Start with the rebuyable Reality Upgrade and
+    reward: () => `Start with all one-time Doom upgrades, the rebuyable Reality Upgrade and
     Black Hole autobuyers, Imaginary Upgrade 'Vacuum Acceleration'
     and both black holes start unlocked and pernamently active. 
-    Start every Armageddon, Reality, and Collapse with all Eternity 
-    Challenges completed, and Reality Upgrade 'The Knowing Existance' no longer 
-    fails if you have EC1 completions. The Galaxy Generator production, animations 
-    and Rift draining speed are ${formatX(2, 0)} faster.`,
+    Reality Upgrade 'The Knowing Existance' no longer fails if you have EC1 completions. The 
+    Galaxy Generator production, animations and Rift draining speed are ${formatX(2, 0)} faster.`,
   },
   am3: {
     collapses: 3,
-    reward: () => `Start with Teresa's Reality Machine drainer completely filled, 
+    reward: () => `Start with all perks, Teresa's Reality Machine drainer completely filled, 
     the perk shop maxed before Ra's perk shop expansion upgrade,  
     and all Dark Matter Dimension automation 
     (auto-Ascension, auto-DMD-upgrades, auto-Singularity, and auto-Annihilation),
@@ -34,7 +32,7 @@ export const atomMilestones = {
     reward: `Start with Effarig and The Nameless Ones' upgrades and Reality completed
     and V's normal achievements at tier 2, and V is always unlocked. Unlock an Autobuyer 
     which produces Glyph Sacrifice passively through buying and selling Music Glyphs, 
-    and more Automator commands. The Galaxy Generator animation speed is now instant, 
+    and more Automator commands & constants. The Galaxy Generator animation speed is now instant, 
     and the Momentum & Reality Upgrade 'Replicative Rapidity' effects are always maxed.
     Auto-unlock Time Dilation and Time Dimensions 5 through 8 while Doomed.`,
   },
@@ -44,7 +42,8 @@ export const atomMilestones = {
     achievements at tier 2, Laitela's Reality is destabilized once, keep the Dilation Upgrade
     autobuyers while Doomed, one more Rift can be filled simultaneously, and Infinity is broken,
     all pre-break Infinity upgrades are bought, the Big Crunch autobuyer is maxed 
-    while Doomed, and unlock more Automator commands.`,
+    while Doomed, and unlock more Automator commands & constants. Start every Reality and Collapse with all 
+    Eternity Challenges completed.` ,
   },
   am6: {
     time: TimeSpan.fromHours(10).totalMilliseconds,
@@ -68,7 +67,8 @@ export const atomMilestones = {
     reward: `Laitela's Reality is now fully destabilized, all Glyph Alchemy resources start
     at 15000, all V achievements start at tier 4 (including Hard), Ra's pets now start at Level 15,
     unlock an autobuyer for non-rebuyable Reality and Imaginary upgrades, they start out unlocked,
-    and all Break Infinity upgrades bought & Replicanti unlocked while Doomed.`,
+    and all Break Infinity upgrades bought & Replicanti unlocked while Doomed. Start every Armageddon
+    with all Eternity Challenges completed.`,
   },
   am9: {
     time: TimeSpan.fromMinutes(40).totalMilliseconds,

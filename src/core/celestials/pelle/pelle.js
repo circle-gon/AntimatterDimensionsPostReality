@@ -160,7 +160,7 @@ export const Pelle = {
     AutomatorBackend.stop();
 
     // We don't give the singles on reset because it causes a lot of funny things when you Doom
-    if (AtomMilestone.am1.isReached) {
+    if (AtomMilestone.am2.isReached) {
       for (const upg of PelleUpgrade.singles) upg.isBought = true;
       // Normally, the Tickspeed autobuyer mode is set to singles on Doom. This is very annoying
       // and also doesn't make too much sense because we have the Pelle Upgrade that keeps it

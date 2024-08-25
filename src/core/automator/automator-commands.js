@@ -1,5 +1,4 @@
 import { beginProcessReality, getRealityProps } from "../reality";
-import { DEV } from "@/env";
 
 import { AUTOMATOR_COMMAND_STATUS, AutomatorData } from "./automator-backend";
 import { standardizeAutomatorValues, tokenMap as T } from "./lexer";
@@ -1261,7 +1260,7 @@ export const AutomatorCommands = [
     // eslint-disable-next-line complexity
     validate: (ctx, V) => {
       ctx.startLine = ctx.Glyphs[0].startLine;
-      if (!AtomMilestone.am4.isReached && !DEV) {
+      if (!AtomMilestone.am4.isReached) {
         V.addError(ctx.Glyphs[0], "You do not have Reality automation unlocked.", "Unlock it from Atom first.");
         return false;
       }
@@ -1382,7 +1381,7 @@ export const AutomatorCommands = [
     compile: (ctx) => {
       const filter = ctx.$payload;
       return () => {
-        if (!DEV && (!PlayerProgress.realityUnlocked() || !AtomMilestone.am4.isReached)) {
+        if (!PlayerProgress.realityUnlocked()) {
           AutomatorData.logCommandEvent("Attempted to equip a Glyph, but failed (not unlocked yet).", ctx.startLine);
           return AUTOMATOR_COMMAND_STATUS.NEXT_INSTRUCTION;
         }
@@ -1470,7 +1469,7 @@ export const AutomatorCommands = [
       ctx.startLine = ctx.Glyphs[0].startLine;
       // Don't error if glyph sacrifice is not unlocked
       // This makes scripts portable across Collapses
-      if (!AtomMilestone.am4.isReached && !DEV) {
+      if (!AtomMilestone.am4.isReached) {
         V.addError(ctx.Glyphs[0], "You do not have Reality automation unlocked.", "Unlock it from Atom first.");
         return false;
       }
@@ -1547,7 +1546,7 @@ export const AutomatorCommands = [
     compile: (ctx) => {
       const filter = ctx.$payload;
       return () => {
-        if (!GlyphSacrificeHandler.canSacrifice || !AtomMilestone.am4.isReached) {
+        if (!GlyphSacrificeHandler.canSacrifice) {
           AutomatorData.logCommandEvent(
             "Attempted to sacrifice a Glyph, but failed (not unlocked yet).",
             ctx.startLine,

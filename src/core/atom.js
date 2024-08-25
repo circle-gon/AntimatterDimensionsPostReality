@@ -529,15 +529,6 @@ export function collapse() {
   }
 
   if (AtomMilestone.am1.isReached) {
-    // When ACHNR is obtained, it sends a lot of notifications that achievements
-    // have been obtained, which isn't very useful, so we give the achievements here
-    for (const achievement of Achievements.preReality) achievement.give();
-
-    for (const perk of Perks.all) {
-      perk.isBought = true;
-      perk.onPurchased();
-    }
-
     giveRealityUpgrade(10, true);
     giveRealityUpgrade(13, true);
     giveRealityUpgrade(25, true);
@@ -546,10 +537,18 @@ export function collapse() {
     player.records.totalTimePlayedAtBHUnlock = DC.D0;
     for (const blackHole of player.blackHole) blackHole.unlocked = true;
     giveRealityUpgrade(20, false);
-    for (let i = 1; i <= 12; i++) EternityChallenge(i).completions = 5;
     Achievement(144).give();
   }
   if (AtomMilestone.am3.isReached) {
+    // When ACHNR is obtained, it sends a lot of notifications that achievements
+    // have been obtained, which isn't very useful, so we give the achievements here
+    for (const achievement of Achievements.preReality) achievement.give();
+
+    for (const perk of Perks.all) {
+      perk.isBought = true;
+      perk.onPurchased();
+    }
+    
     player.celestials.teresa.pouredAmount = Teresa.pouredAmountCap;
     player.celestials.teresa.perkShop = [11, 11, 4, 2, 0, 0];
   }
@@ -565,6 +564,7 @@ export function collapse() {
     player.celestials.v.runUnlocks = [4, 4, 4, 4, 4, 4, 2, 2, 2];
     player.celestials.laitela.difficultyTier = 1;
     player.celestials.laitela.fastestCompletion = 300;
+    for (let i = 1; i <= 12; i++) EternityChallenge(i).completions = 5;
   }
   if (AtomMilestone.am6.isReached) {
     for (const pet of Ra.pets.all) pet.level = 10;
