@@ -52,7 +52,7 @@ export default {
       this.isCharging = Enslaved.isStoringGameTime;
       this.storedTime.copyFrom(player.celestials.enslaved.stored);
       this.canAutoRelease = Ra.unlocks.autoPulseTime.canBeApplied;
-      this.isAutoReleasing = player.celestials.enslaved.isAutoReleasing;
+      this.isAutoReleasing = Ra.unlocks.autoPulseTime.canBeApplied && player.celestials.enslaved.isAutoReleasing;
     },
     pauseButtonText() {
       if (BlackHoles.arePaused && player.blackHoleNegative < 1) return "Uninvert BH";
