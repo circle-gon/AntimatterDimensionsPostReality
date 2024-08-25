@@ -188,7 +188,9 @@ export const Tickspeed = {
 
 export const FreeTickspeed = {
   BASE_SOFTCAP: 300000,
-  GROWTH_RATE: 6e-6,
+  // This was supposed to be scaling per every `e` tickspeed
+  // But since the code calculates it for log10, the factor needs to be smaller
+  GROWTH_RATE: 6e-6 * Math.log10(Math.E),
   GROWTH_EXP: 2,
   multToNext: 1.33,
 
