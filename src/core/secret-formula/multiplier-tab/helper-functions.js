@@ -249,7 +249,7 @@ export const MultiplierTabHelper = {
 
   getTDValue(id) {
     return TimeDimensions.continuumActive
-      ? TimeDimension(id).continuumValue
+      ? TimeDimension(id).continuumAmount
       : TimeDimension(id).amount;
   },
 };

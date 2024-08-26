@@ -227,18 +227,14 @@ class TimeDimensionState extends DimensionState {
   }
 
   // We handle exceptions here just because it's easier to do so
-  get continuumValue() {
+  get continuumAmount() {
+    if (!TimeDimensions.continuumActive) return 0;
     if (RealityUpgrade(13).isLockingMechanics && this._tier > 4) return 0;
     // TODO: better handling of IM upgrade 15?
     if (ImaginaryUpgrade(15).isLockingMechanics && EternityChallenge(7).completions > 0) return 0;
     let val = this.continuumBaseValue * TimeDimensions.extraPurchases;
     if (Enslaved.isRunning && val > 1) val = 1;
     return val;
-  }
-
-  get continuumAmount() {
-    if (!TimeDimensions.continuumActive) return 0;
-    return Math.floor(this.continuumValue * 10);
   }
 
   get totalAmount() {
@@ -258,7 +254,7 @@ class TimeDimensionState extends DimensionState {
       );
 
     const dim = TimeDimension(tier);
-    const realBought = TimeDimensions.continuumActive ? dim.continuumValue : dim.bought;
+    const realBought = TimeDimensions.continuumActive ? dim.continuumAmount : dim.bought;
     const bought = tier === 8 ? Math.clampMax(realBought, 1e8) : realBought;
     mult += bought * dim.powerMultiplier.log10();
 
