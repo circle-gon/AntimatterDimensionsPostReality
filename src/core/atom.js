@@ -521,6 +521,13 @@ export function collapse() {
 
   // Post-Reset
 
+  // Bug caused by being stuck on another tab while not having any options unlocked
+  // Making it impossible to switch tabs
+  // We set it to inventory management if any of them are not unlocked since it looks better
+  // And the player doesn't need to click on the button in order to fix it
+  if (!EffarigUnlock.glyphFilter.isUnlocked || !EffarigUnlock.setSaves.isUnlocked || !Ra.unlocks.unlockGlyphAlchemy.canBeApplied)
+    player.reality.showSidebarPanel = GLYPH_SIDEBAR_MODE.INVENTORY_MANAGEMENT
+
   // Why here? Some achievements like "Perks of Living" will be obtained through post-reset grants
   // This will cause notifications, which is kind of annoying, so we give them here to avoid that
   if (AtomMilestone.am6.isReached) {
