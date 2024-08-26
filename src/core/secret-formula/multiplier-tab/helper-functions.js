@@ -250,6 +250,6 @@ export const MultiplierTabHelper = {
   getTDValue(id) {
     return TimeDimensions.continuumActive
       ? TimeDimension(id).continuumValue
-      : Math.floor(TimeDimension(id).baseAmount / 10);
+      : TimeDimension(id).amount;
   },
 };
