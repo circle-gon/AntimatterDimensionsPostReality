@@ -12,8 +12,8 @@ export const atomMilestones = {
   am2: {
     collapses: 2,
     reward: () => `Start with all one-time Doom upgrades, the rebuyable Reality Upgrade and
-    Black Hole autobuyers, Imaginary Upgrade 'Vacuum Acceleration'
-    and both black holes start unlocked and pernamently active. 
+    Black Hole autobuyers, Reality Upgrade 'Parity of Singularity', Imaginary Upgrade
+    'Vacuum Acceleration', and both black holes start unlocked and pernamently active. 
     Reality Upgrade 'The Knowing Existance' no longer fails if you have EC1 completions. The 
     Galaxy Generator production, animations and Rift draining speed are ${formatX(2, 0)} faster.`,
   },

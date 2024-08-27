@@ -549,6 +549,7 @@ export function collapse() {
     player.records.totalTimePlayedAtBHUnlock = DC.D0;
     for (const blackHole of player.blackHole) blackHole.unlocked = true;
     giveRealityUpgrade(20, false);
+    giveRealityUpgrade(20, true);
     Achievement(144).give();
   }
   if (AtomMilestone.am3.isReached) {
