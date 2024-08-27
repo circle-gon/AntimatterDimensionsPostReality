@@ -82,6 +82,7 @@ export function skipToNewContent() {
     GameStorage.import(save);
   });
   // Dear god hopefully this should fix it now
+  player.records.thisInfinity.maxAM = Decimal.MAX_VALUE
   collapse();
 }
 
