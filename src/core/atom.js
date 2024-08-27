@@ -1,6 +1,6 @@
 import { BitPurchasableMechanicState, GameMechanicState, RebuyableMechanicState } from "./game-mechanics";
 import { DC } from "./constants";
-import save from "../../saves/am1.txt?raw";
+import save from "../../saves/doom.txt?raw";
 
 export function migrateSaves(player) {
   // Change effarig shards to decimal
@@ -77,12 +77,12 @@ export function migrateSaves(player) {
 }
 
 export function skipToNewContent() {
+  GameStorage.offlineEnabled = false;
   NG.carryover(() => {
-    GameStorage.offlineEnabled = false;
     GameStorage.import(save);
-    // This wasn't fixed properly for the save so use a band-aid fix for now
-    player.blackHoleNegative = 1;
   });
+  // Dear god hopefully this should fix it now
+  collapse();
 }
 
 // Lazy way to hide the "in this Collapse" text until you know about it
@@ -539,6 +539,10 @@ export function collapse() {
     giveRealityUpgrade(10, true);
     giveRealityUpgrade(13, true);
     giveRealityUpgrade(25, true);
+    
+    const first = Perk.firstPerk
+    first.isBought = true
+    first.onPurchased()
   }
   if (AtomMilestone.am2.isReached) {
     player.records.totalTimePlayedAtBHUnlock = DC.D0;

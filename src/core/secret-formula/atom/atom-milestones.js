@@ -1,7 +1,7 @@
 export const atomMilestones = {
   am1: {
     collapses: 1,
-    reward: () => `Start with the Nameless Ones' storing
+    reward: () => `Start with the START perk, the Nameless Ones' storing
     time mechanic unlocked, Automator speed maxed,
     passive IP & EP generation (works while Doomed), and Reality Upgrades 'Existentially Prolong', 
     'The Telemechanical Process', and 'Effortless Existence'.
